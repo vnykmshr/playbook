@@ -704,13 +704,45 @@ export default function() {
 }
 ```
 
+**Customizing thresholds for your system:**
+
+The example uses default thresholds. You must adjust for your actual system:
+
+```
+Default thresholds:
+  p(99) < 500ms  — Assumes fast database (your DB might be 1000ms-2000ms)
+  rate < 0.1     — Allows 10% error rate (too high for production)
+
+Your system thresholds:
+  1. Measure baseline: Run smoke test without threshold enforcement
+  2. Check metrics: What's your typical p99 latency? Error rate?
+  3. Set threshold: Use baseline + 10% margin
+```
+
+**Example for slow system:**
+```javascript
+// If your baseline is: p99=2000ms, error=5%
+export let options = {
+  vus: 1,
+  duration: '2m',
+  thresholds: {
+    http_req_duration: ['p(99)<2200'],  // 2000ms + 10% margin
+    http_req_failed: ['rate<0.1'],      // But keep <10% as safety net
+  },
+};
+```
+
 **Run smoke test:**
 ```bash
-# Set auth token, run smoke test
+# Set auth credentials and run with environment variables
 AUTH_TOKEN=$(curl -s -X POST https://api.example.com/auth/login \
   -d '{"email":"test@example.com","password":"test"}' | jq -r '.token')
 
-k6 run --vus 1 --duration 2m smoke-test.js
+k6 run \
+  --env BASE_URL=https://api.example.com \
+  --env TEST_EMAIL=test@example.com \
+  --env TEST_PASSWORD=test_password \
+  smoke-test.js
 ```
 
 **Example: GitHub Actions smoke test (after deployment)**
@@ -771,6 +803,136 @@ jobs:
           exit 1
 ```
 
+### Data Persistence Validation
+
+**Critical:** HTTP 200 response doesn't guarantee data was saved.
+
+Example problem:
+```
+Deployment breaks database writes silently:
+  - User clicks "create order" → API returns 200 ✅
+  - But order never saved to database ❌
+  - User thinks order exists, payment processed
+  - Real order is missing, customer support nightmare
+```
+
+**Solution: Verify data persisted, not just HTTP 200**
+
+**Bash example (verify order saved):**
+```bash
+#!/bin/bash
+# smoke-test-data.sh - Verify data actually persisted
+
+DOMAIN="https://example.com"
+
+# Get auth token
+TOKEN=$(curl -s -X POST "$DOMAIN/api/login" \
+  -H "Content-Type: application/json" \
+  -d '{"email":"test@example.com","password":"test"}' \
+  | jq -r '.token')
+
+echo "Testing data persistence..."
+
+# Test 1: Create order
+ORDER_RESPONSE=$(curl -s -X POST "$DOMAIN/api/orders" \
+  -H "Authorization: Bearer $TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{"items":[{"id":1,"qty":2}]}')
+
+ORDER_ID=$(echo "$ORDER_RESPONSE" | jq -r '.order_id')
+
+if [ -z "$ORDER_ID" ] || [ "$ORDER_ID" = "null" ]; then
+  echo "❌ Create order failed"
+  exit 1
+fi
+
+echo "✓ Order created: $ORDER_ID"
+
+# Wait 1 second for DB write to complete
+sleep 1
+
+# Test 2: Verify order is in database
+SAVED_ORDER=$(curl -s -X GET "$DOMAIN/api/orders/$ORDER_ID" \
+  -H "Authorization: Bearer $TOKEN")
+
+ORDER_STATUS=$(echo "$SAVED_ORDER" | jq -r '.status')
+
+if [ "$ORDER_STATUS" != "pending" ]; then
+  echo "❌ Order not saved to database (HTTP 200 but no data)"
+  echo "Response: $SAVED_ORDER"
+  exit 1
+fi
+
+echo "✓ Order saved correctly: status=$ORDER_STATUS"
+
+# Test 3: Verify inventory decremented
+INVENTORY=$(curl -s -X GET "$DOMAIN/api/inventory/1" \
+  -H "Authorization: Bearer $TOKEN")
+
+QUANTITY=$(echo "$INVENTORY" | jq -r '.quantity')
+
+if [ "$QUANTITY" -lt 8 ]; then  # Started at 10, ordered 2
+  echo "✓ Inventory decremented correctly: $QUANTITY remaining"
+else
+  echo "❌ Inventory not updated (data not persisted)"
+  exit 1
+fi
+
+echo "✅ All data persistence checks passed"
+```
+
+**k6 example (verify response is correct):**
+```javascript
+// smoke-test-data.js - Verify data state after operations
+import http from 'k6/http';
+import { check, sleep } from 'k6';
+
+export default function() {
+  const BASE_URL = 'https://api.example.com';
+
+  // Step 1: Create a resource
+  let res = http.post(`${BASE_URL}/api/orders`, JSON.stringify({
+    items: [{id: 1, qty: 2}],
+    customer_id: 'test-customer-1',
+  }), {
+    headers: { 'Content-Type': 'application/json' },
+  });
+
+  check(res, {
+    'create order: status 200': (r) => r.status === 200,
+    'create order: has order_id': (r) => r.json('order_id') !== undefined,
+  });
+
+  const orderId = res.json('order_id');
+
+  // Step 2: Wait for eventual consistency (DB write)
+  sleep(1);
+
+  // Step 3: Verify resource persisted correctly
+  res = http.get(`${BASE_URL}/api/orders/${orderId}`);
+
+  check(res, {
+    'verify order: status 200': (r) => r.status === 200,
+    'verify order: status is pending': (r) => r.json('status') === 'pending',
+    'verify order: has items': (r) => r.json('items').length > 0,
+    'verify order: customer_id matches': (r) =>
+      r.json('customer_id') === 'test-customer-1',
+  });
+}
+```
+
+**What to verify per application type:**
+
+| Application | What to verify | Why |
+|-------------|----------------|-----|
+| E-commerce | Order saved, inventory decremented | Financial accuracy |
+| SaaS | Workspace created, settings saved | Data loss is deal-breaker |
+| API Service | Record persisted with correct values | Silent data loss |
+| Messaging | Message in queue/database | Lost messages = lost data |
+| Billing | Payment recorded, invoice generated | Revenue impact |
+
+---
+
 ### Smoke Test Checklist
 
 **Before smoke testing:**
@@ -786,6 +948,7 @@ jobs:
 - [ ] Authentication/authorization working
 - [ ] External services connected (payment, email, etc.)
 - [ ] Error handling works (test invalid input)
+- [ ] **Data persisted correctly** (not just HTTP 200)
 - [ ] Logs capturing traffic
 - [ ] Metrics dashboard updating
 - [ ] No excessive errors (< 1% error rate)

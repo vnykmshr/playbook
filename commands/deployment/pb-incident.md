@@ -250,6 +250,74 @@ Incoming on-call (Sarah):
 - Ignore on-call fatigue (leads to burnout)
 - Force people to be on-call against their will
 
+### On-Call Training & Readiness
+
+Before joining on-call rotation, engineers need hands-on training.
+
+**Mock Incident Training (Required before first on-call week):**
+
+```
+Duration: 30-45 minutes
+Frequency: Once per engineer, before first live on-call
+Purpose: Practice under pressure so first real incident isn't panicked
+```
+
+**Step 1: Scenario Planning (5 min)**
+```
+Simulate realistic incident:
+  SEV-1: API servers down, users can't load page
+  Root cause: Recent deployment broke database connection pooling
+  Discovery: "Users reporting 500 errors, database connection queue full"
+```
+
+**Step 2: Practice Run (20 min)**
+```
+New on-call person:
+  - Joins Slack incident channel
+  - Senior engineer plays "user reports" and "manager escalation"
+  - New person must:
+    * Recognize severity (SEV-1 vs SEV-2)
+    * Declare incident in #incidents
+    * Check logs/metrics to confirm
+    * Identify root cause (recent deploy)
+    * Decide: Rollback? Revert config? Scale resources?
+    * Communicate updates every 15 minutes
+    * Escalate to secondary if stuck > 5 min
+```
+
+**Step 3: Debrief (10 min)**
+```
+Senior engineer reviews:
+  ✅ Did they recognize severity immediately?
+  ✅ Did they declare incident vs. investigating quietly?
+  ✅ Did they check the right dashboards/logs?
+  ✅ How fast did they identify root cause?
+  ✅ Did they communicate frequently enough?
+
+Feedback:
+  - What went well
+  - What could be faster
+  - Where to find dashboards/runbooks during real incident
+```
+
+**Real-world example:**
+```
+New on-call: "I see latency spike, but is it real or metric glitch?"
+Senior: "Good question. Check: (1) Error rate trending up? (2) User complaints in Slack?"
+New: "Yes, 10% error rate now, users reporting 503"
+Senior: "That's real. Declare SEV-1, check recent changes"
+New: "Done. Latest deploy was 5 min ago. Rolling back."
+Senior: "Good decision speed. That's what we want in production."
+```
+
+**What this prevents:**
+- First real incident shouldn't be chaotic
+- New on-call person knows where to look
+- Reduces decision-making paralysis under pressure
+- Builds confidence for actual incidents
+
+---
+
 ### On-Call Rotation Schedule
 
 **Example 4-person team (12 weeks per year on-call = 1 week/month):**
