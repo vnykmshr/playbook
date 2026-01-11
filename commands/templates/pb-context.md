@@ -3,7 +3,7 @@
 > **Purpose:** Onboarding context for new developers and session refresh for ongoing work.
 > **Current Version:** vX.Y.Z | **Last Updated:** YYYY-MM-DD
 >
-> **Related Docs:** `vmx-engineering-playbook` (SDLC tiers, gates, checklists) | `vmx-project-guidelines` (coding standards, conventions)
+> **Related Docs:** `pb-guide` (SDLC tiers, gates, checklists) | `pb-standards` (coding standards, conventions)
 
 ---
 
@@ -95,7 +95,7 @@ make rollback             # Restore previous images
 
 **Philosophy:** Stay committed to full SDLC flow — no shortcuts. Strive for bug-free, quality releases.
 
-> **Work Tiers:** S (small, <2h) | M (medium, phased) | L (large, multi-week). See `vmx-engineering-playbook` for tier definitions, gates, and checklists.
+> **Work Tiers:** S (small, <2h) | M (medium, phased) | L (large, multi-week). See `pb-guide` for tier definitions, gates, and checklists.
 
 ### 1. Planning
 - Define focus area and scope
@@ -158,7 +158,7 @@ make deploy               # Deploy to production
 
 ### Periodic Maintenance
 - **Hygiene releases** — Periodic code cleanup, test organization, dependency updates
-- **Periodic reviews** — Use `/vmx-review-*` skills for structured codebase reviews
+- **Periodic reviews** — Use `/pb-review-*` commands for structured codebase reviews
 - **Performance audits** — Regular performance scans to catch regressions
 
 > **No shortcuts.** Every release follows this flow. Quality over speed.

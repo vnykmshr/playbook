@@ -10,7 +10,7 @@ Before writing code, confirm:
 
 - [ ] Scope is clear (what's in, what's out)
 - [ ] Feature branch created from main
-- [ ] Working context reviewed (`/vmx-project-guidelines`)
+- [ ] Working context reviewed (`/pb-standards`)
 - [ ] Acceptance criteria understood
 
 ---
@@ -53,7 +53,7 @@ Every change follows this cycle without shortcuts:
 └─────────────────────────────────────────────────────────────┘
 ```
 
-**Run `/vmx-dev-cycle` for guided self-review and peer review at each iteration.**
+**Run `/pb-cycle` for guided self-review and peer review at each iteration.**
 
 ---
 
@@ -155,11 +155,11 @@ Stop and ask when:
 
 | Action | Command |
 |--------|---------|
-| Start iteration cycle | `/vmx-dev-cycle` |
+| Start iteration cycle | `/pb-cycle` |
 | Check quality gates | `make lint && make typecheck && make test` |
-| Self-review checklist | See `/vmx-dev-cycle` |
-| Create PR | Follow PR template |
-| Make release | `/vmx-make-release` |
+| Self-review checklist | See `/pb-cycle` |
+| Create PR | `/pb-pr` |
+| Make release | `/pb-release` |
 
 ---
 

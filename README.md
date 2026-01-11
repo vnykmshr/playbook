@@ -24,42 +24,45 @@ A comprehensive set of development workflow commands for Claude Code. Codifies i
 ### Development Workflow
 
 ```
-/vmx-start-dev       Start work on a feature branch
-/vmx-dev-cycle       Self-review + peer review iteration
-/vmx-resume-work     Resume after a break
-/vmx-quick-pr        Create a pull request
+/pb-start     Start work on a feature branch
+/pb-cycle     Self-review + peer review iteration
+/pb-resume    Resume after a break
+/pb-pr        Create a pull request
 ```
 
 ### Planning & Architecture
 
 ```
-/vmx-new-focus-area-generic    Plan a new feature/release
-/vmx-adr                       Document architectural decisions
+/pb-plan      Plan a new feature/release
+/pb-adr       Document architectural decisions
 ```
 
 ### Release & Operations
 
 ```
-/vmx-make-release        Pre-release checks and deployment
-/vmx-incident-response   P0/P1 incident handling
+/pb-release   Pre-release checks and deployment
+/pb-incident  P0/P1 incident handling
 ```
 
 ### Periodic Reviews
 
 ```
-/vmx-project-review-periodic     Comprehensive 10-perspective review
-/vmx-review-engineer-periodic    Code cleanup, repo health
-/vmx-review-tests-periodic       Test suite quality
-/vmx-review-docs-periodic        Documentation accuracy
-/vmx-review-hygiene-periodic     Multi-role health check
+/pb-review           Comprehensive 10-perspective review
+/pb-review-code      Code cleanup, repo health
+/pb-review-tests     Test suite quality
+/pb-review-docs      Documentation accuracy
+/pb-review-hygiene   Multi-role health check
+/pb-review-product   Technical + product review
+/pb-review-prerelease Pre-release code review
 ```
 
 ### Reference
 
 ```
-/vmx-engineering-playbook   Full SDLC guide with tiers and gates
-/vmx-sdlc-template          Templates for commits, phases
-/vmx-project-guidelines     Coding standards and principles
+/pb-guide      Full SDLC guide with tiers and gates
+/pb-templates  Templates for commits, phases
+/pb-standards  Coding standards and principles
+/pb-context    Project context template
 ```
 
 ## Installation
@@ -79,67 +82,42 @@ cd playbook
 ┌─────────────────────────────────────────────────────────────┐
 │  PLANNING          DEVELOPMENT              RELEASE         │
 │                                                             │
-│  focus-area   →    start-dev    →       make-release       │
-│  adr               dev-cycle             incident-response │
-│                    resume-work                              │
-│                    quick-pr                                 │
+│  pb-plan    →      pb-start     →        pb-release        │
+│  pb-adr            pb-cycle               pb-incident       │
+│                    pb-resume                                │
+│                    pb-pr                                    │
 │                                                             │
 │                         ↓                                   │
 │                    MAINTENANCE                              │
-│                    review-* (periodic)                      │
+│                    pb-review-* (periodic)                   │
 └─────────────────────────────────────────────────────────────┘
 ```
 
 ## Quick Start
 
-1. **Planning a feature:**
-   ```
-   /vmx-new-focus-area-generic
-   ```
-
-2. **Starting development:**
-   ```
-   /vmx-start-dev
-   ```
-
-3. **Each iteration (develop → review → commit):**
-   ```
-   /vmx-dev-cycle
-   ```
-
-4. **Creating a PR:**
-   ```
-   /vmx-quick-pr
-   ```
-
-5. **Making a release:**
-   ```
-   /vmx-make-release
-   ```
+```bash
+/pb-plan      # Plan a feature
+/pb-start     # Create branch, establish rhythm
+/pb-cycle     # Develop → Review → Commit (repeat)
+/pb-pr        # Create pull request
+/pb-release   # Deploy to production
+```
 
 ## Directory Structure
 
 ```
 playbook/
 ├── commands/
-│   ├── core/           # Foundation (playbook, templates, guidelines)
-│   ├── planning/       # Focus areas, ADRs
-│   ├── development/    # start-dev, dev-cycle, resume, quick-pr
-│   ├── release/        # make-release, incident-response
-│   ├── reviews/        # Periodic review commands
-│   └── templates/      # working-context-template
+│   ├── core/           # pb-guide, pb-templates, pb-standards
+│   ├── planning/       # pb-plan, pb-adr
+│   ├── development/    # pb-start, pb-cycle, pb-resume, pb-pr
+│   ├── release/        # pb-release, pb-incident
+│   ├── reviews/        # pb-review-*
+│   └── templates/      # pb-context
 ├── docs/               # Documentation
 ├── scripts/            # Install/uninstall scripts
 └── todos/              # Dev-only tracking (gitignored)
 ```
-
-## Customization
-
-Commands use placeholders for project-specific details:
-
-- `[domain]` — Your production domain
-- `make` commands — Adapt to your build system
-- Branch naming — Adjust patterns as needed
 
 ## Uninstall
 

@@ -188,7 +188,7 @@ git reflog | head -20
 git log --all --oneline --graph -20
 
 # 4. Read the working context
-# /vmx-project-guidelines for patterns
+# /pb-standards for patterns
 # Working context doc for current state
 ```
 

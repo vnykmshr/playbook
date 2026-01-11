@@ -157,7 +157,7 @@ We'll update you when service is restored.
 If hotfix was minimal/hacky:
 
 1. Create proper fix branch
-2. Full SDLC process (`/vmx-dev-cycle`)
+2. Full SDLC process (`/pb-cycle`)
 3. Thorough testing
 4. Replace hotfix with proper solution
 

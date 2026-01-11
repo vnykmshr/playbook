@@ -10,7 +10,7 @@ Before creating PR, verify:
 
 - [ ] All commits are logical and atomic
 - [ ] Quality gates pass: `make lint && make typecheck && make test`
-- [ ] Self-review completed (`/vmx-dev-cycle`)
+- [ ] Self-review completed (`/pb-cycle`)
 - [ ] Branch is up to date with main
 - [ ] No merge conflicts
 

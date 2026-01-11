@@ -154,11 +154,11 @@ We commit to **bug-free, rock-solid results** through disciplined adherence to a
 
 ### Development Workflow
 
-**Start work:** `/vmx-start-dev` — Creates feature branch, establishes iteration rhythm
+**Start work:** `/pb-start` — Creates feature branch, establishes iteration rhythm
 
-**Each iteration:** `/vmx-dev-cycle` — Guides through develop → self-review → peer review → commit
+**Each iteration:** `/pb-cycle` — Guides through develop → self-review → peer review → commit
 
-**Release:** `/vmx-make-release` — Pre-release checks, deployment
+**Release:** `/pb-release` — Pre-release checks, deployment
 
 ### Iteration Cycle (Mandatory for All Changes)
 
@@ -176,7 +176,7 @@ We commit to **bug-free, rock-solid results** through disciplined adherence to a
 └─────────────────────────────────────────────────────────────┘
 ```
 
-**Run `/vmx-dev-cycle` for detailed checklists at each iteration.**
+**Run `/pb-cycle` for detailed checklists at each iteration.**
 
 ### Quality Gates
 
@@ -209,7 +209,7 @@ make test        # All tests pass
 
 | Action | Command |
 |--------|---------|
-| Start development | `/vmx-start-dev` |
-| Iteration cycle | `/vmx-dev-cycle` |
-| Release prep | `/vmx-make-release` |
-| Full review | `/vmx-project-review-periodic` |
+| Start development | `/pb-start` |
+| Iteration cycle | `/pb-cycle` |
+| Release prep | `/pb-release` |
+| Full review | `/pb-review` |
