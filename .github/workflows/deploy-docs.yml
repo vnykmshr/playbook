@@ -7,7 +7,6 @@ on:
       - 'docs/**'
       - 'commands/**'
       - 'CHANGELOG.md'
-      - 'RELEASE.md'
       - '.github/CONTRIBUTING.md'
       - '.gitattributes'
       - 'mkdocs.yml'

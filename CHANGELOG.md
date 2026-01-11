@@ -9,7 +9,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 - **Release Automation**: `scripts/release.sh` for automated version management and git tagging
-- **Release Documentation**: `RELEASE.md` with comprehensive release workflow guide
 - **Git Configuration**: `.gitattributes` for consistent line ending normalization (LF)
 - **Command Structure Guidelines**: Enhanced `CONTRIBUTING.md` with detailed command creation standards
 
