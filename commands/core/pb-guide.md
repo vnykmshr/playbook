@@ -387,6 +387,88 @@ def test_payment_webhook_processing(mock_post):
     assert mock_post.called  # Verify we called the external service
 ```
 
+**JavaScript/TypeScript Integration Tests:**
+
+For Node.js/TypeScript projects, use Jest with a real test database:
+
+```typescript
+// Integration test with real database
+import { Database } from './db';
+import { UserService } from './services/user';
+import { EmailService } from './services/email';
+
+describe('User signup integration', () => {
+  let db: Database;
+  let userService: UserService;
+
+  beforeEach(async () => {
+    // Fresh database for each test
+    db = new Database(':memory:'); // Use SQLite in-memory
+    await db.connect();
+    userService = new UserService(db);
+  });
+
+  afterEach(async () => {
+    await db.close();
+  });
+
+  it('should create user and queue email verification', async () => {
+    // Setup: Mock external email service
+    const emailServiceMock = jest.fn().mockResolvedValue({ sent: true });
+    userService.emailService = { send: emailServiceMock };
+
+    // Execute
+    const user = await userService.signup({
+      email: 'test@example.com',
+      password: 'test_password_12345'  // Test data, not real password
+    });
+
+    // Verify: User created in DB
+    expect(user.id).toBeDefined();
+    expect(user.emailVerified).toBe(false);
+
+    // Verify: Email sent (mocked)
+    expect(emailServiceMock).toHaveBeenCalledWith(
+      expect.objectContaining({ to: 'test@example.com' })
+    );
+
+    // Verify: Verification token created
+    const token = await db.query(
+      'SELECT * FROM email_verification_tokens WHERE user_id = ?',
+      [user.id]
+    );
+    expect(token).toBeDefined();
+  });
+});
+```
+
+**Test Database Setup (TypeScript/TypeORM example):**
+
+```typescript
+// test/database-fixture.ts
+import { createConnection, Connection } from 'typeorm';
+
+export async function setupTestDatabase(): Promise<Connection> {
+  return createConnection({
+    type: 'sqlite',
+    database: ':memory:',
+    entities: [User, Payment, EmailQueue],
+    synchronize: true, // Create schema from entities
+    logging: false
+  });
+}
+
+// In test
+beforeEach(async () => {
+  db = await setupTestDatabase();
+});
+
+afterEach(async () => {
+  await db.dropDatabase();
+  await db.close();
+});
+```
+
 **Running Integration Tests in CI/CD:**
 
 Integration tests are slower than unit tests. Manage them carefully:
@@ -420,6 +502,117 @@ CI/CD configuration example (GitHub Actions):
   run: make test-load
   if: github.event_name == 'release'
 ```
+
+**Containerized Test Databases (Docker):**
+
+For teams using Docker, run databases in containers during testing:
+
+Docker Compose for test environment:
+
+```yaml
+# docker-compose.test.yml
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:14-alpine
+    environment:
+      POSTGRES_INITDB_ARGS: "-U postgres"  # Default user
+      POSTGRES_DB: test_db
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+```
+
+Using Docker Compose in tests:
+
+```bash
+# Start test containers
+docker-compose -f docker-compose.test.yml up -d
+
+# Run tests (containers are ready via healthchecks)
+npm test
+
+# Clean up
+docker-compose -f docker-compose.test.yml down -v
+```
+
+In CI/CD (GitHub Actions):
+
+```yaml
+services:
+  postgres:
+    image: postgres:14-alpine
+    env:
+      POSTGRES_HOST_AUTH_METHOD: trust  # Allow connections without password
+      POSTGRES_DB: test_db
+    options: >-
+      --health-cmd pg_isready
+      --health-interval 10s
+      --health-timeout 5s
+      --health-retries 5
+    ports:
+      - 5432:5432
+
+  redis:
+    image: redis:7-alpine
+    options: >-
+      --health-cmd "redis-cli ping"
+      --health-interval 10s
+      --health-timeout 5s
+      --health-retries 5
+    ports:
+      - 6379:6379
+
+steps:
+  - name: Run integration tests
+    run: npm test
+    env:
+      DATABASE_URL: postgres://postgres@localhost:5432/test_db
+      REDIS_URL: redis://localhost:6379
+```
+
+**Alternative: Testcontainers (Automatic Container Management):**
+
+Libraries like Testcontainers handle container lifecycle automatically:
+
+```python
+# Python example with testcontainers
+from testcontainers.postgres import PostgresContainer
+
+def test_with_testcontainers():
+    with PostgresContainer("postgres:14") as postgres:
+        # Container automatically starts, creates, and cleans up
+        db = psycopg2.connect(postgres.get_connection_url())
+
+        # Run test
+        cursor = db.cursor()
+        cursor.execute("CREATE TABLE users (id SERIAL, name TEXT)")
+        # ... test code ...
+
+        # Container automatically cleaned up on exit
+```
+
+Benefits of containerized databases:
+- Matches production environment exactly
+- No version mismatches (SQLite vs PostgreSQL)
+- Easy to test against multiple DB versions
+- Works well with CI/CD services
+- Scales to multi-container integration tests (microservices)
 
 **Common Integration Test Pitfalls:**
 
