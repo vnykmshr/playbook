@@ -377,6 +377,220 @@ except CircuitBreakerOpen:
 
 ---
 
+### Pattern: Rate Limiting
+
+**Problem:** API being abused. Too many requests from one client. Resources exhausted (CPU, memory, database).
+
+**Solution:** Limit requests per time window. Too many requests? Reject or delay.
+
+**Strategies:**
+
+**1. Token Bucket (Recommended)**
+```
+Bucket holds N tokens
+Every request uses 1 token
+Tokens refill at rate R per second
+
+Example: 100 tokens, refill 10/second
+  Request 1: 100 → 99 tokens (OK)
+  Request 2: 99 → 98 tokens (OK)
+  ...
+  Request 100: 1 → 0 tokens (OK)
+  Request 101: 0 tokens (REJECTED)
+  After 1 second: Refilled to 10 tokens
+  After 10 seconds: Refilled to 100 tokens
+```
+
+**2. Sliding Window (Simple but Less Accurate)**
+```
+Count requests in last N seconds
+Too many requests? Reject
+
+Example: Max 100 requests per minute
+  11:00:00 - 11:00:59: 100 requests (at limit)
+  11:01:00: First old request falls out
+  Request 101 now allowed (oldest expired)
+```
+
+**3. Leaky Bucket (Fair, Process at Constant Rate)**
+```
+Requests arrive at variable rate
+Leak (process) at constant rate
+
+Like a queue:
+  Requests → [Bucket] → Processing at constant rate
+  If bucket full: Reject or queue (backpressure)
+```
+
+**Python token bucket example:**
+```python
+import time
+from threading import Lock
+
+class RateLimiter:
+    def __init__(self, capacity=100, refill_rate=10):
+        """
+        capacity: max tokens in bucket
+        refill_rate: tokens per second
+        """
+        self.capacity = capacity
+        self.refill_rate = refill_rate
+        self.tokens = capacity
+        self.last_refill_time = time.time()
+        self.lock = Lock()
+
+    def allow_request(self):
+        """Check if request allowed."""
+        with self.lock:
+            now = time.time()
+            elapsed = now - self.last_refill_time
+
+            # Refill tokens
+            refilled = elapsed * self.refill_rate
+            self.tokens = min(
+                self.capacity,
+                self.tokens + refilled
+            )
+            self.last_refill_time = now
+
+            if self.tokens >= 1:
+                self.tokens -= 1
+                return True
+            return False
+
+    def wait_if_needed(self):
+        """Wait until request is allowed."""
+        while not self.allow_request():
+            time.sleep(0.1)
+
+# Usage
+limiter = RateLimiter(capacity=100, refill_rate=10)
+
+if limiter.allow_request():
+    print("Request allowed")
+else:
+    print("Rate limit exceeded")
+    # Return 429 Too Many Requests
+```
+
+**JavaScript example (per-client limit):**
+```javascript
+const requestCounts = new Map();
+
+function rateLimit(clientId, maxRequests = 100, windowSeconds = 60) {
+  const now = Date.now();
+  const windowStart = now - (windowSeconds * 1000);
+
+  if (!requestCounts.has(clientId)) {
+    requestCounts.set(clientId, []);
+  }
+
+  const requests = requestCounts.get(clientId);
+  const recentRequests = requests.filter(time => time > windowStart);
+
+  if (recentRequests.length >= maxRequests) {
+    return false;  // Rate limit exceeded
+  }
+
+  recentRequests.push(now);
+  requestCounts.set(clientId, recentRequests);
+  return true;  // Request allowed
+}
+
+// Cleanup old entries
+setInterval(() => {
+  const now = Date.now();
+  for (const [clientId, requests] of requestCounts.entries()) {
+    const recent = requests.filter(time => time > now - 600000);  // 10 minutes
+    if (recent.length === 0) {
+      requestCounts.delete(clientId);
+    } else {
+      requestCounts.set(clientId, recent);
+    }
+  }
+}, 60000);  // Cleanup every minute
+
+// API endpoint
+app.get('/api/data', (req, res) => {
+  const clientId = req.ip;
+  if (!rateLimit(clientId)) {
+    return res.status(429).json({
+      error: 'Too many requests',
+      retryAfter: 60
+    });
+  }
+
+  // Process request
+  res.json({data: 'success'});
+});
+```
+
+**Where to implement:**
+
+1. **API Gateway (Best):** Rate limit before hitting services
+   - All services protected
+   - Single configuration point
+   - Can reject early
+
+2. **Individual Service:** Rate limit per service
+   - Finer control (payment service stricter than logging)
+   - Redundant (if gateway exists)
+
+3. **Redis (Distributed):** Share limits across servers
+   - Multiple API instances
+   - Fair across load balancer
+
+**Levels of rate limiting:**
+
+```
+Global (All users): 10,000 requests/minute
+Per user: 100 requests/minute
+Per IP: 50 requests/minute
+Per endpoint: Payment API strict (10/minute), Logging lenient (1000/minute)
+```
+
+**HTTP Response Headers:**
+```
+X-RateLimit-Limit: 100
+X-RateLimit-Remaining: 42
+X-RateLimit-Reset: 1673456789 (unix timestamp)
+
+429 Too Many Requests
+Retry-After: 60
+```
+
+**When to use:**
+- Public APIs (prevent abuse)
+- Resource-intensive endpoints (batch processing, exports)
+- Protecting against DDoS
+- Fair-sharing (one user can't monopolize)
+- Cost control (if calls cost money)
+
+**Gotchas:**
+```
+1. "Too strict, blocks legitimate traffic"
+   Bad: 1 request/minute on public API
+   Good: Match expected usage (100/minute for public, 10,000 for internal)
+
+2. "No distinction between client types"
+   Bad: Free user and premium user same limit
+   Good: Premium gets higher limit, free gets lower
+
+3. "Rate limits not visible"
+   Bad: Client gets 429 with no explanation
+   Good: Send X-RateLimit headers + Retry-After
+
+4. "In-memory only on single server"
+   Bad: Multiple servers, each has separate limits
+   Good: Use Redis for distributed counting
+
+5. "No graceful degradation"
+   Bad: Instant reject when at limit
+   Good: Queue requests, process in order
+```
+
+---
+
 ### Pattern: Cache-Aside
 
 **Problem:** Database is slow, customers wait. Same queries run repeatedly.

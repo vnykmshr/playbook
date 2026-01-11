@@ -74,6 +74,8 @@ Quick reference for all playbook commands.
 | Command | Purpose |
 |---------|---------|
 | `/pb-guide` | Full SDLC guide with tiers, gates, checklists |
+| `/pb-guide-go` | Go-specific SDLC guide with concurrency patterns and tooling |
+| `/pb-guide-python` | Python-specific SDLC guide with async/await and testing |
 | `/pb-templates` | Templates for commits, phases, reviews |
 | `/pb-standards` | Coding standards, quality principles |
 | `/pb-context` | Project onboarding context template |
@@ -122,6 +124,7 @@ Quick reference for all playbook commands.
 | Category | Count |
 |----------|-------|
 | Core | 3 |
+| Language Guides | 2 |
 | Patterns & Architecture | 7 |
 | Planning | 2 |
 | Development | 6 |
@@ -129,4 +132,4 @@ Quick reference for all playbook commands.
 | Reviews | 9 |
 | Repo | 6 |
 | Templates | 1 |
-| **Total** | **36** |
+| **Total** | **38** |

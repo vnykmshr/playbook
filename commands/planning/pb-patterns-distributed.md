@@ -207,6 +207,579 @@ async function fulfillOrder(order) {
    Good: Timeouts and fallbacks
 ```
 
+### Saga Idempotency Pattern
+
+**Problem:** Saga step retries. Payment charged twice. Inventory decremented twice.
+
+**Solution:** Ensure each step is idempotent. Running same operation twice = running it once.
+
+**Approaches:**
+
+**1. Request Deduplication (Recommended)**
+```
+Track request ID. If request ID seen before, return cached result.
+
+Payment Service:
+  Request: POST /charge with requestId=abc123
+  Service stores: requestId → paymentId=pay_xyz
+
+  Retry: POST /charge with requestId=abc123 (same ID)
+  Service checks: I've seen abc123 before
+  Returns cached: paymentId=pay_xyz (no new charge)
+```
+
+**2. Idempotent Operations**
+```
+Design operation to be idempotent:
+
+  Bad (not idempotent):
+    inventory.count = 100
+    inventory.count -= 10  // Decremented to 90
+    [retry happens]
+    inventory.count -= 10  // Now 80 (wrong!)
+
+  Good (idempotent):
+    UPDATE inventory SET count = count - 10
+    WHERE product_id = 123
+    [retry happens]
+    UPDATE inventory SET count = count - 10
+    WHERE product_id = 123
+    (Both decrements happen, but only once because of logic)
+```
+
+**JavaScript example with idempotency:**
+```javascript
+// Payment Service with idempotency
+const paymentRegistry = new Map(); // requestId → result
+
+async function chargePayment(customerId, amount, requestId) {
+  // Check if already processed
+  if (paymentRegistry.has(requestId)) {
+    console.log("Idempotent: Returning cached payment");
+    return paymentRegistry.get(requestId);
+  }
+
+  try {
+    // Process payment
+    const payment = await paymentGateway.charge(customerId, amount);
+
+    // Cache result before returning
+    paymentRegistry.set(requestId, payment);
+    return payment;
+  } catch (error) {
+    // Don't cache failures - allow retry
+    throw error;
+  }
+}
+
+// Saga orchestrator
+async function fulfillOrder(order) {
+  const sagaId = order.id;
+  const requestIds = {
+    payment: `${sagaId}-payment-${order.customerId}`,
+    inventory: `${sagaId}-inventory`,
+    shipping: `${sagaId}-shipping`
+  };
+
+  try {
+    // Payment (retry safe - idempotent)
+    const payment = await chargePayment(
+      order.customerId,
+      order.total,
+      requestIds.payment  // Same ID for retries
+    );
+
+    // Inventory (retry safe)
+    await inventoryService.decrement(
+      order.items,
+      requestIds.inventory
+    );
+
+    // Shipping (retry safe)
+    await shippingService.create(
+      order.id,
+      order.items,
+      requestIds.shipping
+    );
+
+    return { success: true };
+  } catch (error) {
+    // Compensation on failure
+    await compensate(sagaId);
+    throw error;
+  }
+}
+```
+
+**Python example - Idempotent transaction tracking:**
+```python
+class IdempotentSaga:
+    def __init__(self, db):
+        self.db = db
+
+    def execute_step(self, saga_id, step_name, operation_fn):
+        """Execute saga step with idempotency."""
+        # Check if step already executed
+        result = self.db.query(
+            "SELECT result FROM saga_steps WHERE saga_id=? AND step_name=?",
+            saga_id, step_name
+        )
+
+        if result:
+            print(f"Idempotent: Step {step_name} already executed")
+            return result['result']
+
+        # Execute operation
+        try:
+            result = operation_fn()
+
+            # Record success
+            self.db.execute(
+                "INSERT INTO saga_steps (saga_id, step_name, result, status) VALUES (?, ?, ?, ?)",
+                saga_id, step_name, str(result), 'completed'
+            )
+
+            return result
+
+        except Exception as e:
+            # Record failure (not idempotent - allow retry)
+            self.db.execute(
+                "INSERT INTO saga_steps (saga_id, step_name, error, status) VALUES (?, ?, ?, ?)",
+                saga_id, step_name, str(e), 'failed'
+            )
+            raise
+
+# Usage
+saga = IdempotentSaga(db)
+
+try:
+    # Each step execution is idempotent
+    payment = saga.execute_step(
+        'order_123',
+        'charge_payment',
+        lambda: payment_service.charge(amount=99.99)
+    )
+
+    inventory = saga.execute_step(
+        'order_123',
+        'decrement_inventory',
+        lambda: inventory_service.decrement(['item_1', 'item_2'])
+    )
+except Exception as e:
+    print(f"Saga failed: {e}")
+    # Compensation handled separately
+```
+
+**When to implement:**
+- All saga steps (payment, inventory, shipping)
+- Any operation that might retry
+- Multi-step workflows
+
+---
+
+## Event Versioning
+
+**Problem:** Event format changes. Old events become unreadable. New services can't handle old events.
+
+**Solution:** Version events. Support multiple versions simultaneously.
+
+**Strategies:**
+
+**1. Version Field (Simplest)**
+```json
+{
+  "version": 2,
+  "type": "order.created",
+  "order_id": "order_123",
+  "customer_id": "cust_456",
+  "amount": 99.99,
+  "currency": "USD"
+}
+
+vs.
+
+Version 1 (old):
+{
+  "type": "order.created",
+  "order_id": "order_123",
+  "amount": 99.99
+}
+```
+
+**2. Schema Evolution Map**
+```
+v1 → v2: Add currency field (default: USD)
+v2 → v3: Split amount into amount + tax
+v3 → v4: Add shipping_address field
+```
+
+**JavaScript example:**
+```javascript
+class EventVersionHandler {
+  constructor() {
+    this.handlers = {
+      1: this.handleV1,
+      2: this.handleV2,
+      3: this.handleV3
+    };
+  }
+
+  // v1: Basic order data
+  handleV1(event) {
+    return {
+      orderId: event.order_id,
+      customerId: event.customer_id,
+      amount: event.amount,
+      currency: 'USD' // Default
+    };
+  }
+
+  // v2: Added currency field explicitly
+  handleV2(event) {
+    return {
+      orderId: event.order_id,
+      customerId: event.customer_id,
+      amount: event.amount,
+      currency: event.currency || 'USD'
+    };
+  }
+
+  // v3: Split amount and tax
+  handleV3(event) {
+    return {
+      orderId: event.order_id,
+      customerId: event.customer_id,
+      amount: event.amount,
+      tax: event.tax || 0,
+      currency: event.currency || 'USD'
+    };
+  }
+
+  process(event) {
+    const version = event.version || 1; // Default to v1
+    const handler = this.handlers[version];
+
+    if (!handler) {
+      throw new Error(`Unknown event version: ${version}`);
+    }
+
+    return handler.call(this, event);
+  }
+}
+
+// Usage
+const eventHandler = new EventVersionHandler();
+
+// Old v1 event
+const oldEvent = {
+  type: 'order.created',
+  order_id: 'order_123',
+  customer_id: 'cust_456',
+  amount: 99.99
+};
+
+const normalized = eventHandler.process(oldEvent);
+console.log(normalized);
+// { orderId: 'order_123', customerId: 'cust_456', amount: 99.99, currency: 'USD' }
+
+// New v3 event
+const newEvent = {
+  version: 3,
+  type: 'order.created',
+  order_id: 'order_123',
+  customer_id: 'cust_456',
+  amount: 95.00,
+  tax: 4.99,
+  currency: 'USD'
+};
+
+const normalized2 = eventHandler.process(newEvent);
+console.log(normalized2);
+// { orderId: 'order_123', customerId: 'cust_456', amount: 95.00, tax: 4.99, currency: 'USD' }
+```
+
+**Python example - Upcasting old events:**
+```python
+class EventUpgrader:
+    """Convert old event versions to new format."""
+
+    @staticmethod
+    def upgrade_to_latest(event):
+        """Upgrade event to latest version."""
+        version = event.get('version', 1)
+
+        # Chain upgrades
+        if version == 1:
+            event = EventUpgrader._upgrade_v1_to_v2(event)
+        if version == 2:
+            event = EventUpgrader._upgrade_v2_to_v3(event)
+
+        return event
+
+    @staticmethod
+    def _upgrade_v1_to_v2(event):
+        """v1 → v2: Add currency field."""
+        event['currency'] = event.get('currency', 'USD')
+        event['version'] = 2
+        return event
+
+    @staticmethod
+    def _upgrade_v2_to_v3(event):
+        """v2 → v3: Split amount and tax."""
+        if 'tax' not in event:
+            event['tax'] = 0
+        event['version'] = 3
+        return event
+
+# Usage
+old_event_v1 = {
+    'type': 'order.created',
+    'order_id': 'order_123',
+    'amount': 99.99
+}
+
+upgraded = EventUpgrader.upgrade_to_latest(old_event_v1)
+print(upgraded)
+# {'type': 'order.created', 'order_id': 'order_123', 'amount': 99.99, 'currency': 'USD', 'tax': 0, 'version': 3}
+```
+
+**Migration strategy:**
+```
+Phase 1: Add version field to events
+  Existing events: version = 1
+  New events: version = 2
+
+Phase 2: Support both versions in consumers
+  Consumers handle v1 and v2
+
+Phase 3: Migrate old events
+  Background job upgrades v1 → v2
+
+Phase 4: Remove v1 support
+  Only v2+ consumers exist
+```
+
+---
+
+## Outbox Pattern
+
+**Problem:** Publishing event fails after database commit. Event lost. Inconsistency.
+
+**Scenario:**
+```
+Transaction 1: Update order status + publish "order.shipped" event
+  1. UPDATE orders SET status='shipped'
+  2. Publish event to message broker
+  3. If 2 fails: Event never published, but order already updated
+
+Result: Order shipped but nobody notified → inconsistency
+```
+
+**Solution:** Write event to database first, then publish from database.
+
+**How it works:**
+```
+Transaction 1: Write to outbox
+  1. BEGIN TRANSACTION
+  2. UPDATE orders SET status='shipped'
+  3. INSERT INTO outbox (event_type, payload) VALUES (...)
+  4. COMMIT (atomic)
+
+Background process:
+  1. SELECT * FROM outbox WHERE published=false
+  2. FOR EACH event: Publish to message broker
+  3. UPDATE outbox SET published=true
+```
+
+**PostgreSQL example:**
+```python
+import json
+import time
+from datetime import datetime
+
+class OrderService:
+    def __init__(self, db, event_publisher):
+        self.db = db
+        self.event_publisher = event_publisher
+
+    def ship_order(self, order_id):
+        """Ship order and publish event atomically."""
+        with self.db.transaction():
+            # Update order status
+            self.db.execute(
+                "UPDATE orders SET status='shipped', updated_at=NOW() WHERE id=%s",
+                order_id
+            )
+
+            # Write event to outbox (same transaction)
+            self.db.execute(
+                """INSERT INTO outbox (event_type, payload, created_at)
+                   VALUES (%s, %s, NOW())""",
+                'order.shipped',
+                json.dumps({
+                    'order_id': order_id,
+                    'status': 'shipped',
+                    'timestamp': datetime.now().isoformat()
+                })
+            )
+            # Transaction commits atomically
+            # If either fails, both rolled back
+
+    def poll_and_publish(self):
+        """Background process: Poll outbox, publish events."""
+        while True:
+            try:
+                # Fetch unpublished events
+                events = self.db.query(
+                    "SELECT id, event_type, payload FROM outbox WHERE published=false LIMIT 100"
+                )
+
+                for event in events:
+                    try:
+                        # Publish to message broker
+                        self.event_publisher.publish(
+                            event['event_type'],
+                            json.loads(event['payload'])
+                        )
+
+                        # Mark as published
+                        self.db.execute(
+                            "UPDATE outbox SET published=true, published_at=NOW() WHERE id=%s",
+                            event['id']
+                        )
+
+                    except Exception as e:
+                        # Log but continue (handle next event)
+                        print(f"Failed to publish event {event['id']}: {e}")
+
+                # Sleep before next poll
+                time.sleep(1)
+
+            except Exception as e:
+                print(f"Outbox poll failed: {e}")
+                time.sleep(5)
+
+# Database schema
+"""
+CREATE TABLE outbox (
+    id BIGSERIAL PRIMARY KEY,
+    event_type VARCHAR(255) NOT NULL,
+    payload JSONB NOT NULL,
+    published BOOLEAN DEFAULT false,
+    created_at TIMESTAMP DEFAULT NOW(),
+    published_at TIMESTAMP
+);
+
+CREATE INDEX idx_outbox_unpublished ON outbox(published) WHERE published = false;
+"""
+```
+
+**JavaScript/Node.js example:**
+```javascript
+class OrderOutboxPublisher {
+  constructor(db, eventBus) {
+    this.db = db;
+    this.eventBus = eventBus;
+  }
+
+  async shipOrder(orderId) {
+    const client = await this.db.connect();
+
+    try {
+      await client.query('BEGIN');
+
+      // Update order
+      await client.query(
+        'UPDATE orders SET status = $1, updated_at = NOW() WHERE id = $2',
+        ['shipped', orderId]
+      );
+
+      // Write to outbox (same transaction)
+      await client.query(
+        `INSERT INTO outbox (event_type, payload, created_at)
+         VALUES ($1, $2, NOW())`,
+        ['order.shipped', JSON.stringify({
+          orderId,
+          status: 'shipped',
+          timestamp: new Date().toISOString()
+        })]
+      );
+
+      await client.query('COMMIT');
+
+      console.log(`Order ${orderId} shipped atomically`);
+
+    } catch (error) {
+      await client.query('ROLLBACK');
+      throw error;
+
+    } finally {
+      client.release();
+    }
+  }
+
+  async pollAndPublish() {
+    // Run periodically (every 1-5 seconds)
+    setInterval(async () => {
+      try {
+        const { rows: events } = await this.db.query(
+          'SELECT id, event_type, payload FROM outbox WHERE published = false LIMIT 100'
+        );
+
+        for (const event of events) {
+          try {
+            // Publish to message broker
+            await this.eventBus.publish(
+              event.event_type,
+              JSON.parse(event.payload)
+            );
+
+            // Mark as published
+            await this.db.query(
+              'UPDATE outbox SET published = true, published_at = NOW() WHERE id = $1',
+              [event.id]
+            );
+
+          } catch (error) {
+            // Log but continue
+            console.error(`Failed to publish event ${event.id}:`, error);
+          }
+        }
+
+      } catch (error) {
+        console.error('Outbox poll failed:', error);
+      }
+    }, 1000); // Poll every second
+  }
+}
+
+// Usage
+const publisher = new OrderOutboxPublisher(db, eventBus);
+await publisher.shipOrder('order_123');
+publisher.pollAndPublish(); // Start background process
+```
+
+**Benefits:**
+- Atomic writes and events
+- No lost events
+- Guaranteed eventual consistency
+- Simple to implement
+
+**Gotchas:**
+```
+1. "Polling lag"
+   Bad: Polling every 10 seconds, events delayed
+   Good: Poll every 1-5 seconds, or use change data capture
+
+2. "Outbox grows unbounded"
+   Bad: Published events never deleted
+   Good: Archive/delete old published events after 1-2 weeks
+
+3. "Duplicate publishing"
+   Bad: Network hiccup, publish twice
+   Good: Message broker deduplicates by requestId
+```
+
 ---
 
 ## CQRS (Command Query Responsibility Segregation)

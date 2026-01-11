@@ -711,6 +711,283 @@ Read:
 
 ---
 
+## Denormalization & Materialized Views
+
+**Problem:** Normalized database is slow for reads. Too many JOINs, too slow.
+
+**Scenario:**
+```
+Normalized schema:
+  Users table
+  Orders table
+  Order_Items table
+  Products table
+
+Query: Get user with all order details
+  SELECT users.*, orders.*, order_items.*, products.*
+  FROM users
+  JOIN orders ON users.id = orders.user_id
+  JOIN order_items ON orders.id = order_items.order_id
+  JOIN products ON order_items.product_id = products.id
+  (4 table JOINs = slow!)
+```
+
+**Solution:** Denormalize - store pre-computed results for fast reads.
+
+**Two Approaches:**
+
+**1. Denormalized Table (Application-Managed)**
+
+Store copied data in a denormalized table. Application keeps it in sync.
+
+**Example:**
+```sql
+-- Normalized: 4 JOINs to get order details
+SELECT users.*, orders.*, order_items.*, products.*
+FROM users
+JOIN orders ...
+JOIN order_items ...
+JOIN products ...
+
+-- Denormalized: 1 simple query
+CREATE TABLE user_orders_denormalized (
+  id BIGINT PRIMARY KEY,
+  user_id INT,
+  user_name VARCHAR(255),
+  order_id INT,
+  order_total DECIMAL(10, 2),
+  order_created_at TIMESTAMP,
+  item_name VARCHAR(255),
+  item_quantity INT,
+  item_price DECIMAL(10, 2),
+  product_category VARCHAR(100)
+);
+
+-- Fast read: Single table query
+SELECT * FROM user_orders_denormalized WHERE user_id = 123;
+```
+
+**Keeping denormalized table in sync:**
+```python
+def create_order(user_id, items):
+    """Create order and update denormalized table."""
+    with db.transaction():
+        # Insert into normalized tables
+        order = insert_order(user_id, items)
+
+        # Denormalize: Copy relevant data
+        user = get_user(user_id)
+        for item in items:
+            product = get_product(item.product_id)
+
+            db.execute(
+                """INSERT INTO user_orders_denormalized
+                   (user_id, user_name, order_id, order_total, item_name, item_quantity, item_price, product_category)
+                   VALUES (%s, %s, %s, %s, %s, %s, %s, %s)""",
+                user.id, user.name, order.id, order.total,
+                product.name, item.quantity, item.price, product.category
+            )
+
+        return order
+```
+
+**Pros:**
+- Fast reads (no JOINs)
+- Simple queries
+- Flexible (store whatever denormalization needed)
+
+**Cons:**
+- Data duplication (extra storage)
+- Consistency risks (keep in sync manually)
+- Complex updates (change in one place affects multiple tables)
+
+**2. Materialized Views (Database-Managed)**
+
+Database creates and maintains denormalized view.
+
+**SQL Example:**
+```sql
+-- Create materialized view (pre-computed result)
+CREATE MATERIALIZED VIEW user_orders_mv AS
+SELECT
+  users.id as user_id,
+  users.name as user_name,
+  orders.id as order_id,
+  orders.total as order_total,
+  orders.created_at as order_created_at,
+  products.name as item_name,
+  order_items.quantity as item_quantity,
+  products.price as item_price,
+  categories.name as product_category
+FROM users
+JOIN orders ON users.id = orders.user_id
+JOIN order_items ON orders.id = order_items.order_id
+JOIN products ON order_items.product_id = products.id
+JOIN categories ON products.category_id = categories.id;
+
+-- Create index on materialized view for fast lookups
+CREATE INDEX idx_user_orders_mv_user_id ON user_orders_mv(user_id);
+
+-- Fast read: Query materialized view
+SELECT * FROM user_orders_mv WHERE user_id = 123;
+
+-- Refresh materialized view (recompute)
+REFRESH MATERIALIZED VIEW user_orders_mv;
+```
+
+**PostgreSQL Incremental Refresh (Efficient):**
+```sql
+-- Create materialized view with no data
+CREATE MATERIALIZED VIEW user_orders_mv AS
+SELECT ... FROM ...;
+
+-- PostgreSQL extension for incremental refresh
+CREATE OR REPLACE FUNCTION refresh_user_orders_mv()
+RETURNS void AS
+'SELECT count(*) FROM pg_matviews WHERE matviewname = ''user_orders_mv'''
+LANGUAGE SQL;
+
+-- Refresh only changed data (more efficient than full refresh)
+REFRESH MATERIALIZED VIEW CONCURRENTLY user_orders_mv;
+```
+
+**Refresh Strategies:**
+
+1. **Full Refresh (Slow but Complete)**
+```
+REFRESH MATERIALIZED VIEW user_orders_mv;
+-- Recomputes entire view (might be slow for large datasets)
+```
+
+2. **Scheduled Refresh (Periodic)**
+```python
+import schedule
+import time
+
+def refresh_materialized_views():
+    """Refresh views every hour."""
+    with db.connect() as conn:
+        conn.execute("REFRESH MATERIALIZED VIEW user_orders_mv")
+        conn.execute("REFRESH MATERIALIZED VIEW product_analytics_mv")
+    print("Materialized views refreshed")
+
+# Schedule every hour
+schedule.every(1).hours.do(refresh_materialized_views)
+
+while True:
+    schedule.run_pending()
+    time.sleep(60)
+```
+
+3. **Event-Driven Refresh (Real-time)**
+```python
+def create_order(user_id, items):
+    """Create order and refresh materialized view."""
+    with db.transaction():
+        # Create order
+        order = insert_order(user_id, items)
+
+        # Refresh only relevant materialized view
+        db.execute("REFRESH MATERIALIZED VIEW user_orders_mv")
+
+    return order
+```
+
+**JavaScript Example:**
+```javascript
+// Application-managed denormalization
+class OrderService {
+  async createOrder(userId, items) {
+    const client = await db.connect();
+
+    try {
+      await client.query('BEGIN');
+
+      // Insert into normalized tables
+      const orderResult = await client.query(
+        'INSERT INTO orders (user_id, total) VALUES ($1, $2) RETURNING id',
+        [userId, items.reduce((sum, i) => sum + i.price * i.qty, 0)]
+      );
+      const orderId = orderResult.rows[0].id;
+
+      // Insert order items
+      for (const item of items) {
+        await client.query(
+          'INSERT INTO order_items (order_id, product_id, quantity, price) VALUES ($1, $2, $3, $4)',
+          [orderId, item.productId, item.qty, item.price]
+        );
+      }
+
+      // Denormalize for fast reads
+      const user = await client.query('SELECT name FROM users WHERE id = $1', [userId]);
+      for (const item of items) {
+        const product = await client.query(
+          'SELECT name, category FROM products WHERE id = $1',
+          [item.productId]
+        );
+
+        await client.query(
+          `INSERT INTO user_orders_denormalized
+           (user_id, user_name, order_id, item_name, item_qty, category)
+           VALUES ($1, $2, $3, $4, $5, $6)`,
+          [userId, user.rows[0].name, orderId, product.rows[0].name, item.qty, product.rows[0].category]
+        );
+      }
+
+      await client.query('COMMIT');
+      return { orderId };
+
+    } catch (error) {
+      await client.query('ROLLBACK');
+      throw error;
+
+    } finally {
+      client.release();
+    }
+  }
+}
+```
+
+**When to use:**
+
+- Normalized queries have too many JOINs (>3)
+- Read performance critical (reporting, analytics)
+- Data doesn't change frequently
+- Can tolerate slight inconsistency
+
+**Gotchas:**
+```
+1. "Stale data"
+   Bad: Materialized view not refreshed, shows old data
+   Good: Schedule refreshes, or refresh on data change
+
+2. "Storage bloat"
+   Bad: Denormalized tables duplicate all data
+   Good: Only denormalize frequently-read columns
+
+3. "Consistency nightmare"
+   Bad: Denormalized data out of sync with source
+   Good: Automate refresh, use database triggers
+
+4. "Complex updates"
+   Bad: Update one table, must update denormalized copies
+   Good: Use application transactions, or database constraints
+```
+
+**Comparison:**
+
+```
+Denormalized Table (Application-managed):
+  Pros: Flexible, can store anything
+  Cons: Must keep in sync manually, risk of inconsistency
+
+Materialized View (Database-managed):
+  Pros: Simpler, database maintains, can refresh incrementally
+  Cons: Less flexible, refresh overhead
+```
+
+---
+
 ## Pattern Interactions
 
 **Typical Production Database Setup:**
