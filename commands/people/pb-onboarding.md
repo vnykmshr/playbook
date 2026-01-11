@@ -200,14 +200,32 @@ Code review: Every PR reviewed, feedback given
 ```
 
 **Success criteria by end of month 1:**
+
+Quantitative milestones (can measure):
 ```
-☐ Merged 5+ PRs (small to medium)
-☐ Can run tests/deploy independently
-☐ Understands architecture
-☐ Asks targeted questions (not basic setup issues)
+☐ First PR merged by day 5 (shows you can code)
+☐ 5+ PRs merged by end of week 3 (demonstrates productivity)
+☐ Can run tests/deploy independently (self-sufficient)
+☐ Average PR takes <1 day to merge (not blocked)
+☐ Code review feedback positive (quality meeting standard)
+```
+
+Qualitative milestones (team feedback):
+```
+☐ Asks targeted questions (not "how do I set up?")
 ☐ Code quality comparable to team
-☐ Feels comfortable speaking in meetings
-☐ Knows team members and can work with them
+☐ Comfortable speaking in meetings
+☐ Knows team members and can pair with them
+☐ Takes initiative (suggests improvements)
+```
+
+Red flags (needs help):
+```
+❌ No PR by week 2 (blocked or overwhelmed)
+❌ PRs have major quality issues (misunderstood standards)
+❌ Silent in meetings (not engaged or confused)
+❌ Many questions about basics (environment still broken)
+❌ Asking to be switched to different project (didn't fit)
 ```
 
 ### Month 2-3: Full Ramp

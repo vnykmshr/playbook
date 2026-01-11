@@ -756,6 +756,111 @@ Phase 4: Remove old system when everything migrated
 
 ---
 
+## Antipatterns: When Patterns Fail
+
+Patterns are powerful but can backfire. Learn from failures.
+
+### SOA Gone Wrong: Too Many Services
+
+**What happened:** Uber's early architecture (2009-2011)
+
+```
+Decision: "Decompose everything into services"
+Result: 200+ services, too fine-grained
+
+Problems:
+- Service discovery nightmare (which service talks to which?)
+- Testing hell (integration tests spanning 200 services)
+- Deployment chaos (coordinating 200 deploys)
+- Latency spikes (request spans 15 services)
+- Ops complexity (200 services to monitor)
+
+Lesson:
+  Services should map to business domains, not functions
+  Keep manageable: 3-10 services per team
+  Not every function deserves its own service
+```
+
+### Event-Driven Gone Wrong: Ordering Problems
+
+**What happened:** Payment system with async events
+
+```
+Expected:
+  1. order.created
+  2. payment.processed
+  3. order.confirmed
+
+What actually happened:
+  1. payment.processed ← arrived first!
+  2. order.created
+  3. order.confirmed
+
+Why:
+  Different services publish events asynchronously
+  Network jitter (payment response faster)
+  Message broker delays
+
+Problem:
+  Processing payment for order that doesn't exist
+  Orphaned payments (no matching order)
+  Data inconsistency
+
+Lesson:
+  Design events to handle out-of-order arrival
+  Use idempotent processing (same event twice = safe)
+  Add timestamp/sequence numbers to events
+```
+
+### Circuit Breaker Gone Wrong: Cascading Failures
+
+**What happened:** Misconfigured protection
+
+```
+Scenario:
+  Service B goes down
+  Service A opens Circuit Breaker (stops calling B)
+  Service A's request queue backs up
+  Service A becomes slow
+
+Cascade:
+  Service C times out waiting for Service A
+  Service C opens its Circuit Breaker
+  Now both A and C affected because B is down
+
+Lesson:
+  Circuit Breaker helps temporarily
+  Fix the root cause (why is Service B down?)
+  Use async messaging to decouple
+  Don't hide problems, solve them
+```
+
+### Repository Pattern Gone Wrong: Over-Abstraction
+
+**What happened:** Repository for every entity
+
+```
+Result: 50+ Repository classes, all similar
+  class UserRepository { ... }
+  class AddressRepository { ... }
+  class PaymentRepository { ... }
+  ... 47 more ...
+
+Problems:
+- Boilerplate explosion
+- Hides details under abstraction
+- Over-generalized
+- Slow to change (modify 50 files)
+
+Lesson:
+  Use Repository for complex entities
+  Simple queries? Direct database calls are fine
+  Patterns are tools, not dogma
+  Sometimes simple > abstract
+```
+
+---
+
 ## When to Apply Patterns
 
 **Too many patterns:**

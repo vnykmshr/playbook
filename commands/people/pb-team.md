@@ -340,6 +340,84 @@ Live Q&A optional for those who want to join
 
 ---
 
+## Burnout Prevention & Recovery
+
+Burnout is a silent killer. People don't announce it—they just quit.
+
+**Burnout warning signs:**
+
+```
+Early stage:
+  - Cynicism ("our code is garbage anyway")
+  - Reduced enthusiasm (was passionate, now whatever)
+  - Skipping meetings (disengagement)
+
+Mid stage:
+  - Reduced performance (works hard but gets less done)
+  - Quality drops (doesn't care about excellence)
+  - Irritability (short fuse with team, curt responses)
+
+Late stage:
+  - Emotional exhaustion (nothing left to give)
+  - Health issues (sleep problems, physical symptoms)
+  - Disengagement (stops helping others, silent in meetings)
+  - Planning to leave (updating resume, looking for jobs)
+```
+
+**Prevention (easier than recovery):**
+
+```
+Reasonable hours:
+  - No sustained 50+ hour weeks
+  - Explicit "work ends at 6pm" culture
+  - Use vacation time (actually take days off)
+
+Manage scope:
+  - Don't overcommit (say "no" sometimes)
+  - Clear priorities (not everything is urgent)
+  - Realistic deadlines (padding for unknowns)
+
+Recognition:
+  - Acknowledge work (publicly and privately)
+  - Show impact (how does their work help users?)
+  - Career progress (path forward)
+
+Support:
+  - Talk to manager about load ("How are you really?")
+  - Reduce on-call frequency if heavy
+  - Rotate demanding projects
+```
+
+**Recovery (when someone is burned out):**
+
+```
+Immediate:
+  - Reduce scope (fewer meetings, fewer projects)
+  - Encourage time off (force it if needed, not optional)
+  - Check in weekly (show you care)
+
+Medium-term (1-2 months):
+  - Role change (different project, different pace)
+  - Mentoring reduction (focus on recovery, not teaching)
+  - Workload assessment (is the job sustainable?)
+
+Long-term:
+  - Return gradually (don't jump back to 100%)
+  - Support (coaching, therapy if needed)
+  - Follow-up (monitor for recurrence)
+```
+
+**What NOT to do:**
+
+```
+❌ Ignore it ("They'll get over it")
+❌ Push harder ("We need you on this project")
+❌ Minimize ("Everyone gets stressed")
+❌ Make it a performance issue ("Fix your output")
+```
+
+---
+
 ## Recognition & Growth
 
 Teams thrive when people feel valued and growing.
