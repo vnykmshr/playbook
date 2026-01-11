@@ -58,6 +58,7 @@ markdown_extensions:
 
 nav:
   - Home: index.md
+  - Technical Blog: technical-blog.md
   - Getting Started: getting-started.md
   - Workflows: workflows.md
   - Command Reference: command-index.md
