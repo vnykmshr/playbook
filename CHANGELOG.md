@@ -5,6 +5,27 @@ All notable changes to this project are documented here.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v1.2.1] - 2026-01-11
+
+### Added
+- **Release Automation**: `scripts/release.sh` for automated version management and git tagging
+- **Release Documentation**: `RELEASE.md` with comprehensive release workflow guide
+- **Git Configuration**: `.gitattributes` for consistent line ending normalization (LF)
+- **Command Structure Guidelines**: Enhanced `CONTRIBUTING.md` with detailed command creation standards
+
+### Documentation
+- Added command structure requirements: title, overview, sections, examples, checklists
+- Added linting standards and formatting guidelines for command files
+- Added pre-submission checklist for contributors
+- Added example command template
+
+### Changed
+- Extended CI/CD pipeline (`.github/workflows/deploy-docs.yml`) to validate both `docs/` and `commands/` directories
+- Enhanced contributor documentation with command structure expectations
+
+### Fixed
+- Established line ending normalization via `.gitattributes` to prevent CRLF issues across platforms
+
 ## [v1.2.0] - 2026-01-11
 
 ### Added
