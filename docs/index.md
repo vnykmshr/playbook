@@ -13,6 +13,8 @@ A comprehensive, integrated set of commands and guides for structuring iterative
 
 The playbook is a **decision framework** that codifies how to approach development work—from planning through production operations. It's not a tool; it's a set of structured, well-documented processes that work together to reduce friction, prevent common mistakes, and maintain quality at every step.
 
+**[Read the full technical narrative →](technical-blog.md)** — Why the playbook exists, how it solves real problems, and how it all works together as an integrated system.
+
 ### For New Teams
 Establish engineering practices from day one with clear, repeatable processes covering planning, development, code review, and operations.
 
