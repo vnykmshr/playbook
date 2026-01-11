@@ -291,6 +291,145 @@ Tests should catch bugs, not just increase coverage numbers.
 | **M** | Unit + Integration + QA scenarios |
 | **L** | Unit + Integration + E2E + Load tests (if perf-critical) |
 
+**6.2a Integration Testing Patterns**
+
+Integration tests verify that multiple components work together correctly. They're essential for M/L tier work where components interact through databases, external APIs, queues, or caches.
+
+**Definition & When to Use:**
+- **Integration tests** test component interactions (e.g., API → Database, Service A → Service B, Frontend → Backend)
+- Use when: Components depend on each other, external system calls occur, business logic spans multiple services
+- Avoid overusing: If a unit test with mocks provides the same confidence, stick with unit tests (faster, more focused)
+
+**Test Database Setup:**
+
+For database-dependent integration tests, isolate each test:
+
+```python
+# Python pytest example
+import pytest
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker, scoped_session
+
+@pytest.fixture(scope="function")  # Fresh DB per test
+def test_db():
+    """Create isolated test database."""
+    engine = create_engine("sqlite:///:memory:")  # Use in-memory for speed
+    Base.metadata.create_all(engine)
+    session = scoped_session(sessionmaker(bind=engine))
+    yield session
+    session.close()
+
+def test_user_creation_with_email_verification(test_db):
+    """Integration: Create user, verify email sent, confirm verification."""
+    user = User(email="test@example.com", name="Test User")
+    test_db.add(user)
+    test_db.commit()
+
+    # Verify side effects: email sent, user marked unverified
+    assert user.id is not None
+    assert user.email_verified == False
+    assert EmailQueue.count_pending(test_db) > 0
+```
+
+**Pattern: Test Data Factories:**
+
+Instead of manually creating test data in each test, use factories:
+
+```python
+# Avoid: Manual test data in each test
+def test_user_payment():
+    user = User(email="test@example.com", name="Test", ...)
+    db.add(user)
+    db.commit()
+    # ... many lines duplicated across tests
+
+# Prefer: Reusable factory
+from factory.alchemy import SQLAlchemyModelFactory
+
+class UserFactory(SQLAlchemyModelFactory):
+    class Meta:
+        model = User
+        sqlalchemy_session = test_db
+
+    email = factory.Sequence(lambda n: f"user{n}@example.com")
+    name = "Test User"
+    email_verified = False
+
+def test_user_payment():
+    user = UserFactory(email_verified=True)  # Override as needed
+    # Simpler, more readable
+```
+
+**Mocking External Services:**
+
+Integration tests use real databases but mock external APIs (to avoid dependencies, speed, cost):
+
+```python
+import requests
+from unittest.mock import patch, MagicMock
+
+@patch('requests.post')  # Mock the HTTP call
+def test_payment_webhook_processing(mock_post):
+    """Integration: Process payment event from external provider."""
+    # Setup: Mock returns success
+    mock_post.return_value = MagicMock(status_code=200, json={
+        "transaction_id": "tx_123",
+        "status": "completed",
+        "amount": 9999
+    })
+
+    # Execute: Call our webhook handler
+    response = webhook_handler({"transaction_id": "tx_123"})
+
+    # Verify: DB was updated, user notified
+    assert response.status_code == 200
+    assert Payment.query.filter_by(tx_id="tx_123").count() > 0
+    assert mock_post.called  # Verify we called the external service
+```
+
+**Running Integration Tests in CI/CD:**
+
+Integration tests are slower than unit tests. Manage them carefully:
+
+```bash
+# Separate test runs by speed
+make test-unit       # Fast unit tests (30s)
+make test-int        # Slower integration tests (5min)
+make test-all        # Both (5.5min, full suite)
+
+# In CI/CD:
+# - Run unit tests on every commit (fail fast)
+# - Run integration tests on PR/merge (comprehensive)
+# - Run load/E2E tests pre-release only (very slow)
+```
+
+CI/CD configuration example (GitHub Actions):
+
+```yaml
+# For PR: Quick feedback (unit tests only)
+- name: Run unit tests
+  run: make test-unit
+
+# For merge to main: Full integration
+- name: Run integration tests
+  run: make test-int
+  timeout-minutes: 15
+
+# For release: Everything
+- name: Run load tests
+  run: make test-load
+  if: github.event_name == 'release'
+```
+
+**Common Integration Test Pitfalls:**
+
+| Problem | Solution |
+|---------|----------|
+| Tests interact (previous test data affects next) | Use `scope="function"` per-test isolation, clean up after each test |
+| Tests are slow (whole test suite takes 30min) | Use in-memory DB, mock slow external services, parallelize tests |
+| Tests are flaky (pass sometimes, fail sometimes) | Avoid timing assumptions, use explicit waits, avoid test interdependencies |
+| Too many integration tests (100+) | Keep only critical paths; use unit tests for edge cases |
+
 **6.3 Test types reference**
 
 * **Unit tests** - Isolated function/method testing
