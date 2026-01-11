@@ -403,20 +403,20 @@ Test individual functions and logic:
 **Go Example:**
 ```go
 func TestCreateUser(t *testing.T) {
-	// Table-driven test
-	tests := []struct {
-		name    string
-		input   CreateUserInput
-		wantErr bool
-	}{
-		{"valid user", CreateUserInput{...}, false},
-		{"invalid email", CreateUserInput{...}, true},
-	}
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			// Test logic
-		})
-	}
+    // Table-driven test
+    tests := []struct {
+        name    string
+        input   CreateUserInput
+        wantErr bool
+    }{
+        {"valid user", CreateUserInput{...}, false},
+        {"invalid email", CreateUserInput{...}, true},
+    }
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            // Test logic
+        })
+    }
 }
 ```
 
@@ -424,20 +424,20 @@ func TestCreateUser(t *testing.T) {
 ```python
 @pytest.mark.asyncio
 async def test_ingest_events_success(pipeline):
-	events = [{'user_id': '1', 'event_type': 'login', 'data': ''}]
-	count = await pipeline.ingest_events(events)
-	assert count == 1
+    events = [{'user_id': '1', 'event_type': 'login', 'data': ''}]
+    count = await pipeline.ingest_events(events)
+    assert count == 1
 ```
 
 **Node.js Example:**
 ```typescript
 describe('POST /users', () => {
-	it('should create user with valid input', async () => {
-		const response = await request(app)
-			.post('/users')
-			.send({ name: 'Alice', email: 'alice@example.com' });
-		expect(response.status).toBe(201);
-	});
+    it('should create user with valid input', async () => {
+        const response = await request(app)
+            .post('/users')
+            .send({ name: 'Alice', email: 'alice@example.com' });
+        expect(response.status).toBe(201);
+    });
 });
 ```
 
