@@ -522,6 +522,283 @@ kubectl patch service app -p '{"spec":{"selector":{"version":"mixed"}}}'
 
 ---
 
+## Smoke Testing: Quick Validation After Deployment
+
+**What:** Smoke tests are rapid validation checks that verify the system's core functionality is working right after deployment.
+
+**Why:** Deploy → immediately test critical paths → catch issues before users do → roll back quickly if needed.
+
+**Key difference:**
+- Unit tests: Verify functions work (in code)
+- Integration tests: Verify components work together (in CI/CD)
+- **Smoke tests: Verify system works end-to-end (after deployment)**
+
+### Manual Smoke Testing
+
+**When to run:** Immediately after deployment (first 5-10 minutes).
+
+**Timing:** 5-15 minutes per deployment.
+
+**What to test (critical user paths):**
+
+```markdown
+Ecommerce platform:
+✓ User can browse products
+✓ User can add to cart
+✓ User can checkout (full payment flow)
+✓ Order confirmation email sent
+✓ Admin can view orders
+✓ Inventory updated correctly
+
+SaaS application:
+✓ User can login
+✓ User can create new project/workspace
+✓ User can export data
+✓ Admin dashboard loads
+✓ API endpoints responding
+✓ Database queries fast (< 500ms)
+
+API service:
+✓ Health check endpoint returns 200
+✓ Authentication working
+✓ Core endpoint responses correct
+✓ Error handling works
+✓ Rate limiting functional
+✓ Logs capturing requests
+```
+
+**Manual smoke test script (Bash):**
+
+```bash
+#!/bin/bash
+# smoke-test.sh - Quick validation after deployment
+
+set -e  # Exit on first failure
+DOMAIN="${SMOKE_TEST_DOMAIN:-https://example.com}"
+HEALTH_CHECK_URL="$DOMAIN/health"
+TEST_USER_EMAIL="${SMOKE_TEST_EMAIL:-test+smoke@example.com}"
+TEST_USER_PASS="${SMOKE_TEST_PASSWORD:-changeme123}"  # Set via env var
+
+echo "🔥 Starting smoke tests..."
+
+# 1. Health check
+echo "✓ Checking health endpoint..."
+STATUS=$(curl -s -o /dev/null -w "%{http_code}" "$HEALTH_CHECK_URL")
+if [ "$STATUS" != "200" ]; then
+  echo "❌ Health check failed: $STATUS"
+  exit 1
+fi
+
+# 2. Login
+echo "✓ Testing login..."
+LOGIN_RESPONSE=$(curl -s -X POST "$DOMAIN/api/login" \
+  -H "Content-Type: application/json" \
+  -d "{\"email\":\"$TEST_USER_EMAIL\",\"password\":\"$TEST_USER_PASS\"}")
+
+if ! echo "$LOGIN_RESPONSE" | grep -q "\"token\""; then
+  echo "❌ Login failed"
+  exit 1
+fi
+
+TOKEN=$(echo "$LOGIN_RESPONSE" | grep -o '"token":"[^"]*' | cut -d'"' -f4)
+
+# 3. Core API endpoint
+echo "✓ Testing API endpoint..."
+API_RESPONSE=$(curl -s -X GET "$DOMAIN/api/user/profile" \
+  -H "Authorization: Bearer $TOKEN")
+
+if ! echo "$API_RESPONSE" | grep -q "\"email\""; then
+  echo "❌ API endpoint failed"
+  exit 1
+fi
+
+# 4. Database connection (query latency)
+echo "✓ Checking database performance..."
+LATENCY=$(curl -s -X GET "$DOMAIN/api/metrics/db-latency" \
+  -H "Authorization: Bearer $TOKEN" | grep -o '"latency":[0-9]*' | cut -d':' -f2)
+
+if [ "$LATENCY" -gt 1000 ]; then
+  echo "⚠️  Database latency high: ${LATENCY}ms (expected < 1000ms)"
+fi
+
+echo "✅ Smoke tests passed!"
+```
+
+**Manual test checklist:**
+
+- [ ] Can login with existing user
+- [ ] Can create new account
+- [ ] Can access dashboard/homepage
+- [ ] Can perform primary action (checkout, submit form, etc.)
+- [ ] Can access admin panel (if applicable)
+- [ ] Database responding (queries < 500ms)
+- [ ] External services working (payment, email, etc.)
+- [ ] Error messages display correctly
+- [ ] Logs showing requests (check CloudWatch/ELK/etc.)
+
+### Automated Smoke Testing
+
+**When to run:** In CI/CD pipeline, after deployment.
+
+**Tools:**
+- **curl/httpie:** Simple HTTP requests
+- **Selenium/Playwright:** Browser-based testing
+- **k6:** Load testing with smoke scenarios
+- **Postman/Newman:** API testing
+- **Cypress:** End-to-end testing
+
+**Example: k6 smoke test (lightweight)**
+
+```javascript
+// smoke-test.js - k6 script for smoke testing
+import http from 'k6/http';
+import { check, sleep } from 'k6';
+
+export let options = {
+  // Smoke test: few users, short duration
+  vus: 1,          // 1 virtual user
+  duration: '2m',  // Run for 2 minutes
+  thresholds: {
+    http_req_duration: ['p(99)<500'],  // 99% requests < 500ms
+    http_req_failed: ['rate<0.1'],     // Less than 10% failure rate
+  },
+};
+
+export default function() {
+  const BASE_URL = __ENV.BASE_URL || 'https://api.example.com';
+  const TEST_EMAIL = __ENV.TEST_EMAIL || 'test@example.com';
+  const TEST_PASSWORD = __ENV.TEST_PASSWORD || 'changeme123';
+
+  // Test 1: Health check
+  let res = http.get(`${BASE_URL}/health`);
+  check(res, {
+    'health: status 200': (r) => r.status === 200,
+  });
+
+  // Test 2: Login
+  res = http.post(`${BASE_URL}/auth/login`, JSON.stringify({
+    email: TEST_EMAIL,
+    password: TEST_PASSWORD,
+  }), {
+    headers: { 'Content-Type': 'application/json' },
+  });
+
+  check(res, {
+    'login: status 200': (r) => r.status === 200,
+    'login: token received': (r) => r.json('token') !== undefined,
+  });
+
+  const token = res.json('token');
+
+  // Test 3: Core endpoint with auth
+  res = http.get(`${BASE_URL}/api/user/profile`, {
+    headers: { 'Authorization': `Bearer ${token}` },
+  });
+
+  check(res, {
+    'profile: status 200': (r) => r.status === 200,
+    'profile: has email': (r) => r.json('email') !== undefined,
+  });
+
+  sleep(1);
+}
+```
+
+**Run smoke test:**
+```bash
+# Set auth token, run smoke test
+AUTH_TOKEN=$(curl -s -X POST https://api.example.com/auth/login \
+  -d '{"email":"test@example.com","password":"test"}' | jq -r '.token')
+
+k6 run --vus 1 --duration 2m smoke-test.js
+```
+
+**Example: GitHub Actions smoke test (after deployment)**
+
+```yaml
+name: Deploy & Smoke Test
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Deploy to production
+        run: |
+          kubectl set image deployment/app app=myapp:${{ github.sha }}
+          kubectl rollout status deployment/app --timeout=5m
+
+  smoke-test:
+    needs: deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: Wait for deployment to stabilize
+        run: sleep 30
+
+      - name: Run smoke tests
+        env:
+          SMOKE_TEST_EMAIL: ${{ secrets.SMOKE_TEST_EMAIL }}
+          SMOKE_TEST_PASSWORD: ${{ secrets.SMOKE_TEST_PASSWORD }}
+        run: |
+          #!/bin/bash
+          set -e
+
+          # Test health check
+          curl -f https://example.com/health || exit 1
+
+          # Test login
+          TOKEN=$(curl -s -X POST https://example.com/api/login \
+            -H "Content-Type: application/json" \
+            -d "{\"email\":\"$SMOKE_TEST_EMAIL\",\"password\":\"$SMOKE_TEST_PASSWORD\"}" \
+            | jq -r '.token')
+
+          [ ! -z "$TOKEN" ] || exit 1
+
+          # Test core endpoint
+          curl -f -H "Authorization: Bearer $TOKEN" \
+            https://example.com/api/user/profile || exit 1
+
+      - name: Rollback on failure
+        if: failure()
+        run: |
+          kubectl rollout undo deployment/app
+          echo "Rollback complete. Smoke test failed."
+          exit 1
+```
+
+### Smoke Test Checklist
+
+**Before smoke testing:**
+- [ ] Deployment completed successfully
+- [ ] All pods/instances are healthy
+- [ ] Health checks passing
+- [ ] Wait 30-60 seconds for services to be ready
+
+**Smoke test validation:**
+- [ ] Critical user path works (login → action → success)
+- [ ] API endpoints respond (< 500ms)
+- [ ] Database queries fast (< 500ms)
+- [ ] Authentication/authorization working
+- [ ] External services connected (payment, email, etc.)
+- [ ] Error handling works (test invalid input)
+- [ ] Logs capturing traffic
+- [ ] Metrics dashboard updating
+- [ ] No excessive errors (< 1% error rate)
+
+**If smoke test fails:**
+- [ ] Check deployment logs (any deployment errors?)
+- [ ] Check application logs (what's the actual error?)
+- [ ] Check metrics (CPU/memory/disk full?)
+- [ ] **ROLLBACK IMMEDIATELY** (don't wait)
+- [ ] Investigate root cause (slow database? config wrong? service down?)
+
+---
+
 ## Deployment by Strategy Comparison
 
 | Strategy | Time | Risk | Rollback | Cost | Complexity |

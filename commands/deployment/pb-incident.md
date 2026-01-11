@@ -124,6 +124,165 @@ Once incident declared:
 
 ---
 
+## On-Call Scheduling & Rotations
+
+### Setting Up On-Call
+
+Before incidents happen, establish clear on-call coverage.
+
+**On-Call Rotation Structure:**
+
+```
+Primary On-Call: Responds immediately (paged on SEV-1/2)
+  - Works day job normally
+  - Paged within minutes of alert
+  - Expected to join call within 5 minutes
+  - High interrupt cost, use 1 week rotations
+
+Secondary On-Call: Called if primary unavailable
+  - Called if primary doesn't respond in 5 minutes
+  - Escalation person for major incidents
+
+Weekly Rotation:
+  Monday-Friday: Primary + Secondary
+  Weekends/Holidays: Same rotation or coverage plan
+  Handoff: Friday 5pm (or end of week)
+  Ramp-up: New person shadows for 1 week first
+```
+
+**Coverage Calculation:**
+
+```
+If incident rate is 2 per month:
+  Average incident every 2 weeks
+  Per person: ~1 incident per 12 weeks (manageable)
+
+If incident rate is 2 per week:
+  Per person: ~1 incident per 6 weeks (getting heavy)
+  Need more people or reduce incident rate
+
+If incident rate is 2 per day:
+  Need dedicated on-call team (not part-time)
+```
+
+### On-Call Tools
+
+**PagerDuty / Opsgenie (Recommended):**
+```
+1. Set up escalation policy
+   - Primary on-call: page immediately
+   - 5 min: if no ack, page secondary
+   - 5 min: if no ack, page manager
+
+2. Configure alert routing
+   - SEV-1: Page on-call immediately
+   - SEV-2: Page on-call immediately
+   - SEV-3: Create ticket, no page
+
+3. On-call calendar
+   - Shows who's on-call
+   - Enables time-off swaps
+   - Mobile app for easy acknowledgment
+```
+
+**Simple Alternative (Google Calendar + Slack):**
+```
+1. Create calendar "On-Call"
+   - Add weekly shifts (e.g., "John - Week of Jan 15")
+   - Share with team
+
+2. Set up Slack bot
+   - "/whois-oncall" → Returns current on-call person
+   - Bot pages person for SEV-1/2 (via SMS if needed)
+   - Cheaper but less robust than PagerDuty
+```
+
+### On-Call Handoff
+
+**Friday at 5pm (or end of shift):**
+```
+Outgoing on-call (John):
+  - "Handing off to Sarah"
+  - Update calendar/PagerDuty
+  - Brief incoming on-call about ongoing work
+  - Point to dashboard
+  - Ensure Sarah has phone number
+  - Confirm Sarah logged into monitoring
+
+Incoming on-call (Sarah):
+  - Acknowledge handoff
+  - Check dashboard (no active incidents?)
+  - Review logs from past week (recent issues?)
+  - Ask John about recent incidents
+  - Confirm phone is charged and alerts enabled
+```
+
+### On-Call Expectations
+
+**What on-call should do:**
+
+✅ **During on-call week:**
+- Check phone for messages/alerts every 10 minutes
+- Respond to SEV-1/2 pages within 5 minutes
+- Acknowledge page (even if investigating)
+- Work from location where you can join calls (home, not hiking)
+- Sleep with phone nearby but on vibrate (not silent)
+
+❌ **During on-call week (avoid):**
+- Don't travel to areas without cell service
+- Don't go to venues with restricted phones (movies, concerts)
+- Don't drink heavily (need clear mind if paged)
+- Don't schedule major meetings/presentations
+- Don't ignore pages "just because it's Friday night"
+
+**What the company should do:**
+
+✅ **For on-call engineers:**
+- Pay on-call stipend (e.g., $500/week extra)
+- Give Friday afternoon flexible time off (if paged Thursday night)
+- Limit to 1 week on-call per month if possible
+- Provide on-call fatigue recovery (day off after heavy on-call)
+- Recognize/thank on-call people (they trade social life)
+
+❌ **Don't:**
+- Expect on-call to work extra (they're on-call instead of coding)
+- Schedule meetings during on-call week
+- Ignore on-call fatigue (leads to burnout)
+- Force people to be on-call against their will
+
+### On-Call Rotation Schedule
+
+**Example 4-person team (12 weeks per year on-call = 1 week/month):**
+
+```
+Jan:  John, Sarah, Mike, Lisa
+      Week 1-4: John
+      Week 5-8: Sarah
+      Week 9-12: Mike
+      Week 13-13: Lisa
+      Week 1-52: Repeat
+
+No person on-call twice in a row (unfair)
+Everyone gets same amount (fair)
+Predictable (plan vacation around it)
+```
+
+**Smaller team (2-3 people):**
+
+```
+Each person on-call 2 weeks per month (rotating)
+More burden, but covers gaps
+Pay higher on-call stipend
+
+OR
+
+Hire dedicated on-call person (if company large enough)
+Dedicated role just responds to incidents
+Reduces burden on engineers with day jobs
+```
+
+---
+
 ## Immediate Response (First 5 Minutes)
 
 ### IC Quick Triage
