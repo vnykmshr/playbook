@@ -5,6 +5,11 @@ on:
     branches: [ main ]
     paths:
       - 'docs/**'
+      - 'commands/**'
+      - 'CHANGELOG.md'
+      - 'RELEASE.md'
+      - '.github/CONTRIBUTING.md'
+      - '.gitattributes'
       - 'mkdocs.yml'
       - '.markdownlint.json'
       - '.yamllint'
