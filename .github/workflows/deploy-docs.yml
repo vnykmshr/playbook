@@ -33,7 +33,7 @@ jobs:
       - name: Lint markdown files
         run: |
           npm install -g markdownlint-cli
-          markdownlint --config .markdownlint.json 'docs/**/*.md'
+          markdownlint --config .markdownlint.json 'docs/**/*.md' 'commands/**/*.md'
 
       - name: Validate YAML
         run: |
