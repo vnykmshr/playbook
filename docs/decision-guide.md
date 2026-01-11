@@ -319,7 +319,7 @@ START
 
 ## Next Steps
 
-- **[Full Command Reference](command-index.md)** — See all 45 commands
+- **[Full Command Reference](command-index.md)** — See all commands
 - **[Getting Started](getting-started.md)** — Pick a scenario
 - **[Integration Guide](integration-guide.md)** — See how commands work together
 - **[FAQ](faq.md)** — Common questions

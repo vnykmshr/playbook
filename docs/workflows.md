@@ -312,5 +312,5 @@ MORNING               MIDDAY                AFTERNOON               END OF DAY
 ## Next Steps
 
 - **[Decision Guide](decision-guide.md)** — Find the right command for any situation
-- **[Command Reference](command-index.md)** — Browse all 45 commands
+- **[Command Reference](command-index.md)** — Browse all commands
 - **[Integration Guide](integration-guide.md)** — Deep dive on command relationships

@@ -24,7 +24,7 @@ cd playbook
 ls ~/.claude/commands/ | grep pb-
 ```
 
-All 45 playbook commands are now available in Claude Code.
+All playbook commands are now available in Claude Code.
 
 ### Uninstall
 
@@ -223,7 +223,7 @@ A: Check the [FAQ](faq.md) or [open an issue on GitHub](https://github.com/vnykm
 
 ## What to Read Next
 
-1. **[Command Reference](command-index.md)** — Browse all 45 commands by category
+1. **[Command Reference](command-index.md)** — Browse commands by category
 2. **[Integration Guide](integration-guide.md)** — Understand how commands work together
 3. **[Decision Guide](decision-guide.md)** — Find the right command for any situation
 4. **[FAQ](faq.md)** — Common questions and troubleshooting

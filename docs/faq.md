@@ -7,9 +7,9 @@ Common questions about the Engineering Playbook.
 ## Getting Started
 
 ### Q: What is the Engineering Playbook?
-**A:** The Engineering Playbook is a decision framework—a set of 45 commands and guides that codify how to approach development work. It covers planning, development, code review, release, and team operations. It's not a tool, but a structured process that reduces friction and maintains quality at every step.
+**A:** The Engineering Playbook is a decision framework—a set of commands and guides that codify how to approach development work. It covers planning, development, code review, release, and team operations. It's not a tool, but a structured process that reduces friction and maintains quality at every step.
 
-### Q: Do I have to use all 45 commands?
+### Q: Do I have to use all commands?
 **A:** No. Start with the commands that address your current challenges. Most teams begin with `/pb-plan`, `/pb-cycle`, and `/pb-release`. You can adopt others gradually as you need them.
 
 ### Q: How long does it take to learn the playbook?
@@ -32,7 +32,7 @@ git clone https://github.com/vnykmshr/playbook.git
 cd playbook
 ./scripts/install.sh
 ```
-This creates symlinks in `~/.claude/commands/` making all 45 commands available in Claude Code.
+This creates symlinks in `~/.claude/commands/` making all commands available in Claude Code.
 
 ### Q: I ran the install script but commands aren't showing up. What do I do?
 **A:** Check that `~/.claude/commands/` exists and has the symlinks:
@@ -406,7 +406,7 @@ The playbook is a tool to help, not a mandate.
 ## Still Have Questions?
 
 - **[Decision Guide](decision-guide.md)** — Find commands by situation
-- **[Command Reference](command-index.md)** — Browse all 45 commands
+- **[Command Reference](command-index.md)** — Browse all commands
 - **[Getting Started](getting-started.md)** — Quick start guide
 - **[Integration Guide](integration-guide.md)** — How commands work together
 - **[GitHub Issues](https://github.com/vnykmshr/playbook/issues)** — Report problems

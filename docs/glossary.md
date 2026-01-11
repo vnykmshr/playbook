@@ -16,7 +16,7 @@ The process of developing code, reviewing it (self and peer), and getting approv
 The Engineering Playbook itself—a set of structured processes for making engineering decisions.
 
 ### Integration Guide
-Comprehensive documentation showing how all 45 commands work together. See `/docs/integration-guide.md`.
+Comprehensive documentation showing how all commands work together. See `/docs/integration-guide.md`.
 
 ### Quality Gate
 A checkpoint that must pass before code moves forward. Examples: linting, testing, security review.
@@ -257,6 +257,6 @@ Shorthand for commands used throughout documentation:
 ## See Also
 
 - **[Decision Guide](decision-guide.md)** — Which command to use?
-- **[Command Reference](command-index.md)** — All 45 commands
+- **[Command Reference](command-index.md)** — All commands
 - **[Getting Started](getting-started.md)** — Quick start
 - **[FAQ](faq.md)** — Common questions

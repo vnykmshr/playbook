@@ -1,9 +1,9 @@
 # Engineering Playbook
 
-A comprehensive, integrated set of **45 commands and guides** for structuring iterative development workflows, architectural decisions, code reviews, and team operations.
+A comprehensive, integrated set of commands and guides for structuring iterative development workflows, architectural decisions, code reviews, and team operations.
 
 [![Latest Release](https://img.shields.io/github/v/release/vnykmshr/playbook?label=v1.2.0)](https://github.com/vnykmshr/playbook/releases/tag/v1.2.0)
-[![Commands](https://img.shields.io/badge/commands-45-blue)](command-index.md)
+[![Commands](https://img.shields.io/badge/status-active-brightgreen)](command-index.md)
 [![Documentation](https://img.shields.io/badge/docs-integration%20guide-blue)](integration-guide.md)
 [![License](https://img.shields.io/badge/license-MIT-green)](https://github.com/vnykmshr/playbook/blob/main/LICENSE)
 
@@ -125,7 +125,7 @@ Follow [Scenario 2: Adopting Playbook](getting-started.md#scenario-2-adopting-pl
 - **[Decision Guide](decision-guide.md)** — Which command should I use?
 - **[FAQ](faq.md)** — Common questions and answers
 - **[Integration Guide](integration-guide.md)** — How commands work together
-- **[Full Command Reference](command-index.md)** — All 45 commands
+- **[Full Command Reference](command-index.md)** — Browse all commands
 
 ---
 
@@ -150,7 +150,7 @@ cd playbook
 ls ~/.claude/commands/ | grep pb-
 ```
 
-All 45 playbook commands are now available in Claude Code.
+All playbook commands are now available in Claude Code.
 
 ---
 
@@ -194,7 +194,7 @@ Pick a scenario and follow the step-by-step workflow
 Find the right command for your situation
 
 **[Command Reference →](command-index.md)**
-Browse all 45 commands by category
+Browse commands by category
 
 **[Integration Guide →](integration-guide.md)**
 Understand how all commands work together as a system
