@@ -223,7 +223,7 @@ Design systems before implementation.
 | `/pb-observability` | Monitoring, observability patterns, and alerting strategy |
 | `/pb-deprecation` | Deprecation strategy, communication, and backwards compatibility |
 
-### Development (8 commands)
+### Development (9 commands)
 Iterative feature development with built-in quality gates.
 
 | Command | Purpose |
@@ -236,6 +236,7 @@ Iterative feature development with built-in quality gates.
 | `/pb-pr` | Streamlined pull request creation |
 | `/pb-testing` | Testing philosophy (unit, integration, E2E) |
 | `/pb-todo-implement` | Structured implementation with checkpoint approval |
+| `/pb-knowledge-transfer` | Knowledge transfer session preparation and execution |
 
 ### Code Review & Quality (10 commands)
 Multiple perspectives on code quality.
@@ -332,9 +333,6 @@ All commands work together as a **unified system**:
 - 8 command clusters (groups that work together)
 - Reference matrix showing which commands integrate
 - Scenario-based selection guide
-
-### For Integration Best Practices
-→ **[Integration Summary](/docs/INTEGRATION-SUMMARY.md)** — How playbook commands integrate cohesively
 
 ### For Getting Started
 → **[Scenarios Above](#quick-start-five-scenarios)** — Real-world use cases
@@ -434,7 +432,7 @@ The playbook provides frameworks you adapt to your team's needs, not commandment
 - Suggest improvements: [GitHub Discussions](https://github.com/vnykmshr/playbook/discussions)
 
 ### Contributing
-Contributions are welcome! See [CONTRIBUTING.md](CONTRIBUTING.md) (or reach out for guidelines).
+Contributions are welcome! See [.github/CONTRIBUTING.md](.github/CONTRIBUTING.md) for guidelines.
 
 ---
 
