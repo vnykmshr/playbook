@@ -81,7 +81,9 @@ nav:
     - Integration Guide: integration-guide.md
     - Integration Summary: INTEGRATION-SUMMARY.md
     - How Commands Work Together: integration-guide.md#command-integration
+  - Best Practices: best-practices.md
   - Decision Guide: decision-guide.md
+  - Glossary: glossary.md
   - FAQ: faq.md
   - Contributing: ../CONTRIBUTING.md
   - License: ../LICENSE
