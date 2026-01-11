@@ -1,9 +1,9 @@
 # Engineering Playbook
 
-A comprehensive, integrated set of 45 commands and guides for structuring iterative development workflows, architectural decisions, code reviews, and team operations.
+A comprehensive, integrated set of commands and guides for structuring iterative development workflows, architectural decisions, code reviews, and team operations.
 
 [![Latest Release](https://img.shields.io/github/v/release/vnykmshr/playbook?label=v1.2.0)](https://github.com/vnykmshr/playbook/releases/tag/v1.2.0)
-[![Commands](https://img.shields.io/badge/commands-45-blue)](docs/command-index.md)
+[![Commands](https://img.shields.io/badge/status-active-brightgreen)](docs/command-index.md)
 [![Documentation](https://img.shields.io/badge/docs-integration%20guide-blue)](docs/integration-guide.md)
 [![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)
 
@@ -51,7 +51,7 @@ cd playbook
 ls ~/.claude/commands/ | grep pb-
 ```
 
-All 45 playbook commands are now available in Claude Code.
+All playbook commands are now available in Claude Code.
 
 ### Uninstall
 
@@ -195,7 +195,7 @@ Production is down. Execute quickly:
 
 ---
 
-## Command Categories (45 Commands)
+## Command Categories
 
 ### 🏗️ Core Foundation (4 commands)
 Master SDLC framework, working standards, and templates.
@@ -309,7 +309,7 @@ PLAN                    DEVELOP                    RELEASE
 
 ### Command Integration
 
-All 45 commands work together as a **unified system**:
+All commands work together as a **unified system**:
 
 - **Foundation** (`/pb-guide`, `/pb-standards`) — Principles all others implement
 - **Hub commands** (`/pb-cycle`, `/pb-plan`) — Central junctions connecting workflows
@@ -322,7 +322,7 @@ All 45 commands work together as a **unified system**:
 ## Documentation: Finding What You Need
 
 ### For Quick Navigation
-→ **[Command Index](/docs/command-index.md)** — All 45 commands by category
+→ **[Command Index](/docs/command-index.md)** — Browse all commands by category
 
 ### For Understanding Workflows
 → **[Integration Guide](/docs/integration-guide.md)** — How commands work together
@@ -355,7 +355,7 @@ playbook/
 │   └── templates/      # pb-context
 │
 ├── docs/
-│   ├── command-index.md           # Quick reference (all 45 commands)
+│   ├── command-index.md           # Quick reference for all commands
 │   ├── integration-guide.md        # How commands work together (workflows, clusters)
 │   ├── INTEGRATION-SUMMARY.md      # Integration improvements and patterns
 │   └── checklists.md               # Reusable quality checklists
@@ -423,7 +423,7 @@ The playbook provides frameworks you adapt to your team's needs, not commandment
 ## Getting Help
 
 ### Documentation
-- **[Command Index](/docs/command-index.md)** — Reference all 45 commands
+- **[Command Index](/docs/command-index.md)** — Reference all commands
 - **[Integration Guide](/docs/integration-guide.md)** — Understand command relationships
 - **Individual commands** — Each command file has detailed guidance and examples
 
