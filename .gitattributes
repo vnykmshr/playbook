@@ -1,0 +1,33 @@
+# Auto detect text files and normalize line endings
+* text=auto
+
+# Markdown and documentation files: LF line endings
+*.md text eol=lf
+
+# YAML configuration files: LF line endings
+*.yml text eol=lf
+*.yaml text eol=lf
+mkdocs.yml text eol=lf
+
+# Shell scripts: LF line endings
+*.sh text eol=lf
+
+# JSON configuration files: LF line endings
+*.json text eol=lf
+.markdownlint.json text eol=lf
+
+# Git and GitHub files: LF line endings
+.gitignore text eol=lf
+.gitattributes text eol=lf
+.github/** text eol=lf
+
+# OS files: Not text, don't process
+.DS_Store binary
+Thumbs.db binary
+
+# Temporary files
+*.swp binary
+*.swo binary
+*~ binary
+*.tmp binary
+*.bak binary

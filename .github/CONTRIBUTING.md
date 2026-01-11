@@ -28,6 +28,106 @@ Have an idea for a new command or enhancement? [Start a discussion](https://gith
    - When to use it
    - How it integrates with other commands
 
+#### Command Structure Guidelines
+
+All commands must follow this structure to ensure consistency and usability:
+
+**Required Elements:**
+
+1. **Title** (H1 heading)
+   - Clear, action-oriented description (e.g., "Start Development Work", "Deploy with Blue-Green Strategy")
+   - Format: `# [Verb] [What]` or `# [What] Guide`
+
+2. **Overview** (introductory paragraph)
+   - One sentence describing when to use this command
+   - One sentence describing what it does
+   - Reference related commands using `/pb-command-name` format
+
+3. **Sections** (H2 headings with `---` dividers)
+   - Use at least 3 major sections (e.g., "Preconditions", "Steps", "Verification")
+   - Separate sections with `---` for visual clarity
+   - Order sections logically (setup → execution → verification → rollback)
+
+4. **Code Examples**
+   - Include at least one runnable example
+   - Use appropriate syntax highlighting (markdown, bash, etc.)
+   - Real code examples, not pseudocode
+   - Examples should be directly copy-pasteable
+
+5. **Checklists** (where appropriate)
+   - Use `[ ]` format for verification steps
+   - Include acceptance criteria
+   - Help users verify work is complete
+
+6. **Cross-references**
+   - Reference related commands using `/pb-command-name`
+   - Format: `See [description](/pb-command-name)`
+   - Keep references minimal (avoid link pollution)
+
+**Optional Elements:**
+
+- **Examples** section for multiple use cases
+- **Troubleshooting** section for common issues
+- **FAQ** section for questions
+- **Rollback** section for destructive operations
+
+**Linting Standards:**
+
+- **Line length**: Soft limit 100 chars (warning at 120)
+- **Heading style**: Consistent (all ATX style `# Heading`)
+- **List indentation**: 2 spaces
+- **No hard tabs**: Use spaces only
+- **No trailing whitespace**
+- **One blank line between sections**
+
+**Before Submitting:**
+
+- [ ] Title is clear and action-oriented
+- [ ] Overview describes when and why to use
+- [ ] At least 3 major sections with `---` dividers
+- [ ] At least one runnable code example
+- [ ] All `/pb-command` references are valid
+- [ ] Markdown linting passes: `markdownlint --config .markdownlint.json commands/category/pb-command.md`
+- [ ] No trailing whitespace or hard tabs
+- [ ] Tone consistent with existing commands (professional, concise, no fluff)
+
+**Example Command Structure:**
+
+```
+# [Title]
+
+[Overview paragraph]
+
+---
+
+## [Section 1]
+
+[Content]
+
+### Subsection
+
+[Details]
+
+---
+
+## [Section 2]
+
+[Content with examples]
+
+\`\`\`bash
+# Example code
+\`\`\`
+
+---
+
+## [Section 3]
+
+[Content]
+
+- [ ] Verification step 1
+- [ ] Verification step 2
+```
+
 ### Documentation
 
 1. Follow the same branch/PR process
