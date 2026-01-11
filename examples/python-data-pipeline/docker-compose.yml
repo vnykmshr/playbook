@@ -1,0 +1,36 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:15-alpine
+    container_name: playbook_postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: playbook_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  pipeline:
+    build: .
+    container_name: playbook_pipeline
+    environment:
+      DATABASE_URL: "postgresql+asyncpg://postgres:postgres@postgres:5432/playbook_db"
+      CSV_FILE: "sample_events.csv"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    volumes:
+      - ./sample_events.csv:/app/sample_events.csv
+      - ./src:/app/src
+    restart: "no"
+
+volumes:
+  postgres_data:
