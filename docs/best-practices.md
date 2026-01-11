@@ -6,7 +6,7 @@ Proven patterns and anti-patterns from the Engineering Playbook in practice.
 
 ## Development Process Best Practices
 
-### ✅ DO: Commit Frequently and Logically
+### DO:Commit Frequently and Logically
 
 **Practice**: Create commits after each meaningful unit of work (feature, fix, refactor), not at end of day.
 
@@ -24,7 +24,7 @@ git commit -m "add auth and tests and update docs"
 
 ---
 
-### ✅ DO: Self-Review Before Requesting Peer Review
+### DO:Self-Review Before Requesting Peer Review
 
 **Practice**: Always use `/pb-cycle` self-review before requesting peer review.
 
@@ -41,7 +41,7 @@ Checklist from self-review:
 
 ---
 
-### ✅ DO: Keep Pull Requests Small
+### DO:Keep Pull Requests Small
 
 **Practice**: Target PR scope: one feature or one fix, 200-500 lines of code.
 
@@ -54,7 +54,7 @@ Bad PR: "Auth system overhaul" (adds 2,000 lines)
 
 ---
 
-### ✅ DO: Write Clear Commit Messages
+### DO:Write Clear Commit Messages
 
 **Practice**: Use format from `/pb-commit`:
 ```
@@ -78,7 +78,7 @@ Fixes #42, relates to #38
 
 ---
 
-### ❌ DON'T: Skip Testing
+### DON'T:Skip Testing
 
 **Anti-Pattern**: "I'll add tests later" or "This doesn't need tests"
 
@@ -91,7 +91,7 @@ Fixes #42, relates to #38
 
 ---
 
-### ❌ DON'T: Commit Large Files
+### DON'T:Commit Large Files
 
 **Anti-Pattern**: Committing large binaries, databases, or configuration with secrets
 
@@ -111,7 +111,7 @@ git commit -m "chore: add .gitignore"
 
 ## Code Review Best Practices
 
-### ✅ DO: Request Review Early and Often
+### DO:Request Review Early and Often
 
 **Practice**: Don't wait until code is "perfect" to request review. Review feedback often improves the design.
 
@@ -124,7 +124,7 @@ Bad: Request review only after everything is polished
 
 ---
 
-### ✅ DO: Provide Constructive Feedback
+### DO:Provide Constructive Feedback
 
 **Practice**: When reviewing, explain the "why" behind suggestions:
 
@@ -140,7 +140,7 @@ Bad: "This is wrong. Fix it."
 
 ---
 
-### ✅ DO: Request Changes for Real Issues Only
+### DO:Request Changes for Real Issues Only
 
 **Practice**: Distinguish between "must fix" and "nice to have":
 
@@ -156,7 +156,7 @@ Bad: "This is wrong. Fix it."
 
 ---
 
-### ❌ DON'T: Approve Without Reading Code
+### DON'T:Approve Without Reading Code
 
 **Anti-Pattern**: Approving PRs without thoroughly reviewing
 
@@ -171,7 +171,7 @@ Bad: "This is wrong. Fix it."
 
 ## Quality & Testing Best Practices
 
-### ✅ DO: Test Edge Cases
+### DO:Test Edge Cases
 
 **Practice**: For each feature, test:
 - Happy path (normal usage)
@@ -198,7 +198,7 @@ def test_password_reset_rate_limited():
 
 ---
 
-### ✅ DO: Use Meaningful Test Names
+### DO:Use Meaningful Test Names
 
 **Practice**: Test names should describe what they test:
 
@@ -218,7 +218,7 @@ test_it_works()
 
 ---
 
-### ❌ DON'T: Have Flaky Tests
+### DON'T:Have Flaky Tests
 
 **Anti-Pattern**: Tests that sometimes pass and sometimes fail (usually due to timing, randomness, or external dependencies)
 
@@ -241,7 +241,7 @@ def test_token_expires():
 
 ## Architecture Best Practices
 
-### ✅ DO: Document Architectural Decisions
+### DO:Document Architectural Decisions
 
 **Practice**: Use `/pb-adr` to record decisions as you make them.
 
@@ -268,7 +268,7 @@ Consequences:
 
 ---
 
-### ✅ DO: Reference Relevant Patterns
+### DO:Reference Relevant Patterns
 
 **Practice**: Before implementing a feature, check `/pb-patterns-*` for relevant patterns.
 
@@ -283,7 +283,7 @@ Building a notification system?
 
 ---
 
-### ✅ DO: Plan for Observability Early
+### DO:Plan for Observability Early
 
 **Practice**: As you design, plan what you'll monitor:
 
@@ -304,7 +304,7 @@ Alerting:
 
 ---
 
-### ❌ DON'T: Build Without Measuring
+### DON'T:Build Without Measuring
 
 **Anti-Pattern**: "We can optimize later" without gathering baseline metrics
 
@@ -319,7 +319,7 @@ Alerting:
 
 ## Team & Communication Best Practices
 
-### ✅ DO: Write Async Standups
+### DO:Write Async Standups
 
 **Practice**: Use `/pb-standup` for daily async status:
 
@@ -327,8 +327,8 @@ Alerting:
 ## Today's Status
 
 ### Completed
-- ✅ Implemented password reset feature
-- ✅ Added integration tests
+- [YES]Implemented password reset feature
+- [YES]Added integration tests
 
 ### In Progress
 - Working on password complexity validation
@@ -345,7 +345,7 @@ Alerting:
 
 ---
 
-### ✅ DO: Discuss Big Changes Before Implementing
+### DO:Discuss Big Changes Before Implementing
 
 **Practice**: For major changes, discuss approach before spending days on implementation.
 
@@ -358,7 +358,7 @@ Good: Discuss approach for 30 min, implement for 1 day, PR, iterate
 
 ---
 
-### ❌ DON'T: Use Meeting for Information Transfer
+### DON'T:Use Meeting for Information Transfer
 
 **Anti-Pattern**: Using synchronous meetings to share information
 
@@ -372,7 +372,7 @@ Good: Discuss approach for 30 min, implement for 1 day, PR, iterate
 
 ## Security Best Practices
 
-### ✅ DO: Validate Input at Boundaries
+### DO:Validate Input at Boundaries
 
 **Practice**: Never trust user input. Validate at API boundary:
 
@@ -396,7 +396,7 @@ def reset_password(request):
 
 ---
 
-### ✅ DO: Check Authorization for Every Action
+### DO:Check Authorization for Every Action
 
 **Practice**: Every operation should verify user is authorized:
 
@@ -418,7 +418,7 @@ def delete_user(user_id, current_user):
 
 ---
 
-### ❌ DON'T: Log Sensitive Data
+### DON'T:Log Sensitive Data
 
 **Anti-Pattern**: Logging passwords, tokens, credit card numbers
 
@@ -436,7 +436,7 @@ logger.info(f"User {email} logging in")
 
 ## Performance Best Practices
 
-### ✅ DO: Measure Before Optimizing
+### DO:Measure Before Optimizing
 
 **Practice**: Profile to identify bottlenecks, then optimize:
 
@@ -450,7 +450,7 @@ Good: "Profile shows DB query is 10s of response time.
 
 ---
 
-### ✅ DO: Monitor Production After Changes
+### DO:Monitor Production After Changes
 
 **Practice**: After optimization, verify it actually helped:
 
@@ -464,7 +464,7 @@ Verified with: tail latency metrics in prod, 1hr monitoring window
 
 ---
 
-### ❌ DON'T: Prematurely Optimize
+### DON'T:Prematurely Optimize
 
 **Anti-Pattern**: Optimizing code before it's proven slow
 
@@ -481,7 +481,7 @@ Good: Profile first, optimize bottleneck
 
 ## Release Best Practices
 
-### ✅ DO: Use Automated Deployments
+### DO:Use Automated Deployments
 
 **Practice**: Automate deployment to reduce human error:
 
@@ -496,7 +496,7 @@ Bad: Manual deployment steps on shared script
 
 ---
 
-### ✅ DO: Have Rollback Plan
+### DO:Have Rollback Plan
 
 **Practice**: Before releasing, know how to rollback:
 
@@ -512,7 +512,7 @@ Test rollback procedure before release
 
 ---
 
-### ❌ DON'T: Release on Friday Afternoon
+### DON'T:Release on Friday Afternoon
 
 **Anti-Pattern**: Pushing code right before weekend
 

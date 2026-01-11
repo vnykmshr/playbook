@@ -197,7 +197,7 @@ Production is down. Execute quickly:
 
 ## Command Categories
 
-### 🏗️ Core Foundation (4 commands)
+### Core Foundation (4 commands)
 Master SDLC framework, working standards, and templates.
 
 | Command | Purpose |
@@ -207,7 +207,7 @@ Master SDLC framework, working standards, and templates.
 | `/pb-documentation` | Writing technical docs at 5 levels |
 | `/pb-templates` | Reusable commit, PR, and testing templates |
 
-### 📋 Planning & Architecture (8 commands)
+### Planning & Architecture (8 commands)
 Design systems before implementation.
 
 | Command | Purpose |
@@ -221,7 +221,7 @@ Design systems before implementation.
 | `/pb-patterns-distributed` | Distributed patterns (saga, CQRS, eventual consistency) |
 | `/pb-performance` | Performance optimization and profiling |
 
-### ⚙️ Development (8 commands)
+### Development (8 commands)
 Iterative feature development with built-in quality gates.
 
 | Command | Purpose |
@@ -235,7 +235,7 @@ Iterative feature development with built-in quality gates.
 | `/pb-testing` | Testing philosophy (unit, integration, E2E) |
 | `/pb-todo-implement` | Structured implementation with checkpoint approval |
 
-### ✅ Code Review & Quality (9 commands)
+### Code Review & Quality (9 commands)
 Multiple perspectives on code quality.
 
 | Command | Purpose |
@@ -250,7 +250,7 @@ Multiple perspectives on code quality.
 | `/pb-security` | Security checklist (quick/standard/deep) |
 | `/pb-logging` | Logging standards and structured logging |
 
-### 🚀 Release & Operations (4 commands)
+### Release & Operations (4 commands)
 Safe production deployment and incident response.
 
 | Command | Purpose |
@@ -260,7 +260,7 @@ Safe production deployment and incident response.
 | `/pb-incident` | Incident assessment and response (P0-P3) |
 | `/pb-observability` | Monitoring, logging, tracing, and alerting |
 
-### 📦 Repository Management (6 commands)
+### Repository Management (6 commands)
 Professional repository structure and presentation.
 
 | Command | Purpose |
@@ -272,7 +272,7 @@ Professional repository structure and presentation.
 | `/pb-repo-blog` | Write technical blog post |
 | `/pb-repo-enhance` | Full repository enhancement (combines all above) |
 
-### 👥 Team & Growth (2 commands)
+### Team & Growth (2 commands)
 Team development and knowledge sharing.
 
 | Command | Purpose |
@@ -281,7 +281,7 @@ Team development and knowledge sharing.
 | `/pb-team` | Team dynamics, feedback, and retrospectives |
 | `/pb-knowledge-transfer` | Knowledge transfer session preparation |
 
-### 📚 Reference (1 command)
+### Reference (1 command)
 Project context and reference.
 
 | Command | Purpose |
@@ -406,7 +406,7 @@ The playbook provides frameworks you adapt to your team's needs, not commandment
 
 ## Use Cases
 
-### ✅ Perfect for:
+### Perfect for:
 - **New teams** — Establish practices from day one
 - **Growing teams** — Repeatable processes as you scale
 - **Distributed teams** — Async-first practices (standups, KT, reviews)

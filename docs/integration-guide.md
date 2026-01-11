@@ -825,16 +825,16 @@ The commands form a **unified SDLC framework**. Use them **in combination**, not
 
 ```
 ISOLATED:
-❌ /pb-cycle alone
-❌ /pb-security alone
-❌ /pb-testing alone
-❌ /pb-observability alone
+[NO] /pb-cycle alone
+[NO] /pb-security alone
+[NO] /pb-testing alone
+[NO] /pb-observability alone
 
 POWERFUL:
-✅ /pb-cycle WITH /pb-testing, /pb-standards, /pb-security
-✅ /pb-plan WITH /pb-adr, /pb-patterns, /pb-observability
-✅ /pb-incident WITH /pb-observability, /pb-deployment, /pb-adr
-✅ /pb-onboarding WITH /pb-knowledge-transfer, /pb-guide, /pb-standards
+[YES] /pb-cycle WITH /pb-testing, /pb-standards, /pb-security
+[YES] /pb-plan WITH /pb-adr, /pb-patterns, /pb-observability
+[YES] /pb-incident WITH /pb-observability, /pb-deployment, /pb-adr
+[YES] /pb-onboarding WITH /pb-knowledge-transfer, /pb-guide, /pb-standards
 ```
 
 ### Key Relationships

@@ -57,15 +57,15 @@ Organized in 9 categories:
 
 | Category | Count | Purpose |
 |----------|-------|---------|
-| 🏗️ **Core Foundation** | 4 | SDLC framework, standards, templates |
-| 📋 **Planning & Architecture** | 8 | Design, patterns, decisions |
-| ⚙️ **Development** | 8 | Feature development, iteration, reviews |
-| ✅ **Code Review & Quality** | 9 | Multiple perspectives, quality gates |
-| 🚀 **Release & Operations** | 4 | Deployment, incidents, observability |
-| 📦 **Repository Management** | 6 | Structure, README, documentation |
-| 👥 **Team & Growth** | 2 | Onboarding, feedback, growth |
-| 📚 **Reference** | 1 | Project context |
-| **Total** | **45** | **Unified ecosystem** |
+| **Core Foundation** | 4 | SDLC framework, standards, templates |
+| **Planning & Architecture** | 8 | Design, patterns, decisions |
+| **Development** | 8 | Feature development, iteration, reviews |
+| **Code Review & Quality** | 9 | Multiple perspectives, quality gates |
+| **Release & Operations** | 4 | Deployment, incidents, observability |
+| **Repository Management** | 6 | Structure, README, documentation |
+| **Team & Growth** | 2 | Onboarding, feedback, growth |
+| **Reference** | 1 | Project context |
+| **Total** | All | **Unified ecosystem** |
 
 [See full command reference →](command-index.md)
 
@@ -171,7 +171,7 @@ The Engineering Playbook believes that:
 
 ## Use Cases
 
-### ✅ Perfect For
+### Perfect For
 - **New teams** establishing practices from day one
 - **Growing teams** scaling with repeatable processes
 - **Distributed teams** needing async-first workflows

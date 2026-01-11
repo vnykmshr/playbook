@@ -2,7 +2,7 @@
 
 Quick reference for all playbook commands.
 
-**📋 For detailed integration guide showing how commands work together, see [`/docs/integration-guide.md`](integration-guide.md)**
+**For detailed integration guide showing how commands work together, see [`/docs/integration-guide.md`](integration-guide.md)**
 
 ## Development Workflow
 

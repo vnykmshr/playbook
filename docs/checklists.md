@@ -345,14 +345,14 @@ For new frontend features.
 
 ## Tips for Effective Checklists
 
-✅ **DO:**
+**DO:**
 - Use these as starting points, customize for your project
 - Check items as you verify them
 - Skip items that don't apply to your change
 - Add project-specific items
 - Review checklists periodically and update
 
-❌ **DON'T:**
+**DON'T:**
 - Check items without actually verifying
 - Use as a replacement for thinking
 - Add so many items it becomes overwhelming
