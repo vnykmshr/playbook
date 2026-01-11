@@ -492,44 +492,17 @@ Copy and fill for each significant change:
 
 ## **Appendix A: Security Checklist**
 
-Reference this checklist from §4.5 and §7.2. Check all applicable items.
+**See `/pb-security` command** for comprehensive security guidance and checklists.
 
-### Input & Data
-- [ ] All user inputs validated and sanitized
-- [ ] SQL injection prevention (parameterized queries)
-- [ ] XSS prevention (output encoding)
-- [ ] File upload restrictions (type, size, content validation)
-- [ ] No sensitive data in logs
-- [ ] PII handling compliant with policy
+For quick reference during development:
+- Use `/docs/checklists.md` Quick Security Checklist (5 min) for S tier work
+- Use `/pb-security` Standard Checklist (20 min) for M tier features
+- Use `/pb-security` Deep Dive (1+ hour) for L tier or security-critical work
 
-### Authentication & Authorization
-- [ ] Authentication required for protected endpoints
-- [ ] Authorization checks at correct layer
-- [ ] Session management secure (timeout, invalidation)
-- [ ] Password/token handling follows best practices
-
-### Secrets & Configuration
-- [ ] No secrets in code or version control
-- [ ] Secrets in secure storage (env vars, secrets manager)
-- [ ] API keys scoped to minimum required permissions
-- [ ] Secrets rotation plan exists
-
-### Network & Infrastructure
-- [ ] HTTPS enforced
-- [ ] CORS configured correctly
-- [ ] Rate limiting in place
-- [ ] No unnecessary ports exposed
-- [ ] Internal services not publicly accessible
-
-### Error Handling
-- [ ] Errors don't leak sensitive information
-- [ ] Stack traces not exposed to users
-- [ ] Audit logging for security events
-
-### Dependencies
-- [ ] No known vulnerabilities in dependencies
-- [ ] Dependencies from trusted sources
-- [ ] Lock files committed
+This covers:
+- Input validation, SQL injection, XSS prevention, secrets management
+- Authentication, authorization, cryptography
+- Error handling, logging, API security, and compliance frameworks (PCI-DSS, HIPAA, SOC2, GDPR)
 
 ---
 

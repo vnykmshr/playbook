@@ -456,11 +456,138 @@ for shared state, in-memory for hot data.
 
 ## Implementation Notes
 
+### TTL Strategy
 - CDN cache TTL: 1 hour for product data, 5 min for user data
 - Redis TTL: 15 minutes
 - In-memory TTL: 5 minutes
-- Cache invalidation: Event-driven (webhook on data change)
-- Monitor: Cache hit rates, eviction rates, memory usage
+
+### Cache Invalidation Patterns
+
+**Event-Driven Invalidation** (Recommended)
+- On data change (create/update/delete), emit event
+- Webhook or event stream triggers cache purge
+- Pros: Immediate consistency, minimal stale data
+- Cons: Requires event infrastructure
+- Example: User updates profile → publish event → invalidate user cache in all layers
+
+**Time-Based TTL** (Default Fallback)
+- Cache expires naturally based on TTL
+- Appropriate for data that's acceptable to be slightly stale
+- No invalidation infrastructure needed
+- Cons: Must tolerate eventual consistency
+
+**Manual Invalidation** (For Emergencies)
+- Admin API to force cache purge
+- Used for critical fixes (security patches, data corrections)
+- Explicit purge endpoints for sensitive data
+- Never sole invalidation strategy
+
+**Hybrid Approach** (Best Practice)
+- Short TTL on frequently-changing data (5-15 min)
+- Longer TTL on stable data (1 hour)
+- Event-driven invalidation for critical changes
+- Manual purge capability for emergencies
+
+### Monitoring
+- Cache hit rates (track per layer)
+- Eviction rates (sign of undersized cache)
+- Memory usage (Redis and in-memory)
+- Invalidation latency (how quickly purges propagate)
+```
+
+---
+
+### Example 5: API Versioning Strategy (URL Path vs Header vs Media Type)
+
+```markdown
+# ADR-0004: URL Path Versioning for Public APIs
+
+**Date:** 2026-01-10
+**Status:** Accepted
+**Deciders:** Engineering team, Platform team
+
+## Context
+
+Public API used by 50+ third-party integrations and mobile apps. Need long-term
+backwards compatibility (3-5 year minimum). Currently tracking 3 legacy API versions
+in production. Team needs clear strategy for introducing breaking changes without
+disrupting existing clients.
+
+Requirements:
+- Support 2-3 API versions simultaneously
+- Clear client migration path
+- Trackable version adoption
+- Minimize API server complexity
+
+## Decision
+
+Use URL path versioning (/v1/, /v2/, /v3/). Maintain 2 major versions in production
+at any time, deprecate oldest version 6 months after new version launch.
+
+## Alternatives Considered
+
+### Option A: URL Path Versioning (Selected)
+**Pros:**
+- Most explicit (version visible in URL)
+- Easy to track usage (via logs/metrics)
+- Different code paths for versions clear
+- Browser-friendly (can test with URL bar)
+
+**Cons:**
+- URL pollution (endpoints duplicated across versions)
+- Code duplication for compatibility
+- Routing complexity in API framework
+
+### Option B: Header-Based Versioning
+**Pros:**
+- Cleaner URLs
+- Backward compatible (same URL serves multiple versions)
+
+**Cons:**
+- Version not visible in logs/monitoring by default
+- Harder to test (requires setting headers)
+- Client confusion (which version am I using?)
+
+### Option C: Media Type Versioning
+**Pros:**
+- RESTful (follows HTTP semantics)
+- Single URL for resource
+
+**Cons:**
+- Complex (custom media types like `application/vnd.myapi.v2+json`)
+- Not widely used (client confusion)
+- Requires Accept header understanding
+
+## Rationale
+
+URL path versioning is the most transparent for third-party integrations. Mobile and
+web clients can easily see their API version in request logs. Team can deprecate versions
+explicitly with clear migration timelines published 6 months in advance.
+
+## Consequences
+
+**Positive:**
+- Clear version tracking (metrics, logs, monitoring)
+- Explicit deprecation path (v1 → v2 → v3)
+- Easy client communication (migrate by Jan 1, 2027)
+- Different teams can own version-specific logic
+
+**Negative:**
+- Code duplication (shared logic extracted to internal modules)
+- More endpoints to maintain and document
+- Larger API surface area
+
+**Neutral:**
+- Routing slightly more complex (but manageable with versioned routers)
+
+## Implementation Notes
+
+- Use URL pattern: `/api/v1/users`, `/api/v2/users`
+- Share business logic via internal modules (v1, v2 handlers call shared UserService)
+- Version deprecation timeline: Support for 18 months after new version launch
+- Announce deprecation 6 months in advance
+- Provide automated migration guide (v1 → v2 breaking changes)
+- Feature flags for gradual rollout of v2 endpoints
 ```
 
 ---

@@ -56,83 +56,28 @@ silent scan failures.
 
 ## Self-Review Checklist
 
-Run through this checklist before requesting peer review.
+**See `/docs/checklists.md`** for comprehensive checklist with all sections.
 
-### Code Quality
-- [ ] No hardcoded values (secrets, URLs, magic numbers)
-- [ ] No commented-out code left behind
-- [ ] No debug print statements (unless structured logging)
-- [ ] Consistent naming conventions followed
-- [ ] No duplicate code - extracted to shared utilities
-- [ ] Error messages are user-friendly and actionable
-
-### Security
-- [ ] No secrets in code or config files
-- [ ] Input validation on all external data
-- [ ] SQL queries use parameterized statements
-- [ ] Authentication/authorization checked appropriately
-- [ ] Sensitive data not logged
-
-### Testing
-- [ ] Unit tests for new functions
-- [ ] Integration tests for new endpoints
-- [ ] Edge cases covered (empty, null, boundary values)
-- [ ] Error paths tested
-- [ ] Tests pass locally: `go test ./...` or `npm test`
-
-### Documentation
-- [ ] Public functions have doc comments
-- [ ] Complex logic has inline comments explaining "why"
-- [ ] README updated if new setup steps needed
-- [ ] API documentation updated (OpenAPI spec)
-
-### Database
-- [ ] Migration is reversible (has DOWN migration)
-- [ ] Indexes added for query patterns
-- [ ] Foreign key constraints appropriate
-- [ ] No breaking changes to existing data
-
-### Performance
-- [ ] No N+1 query patterns
-- [ ] Pagination on list endpoints
-- [ ] Appropriate timeouts set
-- [ ] No unbounded loops or recursion
+Quick reference before requesting peer review:
+- **Code Quality**: No hardcoded values, no dead code, naming, DRY, error messages
+- **Security**: No secrets, input validation, parameterized queries, auth/authz, no sensitive logging
+- **Testing**: Unit tests, integration tests, edge cases, error paths, all passing
+- **Documentation**: Doc comments, complex logic explained, README, API docs
+- **Database**: Reversible migrations, indexes, constraints, no breaking changes
+- **Performance**: No N+1, pagination, timeouts, no unbounded loops
 
 ---
 
 ## Peer Review Checklist
 
-For the reviewing engineer.
+**See `/docs/checklists.md`** for comprehensive peer review checklist.
 
-### Architecture
-- [ ] Changes align with existing patterns
-- [ ] No unnecessary complexity introduced
-- [ ] Separation of concerns maintained
-- [ ] Dependencies appropriate (not pulling in large libs for small tasks)
-
-### Correctness
-- [ ] Logic handles all stated requirements
-- [ ] Edge cases considered
-- [ ] Error handling is comprehensive
-- [ ] Race conditions considered for concurrent operations
-
-### Maintainability
-- [ ] Code is readable without extensive comments
-- [ ] Functions are single-purpose and reasonably sized
-- [ ] Magic values extracted to constants
-- [ ] Naming clearly expresses intent
-
-### Security Review
-- [ ] No injection vulnerabilities (SQL, command, etc.)
-- [ ] Authorization properly enforced
-- [ ] Sensitive operations properly audited
-- [ ] No information leakage in error responses
-
-### Test Coverage
-- [ ] Tests actually verify the behavior (not just coverage%)
-- [ ] Test names describe what they verify
-- [ ] Mocks/stubs used appropriately
-- [ ] No flaky tests introduced
+Quick reference when reviewing:
+- **Architecture**: Aligns with patterns, no unnecessary complexity, separation of concerns
+- **Correctness**: Requirements met, edge cases handled, error handling, race conditions
+- **Maintainability**: Readable, single-purpose functions, clear naming
+- **Security**: No injection vulnerabilities, proper authorization, no info leakage
+- **Tests**: Tests verify behavior, clear names, appropriate mocks, no flaky tests
 
 ---
 

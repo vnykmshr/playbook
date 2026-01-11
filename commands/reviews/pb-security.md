@@ -398,6 +398,98 @@ password_hash = bcrypt.hashpw(password.encode(), bcrypt.gensalt())
 bcrypt.checkpw(password.encode(), password_hash)
 ```
 
+### Example 5: Command Injection
+
+```bash
+# ❌ VULNERABLE (Shell Injection)
+filename = request.args.get('file')
+os.system(f"cat {filename}")  # If filename = "file.txt; rm -rf /", disaster
+
+# ✅ SAFE (No Shell Expansion)
+import subprocess
+filename = request.args.get('file')
+result = subprocess.run(['cat', filename], capture_output=True)
+# Args as list, no shell expansion
+```
+
+**Why**: Shell expands special characters (`|`, `;`, `$()`, etc.). Always use APIs that don't invoke shell.
+
+### Example 6: Server-Side Request Forgery (SSRF)
+
+```python
+# ❌ VULNERABLE (No URL validation)
+import requests
+user_url = request.args.get('url')
+data = requests.get(user_url).text  # Could fetch internal services
+# Attacker passes: http://internal-api:8080/admin or http://localhost:6379
+
+# ✅ SAFE (Allowlist + validation)
+import requests
+from urllib.parse import urlparse
+
+user_url = request.args.get('url')
+parsed = urlparse(user_url)
+
+# Allowlist safe domains
+ALLOWED_DOMAINS = ['example.com', 'api.example.com']
+if parsed.netloc not in ALLOWED_DOMAINS:
+    raise ValueError("Domain not allowed")
+
+# Reject private IPs
+if any(ip in parsed.netloc for ip in ['localhost', '127.', '10.', '172.', '192.168']):
+    raise ValueError("Private IPs not allowed")
+
+data = requests.get(user_url).text
+```
+
+**Why**: Without validation, attacker can access internal services, cloud metadata APIs (AWS, GCP credentials), or local services.
+
+### Example 7: Unsafe Deserialization
+
+```python
+# ❌ VULNERABLE (Arbitrary code execution)
+import pickle
+user_data = pickle.loads(request.data)  # pickle can execute code during deserialization
+
+# ❌ ALSO VULNERABLE (eval)
+config_str = request.args.get('config')
+config = eval(config_str)  # Arbitrary code execution
+
+# ✅ SAFE (Use JSON only)
+import json
+user_data = json.loads(request.data)  # Safe parsing, no code execution
+```
+
+**Why**: `pickle` and `eval` can execute arbitrary code. JSON is data-only format, safe to deserialize untrusted input.
+
+---
+
+## Compliance Framework Guidance
+
+If you need to meet security compliance frameworks, here's what maps to this guide:
+
+### PCI-DSS (Payment Card Data)
+Focus on: Secrets management, encryption in transit/at rest, access control
+Relevant sections: Cryptography, Secrets Management, Authorization & Access Control, API Security
+Additional: Audit logging, data retention policies
+
+### HIPAA (Healthcare Data)
+Focus on: Encryption, access logs, data minimization
+Relevant sections: Data Protection, Cryptography, Logging & Monitoring, Secrets Management
+Additional: Audit controls, breach notification procedures
+
+### SOC 2 (Service Organization Control)
+Focus on: Security controls, access management, incident response
+Relevant sections: All checklist sections apply
+Additional: Evidence collection (audit logs, access reviews), incident response testing
+
+### GDPR (Data Privacy - Europe)
+Focus on: Consent, data minimization, user rights
+Relevant sections: Data Protection, Input Validation, Error Handling
+Additional: Privacy by design, user data export/deletion
+
+**Action**: Use checklists above. For compliance frameworks, consult your legal/security team and audit frameworks for specific requirements.
+
 ---
 
 ## Resources

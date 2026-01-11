@@ -301,7 +301,86 @@ Standups create a paper trail of:
 
 ---
 
-## FAQ
+## Building Team Culture Around Standups
+
+Standups are more than status updates—they're about building trust and psychological safety.
+
+### Create Psychological Safety for Blockers
+
+**Why it matters**: Teams that feel safe reporting blockers unblock faster and ship better.
+
+**Practice:**
+- Celebrate blockers being surfaced ("Thank you for flagging that early")
+- Never punish for being stuck (ask how to help instead)
+- Public blockers → team problem-solving (not individual failure)
+- Model vulnerability (leaders share their own blockers first)
+
+**Example:**
+```
+Bad: "Why is auth still blocked? That's been 3 days."
+Good: "I see auth is blocked on API review. How can we unblock that? Can I help review?"
+```
+
+### Celebrating Progress in Distributed Teams
+
+**Weekly wins ritual:**
+- Highlight completed features (not just checklist items)
+- Call out helpful peer reviews, knowledge sharing, or mentoring
+- Recognize cross-team collaboration
+- Share customer feedback or metrics
+
+**Why**: Distributed teams lack hallway conversations. Standups are a moment to feel part of something.
+
+### Handling Sensitive Situations
+
+**Scope changes or deprioritization:**
+- Acknowledge the shift explicitly
+- Explain impact (avoid sudden plan changes)
+- Provide new timeline/expectations
+- Ask if team has concerns
+
+**Extended blockers (1+ week):**
+- Escalate explicitly (not buried in standup)
+- Propose solutions, don't just report problem
+- Schedule dedicated unblocking session
+
+**Team dynamics or personal issues:**
+- Normalize "personal circumstances affecting focus" (no details needed)
+- Offer flexibility without requiring explanation
+- Check in 1-on-1 separately if you notice patterns
+
+### Remote-First Best Practices
+
+**Written standups work best because:**
+- Asynchronous (no meeting fatigue)
+- Skimmable (busy people can scan quickly)
+- Searchable (reference past decisions/blockers)
+- Inclusive (no one talking over each other)
+
+**Make them effective:**
+- Post at consistent time (start of day recommended)
+- Don't require immediate responses (async means async)
+- Link to artifacts (PRs, docs, tickets) not raw prose
+- Read others' standups regularly (builds team awareness)
+
+**Video standups (avoid):**
+- Same latency as meeting but less scannable
+- Makes async harder
+- Use for real-time discussions, not status
+
+### Standup Etiquette
+
+**For writers:**
+- Be honest about blockers (don't minimize)
+- Include "needs help" asks (don't suffer silently)
+- Link everything (help readers find context)
+
+**For readers:**
+- Read daily (takes 5 min, huge impact on collaboration)
+- Respond to help requests same day (or delegate)
+- Ask thoughtful follow-up questions (shows you're paying attention)
+
+---
 
 **Q: How detailed should standups be?**
 A: Detailed enough that someone unfamiliar with the task understands progress. Link to PRs/commits for details.

@@ -8,35 +8,13 @@ Run this after completing a unit of work. Guides you through self-review, qualit
 
 Review your own changes critically before requesting peer review.
 
-### Code Quality Checklist
-
-- [ ] No hardcoded values (secrets, URLs, magic numbers)
-- [ ] No commented-out code left behind
-- [ ] No debug print statements (unless structured logging)
-- [ ] Consistent naming conventions followed
-- [ ] No duplicate code - extracted to shared utilities if needed
-- [ ] Error messages are user-friendly and actionable
-
-### Security Checklist
-
-- [ ] No secrets in code or config files
-- [ ] Input validation on all external data
-- [ ] SQL queries use parameterized statements
-- [ ] Authentication/authorization checked appropriately
-- [ ] Sensitive data not logged
-
-### Testing Checklist
-
-- [ ] Unit tests for new/changed functions
-- [ ] Edge cases covered (empty, null, boundary values)
-- [ ] Error paths tested
-- [ ] Tests pass locally
-
-### Documentation Checklist
-
-- [ ] Complex logic has comments explaining "why"
-- [ ] Public functions have clear names (prefer self-documenting code)
-- [ ] API changes reflected in docs if applicable
+**Use the Self-Review Checklist** from `/docs/checklists.md`:
+- Code Quality: hardcoded values, dead code, naming, DRY, error messages
+- Security: no secrets, input validation, parameterized queries, auth checks, logging
+- Testing: unit tests, edge cases, error paths, all tests passing
+- Documentation: comments for "why", clear names, API docs updated
+- Database: reversible migrations, indexes, constraints, no breaking changes
+- Performance: N+1 queries, pagination, timeouts, unbounded loops
 
 ---
 
