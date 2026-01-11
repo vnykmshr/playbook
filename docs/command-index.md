@@ -90,7 +90,7 @@ Real-world implementations of the playbook in action:
 | **Python Pipeline** | Python 3.11 + SQLAlchemy | Async data pipeline with event aggregation | `examples/python-data-pipeline/` |
 | **Node.js REST API** | Node.js 20 + TypeScript + Express | Type-safe REST API with request tracing | `examples/node-api/` |
 
-**See [`docs/PLAYBOOK_IN_ACTION.md`](PLAYBOOK_IN_ACTION.md) for detailed walkthrough showing:**
+**See [`docs/playbook-in-action.md`](playbook-in-action.md) for detailed walkthrough showing:**
 - How to use `/pb-start`, `/pb-cycle`, and `/pb-pr` with real examples
 - Complete development workflows for each stack
 - Testing, code quality, and deployment patterns
