@@ -251,12 +251,12 @@ Use for security-critical features, payment processing, authentication systems, 
 
 **Best practices:**
 ```javascript
-// ❌ DANGEROUS
+// [NO] DANGEROUS
 const result = eval(userInput);
 element.innerHTML = userInput;
 const obj = JSON.parse(userInput); // Trust JSON.parse, not the input
 
-// ✅ SAFE
+// [YES] SAFE
 // Use libraries for evaluation
 const safe = DOMPurify.sanitize(userInput);
 element.textContent = userInput;  // Text is safe
@@ -282,12 +282,12 @@ if (!allowedKeys.includes(key)) throw new Error('Invalid key');
 
 **Best practices:**
 ```python
-# ❌ DANGEROUS
+# [NO] DANGEROUS
 user_data = pickle.loads(request.data)  # Arbitrary code execution
 query = f"SELECT * FROM users WHERE id = {user_id}"  # SQL injection
 exec(user_input)  # Arbitrary code execution
 
-# ✅ SAFE
+# [YES] SAFE
 user_data = json.loads(request.data)  # Safe parsing
 query = db.session.query(User).filter_by(id=user_id)  # SQLAlchemy ORM
 # Execute only trusted code, not user input
@@ -309,12 +309,12 @@ query = db.session.query(User).filter_by(id=user_id)  # SQLAlchemy ORM
 
 **Best practices:**
 ```go
-// ❌ DANGEROUS
+// [NO] DANGEROUS
 query := fmt.Sprintf("SELECT * FROM users WHERE id = %d", userID)
 cmd := exec.Command("sh", "-c", userInput)  // Shell injection
 json.Unmarshal(data, &obj)  // No validation
 
-// ✅ SAFE
+// [YES] SAFE
 db.QueryRow("SELECT * FROM users WHERE id = ?", userID)
 cmd := exec.Command("program", args...)  // No shell
 // Validate before unmarshaling
@@ -336,14 +336,14 @@ validator.Validate(obj)
 ### Example 1: SQL Injection
 
 ```python
-# ❌ VULNERABLE
+# [NO] VULNERABLE
 user_id = request.args.get('id')
 query = f"SELECT * FROM users WHERE id = {user_id}"
 results = db.execute(query)
 
 # Attacker can pass: id=1 OR 1=1 (returns all users)
 
-# ✅ SAFE
+# [YES] SAFE
 user_id = request.args.get('id')
 results = db.execute("SELECT * FROM users WHERE id = ?", (user_id,))
 
@@ -354,13 +354,13 @@ results = User.query.filter_by(id=user_id).all()
 ### Example 2: XSS (Cross-Site Scripting)
 
 ```javascript
-// ❌ VULNERABLE
+// [NO] VULNERABLE
 const comment = getUserComment();
 document.getElementById('comments').innerHTML = comment;
 // If comment = "<img src=x onerror='alert(\"hacked\")'>"
 // The script will execute
 
-// ✅ SAFE
+// [YES] SAFE
 document.getElementById('comments').textContent = comment;
 // Or sanitize
 const clean = DOMPurify.sanitize(comment);
@@ -370,10 +370,10 @@ document.getElementById('comments').innerHTML = clean;
 ### Example 3: Hardcoded Secrets
 
 ```python
-# ❌ VULNERABLE
+# [NO] VULNERABLE
 API_KEY = "sk_live_abc123def456"  # In code, in git history
 
-# ✅ SAFE
+# [YES] SAFE
 import os
 API_KEY = os.environ.get('API_KEY')
 
@@ -387,11 +387,11 @@ API_KEY = response['SecretString']
 ### Example 4: Weak Password Hashing
 
 ```python
-# ❌ VULNERABLE
+# [NO] VULNERABLE
 import hashlib
 password_hash = hashlib.sha256(password.encode()).hexdigest()
 
-# ✅ SAFE
+# [YES] SAFE
 import bcrypt
 password_hash = bcrypt.hashpw(password.encode(), bcrypt.gensalt())
 # Verification
@@ -401,11 +401,11 @@ bcrypt.checkpw(password.encode(), password_hash)
 ### Example 5: Command Injection
 
 ```bash
-# ❌ VULNERABLE (Shell Injection)
+# [NO] VULNERABLE (Shell Injection)
 filename = request.args.get('file')
 os.system(f"cat {filename}")  # If filename = "file.txt; rm -rf /", disaster
 
-# ✅ SAFE (No Shell Expansion)
+# [YES] SAFE (No Shell Expansion)
 import subprocess
 filename = request.args.get('file')
 result = subprocess.run(['cat', filename], capture_output=True)
@@ -417,13 +417,13 @@ result = subprocess.run(['cat', filename], capture_output=True)
 ### Example 6: Server-Side Request Forgery (SSRF)
 
 ```python
-# ❌ VULNERABLE (No URL validation)
+# [NO] VULNERABLE (No URL validation)
 import requests
 user_url = request.args.get('url')
 data = requests.get(user_url).text  # Could fetch internal services
 # Attacker passes: http://internal-api:8080/admin or http://localhost:6379
 
-# ✅ SAFE (Allowlist + validation)
+# [YES] SAFE (Allowlist + validation)
 import requests
 from urllib.parse import urlparse
 
@@ -447,15 +447,15 @@ data = requests.get(user_url).text
 ### Example 7: Unsafe Deserialization
 
 ```python
-# ❌ VULNERABLE (Arbitrary code execution)
+# [NO] VULNERABLE (Arbitrary code execution)
 import pickle
 user_data = pickle.loads(request.data)  # pickle can execute code during deserialization
 
-# ❌ ALSO VULNERABLE (eval)
+# [NO] ALSO VULNERABLE (eval)
 config_str = request.args.get('config')
 config = eval(config_str)  # Arbitrary code execution
 
-# ✅ SAFE (Use JSON only)
+# [YES] SAFE (Use JSON only)
 import json
 user_data = json.loads(request.data)  # Safe parsing, no code execution
 ```

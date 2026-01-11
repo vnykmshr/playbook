@@ -169,10 +169,10 @@ Risk: Very low (only affects error message)
 
 **What NOT to do:**
 ```
-❌ Throw person at complex system
-❌ Make them read 10,000 lines of code first
-❌ Assign a huge feature with no support
-❌ Disappear and let them struggle alone
+[NO] Throw person at complex system
+[NO] Make them read 10,000 lines of code first
+[NO] Assign a huge feature with no support
+[NO] Disappear and let them struggle alone
 ```
 
 ### Month 1: Building Confidence
@@ -221,11 +221,11 @@ Qualitative milestones (team feedback):
 
 Red flags (needs help):
 ```
-❌ No PR by week 2 (blocked or overwhelmed)
-❌ PRs have major quality issues (misunderstood standards)
-❌ Silent in meetings (not engaged or confused)
-❌ Many questions about basics (environment still broken)
-❌ Asking to be switched to different project (didn't fit)
+[NO] No PR by week 2 (blocked or overwhelmed)
+[NO] PRs have major quality issues (misunderstood standards)
+[NO] Silent in meetings (not engaged or confused)
+[NO] Many questions about basics (environment still broken)
+[NO] Asking to be switched to different project (didn't fit)
 ```
 
 ### Month 2-3: Full Ramp

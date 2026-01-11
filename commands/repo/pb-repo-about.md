@@ -41,13 +41,13 @@ Lightweight feature flag service with real-time updates and audit logging
 
 **Bad:**
 ```
-A revolutionary next-generation tool for managing stuff efficiently  ❌
+A revolutionary next-generation tool for managing stuff efficiently  [NO]
 ```
 ```
-My awesome project  ❌
+My awesome project  [NO]
 ```
 ```
-Node.js application  ❌
+Node.js application  [NO]
 ```
 
 ---

@@ -114,10 +114,10 @@ Manager role: Remove blockers, hold Sarah accountable
 ```
 
 **Benefits:**
-- ✅ Fast decisions (don't wait for consensus)
-- ✅ Clear accountability (know who to ask)
-- ✅ Ownership mentality (DRI cares about outcome)
-- ✅ Faster learning (responsibility drives focus)
+- Fast decisions (don't wait for consensus)
+- Clear accountability (know who to ask)
+- Ownership mentality (DRI cares about outcome)
+- Faster learning (responsibility drives focus)
 
 **Bad example:**
 ```
@@ -410,10 +410,10 @@ Long-term:
 **What NOT to do:**
 
 ```
-❌ Ignore it ("They'll get over it")
-❌ Push harder ("We need you on this project")
-❌ Minimize ("Everyone gets stressed")
-❌ Make it a performance issue ("Fix your output")
+[NO] Ignore it ("They'll get over it")
+[NO] Push harder ("We need you on this project")
+[NO] Minimize ("Everyone gets stressed")
+[NO] Make it a performance issue ("Fix your output")
 ```
 
 ---

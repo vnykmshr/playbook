@@ -426,14 +426,14 @@ kubectl scale deployment app --replicas=5
 
 ### What NOT to Do
 
-**❌ DON'T rollback by keeping both versions:**
+**[NO] DON'T rollback by keeping both versions:**
 ```bash
 # Bad: Users see inconsistency, data corruption
 kubectl patch service app -p '{"spec":{"selector":{"version":"mixed"}}}'
 # Some requests go to v1.0, some to v2.0, data gets out of sync
 ```
 
-**❌ DON'T deploy fix immediately after rollback:**
+**[NO] DON'T deploy fix immediately after rollback:**
 ```bash
 # Bad: Rolled back to v1.0 due to bug
 # Then immediately redeployed v2.0 with "fix"
@@ -585,7 +585,7 @@ echo "🔥 Starting smoke tests..."
 echo "✓ Checking health endpoint..."
 STATUS=$(curl -s -o /dev/null -w "%{http_code}" "$HEALTH_CHECK_URL")
 if [ "$STATUS" != "200" ]; then
-  echo "❌ Health check failed: $STATUS"
+  echo "[NO] Health check failed: $STATUS"
   exit 1
 fi
 
@@ -596,7 +596,7 @@ LOGIN_RESPONSE=$(curl -s -X POST "$DOMAIN/api/login" \
   -d "{\"email\":\"$TEST_USER_EMAIL\",\"password\":\"$TEST_USER_PASS\"}")
 
 if ! echo "$LOGIN_RESPONSE" | grep -q "\"token\""; then
-  echo "❌ Login failed"
+  echo "[NO] Login failed"
   exit 1
 fi
 
@@ -608,7 +608,7 @@ API_RESPONSE=$(curl -s -X GET "$DOMAIN/api/user/profile" \
   -H "Authorization: Bearer $TOKEN")
 
 if ! echo "$API_RESPONSE" | grep -q "\"email\""; then
-  echo "❌ API endpoint failed"
+  echo "[NO] API endpoint failed"
   exit 1
 fi
 
@@ -621,7 +621,7 @@ if [ "$LATENCY" -gt 1000 ]; then
   echo "⚠️  Database latency high: ${LATENCY}ms (expected < 1000ms)"
 fi
 
-echo "✅ Smoke tests passed!"
+echo "[YES] Smoke tests passed!"
 ```
 
 **Manual test checklist:**
@@ -810,8 +810,8 @@ jobs:
 Example problem:
 ```
 Deployment breaks database writes silently:
-  - User clicks "create order" → API returns 200 ✅
-  - But order never saved to database ❌
+  - User clicks "create order" → API returns 200 [YES]
+  - But order never saved to database [NO]
   - User thinks order exists, payment processed
   - Real order is missing, customer support nightmare
 ```
@@ -842,7 +842,7 @@ ORDER_RESPONSE=$(curl -s -X POST "$DOMAIN/api/orders" \
 ORDER_ID=$(echo "$ORDER_RESPONSE" | jq -r '.order_id')
 
 if [ -z "$ORDER_ID" ] || [ "$ORDER_ID" = "null" ]; then
-  echo "❌ Create order failed"
+  echo "[NO] Create order failed"
   exit 1
 fi
 
@@ -858,7 +858,7 @@ SAVED_ORDER=$(curl -s -X GET "$DOMAIN/api/orders/$ORDER_ID" \
 ORDER_STATUS=$(echo "$SAVED_ORDER" | jq -r '.status')
 
 if [ "$ORDER_STATUS" != "pending" ]; then
-  echo "❌ Order not saved to database (HTTP 200 but no data)"
+  echo "[NO] Order not saved to database (HTTP 200 but no data)"
   echo "Response: $SAVED_ORDER"
   exit 1
 fi
@@ -874,11 +874,11 @@ QUANTITY=$(echo "$INVENTORY" | jq -r '.quantity')
 if [ "$QUANTITY" -lt 8 ]; then  # Started at 10, ordered 2
   echo "✓ Inventory decremented correctly: $QUANTITY remaining"
 else
-  echo "❌ Inventory not updated (data not persisted)"
+  echo "[NO] Inventory not updated (data not persisted)"
   exit 1
 fi
 
-echo "✅ All data persistence checks passed"
+echo "[YES] All data persistence checks passed"
 ```
 
 **k6 example (verify response is correct):**

@@ -211,13 +211,13 @@ Problem: Need to...
 
 ## Anti-Pattern: Too Many Patterns
 
-**❌ Bad:**
+**[NO] Bad:**
 ```
 Using Circuit Breaker + Retry + Timeout + Bulkhead + Saga + CQRS
 for a simple service (overkill, hard to maintain)
 ```
 
-**✅ Good:**
+**[YES] Good:**
 ```
 Start simple, add patterns only when needed
 Service slow? Add cache (Cache-Aside)
@@ -231,22 +231,22 @@ Multiple services? Add Saga
 
 All patterns in this family follow these standards:
 
-✅ **Real Code Examples** (not pseudocode)
+[YES] **Real Code Examples** (not pseudocode)
 - Python and JavaScript examples throughout
 - Copy-paste ready
 - Production tested
 
-✅ **Trade-offs Documented**
+[YES] **Trade-offs Documented**
 - Pros and cons explicit
 - When to use, when not to
 - Comparison with alternatives
 
-✅ **Gotchas Included**
+[YES] **Gotchas Included**
 - Real production failures
 - Why the gotcha happens
 - How to prevent it
 
-✅ **Antipatterns Shown**
+[YES] **Antipatterns Shown**
 - Bad patterns from real systems
 - Lessons learned
 - How to do it right

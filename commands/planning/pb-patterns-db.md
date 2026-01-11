@@ -143,14 +143,14 @@ async function getUser(userId) {
 - Monitor: Pool usage, connection creation rate, slow queries
 
 **Pros:**
-- ✅ Huge performance improvement (10-100x faster than creating connections)
-- ✅ Simple to implement (most libraries have built-in)
-- ✅ Automatic connection reuse
+- Huge performance improvement (10-100x faster than creating connections)
+- Simple to implement (most libraries have built-in)
+- Automatic connection reuse
 
 **Cons:**
-- ❌ Requires tuning (finding right pool size)
-- ❌ Easy to leak connections
-- ❌ Resource overhead (idle connections consume memory)
+- Requires tuning (finding right pool size)
+- Easy to leak connections
+- Resource overhead (idle connections consume memory)
 
 ---
 
@@ -170,7 +170,7 @@ Total: 1 + N queries (bad!)
 
 **Bad Example:**
 ```python
-# ❌ N+1 queries
+# [NO] N+1 queries
 users = db.query("SELECT * FROM users")
 for user in users:
     orders = db.query("SELECT * FROM orders WHERE user_id = ?", user.id)
@@ -180,7 +180,7 @@ for user in users:
 
 **Good Solution 1: JOIN Query**
 ```python
-# ✅ 1 query using JOIN
+# [YES] 1 query using JOIN
 query = """
 SELECT users.*, orders.* FROM users
 LEFT JOIN orders ON orders.user_id = users.id
@@ -200,7 +200,7 @@ users = list(users_dict.values())
 
 **Good Solution 2: Batch Query**
 ```python
-# ✅ 2 queries: one for users, one for all orders
+# [YES] 2 queries: one for users, one for all orders
 users = db.query("SELECT * FROM users")
 user_ids = [u.id for u in users]
 
@@ -223,7 +223,7 @@ for user in users:
 
 **Good Solution 3: ORM With Eager Loading**
 ```python
-# ✅ 1 query (ORM handles JOIN)
+# [YES] 1 query (ORM handles JOIN)
 from sqlalchemy.orm import joinedload
 
 users = db.query(User).options(joinedload(User.orders)).all()
@@ -238,10 +238,10 @@ users = db.query(User).options(joinedload(User.orders)).all()
 
 **Example:**
 ```sql
--- ❌ Without index: Full table scan (1,000,000 rows scanned)
+-- [NO] Without index: Full table scan (1,000,000 rows scanned)
 SELECT * FROM orders WHERE customer_id = 123;
 
--- ✅ With index: Direct lookup (10 rows scanned)
+-- [YES] With index: Direct lookup (10 rows scanned)
 CREATE INDEX idx_orders_customer_id ON orders(customer_id);
 SELECT * FROM orders WHERE customer_id = 123;
 ```
@@ -409,14 +409,14 @@ async def update_user(user_id, name):
 ```
 
 **Pros:**
-- ✅ Scale reads (many replicas)
-- ✅ High availability (replicas become primary if primary fails)
-- ✅ Analytics (dedicated replica for reporting)
+- Scale reads (many replicas)
+- High availability (replicas become primary if primary fails)
+- Analytics (dedicated replica for reporting)
 
 **Cons:**
-- ❌ Eventual consistency (replicas behind)
-- ❌ Operational complexity (more servers to manage)
-- ❌ Replication lag issues
+- Eventual consistency (replicas behind)
+- Operational complexity (more servers to manage)
+- Replication lag issues
 
 ---
 
@@ -483,9 +483,9 @@ async def get_customer_orders(customer_id):
 ```
 
 **Choosing Shard Key:**
-- ✅ Good: `customer_id`, `user_id`, `company_id` (queries naturally by this key)
-- ❌ Bad: `order_id` (hard to query across shards later)
-- ❌ Bad: `timestamp` (uneven distribution, hot shards)
+- Good: `customer_id`, `user_id`, `company_id` (queries naturally by this key)
+- Bad: `order_id` (hard to query across shards later)
+- Bad: `timestamp` (uneven distribution, hot shards)
 
 **Gotchas:**
 ```
@@ -507,14 +507,14 @@ async def get_customer_orders(customer_id):
 ```
 
 **Pros:**
-- ✅ Scale writes (each shard handles portion)
-- ✅ Scale storage (data distributed)
-- ✅ Performance (smaller databases faster)
+- Scale writes (each shard handles portion)
+- Scale storage (data distributed)
+- Performance (smaller databases faster)
 
 **Cons:**
-- ❌ Complex queries (might span shards)
-- ❌ Resharding painful (moving data)
-- ❌ Distributed transactions difficult
+- Complex queries (might span shards)
+- Resharding painful (moving data)
+- Distributed transactions difficult
 
 ---
 
@@ -614,7 +614,7 @@ cursor.execute("SET TRANSACTION ISOLATION LEVEL REPEATABLE READ")
 
 **Bad (Slow):**
 ```python
-# ❌ N individual queries (slow)
+# [NO] N individual queries (slow)
 for user in users:
     cursor.execute(
         "INSERT INTO users (name, email) VALUES (%s, %s)",
@@ -625,7 +625,7 @@ for user in users:
 
 **Good (Fast):**
 ```python
-# ✅ 1 batch query (fast)
+# [YES] 1 batch query (fast)
 cursor.executemany(
     "INSERT INTO users (name, email) VALUES (%s, %s)",
     [(user.name, user.email) for user in users]
@@ -635,7 +635,7 @@ conn.commit()
 
 **Multi-Row Insert (Fastest):**
 ```python
-# ✅ Super fast - single SQL statement
+# [YES] Super fast - single SQL statement
 query = """
 INSERT INTO users (name, email) VALUES
 (%s, %s),
@@ -679,11 +679,11 @@ Read:
 ```
 
 **Pros:**
-- ✅ Data always consistent (cache = database)
-- ✅ Simple to reason about
+- Data always consistent (cache = database)
+- Simple to reason about
 
 **Cons:**
-- ❌ Every write hits database (slower)
+- Every write hits database (slower)
 
 ### Write-Behind Cache
 
@@ -702,12 +702,12 @@ Read:
 ```
 
 **Pros:**
-- ✅ Very fast writes (cache only)
-- ✅ Database load spread out
+- Very fast writes (cache only)
+- Database load spread out
 
 **Cons:**
-- ❌ Data inconsistency if cache crashes before flush
-- ❌ Complex implementation
+- Data inconsistency if cache crashes before flush
+- Complex implementation
 
 ---
 
@@ -740,21 +740,21 @@ Primary Database          Replica 1          Replica 2
 
 **Unoptimized Queries:**
 ```python
-# ❌ No indexes, full table scans
+# [NO] No indexes, full table scans
 SELECT * FROM orders WHERE customer_id = 123;
 
-# ✅ With index
+# [YES] With index
 CREATE INDEX idx_orders_customer_id ON orders(customer_id);
 ```
 
 **Connection Leak:**
 ```python
-# ❌ Connection never returned to pool
+# [NO] Connection never returned to pool
 conn = get_connection()
 result = conn.query("...")
 # Forgot to close/return!
 
-# ✅ Always return connection
+# [YES] Always return connection
 try:
     conn = get_connection()
     result = conn.query("...")
@@ -764,11 +764,11 @@ finally:
 
 **Reading after write without waiting:**
 ```python
-# ❌ Replication lag - might read old data from replica
+# [NO] Replication lag - might read old data from replica
 write_to_primary(data)
 read_from_replica(id)  # Might not see write yet!
 
-# ✅ Read from primary after write
+# [YES] Read from primary after write
 write_to_primary(data)
 read_from_primary(id)  # Guaranteed to see write
 ```
@@ -835,7 +835,7 @@ import (
     "time"
 )
 
-// ❌ N+1 problem: Multiple queries
+// [NO] N+1 problem: Multiple queries
 func getUsersAndOrdersBad(db *sql.DB) {
     rows, _ := db.Query("SELECT id FROM users LIMIT 10")
     for rows.Next() {
@@ -850,7 +850,7 @@ func getUsersAndOrdersBad(db *sql.DB) {
     }
 }
 
-// ✅ Optimized: JOIN reduces to single query
+// [YES] Optimized: JOIN reduces to single query
 func getUsersAndOrdersOptimized(db *sql.DB) {
     query := `
     SELECT u.id, u.name, o.id, o.total
@@ -932,7 +932,7 @@ type Order struct {
     Item   string
 }
 
-// ❌ Slow: One INSERT per row
+// [NO] Slow: One INSERT per row
 func insertOrdersOneByOne(db *sql.DB, orders []Order) {
     start := time.Now()
 
@@ -947,7 +947,7 @@ func insertOrdersOneByOne(db *sql.DB, orders []Order) {
     // Slow: 1000 rows = 1000 round trips to database
 }
 
-// ✅ Fast: Batch INSERT
+// [YES] Fast: Batch INSERT
 func insertOrdersBatch(db *sql.DB, orders []Order) error {
     start := time.Now()
 

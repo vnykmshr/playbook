@@ -221,14 +221,14 @@ Incoming on-call (Sarah):
 
 **What on-call should do:**
 
-✅ **During on-call week:**
+[YES] **During on-call week:**
 - Check phone for messages/alerts every 10 minutes
 - Respond to SEV-1/2 pages within 5 minutes
 - Acknowledge page (even if investigating)
 - Work from location where you can join calls (home, not hiking)
 - Sleep with phone nearby but on vibrate (not silent)
 
-❌ **During on-call week (avoid):**
+[NO] **During on-call week (avoid):**
 - Don't travel to areas without cell service
 - Don't go to venues with restricted phones (movies, concerts)
 - Don't drink heavily (need clear mind if paged)
@@ -237,14 +237,14 @@ Incoming on-call (Sarah):
 
 **What the company should do:**
 
-✅ **For on-call engineers:**
+[YES] **For on-call engineers:**
 - Pay on-call stipend (e.g., $500/week extra)
 - Give Friday afternoon flexible time off (if paged Thursday night)
 - Limit to 1 week on-call per month if possible
 - Provide on-call fatigue recovery (day off after heavy on-call)
 - Recognize/thank on-call people (they trade social life)
 
-❌ **Don't:**
+[NO] **Don't:**
 - Expect on-call to work extra (they're on-call instead of coding)
 - Schedule meetings during on-call week
 - Ignore on-call fatigue (leads to burnout)
@@ -288,11 +288,11 @@ New on-call person:
 **Step 3: Debrief (10 min)**
 ```
 Senior engineer reviews:
-  ✅ Did they recognize severity immediately?
-  ✅ Did they declare incident vs. investigating quietly?
-  ✅ Did they check the right dashboards/logs?
-  ✅ How fast did they identify root cause?
-  ✅ Did they communicate frequently enough?
+  [YES] Did they recognize severity immediately?
+  [YES] Did they declare incident vs. investigating quietly?
+  [YES] Did they check the right dashboards/logs?
+  [YES] How fast did they identify root cause?
+  [YES] Did they communicate frequently enough?
 
 Feedback:
   - What went well

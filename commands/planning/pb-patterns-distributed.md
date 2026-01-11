@@ -109,14 +109,14 @@ eventBus.subscribe('payment.processed', async (event) => {
 ```
 
 **Pros:**
-- ✅ Loose coupling (services don't know about each other)
-- ✅ Scalable (add new steps without changing others)
-- ✅ Decentralized (no orchestrator)
+- Loose coupling (services don't know about each other)
+- Scalable (add new steps without changing others)
+- Decentralized (no orchestrator)
 
 **Cons:**
-- ❌ Hard to track state (which step are we in?)
-- ❌ Hard to debug (events scattered across services)
-- ❌ Difficult to add timeouts/retries
+- Hard to track state (which step are we in?)
+- Hard to debug (events scattered across services)
+- Difficult to add timeouts/retries
 
 ### 2. Orchestration (Centralized)
 
@@ -183,14 +183,14 @@ async function fulfillOrder(order) {
 ```
 
 **Pros:**
-- ✅ Easy to track state (one place)
-- ✅ Easy to debug (centralized logic)
-- ✅ Easy to add timeouts/retries
+- Easy to track state (one place)
+- Easy to debug (centralized logic)
+- Easy to add timeouts/retries
 
 **Cons:**
-- ❌ Tight coupling (orchestrator knows all services)
-- ❌ Single point of failure (orchestrator goes down)
-- ❌ Orchestrator becomes bottleneck
+- Tight coupling (orchestrator knows all services)
+- Single point of failure (orchestrator goes down)
+- Orchestrator becomes bottleneck
 
 **Gotchas:**
 ```
@@ -268,16 +268,16 @@ eventBus.subscribe('UserProfileUpdated', async (event) => {
 ```
 
 **Pros:**
-- ✅ Optimize reads and writes separately
-- ✅ Read model can be denormalized (fast reads)
-- ✅ Event sourcing enables audit trail
-- ✅ Scale reads and writes independently
+- Optimize reads and writes separately
+- Read model can be denormalized (fast reads)
+- Event sourcing enables audit trail
+- Scale reads and writes independently
 
 **Cons:**
-- ❌ Eventual consistency (read model behind write model)
-- ❌ Complex to implement
-- ❌ More storage (storing events + read model)
-- ❌ Hard to delete data (audit trail preserved)
+- Eventual consistency (read model behind write model)
+- Complex to implement
+- More storage (storing events + read model)
+- Hard to delete data (audit trail preserved)
 
 **Gotchas:**
 ```
@@ -364,14 +364,14 @@ eventBus.subscribe('user.followed', async (event) => {
 ```
 
 **Guarantees:**
-- ✅ Fast writes (return immediately)
-- ✅ Eventual reads (data consistent within seconds)
-- ✅ Scalable (no locking)
+- Fast writes (return immediately)
+- Eventual reads (data consistent within seconds)
+- Scalable (no locking)
 
 **Trade-offs:**
-- ❌ Users see temporary inconsistency
-- ❌ Complex to reason about
-- ❌ Requires compensating actions for errors
+- Users see temporary inconsistency
+- Complex to reason about
+- Requires compensating actions for errors
 
 ---
 
@@ -437,14 +437,14 @@ result = await txn.execute([
 ```
 
 **Pros:**
-- ✅ Strong consistency (all-or-nothing)
-- ✅ ACID guarantees across services
+- Strong consistency (all-or-nothing)
+- ACID guarantees across services
 
 **Cons:**
-- ❌ Slow (two round-trips)
-- ❌ Blocking (locks held during prepare phase)
-- ❌ Coordinator failure means stuck transaction
-- ❌ Poor availability (one service down fails whole transaction)
+- Slow (two round-trips)
+- Blocking (locks held during prepare phase)
+- Coordinator failure means stuck transaction
+- Poor availability (one service down fails whole transaction)
 
 **Gotchas:**
 ```
@@ -462,8 +462,8 @@ result = await txn.execute([
 ```
 
 **When to use:**
-- ✅ Strong consistency critical (financial transactions)
-- ❌ Prefer Saga for loosely coupled services
+- Strong consistency critical (financial transactions)
+- Prefer Saga for loosely coupled services
 
 ---
 
@@ -529,11 +529,11 @@ try {
 
 **Using 2PC with loosely coupled services:**
 ```
-❌ Bad: Tight coupling, poor availability
+[NO] Bad: Tight coupling, poor availability
 Service A → Coordinator → Service B → Service C
 (All must be up and responsive)
 
-✅ Good: Use Saga + events instead
+[YES] Good: Use Saga + events instead
 Service A → Event → Service B
 Event → Service C
 (Services can be down independently)
@@ -541,11 +541,11 @@ Event → Service C
 
 **Ignoring eventual consistency window:**
 ```
-❌ Bad: Write data, immediate read assumes consistent
+[NO] Bad: Write data, immediate read assumes consistent
 data = write(user, 'John')
 user = read(user)  // Might be old data!
 
-✅ Good: Accept delay or read from write model
+[YES] Good: Accept delay or read from write model
 write(user, 'John')  // Async
 return { success: true }  // Don't promise immediate visibility
 // Client retries read in UI if needed
@@ -553,11 +553,11 @@ return { success: true }  // Don't promise immediate visibility
 
 **Creating saga with too many steps:**
 ```
-❌ Bad: 20-step saga, hard to debug
+[NO] Bad: 20-step saga, hard to debug
 Step 1 → Step 2 → ... → Step 20
 (If step 15 fails, debugging nightmare)
 
-✅ Good: Break into smaller sagas
+[YES] Good: Break into smaller sagas
 Saga 1: Order fulfillment (5 steps)
 Saga 2: Inventory management (3 steps)
 (Each saga can be tested independently)

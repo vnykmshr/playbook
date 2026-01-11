@@ -17,7 +17,7 @@ Performance matters:
 
 ## When to Optimize
 
-### ❌ DON'T Optimize:
+### [NO] DON'T Optimize:
 
 - Too early: Before you have users / load
 - Without measurement: Guessing slows you down more
@@ -25,7 +25,7 @@ Performance matters:
 - Premature: "This might be slow someday"
 - Diminishing returns: Optimizing 1% of total time
 
-### ✅ DO Optimize:
+### [YES] DO Optimize:
 
 - When users complain: "Site is slow"
 - When metrics show problem: P99 latency > target
@@ -513,7 +513,7 @@ wrk -t 20 -c 100 -d 60s -s optimize.lua http://localhost:8000/api/search
 
 ## Common Optimization Mistakes
 
-### ❌ Mistake 1: Optimize Wrong Layer
+### [NO] Mistake 1: Optimize Wrong Layer
 
 ```
 Problem: "Website slow"
@@ -523,7 +523,7 @@ Right fix: Optimize API (80% of problem)
 Lesson: Measure first, optimize biggest impact
 ```
 
-### ❌ Mistake 2: Optimize Before Growth
+### [NO] Mistake 2: Optimize Before Growth
 
 ```
 Situation: Brand new startup, 10 users
@@ -532,7 +532,7 @@ Reality: Spend time on features instead
 Lesson: Optimize when you need to (when traffic grows or metrics slip)
 ```
 
-### ❌ Mistake 3: Premature Microservices
+### [NO] Mistake 3: Premature Microservices
 
 ```
 Problem: App slow
@@ -541,7 +541,7 @@ Reality: Microservices slower (network latency between services)
 Lesson: Monolith fast, microservices slow (use when you need independent scaling)
 ```
 
-### ❌ Mistake 4: Cache Everything
+### [NO] Mistake 4: Cache Everything
 
 ```
 Problem: "Cache will make it faster"

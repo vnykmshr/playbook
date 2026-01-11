@@ -74,16 +74,16 @@ Each service:
 ```
 
 **Pros:**
-- ✅ Independent scaling (payment service under load? Scale just that)
-- ✅ Independent deployment (order service update doesn't affect payments)
-- ✅ Technology flexibility (use Node for one, Python for another)
-- ✅ Clear boundaries (easy to understand what each does)
+- Independent scaling (payment service under load? Scale just that)
+- Independent deployment (order service update doesn't affect payments)
+- Technology flexibility (use Node for one, Python for another)
+- Clear boundaries (easy to understand what each does)
 
 **Cons:**
-- ❌ Operational complexity (many services to manage)
-- ❌ Network latency (services talking over network)
-- ❌ Data consistency harder (each has own database)
-- ❌ Debugging harder (request spans multiple services)
+- Operational complexity (many services to manage)
+- Network latency (services talking over network)
+- Data consistency harder (each has own database)
+- Debugging harder (request spans multiple services)
 
 **When to use:**
 - Team size > 10 people (each team owns a service)
@@ -172,16 +172,16 @@ eventBus.subscribe('order.created', async (event) => {
 ```
 
 **Pros:**
-- ✅ Loose coupling (services don't know about each other)
-- ✅ Scalable (can add listeners without changing publisher)
-- ✅ Resilient (if one service is slow, doesn't block others)
-- ✅ Debuggable (event history is audit trail)
+- Loose coupling (services don't know about each other)
+- Scalable (can add listeners without changing publisher)
+- Resilient (if one service is slow, doesn't block others)
+- Debuggable (event history is audit trail)
 
 **Cons:**
-- ❌ Harder to debug (request spans multiple services asynchronously)
-- ❌ Eventual consistency (order created, payment might fail later)
-- ❌ Operational complexity (need event broker)
-- ❌ Ordering challenges (events might arrive out of order)
+- Harder to debug (request spans multiple services asynchronously)
+- Eventual consistency (order created, payment might fail later)
+- Operational complexity (need event broker)
+- Ordering challenges (events might arrive out of order)
 
 **Gotchas:**
 ```
@@ -268,10 +268,10 @@ await callWithRetry(() => paymentService.charge(99.99));
 ```
 
 **When to use:**
-- ✅ Calling external APIs (network timeouts happen)
-- ✅ Database operations (short temporary outages)
-- ❌ NOT for validation errors (retrying won't help)
-- ❌ NOT for authorization failures (retrying won't help)
+- Calling external APIs (network timeouts happen)
+- Database operations (short temporary outages)
+- NOT for validation errors (retrying won't help)
+- NOT for authorization failures (retrying won't help)
 
 **Gotchas:**
 ```
@@ -370,10 +370,10 @@ except CircuitBreakerOpen:
 ```
 
 **When to use:**
-- ✅ Calling external APIs (prevent cascading failures)
-- ✅ Database connection pooling
-- ✅ Any resource that might be temporarily down
-- ❌ NOT for immediate failures you want to handle differently
+- Calling external APIs (prevent cascading failures)
+- Database connection pooling
+- Any resource that might be temporarily down
+- NOT for immediate failures you want to handle differently
 
 ---
 
@@ -418,14 +418,14 @@ def get_user(user_id):
 - Database query cache (depends on database)
 
 **Pros:**
-- ✅ Simple to implement
-- ✅ Huge performance improvement (10-100x faster)
-- ✅ Scales well (distribute caches across servers)
+- Simple to implement
+- Huge performance improvement (10-100x faster)
+- Scales well (distribute caches across servers)
 
 **Cons:**
-- ❌ Stale data (cache might be old)
-- ❌ Cache invalidation (when data changes)
-- ❌ Memory cost (storing data twice)
+- Stale data (cache might be old)
+- Cache invalidation (when data changes)
+- Memory cost (storing data twice)
 
 **Gotchas:**
 ```
@@ -512,9 +512,9 @@ def order_processing():
 ```
 
 **When to use:**
-- ✅ Protecting against resource exhaustion
-- ✅ Services with different loads (payment slow, orders fast)
-- ✅ Critical systems that must stay available
+- Protecting against resource exhaustion
+- Services with different loads (payment slow, orders fast)
+- Critical systems that must stay available
 
 ---
 
@@ -575,10 +575,10 @@ repo.update(123, name="New Name")
 ```
 
 **Benefits:**
-- ✅ Centralized data access (one place to change queries)
-- ✅ Easy to test (mock repository for unit tests)
-- ✅ Easy to swap databases (change repository, not whole app)
-- ✅ Consistency (same query patterns everywhere)
+- Centralized data access (one place to change queries)
+- Easy to test (mock repository for unit tests)
+- Easy to swap databases (change repository, not whole app)
+- Consistency (same query patterns everywhere)
 
 ---
 
@@ -636,9 +636,9 @@ def get_user(user_id: int):
 ```
 
 **Benefits:**
-- ✅ Security (don't expose internal fields)
-- ✅ Flexibility (database schema ≠ API contract)
-- ✅ Clarity (API shows exactly what's available)
+- Security (don't expose internal fields)
+- Flexibility (database schema ≠ API contract)
+- Clarity (API shows exactly what's available)
 
 ---
 
@@ -752,10 +752,10 @@ Phase 4: Remove old system when everything migrated
 ```
 
 **Benefits:**
-- ✅ No downtime (systems run in parallel)
-- ✅ Gradual migration (low risk)
-- ✅ Ability to rollback (old system still there)
-- ✅ Real traffic testing (new system handles real requests)
+- No downtime (systems run in parallel)
+- Gradual migration (low risk)
+- Ability to rollback (old system still there)
+- Real traffic testing (new system handles real requests)
 
 ---
 
@@ -920,7 +920,7 @@ Notification Service
 
 **Wrong:** Retry without Circuit Breaker
 ```
-❌ Bad: Keep retrying failed service
+[NO] Bad: Keep retrying failed service
 Request 1 → Wait 1s, fail
 Request 2 → Wait 2s, fail
 Request 3 → Wait 4s, fail
@@ -930,7 +930,7 @@ Result: Slow cascading failure
 
 **Right:** Circuit Breaker first, Retry later
 ```
-✅ Good: Circuit breaker detects failure, stops retrying
+[YES] Good: Circuit breaker detects failure, stops retrying
 Request 1-5 → All fail → Circuit Breaker opens
 Request 6 → Fail immediately (don't even try)
 Request 7 → Half-open test → Success → Circuit closes
@@ -1016,17 +1016,17 @@ Benefits:
 
 **Too many patterns:**
 ```
-❌ Every new problem → find a pattern
-❌ Using Strangler Fig, Event-Driven, Microservices, Circuit Breaker, etc.
-❌ System is complex to understand
+[NO] Every new problem → find a pattern
+[NO] Using Strangler Fig, Event-Driven, Microservices, Circuit Breaker, etc.
+[NO] System is complex to understand
 ```
 
 **Right amount of patterns:**
 ```
-✅ Use patterns for recurring problems
-✅ Only when simpler solution doesn't work
-✅ Understand pattern before using it
-✅ Document why pattern was chosen
+[YES] Use patterns for recurring problems
+[YES] Only when simpler solution doesn't work
+[YES] Understand pattern before using it
+[YES] Document why pattern was chosen
 ```
 
 **Pattern checklist:**

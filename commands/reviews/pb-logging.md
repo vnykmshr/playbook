@@ -32,8 +32,8 @@ logger.debug("Cache hit for key: user_profile_123")
 - Should not be logged to production by default (configure via log level)
 
 **Pitfalls:**
-- ❌ Not useful in production (logging is disabled anyway)
-- ❌ Creates noise if left at DEBUG level unnecessarily
+- Not useful in production (logging is disabled anyway)
+- Creates noise if left at DEBUG level unnecessarily
 
 ---
 
@@ -54,9 +54,9 @@ logger.info("Job completed", extra={"job_id": 999, "duration_ms": 5000, "status"
 - Follows "Verb + noun + context" pattern
 
 **Pitfalls:**
-- ❌ "Processing user" - too vague
-- ❌ "Got here" - non-actionable
-- ✅ "User registration initiated" - clear and actionable
+- "Processing user" - too vague
+- "Got here" - non-actionable
+- "User registration initiated" - clear and actionable
 
 ---
 
@@ -87,9 +87,9 @@ logger.warning("Cache miss spike detected", extra={
 - Includes metrics or context for investigation
 
 **Pitfalls:**
-- ❌ Warning for every retried request (too noisy)
-- ❌ Warning for expected rate limit responses (should be INFO if handled)
-- ✅ Warning for unusual patterns: slow queries, high error rates
+- Warning for every retried request (too noisy)
+- Warning for expected rate limit responses (should be INFO if handled)
+- Warning for unusual patterns: slow queries, high error rates
 
 ---
 
@@ -118,8 +118,8 @@ logger.error("Database connection failed", extra={
 - Stack traces helpful only for unexpected errors
 
 **Critical:**
-- ❌ Never log passwords, API keys, PII, or sensitive data
-- ✅ Log error codes and codes that help identify the issue
+- Never log passwords, API keys, PII, or sensitive data
+- Log error codes and codes that help identify the issue
 
 ---
 
@@ -145,8 +145,8 @@ logger.critical("Authentication service down", extra={
 - Should be rare (aim for < 1 per month)
 
 **Pitfalls:**
-- ❌ Using CRITICAL for issues that only affect one user
-- ✅ Using CRITICAL only for platform-wide outages
+- Using CRITICAL for issues that only affect one user
+- Using CRITICAL only for platform-wide outages
 
 ---
 
@@ -155,7 +155,7 @@ logger.critical("Authentication service down", extra={
 ### Authentication & Authorization
 
 ```python
-# ✅ Good: Log security events without exposing credentials
+# [YES] Good: Log security events without exposing credentials
 logger.info("User login successful", extra={
     "user_id": 789,
     "login_method": "email_password",
@@ -174,14 +174,14 @@ logger.error("Account locked after failed attempts", extra={
     "lockout_duration_min": 30
 })
 
-# ❌ Bad: Logging credentials
+# [NO] Bad: Logging credentials
 logger.debug("Login attempt", extra={"username": "user@example.com", "password": "secret123"})
 ```
 
 ### External Service Calls
 
 ```python
-# ✅ Good: Log request, response, and timing
+# [YES] Good: Log request, response, and timing
 logger.info("Payment service called", extra={
     "service": "stripe",
     "method": "charge",
@@ -206,7 +206,7 @@ logger.error("Payment service error", extra={
 ### Database Operations
 
 ```python
-# ✅ Good: Log queries that matter
+# [YES] Good: Log queries that matter
 logger.info("Order created in database", extra={
     "order_id": "ORD-999",
     "customer_id": 456,
@@ -219,7 +219,7 @@ logger.warning("Slow database query", extra={
     "rows_returned": 50000
 })
 
-# ❌ Bad: Logging every SELECT (creates noise)
+# [NO] Bad: Logging every SELECT (creates noise)
 logger.debug("SELECT user WHERE id = 123")
 logger.debug("SELECT orders WHERE customer_id = 456")
 ```
@@ -227,7 +227,7 @@ logger.debug("SELECT orders WHERE customer_id = 456")
 ### Job/Task Processing
 
 ```python
-# ✅ Good: Log job lifecycle
+# [YES] Good: Log job lifecycle
 logger.info("Background job started", extra={
     "job_id": 999,
     "job_type": "send_email",
@@ -255,7 +255,7 @@ logger.error("Background job failed", extra={
 ### Consistent Format
 
 ```python
-# ✅ Good: JSON structured logging
+# [YES] Good: JSON structured logging
 import json
 import logging
 
@@ -304,7 +304,7 @@ def correlation_id_middleware(request):
 ### Context and Exception Handling
 
 ```python
-# ✅ Good: Include exception context
+# [YES] Good: Include exception context
 try:
     process_payment(order)
 except PaymentError as e:
@@ -363,7 +363,7 @@ logging.getLogger('myapp.payment').setLevel(logging.DEBUG)      # More verbose f
 
 ### Problem: "Log Bombing" - Too Many Logs
 
-**❌ Example:**
+**[NO] Example:**
 ```python
 for user_id in user_ids:
     logger.info(f"Processing user {user_id}")  # Logs 1000 times!
@@ -371,7 +371,7 @@ for user_id in user_ids:
     logger.info(f"Updated database for user {user_id}")
 ```
 
-**✅ Fix:**
+**[YES] Fix:**
 ```python
 logger.info("Starting bulk user processing", extra={"total_users": len(user_ids)})
 for user_id in user_ids:
@@ -393,13 +393,13 @@ logger.info("Bulk user processing completed", extra={
 
 ### Problem: Missing Context
 
-**❌ Bad:**
+**[NO] Bad:**
 ```python
 logger.error("Connection failed")  # Which connection? Which service?
 logger.warning("Request timed out")  # Which request? What timeout?
 ```
 
-**✅ Good:**
+**[YES] Good:**
 ```python
 logger.error("Database connection failed", extra={
     "host": "db.prod.example.com",
@@ -419,7 +419,7 @@ logger.warning("API request timed out", extra={
 
 ### Problem: Logging Sensitive Data
 
-**❌ Bad:**
+**[NO] Bad:**
 ```python
 logger.info("User login", extra={
     "email": user.email,
@@ -428,7 +428,7 @@ logger.info("User login", extra={
 })
 ```
 
-**✅ Good:**
+**[YES] Good:**
 ```python
 logger.info("User login successful", extra={
     "user_id": user.id,

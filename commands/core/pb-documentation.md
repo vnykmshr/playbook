@@ -393,8 +393,8 @@ print(f"Order created: {order.id}")
 ```
 
 ## Common mistakes
-- ❌ Empty items list (will raise ValueError)
-- ❌ Forgetting payment method (will fail at checkout)
+- Empty items list (will raise ValueError)
+- Forgetting payment method (will fail at checkout)
 ```
 
 ### 4. Keep It Updated

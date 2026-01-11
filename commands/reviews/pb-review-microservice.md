@@ -23,16 +23,16 @@ Microservice reviews ensure:
 **Question: Is this the right scope for a service?**
 
 **Bad Service Boundaries:**
-- ❌ Service per function (getUser, createUser, deleteUser = 3 services)
-- ❌ Service per tier (frontend, backend, database services)
-- ❌ Service per database table
-- ❌ Shared database between services
+- Service per function (getUser, createUser, deleteUser = 3 services)
+- Service per tier (frontend, backend, database services)
+- Service per database table
+- Shared database between services
 
 **Good Service Boundaries:**
-- ✅ Service per business domain (User Service, Order Service, Payment Service)
-- ✅ Service owns its data (no shared database)
-- ✅ Service encapsulates related functionality
-- ✅ Service is independently deployable
+- Service per business domain (User Service, Order Service, Payment Service)
+- Service owns its data (no shared database)
+- Service encapsulates related functionality
+- Service is independently deployable
 
 **Checklist:**
 ```
@@ -47,7 +47,7 @@ Microservice reviews ensure:
 
 **Example: Good vs Bad Boundaries**
 
-**❌ Bad:**
+**[NO] Bad:**
 ```
 UserService:
   - User authentication
@@ -59,7 +59,7 @@ UserService:
 (Too big, mixing auth + profile + permissions)
 ```
 
-**✅ Good:**
+**[YES] Good:**
 ```
 Identity Service:
   - User authentication
@@ -233,7 +233,7 @@ class UserService:
         finally:
             conn.release()
 
-# ❌ Bad: Sharing database
+# [NO] Bad: Sharing database
 # Both services query same database
 class OrderService:
     def __init__(self, shared_db_pool):

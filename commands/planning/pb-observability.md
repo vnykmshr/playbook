@@ -183,14 +183,14 @@ CRITICAL Use: System is down or degraded
 
 ### What to Log
 
-✅ **DO Log**:
+[YES] **DO Log**:
 - Errors and exceptions (with stack traces)
 - Major state changes (user logged in, order placed)
 - Performance concerns (slow queries, timeouts)
 - Security events (login attempts, permission denials)
 - Debugging info (request IDs, user context)
 
-❌ **DON'T Log**:
+[NO] **DON'T Log**:
 - User passwords, API keys, tokens
 - Full credit card numbers (log last 4 digits only)
 - Personally identifiable info (unless required)
@@ -530,9 +530,9 @@ Copy this for each critical service:
 
 | SLI | Target | Actual | Status | Burn |
 |-----|--------|--------|--------|------|
-| Latency P99 | < 500ms | 185ms | ✅ Green | Good |
-| Success rate | > 99.99% | 99.991% | ✅ Green | Good |
-| Availability | 99.9% | 99.94% | ✅ Green | Good |
+| Latency P99 | < 500ms | 185ms | [YES] Green | Good |
+| Success rate | > 99.99% | 99.991% | [YES] Green | Good |
+| Availability | 99.9% | 99.94% | [YES] Green | Good |
 | Budget remaining | 43.2 min | 38 min | ⚠️ Yellow | Normal |
 
 ### Actions

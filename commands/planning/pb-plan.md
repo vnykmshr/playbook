@@ -202,8 +202,8 @@ todos/releases/vX.Y.Z/
 
 | Phase | Focus | Priority | Status |
 |-------|-------|----------|--------|
-| 1 | [Name] | P1 | ⏳ |
-| 2 | [Name] | P2 | ⏳ |
+| 1 | [Name] | P1 | pending |
+| 2 | [Name] | P2 | pending |
 
 ---
 
@@ -211,9 +211,9 @@ todos/releases/vX.Y.Z/
 
 | Gate | After | Sign-off | Status |
 |------|-------|----------|--------|
-| Scope Lock | Planning | [Who] | ⏳ |
-| Ready for QA | Implementation | [Who] | ⏳ |
-| Ready for Release | QA | [Who] | ⏳ |
+| Scope Lock | Planning | [Who] | pending |
+| Ready for QA | Implementation | [Who] | pending |
+| Ready for Release | QA | [Who] | pending |
 
 ---
 
@@ -330,40 +330,40 @@ todos/releases/vX.Y.Z/
 ### Surgical Precision
 
 ```
-❌ "While I'm here, I'll also refactor this other thing"
-✅ "This change does exactly one thing: [X]"
+[NO] "While I'm here, I'll also refactor this other thing"
+[YES] "This change does exactly one thing: [X]"
 
-❌ "Let me add comprehensive error handling everywhere"
-✅ "This endpoint needs validation because users hit this error"
+[NO] "Let me add comprehensive error handling everywhere"
+[YES] "This endpoint needs validation because users hit this error"
 
-❌ "We should add tests for all the things"
-✅ "This specific behavior broke before, adding a regression test"
+[NO] "We should add tests for all the things"
+[YES] "This specific behavior broke before, adding a regression test"
 ```
 
 ### Scope Discipline
 
 ```
-❌ "This is related, so let's include it"
-✅ "That's valuable, but out of scope. Adding to backlog."
+[NO] "This is related, so let's include it"
+[YES] "That's valuable, but out of scope. Adding to backlog."
 
-❌ "We might need this later"
-✅ "We'll add it when we need it"
+[NO] "We might need this later"
+[YES] "We'll add it when we need it"
 
-❌ "Let's make it configurable"
-✅ "Let's hardcode the only value we use"
+[NO] "Let's make it configurable"
+[YES] "Let's hardcode the only value we use"
 ```
 
 ### Progress Over Perfection
 
 ```
-❌ Wait for perfect solution
-✅ Ship good-enough solution, iterate
+[NO] Wait for perfect solution
+[YES] Ship good-enough solution, iterate
 
-❌ Batch all improvements into one release
-✅ Ship improvements incrementally
+[NO] Batch all improvements into one release
+[YES] Ship improvements incrementally
 
-❌ Plan for every edge case upfront
-✅ Handle edge cases when they occur
+[NO] Plan for every edge case upfront
+[YES] Handle edge cases when they occur
 ```
 
 ---
@@ -447,9 +447,9 @@ After planning is complete and scope is locked, implement individual todos using
 ### When to Use `/pb-todo-implement`
 
 Once you have:
-- ✅ Scope locked
-- ✅ Phases defined
-- ✅ Todos broken down into concrete tasks
+- Scope locked
+- Phases defined
+- Todos broken down into concrete tasks
 
 Then for each todo:
 

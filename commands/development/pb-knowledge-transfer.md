@@ -364,8 +364,8 @@ Total: ~10 minutes
   - Solution: Always clear cache when refund is processed
 
 ### Bugs & Limitations
-- ❌ Refunds can only be done within 90 days of charge (Stripe limitation)
-- ❌ Large payouts (>$100k) are delayed 7 days in test mode
+- Refunds can only be done within 90 days of charge (Stripe limitation)
+- Large payouts (>$100k) are delayed 7 days in test mode
 - ⚠️ Webhook retries sometimes arrive out-of-order
 
 ### Non-Obvious Behaviors

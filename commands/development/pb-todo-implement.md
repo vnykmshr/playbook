@@ -491,14 +491,14 @@ todos/
 ### Checkpoint Design
 
 ```
-❌ Too coarse: "[ ] Implement everything"
-✅ Right-sized: "[ ] Add validation to email input (user.ts:45-60)"
+[NO] Too coarse: "[ ] Implement everything"
+[YES] Right-sized: "[ ] Add validation to email input (user.ts:45-60)"
 
-❌ Too vague: "[ ] Fix the bugs"
-✅ Clear: "[ ] Fix password reset error when email has +address (fix in auth-service.ts:120)"
+[NO] Too vague: "[ ] Fix the bugs"
+[YES] Clear: "[ ] Fix password reset error when email has +address (fix in auth-service.ts:120)"
 
-❌ Too many: "[ ] Change 1 variable, [ ] Change 2 variables, [ ] Change 3 variables"
-✅ Grouped: "[ ] Update config variables in config.ts:10-30"
+[NO] Too many: "[ ] Change 1 variable, [ ] Change 2 variables, [ ] Change 3 variables"
+[YES] Grouped: "[ ] Update config variables in config.ts:10-30"
 ```
 
 ### Effort Estimation

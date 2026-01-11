@@ -78,13 +78,13 @@ def test_json_roundtrip(data):
 
 ### When to Use Property-Based Testing
 
-✅ **DO** use for:
+[YES] **DO** use for:
 - Utility functions (sort, parse, format)
 - Mathematical functions
 - Data structure operations
 - Encoding/decoding
 
-❌ **DON'T** use for:
+[NO] **DON'T** use for:
 - Functions with complex business logic
 - Functions with side effects
 - Database queries
@@ -181,13 +181,13 @@ mvn install pitest:mutationCoverage
 
 ### When to Use Mutation Testing
 
-✅ **DO** use for:
+[YES] **DO** use for:
 - Critical code paths
 - Mathematical/utility functions
 - Security code
 - Data validation
 
-❌ **DON'T** use for:
+[NO] **DON'T** use for:
 - Every function (slow, overkill)
 - Integration tests
 - UI code
@@ -281,13 +281,13 @@ pact.verify()  # PASS or FAIL
 
 ### When to Use Contract Testing
 
-✅ **DO** use for:
+[YES] **DO** use for:
 - Microservices communication
 - Public APIs
 - Third-party integrations
 - Service boundaries
 
-❌ **DON'T** use for:
+[NO] **DON'T** use for:
 - Internal functions
 - Single-service monoliths
 - Unit tests
@@ -376,13 +376,13 @@ rollbacks:
 
 ### When to Use Chaos Testing
 
-✅ **DO** use for:
+[YES] **DO** use for:
 - Distributed systems
 - Microservices
 - Critical paths
 - Before major incidents happen
 
-❌ **DON'T** use for:
+[NO] **DON'T** use for:
 - Development environments
 - Simple systems
 - Nice-to-have features
@@ -448,13 +448,13 @@ wrk -c 1000 http://localhost:8000/
 
 ### Safe Practices
 
-✅ **Production Testing:**
+[YES] **Production Testing:**
 - Real traffic reveals real issues
 - Catch edge cases not seen in tests
 - Validate actual performance
 - Test real integrations
 
-❌ **But be careful:**
+[NO] **But be careful:**
 - Don't corrupt user data
 - Don't expose security issues
 - Have rollback ready
@@ -528,7 +528,7 @@ def synthetic_test_production():
 ### Problem: Production Data in Tests
 
 ```python
-# ❌ BAD: Using real production data
+# [NO] BAD: Using real production data
 def test_checkout():
     user = User.objects.get(id=12345)  # Real user
     checkout = checkout_flow(user)
@@ -538,7 +538,7 @@ def test_checkout():
 ### Solution: Test Data Builders
 
 ```python
-# ✅ GOOD: Build test data on demand
+# [YES] GOOD: Build test data on demand
 class UserBuilder:
     def __init__(self):
         self.email = f"test_{uuid4()}@example.com"

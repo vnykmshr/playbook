@@ -122,7 +122,7 @@ BREAKING CHANGE: Email is now required for signup
 
 One commit = One logical change. Examples:
 
-### ✅ GOOD: Logical, Atomic
+### [YES] GOOD: Logical, Atomic
 
 **Commit 1**: "feat(auth): add password reset flow"
 ```
@@ -142,21 +142,21 @@ One commit = One logical change. Examples:
 ```
 *Why it's good*: One refactoring, affects multiple places, still one logical change
 
-### ❌ BAD: Too Large
+### [NO] BAD: Too Large
 
 ```
 feat(auth): add email verification and password reset and 2FA
 ```
 *Why it's bad*: Three unrelated features, hard to review, hard to revert one without others
 
-### ❌ BAD: Too Small
+### [NO] BAD: Too Small
 
 ```
 feat(auth): add import statement for bcrypt
 ```
 *Why it's bad*: Doesn't work on its own, meaningless by itself
 
-### ❌ BAD: Mixed Concerns
+### [NO] BAD: Mixed Concerns
 
 ```
 feat(auth): add password reset
@@ -171,7 +171,7 @@ docs: update README
 
 ### Example 1: Authentication Feature
 
-❌ BAD
+[NO] BAD
 ```
 git commit -m "fix stuff"
 ```
@@ -179,7 +179,7 @@ git commit -m "fix stuff"
 - Impossible to understand what changed
 - Useless in git blame/bisect
 
-✅ GOOD
+[YES] GOOD
 ```
 git commit -m "feat(auth): implement JWT refresh token rotation
 
@@ -192,7 +192,7 @@ Fixes #456"
 
 ### Example 2: Bug Fix
 
-❌ BAD
+[NO] BAD
 ```
 git commit -m "fixed bug in user lookup
 
@@ -202,7 +202,7 @@ modified the query. also cleaned up some code and added logging"
 - Multiple concerns (fix + cleanup + logging)
 - No reference to issue
 
-✅ GOOD
+[YES] GOOD
 ```
 git commit -m "fix(database): handle NULL values in user lookup
 
@@ -214,7 +214,7 @@ Fixes #789"
 
 ### Example 3: Refactoring
 
-❌ BAD
+[NO] BAD
 ```
 git commit -m "refactored code
 
@@ -224,7 +224,7 @@ Extracted common logic, renamed variables, updated imports"
 - Why extract it?
 - No impact analysis
 
-✅ GOOD
+[YES] GOOD
 ```
 git commit -m "refactor(api): extract request validation middleware
 
@@ -360,7 +360,7 @@ BREAKING CHANGE: Requires Node 14+
 
 ## Tips for Great Commits
 
-### ✅ DO
+### [YES] DO
 
 - **Be specific**: "add email validation" not "add validation"
 - **One thought per commit**: All parts of one feature, not multiple features
@@ -369,7 +369,7 @@ BREAKING CHANGE: Requires Node 14+
 - **Link to issues**: Reference the issue/ticket being fixed
 - **Use present tense**: "add feature" not "added feature"
 
-### ❌ DON'T
+### [NO] DON'T
 
 - **Don't mix concerns**: One fix + one refactor + one docs update = 3 commits
 - **Don't make mega-commits**: If you can't describe it in one sentence, it's too big

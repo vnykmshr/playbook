@@ -26,11 +26,11 @@ Async standups provide visibility into:
 ```markdown
 ## Standup: [Your Name] - [Date]
 
-### Yesterday ✅
+### Yesterday [YES]
 - [Task completed with link/PR/commit]
 - [Task completed]
 
-### Today 🔄
+### Today in progress
 - [Current focus]
 - [Planned task]
 
@@ -48,12 +48,12 @@ Async standups provide visibility into:
 ```markdown
 ## Standup: Sarah - 2026-01-13
 
-### Yesterday ✅
+### Yesterday [YES]
 - Implemented user authentication endpoint (PR #234)
 - Added unit tests for auth logic
 - Fixed bug in password validation
 
-### Today 🔄
+### Today in progress
 - Refactoring database queries for performance
 - Adding integration tests for auth flow
 - Pairing with James on API contract
@@ -78,7 +78,7 @@ Use when you need to provide more context or detailed progress update.
 ### Section 1: Yesterday (What Got Done)
 
 List completed work from the previous working day:
-- ✅ **Task description** — Brief outcome
+- **Task description** — Brief outcome
   - Where to find it: PR link, commit, test results, screenshot
 
 **Guidelines:**
@@ -89,7 +89,7 @@ List completed work from the previous working day:
 
 **Example:**
 ```
-### Yesterday ✅
+### Yesterday [YES]
 - Created payment webhook endpoint (PR #445)
 - Added webhook signature validation tests
 - Reviewed team's database design PR #440
@@ -99,8 +99,8 @@ List completed work from the previous working day:
 ### Section 2: Today (Current Focus & Plans)
 
 What you're working on right now and what's planned:
-- 🔄 **Current task** — What you're actively coding on
-- 📋 **Planned task** — What comes next
+- in progress **Current task** — What you're actively coding on
+- task **Planned task** — What comes next
 - ⏸️ **Waiting on** — Things you're waiting for (feedback, approval, dependency)
 
 **Guidelines:**
@@ -111,7 +111,7 @@ What you're working on right now and what's planned:
 
 **Example:**
 ```
-### Today 🔄
+### Today in progress
 - Debugging rate limiter edge case (in progress, hoping to complete by noon)
 - Adding caching layer to user queries (if rate limiter done)
 - Waiting on QA sign-off from yesterday's changes before deploying
@@ -211,14 +211,14 @@ Expand to include:
 
 ### Writing Effective Standups
 
-✅ **DO:**
+[YES] **DO:**
 - Be specific ("Added validation for email input" not "Worked on form")
 - Include links (PR, commit, dashboard, screenshot)
 - Be honest about blockers and concerns
 - Keep it scannable (bullet points, one thought per line)
 - Write for someone who doesn't know the project
 
-❌ **DON'T:**
+[NO] **DON'T:**
 - Over-explain ("Spent 2 hours debugging" — just say "Fixed bug X")
 - Use jargon without context
 - Make excuses ("Lots of meetings" — just note if it affected progress)
@@ -295,11 +295,11 @@ Standups create a paper trail of:
 ```markdown
 ## Standup: [Your Name] - [Date: YYYY-MM-DD]
 
-### Yesterday ✅
+### Yesterday [YES]
 - [ ] Task 1
 - [ ] Task 2
 
-### Today 🔄
+### Today in progress
 - [ ] Current work
 - [ ] Next task
 

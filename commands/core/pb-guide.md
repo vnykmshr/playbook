@@ -1460,5 +1460,5 @@ This covers:
 - **Team & Growth** → `/pb-team`, `/pb-onboarding`, `/pb-documentation`
 
 **See also:**
-- `/docs/integration-guide.md` — Comprehensive guide showing all 45 commands, workflows, and how they work together
+- `/docs/integration-guide.md` — Comprehensive guide showing all commands, workflows, and how they work together
 - `/docs/command-index.md` — Quick reference by category

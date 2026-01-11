@@ -206,7 +206,7 @@ update code
 - `/pb-commit` — Craft atomic, well-formatted commit
 - `/pb-pr` — Create pull request with context
 
-**See also**: `/docs/integration-guide.md` for how all 45 commands work together
+**See also**: `/docs/integration-guide.md` for how all commands work together
 
 ---
 

@@ -87,7 +87,7 @@ fetch_user(123, handle_result)
 
 **Callback Hell (Anti-pattern):**
 ```javascript
-// ❌ Nested callbacks - hard to read and maintain
+// [NO] Nested callbacks - hard to read and maintain
 fetchUser(123, (error, user) => {
   if (error) {
     handleError(error);
@@ -108,24 +108,24 @@ fetchUser(123, (error, user) => {
   }
 });
 
-// ✅ Better: Use Promises or async/await instead
+// [YES] Better: Use Promises or async/await instead
 ```
 
 **Pros:**
-- ✅ Simple concept
-- ✅ No special syntax needed
-- ✅ Works in all JavaScript environments
+- Simple concept
+- No special syntax needed
+- Works in all JavaScript environments
 
 **Cons:**
-- ❌ Error handling repetitive
-- ❌ Callback hell (deeply nested)
-- ❌ Hard to sequence operations
-- ❌ Hard to parallelize operations
+- Error handling repetitive
+- Callback hell (deeply nested)
+- Hard to sequence operations
+- Hard to parallelize operations
 
 **When to use:**
 - Simple one-off async operations
 - Event handlers
-- ❌ Generally avoid in favor of Promises/async-await
+- Generally avoid in favor of Promises/async-await
 
 ---
 
@@ -203,15 +203,15 @@ const fast = Promise.race([
 ```
 
 **Pros:**
-- ✅ Cleaner than callbacks
-- ✅ Easy to chain operations
-- ✅ Easy to parallelize with Promise.all()
-- ✅ Standardized error handling
+- Cleaner than callbacks
+- Easy to chain operations
+- Easy to parallelize with Promise.all()
+- Standardized error handling
 
 **Cons:**
-- ❌ Still somewhat verbose
-- ❌ Easy to get wrong (unhandled rejections)
-- ❌ Hard to debug (.then() chains)
+- Still somewhat verbose
+- Easy to get wrong (unhandled rejections)
+- Hard to debug (.then() chains)
 
 **When to use:**
 - Multiple async operations to sequence
@@ -341,15 +341,15 @@ async def process_user(user_id):
 ```
 
 **Pros:**
-- ✅ Reads like synchronous code
-- ✅ Easy to understand flow
-- ✅ Standard try/catch error handling
-- ✅ Easy to parallelize with Promise.all()
+- Reads like synchronous code
+- Easy to understand flow
+- Standard try/catch error handling
+- Easy to parallelize with Promise.all()
 
 **Cons:**
-- ❌ Can accidentally serialize operations (using await sequentially)
-- ❌ No built-in timeout mechanism
-- ❌ Can hide performance issues
+- Can accidentally serialize operations (using await sequentially)
+- No built-in timeout mechanism
+- Can hide performance issues
 
 **When to use:**
 - Most modern async code
@@ -437,22 +437,22 @@ asyncio.run(process_events())
 ```
 
 **Pros:**
-- ✅ Powerful for complex event flows
-- ✅ Functional transformations (map, filter, etc.)
-- ✅ Built-in operators (debounce, throttle, etc.)
-- ✅ Handles backpressure automatically
+- Powerful for complex event flows
+- Functional transformations (map, filter, etc.)
+- Built-in operators (debounce, throttle, etc.)
+- Handles backpressure automatically
 
 **Cons:**
-- ❌ Steep learning curve
-- ❌ Can be overkill for simple cases
-- ❌ Error handling can be tricky
-- ❌ Debugging observable chains difficult
+- Steep learning curve
+- Can be overkill for simple cases
+- Error handling can be tricky
+- Debugging observable chains difficult
 
 **When to use:**
 - Complex event streams (user input, WebSocket messages)
 - Multiple transformations needed
 - Backpressure handling needed
-- ❌ Avoid for simple fetch operations
+- Avoid for simple fetch operations
 
 ---
 
@@ -519,19 +519,19 @@ with ProcessPoolExecutor(max_workers=4) as executor:
 ```
 
 **Pros:**
-- ✅ Parallel execution on multiple cores
-- ✅ Event loop doesn't block
-- ✅ True parallelism (not just concurrency)
+- Parallel execution on multiple cores
+- Event loop doesn't block
+- True parallelism (not just concurrency)
 
 **Cons:**
-- ❌ Communication overhead (passing data)
-- ❌ Can't share memory directly
-- ❌ More resource intensive
+- Communication overhead (passing data)
+- Can't share memory directly
+- More resource intensive
 
 **When to use:**
 - CPU-intensive work (calculations, image processing)
 - Long-running tasks
-- ❌ Not for I/O operations (use async instead)
+- Not for I/O operations (use async instead)
 
 ---
 
@@ -618,15 +618,15 @@ send_email.apply_async(
 ```
 
 **Pros:**
-- ✅ Handles burst loads (queue absorbs spikes)
-- ✅ Automatic retries
-- ✅ Can scale workers independently
-- ✅ Decouples producer from consumer
+- Handles burst loads (queue absorbs spikes)
+- Automatic retries
+- Can scale workers independently
+- Decouples producer from consumer
 
 **Cons:**
-- ❌ Requires external service (Redis, RabbitMQ)
-- ❌ More operational complexity
-- ❌ Eventual consistency (task might not execute immediately)
+- Requires external service (Redis, RabbitMQ)
+- More operational complexity
+- Eventual consistency (task might not execute immediately)
 
 **When to use:**
 - Background tasks (emails, notifications)
@@ -705,13 +705,13 @@ searchInput.addEventListener('input', (e) => {
 
 **Mixing async and sync (confusing code):**
 ```javascript
-// ❌ Bad: async function called without await
+// [NO] Bad: async function called without await
 function processUser(userId) {
   const user = fetchUser(userId);  // Missing await!
   console.log(user);  // Promise, not user object
 }
 
-// ✅ Good: Properly await
+// [YES] Good: Properly await
 async function processUser(userId) {
   const user = await fetchUser(userId);
   console.log(user);  // User object
@@ -720,12 +720,12 @@ async function processUser(userId) {
 
 **Swallowing errors:**
 ```javascript
-// ❌ Bad: Error not caught
+// [NO] Bad: Error not caught
 fetchUser(userId).then(user => {
   console.log(user);
 });  // If fetchUser fails, error is uncaught
 
-// ✅ Good: Error handled
+// [YES] Good: Error handled
 fetchUser(userId)
   .then(user => console.log(user))
   .catch(error => console.error('Failed:', error));
@@ -741,12 +741,12 @@ try {
 
 **Creating promise per iteration:**
 ```javascript
-// ❌ Bad: Creates promise for each item (slow)
+// [NO] Bad: Creates promise for each item (slow)
 for (const userId of userIds) {
   await fetchUser(userId);  // Sequential, not parallel
 }
 
-// ✅ Good: Parallel execution
+// [YES] Good: Parallel execution
 await Promise.all(
   userIds.map(userId => fetchUser(userId))
 );
@@ -954,7 +954,7 @@ func main() {
 ```go
 // Go: Sequential vs parallel pattern choices
 
-// ❌ Sequential (slow): Wait for each operation
+// [NO] Sequential (slow): Wait for each operation
 func processUsersSequential(ctx context.Context, userIds []int) {
     for _, userID := range userIds {
         user, _ := fetchUser(ctx, userID)
@@ -963,7 +963,7 @@ func processUsersSequential(ctx context.Context, userIds []int) {
     // Total time: N × (fetch + process time)
 }
 
-// ✅ Parallel (fast): Process concurrently
+// [YES] Parallel (fast): Process concurrently
 func processUsersParallel(ctx context.Context, userIds []int) {
     var wg sync.WaitGroup
 
@@ -980,7 +980,7 @@ func processUsersParallel(ctx context.Context, userIds []int) {
     // Total time: max(fetch + process time) instead of sum
 }
 
-// ✅ Parallel with concurrency limit (prevent resource exhaustion)
+// [YES] Parallel with concurrency limit (prevent resource exhaustion)
 func processUsersWithLimit(ctx context.Context, userIds []int, maxConcurrent int) {
     semaphore := make(chan struct{}, maxConcurrent)
     var wg sync.WaitGroup
