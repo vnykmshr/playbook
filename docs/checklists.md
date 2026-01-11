@@ -1,4 +1,4 @@
-# Development Checklists Reference
+# Development Checklists & Quality Gates
 
 Single source of truth for all checklists used in the playbook. Reference these from `/pb-cycle`, `/pb-templates`, `/pb-guide`, and other commands.
 
