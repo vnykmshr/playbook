@@ -11,6 +11,16 @@ Quick reference for all playbook commands.
 | `/pb-resume` | Resuming after a break |
 | `/pb-pr` | Creating a pull request |
 
+## Patterns & Architecture
+
+| Command | When to Use |
+|---------|-------------|
+| `/pb-patterns` | Overview & quick reference for all patterns |
+| `/pb-patterns-core` | Core architectural & design patterns (SOA, Event-Driven, Retry, Circuit Breaker, etc.) |
+| `/pb-patterns-async` | Async/concurrent patterns (callbacks, promises, async/await, reactive, workers, job queues) |
+| `/pb-patterns-db` | Database patterns (pooling, optimization, replication, sharding) |
+| `/pb-patterns-distributed` | Distributed patterns (saga, CQRS, eventual consistency, 2PC) |
+
 ## Planning
 
 | Command | When to Use |
@@ -36,7 +46,7 @@ Quick reference for all playbook commands.
 | `/pb-repo-blog` | Create technical blog post |
 | `/pb-repo-enhance` | Full repository polish (combines above) |
 
-## Periodic Reviews
+## Reviews
 
 | Command | When to Use | Frequency |
 |---------|-------------|-----------|
@@ -47,6 +57,7 @@ Quick reference for all playbook commands.
 | `/pb-review-docs` | Documentation accuracy | Quarterly |
 | `/pb-review-hygiene` | Multi-role health check | Quarterly |
 | `/pb-review-product` | Technical + product review | Monthly |
+| `/pb-review-microservice` | Microservice architecture design review | Before microservice deployment |
 
 ## Reference Documents
 
@@ -91,10 +102,11 @@ Quick reference for all playbook commands.
 | Category | Count |
 |----------|-------|
 | Core | 3 |
+| Patterns & Architecture | 5 |
 | Planning | 2 |
 | Development | 4 |
 | Release | 2 |
-| Reviews | 7 |
+| Reviews | 8 |
 | Repo | 6 |
 | Templates | 1 |
-| **Total** | **25** |
+| **Total** | **31** |
