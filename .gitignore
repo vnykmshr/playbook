@@ -15,3 +15,6 @@ Thumbs.db
 # Temporary files
 *.tmp
 *.bak
+
+# Generated docs (built by mkdocs, deployed by GitHub Actions)
+site/
