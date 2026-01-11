@@ -24,9 +24,9 @@ Have an idea for a new command or enhancement? [Start a discussion](https://gith
 4. Follow existing command structure and documentation format
 5. Test locally: verify the command works as documented
 6. Submit a pull request with:
-   - Clear description of what the command does
-   - When to use it
-   - How it integrates with other commands
+  - Clear description of what the command does
+  - When to use it
+  - How it integrates with other commands
 
 #### Command Structure Guidelines
 
@@ -35,34 +35,34 @@ All commands must follow this structure to ensure consistency and usability:
 **Required Elements:**
 
 1. **Title** (H1 heading)
-   - Clear, action-oriented description (e.g., "Start Development Work", "Deploy with Blue-Green Strategy")
-   - Format: `# [Verb] [What]` or `# [What] Guide`
+  - Clear, action-oriented description (e.g., "Start Development Work", "Deploy with Blue-Green Strategy")
+  - Format: `# [Verb] [What]` or `# [What] Guide`
 
 2. **Overview** (introductory paragraph)
-   - One sentence describing when to use this command
-   - One sentence describing what it does
-   - Reference related commands using `/pb-command-name` format
+  - One sentence describing when to use this command
+  - One sentence describing what it does
+  - Reference related commands using `/pb-command-name` format
 
 3. **Sections** (H2 headings with `---` dividers)
-   - Use at least 3 major sections (e.g., "Preconditions", "Steps", "Verification")
-   - Separate sections with `---` for visual clarity
-   - Order sections logically (setup → execution → verification → rollback)
+  - Use at least 3 major sections (e.g., "Preconditions", "Steps", "Verification")
+  - Separate sections with `---` for visual clarity
+  - Order sections logically (setup → execution → verification → rollback)
 
 4. **Code Examples**
-   - Include at least one runnable example
-   - Use appropriate syntax highlighting (markdown, bash, etc.)
-   - Real code examples, not pseudocode
-   - Examples should be directly copy-pasteable
+  - Include at least one runnable example
+  - Use appropriate syntax highlighting (markdown, bash, etc.)
+  - Real code examples, not pseudocode
+  - Examples should be directly copy-pasteable
 
 5. **Checklists** (where appropriate)
-   - Use `[ ]` format for verification steps
-   - Include acceptance criteria
-   - Help users verify work is complete
+  - Use `[ ]` format for verification steps
+  - Include acceptance criteria
+  - Help users verify work is complete
 
 6. **Cross-references**
-   - Reference related commands using `/pb-command-name`
-   - Format: `See [description](/pb-command-name)`
-   - Keep references minimal (avoid link pollution)
+  - Reference related commands using `/pb-command-name`
+  - Format: `See [description](/pb-command-name)`
+  - Keep references minimal (avoid link pollution)
 
 **Optional Elements:**
 
