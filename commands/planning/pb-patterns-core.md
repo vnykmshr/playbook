@@ -861,6 +861,154 @@ Lesson:
 
 ---
 
+## Pattern Interactions: How Patterns Work Together
+
+Real systems combine multiple patterns. Understanding how they interact prevents conflicts.
+
+### Example: E-Commerce Order Processing
+
+**Architectural Level:**
+- **SOA**: Separate Order, Payment, Inventory services
+- **Event-Driven**: Services communicate via events (not direct calls)
+
+**Service Internal Level:**
+- **Repository Pattern**: Data access layer in each service
+- **Cache-Aside**: Redis cache in front of database
+- **Connection Pooling**: Database connection reuse
+
+**Communication Level:**
+- **Retry with Backoff**: Retry failed calls to other services
+- **Circuit Breaker**: Stop calling failed service for a time
+- **Bulkhead**: Thread pool per service prevents resource starvation
+
+**Data Level:**
+- **DTO**: API returns only public fields
+- **Pagination**: List endpoints return pages, not all records
+
+**System Design:**
+```
+User Request
+  ↓
+API Gateway (Rate limiting, auth)
+  ↓
+[Order Service]
+  • Repository for data access
+  • Cache-Aside for product cache
+  • Connection pool for DB
+  ↓
+[Event: order.created]
+  ↓
+Payment Service (Circuit Breaker)
+  • Retry with backoff on failure
+  • Bulkhead prevents thread exhaustion
+  ↓
+[Event: payment.processed] OR [Event: payment.failed]
+  ↓
+Inventory Service
+  • Same pattern repetition
+  ↓
+[Event: order.completed]
+  ↓
+Notification Service
+  • Job queue for emails (don't block response)
+```
+
+### Circuit Breaker + Retry Interaction
+
+**Wrong:** Retry without Circuit Breaker
+```
+❌ Bad: Keep retrying failed service
+Request 1 → Wait 1s, fail
+Request 2 → Wait 2s, fail
+Request 3 → Wait 4s, fail
+...
+Result: Slow cascading failure
+```
+
+**Right:** Circuit Breaker first, Retry later
+```
+✅ Good: Circuit breaker detects failure, stops retrying
+Request 1-5 → All fail → Circuit Breaker opens
+Request 6 → Fail immediately (don't even try)
+Request 7 → Half-open test → Success → Circuit closes
+Retry: Automatic with exponential backoff for transient failures
+```
+
+### Cache-Aside + Bulkhead Interaction
+
+**Problem:** Cache stampede with bulkhead
+```
+Key expires, 100 requests hit database
+Bulkhead: Only 5 threads available
+95 requests queued, 5 in progress
+Database overloaded
+```
+
+**Solution:** Lock-based cache repopulation
+```
+Request 1: Cache miss → Gets lock → Queries DB
+Requests 2-100: Cache miss → Wait for lock → Get value from request 1
+Result: Only 1 database query, others served from cache
+```
+
+### SOA + Event-Driven + Saga Pattern
+
+**Real-World Scenario: Payment Processing**
+```
+Service A (Order Service):
+  Receives order
+  Publishes: "payment_required"
+  State: AWAITING_PAYMENT
+
+Service B (Payment Service):
+  Listens: "payment_required"
+  Attempts payment with Retry + Circuit Breaker
+  If success: Publishes "payment_received"
+  If failure after retries: Publishes "payment_failed"
+
+Service A (compensation):
+  Listens: "payment_failed"
+  Performs compensating action: Cancel order
+
+Service C (Inventory):
+  Listens: "payment_received"
+  Decrements stock with Repository pattern
+  Publishes: "stock_decremented"
+```
+
+### DTO + Pagination + API Versioning
+
+**Real-World API Response**
+```
+Old API (v1):
+GET /users?page=1&per_page=20
+{
+  "users": [{id, email, password_hash, created_at, ...}],
+  "page": 1,
+  "per_page": 20,
+  "total": 523
+}
+
+New API (v2, with DTO):
+GET /v2/users?page=1&per_page=20
+{
+  "data": [{id, email, name}],  // DTO, no password_hash
+  "pagination": {
+    "page": 1,
+    "per_page": 20,
+    "total": 523,
+    "has_next": true
+  }
+}
+
+Benefits:
+- DTO: Security (password_hash not exposed)
+- Pagination: Prevents huge responses
+- Versioning: Can change API without breaking v1 clients
+```
+
+---
+
 ## When to Apply Patterns
 
 **Too many patterns:**
@@ -892,19 +1040,35 @@ Lesson:
 
 ## Integration with Playbook
 
-**Part of architecture & design:**
-- `/pb-adr` — Document why patterns chosen
-- `/pb-guide` — Design requirements
-- `/pb-deployment` — How patterns affect deployment
+**Pattern Family:**
+This is the core patterns command. It covers foundational architectural, design, data access, and API patterns.
 
-**Related Commands:**
-- `/pb-adr` — When to document pattern decisions
-- `/pb-security` — Patterns for security
-- `/pb-performance` — Patterns for performance
-- `/pb-testing` — Testing patterns
-- `/pb-patterns-async` — Async patterns
-- `/pb-patterns-db` — Database patterns
-- `/pb-patterns-distributed` — Distributed patterns
+**Related Pattern Commands (Pattern Family):**
+- `/pb-patterns-async` — Async patterns (callbacks, promises, async/await, reactive, workers, job queues)
+- `/pb-patterns-db` — Database patterns (connection pooling, optimization, replication, sharding)
+- `/pb-patterns-distributed` — Distributed patterns (saga, CQRS, eventual consistency, 2PC)
+
+**How They Work Together:**
+```
+pb-patterns-core → Foundation (SOA, Event-Driven, Retry, Circuit Breaker, etc.)
+    ↓
+pb-patterns-async → Async operations (implement Event-Driven, job queues)
+    ↓
+pb-patterns-db → Database implementation (pooling for performance)
+    ↓
+pb-patterns-distributed → Multi-service coordination (saga, CQRS)
+```
+
+**Architecture & Design Decision:**
+- `/pb-adr` — Document why specific patterns chosen
+- `/pb-guide` — System design and pattern selection
+- `/pb-deployment` — How patterns affect deployment strategy
+
+**Testing & Operations:**
+- `/pb-security` — Security patterns and secure code
+- `/pb-performance` — Performance optimization using patterns
+- `/pb-testing` — Testing pattern implementations
+- `/pb-incident` — Handling pattern failures
 
 ---
 
