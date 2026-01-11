@@ -2,7 +2,7 @@
 
 A comprehensive, integrated set of commands and guides for structuring iterative development workflows, architectural decisions, code reviews, and team operations.
 
-[![Latest Release](https://img.shields.io/github/v/release/vnykmshr/playbook?label=v1.2.0)](https://github.com/vnykmshr/playbook/releases/tag/v1.2.0)
+[![Latest Release](https://img.shields.io/github/v/release/vnykmshr/playbook?label=v1.3.0)](https://github.com/vnykmshr/playbook/releases/tag/v1.3.0)
 [![Commands](https://img.shields.io/badge/status-active-brightgreen)](command-index.md)
 [![Documentation](https://img.shields.io/badge/docs-integration%20guide-blue)](integration-guide.md)
 [![License](https://img.shields.io/badge/license-MIT-green)](https://github.com/vnykmshr/playbook/blob/main/LICENSE)
@@ -51,11 +51,14 @@ Decision tree showing which command to use for any situation
 **[Answer a common question →](faq.md)**
 FAQ section covering setup, workflow, integration, and common issues
 
+**[See playbook in action →](playbook-in-action.md)**
+Real-world walkthroughs showing development teams using playbook commands end-to-end
+
 ---
 
-## The 45 Commands
+## Commands
 
-Organized in 9 categories:
+Organized by category:
 
 | Category | Count | Purpose |
 |----------|-------|---------|

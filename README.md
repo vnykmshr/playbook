@@ -2,7 +2,7 @@
 
 A comprehensive, integrated set of commands and guides for structuring iterative development workflows, architectural decisions, code reviews, and team operations.
 
-[![Latest Release](https://img.shields.io/github/v/release/vnykmshr/playbook?label=v1.2.0)](https://github.com/vnykmshr/playbook/releases/tag/v1.2.0)
+[![Latest Release](https://img.shields.io/github/v/release/vnykmshr/playbook?label=v1.3.0)](https://github.com/vnykmshr/playbook/releases/tag/v1.3.0)
 [![Commands](https://img.shields.io/badge/status-active-brightgreen)](docs/command-index.md)
 [![Documentation](https://img.shields.io/badge/docs-integration%20guide-blue)](docs/integration-guide.md)
 [![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)
@@ -23,9 +23,10 @@ The Engineering Playbook is a **decision framework** that codifies how to approa
 - **Iterative development workflows** — Clear, repeatable patterns from idea to production
 - **Quality gates at every step** — Automatic checks before code moves forward
 - **Multi-perspective code reviews** — Code, security, product, tests, performance
-- **Pattern library** — 39 documented architectural patterns (async, database, distributed systems)
+- **Pattern library** — Comprehensive patterns covering async, core, database, distributed, security, and cloud deployment
 - **Team operations** — Onboarding, knowledge transfer, incident response, retrospectives
 - **Repository organization** — Professional structure and documentation
+- **Integrated commands** — Comprehensive guidance from planning through production operations
 
 ---
 
@@ -438,21 +439,11 @@ Contributions are welcome! See [.github/CONTRIBUTING.md](.github/CONTRIBUTING.md
 
 ## Version History
 
-### v1.2.0 (2026-01-11)
-- **Added**: 8 new commands (45 total, was 25 at v1.1.0)
-  - `/pb-todo-implement` — Checkpoint-based implementation workflow
-  - `/pb-standup` — Async standup template and guidance
-  - `/pb-logging` — Logging standards audit
-  - `/pb-knowledge-transfer` — KT session preparation
-  - `/pb-patterns-async`, `-core`, `-db`, `-distributed` — Pattern family
-- **Added**: `/pb-review-microservice` — Microservice review command
-- **Enhanced**: `/pb-guide` with async/distributed examples
-- **Created**: Comprehensive integration documentation
+### Latest Release
 
-### v1.1.0 (Initial Release)
-- 25 commands covering planning, development, review, and release
-- Comprehensive SDLC framework with quality gates
-- Multi-perspective code review workflow
+For detailed release notes and full version history, see the [CHANGELOG.md](CHANGELOG.md).
+
+The playbook continues to evolve with new commands and patterns added regularly. See [CHANGELOG.md](CHANGELOG.md) for complete history and feature additions.
 
 ---
 

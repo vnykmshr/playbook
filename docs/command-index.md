@@ -135,17 +135,6 @@ Real-world implementations of the playbook in action:
 /pb-review-*       → Various reviews as scheduled
 ```
 
-## Command Count by Category
+## Browse All Commands
 
-| Category | Count |
-|----------|-------|
-| Core | 3 |
-| Language Guides | 2 |
-| Patterns & Architecture | 7 |
-| Planning | 2 |
-| Development | 6 |
-| Release | 2 |
-| Reviews | 9 |
-| Repo | 6 |
-| Templates | 1 |
-| **Total** | **38** |
+For a comprehensive list of all available commands organized by category, see the command files in `/commands/` directory or consult the [integration guide](integration-guide.md) for workflow-based command references.
