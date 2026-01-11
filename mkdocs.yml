@@ -1,0 +1,89 @@
+site_name: Engineering Playbook
+site_description: A comprehensive, integrated set of 45 commands and guides for structuring iterative development workflows
+site_url: https://playbook.dev
+repo_url: https://github.com/vnykmshr/playbook
+repo_name: vnykmshr/playbook
+edit_uri: edit/main/docs/
+
+theme:
+  name: material
+  features:
+    - content.code.copy
+    - content.code.select
+    - content.action.edit
+    - content.tabs.link
+    - navigation.sections
+    - navigation.top
+    - search.highlight
+    - search.share
+    - search.suggest
+    - toc.follow
+  palette:
+    - scheme: default
+      primary: blue
+      accent: amber
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    - scheme: slate
+      primary: blue
+      accent: amber
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+
+plugins:
+  - search:
+      lang: en
+  - glightbox
+
+markdown_extensions:
+  - pymdownx.highlight:
+      use_pygments: true
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - attr_list
+  - md_in_html
+  - toc:
+      permalink: true
+  - admonition
+  - pymdownx.details
+
+nav:
+  - Home: index.md
+  - Getting Started:
+    - Quick Start: getting-started.md
+    - Installation: getting-started.md#installation
+    - Five Scenarios: getting-started.md#quick-start-five-scenarios
+  - Workflows:
+    - Overview: workflows.md
+    - Feature Development: workflows.md#feature-development-workflow
+    - Incident Response: workflows.md#incident-response-workflow
+    - Team Onboarding: workflows.md#team-onboarding-workflow
+    - Periodic Reviews: workflows.md#periodic-quality-reviews
+  - Command Reference:
+    - All Commands: command-index.md
+    - Core Foundation: command-index.md#core-foundation
+    - Planning & Architecture: command-index.md#planning--architecture
+    - Development: command-index.md#development
+    - Code Review & Quality: command-index.md#code-review--quality
+    - Release & Operations: command-index.md#release--operations
+    - Repository Management: command-index.md#repository-management
+    - Team & Growth: command-index.md#team--growth
+  - Integration:
+    - Integration Guide: integration-guide.md
+    - Integration Summary: INTEGRATION-SUMMARY.md
+    - How Commands Work Together: integration-guide.md#command-integration
+  - Decision Guide: decision-guide.md
+  - FAQ: faq.md
+  - Contributing: ../CONTRIBUTING.md
+  - License: ../LICENSE
+
+copyright: Copyright &copy; 2026 vnykmshr - MIT License
