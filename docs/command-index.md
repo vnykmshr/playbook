@@ -25,6 +25,17 @@ Quick reference for all playbook commands.
 | `/pb-release` | Pre-release checks and deployment |
 | `/pb-incident` | P0/P1 production incidents |
 
+## Repository Management
+
+| Command | When to Use |
+|---------|-------------|
+| `/pb-repo-init` | Initialize new greenfield project |
+| `/pb-repo-organize` | Clean up project root structure |
+| `/pb-repo-about` | Generate GitHub About section + tags |
+| `/pb-repo-readme` | Write or rewrite project README |
+| `/pb-repo-blog` | Create technical blog post |
+| `/pb-repo-enhance` | Full repository polish (combines above) |
+
 ## Periodic Reviews
 
 | Command | When to Use | Frequency |
@@ -46,23 +57,44 @@ Quick reference for all playbook commands.
 | `/pb-standards` | Coding standards, quality principles |
 | `/pb-context` | Project onboarding context template |
 
-## Typical Workflow
+## Typical Workflows
 
+### Feature Development
 ```
-1. Plan
-   /pb-plan     → Lock scope, define phases
-
-2. Develop (iterative)
-   /pb-start    → Create branch, set rhythm
-   /pb-cycle    → Develop → Review → Commit (repeat)
-   /pb-resume   → Resume after breaks
-
-3. PR
-   /pb-pr       → Create with proper context
-
-4. Release
-   /pb-release  → Checks, deploy, verify
-
-5. Maintain
-   /pb-review-* → Periodic reviews as scheduled
+/pb-plan     → Lock scope, define phases
+/pb-start    → Create branch, set rhythm
+/pb-cycle    → Develop → Review → Commit (repeat)
+/pb-pr       → Create with proper context
+/pb-release  → Checks, deploy, verify
 ```
+
+### New Project Setup
+```
+/pb-repo-init      → Plan project structure
+/pb-repo-organize  → Clean folder layout
+/pb-repo-readme    → Write documentation
+/pb-repo-about     → GitHub presentation
+```
+
+### Repository Polish
+```
+/pb-repo-enhance   → Full suite (organize + docs + presentation)
+```
+
+### Periodic Maintenance
+```
+/pb-review-*       → Various reviews as scheduled
+```
+
+## Command Count by Category
+
+| Category | Count |
+|----------|-------|
+| Core | 3 |
+| Planning | 2 |
+| Development | 4 |
+| Release | 2 |
+| Reviews | 7 |
+| Repo | 6 |
+| Templates | 1 |
+| **Total** | **25** |

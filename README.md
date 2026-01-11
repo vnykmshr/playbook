@@ -19,6 +19,7 @@ A comprehensive set of development workflow commands for Claude Code. Codifies i
 | **Development** | 4 | Feature branches, reviews, PRs |
 | **Release** | 2 | Deployment, incidents |
 | **Reviews** | 7 | Periodic codebase reviews |
+| **Repo** | 6 | Repository organization and documentation |
 | **Templates** | 1 | Project context template |
 
 ### Development Workflow
@@ -42,6 +43,17 @@ A comprehensive set of development workflow commands for Claude Code. Codifies i
 ```
 /pb-release   Pre-release checks and deployment
 /pb-incident  P0/P1 incident handling
+```
+
+### Repository Management
+
+```
+/pb-repo-init      Initialize new project
+/pb-repo-organize  Clean up project structure
+/pb-repo-about     Generate GitHub About + tags
+/pb-repo-readme    Write/rewrite README
+/pb-repo-blog      Write technical blog post
+/pb-repo-enhance   Full repository polish
 ```
 
 ### Periodic Reviews
@@ -90,6 +102,7 @@ cd playbook
 │                         ↓                                   │
 │                    MAINTENANCE                              │
 │                    pb-review-* (periodic)                   │
+│                    pb-repo-* (organization)                 │
 └─────────────────────────────────────────────────────────────┘
 ```
 
@@ -113,6 +126,7 @@ playbook/
 │   ├── development/    # pb-start, pb-cycle, pb-resume, pb-pr
 │   ├── release/        # pb-release, pb-incident
 │   ├── reviews/        # pb-review-*
+│   ├── repo/           # pb-repo-*
 │   └── templates/      # pb-context
 ├── docs/               # Documentation
 ├── scripts/            # Install/uninstall scripts

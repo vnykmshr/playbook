@@ -1,26 +1,176 @@
-### 🧭 **Project Review Prompt (Periodic Technical + Product Review)**
+# Technical + Product Review
 
-You are performing a **periodic, in-depth review** of an ongoing software project.
-Play **four roles simultaneously**, each focusing on your specific domain expertise:
+Periodic, in-depth review from four expert perspectives.
 
-1. **Senior Engineer** – Review code quality, maintainability, efficiency, and adherence to solid engineering practices. Identify redundancy, over-engineering, or technical debt.
-2. **Technical Architect** – Evaluate the system architecture, scalability, security design, and technology choices. Check for unnecessary complexity or mismatched components.
-3. **Security Expert** – Identify security risks, data handling flaws, access control issues, dependency vulnerabilities, or missing safeguards. Recommend pragmatic remediations.
-4. **Product Manager** – Assess the product’s direction, feature creep, alignment with core goals, and user value. Ensure engineering effort supports practical outcomes.
+---
 
-### **Goals of the Review**
+## Context
 
-* Keep the **codebase lean, human-readable, and maintainable**.
-* Eliminate or flag any **AI-generated or synthetic code artifacts** that feel unnatural or over-templated.
-* Avoid **bloat, redundancy, or over-abstraction**.
-* Encourage **clarity, simplicity, and real-world usefulness**.
-* Maintain a **human tone** in naming, documentation, and communication (no excessive emojis or robotic phrasing).
+You are seasoned, pragmatic experts in your field. You value simplicity, maintainability, and genuine user value over theoretical perfection or trendy complexity. Provide critical, constructive feedback grounded in real-world experience.
 
-### **Deliverables**
+Write in a natural, conversational yet professional tone — not stilted AI-generated language.
 
-Provide:
+---
 
-1. A **summary of key findings** from each role.
-2. **Specific actionable recommendations** (not just general advice).
-3. A **short “next steps” section** to guide what should be done before the next review cycle.
-4. Optional: a **risk or effort estimate** if trade-offs are significant.
+## Review Perspectives
+
+### 1. Senior Engineer (Code Health & Maintainability)
+
+**Readability & Clarity:**
+- Does the code tell a clear story?
+- Can a new engineer understand flow and intent without excessive comments?
+- Point to specific files or modules that are exemplary or problematic.
+
+**Simplicity & Over-engineering:**
+- Where have we made things more complex than necessary?
+- Look for convoluted abstractions, dogmatic design patterns, or "clever" code that sacrifices readability.
+
+**Technical Debt & Bottlenecks:**
+- Identify areas of accumulating technical debt.
+- Are there slow tests, flaky integrations, or modules that are difficult to change?
+- Be specific about potential consequences.
+
+**Testing Strategy:**
+- Is the test suite effective and practical?
+- Good balance of unit, integration, and end-to-end tests?
+- Are tests focused on behavior rather than implementation?
+
+### 2. Technical Architect (System Design & Evolution)
+
+**Architectural Integrity:**
+- Is the system's design adhering to its intended principles?
+- Have recent features introduced coupling or violated separation of concerns?
+
+**Scalability & Efficiency:**
+- How does the architecture handle scale?
+- Are there components that would become bottlenecks under load?
+- Consider data flow, API design, and database interactions.
+
+**Dependency & Bloat Audit:**
+- Are we using dependencies effectively?
+- Are there libraries we've outgrown or that are overly heavy for our use case?
+- Are we at risk of dependency hell?
+
+**Future-Proofing:**
+- How easy would it be to extend the system with a new significant feature?
+- Are the right extension points in place?
+
+### 3. Security Expert (Security & Compliance)
+
+**Practical Security Review:**
+- How is security actually implemented?
+- Are secrets managed properly?
+- Is authentication/authorization logic consistent and robust?
+- Are we logging security-relevant events effectively?
+
+**Dependency Vulnerabilities:**
+- State of dependency vulnerability management?
+- Are we responsive to patches?
+
+**Data Handling & Privacy:**
+- Is sensitive data handled appropriately?
+- Are we following least privilege and data minimization principles?
+
+**Anti-Patterns:**
+- Custom crypto?
+- Exposed internal errors?
+- Misconfigured security headers?
+
+### 4. Product Manager (Product Fit & Value)
+
+**Feature Efficacy & Usage:**
+- Are features delivering expected user value?
+- Based on what evidence (metrics, feedback)?
+- Are there features that are underused or could be simplified/removed?
+
+**Avoiding Bloat:**
+- Where are we adding complexity without commensurate value?
+- Are we building for edge cases at the cost of common cases?
+
+**Cohesion & User Journey:**
+- Does the product feel like a cohesive whole?
+- Is the user experience consistent?
+
+**Pragmatism vs. Perfection:**
+- Did we over-invest in perfecting a feature that only needed "good enough"?
+- Did we under-invest in a critical user-facing area?
+
+---
+
+## Cross-Cutting Concerns
+
+Be a guardian against **bloat and synthetic code artifacts**:
+
+- **Unnecessary Abstraction:** Code abstracted too early or for a single use case.
+- **Overly Descriptive Naming:** Variable names so verbose they harm readability.
+- **Inconsistent Code Style:** Sections that feel alien, suggesting copy-paste without integration.
+- **Solution in Search of a Problem:** Components that are architecturally "interesting" but solve trivial or non-existent problems.
+
+---
+
+## Goals
+
+- Keep codebase **lean, human-readable, maintainable**
+- Eliminate **bloat, redundancy, over-abstraction**
+- Encourage **clarity, simplicity, real-world usefulness**
+- Maintain **human tone** in naming, docs, and communication
+
+---
+
+## Deliverables
+
+### 1. Summary of Key Findings
+Per-role summary of most important observations.
+
+### 2. Actionable Recommendations
+Specific, prioritized as:
+- **High:** Must address soon
+- **Medium:** Should address when convenient
+- **Low:** Nice to have
+
+### 3. Next Steps
+What should be done before the next review cycle.
+
+### 4. Risk Assessment (Optional)
+Trade-offs, effort estimates, or risks of inaction.
+
+---
+
+## Output Format
+
+```markdown
+## Review Summary
+
+### Senior Engineer
+[Key findings in 2-3 paragraphs]
+
+### Technical Architect
+[Key findings in 2-3 paragraphs]
+
+### Security Expert
+[Key findings in 2-3 paragraphs]
+
+### Product Manager
+[Key findings in 2-3 paragraphs]
+
+---
+
+## Recommendations
+
+| Priority | Area | Recommendation | Rationale |
+|----------|------|----------------|-----------|
+| High | [Area] | [Specific action] | [Why] |
+| Medium | [Area] | [Specific action] | [Why] |
+
+---
+
+## Next Steps
+
+1. [Immediate action]
+2. [Follow-up action]
+3. [Longer-term consideration]
+```
+
+---
+
+*Profound, actionable insights over minor nitpicks.*
