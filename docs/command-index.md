@@ -7,6 +7,7 @@ Quick reference for all playbook commands.
 | Command | When to Use |
 |---------|-------------|
 | `/pb-start` | Starting work on a feature branch |
+| `/pb-todo-implement` | Structured implementation of individual todos with checkpoint-based review |
 | `/pb-cycle` | Each iteration (develop → review → commit) |
 | `/pb-resume` | Resuming after a break |
 | `/pb-pr` | Creating a pull request |
@@ -72,7 +73,17 @@ Quick reference for all playbook commands.
 
 ## Typical Workflows
 
-### Feature Development
+### Feature Development (with Checkpoint Review)
+```
+/pb-plan              → Lock scope, define phases
+/pb-start             → Create branch, set rhythm
+/pb-todo-implement    → Implement todos with checkpoint-based approval
+/pb-cycle             → Self-review → Peer review iteration
+/pb-pr                → Create with proper context
+/pb-release           → Checks, deploy, verify
+```
+
+### Feature Development (Traditional)
 ```
 /pb-plan     → Lock scope, define phases
 /pb-start    → Create branch, set rhythm
@@ -106,9 +117,9 @@ Quick reference for all playbook commands.
 | Core | 3 |
 | Patterns & Architecture | 5 |
 | Planning | 2 |
-| Development | 5 |
+| Development | 6 |
 | Release | 2 |
 | Reviews | 9 |
 | Repo | 6 |
 | Templates | 1 |
-| **Total** | **33** |
+| **Total** | **34** |

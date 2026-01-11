@@ -440,6 +440,34 @@ Next: [What we're doing this session]
 
 ---
 
+## Next Step: Implementation
+
+After planning is complete and scope is locked, implement individual todos using **`/pb-todo-implement`**:
+
+### When to Use `/pb-todo-implement`
+
+Once you have:
+- ✅ Scope locked
+- ✅ Phases defined
+- ✅ Todos broken down into concrete tasks
+
+Then for each todo:
+
+```
+/pb-todo-implement
+```
+
+This workflow:
+1. Analyzes codebase to find exactly what needs to change
+2. Drafts implementation plan with specific file:line references
+3. Guides implementation checkpoint-by-checkpoint
+4. Commits changes with full audit trail
+5. Maintains historical record of completed work
+
+**Integration**: Plan → **Implement** → Self-Review → Peer Review → Commit/Release
+
+---
+
 ## Red Flags to Watch For
 
 ### Scope Creep
