@@ -1,7 +1,7 @@
 ---
 site_name: Engineering Playbook
 site_description: A comprehensive, integrated set of 45 commands and guides for structuring iterative development workflows
-site_url: https://playbook.dev
+site_url: https://vnykmshr.github.io/playbook
 repo_url: https://github.com/vnykmshr/playbook
 repo_name: vnykmshr/playbook
 edit_uri: edit/main/docs/
