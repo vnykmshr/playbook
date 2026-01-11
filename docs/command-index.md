@@ -24,6 +24,8 @@ Quick reference for all playbook commands.
 | `/pb-patterns-async` | Async/concurrent patterns (callbacks, promises, async/await, reactive, workers, job queues) |
 | `/pb-patterns-db` | Database patterns (pooling, optimization, replication, sharding) |
 | `/pb-patterns-distributed` | Distributed patterns (saga, CQRS, eventual consistency, 2PC) |
+| `/pb-patterns-security` | Security patterns for microservices (OAuth, JWT, mTLS, RBAC, ABAC, encryption, audit trails) |
+| `/pb-patterns-cloud` | Cloud deployment patterns (AWS EC2/RDS, ECS, Lambda; GCP Cloud Run, GKE; Azure App Service, Functions) |
 
 ## Planning
 
@@ -120,11 +122,11 @@ Quick reference for all playbook commands.
 | Category | Count |
 |----------|-------|
 | Core | 3 |
-| Patterns & Architecture | 5 |
+| Patterns & Architecture | 7 |
 | Planning | 2 |
 | Development | 6 |
 | Release | 2 |
 | Reviews | 9 |
 | Repo | 6 |
 | Templates | 1 |
-| **Total** | **34** |
+| **Total** | **36** |
