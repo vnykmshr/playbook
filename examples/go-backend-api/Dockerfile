@@ -20,7 +20,7 @@ COPY tests/ ./tests/
 RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o api ./src/main.go
 
 # Runtime stage
-FROM alpine:latest
+FROM alpine:3.19
 
 # Install runtime dependencies (for database SSL, etc.)
 RUN apk --no-cache add ca-certificates
