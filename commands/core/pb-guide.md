@@ -176,6 +176,515 @@ Include:
 * Error pathways
 * Retry/timeout/circuit breaker behavior
 
+**For async and event-driven systems, reference `/pb-patterns-async`, `/pb-patterns-distributed`:**
+
+**Async Patterns (Callbacks, Promises, Async/Await, Job Queues):**
+
+When handling non-blocking operations, choose the appropriate async pattern:
+
+```python
+# Python: Async/await for cleaner code
+import asyncio
+import aiohttp
+
+async def fetch_user_and_posts(user_id):
+    """Fetch user data and posts concurrently."""
+    async with aiohttp.ClientSession() as session:
+        # Fetch in parallel instead of sequentially
+        user_task = fetch_from_api(session, f'/users/{user_id}')
+        posts_task = fetch_from_api(session, f'/users/{user_id}/posts')
+
+        user, posts = await asyncio.gather(user_task, posts_task)
+        return {'user': user, 'posts': posts}
+
+async def fetch_from_api(session, endpoint):
+    """Fetch from API with timeout and error handling."""
+    try:
+        async with session.get(endpoint, timeout=5) as resp:
+            if resp.status == 200:
+                return await resp.json()
+            else:
+                raise ValueError(f"API returned {resp.status}")
+    except asyncio.TimeoutError:
+        # Log, notify, or retry with backoff
+        logger.error(f"Request to {endpoint} timed out")
+        raise
+```
+
+```javascript
+// JavaScript: Promise with proper error handling
+function fetchUserAndPosts(userId) {
+  // Fetch in parallel instead of sequentially
+  return Promise.all([
+    fetch(`/api/users/${userId}`).then(r => r.json()),
+    fetch(`/api/users/${userId}/posts`).then(r => r.json())
+  ])
+  .then(([user, posts]) => {
+    return { user, posts };
+  })
+  .catch(error => {
+    logger.error('Failed to fetch user data:', error);
+    // Decide: retry, fallback, or propagate error
+    throw error;
+  });
+}
+
+// Or with async/await (preferred)
+async function fetchUserAndPosts(userId) {
+  try {
+    const [user, posts] = await Promise.all([
+      fetch(`/api/users/${userId}`).then(r => r.json()),
+      fetch(`/api/users/${userId}/posts`).then(r => r.json())
+    ]);
+    return { user, posts };
+  } catch (error) {
+    logger.error('Failed to fetch user data:', error);
+    throw error;
+  }
+}
+```
+
+```go
+// Go: Goroutines and channels for concurrent operations
+func fetchUserAndPosts(ctx context.Context, userID int) (User, []Post, error) {
+    // Use channels to coordinate goroutines
+    userChan := make(chan User)
+    postsChan := make(chan []Post)
+    errChan := make(chan error)
+
+    // Fetch user concurrently
+    go func() {
+        user, err := fetchUser(ctx, userID)
+        if err != nil {
+            errChan <- err
+            return
+        }
+        userChan <- user
+    }()
+
+    // Fetch posts concurrently
+    go func() {
+        posts, err := fetchPosts(ctx, userID)
+        if err != nil {
+            errChan <- err
+            return
+        }
+        postsChan <- posts
+    }()
+
+    // Wait for both with timeout context
+    var user User
+    var posts []Post
+
+    for i := 0; i < 2; i++ {
+        select {
+        case u := <-userChan:
+            user = u
+        case p := <-postsChan:
+            posts = p
+        case err := <-errChan:
+            return User{}, nil, fmt.Errorf("fetch failed: %w", err)
+        case <-ctx.Done():
+            return User{}, nil, fmt.Errorf("request cancelled or timed out")
+        }
+    }
+
+    return user, posts, nil
+}
+```
+
+**Job Queues for background processing:**
+
+```python
+# Python: Using task queue (Celery) for long-running operations
+from celery import shared_task
+from time import sleep
+
+@shared_task(max_retries=3)
+def send_email_notification(user_id, email_type):
+    """Send email asynchronously with automatic retries."""
+    try:
+        user = User.query.get(user_id)
+        email_service.send(user.email, email_type)
+        logger.info(f"Email sent to user {user_id}")
+    except Exception as exc:
+        # Retry with exponential backoff
+        logger.error(f"Email send failed: {exc}")
+        raise self.retry(exc=exc, countdown=2 ** self.request.retries)
+
+# Queue task from request handler (non-blocking)
+def handle_user_signup(request):
+    user = create_user(request.data)
+    # Queue email asynchronously - request returns immediately
+    send_email_notification.delay(user.id, 'welcome')
+    return {'user_id': user.id}
+```
+
+```javascript
+// JavaScript: Using job queue (Bull for Redis) for background work
+const emailQueue = new Queue('emails', {
+  redis: { host: 'localhost', port: 6379 }
+});
+
+// Process jobs from the queue
+emailQueue.process(5, async (job) => {
+  // Job contains: { userId, emailType }
+  const user = await User.findById(job.data.userId);
+  await emailService.send(user.email, job.data.emailType);
+  return { sent: true };
+});
+
+// Handle failed jobs with retries
+emailQueue.on('failed', (job, err) => {
+  logger.error(`Job ${job.id} failed:`, err);
+  // Bull automatically retries with exponential backoff
+});
+
+// Queue job from request handler (non-blocking)
+app.post('/signup', async (req, res) => {
+  const user = await createUser(req.body);
+  // Add job to queue - returns immediately
+  await emailQueue.add(
+    { userId: user.id, emailType: 'welcome' },
+    { attempts: 3, backoff: { type: 'exponential', delay: 2000 } }
+  );
+  res.json({ user_id: user.id });
+});
+```
+
+```go
+// Go: Using worker pool pattern with channels
+type JobQueue struct {
+    jobs    chan Job
+    workers int
+}
+
+type Job struct {
+    UserID    int
+    EmailType string
+}
+
+func (q *JobQueue) Start(ctx context.Context) {
+    for i := 0; i < q.workers; i++ {
+        go q.worker(ctx)
+    }
+}
+
+func (q *JobQueue) worker(ctx context.Context) {
+    for {
+        select {
+        case job := <-q.jobs:
+            if err := sendEmailJob(ctx, job); err != nil {
+                logger.Errorf("Job failed for user %d: %v", job.UserID, err)
+                // Requeue or log failure for monitoring
+            }
+        case <-ctx.Done():
+            return
+        }
+    }
+}
+
+// Queue job from request (non-blocking)
+func handleSignup(w http.ResponseWriter, r *http.Request) {
+    user := createUser(r)
+    // Send job to queue channel (doesn't block)
+    jobQueue.jobs <- Job{UserID: user.ID, EmailType: "welcome"}
+    json.NewEncoder(w).Encode(user)
+}
+```
+
+**Distributed Systems & Event-Driven Patterns:**
+
+For systems spanning multiple services, use Saga patterns for multi-step transactions. See `/pb-patterns-distributed` for detailed guidance.
+
+```python
+# Python: Saga pattern for multi-service transactions
+class OrderSaga:
+    """Orchestrates multi-step order fulfillment across services."""
+
+    def __init__(self, event_bus, order_service, payment_service, inventory_service):
+        self.event_bus = event_bus
+        self.order_service = order_service
+        self.payment_service = payment_service
+        self.inventory_service = inventory_service
+
+    def execute(self, order):
+        """Execute order saga with compensating transactions."""
+        saga_state = {'order_id': order.id, 'steps_completed': []}
+
+        try:
+            # Step 1: Create order
+            self.order_service.create(order)
+            saga_state['steps_completed'].append('order_created')
+
+            # Step 2: Process payment
+            payment = self.payment_service.charge(order.customer_id, order.total)
+            saga_state['steps_completed'].append('payment_charged')
+
+            # Step 3: Deduct inventory
+            self.inventory_service.deduct(order.items)
+            saga_state['steps_completed'].append('inventory_deducted')
+
+            # Publish completion event
+            self.event_bus.publish('order.completed', {
+                'order_id': order.id,
+                'customer_id': order.customer_id
+            })
+
+            return saga_state
+
+        except Exception as error:
+            # Compensate: undo steps in reverse order
+            logger.error(f"Saga failed at step: {error}")
+
+            if 'inventory_deducted' in saga_state['steps_completed']:
+                self.inventory_service.restore(order.items)
+
+            if 'payment_charged' in saga_state['steps_completed']:
+                self.payment_service.refund(payment.id)
+
+            # Publish failure event
+            self.event_bus.publish('order.failed', {
+                'order_id': order.id,
+                'reason': str(error)
+            })
+
+            raise
+```
+
+```javascript
+// JavaScript: Saga pattern with event orchestration
+class OrderSaga {
+  constructor(orderService, paymentService, inventoryService, eventBus) {
+    this.orderService = orderService;
+    this.paymentService = paymentService;
+    this.inventoryService = inventoryService;
+    this.eventBus = eventBus;
+  }
+
+  async execute(order) {
+    const sagaState = {
+      orderId: order.id,
+      stepsCompleted: []
+    };
+
+    try {
+      // Step 1: Create order
+      await this.orderService.create(order);
+      sagaState.stepsCompleted.push('order_created');
+
+      // Step 2: Process payment
+      const payment = await this.paymentService.charge(
+        order.customerId,
+        order.total
+      );
+      sagaState.stepsCompleted.push('payment_charged');
+
+      // Step 3: Deduct inventory
+      await this.inventoryService.deduct(order.items);
+      sagaState.stepsCompleted.push('inventory_deducted');
+
+      // Publish completion event
+      this.eventBus.publish('order.completed', {
+        orderId: order.id,
+        customerId: order.customerId
+      });
+
+      return sagaState;
+    } catch (error) {
+      logger.error(`Saga failed: ${error.message}`);
+
+      // Compensate: undo steps in reverse order
+      if (sagaState.stepsCompleted.includes('inventory_deducted')) {
+        await this.inventoryService.restore(order.items);
+      }
+
+      if (sagaState.stepsCompleted.includes('payment_charged')) {
+        await this.paymentService.refund(payment.id);
+      }
+
+      // Publish failure event
+      this.eventBus.publish('order.failed', {
+        orderId: order.id,
+        reason: error.message
+      });
+
+      throw error;
+    }
+  }
+}
+```
+
+```go
+// Go: Saga pattern with error recovery
+type OrderSaga struct {
+    orderService     OrderService
+    paymentService   PaymentService
+    inventoryService InventoryService
+    eventBus         EventBus
+}
+
+func (s *OrderSaga) Execute(ctx context.Context, order *Order) error {
+    steps := []string{} // Track completed steps for compensation
+
+    // Step 1: Create order
+    if err := s.orderService.Create(ctx, order); err != nil {
+        s.eventBus.Publish("order.failed", map[string]interface{}{
+            "orderId": order.ID,
+            "reason":  err.Error(),
+        })
+        return fmt.Errorf("order creation failed: %w", err)
+    }
+    steps = append(steps, "order_created")
+
+    // Step 2: Process payment
+    payment, err := s.paymentService.Charge(ctx, order.CustomerID, order.Total)
+    if err != nil {
+        s.compensate(ctx, steps, order)
+        s.eventBus.Publish("order.failed", map[string]interface{}{
+            "orderId": order.ID,
+            "reason":  err.Error(),
+        })
+        return fmt.Errorf("payment failed: %w", err)
+    }
+    steps = append(steps, "payment_charged")
+
+    // Step 3: Deduct inventory
+    if err := s.inventoryService.Deduct(ctx, order.Items); err != nil {
+        s.compensate(ctx, steps, order)
+        s.eventBus.Publish("order.failed", map[string]interface{}{
+            "orderId": order.ID,
+            "reason":  err.Error(),
+        })
+        return fmt.Errorf("inventory deduction failed: %w", err)
+    }
+    steps = append(steps, "inventory_deducted")
+
+    // Publish completion event
+    s.eventBus.Publish("order.completed", map[string]interface{}{
+        "orderId":    order.ID,
+        "customerId": order.CustomerID,
+    })
+
+    return nil
+}
+
+func (s *OrderSaga) compensate(ctx context.Context, steps []string, order *Order) {
+    // Undo steps in reverse order
+    for i := len(steps) - 1; i >= 0; i-- {
+        switch steps[i] {
+        case "inventory_deducted":
+            if err := s.inventoryService.Restore(ctx, order.Items); err != nil {
+                logger.Errorf("Failed to restore inventory: %v", err)
+            }
+        case "payment_charged":
+            if err := s.paymentService.Refund(ctx, order.PaymentID); err != nil {
+                logger.Errorf("Failed to refund payment: %v", err)
+            }
+        }
+    }
+}
+```
+
+**Event-Driven Architecture:**
+
+Use event-driven patterns when services need loose coupling. Publish domain events and let interested services react.
+
+```python
+# Python: Event-driven service communication
+class UserService:
+    def __init__(self, event_bus, db):
+        self.event_bus = event_bus
+        self.db = db
+
+    def create_user(self, user_data):
+        """Create user and publish event for other services."""
+        user = self.db.create_user(user_data)
+
+        # Publish event - other services listen and react independently
+        self.event_bus.publish('user.created', {
+            'user_id': user.id,
+            'email': user.email,
+            'created_at': user.created_at.isoformat()
+        })
+
+        return user
+
+# Other services can subscribe to events without coupling
+class NotificationService:
+    def __init__(self, event_bus):
+        self.event_bus = event_bus
+        # Listen for user creation events
+        self.event_bus.subscribe('user.created', self.send_welcome_email)
+
+    def send_welcome_email(self, event):
+        """React to user.created event."""
+        user_id = event['user_id']
+        email = event['email']
+        # Send welcome email asynchronously
+        send_email_task.delay(email, 'Welcome to our service!')
+```
+
+```go
+// Go: Event-driven service communication with channels
+type Event struct {
+    Type    string
+    Payload map[string]interface{}
+}
+
+type UserService struct {
+    eventBus chan Event
+    db       Database
+}
+
+func (s *UserService) CreateUser(ctx context.Context, userData map[string]interface{}) (*User, error) {
+    user, err := s.db.CreateUser(ctx, userData)
+    if err != nil {
+        return nil, err
+    }
+
+    // Publish event - non-blocking (buffered channel)
+    select {
+    case s.eventBus <- Event{
+        Type: "user.created",
+        Payload: map[string]interface{}{
+            "user_id":   user.ID,
+            "email":     user.Email,
+            "created_at": user.CreatedAt,
+        },
+    }:
+    case <-ctx.Done():
+        return user, fmt.Errorf("context cancelled while publishing event")
+    }
+
+    return user, nil
+}
+
+// Other services listen for events
+type NotificationService struct {
+    eventBus chan Event
+}
+
+func (s *NotificationService) Start(ctx context.Context) {
+    for {
+        select {
+        case event := <-s.eventBus:
+            if event.Type == "user.created" {
+                s.handleUserCreated(event)
+            }
+        case <-ctx.Done():
+            return
+        }
+    }
+}
+
+func (s *NotificationService) handleUserCreated(event Event) {
+    email := event.Payload["email"].(string)
+    // Send welcome email asynchronously
+    go sendWelcomeEmail(email)
+}
+```
+
 **4.2 Data Model Design**
 * Schema updates
 * Indexing strategy
