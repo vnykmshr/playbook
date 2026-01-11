@@ -80,6 +80,22 @@ Quick reference for all playbook commands.
 | `/pb-standards` | Coding standards, quality principles |
 | `/pb-context` | Project onboarding context template |
 
+## Example Projects
+
+Real-world implementations of the playbook in action:
+
+| Project | Stack | Purpose | Location |
+|---------|-------|---------|----------|
+| **Go Backend API** | Go 1.22 + PostgreSQL | REST API with graceful shutdown, connection pooling | `examples/go-backend-api/` |
+| **Python Pipeline** | Python 3.11 + SQLAlchemy | Async data pipeline with event aggregation | `examples/python-data-pipeline/` |
+| **Node.js REST API** | Node.js 20 + TypeScript + Express | Type-safe REST API with request tracing | `examples/node-api/` |
+
+**See [`docs/PLAYBOOK_IN_ACTION.md`](PLAYBOOK_IN_ACTION.md) for detailed walkthrough showing:**
+- How to use `/pb-start`, `/pb-cycle`, and `/pb-pr` with real examples
+- Complete development workflows for each stack
+- Testing, code quality, and deployment patterns
+- Common scenarios with step-by-step commands
+
 ## Typical Workflows
 
 ### Feature Development (with Checkpoint Review)
