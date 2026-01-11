@@ -27,7 +27,7 @@
 
 ### Working Memory & Development Control
 * **Todos are Dev-Only:** The `todos/` folder is for development notes only and must be `.git-ignored`. Never commit temporary files.
-* **Never add new docs** Anything published to docs/ must be confirmed, status report, working docs, ADR can be saved to todos/ for local reviews. 
+* **Never add new docs** Anything published to docs/ must be confirmed, status report, working docs, ADR can be saved to todos/ for local reviews.
 * **Time-Boxed Prototyping:** Use temporary branches for experiments.
 * **Task Output:** Each task or todo must result in demonstrably working, testable code.
 
