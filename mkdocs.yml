@@ -1,3 +1,4 @@
+---
 site_name: Engineering Playbook
 site_description: A comprehensive, integrated set of 45 commands and guides for structuring iterative development workflows
 site_url: https://playbook.dev
@@ -62,11 +63,11 @@ nav:
   - Command Reference: command-index.md
   - Integration Guide: integration-guide.md
   - Quality:
-    - Best Practices: best-practices.md
-    - Checklists: checklists.md
+      - Best Practices: best-practices.md
+      - Checklists: checklists.md
   - Discovery:
-    - Decision Guide: decision-guide.md
-    - FAQ: faq.md
-    - Glossary: glossary.md
+      - Decision Guide: decision-guide.md
+      - FAQ: faq.md
+      - Glossary: glossary.md
 
 copyright: Copyright &copy; 2026 vnykmshr - MIT License
