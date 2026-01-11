@@ -1,4 +1,4 @@
-name: Deploy Documentation to GitHub Pages
+name: Documentation Quality & Deployment
 
 on:
   push:
@@ -20,9 +20,29 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  build:
-    name: Build Documentation
+  lint:
+    name: Lint & Validate
     runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Lint markdown files
+        uses: nosplanation/github-action-markdown-cli@v3.3.0
+        with:
+          files: docs
+          config_file: .markdownlint.json
+
+      - name: Validate YAML
+        run: |
+          pip install yamllint
+          yamllint -c .yamllint mkdocs.yml
+
+  build:
+    name: Build & Validate
+    runs-on: ubuntu-latest
+    needs: lint
 
     steps:
       - name: Checkout repository
@@ -40,6 +60,13 @@ jobs:
 
       - name: Build documentation
         run: mkdocs build
+
+      - name: Check for broken links
+        uses: lycheeverse/lychee-action@v1.10.0
+        with:
+          args: --no-progress --format markdown site
+          fail: true
+        continue-on-error: true
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v2
