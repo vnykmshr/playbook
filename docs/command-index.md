@@ -10,6 +10,7 @@ Quick reference for all playbook commands.
 | `/pb-cycle` | Each iteration (develop → review → commit) |
 | `/pb-resume` | Resuming after a break |
 | `/pb-pr` | Creating a pull request |
+| `/pb-knowledge-transfer` | Preparing KT session for new developer or team handoff |
 
 ## Patterns & Architecture
 
@@ -58,6 +59,7 @@ Quick reference for all playbook commands.
 | `/pb-review-hygiene` | Multi-role health check | Quarterly |
 | `/pb-review-product` | Technical + product review | Monthly |
 | `/pb-review-microservice` | Microservice architecture design review | Before microservice deployment |
+| `/pb-logging` | Logging strategy & standards audit | During code review, pre-release |
 
 ## Reference Documents
 
@@ -104,9 +106,9 @@ Quick reference for all playbook commands.
 | Core | 3 |
 | Patterns & Architecture | 5 |
 | Planning | 2 |
-| Development | 4 |
+| Development | 5 |
 | Release | 2 |
-| Reviews | 8 |
+| Reviews | 9 |
 | Repo | 6 |
 | Templates | 1 |
-| **Total** | **31** |
+| **Total** | **33** |
