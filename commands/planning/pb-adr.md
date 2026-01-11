@@ -179,6 +179,292 @@ minimizing payload through lazy loading of theme-specific fonts.
 
 ---
 
+## Example ADRs (Additional)
+
+### Example 2: Database Selection (PostgreSQL vs MongoDB)
+
+```markdown
+# ADR-0001: PostgreSQL for Primary Database
+
+**Date:** 2026-01-05
+**Status:** Accepted
+**Deciders:** Engineering team, Tech lead
+
+## Context
+
+Building a new SaaS application. Need to select primary data store for user accounts, billing,
+and product data. Team has experience with both SQL and NoSQL. Requirements:
+- Strong consistency (financial transactions)
+- Complex queries across related data
+- ACID transactions required
+- Expected growth: 100M+ records over 5 years
+
+## Decision
+
+Use PostgreSQL as primary database. Use Redis for caching and sessions.
+
+## Alternatives Considered
+
+### Option A: PostgreSQL (Selected)
+**Pros:**
+- ACID guarantees for transactions
+- Complex queries with JOINs
+- Strong consistency
+- Mature tooling and libraries
+- Battle-tested at scale
+
+**Cons:**
+- Requires schema design upfront
+- Vertical scaling limitations (horizontal scaling complex)
+- Not ideal for unstructured data
+
+### Option B: MongoDB
+**Pros:**
+- Flexible schema (iterate quickly)
+- Built-in horizontal scaling
+- Good for unstructured data
+- Document-oriented (natural data model for some use cases)
+
+**Cons:**
+- Eventual consistency (problematic for financial data)
+- Complex transactions until v4.0+
+- Higher memory footprint
+- Harder to query across documents
+
+### Option C: Multi-database (PostgreSQL + MongoDB)
+**Pros:**
+- Best of both worlds
+- Flexibility by data type
+
+**Cons:**
+- Operational complexity
+- Data sync challenges
+- Increased maintenance burden
+
+## Rationale
+
+Financial data (billing, subscriptions, payments) demands ACID guarantees. Complex reporting
+queries (user analytics, revenue reports) benefit from SQL. PostgreSQL's maturity and
+proven scaling strategies at companies like Stripe, Pinterest, Instagram make it the best fit.
+
+## Consequences
+
+**Positive:**
+- Data integrity guaranteed
+- Complex queries fast and efficient
+- Excellent ecosystem (ORMs, migration tools, monitoring)
+- Smaller operational footprint than MongoDB
+
+**Negative:**
+- Schema migrations required when data model changes
+- Developers must think about schema design upfront
+- Scaling read load requires replication setup
+
+**Neutral:**
+- Network latency same as MongoDB for single-node setup
+
+## Implementation Notes
+
+- Use connection pooling (PgBouncer) from day 1
+- Set up read replicas before launch for analytics queries
+- Configure backup strategy (WAL archiving, pg_basebackup)
+- Monitor table bloat and run VACUUM regularly
+- Use indexes strategically (query plans matter)
+```
+
+---
+
+### Example 3: Authentication Strategy (JWT vs OAuth2 vs Session-based)
+
+```markdown
+# ADR-0002: JWT with Refresh Tokens for Authentication
+
+**Date:** 2026-01-07
+**Status:** Accepted
+**Deciders:** Engineering team, Security lead
+
+## Context
+
+Building SPA (React) + mobile app (iOS/Android) + backend. Need stateless authentication
+that works across multiple clients. Requirements:
+- Support web, iOS, Android clients
+- Stateless backend (can scale horizontally)
+- Secure token revocation (logout)
+- Standard industry practice
+
+## Decision
+
+Use JWT (JSON Web Tokens) with refresh token rotation. Short-lived access tokens (15 min),
+longer-lived refresh tokens (7 days) with rotation on each refresh.
+
+## Alternatives Considered
+
+### Option A: Session-based (traditional)
+**Pros:**
+- Simple to understand
+- Easy token revocation
+- Built-in CSRF protection (when using cookies)
+- Server controls session lifetime
+
+**Cons:**
+- Requires server-side session storage
+- Doesn't scale well horizontally (session affinity needed or shared store)
+- Poor mobile experience (cookies not ideal)
+- Logout requires server cleanup
+
+### Option B: JWT without refresh tokens
+**Pros:**
+- Stateless, scales horizontally
+- Works great for mobile/SPA
+
+**Cons:**
+- Long token lifetime = security risk if token stolen
+- Can't revoke tokens (except via blacklist, defeating statelessness)
+- Logout doesn't actually log you out (token still valid)
+
+### Option C: JWT with refresh tokens (Selected)
+**Pros:**
+- Stateless backend (scales horizontally)
+- Secure: access token short-lived, refresh token rotated
+- Logout works (invalidate refresh token)
+- Works for web, mobile, SPA
+- Standard industry practice
+
+**Cons:**
+- More complex than simple sessions
+- Requires client-side refresh token storage (secure HttpOnly cookie recommended)
+- Extra network call when token expires
+
+## Rationale
+
+Refresh token rotation provides security benefits of short-lived tokens without
+logout UX issues. Industry standard used by Auth0, Firebase, AWS Cognito.
+
+## Consequences
+
+**Positive:**
+- Horizontal scaling without session store
+- Logout is instant (revoke refresh token)
+- Security: token theft has limited window
+- Mobile-friendly
+
+**Negative:**
+- Slightly more implementation complexity
+- Requires secure refresh token storage
+- Extra API call on token refresh
+
+**Neutral:**
+- Network latency barely noticeable (typical 20-50ms refresh call)
+
+## Implementation Notes
+
+- Access token lifetime: 15 minutes (tradeoff between security and UX)
+- Refresh token lifetime: 7 days
+- Rotate refresh token on each use (new refresh token returned)
+- Store refresh token in httpOnly, secure cookie (not localStorage)
+- Include token fingerprint to prevent token reuse attacks
+- Implement refresh token revocation list for logout
+```
+
+---
+
+### Example 4: Caching Strategy (Redis vs In-memory vs CDN)
+
+```markdown
+# ADR-0003: Tiered Caching Strategy (CDN + Redis + In-memory)
+
+**Date:** 2026-01-08
+**Status:** Accepted
+**Deciders:** Engineering team, Infrastructure team
+
+## Context
+
+Application serves millions of requests daily with 30% cache-able content (product data,
+user profiles, configurations). Current approach (no caching) causes N+1 queries and
+slow response times. Need to balance cost, complexity, and performance.
+
+Requirements:
+- <100ms p99 latency
+- 50M+ requests/day
+- Global users (US + EU)
+- Cache invalidation must be reliable
+
+## Decision
+
+Implement three-tier caching:
+1. CDN (CloudFront) for static assets and API responses
+2. Redis for session data and frequently accessed objects
+3. In-memory application cache for hot data
+
+## Alternatives Considered
+
+### Option A: Redis only
+**Pros:**
+- Simple to understand
+- Works globally (with replication)
+
+**Cons:**
+- Extra network hop (vs in-memory)
+- Database load on cache misses
+- Single point of failure (high availability needed)
+- Expensive at scale
+
+### Option B: In-memory only
+**Pros:**
+- Fastest possible (no network)
+- No operational overhead
+
+**Cons:**
+- Data lost on restart
+- Doesn't work for distributed systems
+- Cache invalidation complexity across instances
+- Can't share session data across servers
+
+### Option C: Tiered caching (Selected)
+**Pros:**
+- Best performance (hit CDN first, Redis second, in-memory third)
+- Cost-effective (CDN is cheap for static content)
+- Resilient (fallback if one layer fails)
+- Scales to billions of requests
+
+**Cons:**
+- More complex (three systems to manage)
+- Cache invalidation across layers
+- Potential stale data issues
+
+## Rationale
+
+Real-world performance requires multiple cache layers. Netflix, Uber, Airbnb use similar
+patterns. Each layer serves different purposes: CDN for geographic distribution, Redis
+for shared state, in-memory for hot data.
+
+## Consequences
+
+**Positive:**
+- P99 latency drops from 500ms to 50ms
+- Reduced database load (70% hit rate)
+- Global performance (CDN)
+- Cost-effective at scale
+
+**Negative:**
+- Operational complexity (managing 3 systems)
+- Cache invalidation harder to reason about
+- Potential stale data (eventual consistency)
+
+**Neutral:**
+- Need to monitor cache hit rates separately
+
+## Implementation Notes
+
+- CDN cache TTL: 1 hour for product data, 5 min for user data
+- Redis TTL: 15 minutes
+- In-memory TTL: 5 minutes
+- Cache invalidation: Event-driven (webhook on data change)
+- Monitor: Cache hit rates, eviction rates, memory usage
+```
+
+---
+
 ## ADR Lifecycle
 
 ```
