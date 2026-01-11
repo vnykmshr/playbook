@@ -1,5 +1,5 @@
 # Multi-stage build
-FROM golang:1.21-alpine AS builder
+FROM golang:1.22-alpine AS builder
 
 WORKDIR /build
 
@@ -7,10 +7,10 @@ WORKDIR /build
 RUN apk add --no-cache git
 
 # Copy go mod files
-COPY go.mod go.sum* ./
+COPY go.mod ./
 
 # Download dependencies
-RUN go mod download
+RUN go get github.com/lib/pq@v1.10.9 && go get github.com/stretchr/testify@v1.8.4
 
 # Copy source code
 COPY src/ ./src/

@@ -10,18 +10,11 @@
  */
 
 import express, { Express, Request, Response, NextFunction } from 'express';
-import { Pool, PoolClient } from 'pg';
+import { Pool } from 'pg';
 import Logger from 'pino';
 import { v4 as uuidv4 } from 'uuid';
 
 // Types
-interface User {
-  id: number;
-  name: string;
-  email: string;
-  created_at?: string;
-}
-
 interface CreateUserInput {
   name: string;
   email: string;
@@ -54,7 +47,7 @@ function requestIdMiddleware(req: Request, res: Response, next: NextFunction): v
 }
 
 // Error handling middleware
-function errorHandler(err: ApiError, req: Request, res: Response, next: NextFunction): void {
+function errorHandler(err: ApiError, _req: Request, res: Response, _next: NextFunction): void {
   const log = res.locals.logger || logger;
 
   const status = err.status || 500;
@@ -93,7 +86,7 @@ async function initializeDatabase(): Promise<void> {
 }
 
 // Handler: List users
-async function listUsers(req: Request, res: Response, next: NextFunction): Promise<void> {
+async function listUsers(_req: Request, res: Response, next: NextFunction): Promise<void> {
   try {
     const result = await pool.query('SELECT id, name, email, created_at FROM users ORDER BY id');
     res.json(result.rows);
@@ -201,7 +194,7 @@ function createApp(): Express {
   app.use(requestIdMiddleware);
 
   // Routes
-  app.get('/health', (req: Request, res: Response) => {
+  app.get('/health', (_req: Request, res: Response) => {
     res.json({ status: 'ok', timestamp: new Date().toISOString() });
   });
 

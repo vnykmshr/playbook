@@ -41,10 +41,17 @@ func NewServer(db *sql.DB) *Server {
 
 // setupRoutes registers all HTTP handlers
 func (s *Server) setupRoutes() {
+	s.mux.HandleFunc("GET /health", s.Health)
 	s.mux.HandleFunc("GET /users", s.ListUsers)
 	s.mux.HandleFunc("GET /users/{id}", s.GetUser)
 	s.mux.HandleFunc("POST /users", s.CreateUser)
 	s.mux.HandleFunc("DELETE /users/{id}", s.DeleteUser)
+}
+
+// Health returns the health status of the service
+func (s *Server) Health(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(map[string]string{"status": "healthy"})
 }
 
 // ListUsers returns all users
