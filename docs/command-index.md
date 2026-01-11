@@ -31,6 +31,9 @@ Quick reference for all playbook commands.
 |---------|-------------|
 | `/pb-plan` | Planning a new feature/release |
 | `/pb-adr` | Documenting architectural decisions |
+| `/pb-deprecation` | Planning deprecations, breaking changes, migration paths |
+| `/pb-observability` | Planning monitoring, observability, and alerting strategy |
+| `/pb-performance` | Performance optimization and profiling strategy |
 
 ## Release & Operations
 

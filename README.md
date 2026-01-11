@@ -207,7 +207,7 @@ Master SDLC framework, working standards, and templates.
 | `/pb-documentation` | Writing technical docs at 5 levels |
 | `/pb-templates` | Reusable commit, PR, and testing templates |
 
-### Planning & Architecture (8 commands)
+### Planning & Architecture (10 commands)
 Design systems before implementation.
 
 | Command | Purpose |
@@ -220,6 +220,8 @@ Design systems before implementation.
 | `/pb-patterns-db` | Database patterns (pooling, optimization, sharding) |
 | `/pb-patterns-distributed` | Distributed patterns (saga, CQRS, eventual consistency) |
 | `/pb-performance` | Performance optimization and profiling |
+| `/pb-observability` | Monitoring, observability patterns, and alerting strategy |
+| `/pb-deprecation` | Deprecation strategy, communication, and backwards compatibility |
 
 ### Development (8 commands)
 Iterative feature development with built-in quality gates.
@@ -235,7 +237,7 @@ Iterative feature development with built-in quality gates.
 | `/pb-testing` | Testing philosophy (unit, integration, E2E) |
 | `/pb-todo-implement` | Structured implementation with checkpoint approval |
 
-### Code Review & Quality (9 commands)
+### Code Review & Quality (10 commands)
 Multiple perspectives on code quality.
 
 | Command | Purpose |
@@ -244,13 +246,14 @@ Multiple perspectives on code quality.
 | `/pb-review-code` | Code quality and best practices |
 | `/pb-review-product` | Technical + product alignment |
 | `/pb-review-tests` | Test suite quality and coverage |
+| `/pb-review-docs` | Periodic documentation review (accuracy, completeness, maintenance) |
 | `/pb-review-microservice` | Microservice architecture design |
 | `/pb-review-hygiene` | Code cleanup and technical debt |
 | `/pb-review-prerelease` | Senior engineer final release gate |
 | `/pb-security` | Security checklist (quick/standard/deep) |
 | `/pb-logging` | Logging standards and structured logging |
 
-### Release & Operations (4 commands)
+### Release & Operations (3 commands)
 Safe production deployment and incident response.
 
 | Command | Purpose |
@@ -258,7 +261,6 @@ Safe production deployment and incident response.
 | `/pb-release` | Pre-release checks and sign-off |
 | `/pb-deployment` | Deployment strategies (blue-green, canary, rolling) |
 | `/pb-incident` | Incident assessment and response (P0-P3) |
-| `/pb-observability` | Monitoring, logging, tracing, and alerting |
 
 ### Repository Management (6 commands)
 Professional repository structure and presentation.
