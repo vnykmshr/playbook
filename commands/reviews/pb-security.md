@@ -1,0 +1,428 @@
+# Security Review & Checklist
+
+Comprehensive security guidance for code review, design assessment, and pre-release validation. Use the checklist appropriate to your context: quick review, standard audit, or deep dive.
+
+---
+
+## Overview
+
+Security is not an afterthought. Integrate these checks into:
+- **Code review** — Before merging to main
+- **Design phase** — Architecture decisions
+- **Pre-release** — Before shipping to production
+
+Choose the checklist that fits your context:
+- **Quick Checklist** — 5-10 minutes, S tier changes
+- **Standard Checklist** — 20 minutes, M tier changes
+- **Deep Dive** — 1+ hour, L tier changes, security-critical features
+
+---
+
+## Quick Security Checklist (5 minutes)
+
+Use for small changes, bug fixes, single-file updates.
+
+### Input & Validation
+- [ ] All user inputs validated (never trust user input)
+- [ ] No SQL injection (use parameterized queries)
+- [ ] No XSS (output encoded, Content-Security-Policy set)
+- [ ] No command injection (no shell eval, use APIs instead)
+
+### Secrets & Configuration
+- [ ] No secrets in code (no hardcoded passwords, API keys, tokens)
+- [ ] Secrets in environment variables or secrets manager
+- [ ] No secrets in git history (use git-secrets or similar)
+
+### Authentication & Authorization
+- [ ] Authentication required for protected endpoints
+- [ ] Authorization checks present (not just auth, but correct permissions)
+- [ ] Session/token management secure
+
+### Dependency Security
+- [ ] No new dependencies with known vulnerabilities
+- [ ] Dependencies from trusted sources (not random npm packages)
+
+### Logging
+- [ ] No sensitive data logged (no PII, passwords, tokens)
+- [ ] Error messages don't leak information
+
+---
+
+## Standard Security Checklist (20 minutes)
+
+Use for feature development, API changes, multi-file changes.
+
+### Input Validation & Data Processing
+- [ ] All user inputs validated and sanitized
+- [ ] Input size limits enforced (prevent buffer overflow, DoS)
+- [ ] File uploads restricted (type, size, content scanning)
+- [ ] Data type validation (not just format, but values)
+- [ ] Null/empty input handling
+- [ ] SQL injection prevention (parameterized queries, ORMs)
+- [ ] NoSQL injection prevention (use proper query builders)
+- [ ] Command injection prevention (no shell execution)
+- [ ] Path traversal prevention (validate file paths)
+- [ ] Deserialization safety (validate JSON/XML structure)
+
+### Output Encoding & XSS Prevention
+- [ ] HTML output properly encoded
+- [ ] JavaScript output properly escaped
+- [ ] URL parameters encoded
+- [ ] CSS escaping where needed
+- [ ] Content-Security-Policy headers configured
+- [ ] No `innerHTML` with user input (use `textContent` or sanitize)
+
+### Authentication
+- [ ] Authentication mechanism appropriate (basic auth not over HTTP, etc.)
+- [ ] Passwords never logged or stored in plain text
+- [ ] Password requirements reasonable (length, complexity)
+- [ ] Failed login attempts rate-limited
+- [ ] Multi-factor authentication available for sensitive operations
+- [ ] Session timeout configured (15-30 min recommended)
+- [ ] Session tokens invalidated on logout
+- [ ] Token/session storage secure (secure HttpOnly cookies preferred)
+
+### Authorization & Access Control
+- [ ] Authorization checks at correct layer (server-side, not client)
+- [ ] Principle of least privilege (minimum required permissions)
+- [ ] All restricted endpoints protected
+- [ ] Cross-tenant data isolation (if multi-tenant)
+- [ ] Admin functions only accessible to admins
+- [ ] API endpoints check user ownership before returning data
+
+### Secrets Management
+- [ ] No hardcoded secrets (API keys, tokens, passwords)
+- [ ] Secrets stored in secure location (AWS Secrets Manager, HashiCorp Vault, etc.)
+- [ ] Secrets rotated regularly
+- [ ] Service-to-service authentication uses temporary credentials
+- [ ] Database credentials use principle of least privilege
+- [ ] API keys scoped to minimum required permissions
+
+### Cryptography
+- [ ] Sensitive data encrypted in transit (HTTPS/TLS)
+- [ ] Sensitive data encrypted at rest (database encryption, file encryption)
+- [ ] Use strong algorithms (AES-256, SHA-256 minimum)
+- [ ] No custom cryptography (use established libraries)
+- [ ] Random values use cryptographically secure random (not Math.random())
+
+### Error Handling
+- [ ] Error messages don't leak sensitive information
+- [ ] Stack traces not exposed to users
+- [ ] Generic error message to user ("An error occurred") with code for logging
+- [ ] Logging includes full error details for debugging
+- [ ] Don't reveal information about the system (versions, paths, etc.)
+
+### Logging & Monitoring
+- [ ] No PII logged (names, emails, passwords, credit cards, etc.)
+- [ ] Authentication/authorization events logged
+- [ ] Failed login attempts logged and alerted
+- [ ] Data access logged (who accessed what data)
+- [ ] API key/token usage logged
+- [ ] Suspicious activities logged (unusual patterns, rapid requests, etc.)
+
+### Dependencies
+- [ ] No known vulnerabilities in dependencies (`npm audit`, `safety check`)
+- [ ] Dependencies from trusted sources
+- [ ] Dependency versions locked (lock file committed)
+- [ ] Dependency update process regular and tested
+- [ ] Unused dependencies removed
+
+### API Security
+- [ ] HTTPS enforced (no HTTP)
+- [ ] CORS configured correctly (not `*` for sensitive APIs)
+- [ ] Rate limiting enforced
+- [ ] API versioning (clear deprecation path)
+- [ ] Request size limits
+- [ ] Timeout limits on API calls
+- [ ] API authentication (OAuth2, JWT, or API keys)
+
+---
+
+## Deep Dive Security Review (1+ hour)
+
+Use for security-critical features, payment processing, authentication systems, data handling.
+
+### Threat Modeling
+- [ ] Threat model created (STRIDE, PASTA, or similar)
+- [ ] High-risk data flows identified
+- [ ] Attack surfaces enumerated
+- [ ] Mitigation strategies documented
+
+### Advanced Input Validation
+- [ ] Unicode handling correct (no bypass with special characters)
+- [ ] Regex validation doesn't have ReDoS (Regular Expression Denial of Service) vulnerability
+- [ ] Input length limits enforce min/max (not just max)
+- [ ] Whitelist validation where possible (only allow known good input)
+- [ ] Special characters handled correctly
+- [ ] Format validation (email, phone, dates) uses libraries, not custom regex
+- [ ] Batch input size limits (prevent bulk operations DoS)
+
+### Advanced Authentication
+- [ ] Password hashing uses strong algorithm (bcrypt, argon2, scrypt)
+- [ ] Password salt used and unique per user
+- [ ] Account lockout after failed attempts
+- [ ] Password reset flow secure (token expiration, one-time use)
+- [ ] Email verification before account activation
+- [ ] Session fixation prevention
+- [ ] Brute force protection
+- [ ] CAPTCHA or similar for login forms (if public)
+- [ ] Consider passwordless auth (passkeys, magic links) for UX improvement
+
+### Advanced Authorization
+- [ ] Role-based access control (RBAC) or attribute-based (ABAC)
+- [ ] Permission model documented
+- [ ] Admin actions require additional verification
+- [ ] Sensitive operations (delete, transfer, etc.) require confirmation
+- [ ] Delegation of permissions possible and auditable
+- [ ] Temporary elevated privileges possible (not permanent admin accounts)
+
+### Data Protection
+- [ ] PII identification complete (name, email, phone, SSN, IP, etc.)
+- [ ] PII storage justified (do we actually need to store this?)
+- [ ] PII encrypted in database
+- [ ] PII encrypted in transit
+- [ ] Data retention policy defined
+- [ ] Data deletion process defined (not just flag as deleted)
+- [ ] Database backups encrypted
+- [ ] Backup restoration tested and documented
+- [ ] Cross-tenant data isolation verified
+
+### Advanced Cryptography
+- [ ] Key management process documented
+- [ ] Key rotation schedule established
+- [ ] Key derivation uses proper KDF (not custom)
+- [ ] Encryption authenticated (not just encrypted, use AEAD)
+- [ ] IV/nonce handling correct (random, not reused)
+- [ ] TLS version recent (1.2 or 1.3, not 1.0 or 1.1)
+- [ ] Cipher suites strong (no weak algorithms)
+- [ ] Certificate pinning considered for mobile apps
+
+### Advanced API Security
+- [ ] OAuth2/OIDC implementation correct (not homemade auth)
+- [ ] CSRF tokens for state-changing operations (if not using CORS properly)
+- [ ] HSTS headers configured (forces HTTPS)
+- [ ] CSP headers configured (restrict script execution)
+- [ ] X-Frame-Options configured (prevent clickjacking)
+- [ ] X-Content-Type-Options configured (prevent MIME sniffing)
+- [ ] Referrer-Policy configured
+- [ ] API rate limiting per user and IP
+- [ ] API request timeout configured
+
+### Infrastructure Security
+- [ ] Network isolation (not all services accessible from everywhere)
+- [ ] Firewall rules minimal (default deny)
+- [ ] Database not directly accessible from internet
+- [ ] Secrets not in environment (consider Secrets Manager)
+- [ ] Container image scanning for vulnerabilities
+- [ ] Container running as non-root
+- [ ] Secret scanning in CI/CD pipeline
+
+### Incident Response
+- [ ] Logging sufficient for investigation
+- [ ] Alerting on suspicious activities
+- [ ] Incident response plan documented
+- [ ] Communication plan for security incidents
+- [ ] Forensics capability (log retention, audit trail)
+
+### OWASP Top 10 (Application Security)
+
+1. **Broken Access Control** — Verified authorization checks
+2. **Cryptographic Failures** — Verified encryption and key management
+3. **Injection** — Verified input validation and parameterized queries
+4. **Insecure Design** — Threat modeling done, secure defaults
+5. **Security Misconfiguration** — Production config reviewed, defaults changed
+6. **Vulnerable Components** — Dependencies checked for vulnerabilities
+7. **Authentication Failures** — Authentication mechanism secure
+8. **Software & Data Integrity** — Dependencies from trusted sources, no tampering
+9. **Logging & Monitoring Failures** — Logging sufficient and alerting configured
+10. **SSRF** — Internal service discovery protected, not accessible from untrusted sources
+
+---
+
+## Language-Specific Guidance
+
+### JavaScript/Node.js
+
+**Common vulnerabilities:**
+- `eval()`, `Function()` constructor — NEVER use with user input
+- `innerHTML` with user input → Use DOMPurify or `textContent`
+- Prototype pollution — Validate object keys
+- Regex DoS — Use safe-regex or library validation
+
+**Best practices:**
+```javascript
+// ❌ DANGEROUS
+const result = eval(userInput);
+element.innerHTML = userInput;
+const obj = JSON.parse(userInput); // Trust JSON.parse, not the input
+
+// ✅ SAFE
+// Use libraries for evaluation
+const safe = DOMPurify.sanitize(userInput);
+element.textContent = userInput;  // Text is safe
+const obj = JSON.parse(userInput); // Safe to parse
+// Validate object keys
+if (!allowedKeys.includes(key)) throw new Error('Invalid key');
+```
+
+**Recommended packages:**
+- `helmet` — Security headers middleware
+- `express-rate-limit` — Rate limiting
+- `bcryptjs` — Password hashing
+- `jsonwebtoken` — JWT handling
+- `dompurify` — HTML sanitization
+
+### Python
+
+**Common vulnerabilities:**
+- `pickle.loads(userInput)` → Use JSON instead
+- SQL string formatting — Use parameterized queries (SQLAlchemy)
+- `exec()`, `eval()` with user input — NEVER
+- File path concatenation → Use `pathlib`, not string concat
+
+**Best practices:**
+```python
+# ❌ DANGEROUS
+user_data = pickle.loads(request.data)  # Arbitrary code execution
+query = f"SELECT * FROM users WHERE id = {user_id}"  # SQL injection
+exec(user_input)  # Arbitrary code execution
+
+# ✅ SAFE
+user_data = json.loads(request.data)  # Safe parsing
+query = db.session.query(User).filter_by(id=user_id)  # SQLAlchemy ORM
+# Execute only trusted code, not user input
+```
+
+**Recommended packages:**
+- `flask` — Web framework with security features
+- `sqlalchemy` — ORM with parameterized queries
+- `cryptography` — Encryption library
+- `bcrypt` — Password hashing
+- `pydantic` — Input validation and serialization
+
+### Go
+
+**Common vulnerabilities:**
+- `sql.Query` with string concatenation → Use parameterized queries
+- `exec.Command` with user input → Use array args, not shell
+- Insecure deserialization → Validate before unmarshaling
+
+**Best practices:**
+```go
+// ❌ DANGEROUS
+query := fmt.Sprintf("SELECT * FROM users WHERE id = %d", userID)
+cmd := exec.Command("sh", "-c", userInput)  // Shell injection
+json.Unmarshal(data, &obj)  // No validation
+
+// ✅ SAFE
+db.QueryRow("SELECT * FROM users WHERE id = ?", userID)
+cmd := exec.Command("program", args...)  // No shell
+// Validate before unmarshaling
+json.Unmarshal(data, &obj)
+validator.Validate(obj)
+```
+
+**Recommended packages:**
+- `database/sql` — Parameterized queries
+- `gorilla/mux` — Secure routing
+- `golang-jwt/jwt` — JWT handling
+- `golang.org/x/crypto` — Cryptography
+- `https://github.com/asaskevich/govalidator` — Input validation
+
+---
+
+## Common Vulnerability Examples
+
+### Example 1: SQL Injection
+
+```python
+# ❌ VULNERABLE
+user_id = request.args.get('id')
+query = f"SELECT * FROM users WHERE id = {user_id}"
+results = db.execute(query)
+
+# Attacker can pass: id=1 OR 1=1 (returns all users)
+
+# ✅ SAFE
+user_id = request.args.get('id')
+results = db.execute("SELECT * FROM users WHERE id = ?", (user_id,))
+
+# Or with ORM
+results = User.query.filter_by(id=user_id).all()
+```
+
+### Example 2: XSS (Cross-Site Scripting)
+
+```javascript
+// ❌ VULNERABLE
+const comment = getUserComment();
+document.getElementById('comments').innerHTML = comment;
+// If comment = "<img src=x onerror='alert(\"hacked\")'>"
+// The script will execute
+
+// ✅ SAFE
+document.getElementById('comments').textContent = comment;
+// Or sanitize
+const clean = DOMPurify.sanitize(comment);
+document.getElementById('comments').innerHTML = clean;
+```
+
+### Example 3: Hardcoded Secrets
+
+```python
+# ❌ VULNERABLE
+API_KEY = "sk_live_abc123def456"  # In code, in git history
+
+# ✅ SAFE
+import os
+API_KEY = os.environ.get('API_KEY')
+
+# Or with secrets manager
+import boto3
+secrets = boto3.client('secretsmanager')
+response = secrets.get_secret_value(SecretId='api-key')
+API_KEY = response['SecretString']
+```
+
+### Example 4: Weak Password Hashing
+
+```python
+# ❌ VULNERABLE
+import hashlib
+password_hash = hashlib.sha256(password.encode()).hexdigest()
+
+# ✅ SAFE
+import bcrypt
+password_hash = bcrypt.hashpw(password.encode(), bcrypt.gensalt())
+# Verification
+bcrypt.checkpw(password.encode(), password_hash)
+```
+
+---
+
+## Resources
+
+- **OWASP Top 10** — https://owasp.org/www-project-top-ten/
+- **CWE Top 25** — https://cwe.mitre.org/top25/
+- **NIST Cybersecurity Framework** — https://www.nist.gov/cyberframework/
+- **Snyk Vulnerability Database** — https://snyk.io/vuln/
+- **PortSwigger Web Security Academy** — https://portswigger.net/web-security/
+
+---
+
+## Integration with Playbook
+
+**Part of review workflow:**
+- `/pb-cycle` Step 1 — Self-review security checklist
+- `/pb-review-code` — Security section in code review
+- `/pb-guide` §4.5 — Security design during planning
+- `/pb-release` — Pre-release security checklist
+
+**Related Commands:**
+- `/pb-cycle` — Daily development with security checks
+- `/pb-guide` — Security design section
+- `/pb-review-code` — Code quality including security
+
+---
+
+*Created: 2026-01-11 | Category: Reviews | Last updated: When shipped*
