@@ -148,9 +148,12 @@ Benefit: Services don't know about each other
   "items": [
     {"product_id": "prod_1", "quantity": 2}
   ],
-  "total": 99.99
+  "total": 99.99,
+  "version": 1
 }
 ```
+
+**Note:** Include `version` field for event versioning (critical for schema evolution)
 
 **Service subscribing:**
 ```javascript

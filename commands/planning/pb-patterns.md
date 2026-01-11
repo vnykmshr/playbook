@@ -152,11 +152,11 @@ Patterns for coordinating across services/databases.
 5. Read `/pb-review-microservice` for review checklist
 
 **System is slow:**
-1. Read `/pb-performance` (measure first!)
+1. Measure bottleneck first (database query logs, network traces, CPU profiling)
 2. Identify bottleneck (database, network, CPU?)
 3. If database: Read `/pb-patterns-db`
-4. If network: Read `/pb-patterns-core` (Circuit Breaker, Cache-Aside)
-5. If CPU: Read `/pb-patterns-async` (Workers)
+4. If network/service communication: Read `/pb-patterns-core` (Circuit Breaker, Cache-Aside)
+5. If CPU-intensive: Read `/pb-patterns-async` (Worker Threads)
 
 **Payment/Order processing:**
 1. Read `/pb-patterns-core` (Event-Driven)
@@ -232,7 +232,7 @@ Multiple services? Add Saga
 All patterns in this family follow these standards:
 
 ✅ **Real Code Examples** (not pseudocode)
-- Python, JavaScript, Go examples
+- Python and JavaScript examples throughout
 - Copy-paste ready
 - Production tested
 
