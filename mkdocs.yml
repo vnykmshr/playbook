@@ -35,7 +35,6 @@ theme:
 plugins:
   - search:
       lang: en
-  - glightbox
 
 markdown_extensions:
   - pymdownx.highlight:
@@ -58,34 +57,16 @@ markdown_extensions:
 
 nav:
   - Home: index.md
-  - Getting Started:
-    - Quick Start: getting-started.md
-    - Installation: getting-started.md#installation
-    - Five Scenarios: getting-started.md#quick-start-five-scenarios
-  - Workflows:
-    - Overview: workflows.md
-    - Feature Development: workflows.md#feature-development-workflow
-    - Incident Response: workflows.md#incident-response-workflow
-    - Team Onboarding: workflows.md#team-onboarding-workflow
-    - Periodic Reviews: workflows.md#periodic-quality-reviews
-  - Command Reference:
-    - All Commands: command-index.md
-    - Core Foundation: command-index.md#core-foundation
-    - Planning & Architecture: command-index.md#planning--architecture
-    - Development: command-index.md#development
-    - Code Review & Quality: command-index.md#code-review--quality
-    - Release & Operations: command-index.md#release--operations
-    - Repository Management: command-index.md#repository-management
-    - Team & Growth: command-index.md#team--growth
-  - Integration:
-    - Integration Guide: integration-guide.md
-    - Integration Summary: INTEGRATION-SUMMARY.md
-    - How Commands Work Together: integration-guide.md#command-integration
-  - Best Practices: best-practices.md
-  - Decision Guide: decision-guide.md
-  - Glossary: glossary.md
-  - FAQ: faq.md
-  - Contributing: ../CONTRIBUTING.md
-  - License: ../LICENSE
+  - Getting Started: getting-started.md
+  - Workflows: workflows.md
+  - Command Reference: command-index.md
+  - Integration Guide: integration-guide.md
+  - Quality:
+    - Best Practices: best-practices.md
+    - Checklists: checklists.md
+  - Discovery:
+    - Decision Guide: decision-guide.md
+    - FAQ: faq.md
+    - Glossary: glossary.md
 
 copyright: Copyright &copy; 2026 vnykmshr - MIT License
