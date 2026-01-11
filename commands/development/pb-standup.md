@@ -261,18 +261,32 @@ Standups create a paper trail of:
 
 ## Integration with Playbook
 
-**Part of workflow:**
-- `/pb-start` → Creates feature branch, work begins
-- `/pb-standup` → Daily async visibility (YOU ARE HERE)
-- `/pb-cycle` → Iteration with reviews
-- `/pb-pr` → Merge to main
+**Part of development workflow:**
+- `/pb-start` → Create branch, set iteration rhythm
+- `/pb-resume` → Get back in context after break (write standup after this)
+- **`/pb-standup`** → Daily async visibility (YOU ARE HERE)
+- `/pb-cycle` → Iterate with reviews
+- `/pb-commit` → Atomic commits
+- `/pb-pr` → Pull request
 - `/pb-release` → Deploy
 
-**Related Commands:**
-- `/pb-start` — Starting a feature (pre-standup)
+**When to write standups:**
+- **Daily**: Post standup at start of work day (or end of previous day)
+- **Context switching**: Write standup when resuming different task
+- **After `/pb-resume`**: Write standup after context recovery from break
+- **Blockers**: Write immediately when blocked (don't wait for next day)
+- **Weekly**: Summarize week on Friday for distributed teams
+
+**Related commands:**
+- `/pb-start` — Starting a feature (first standup after creating branch)
+- `/pb-resume` — Resuming after break (write standup as first step)
 - `/pb-cycle` — Iteration & reviews (happens during standups)
-- `/pb-pr` — Opening PR (post-standup when ready)
-- `/pb-resume` — Resuming after break (first thing, write standup)
+- `/pb-context` — Reference project context when writing standup
+- `/pb-standards` — Working principles guide team culture
+- `/pb-pr` — Opening PR (reference PR in standup when ready)
+- `/pb-release` — Deploy (include deployment status in standup)
+
+**See also:** `/docs/integration-guide.md` for how all commands work together
 
 ---
 

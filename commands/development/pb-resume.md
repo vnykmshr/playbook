@@ -167,7 +167,7 @@ For project-level context:
 
 ```bash
 # Read project working context
-cat todos/prompts/1-working-context.md
+/pb-context (or cat todos/prompts/1-working-context.md)
 
 # Check release tracker if on a release branch
 cat todos/releases/v1.X.0/00-master-tracker.md
@@ -189,7 +189,8 @@ git log --all --oneline --graph -20
 
 # 4. Read the working context
 # /pb-standards for patterns
-# Working context doc for current state
+# /pb-context for project context and decision log
+# /pb-guide for SDLC framework reference
 ```
 
 ---
@@ -201,6 +202,7 @@ git log --all --oneline --graph -20
 1. **Commit or stash** - Never leave uncommitted work overnight
 2. **Write a note** - Quick TODO comment or session end note
 3. **Push to remote** - Backup your work
+4. **Leave context** - Update /pb-context decision log or standup
 
 ### When Resuming
 
@@ -208,6 +210,35 @@ git log --all --oneline --graph -20
 2. **Read before writing** - Review recent commits
 3. **Verify environment** - Ensure services running
 4. **Run tests** - Confirm baseline is green
+5. **Post standup** - Write /pb-standup to align with team
+
+---
+
+## Integration with Playbook
+
+**Part of development workflow:**
+- `/pb-start` → Create branch, set iteration rhythm
+- **`/pb-resume`** → Get back in context after break (YOU ARE HERE)
+- `/pb-cycle` → Iterate with reviews
+- `/pb-standup` → Daily async visibility (write after resuming)
+- `/pb-commit` → Atomic commits
+- `/pb-pr` → Pull request
+
+**When to use `/pb-resume`:**
+- After a context switch (lunch break, context switching)
+- After a day off or weekend
+- After a long meeting
+- When resuming work from a different branch
+- When you've been on a different task for hours
+
+**Related commands:**
+- `/pb-start` — Starting new feature (before /pb-resume context recovery)
+- `/pb-context` — Read project context (use alongside /pb-resume)
+- `/pb-standup` — Write after resuming (post status for team)
+- `/pb-standards` — Refresh working principles
+- `/pb-guide` — SDLC framework reference
+
+**See also:** `/docs/integration-guide.md` for how all commands work together
 
 ---
 
