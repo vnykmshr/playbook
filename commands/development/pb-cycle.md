@@ -183,4 +183,31 @@ update code
 
 ---
 
+## Integration with Playbook
+
+**Part of feature development workflow:**
+- `/pb-start` → Create branch, set iteration rhythm
+- `/pb-resume` → Get back in context (if context switching)
+- **`/pb-cycle`** → Self-review + peer review (YOU ARE HERE)
+  - Includes: `/pb-testing` (write tests), `/pb-standards` (check principles), `/pb-security` (security gate)
+- `/pb-commit` → Craft atomic commits (after approval)
+- `/pb-pr` → Create pull request
+- `/pb-review-*` → Additional reviews if needed
+- `/pb-release` → Deploy
+
+**Key integrations during /pb-cycle:**
+- **Testing**: `/pb-testing` for test patterns (unit, integration, E2E)
+- **Security**: `/pb-security` checklist during self-review
+- **Logging**: `/pb-logging` standards for logging validation
+- **Standards**: `/pb-standards` for working principles
+- **Documentation**: `/pb-documentation` for updating docs alongside code
+
+**After /pb-cycle approval:**
+- `/pb-commit` — Craft atomic, well-formatted commit
+- `/pb-pr` — Create pull request with context
+
+**See also**: `/docs/integration-guide.md` for how all 45 commands work together
+
+---
+
 *Every iteration gets the full cycle. No shortcuts.*

@@ -1439,3 +1439,26 @@ This covers:
 - **Container crash loops** - Check container logs to identify startup failures.
 - **Provisioning errors** - Often caused by invalid YAML syntax or missing required fields. Check for proper indentation and required settings.
 - **Environment variable issues** - Shell sourcing may fail with special characters. Use `grep` + `cut` instead of `source` for robust extraction.
+
+---
+
+## Integration with Playbook Ecosystem
+
+**This is the master SDLC framework.** All 45 other commands implement phases described in this guide.
+
+**Key command integrations by phase:**
+
+- **§1 Intake & Planning** → `/pb-plan`, `/pb-adr`, `/pb-patterns-*`
+- **§2 Team & Estimation** → `/pb-team`, `/pb-onboarding`, `/pb-knowledge-transfer`
+- **§3 Architecture & Design** → `/pb-patterns-core`, `/pb-patterns-async`, `/pb-patterns-db`, `/pb-patterns-distributed`
+- **§4 Implementation** → `/pb-start`, `/pb-cycle`, `/pb-testing`, `/pb-commit`, `/pb-todo-implement`
+- **§5 Code Review** → `/pb-review-code`, `/pb-security`, `/pb-logging`, `/pb-review-product`
+- **§6 Quality Gates** → `/pb-review-tests`, `/pb-review-hygiene`, `/pb-review-microservice`
+- **§7 Observability** → `/pb-observability`, `/pb-logging`, `/pb-performance`
+- **§8 Deployment** → `/pb-deployment`, `/pb-release`, `/pb-review-prerelease`
+- **§9 Post-Release** → `/pb-incident`, `/pb-observability` (monitoring)
+- **Team & Growth** → `/pb-team`, `/pb-onboarding`, `/pb-documentation`
+
+**See also:**
+- `/docs/integration-guide.md` — Comprehensive guide showing all 45 commands, workflows, and how they work together
+- `/docs/command-index.md` — Quick reference by category
