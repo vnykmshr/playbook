@@ -449,22 +449,22 @@ Quality becomes the default. Not because of individual heroics, but because good
 
 Pick your scenario:
 
-**[Scenario 1: New Project →](/getting-started.md#scenario-1-starting-a-new-project)**
+**[Scenario 1: New Project →](getting-started.md#scenario-1-starting-a-new-project)**
 From greenfield to production with clear architecture and quality gates.
 
-**[Scenario 2: Existing Codebase →](/getting-started.md#scenario-2-adopting-playbook-in-existing-project)**
+**[Scenario 2: Existing Codebase →](getting-started.md#scenario-2-adopting-playbook-in-existing-project)**
 Gradually adopt playbook practices without disrupting current flow.
 
-**[Scenario 3: Daily Developer Workflow →](/getting-started.md#scenario-3-typical-developer-day)**
+**[Scenario 3: Daily Developer Workflow →](getting-started.md#scenario-3-typical-developer-day)**
 See how a developer uses the playbook during a typical day.
 
-**[Scenario 4: Code Review →](/getting-started.md#scenario-4-code-review)**
+**[Scenario 4: Code Review →](getting-started.md#scenario-4-code-review)**
 Structure code review from multiple perspectives.
 
-**[Scenario 5: Incident Response →](/getting-started.md#scenario-5-incident-response)**
+**[Scenario 5: Incident Response →](getting-started.md#scenario-5-incident-response)**
 Respond to production issues systematically.
 
-Or browse the [full command reference](/command-index.md) and [decision guide](/decision-guide.md).
+Or browse the [full command reference](command-index.md) and [decision guide](decision-guide.md).
 
 ---
 
