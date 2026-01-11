@@ -775,11 +775,383 @@ read_from_primary(id)  # Guaranteed to see write
 
 ---
 
+## Go Examples
+
+**Connection Pooling with database/sql:**
+
+```go
+// Go: Built-in connection pooling with database/sql
+package main
+
+import (
+    "database/sql"
+    "fmt"
+    "os"
+    "time"
+
+    _ "github.com/lib/pq" // PostgreSQL driver
+)
+
+func main() {
+    // database/sql automatically manages connection pooling
+    db, err := sql.Open("postgres", os.Getenv("DATABASE_URL"))
+    if err != nil {
+        panic(err)
+    }
+    defer db.Close()
+
+    // Configure connection pool
+    db.SetMaxOpenConns(25)          // Max 25 open connections
+    db.SetMaxIdleConns(5)            // Keep 5 idle connections
+    db.SetConnMaxLifetime(5 * time.Minute) // Close connections after 5 min
+
+    // Health check - verify connection pool is working
+    if err := db.Ping(); err != nil {
+        panic(err)
+    }
+
+    // Query with automatic connection pooling
+    row := db.QueryRow("SELECT id, name FROM users WHERE id = $1", 123)
+    var id int
+    var name string
+    if err := row.Scan(&id, &name); err != nil {
+        fmt.Println("Query failed:", err)
+        return
+    }
+
+    fmt.Printf("User %d: %s\n", id, name)
+}
+```
+
+**Query Optimization with Indexes:**
+
+```go
+// Go: Query optimization and indexing strategies
+package main
+
+import (
+    "database/sql"
+    "fmt"
+    "time"
+)
+
+// ❌ N+1 problem: Multiple queries
+func getUsersAndOrdersBad(db *sql.DB) {
+    rows, _ := db.Query("SELECT id FROM users LIMIT 10")
+    for rows.Next() {
+        var userID int
+        rows.Scan(&userID)
+
+        // One query per user! (N+1 problem)
+        orderRows, _ := db.Query("SELECT * FROM orders WHERE user_id = $1", userID)
+        for orderRows.Next() {
+            // Process order
+        }
+    }
+}
+
+// ✅ Optimized: JOIN reduces to single query
+func getUsersAndOrdersOptimized(db *sql.DB) {
+    query := `
+    SELECT u.id, u.name, o.id, o.total
+    FROM users u
+    LEFT JOIN orders o ON u.id = o.user_id
+    WHERE u.created_at > NOW() - INTERVAL '30 days'
+    ORDER BY u.id, o.created_at
+    `
+    rows, _ := db.Query(query)
+    defer rows.Close()
+
+    currentUserID := 0
+    var userOrders map[int][]Order
+
+    for rows.Next() {
+        var userID, orderID int
+        var userName string
+        var orderTotal float64
+        rows.Scan(&userID, &userName, &orderID, &orderTotal)
+
+        if userID != currentUserID {
+            currentUserID = userID
+            userOrders[userID] = []Order{}
+        }
+        userOrders[userID] = append(userOrders[userID], Order{
+            ID:    orderID,
+            Total: orderTotal,
+        })
+    }
+}
+
+// Create indexes for common queries
+func ensureIndexes(db *sql.DB) {
+    indexes := []string{
+        // Index for user lookups
+        "CREATE INDEX IF NOT EXISTS idx_users_email ON users(email)",
+        // Index for orders by user_id
+        "CREATE INDEX IF NOT EXISTS idx_orders_user_id ON orders(user_id)",
+        // Composite index for range queries
+        "CREATE INDEX IF NOT EXISTS idx_orders_created ON orders(user_id, created_at)",
+    }
+
+    for _, idx := range indexes {
+        if _, err := db.Exec(idx); err != nil {
+            fmt.Println("Index creation failed:", err)
+        }
+    }
+}
+
+// Analyze query performance with EXPLAIN
+func analyzeQuery(db *sql.DB) {
+    row := db.QueryRow(`
+    EXPLAIN ANALYZE
+    SELECT * FROM orders WHERE user_id = $1 AND created_at > NOW() - INTERVAL '30 days'
+    `, 123)
+
+    var explanation string
+    row.Scan(&explanation)
+    fmt.Println("Query plan:", explanation)
+}
+```
+
+**Batch Operations for Performance:**
+
+```go
+// Go: Batch operations for efficient bulk inserts
+package main
+
+import (
+    "database/sql"
+    "fmt"
+    "strings"
+    "time"
+)
+
+type Order struct {
+    UserID int
+    Amount float64
+    Item   string
+}
+
+// ❌ Slow: One INSERT per row
+func insertOrdersOneByOne(db *sql.DB, orders []Order) {
+    start := time.Now()
+
+    for _, order := range orders {
+        db.Exec(
+            "INSERT INTO orders (user_id, amount, item) VALUES ($1, $2, $3)",
+            order.UserID, order.Amount, order.Item,
+        )
+    }
+
+    fmt.Printf("One-by-one: %.2fs for %d rows\n", time.Since(start).Seconds(), len(orders))
+    // Slow: 1000 rows = 1000 round trips to database
+}
+
+// ✅ Fast: Batch INSERT
+func insertOrdersBatch(db *sql.DB, orders []Order) error {
+    start := time.Now()
+
+    // Build multi-row INSERT
+    const batchSize = 100
+    for i := 0; i < len(orders); i += batchSize {
+        end := i + batchSize
+        if end > len(orders) {
+            end = len(orders)
+        }
+
+        batch := orders[i:end]
+        query, args := buildBatchInsertQuery(batch)
+
+        _, err := db.Exec(query, args...)
+        if err != nil {
+            return fmt.Errorf("batch insert failed: %w", err)
+        }
+    }
+
+    fmt.Printf("Batch insert: %.2fs for %d rows\n", time.Since(start).Seconds(), len(orders))
+    // Fast: 1000 rows = 10 queries (100 per batch)
+
+    return nil
+}
+
+// Helper: Build dynamic INSERT query
+func buildBatchInsertQuery(orders []Order) (string, []interface{}) {
+    placeholders := []string{}
+    args := []interface{}{}
+    paramIndex := 1
+
+    for _, order := range orders {
+        placeholders = append(
+            placeholders,
+            fmt.Sprintf("($%d, $%d, $%d)", paramIndex, paramIndex+1, paramIndex+2),
+        )
+        args = append(args, order.UserID, order.Amount, order.Item)
+        paramIndex += 3
+    }
+
+    query := fmt.Sprintf(
+        "INSERT INTO orders (user_id, amount, item) VALUES %s",
+        strings.Join(placeholders, ", "),
+    )
+    return query, args
+}
+```
+
+**Replication: Read/Write Splitting:**
+
+```go
+// Go: Read from replicas, write to primary
+package main
+
+import (
+    "database/sql"
+    "fmt"
+    "math/rand"
+    "os"
+)
+
+type DataStore struct {
+    primary    *sql.DB // Master
+    replicas   []*sql.DB // Read-only replicas
+    replicaIdx int
+}
+
+func NewDataStore(primaryURL string, replicaURLs []string) (*DataStore, error) {
+    primary, err := sql.Open("postgres", primaryURL)
+    if err != nil {
+        return nil, err
+    }
+
+    replicas := make([]*sql.DB, len(replicaURLs))
+    for i, url := range replicaURLs {
+        db, err := sql.Open("postgres", url)
+        if err != nil {
+            return nil, err
+        }
+        replicas[i] = db
+    }
+
+    return &DataStore{
+        primary:  primary,
+        replicas: replicas,
+    }, nil
+}
+
+// Write to primary only
+func (ds *DataStore) WriteOrder(order Order) error {
+    _, err := ds.primary.Exec(
+        "INSERT INTO orders (user_id, amount, item) VALUES ($1, $2, $3)",
+        order.UserID, order.Amount, order.Item,
+    )
+    return err
+}
+
+// Read from replica (load balance across replicas)
+func (ds *DataStore) GetOrder(id int) (Order, error) {
+    // Random replica selection (or round-robin)
+    replica := ds.replicas[rand.Intn(len(ds.replicas))]
+
+    var order Order
+    err := replica.QueryRow(
+        "SELECT user_id, amount, item FROM orders WHERE id = $1",
+        id,
+    ).Scan(&order.UserID, &order.Amount, &order.Item)
+
+    if err == sql.ErrNoRows {
+        // Replica might be behind - try primary
+        err = ds.primary.QueryRow(
+            "SELECT user_id, amount, item FROM orders WHERE id = $1",
+            id,
+        ).Scan(&order.UserID, &order.Amount, &order.Item)
+    }
+
+    return order, err
+}
+
+// Health check replicas
+func (ds *DataStore) CheckHealth() {
+    if err := ds.primary.Ping(); err != nil {
+        fmt.Println("Primary unhealthy:", err)
+    }
+
+    for i, replica := range ds.replicas {
+        if err := replica.Ping(); err != nil {
+            fmt.Printf("Replica %d unhealthy: %v\n", i, err)
+        }
+    }
+}
+```
+
+**Transactions:**
+
+```go
+// Go: ACID transactions with proper error handling
+package main
+
+import (
+    "database/sql"
+    "fmt"
+)
+
+// Transfer money between accounts (ACID transaction)
+func transferMoney(db *sql.DB, fromAcct, toAcct int, amount float64) error {
+    // Start transaction
+    tx, err := db.Begin()
+    if err != nil {
+        return err
+    }
+    defer tx.Rollback() // Rollback if anything fails
+
+    // Deduct from source account
+    result, err := tx.Exec(
+        "UPDATE accounts SET balance = balance - $1 WHERE id = $2",
+        amount, fromAcct,
+    )
+    if err != nil {
+        return err
+    }
+
+    rowsAffected, _ := result.RowsAffected()
+    if rowsAffected == 0 {
+        return fmt.Errorf("source account not found")
+    }
+
+    // Add to destination account
+    result, err = tx.Exec(
+        "UPDATE accounts SET balance = balance + $1 WHERE id = $2",
+        amount, toAcct,
+    )
+    if err != nil {
+        return err
+    }
+
+    rowsAffected, _ = result.RowsAffected()
+    if rowsAffected == 0 {
+        return fmt.Errorf("destination account not found")
+    }
+
+    // Record transaction
+    _, err = tx.Exec(
+        "INSERT INTO transactions (from_account, to_account, amount) VALUES ($1, $2, $3)",
+        fromAcct, toAcct, amount,
+    )
+    if err != nil {
+        return err
+    }
+
+    // Commit all changes
+    return tx.Commit().Err()
+}
+```
+
+---
+
 ## Integration with Playbook
 
 **Related to database patterns:**
 - `/pb-performance` — Performance optimization
 - `/pb-testing` — Testing database code
+- `/pb-guide` — Database patterns in system design
 - `/pb-deployment` — Database migrations
 - `/pb-patterns-core` — Architectural decisions
 - `/pb-incident` — Database incident response
@@ -787,4 +1159,5 @@ read_from_primary(id)  # Guaranteed to see write
 ---
 
 *Created: 2026-01-11 | Category: Database | Tier: L*
+*Updated: 2026-01-11 | Added Go examples*
 

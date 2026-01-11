@@ -754,22 +754,305 @@ await Promise.all(
 
 ---
 
+## Go Examples
+
+**Goroutines and Channels (Go's async model):**
+
+Go uses goroutines (lightweight threads) and channels for concurrency, similar to async/await in JavaScript/Python:
+
+```go
+// Go: Goroutines with channels for concurrent operations
+package main
+
+import (
+    "context"
+    "fmt"
+)
+
+// Fetch user concurrently using goroutines
+func fetchUserAndPosts(ctx context.Context, userID int) (User, []Post, error) {
+    userChan := make(chan User)
+    postsChan := make(chan []Post)
+    errChan := make(chan error)
+
+    // Goroutine 1: Fetch user
+    go func() {
+        user, err := fetchUser(ctx, userID)
+        if err != nil {
+            errChan <- err
+            return
+        }
+        userChan <- user
+    }()
+
+    // Goroutine 2: Fetch posts
+    go func() {
+        posts, err := fetchPosts(ctx, userID)
+        if err != nil {
+            errChan <- err
+            return
+        }
+        postsChan <- posts
+    }()
+
+    // Wait for both results using select
+    var user User
+    var posts []Post
+    completed := 0
+
+    for completed < 2 {
+        select {
+        case u := <-userChan:
+            user = u
+            completed++
+        case p := <-postsChan:
+            posts = p
+            completed++
+        case err := <-errChan:
+            return User{}, nil, fmt.Errorf("fetch failed: %w", err)
+        case <-ctx.Done():
+            return User{}, nil, fmt.Errorf("request timeout or cancelled")
+        }
+    }
+
+    return user, posts, nil
+}
+
+// Context for timeouts and cancellation
+func fetchWithTimeout(ctx context.Context, url string, timeout time.Duration) (string, error) {
+    // Create context with timeout
+    ctx, cancel := context.WithTimeout(ctx, timeout)
+    defer cancel()
+
+    // Use context for cancellation
+    responseChan := make(chan string)
+    errChan := make(chan error)
+
+    go func() {
+        resp, err := http.Get(url)
+        if err != nil {
+            errChan <- err
+            return
+        }
+        defer resp.Body.Close()
+        body, _ := ioutil.ReadAll(resp.Body)
+        responseChan <- string(body)
+    }()
+
+    select {
+    case resp := <-responseChan:
+        return resp, nil
+    case err := <-errChan:
+        return "", err
+    case <-ctx.Done():
+        return "", fmt.Errorf("request timeout: %w", ctx.Err())
+    }
+}
+```
+
+**Worker Pool Pattern (equivalent to job queue):**
+
+```go
+// Go: Worker pool for processing background jobs
+package main
+
+import (
+    "context"
+    "fmt"
+    "sync"
+)
+
+type Job struct {
+    UserID    int
+    EmailType string
+}
+
+type JobQueue struct {
+    jobs    chan Job
+    workers int
+    mu      sync.Mutex
+}
+
+func NewJobQueue(workers int) *JobQueue {
+    return &JobQueue{
+        jobs:    make(chan Job, 100), // Buffered channel
+        workers: workers,
+    }
+}
+
+// Start worker goroutines
+func (q *JobQueue) Start(ctx context.Context) {
+    for i := 0; i < q.workers; i++ {
+        go q.worker(ctx, i)
+    }
+}
+
+// Worker goroutine processes jobs
+func (q *JobQueue) worker(ctx context.Context, id int) {
+    for {
+        select {
+        case job := <-q.jobs:
+            if err := q.processJob(ctx, job); err != nil {
+                fmt.Printf("Worker %d: Job failed for user %d: %v\n", id, job.UserID, err)
+                // Could requeue job or increment failure count
+            }
+        case <-ctx.Done():
+            fmt.Printf("Worker %d: Shutting down\n", id)
+            return
+        }
+    }
+}
+
+// Process individual job
+func (q *JobQueue) processJob(ctx context.Context, job Job) error {
+    user, err := fetchUser(ctx, job.UserID)
+    if err != nil {
+        return err
+    }
+
+    return sendEmail(ctx, user.Email, job.EmailType)
+}
+
+// Add job to queue (non-blocking)
+func (q *JobQueue) Submit(job Job) error {
+    select {
+    case q.jobs <- job:
+        return nil
+    default:
+        return fmt.Errorf("job queue full")
+    }
+}
+
+// Graceful shutdown
+func (q *JobQueue) Shutdown(ctx context.Context) error {
+    close(q.jobs)
+    // Workers will finish processing remaining jobs and exit when context done
+    <-ctx.Done()
+    return nil
+}
+
+// Usage
+func main() {
+    ctx, cancel := context.WithCancel(context.Background())
+    defer cancel()
+
+    queue := NewJobQueue(5) // 5 workers
+    queue.Start(ctx)
+
+    // Submit jobs
+    queue.Submit(Job{UserID: 1, EmailType: "welcome"})
+    queue.Submit(Job{UserID: 2, EmailType: "reminder"})
+
+    // Let workers process, then shutdown
+    time.Sleep(2 * time.Second)
+    queue.Shutdown(ctx)
+}
+```
+
+**Parallel vs Sequential Execution:**
+
+```go
+// Go: Sequential vs parallel pattern choices
+
+// ❌ Sequential (slow): Wait for each operation
+func processUsersSequential(ctx context.Context, userIds []int) {
+    for _, userID := range userIds {
+        user, _ := fetchUser(ctx, userID)
+        processUser(user)
+    }
+    // Total time: N × (fetch + process time)
+}
+
+// ✅ Parallel (fast): Process concurrently
+func processUsersParallel(ctx context.Context, userIds []int) {
+    var wg sync.WaitGroup
+
+    for _, userID := range userIds {
+        wg.Add(1)
+        go func(id int) {
+            defer wg.Done()
+            user, _ := fetchUser(ctx, id)
+            processUser(user)
+        }(userID)
+    }
+
+    wg.Wait() // Wait for all goroutines to complete
+    // Total time: max(fetch + process time) instead of sum
+}
+
+// ✅ Parallel with concurrency limit (prevent resource exhaustion)
+func processUsersWithLimit(ctx context.Context, userIds []int, maxConcurrent int) {
+    semaphore := make(chan struct{}, maxConcurrent)
+    var wg sync.WaitGroup
+
+    for _, userID := range userIds {
+        wg.Add(1)
+        go func(id int) {
+            defer wg.Done()
+            semaphore <- struct{}{}        // Acquire
+            defer func() { <-semaphore }() // Release
+
+            user, _ := fetchUser(ctx, id)
+            processUser(user)
+        }(userID)
+    }
+
+    wg.Wait()
+    // Controlled concurrency: max N goroutines active at once
+}
+```
+
+**Error Handling in Concurrent Operations:**
+
+```go
+// Go: Error handling with error groups (recommended pattern)
+import "golang.org/x/sync/errgroup"
+
+func fetchMultipleResources(ctx context.Context, ids []int) ([]Resource, error) {
+    g, ctx := errgroup.WithContext(ctx)
+    resources := make([]Resource, len(ids))
+
+    for i, id := range ids {
+        i, id := i, id // Capture loop variables
+        g.Go(func() error {
+            resource, err := fetchResource(ctx, id)
+            if err != nil {
+                return fmt.Errorf("failed to fetch resource %d: %w", id, err)
+            }
+            resources[i] = resource
+            return nil
+        })
+    }
+
+    // Wait for all goroutines; return first error if any
+    if err := g.Wait(); err != nil {
+        return nil, err
+    }
+
+    return resources, nil
+}
+```
+
+---
+
 ## Integration with Playbook
 
 **Related to async patterns:**
 - `/pb-performance` — Async for scalability
-- `/pb-guide` — Testing async code
+- `/pb-guide` — Testing async code and Go goroutine patterns
 - `/pb-testing` — Async test patterns
 - `/pb-patterns-core` — Core architectural patterns
 - `/pb-patterns-db` — Database async operations
 
 **Decision points:**
-- When to use callbacks vs promises
-- When to introduce job queues
+- When to use callbacks vs promises (JavaScript) vs goroutines (Go)
+- When to introduce job queues or worker pools
 - How to handle backpressure
 - Error handling in async flows
+- Context usage for timeouts and cancellation
 
 ---
 
 *Created: 2026-01-11 | Category: Architecture | Tier: L*
+*Updated: 2026-01-11 | Added Go examples*
 

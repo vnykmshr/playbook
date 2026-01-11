@@ -565,11 +565,359 @@ Saga 2: Inventory management (3 steps)
 
 ---
 
+## Go Examples
+
+**Saga Pattern with Compensation:**
+
+```go
+// Go: Order saga with distributed transaction
+package main
+
+import (
+    "context"
+    "fmt"
+    "log"
+)
+
+type OrderSaga struct {
+    orderService     OrderService
+    paymentService   PaymentService
+    inventoryService InventoryService
+}
+
+type Order struct {
+    ID         string
+    CustomerID string
+    Items      []Item
+    Total      float64
+}
+
+// Execute saga with compensation on failure
+func (s *OrderSaga) Execute(ctx context.Context, order *Order) error {
+    completed := []string{} // Track completed steps for compensation
+
+    // Step 1: Create order
+    if err := s.orderService.CreateOrder(ctx, order); err != nil {
+        return fmt.Errorf("order creation failed: %w", err)
+    }
+    completed = append(completed, "order_created")
+
+    // Step 2: Process payment
+    payment, err := s.paymentService.Charge(ctx, order.CustomerID, order.Total)
+    if err != nil {
+        s.compensate(ctx, completed, order, payment)
+        return fmt.Errorf("payment failed: %w", err)
+    }
+    completed = append(completed, "payment_charged")
+
+    // Step 3: Deduct inventory
+    if err := s.inventoryService.DeductInventory(ctx, order.Items); err != nil {
+        s.compensate(ctx, completed, order, payment)
+        return fmt.Errorf("inventory deduction failed: %w", err)
+    }
+    completed = append(completed, "inventory_deducted")
+
+    // Step 4: Update shipping
+    if err := s.orderService.UpdateShippingStatus(ctx, order.ID, "confirmed"); err != nil {
+        s.compensate(ctx, completed, order, payment)
+        return fmt.Errorf("shipping update failed: %w", err)
+    }
+
+    log.Printf("Order %s completed successfully", order.ID)
+    return nil
+}
+
+// Compensate: undo steps in reverse order
+func (s *OrderSaga) compensate(ctx context.Context, completed []string, order *Order, payment *Payment) {
+    // Undo steps in reverse order
+    for i := len(completed) - 1; i >= 0; i-- {
+        step := completed[i]
+
+        switch step {
+        case "inventory_deducted":
+            if err := s.inventoryService.RestoreInventory(ctx, order.Items); err != nil {
+                log.Printf("Failed to restore inventory: %v", err)
+            }
+
+        case "payment_charged":
+            if err := s.paymentService.Refund(ctx, payment.ID); err != nil {
+                log.Printf("Failed to refund payment: %v", err)
+            }
+
+        case "order_created":
+            if err := s.orderService.CancelOrder(ctx, order.ID); err != nil {
+                log.Printf("Failed to cancel order: %v", err)
+            }
+        }
+    }
+
+    log.Printf("Compensation completed for order %s", order.ID)
+}
+```
+
+**Event-Driven Architecture with gRPC:**
+
+```go
+// Go: Event-driven service communication with gRPC
+package main
+
+import (
+    "context"
+    "fmt"
+    "log"
+    "google.golang.org/grpc"
+)
+
+// User service publishes events
+type UserService struct {
+    eventPublisher EventPublisher
+    userStore      Database
+}
+
+// Create user and publish event
+func (s *UserService) CreateUser(ctx context.Context, user *User) (*User, error) {
+    created, err := s.userStore.Create(ctx, user)
+    if err != nil {
+        return nil, err
+    }
+
+    // Publish event for other services to react
+    if err := s.eventPublisher.Publish(ctx, &Event{
+        Type:      "user.created",
+        UserID:    created.ID,
+        Email:     created.Email,
+        Timestamp: time.Now(),
+    }); err != nil {
+        // Log but don't fail - event publishing is async
+        log.Printf("Failed to publish event: %v", err)
+    }
+
+    return created, nil
+}
+
+// Notification service listens for events
+type NotificationService struct {
+    eventSubscriber EventSubscriber
+}
+
+// Start consuming events
+func (s *NotificationService) Start(ctx context.Context) {
+    events, errs := s.eventSubscriber.Subscribe(ctx, "user.created")
+
+    go func() {
+        for {
+            select {
+            case event := <-events:
+                s.handleUserCreated(ctx, event)
+            case err := <-errs:
+                log.Printf("Event subscription error: %v", err)
+            case <-ctx.Done():
+                return
+            }
+        }
+    }()
+}
+
+func (s *NotificationService) handleUserCreated(ctx context.Context, event *Event) {
+    // Send welcome email
+    if err := sendWelcomeEmail(ctx, event.Email); err != nil {
+        log.Printf("Failed to send welcome email: %v", err)
+    }
+}
+
+// gRPC server for inter-service communication
+type OrderServiceServer struct{}
+
+func (s *OrderServiceServer) CreateOrder(ctx context.Context, req *CreateOrderRequest) (*Order, error) {
+    // Call payment service via gRPC
+    // NOTE: Use proper TLS credentials in production (not shown for brevity)
+    conn, err := grpc.Dial("payment-service:50051")
+    if err != nil {
+        return nil, fmt.Errorf("failed to connect to payment service: %w", err)
+    }
+    defer conn.Close()
+
+    client := NewPaymentServiceClient(conn)
+    payment, err := client.ChargePayment(ctx, &ChargeRequest{
+        Amount: req.Total,
+    })
+    if err != nil {
+        return nil, fmt.Errorf("payment failed: %w", err)
+    }
+
+    // Create order with payment ID
+    return &Order{
+        ID:        generateID(),
+        Total:     req.Total,
+        PaymentID: payment.ID,
+    }, nil
+}
+```
+
+**Eventual Consistency Handling:**
+
+```go
+// Go: Handling eventual consistency
+package main
+
+import (
+    "context"
+    "database/sql"
+    "fmt"
+    "time"
+)
+
+// User service writes to primary, reads from replicas (may be stale)
+type UserStore struct {
+    primary  *sql.DB
+    replicas []*sql.DB
+}
+
+// Write to primary
+func (s *UserStore) UpdateUserFollowCount(ctx context.Context, userID string, delta int) error {
+    _, err := s.primary.ExecContext(ctx,
+        "UPDATE users SET follower_count = follower_count + $1 WHERE id = $2",
+        delta, userID,
+    )
+    return err
+}
+
+// Read from replica (may be behind)
+func (s *UserStore) GetUserFollowCount(ctx context.Context, userID string) (int, error) {
+    // Try replica first (may be stale)
+    replica := s.replicas[0] // Round-robin in production
+    var count int
+    err := replica.QueryRowContext(ctx,
+        "SELECT follower_count FROM users WHERE id = $1",
+        userID,
+    ).Scan(&count)
+
+    if err == sql.ErrNoRows {
+        // User not found on replica, try primary
+        err = s.primary.QueryRowContext(ctx,
+            "SELECT follower_count FROM users WHERE id = $1",
+            userID,
+        ).Scan(&count)
+    }
+
+    return count, err
+}
+
+// Read-after-write consistency: Check primary if stale data detected
+func (s *UserStore) GetUserProfile(ctx context.Context, userID string) (*User, error) {
+    // First read from replica (fast)
+    replica := s.replicas[0]
+    user := &User{}
+    err := replica.QueryRowContext(ctx,
+        "SELECT id, name, follower_count, updated_at FROM users WHERE id = $1",
+        userID,
+    ).Scan(&user.ID, &user.Name, &user.FollowerCount, &user.UpdatedAt)
+
+    // If data is too old, read from primary to ensure consistency
+    if err == nil && time.Since(user.UpdatedAt) > 10*time.Second {
+        // Stale data, read from primary
+        err = s.primary.QueryRowContext(ctx,
+            "SELECT id, name, follower_count, updated_at FROM users WHERE id = $1",
+            userID,
+        ).Scan(&user.ID, &user.Name, &user.FollowerCount, &user.UpdatedAt)
+    }
+
+    return user, err
+}
+
+// Polling pattern: Client retries until data is consistent
+func (s *UserStore) WaitForFollowCountUpdate(ctx context.Context, userID string, expectedCount int, timeout time.Duration) bool {
+    deadline := time.Now().Add(timeout)
+
+    for time.Now().Before(deadline) {
+        count, err := s.GetUserFollowCount(ctx, userID)
+        if err == nil && count == expectedCount {
+            return true // Replica caught up
+        }
+
+        select {
+        case <-time.After(100 * time.Millisecond):
+            // Retry
+        case <-ctx.Done():
+            return false
+        }
+    }
+
+    return false // Timeout
+}
+```
+
+**CQRS with Event Sourcing:**
+
+```go
+// Go: CQRS - separate read and write models
+package main
+
+import (
+    "context"
+    "time"
+)
+
+// Write side: Append-only event log
+type EventStore struct {
+    db Database
+}
+
+func (es *EventStore) AppendEvent(ctx context.Context, event *Event) error {
+    // Only write operations - no deletes, no updates
+    return es.db.InsertEvent(ctx, event)
+}
+
+// Read side: Optimized for queries
+type UserReadModel struct {
+    db Database
+}
+
+func (rm *UserReadModel) GetUserProfile(ctx context.Context, userID string) (*UserProfile, error) {
+    // Read from denormalized view (fast, optimized for reading)
+    return rm.db.QueryUserProfile(ctx, userID)
+}
+
+// Event processor: Keep read model in sync
+type EventProcessor struct {
+    eventStore *EventStore
+    readModel  *UserReadModel
+}
+
+func (ep *EventProcessor) Start(ctx context.Context) {
+    // Listen for events
+    events := ep.eventStore.StreamEvents(ctx)
+
+    for event := range events {
+        switch event.Type {
+        case "user.created":
+            // Update read model
+            ep.readModel.db.InsertUserProfile(ctx, &UserProfile{
+                UserID:    event.UserID,
+                Email:     event.Email,
+                CreatedAt: event.Timestamp,
+            })
+
+        case "user.follow":
+            // Update follower count in read model
+            ep.readModel.db.IncrementFollowerCount(ctx, event.TargetUserID)
+
+        case "post.created":
+            // Update post count in read model
+            ep.readModel.db.IncrementPostCount(ctx, event.UserID)
+        }
+    }
+}
+```
+
+---
+
 ## Integration with Playbook
 
 **Related to distributed patterns:**
 - `/pb-patterns-core` — SOA and Event-Driven (foundation)
 - `/pb-patterns-async` — Async operations (needed for Saga)
+- `/pb-guide` — Distributed systems design
 - `/pb-incident` — Handling distributed failures
 - `/pb-observability` — Tracing sagas across services
 - `/pb-deployment` — Coordinating deployments across services
@@ -579,8 +927,10 @@ Saga 2: Inventory management (3 steps)
 - When to accept eventual consistency
 - How to handle distributed failures
 - How to monitor saga execution
+- gRPC vs REST for inter-service communication
 
 ---
 
 *Created: 2026-01-11 | Category: Distributed Systems | Tier: L*
+*Updated: 2026-01-11 | Added Go examples*
 
