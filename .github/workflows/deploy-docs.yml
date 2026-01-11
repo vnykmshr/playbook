@@ -29,10 +29,9 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Lint markdown files
-        uses: nosplanation/github-action-markdown-cli@v3.3.0
-        with:
-          files: docs
-          config_file: .markdownlint.json
+        run: |
+          npm install -g markdownlint-cli
+          markdownlint --config .markdownlint.json 'docs/**/*.md'
 
       - name: Validate YAML
         run: |
