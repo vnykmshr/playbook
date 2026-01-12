@@ -13,9 +13,13 @@ A comprehensive, integrated set of commands and guides for structuring iterative
 
 The playbook is a **decision framework** that codifies how to approach development work—from planning through production operations. It's not a tool; it's a set of structured, well-documented processes that work together to reduce friction, prevent common mistakes, and maintain quality at every step.
 
-**Built on a core insight:** The quality of development depends less on individual brilliance and more on *how teams think together*. This framework is anchored in the **Preamble** — a set of principles about collaboration that makes psychological safety and correctness the default.
+**Built on two complementary insights:**
 
-**[Read the full technical narrative →](technical-blog.md)** — Why the playbook exists, how it solves real problems, and how it all works together as an integrated system.
+1. **Development quality depends on how teams think together**, not individual brilliance. The **Preamble** establishes principles about collaboration that make psychological safety and correctness the default.
+
+2. **System quality depends on sound design principles**, not just clever engineering. The **Design Rules** establish 17 classical principles organized in 4 clusters (Clarity, Simplicity, Resilience, Extensibility) that guide every technical decision.
+
+**[Read the full technical narrative →](technical-blog.md)** — Why the playbook exists, how both frameworks solve real problems, and how it all works together as an integrated system.
 
 ---
 
@@ -45,13 +49,25 @@ Technical principles that guide every system decision and architectural choice:
 
 **[Read the Design Rules Framework →](../commands/core/pb-design-rules.md)**
 
-### Why Both Matter
+### The Two Frameworks Enable Each Other
 
-- **Preamble alone:** Teams collaborate well but build the wrong things
-- **Design rules alone:** Teams know what's right but can't decide together
-- **Together:** Better decisions, clearer discussions, better systems
+**What each framework does alone:**
+- **Preamble alone:** Teams collaborate well but build systems that are hard to maintain or overly complex
+- **Design rules alone:** Clear design goals, but teams debate endlessly about what's "right" without reaching decisions
+- **Together:** Teams collaboratively decide on technically sound systems
 
-Every command assumes both preamble thinking (collaboration) and design rules (technical excellence).
+**How they work together:**
+- Preamble gives teams the psychological safety to challenge design decisions openly
+- Design rules give teams concrete language for critiquing ideas (not just opinions)
+- Preamble ensures disagreement leads to better decisions, not hierarchy wins
+- Design rules ensure those decisions are technically sound and maintainable
+
+**In practice:**
+- Code review becomes: "Does this embody Clarity and Simplicity?" (design rules) asked safely by peers (preamble)
+- Architecture decisions become: "Here's our choice, here's the reasoning, challenge it" (preamble) anchored in principles (design rules)
+- Team culture becomes: "We disagree about Robustness trade-offs" (preamble + design rules together enable productive disagreement)
+
+Every command in this playbook assumes both frameworks working together.
 
 ### For New Teams
 Establish engineering practices from day one with clear, repeatable processes covering planning, development, code review, and operations.
@@ -114,53 +130,62 @@ Organized by category:
 
 ---
 
-## Key Principles: Embodying Preamble Thinking
+## Key Principles: Embodying Preamble + Design Rules
 
-### 1. Challenge is Built Into Process
+### 1. Preamble: Challenge is Built Into Process
 Quality gates aren't about trust—they're about explicitly inviting challenge:
-- **Self-review** challenges your own assumptions
-- **Peer review** surfaces risks and flaws
-- **Security & testing** represent different expertise challenging the work
-- **Decision documentation** makes reasoning explicit so it can be intelligently questioned
+- **Self-review** challenges your own assumptions (preamble thinking)
+- **Peer review** surfaces risks and flaws using design principles as language (design rules)
+- **Security & testing** represent different expertise challenging the work professionally (preamble)
+- **Decision documentation** makes reasoning explicit so it can be challenged (preamble) and grounded in principles (design rules)
 
-**Why this matters:** When review is a gate, not a favor, people feel safe questioning.
+**Why this matters:** When review is a gate, not a favor, people feel safe questioning. When they have design principles to reference, questioning becomes technical, not personal.
 
-### 2. Transparent Reasoning Over Hierarchy
+### 2. Design Rules: Transparent Reasoning Grounded in Principles
 Every command asks "why," not just "what":
-- **Commits** explain the reason for the change, not just list files
-- **Pull requests** document problems, alternatives, and trade-offs
-- **Architecture decisions** record reasoning explicitly
-- **Retrospectives** focus on learning, not blame
+- **Commits** explain the reason for change AND which design rules guided it
+- **Pull requests** document problems, alternatives, trade-offs, AND how design rules informed choices
+- **Architecture decisions** record reasoning AND show which design principles matter most
+- **Retrospectives** focus on learning what worked AND why (preamble + design rules)
 
-**Why this matters:** When reasoning is transparent, disagreement becomes productive. You're challenging thinking, not authority.
+**Why this matters:** When reasoning is transparent AND grounded in sound design principles, disagreement becomes productive. You're challenging both thinking AND technical soundness.
 
-### 3. Multi-Perspective Review Prevents Authority from Winning
-Code review isn't one person's opinion—it's multiple expertise perspectives:
-- **Code reviewer**: Architecture, patterns, maintainability
-- **Security engineer**: Input validation, secrets, auth, cryptography
-- **Product**: Does it align with user needs?
-- **Test engineer**: Coverage, edge cases, regression tests
-- **Performance engineer**: Bottlenecks, optimization opportunities
+### 3. Design Rules: Multi-Perspective Review Prevents Authority from Winning
+Code review uses design rules as shared language for expertise perspectives:
+- **Code reviewer**: Clarity, Modularity — is the code obviously structured?
+- **Security engineer**: Robustness, Transparency — does it fail loudly, is the design transparent?
+- **Product**: Simplicity, Clarity — did we build the right thing simply?
+- **Test engineer**: Robustness, Repair — does it fail loudly, can we recover?
+- **Performance engineer**: Optimization discipline — did we measure before optimizing?
 
-**Why this matters:** A junior person's security concern carries weight. A senior person's performance idea gets questioned. Different expertise wins, not different rank.
+**Why this matters:** Design rules give reviewers concrete language. A junior person's "this is confusing" becomes "this violates the Clarity rule." Different expertise wins because it's grounded in technical principles, not rank.
 
-### 4. Logical, Atomic Commits Enable Learning
+### 4. Preamble + Design Rules: Logical, Atomic Commits Enable Learning
 Small, well-explained commits:
-- Make intent clear (and easy to challenge)
-- Keep changes focused for thoughtful review
-- Maintain git history as documentation of *why* decisions happened
-- Enable understanding when reversals are needed
+- Make intent clear (preamble: easy to challenge) AND grounded in design principles (design rules)
+- Keep changes focused for thoughtful review of both reasoning AND technical quality
+- Maintain git history as documentation of *why* decisions happened AND what principles mattered
+- Enable understanding when reversals are needed (was the principle wrong, or the implementation?)
 
-**Why this matters:** You can learn from history when you can see why decisions were made.
+**Why this matters:** You can learn from history when you can see both the reasoning AND the principles that guided decisions.
 
-### 5. Structured Processes Enable Autonomy
+### 5. Preamble + Design Rules: Frameworks Enable Autonomy
 The playbook provides frameworks, not commandments:
-- Frameworks assume you'll challenge and adapt them
+- Frameworks assume you'll challenge and adapt them (preamble)
 - Checklists are starting points, not finish lines
 - Patterns are tools to think with, not rules to obey
+- Design rules anchor decisions: when you break a pattern, you have principles on your side
 - Every command includes guidance on when to break the pattern
 
-**Why this matters:** Psychological safety requires autonomy. Rigid rules kill challenge; frameworks enable it.
+**Why this matters:** Psychological safety requires autonomy. Rigid rules kill challenge. Frameworks anchored in both peer thinking AND sound design principles enable you to both challenge AND make sound decisions.
+
+### 6. Integration: Preamble + Design Rules Work as One System
+The playbook's power comes from both frameworks working together:
+- **Preamble without design rules**: Teams collaborate well but debate endlessly about what's "right"
+- **Design rules without preamble**: Teams know what's right but can't decide together on it
+- **Together**: Teams collaboratively decide on technically sound systems
+
+This integration is woven throughout the playbook. Every command that references the preamble also references design rules. Every code review, every architecture decision, every commit assumes both matter.
 
 ---
 

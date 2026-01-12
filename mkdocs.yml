@@ -1,6 +1,6 @@
 ---
 site_name: Engineering Playbook
-site_description: A comprehensive set of 47 commands and guides for iterative development workflows
+site_description: Complete framework for development workflows, anchored in peer collaboration (Preamble) and technical design principles (Design Rules)
 site_url: https://vnykmshr.github.io/playbook
 repo_url: https://github.com/vnykmshr/playbook
 repo_name: vnykmshr/playbook
