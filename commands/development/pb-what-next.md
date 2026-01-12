@@ -208,7 +208,7 @@ This generates the metadata that `/pb-what-next` uses for command details.
 **Solution:**
 - Run with `--verbose` to see how the phase was detected
 - Check your git state: `git status`, `git log --oneline -5`
-- Branch name matters: use `feature/*, `fix/*, `refactor/*` naming for best results
+- Branch name matters: use `feature/*`, `fix/*`, `refactor/*` naming for best results
 
 ### "Can't analyze git state"
 **Problem:** Git analysis fails
