@@ -19,7 +19,8 @@ Thumbs.db
 # Generated docs (built by mkdocs, deployed by GitHub Actions)
 site/
 
-# Generated playbook metadata (auto-extracted from commands)
+# Generated playbook metadata and discovery tools (auto-generated from commands)
 .playbook-metadata.json
 .playbook-extraction-report.json
+.playbook-quick-ref.md
 extraction_report.txt
