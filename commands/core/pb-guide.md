@@ -3,6 +3,8 @@
 A reusable end-to-end guide for any feature, enhancement, refactor, or bug fix.
 Right-size your process using **Change Tiers**, then follow required sections.
 
+**Mindset:** This framework assumes you're operating from `/pb-preamble`. Challenge the tiers, rearrange gates, adapt to your team—this is a starting point, not dogma.
+
 ---
 
 ## **Quick Reference: Change Tiers**
