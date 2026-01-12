@@ -5,6 +5,73 @@ All notable changes to this project are documented here.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v1.5.0] - 2026-01-12
+
+### Added
+
+**Design Rules Framework Integration**
+- Integrated 17 classical design rules as foundational technical framework alongside Preamble
+- Created `/pb-design-rules.md` (23KB) with complete design rules philosophy
+  - 4 clusters organizing 17 rules: Clarity, Simplicity, Resilience, Extensibility
+  - Decision framework for rule trade-offs
+  - 5 real-world implementation examples
+- Created `/docs/design-rules-quick-ref.md` for daily reference lookup
+  - Quick table of all 17 rules
+  - Decision tree for which rules apply when
+  - Trade-off matrix for conflicting rules
+  - Failure mode diagnosis
+
+**Framework Integration Across 50+ Commands**
+- Updated all 51 command files to reference Design Rules
+- Every command now explicitly shows which design rules apply to its domain
+- Integration across all command categories:
+  - Core commands (4): Added design rules context
+  - Planning commands (10): Show design rules for architectural decisions
+  - Development commands (9): Design rules checks in iteration cycle
+  - Deployment commands (2): Simplicity vs Robustness trade-offs
+  - Release commands (1): Robustness and clarity in release process
+  - Review commands (10): Design rules language for code review
+  - Repository commands (6): Clarity and representation rules
+  - People commands (3): Technical excellence + psychological safety
+  - Templates (1): Design rules in onboarding context
+
+**Documentation Enhancement**
+- Enhanced README.md to prominently feature both Preamble and Design Rules
+  - Reframed overview to present two complementary frameworks
+  - Updated key capabilities to show which framework enables each one
+  - Restructured principles section to show integration
+  - New principle: Preamble + Design Rules enable autonomy + soundness
+- Enhanced docs/index.md as documentation site home
+  - Dual framework introduction with equal prominence
+  - New section: "The Two Frameworks Enable Each Other"
+  - Detailed explanation of how frameworks complement each other
+  - Updated all 5 key principles to show both framework perspectives
+  - New 6th principle: Integration as one system
+- Updated mkdocs.yml site description to reference both frameworks
+- Enhanced working context (todos/1-working-context.md) development guide
+
+### Documentation
+
+- Added comprehensive design rules reference guide for daily use
+- Enhanced project README to show complete philosophy (Preamble + Design Rules)
+- Updated documentation site home to feature both frameworks
+- All command documentation now reference applicable design rules
+
+### Mission Alignment
+
+- Clarified core mission: "Complete framework for development workflows, anchored in peer collaboration (Preamble) and technical design principles (Design Rules)"
+- Verified every command embodies both frameworks
+- Both frameworks now visibly foundational across all entry points (README, docs, mkdocs)
+
+### Status
+
+- 50+ commands across 9 categories
+- Complete Preamble + Design Rules integration
+- Production-ready documentation
+- All quality gates passing
+
+---
+
 ## [v1.4.1] - 2026-01-12
 
 ### Fixed
