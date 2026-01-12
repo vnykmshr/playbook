@@ -4,7 +4,9 @@
 
 Cloud platforms (AWS, GCP, Azure) offer multiple ways to deploy the same architecture. Choosing patterns based on your constraints—cost, latency, skill, scale—is crucial. This guide covers proven deployment patterns across the three major cloud platforms, with real-world trade-offs.
 
-**Caveat:** Each platform has competing patterns. Use `/pb-preamble` thinking: question your actual constraints before choosing. Challenge vendor recommendations. The cheapest or most featured pattern isn't always the right one.
+**Caveat:** Each platform has competing patterns. Use `/pb-preamble` thinking (challenge assumptions, surface trade-offs) and `/pb-design-rules` thinking (especially Simplicity and Parsimony—choose what you actually need, not what's available).
+
+Question your actual constraints before choosing. Challenge vendor recommendations. The cheapest or most featured pattern isn't always the right one. Choose based on your requirements, not vendor features.
 
 ---
 

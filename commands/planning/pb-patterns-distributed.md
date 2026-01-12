@@ -2,7 +2,9 @@
 
 Patterns for coordinating operations across multiple services/databases.
 
-**Caveat:** Distributed patterns add complexity. Use `/pb-preamble` thinking: question whether you really need distributed systems. Challenge the assumption that you can't keep things simple.
+**Caveat:** Distributed patterns add significant complexity. Use `/pb-preamble` thinking (challenge assumptions) and `/pb-design-rules` thinking (especially Simplicity and Resilience—can you achieve your goals with simpler approaches?).
+
+Question whether you truly need distributed systems. Challenge the assumption that you can't keep things simple. Understand the real constraints before choosing.
 
 ---
 

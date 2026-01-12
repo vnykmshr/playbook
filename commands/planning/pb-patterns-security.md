@@ -6,7 +6,9 @@ Security in microservices requires a multi-layered approach: authentication prov
 
 This guide covers proven security patterns for microservices, showing when to use each and real-world trade-offs.
 
-**Caveat:** Security patterns can add significant complexity. Use `/pb-preamble` thinking: question threat models, challenge assumed attack surfaces, and surface the real risk vs. implementation cost trade-off.
+**Caveat:** Security patterns can add significant complexity. Use `/pb-preamble` thinking (challenge assumptions, surface trade-offs) and `/pb-design-rules` thinking (does this pattern serve Simplicity while maintaining Robustness?).
+
+Question threat models. Challenge assumed attack surfaces. Surface the real risk vs. implementation cost trade-off. Don't add complexity without understanding the actual risk.
 
 ---
 

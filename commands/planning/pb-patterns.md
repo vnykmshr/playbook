@@ -2,7 +2,9 @@
 
 Overview and navigation guide for the pattern family.
 
-**Every pattern has trade-offs:** Use `/pb-preamble` thinking—challenge whether this pattern fits, question the costs, explore alternatives.
+**Every pattern has trade-offs:** Use `/pb-preamble` thinking (challenge assumptions, transparent reasoning) and `/pb-design-rules` thinking (patterns should serve Clarity, Simplicity, and Modularity).
+
+Question whether this pattern fits your constraints. Challenge the costs. Explore alternatives. Good patterns are tools you understand and choose, not dogma you follow.
 
 ---
 
