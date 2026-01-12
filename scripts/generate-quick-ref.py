@@ -134,7 +134,8 @@ class QuickRefGenerator:
             lines.append(f"**Timeline**: {timing}")
 
         lines.append("")
-        lines.append(f"Based on: {' → '.join(f'/pb-{cmd.split('-', 1)[1]}' for cmd in commands)}")
+        cmd_links = ' → '.join(f'/pb-{cmd.split("-", 1)[1]}' for cmd in commands)
+        lines.append(f"Based on: {cmd_links}")
         lines.append("")
 
         # Add each command with purpose and timing
