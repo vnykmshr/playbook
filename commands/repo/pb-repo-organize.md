@@ -2,7 +2,9 @@
 
 Clean up and reorganize the project root for clarity and maintainability.
 
-**Approach:** Organization is about inviting scrutiny. Use `/pb-preamble` thinking: structure should make it easy for others to challenge assumptions and find issues. Clear organization beats clever categorization.
+**Approach:** Organization is about inviting scrutiny. Use `/pb-preamble` thinking (structure should invite challenge) and `/pb-design-rules` thinking (especially Clarity and Modularity: organization should be obvious, not clever).
+
+Clear, obvious organization beats clever categorization. The structure should make it easy for others to find code and understand it.
 
 ---
 

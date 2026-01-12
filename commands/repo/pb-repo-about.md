@@ -2,7 +2,9 @@
 
 Create a concise, search-optimized GitHub "About" description and relevant topic tags.
 
-**Principle:** Accuracy over cleverness. Use `/pb-preamble` thinking: describe what the project actually does, not what you wish it did. Honest descriptions help the right people find you.
+**Principle:** Accuracy over cleverness. Use `/pb-preamble` thinking (honesty over marketing) and `/pb-design-rules` thinking (especially Clarity and Least Surprise: description should match reality).
+
+Describe what the project actually does, not what you wish it did. Honest descriptions help the right people find you.
 
 ---
 
