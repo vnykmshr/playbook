@@ -1448,7 +1448,7 @@ This covers:
 
 **Key command integrations by phase:**
 
-- **§1 Intake & Planning** → `/pb-plan`, `/pb-adr`, `/pb-patterns-*`
+- **§1 Intake & Planning** → `/pb-plan`, `/pb-adr`, `/pb-patterns-core`
 - **§2 Team & Estimation** → `/pb-team`, `/pb-onboarding`, `/pb-knowledge-transfer`
 - **§3 Architecture & Design** → `/pb-patterns-core`, `/pb-patterns-async`, `/pb-patterns-db`, `/pb-patterns-distributed`
 - **§4 Implementation** → `/pb-start`, `/pb-cycle`, `/pb-testing`, `/pb-commit`, `/pb-todo-implement`
