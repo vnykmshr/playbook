@@ -13,19 +13,23 @@ A comprehensive, integrated set of commands and guides for structuring iterative
 
 The Engineering Playbook is a **decision framework** that codifies how to approach development work—from planning through production operations. It's not a tool; it's a set of structured, well-documented processes that work together to reduce friction, prevent common mistakes, and maintain quality at every step.
 
+**Built on a core insight:** Development quality depends less on individual brilliance and more on *how teams think together*. The playbook is anchored in a philosophy about collaboration—the `/pb-preamble`—that makes psychological safety and correctness the default.
+
 **Who it's for:**
-- Teams adopting structured SDLC workflows
+- Teams wanting to shift from hierarchy-based to peer-based thinking
 - Projects using Claude Code for development
-- Organizations wanting repeatable, documented practices
-- New team members learning your development culture
+- Organizations building cultures where the best ideas win regardless of source
+- New team members learning your development culture and decision-making patterns
 
 **Key capabilities:**
-- **Context-aware command discovery** — `/pb-what-next` analyzes your work and recommends the right commands
+- **Psychological safety by design** — Commands assume challenge is professional, not disrespectful
+- **Transparent decision-making** — Every command documents reasoning, not just decisions
 - **Iterative development workflows** — Clear, repeatable patterns from idea to production
 - **Quality gates at every step** — Automatic checks before code moves forward
 - **Multi-perspective code reviews** — Code, security, product, tests, performance
 - **Pattern library** — Comprehensive patterns covering async, core, database, distributed, security, and cloud deployment
-- **Team operations** — Onboarding, knowledge transfer, incident response, retrospectives
+- **Explicit learning culture** — Failures become learning, not blame
+- **Team operations** — Onboarding, knowledge transfer, incident response, retrospectives built on preamble thinking
 - **Repository organization** — Professional structure and documentation
 - **Integrated commands** — Comprehensive guidance from planning through production operations
 
@@ -395,36 +399,53 @@ playbook/
 
 ---
 
-## Key Principles
+## Key Principles: How the Playbook Embodies Preamble Thinking
 
-### 1. Quality Gates at Every Step
-Never skip the review step. Each iteration includes:
-- **Self-review** — You catch your own mistakes first
-- **Testing** — Code is tested alongside development
-- **Security** — Verified before merging
-- **Logging** — Standards checked before production
-- **Peer review** — Different perspectives catch different issues
+### 1. Challenge is Embedded in Process
+Quality gates aren't about trust; they're about explicitly inviting challenge:
+- **Self-review** — Challenge your own assumptions before others see them
+- **Peer review** — Ask reviewers to surface risks, not just approve
+- **Security & testing** — Different specialists challenge from different angles
+- **Decision documentation** — Record the reasoning so decisions can be intelligently challenged
 
-### 2. Logical, Atomic Commits
-Small commits that:
-- Address one concern
-- Are always deployable
-- Have clear, explanatory messages
-- Maintain git history as documentation
+**Why this matters:** Challenge is not optional. It's built into every workflow. When review is a gate, not a favor, people feel safe questioning.
 
-### 3. Multi-Perspective Reviews
-Code review isn't one perspective:
+### 2. Transparent Reasoning, Not Just Decisions
+Every command in the playbook asks "why," not just "what":
+- **Commits** — Explain the reason for the change, not just list the files
+- **Pull requests** — Document the problem being solved and alternatives considered
+- **Architecture decisions** — Record trade-offs explicitly so others can understand the thinking
+- **Retrospectives** — Focus on learning, not blame
+
+**Why this matters:** When reasoning is transparent, disagreement becomes productive. You're challenging thinking, not authority.
+
+### 3. Multi-Perspective Review Prevents Hierarchy from Winning
+Code review isn't one person's opinion:
 - **Code reviewer**: Architecture, patterns, maintainability
 - **Security engineer**: Input validation, secrets, auth, cryptography
 - **Product**: Does it align with user needs?
 - **Test engineer**: Coverage, edge cases, regression tests
 - **Performance engineer**: Bottlenecks, optimization opportunities
 
-### 4. Documented Decisions
-Every architectural decision is recorded (`/pb-adr`), so future team members understand the "why," not just the "what."
+**Why this matters:** A junior person's security concern carries weight. A senior person's performance idea gets questioned. Different expertise wins, not different rank.
 
-### 5. Structured Processes, Not Rigid Rules
-The playbook provides frameworks you adapt to your team's needs, not commandments you follow blindly.
+### 4. Logical, Atomic Commits Maintain Thinking Quality
+Small, well-explained commits:
+- Make it easy to understand intent (and challenge it)
+- Keep changes focused so review is manageable
+- Maintain git history as documentation of *why* decisions happened
+- Enable easy reversal if a decision turns out wrong
+
+**Why this matters:** Atomic commits make learning possible. When you can see why a decision was made, you can understand if it was good.
+
+### 5. Structured Processes Enable Psychological Safety, Not Rules
+The playbook provides frameworks you adapt, not commandments you follow:
+- Frameworks assume you'll challenge them
+- Checklists are starting points, not finish lines
+- Patterns are tools to think with, not rules to obey
+- Every command includes guidance on when to break the pattern
+
+**Why this matters:** Psychological safety requires autonomy. Rigid rules kill challenge; frameworks enable it.
 
 ---
 

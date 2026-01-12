@@ -13,7 +13,24 @@ A comprehensive, integrated set of commands and guides for structuring iterative
 
 The playbook is a **decision framework** that codifies how to approach development work—from planning through production operations. It's not a tool; it's a set of structured, well-documented processes that work together to reduce friction, prevent common mistakes, and maintain quality at every step.
 
+**Built on a core insight:** The quality of development depends less on individual brilliance and more on *how teams think together*. This framework is anchored in the **Preamble** — a set of principles about collaboration that makes psychological safety and correctness the default.
+
 **[Read the full technical narrative →](technical-blog.md)** — Why the playbook exists, how it solves real problems, and how it all works together as an integrated system.
+
+---
+
+## Start Here: The Preamble
+
+Before diving into commands, understand the collaborative philosophy that all playbook commands assume:
+
+- **Challenge assumptions** — Not to be difficult, but because correctness matters more than agreement
+- **Think like peers, not hierarchies** — Best ideas win regardless of who suggests them
+- **Truth over tone** — Direct, clear feedback beats careful politeness
+- **Think holistically** — Optimize for team outcomes, not just individual concerns
+
+Every command in the playbook is designed around these principles. You'll see them in how code reviews work (surface flaws, don't just approve), how decisions are documented (reasoning, so they can be intelligently challenged), and how failures become learning (not blame).
+
+**[Read the complete Preamble Framework →](../commands/core/pb-preamble.md)**
 
 ### For New Teams
 Establish engineering practices from day one with clear, repeatable processes covering planning, development, code review, and operations.
@@ -76,22 +93,53 @@ Organized by category:
 
 ---
 
-## Key Principles
+## Key Principles: Embodying Preamble Thinking
 
-### 1. Quality Gates at Every Step
-Never skip review. Every iteration includes self-review, testing, security checks, and peer review.
+### 1. Challenge is Built Into Process
+Quality gates aren't about trust—they're about explicitly inviting challenge:
+- **Self-review** challenges your own assumptions
+- **Peer review** surfaces risks and flaws
+- **Security & testing** represent different expertise challenging the work
+- **Decision documentation** makes reasoning explicit so it can be intelligently questioned
 
-### 2. Logical, Atomic Commits
-Small commits that address one concern, are always deployable, and have clear messages documenting the "why."
+**Why this matters:** When review is a gate, not a favor, people feel safe questioning.
 
-### 3. Multi-Perspective Code Review
-Code quality, security, product alignment, test coverage, and performance—each perspective catches different issues.
+### 2. Transparent Reasoning Over Hierarchy
+Every command asks "why," not just "what":
+- **Commits** explain the reason for the change, not just list files
+- **Pull requests** document problems, alternatives, and trade-offs
+- **Architecture decisions** record reasoning explicitly
+- **Retrospectives** focus on learning, not blame
 
-### 4. Documented Decisions
-Every architectural decision is recorded, so future team members understand the "why," not just the "what."
+**Why this matters:** When reasoning is transparent, disagreement becomes productive. You're challenging thinking, not authority.
 
-### 5. Structured Processes, Not Rigid Rules
-The playbook provides frameworks you adapt to your team's needs, not commandments you follow blindly.
+### 3. Multi-Perspective Review Prevents Authority from Winning
+Code review isn't one person's opinion—it's multiple expertise perspectives:
+- **Code reviewer**: Architecture, patterns, maintainability
+- **Security engineer**: Input validation, secrets, auth, cryptography
+- **Product**: Does it align with user needs?
+- **Test engineer**: Coverage, edge cases, regression tests
+- **Performance engineer**: Bottlenecks, optimization opportunities
+
+**Why this matters:** A junior person's security concern carries weight. A senior person's performance idea gets questioned. Different expertise wins, not different rank.
+
+### 4. Logical, Atomic Commits Enable Learning
+Small, well-explained commits:
+- Make intent clear (and easy to challenge)
+- Keep changes focused for thoughtful review
+- Maintain git history as documentation of *why* decisions happened
+- Enable understanding when reversals are needed
+
+**Why this matters:** You can learn from history when you can see why decisions were made.
+
+### 5. Structured Processes Enable Autonomy
+The playbook provides frameworks, not commandments:
+- Frameworks assume you'll challenge and adapt them
+- Checklists are starting points, not finish lines
+- Patterns are tools to think with, not rules to obey
+- Every command includes guidance on when to break the pattern
+
+**Why this matters:** Psychological safety requires autonomy. Rigid rules kill challenge; frameworks enable it.
 
 ---
 
@@ -159,18 +207,28 @@ All playbook commands are now available in Claude Code.
 
 ---
 
-## Philosophy
+## Philosophy: How Teams Think Together
 
-> **The playbook isn't just documentation—it's a decision framework that makes good development practices the default.**
+> **The playbook isn't just documentation—it's a decision framework that makes good development practices the default by making peer thinking the default.**
 
-The Engineering Playbook believes that:
+The Engineering Playbook is built on the insight that **the quality of development depends on how teams think together, not individual brilliance**. This means:
 
+### On Collaboration
+- **Challenge is professional, not disrespectful** — Surface flaws because correctness matters, not because you disagree
+- **Hierarchy shouldn't determine who's right** — Peer thinking means best ideas win regardless of rank
+- **Truth over tone** — Direct feedback beats careful politeness; clarity beats harmony
+- **Psychological safety is built, not assumed** — Design processes that invite challenge, visibly reward it, and never punish it
+
+### On Process
 - **Quality shouldn't require heroic effort** — Good processes make quality the default
 - **Teams learn faster with documented patterns** — Don't reinvent, iterate on proven approaches
 - **Async-first communication scales better** — Document decisions, share knowledge asynchronously
 - **Code review catches different issues from different perspectives** — Not just code quality, but security, product fit, tests, and performance
+
+### On Learning
 - **Atomic commits maintain useful git history** — History becomes a teaching tool, not noise
 - **Documented decisions enable faster iteration** — Future changes understand the "why" behind current decisions
+- **Failures teach when blame doesn't** — Post-mortems focus on "what did we learn" not "who messed up"
 
 ---
 
