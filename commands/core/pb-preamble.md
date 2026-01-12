@@ -36,6 +36,34 @@ This doesn't mean ignoring experience or authority. It means authority is earned
 
 ---
 
+## I.5 Preamble + Design Rules: Complete Philosophy
+
+**The preamble answers: HOW do teams think together?**
+- Challenge assumptions
+- Prefer correctness over agreement
+- Think like peers, not hierarchies
+- Use transparent reasoning
+
+**Design rules answer: WHAT do we build?**
+- See `/pb-design-rules` for the 17 technical principles
+- Organized into 4 clusters: Clarity, Simplicity, Resilience, Extensibility
+- Guide every architectural and technical decision
+- Ensure systems that are clear, simple, reliable, and adaptable
+
+**Why both matter:**
+
+A team with preamble thinking but no design discipline builds wrong things. They collaborate well while making poor technical choices. A team with design rules but no preamble thinking debates endlessly without resolution. They know what good design looks like but can't decide together.
+
+**How they work together:**
+
+- **Preamble thinking enables design discipline:** When teams challenge assumptions openly, they can discuss design rules without defensiveness
+- **Design rules anchor preamble thinking:** When teams have shared design principles, they have concrete ground to stand on when challenging ideas
+- **Both together:** Better decisions, faster execution, systems that scale
+
+Every command in the playbook assumes both: peer thinking (preamble) and sound design (design rules).
+
+---
+
 ## II. Four Principles
 
 ### Principle A: Correctness Over Agreement
