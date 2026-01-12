@@ -5,6 +5,34 @@ All notable changes to this project are documented here.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v1.4.1] - 2026-01-12
+
+### Fixed
+
+**CI/CD & Automation**
+- Updated GitHub Actions artifact actions from v3 to v4 for compatibility
+- Made CI/CD workflow more resilient to metadata extraction warnings
+- Disabled redundant `validate-metadata` workflow, consolidated to `deploy-docs` only
+- Added `scripts/` directory to deployment workflow trigger paths
+- Enhanced `deploy-docs` triggers to include README.md and script changes
+
+**Scripts & Quality**
+- Resolved f-string syntax error in `generate-quick-ref.py` script
+- Improved metadata extraction robustness to handle field errors gracefully
+- Corrected markdown linting error in `/pb-what-next.md` command
+
+**Documentation**
+- Updated mkdocs site description from 45 to 47 commands
+- Improved documentation formatting to fit YAML line length requirements
+
+### Status
+
+- All v1.4.0 features stable and production-ready
+- CI/CD pipeline optimized and resilient
+- No breaking changes; patch-level fixes only
+
+---
+
 ## [v1.4.0] - 2026-01-12
 
 ### Added
