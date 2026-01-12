@@ -2,7 +2,7 @@
 
 Structured implementation of individual todos with checkpoint-based approval. Transforms vague todos into concrete, tested features with full audit trail.
 
-**Checkpoint thinking:** Each checkpoint is a gate where `/pb-preamble` thinking applies. Challenge assumptions at each stage. Don't proceed past a gate without genuine confidence.
+**Checkpoint thinking:** Each checkpoint is a gate where `/pb-preamble` thinking (challenge assumptions, surface risks) and `/pb-design-rules` thinking (verify Clarity, verify Simplicity) apply. Challenge assumptions at each stage. Don't proceed past a gate without genuine confidence that design is sound and risks are surfaced.
 
 ---
 
