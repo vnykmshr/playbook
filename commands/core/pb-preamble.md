@@ -466,4 +466,30 @@ This preamble isn't nice-to-have. It's foundational. Everything else in the play
 
 ---
 
+## IX. What's Next: Philosophy Expansion
+
+This preamble establishes the foundational mindset. Three more parts are being developed to address nuance and context:
+
+**Part 2: Async & Distributed Teams** (in progress)
+- How preamble thinking works in async communication (Slack, GitHub comments, async meetings)
+- Timing, tone, and intent in written feedback
+- Building trust across distributed teams
+- Psychological safety in remote-first cultures
+
+**Part 3: Power Dynamics & Psychology** (in progress)
+- How preamble applies across hierarchies (reporting relationships, performance reviews)
+- Dissent escalation: when to accept vs. escalate
+- Building toward preamble thinking on teams with low psychological safety
+- Authority earned through reasoning, not just position
+
+**Part 4: Decision Making & Dissent** (planned)
+- Decision reversal: when you've disagreed, now what?
+- Cost-benefit of continuous challenge
+- Loyalty after disagreement
+- Building toward organizational learning culture
+
+These expansions deepen the philosophy with context-specific guidance while keeping core preamble intact.
+
+---
+
 *Read this before any other command. Reference it when you feel hesitation about speaking up. Build it into your culture from day one.*
