@@ -18,31 +18,19 @@ from pathlib import Path
 from typing import Any, Dict, List, Optional, Set
 import logging
 
+from playbook_utils import setup_logger
+
 
 class MetadataValidator:
     """Validates extracted playbook metadata."""
 
     def __init__(self, verbose: bool = False):
         """Initialize validator."""
-        self.logger = self._setup_logging(verbose)
+        self.logger = setup_logger("metadata-validator", verbose)
         self.errors: List[Dict[str, Any]] = []
         self.warnings: List[Dict[str, Any]] = []
         self.suggestions: List[Dict[str, str]] = []
         self.metrics = {}
-
-    def _setup_logging(self, verbose: bool) -> logging.Logger:
-        """Setup logging."""
-        logger = logging.getLogger("metadata-validator")
-        logger.setLevel(logging.DEBUG if verbose else logging.INFO)
-
-        handler = logging.StreamHandler(sys.stdout)
-        formatter = logging.Formatter(
-            "%(asctime)s - %(levelname)s - %(message)s"
-        )
-        handler.setFormatter(formatter)
-        logger.addHandler(handler)
-
-        return logger
 
     def validate(self, metadata: Dict[str, Any]) -> bool:
         """

@@ -21,6 +21,8 @@ from pathlib import Path
 from typing import Dict, List, Any, Optional, Set
 import re
 
+from playbook_utils import setup_logger, load_metadata
+
 
 class PlaybookContextAnalyzer:
     """Analyze user context and recommend playbook commands."""
@@ -28,26 +30,12 @@ class PlaybookContextAnalyzer:
     def __init__(self, metadata_file: Path = None, verbose: bool = False):
         """Initialize analyzer."""
         self.metadata_file = metadata_file or Path(".playbook-metadata.json")
-        self.logger = self._setup_logging(verbose)
+        self.logger = setup_logger("context-analyzer", verbose)
         self.metadata = {}
         self.commands = {}
         self.recommendations: List[Dict[str, Any]] = []
         self.warnings: List[str] = []
         self.errors: List[str] = []
-
-    def _setup_logging(self, verbose: bool) -> logging.Logger:
-        """Setup logging."""
-        logger = logging.getLogger("context-analyzer")
-        logger.setLevel(logging.DEBUG if verbose else logging.INFO)
-
-        handler = logging.StreamHandler(sys.stdout)
-        formatter = logging.Formatter(
-            "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
-        )
-        handler.setFormatter(formatter)
-        logger.addHandler(handler)
-
-        return logger
 
     def analyze(self) -> str:
         """Main analysis pipeline: load -> analyze -> recommend -> format."""
@@ -75,25 +63,14 @@ class PlaybookContextAnalyzer:
 
     def load_metadata(self) -> bool:
         """Load extracted metadata from JSON file."""
-        if not self.metadata_file.exists():
-            self.errors.append(f"Metadata file not found: {self.metadata_file}")
-            self.logger.error(f"Metadata file not found: {self.metadata_file}")
+        self.metadata = load_metadata(self.metadata_file)
+        if not self.metadata:
+            self.errors.append(f"Failed to load metadata from {self.metadata_file}")
             return False
 
-        try:
-            with open(self.metadata_file, "r", encoding="utf-8") as f:
-                self.metadata = json.load(f)
-            self.commands = self.metadata.get("commands", {})
-            self.logger.info(f"Loaded metadata for {len(self.commands)} commands")
-            return True
-        except json.JSONDecodeError as e:
-            self.errors.append(f"Invalid JSON in metadata file: {e}")
-            self.logger.error(f"Invalid JSON in metadata file: {e}")
-            return False
-        except Exception as e:
-            self.errors.append(f"Error loading metadata: {e}")
-            self.logger.error(f"Error loading metadata: {e}")
-            return False
+        self.commands = self.metadata.get("commands", {})
+        self.logger.info(f"Loaded metadata for {len(self.commands)} commands")
+        return True
 
     def _analyze_git_state(self) -> Optional[Dict[str, Any]]:
         """Analyze current git state."""

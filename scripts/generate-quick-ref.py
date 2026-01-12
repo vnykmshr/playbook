@@ -18,6 +18,8 @@ from pathlib import Path
 from typing import Dict, List, Any, Set, Tuple
 import logging
 
+from playbook_utils import setup_logger, load_metadata, get_tier_time_string
+
 
 class QuickRefGenerator:
     """Generate quick reference documentation from playbook metadata."""
@@ -32,32 +34,18 @@ class QuickRefGenerator:
 
     def _setup_logging(self, verbose: bool) -> logging.Logger:
         """Setup logging."""
-        logger = logging.getLogger("quick-ref-generator")
-        logger.setLevel(logging.DEBUG if verbose else logging.INFO)
-
-        handler = logging.StreamHandler(sys.stdout)
-        formatter = logging.Formatter("%(asctime)s - %(levelname)s - %(message)s")
-        handler.setFormatter(formatter)
-        logger.addHandler(handler)
-
-        return logger
+        return setup_logger("quick-ref-generator", verbose)
 
     def load_metadata(self) -> bool:
         """Load extracted metadata from JSON file."""
-        if not self.metadata_file.exists():
-            self.logger.error(f"Metadata file not found: {self.metadata_file}")
+        self.metadata = load_metadata(self.metadata_file)
+        if not self.metadata:
             return False
 
-        try:
-            with open(self.metadata_file, "r", encoding="utf-8") as f:
-                self.metadata = json.load(f)
-            self.commands = self.metadata.get("commands", {})
-            self.categories = self.metadata.get("categories", {})
-            self.logger.info(f"Loaded metadata for {len(self.commands)} commands")
-            return True
-        except json.JSONDecodeError as e:
-            self.logger.error(f"Invalid JSON in metadata file: {e}")
-            return False
+        self.commands = self.metadata.get("commands", {})
+        self.categories = self.metadata.get("categories", {})
+        self.logger.info(f"Loaded metadata for {len(self.commands)} commands")
+        return True
 
     def generate(self) -> str:
         """Generate quick reference markdown content."""
@@ -184,14 +172,7 @@ class QuickRefGenerator:
 
     def _get_tier_time(self, tier: Any) -> str:
         """Get estimated time for a tier."""
-        if tier is None:
-            return "varies"
-        if isinstance(tier, list):
-            if not tier:
-                return "varies"
-            tier = tier[0]
-        times = {"XS": "5 min", "S": "10 min", "M": "25 min", "L": "45 min"}
-        return times.get(str(tier), "varies")
+        return get_tier_time_string(tier)
 
     def _generate_command_browser(self) -> str:
         """Generate command browser by category."""

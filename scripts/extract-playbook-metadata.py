@@ -23,6 +23,8 @@ from pathlib import Path
 from typing import Any, Dict, List, Optional, Set, Tuple
 import logging
 
+from playbook_utils import setup_logger, is_skill_file
+
 
 class PlaybookMetadataExtractor:
     """
@@ -37,7 +39,7 @@ class PlaybookMetadataExtractor:
         self.schema_file = self.repo_root / ".playbook-extraction-schema.yaml"
 
         # Setup logging
-        self.logger = self._setup_logging(verbose)
+        self.logger = setup_logger("playbook-extractor", verbose)
 
         # Cache of all valid commands (for cross-validation)
         self.valid_commands: Set[str] = set()
@@ -46,20 +48,6 @@ class PlaybookMetadataExtractor:
         self.metadata: Dict[str, Dict[str, Any]] = {}
         self.warnings: List[Dict[str, str]] = []
         self.errors: List[Dict[str, str]] = []
-
-    def _setup_logging(self, verbose: bool) -> logging.Logger:
-        """Setup logging."""
-        logger = logging.getLogger("playbook-extractor")
-        logger.setLevel(logging.DEBUG if verbose else logging.INFO)
-
-        handler = logging.StreamHandler(sys.stdout)
-        formatter = logging.Formatter(
-            "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
-        )
-        handler.setFormatter(formatter)
-        logger.addHandler(handler)
-
-        return logger
 
     def extract_all(self) -> Dict[str, Any]:
         """
@@ -104,20 +92,6 @@ class PlaybookMetadataExtractor:
         self.logger.info("Extraction complete")
         return complete_metadata
 
-    def _is_skill_file(self, content: str) -> bool:
-        """
-        Detect if a file is a skill file (AI prompt) vs regular command.
-        Skill files start with instructions to AI, not user-facing commands.
-        """
-        # Skill files typically start with "You are...", "You will...", or "Lets..."
-        skill_indicators = [
-            r"^You are\s",
-            r"^You will\s",
-            r"^Lets\s",
-            r"^You should\s",
-        ]
-        first_line = content.split("\n")[0].strip()
-        return any(re.match(indicator, first_line) for indicator in skill_indicators)
 
     def _discover_commands(self) -> List[Path]:
         """Discover all command markdown files (excluding skill files)."""
@@ -134,7 +108,7 @@ class PlaybookMetadataExtractor:
         for file_path in all_files:
             try:
                 content = self._read_file(file_path)
-                if self._is_skill_file(content):
+                if is_skill_file(content):
                     skill_files.append(file_path.stem)
                 else:
                     regular_commands.append(file_path)
