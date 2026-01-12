@@ -13,17 +13,23 @@ Run this command when you're unsure which playbook command to use next. The comm
 
 ---
 
-## Quick Usage
+## Status
+
+⚠️ **This command is documented for Phase 2, implementation comes in Phase 3 (with CI/CD automation).**
+
+Currently, this guide helps you understand how context-aware discovery works. The actual `/pb-what-next` implementation will analyze your git state and recommend commands automatically.
+
+## Planned Usage (Phase 3)
 
 ```bash
-# See recommendations for your current state
+# See recommendations for your current state (implementation in Phase 3)
 /pb-what-next
 
-# Verbose output with explanations
-/pb-what-next --verbose
-
-# Force context detection
-/pb-what-next --detect
+# This command will analyze:
+# - Git branch and changed files
+# - Work phase (early, mid-feature, ready for review)
+# - Related commands from metadata
+# - Workflow suggestions
 ```
 
 ---
@@ -121,9 +127,9 @@ Use `/pb-what-next` when in doubt. It analyzes your situation and points you to 
 
 ---
 
-## Implementation (Behind the Scenes)
+## How the Implementation Will Work (Phase 3)
 
-The command uses intelligent analysis:
+The `/pb-what-next` command will use intelligent analysis:
 
 1. **Git State Analysis**
    ```bash
