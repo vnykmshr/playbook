@@ -451,48 +451,62 @@ The playbook provides the framework. You adjust the rigor based on context.
 
 ---
 
-## What's Included in v1.5.0
+## What's Included
 
-### 52 Commands Across 9 Categories
+### Complete Framework + Command Library
 
-**Foundational Frameworks** — `/pb-preamble`, `/pb-design-rules` (+ 3 preamble expansions)
+**Foundational Frameworks** — `/pb-preamble`, `/pb-design-rules` (with expansions on specific contexts)
 - Complete philosophy for peer collaboration and technical design
+- Preamble expansion guides for async teams, power dynamics, decision discipline
+- Design Rules organized into 4 clusters with decision framework
 
 **Core Foundation** — `/pb-guide`, `/pb-standards`, `/pb-documentation`, `/pb-templates`
-- SDLC framework, collaboration norms, quality standards
+- SDLC framework with right-sized rigor
+- Collaboration norms and quality standards
+- Reusable templates for commits, PRs, decisions
 
-**Planning** — `/pb-plan`, `/pb-adr`, `/pb-patterns*` (7 families: async, core, db, distributed, security, cloud), `/pb-performance`, `/pb-observability`, `/pb-deprecation`
-- Scope planning, architectural decisions, pattern library, design considerations
+**Planning** — `/pb-plan`, `/pb-adr`, `/pb-patterns*` (multiple families: async, core, database, distributed, security, cloud), `/pb-performance`, `/pb-observability`, `/pb-deprecation`
+- Scope planning and architectural decisions
+- Comprehensive pattern library with trade-offs
+- Design considerations before implementation
 
 **Development** — `/pb-start`, `/pb-cycle`, `/pb-resume`, `/pb-commit`, `/pb-pr`, `/pb-testing`, `/pb-standup`, `/pb-todo-implement`, `/pb-knowledge-transfer`, `/pb-what-next`
-- Feature branches, iteration cycles, commits, pull requests, testing, async communication
+- Feature branch establishment with clear scope
+- Iteration cycles with self and peer review
+- Atomic commits and pull requests
+- Testing, async communication, knowledge transfer
+- Contextual command recommendations
 
 **Deployment** — `/pb-deployment`, `/pb-incident`
-- Deployment strategies, incident response and recovery
+- Deployment strategies (blue-green, canary, rolling)
+- Incident assessment, response, and recovery
 
 **Release** — `/pb-release`
-- Pre-release checks and production sign-off
+- Pre-release checklists and production sign-off
 
-**Review** — `/pb-review*` (10 commands: comprehensive, code, product, tests, docs, hygiene, microservice, prerelease), `/pb-security`, `/pb-logging`
-- Multi-perspective code review, specialized audits
+**Review** — `/pb-review*` (comprehensive, code, product, tests, docs, hygiene, microservice, prerelease), `/pb-security`, `/pb-logging`
+- Multi-perspective code review with design rules as shared language
+- Specialized audits (security, logging, architecture)
 
-**Repository** — `/pb-repo*` (6 commands: init, organize, readme, about, blog, enhance)
-- Project setup, documentation, polishing
+**Repository** — `/pb-repo*` (init, organize, readme, about, blog, enhance)
+- Greenfield project initialization
+- Repository structure and documentation
 
-**People** — `/pb-onboarding`, `/pb-team`, (knowledge-transfer covered in development)
-- Team onboarding, retrospectives, dynamics
+**People** — `/pb-onboarding`, `/pb-team`
+- Structured team member onboarding
+- Retrospectives and team dynamics
+- Knowledge transfer processes
 
 **Reference** — `/pb-context`
-- Project working context and decision log
+- Project working context and decision log template
 
 ### Documentation
-- **Frameworks** — Preamble guide (+ 3 expansion guides), Design Rules (17 principles in 4 clusters)
-- Command reference with examples for all 52 commands
-- Integration guide showing how frameworks and commands work together
-- Decision guide (decision tree for "which command should I use?")
-- Getting started guide with 5 real-world scenarios
-- Best practices and checklists
-- Quick references (preamble, design rules, command workflows)
+- **Frameworks** — Preamble and Design Rules with practical integration guides
+- Command reference with real-world examples
+- Integration guide showing framework and command relationships
+- Decision guide for choosing the right command
+- Getting started scenarios for different situations
+- Quick references for daily lookup
 
 ### Ready to Install
 ```bash
@@ -512,23 +526,23 @@ Engineering teams face the same challenges repeatedly. The Playbook solves them 
 ### How It Works
 
 1. **The Preamble** (HOW teams think) — Establishes peer collaboration, psychological safety, correctness over agreement
-2. **Design Rules** (WHAT teams build) — 17 classical principles ensuring clarity, simplicity, robustness, extensibility
+2. **Design Rules** (WHAT teams build) — Classical principles ensuring clarity, simplicity, robustness, extensibility
 3. **Together** — Enable teams to build systems that are both technically excellent AND arrived at through trustworthy processes
 
 ### What This Enables
 
 1. **Codifying proven practices** — Don't invent, iterate (grounded in design rules)
 2. **Documenting the "why"** — Future decisions are informed by past decisions (enabled by preamble thinking)
-3. **Integrating systems** — Commands work together, not in isolation (both frameworks throughout)
-4. **Right-sizing rigor** — Lightweight process for small changes, thorough for large (applies to all change sizes)
-5. **Scaling asynchronously** — Distributed teams stay aligned without constant meetings (preamble + design rules documented)
+3. **Integrating systems** — Commands work together as a coherent whole, not in isolation
+4. **Right-sizing rigor** — Lightweight process for small changes, thorough for large ones
+5. **Scaling across time zones** — Distributed teams stay aligned through structured async communication
 
 ### The Result
 
-A team that ships faster, maintains higher quality, responds to incidents better, and burns out less.
+Teams that ship faster, maintain higher quality, respond to incidents better, and experience less burnout.
 
 Quality becomes the default. Not because of individual heroics, but because:
-- **Good processes** are built into how work gets done (preamble thinking)
+- **Good processes** are embedded in how work gets done (preamble thinking)
 - **Sound design** is enforced at every step (design rules)
 - **Both frameworks** work together to enable trust and excellence
 
@@ -571,11 +585,12 @@ Browse the [full command reference](command-index.md), [decision guide](decision
 
 **The playbook isn't just documentation. It's a decision framework that makes good development practices the default.**
 
-By combining **Preamble** (peer thinking) with **Design Rules** (technical excellence), the playbook enables teams to:
-- Think together without hierarchy
-- Build systems that are simple, clear, and robust
-- Ship confidently with fewer regressions
-- Scale asynchronously across time zones
-- Burn out less while maintaining quality
+By integrating **Preamble** (peer thinking) with **Design Rules** (technical excellence), the playbook enables teams to:
 
-v1.5.0 represents the complete integration of both frameworks across all 52 commands. Ready for immediate adoption by high-performance engineering teams. 🚀
+- **Think together without hierarchy** — Challenge assumptions professionally, surface problems early
+- **Build systems that endure** — Systems are clear, simple, and robust by design
+- **Ship confidently** — Quality gates catch mistakes before they reach production
+- **Scale without meetings** — Distributed teams stay aligned through structured async communication
+- **Sustain momentum** — Good processes prevent burnout, not increase it
+
+The culmination of this work is a complete engineering philosophy—not separated into "soft skills" and "technical skills," but integrated as a unified whole. Teams that adopt both the Preamble and Design Rules don't just write better code. They build better teams.
