@@ -304,36 +304,36 @@ Remember: they're operating from this preamble. They're not being rude; they're 
 - `/pb-documentation` — Clear writing invites healthy challenge
 
 **Development Workflow:**
-- `/pb-cycle` — Peer review section assumes preamble thinking
-- `/pb-commit` — "Clear messages" section encourages thinking that invites critique
-- `/pb-pr` — Code review process assumes critical thinking from both sides
-- `/pb-start` — Team alignment assumes shared preamble
-- `/pb-testing` — Tests are designed to catch flawed assumptions
+- `/pb-cycle` — Step 3: Peer Review assumes preamble thinking. Reviewer challenges, author welcomes critical feedback.
+- `/pb-commit` — Clear messages force you to explain *why*, inviting scrutiny and challenge
+- `/pb-pr` — Code review process assumes critical thinking from both author and reviewer
+- `/pb-start` — Team alignment gate explicitly includes "assumptions are explicit, disagreements surfaced"
+- `/pb-testing` — Tests are designed to catch flawed assumptions, not validate them
 
 **Planning & Architecture:**
-- `/pb-plan` — Scope negotiation assumes peer-level challenge
-- `/pb-adr` — Alternatives section enforces preamble thinking (can't skip it)
-- `/pb-patterns-*` — Trade-offs are always discussed, never hidden
-- `/pb-performance` — Questioning assumptions is the starting point
-- `/pb-observability` — Multi-perspective thinking requires this preamble
-- `/pb-deprecation` — Thoughtful decisions require challenging the status quo
+- `/pb-plan` — Clarify phase assumes peer-level challenge: "Clarify means ask hard questions and challenge assumptions"
+- `/pb-adr` — Alternatives and Rationale sections require explicit reasoning that can be challenged
+- `/pb-patterns-*` — Every pattern guide emphasizes: question if it fits, challenge the costs, explore alternatives
+- `/pb-performance` — "Question assumptions about slowness. Challenge whether optimization is worth the complexity cost."
+- `/pb-observability` — "Multi-perspective thinking: no single perspective is complete"
+- `/pb-deprecation` — "Challenge whether change is really necessary. Surface impact on users."
 
 **Reviews & Quality:**
-- `/pb-review` — Comprehensive review assumes critical perspective
-- `/pb-review-code` — Code quality section assumes peer critique
-- `/pb-review-tests` — Test quality requires questioning assumptions
-- `/pb-review-docs` — Documentation review assumes critical feedback
-- `/pb-security` — Security review is designed to find what was missed
-- `/pb-review-product` — Product alignment requires honest trade-off discussion
-- `/pb-review-microservice` — Architecture review requires challenging decisions
-- `/pb-logging` — Logging standards review assumes critical evaluation
-- `/pb-review-prerelease` — Senior reviewer assumes preamble thinking
+- `/pb-review` — Comprehensive review assumes critical perspective from multiple experts
+- `/pb-review-code` — "Challenge architectural choices. Point out duplication and complexity. Surface flaws directly."
+- `/pb-review-tests` — "Question test assumptions. Challenge coverage claims. Point out flaky or brittle tests."
+- `/pb-review-docs` — "Find unclear sections, challenge stated assumptions, and surface gaps"
+- `/pb-security` — "Your job is to find what was missed, challenge assumptions about safety, and surface risks"
+- `/pb-review-product` — "Each perspective should challenge the others. Surface disagreements—they surface real problems."
+- `/pb-review-microservice` — "Question service boundaries. Challenge coupling. Surface design flaws early."
+- `/pb-logging` — "Logs must reveal assumptions and make failures obvious, not hide them"
+- `/pb-review-prerelease` — "Challenge readiness assumptions. Surface risks directly. Don't hide issues at last gate."
 
 **Team & Operations:**
-- `/pb-team` — Team dynamics section explicitly builds on preamble
-- `/pb-incident` — Incident response requires honest assessment
-- `/pb-standup` — Async updates assume critical thinking about blockers
-- `/pb-onboarding` — New team members learn this preamble first
+- `/pb-team` — "Psychological safety is directly enabled by preamble thinking. When teams operate from that preamble, challenging assumptions becomes the default."
+- `/pb-incident` — "During response: be direct about status, challenge assumptions about cause, surface unknowns"
+- `/pb-standup` — "Surface blockers and risks directly. Use preamble thinking: be direct about problems, don't hide issues to seem productive."
+- `/pb-onboarding` — "New team members learn this preamble first: challenge assumptions, prefer correctness, think like peers."
 
 **Meta Commands:**
 - `/pb-what-next` — Context analysis requires critical perspective

@@ -38,8 +38,17 @@ The Engineering Playbook is a **decision framework** that codifies how to approa
 - Challenge assumptions. Prefer correctness over agreement.
 - Think like peers, not hierarchies. Disagreement is professional.
 - Truth over tone. Direct, clear feedback beats careful politeness.
+- Think holistically. Optimize for outcomes, not just individual concerns.
 
 Every command in this playbook—from `/pb-guide` to `/pb-cycle` to `/pb-security`—is more powerful when you bring this mindset. The preamble is not optional; it's foundational.
+
+**Learning path:**
+1. Read preamble → understand the mindset
+2. See it in action → Read examples in `/pb-cycle` (peer review) and `/pb-adr` (documenting decisions)
+3. Apply it → Use as anchor for `/pb-plan`, `/pb-commit`, `/pb-pr`, all review commands
+4. Recognize failure modes → Use `/pb-preamble` section "When This Goes Wrong" to self-diagnose
+
+**Key insight:** The preamble isn't about process—it's about *how* you think and work together. All other commands assume this thinking.
 
 ---
 
