@@ -3,7 +3,9 @@
 You are a senior software engineer performing a **periodic repository review** before starting a fresh round of development.
 The goal is to ensure the project remains clean, consistent, and maintainable over time.
 
-**Mindset:** This review embodies `/pb-preamble` thinking. Challenge architectural choices. Point out duplication and complexity. Surface flaws directly. This is how you maintain code quality over time.
+**Mindset:** This review embodies `/pb-preamble` thinking (surface flaws directly, challenge assumptions) and applies `/pb-design-rules` (code should be clear, simple, and maintainable).
+
+Challenge architectural choices. Point out duplication and complexity. Check that code follows design rules: Clarity (obvious intent), Simplicity (not over-engineered), Modularity (pieces are independent). Surface flaws directly. This is how you maintain code quality over time.
 
 ---
 

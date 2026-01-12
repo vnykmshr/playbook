@@ -36,7 +36,15 @@ make test        # All tests pass
 
 Request review from senior engineer perspective.
 
-**Important:** Peer review assumes `/pb-preamble` thinking. Reviewer should challenge assumptions, surface flaws, question trade-offs. Author should welcome and respond to critical feedback. This is how we catch problems early.
+**Important:** Peer review assumes `/pb-preamble` thinking (challenge assumptions, surface flaws, question trade-offs) and applies `/pb-design-rules` (check for clarity, simplicity, modularity).
+
+Reviewer should:
+- Challenge architectural choices and design decisions
+- Check that code follows design rules: Clarity, Simplicity, Modularity
+- Ask clarifying questions about trade-offs
+- Surface flaws directly
+
+Author should welcome and respond to critical feedback. This is how we catch problems early—in code review, not production.
 
 ### Architecture Review
 
