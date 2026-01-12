@@ -6,7 +6,9 @@ on:
     paths:
       - 'docs/**'
       - 'commands/**'
+      - 'scripts/**'
       - 'CHANGELOG.md'
+      - 'README.md'
       - '.github/CONTRIBUTING.md'
       - '.gitattributes'
       - 'mkdocs.yml'
@@ -81,7 +83,7 @@ jobs:
         continue-on-error: true
 
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@v4
         with:
           path: site
 
