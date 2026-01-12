@@ -2,6 +2,8 @@
 
 Clean up and reorganize the project root for clarity and maintainability.
 
+**Approach:** Organization is about inviting scrutiny. Use `/pb-preamble` thinking: structure should make it easy for others to challenge assumptions and find issues. Clear organization beats clever categorization.
+
 ---
 
 ## Objective

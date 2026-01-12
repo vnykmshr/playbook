@@ -2,6 +2,8 @@
 
 Language-specific guide for Go projects. Use alongside `/pb-guide` for general process.
 
+**Principle:** Language-specific guidance still assumes `/pb-preamble` thinking. Challenge Go idioms if they don't fit. Adapt this guide to your project—it's a starting point.
+
 ---
 
 ## **Go-Specific Change Tiers**

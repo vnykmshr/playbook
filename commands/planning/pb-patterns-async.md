@@ -2,6 +2,8 @@
 
 Non-blocking execution patterns for concurrent operations. Essential for scalable systems.
 
+**Trade-offs exist:** Async patterns add complexity. Use `/pb-preamble` thinking: question whether async is necessary, challenge the complexity cost.
+
 ---
 
 ## Purpose

@@ -2,6 +2,8 @@
 
 Patterns for coordinating operations across multiple services/databases.
 
+**Caveat:** Distributed patterns add complexity. Use `/pb-preamble` thinking: question whether you really need distributed systems. Challenge the assumption that you can't keep things simple.
+
 ---
 
 ## Purpose

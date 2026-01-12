@@ -2,6 +2,8 @@
 
 Language-specific guide for Python projects. Use alongside `/pb-guide` for general process.
 
+**Principle:** Language-specific guidance still assumes `/pb-preamble` thinking. Challenge Python conventions if they don't fit. Adapt this guide to your project—it's a starting point.
+
 ---
 
 ## **Python-Specific Change Tiers**

@@ -2,6 +2,8 @@
 
 Periodic, in-depth review from four expert perspectives.
 
+**Mindset:** Multi-perspective review embodies `/pb-preamble` thinking. Each perspective should challenge the others. Surface disagreements—they often surface real problems that single views miss.
+
 ---
 
 ## Context

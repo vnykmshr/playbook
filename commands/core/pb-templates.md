@@ -2,6 +2,8 @@
 
 Reusable templates for consistent implementation across all focus areas.
 
+**Structure matters:** These templates enforce clarity and consistency. Consistent format makes comparison and criticism easier. This embodies `/pb-preamble`: clear structure invites challenge.
+
 ---
 
 ## Commit Strategy

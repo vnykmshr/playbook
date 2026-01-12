@@ -2,6 +2,8 @@
 
 Create a crisp, practical technical blog post explaining this project to a technical audience.
 
+**Writing principle:** Share real decisions, not marketing. Use `/pb-preamble` thinking: explain the problems you solved, the trade-offs you made, what you'd do differently. Honest technical writing builds trust.
+
 ---
 
 ## Role

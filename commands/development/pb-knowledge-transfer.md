@@ -2,6 +2,8 @@
 
 Structured guide for documenting and transferring project knowledge to new team members and stakeholders.
 
+**Teach the preamble first:** The best knowledge transfer includes `/pb-preamble`. New team members need to know: challenge assumptions, prefer correctness, think like peers.
+
 ---
 
 ## Purpose

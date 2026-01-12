@@ -2,6 +2,8 @@
 
 Create a concise, search-optimized GitHub "About" description and relevant topic tags.
 
+**Principle:** Accuracy over cleverness. Use `/pb-preamble` thinking: describe what the project actually does, not what you wish it did. Honest descriptions help the right people find you.
+
 ---
 
 ## Objective

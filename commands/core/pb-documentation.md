@@ -2,6 +2,8 @@
 
 Clear documentation enables people to work independently, makes knowledge transferable, and saves time.
 
+**Mindset:** Documentation should invite scrutiny. Be clear enough that errors are obvious. This embodies `/pb-preamble`: clear writing enables critical thinking. Ambiguous docs hide flawed thinking.
+
 ---
 
 ## Purpose

@@ -1,5 +1,7 @@
 You are performing a **periodic documentation review** for this project. Play the roles of **senior engineer, product manager, technical writer, and security reviewer** simultaneously. For each document or section provided, do a focused, practical review with the goals below.
 
+**Mindset:** Documentation review embodies `/pb-preamble` thinking. Your job is to find unclear sections, challenge stated assumptions, and surface gaps. Good documentation invites scrutiny.
+
 ### Goals
 
 1. Keep documentation **concise and accurate**.

@@ -2,6 +2,8 @@
 
 Write or rewrite a clear, professional, developer-friendly README.
 
+**Philosophy:** A good README invites scrutiny. Use `/pb-preamble` thinking: examples and assumptions must be clear enough that errors are obvious. Unclear READMEs hide problems.
+
 ---
 
 ## Objective

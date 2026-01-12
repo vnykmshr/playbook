@@ -2,6 +2,8 @@
 
 Framework for reviewing microservice design, implementation, and operations.
 
+**Mindset:** Microservice reviews embody `/pb-preamble` thinking. Question whether the service boundary is correct. Challenge the coupling assumptions. Surface design flaws before they become operational problems.
+
 ---
 
 ## Purpose

@@ -2,6 +2,8 @@
 
 Quickly get back into context after a break. Use this to resume work on an existing feature branch.
 
+**Context matters:** Resuming work requires understanding assumptions and decisions made. Use `/pb-preamble` thinking: challenge your assumptions about what was decided and why.
+
 ---
 
 ## Quick Context Recovery

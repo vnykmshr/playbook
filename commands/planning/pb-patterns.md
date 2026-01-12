@@ -2,6 +2,8 @@
 
 Overview and navigation guide for the pattern family.
 
+**Every pattern has trade-offs:** Use `/pb-preamble` thinking—challenge whether this pattern fits, question the costs, explore alternatives.
+
 ---
 
 ## Purpose

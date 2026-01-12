@@ -2,6 +2,8 @@
 
 Patterns for efficient, scalable database operations.
 
+**Caveat:** Database patterns solve specific problems. Use `/pb-preamble` thinking: question whether the database is actually the bottleneck before applying patterns. Challenge the assumption that you need this complexity.
+
 ---
 
 ## Purpose

@@ -2,6 +2,8 @@
 
 Comprehensive repository polish: organize, document, and present.
 
+**Meta-perspective:** Enhancing a repository is about making it easy for others to understand it and challenge it. Use `/pb-preamble` thinking throughout: organize for scrutiny, document for error-detection, present honestly.
+
 ---
 
 ## Objective
