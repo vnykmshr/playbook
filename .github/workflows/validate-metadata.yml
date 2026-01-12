@@ -1,17 +1,20 @@
 name: Validate & Generate Metadata
 
 on:
-  push:
-    branches: [ main ]
-    paths:
-      - 'commands/**'
-      - 'scripts/extract-playbook-metadata.py'
-      - 'scripts/validate-extracted-metadata.py'
-      - 'scripts/generate-quick-ref.py'
-      - '.playbook-extraction-schema.yaml'
-      - '.github/workflows/validate-metadata.yml'
-  pull_request:
-    branches: [ main ]
+  # Disabled for now - deploy-docs.yml handles metadata generation
+  # Uncomment when artifact passing between jobs is fixed
+  # push:
+  #   branches: [ main ]
+  #   paths:
+  #     - 'commands/**'
+  #     - 'scripts/extract-playbook-metadata.py'
+  #     - 'scripts/validate-extracted-metadata.py'
+  #     - 'scripts/generate-quick-ref.py'
+  #     - '.playbook-extraction-schema.yaml'
+  #     - '.github/workflows/validate-metadata.yml'
+  # pull_request:
+  #   branches: [ main ]
+  workflow_dispatch:  # Manual trigger only
 
 permissions:
   contents: read
