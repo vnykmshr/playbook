@@ -2,7 +2,9 @@
 
 Build visibility into your system's behavior: metrics, logs, and traces that help you understand what's happening in production.
 
-**Mindset:** Observability is multi-perspective understanding. You need metrics, logs, and traces—different views of the same system. This embodies `/pb-preamble` thinking: no single perspective is complete. Question your assumptions about what's happening in production.
+**Mindset:** Observability is multi-perspective understanding. You need metrics, logs, and traces—different views of the same system. This embodies `/pb-preamble` thinking (no single perspective is complete) and `/pb-design-rules` thinking (especially Transparency: design for visibility to make debugging easier).
+
+Question your assumptions about what's happening in production. Systems should be observable; you shouldn't need to guess.
 
 ---
 
