@@ -3,7 +3,9 @@
 A reusable end-to-end guide for any feature, enhancement, refactor, or bug fix.
 Right-size your process using **Change Tiers**, then follow required sections.
 
-**Mindset:** This framework assumes you're operating from `/pb-preamble`. Challenge the tiers, rearrange gates, adapt to your team—this is a starting point, not dogma.
+**Mindset:** This framework assumes you're operating from both `/pb-preamble` (how teams think) and `/pb-design-rules` (what systems should be).
+
+Challenge the tiers, rearrange gates, adapt to your team—this is a starting point, not dogma. Every gate should verify design rules are being honored, not just that work is complete.
 
 ---
 

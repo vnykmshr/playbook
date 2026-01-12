@@ -1,6 +1,8 @@
 # Project Guidelines & Working Principles
 
-**See `/pb-preamble` first.** These standards assume you're operating from the mindset anchored there: challenge assumptions, prefer correctness over agreement, think like peers.
+**See `/pb-preamble` and `/pb-design-rules` first.** These standards assume you're operating from both mindsets:
+- **Preamble**: Challenge assumptions, prefer correctness over agreement, think like peers
+- **Design Rules**: Build systems that are clear, simple, modular, robust, and extensible
 
 ---
 
