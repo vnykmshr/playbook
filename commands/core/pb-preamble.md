@@ -16,6 +16,24 @@ Why this matters:
 
 Without this anchor, teams default to performative agreement, risk-averse consensus, and deference over clarity. This preamble is the antidote.
 
+### What "Thinking Like Peers" Means
+
+**Hierarchy thinking:**
+- Junior person defers to senior person
+- Senior person decides; others execute
+- Disagreement is disrespect
+- Silence protects relationships
+- Status informs correctness
+
+**Peer thinking:**
+- All perspectives are examined equally
+- Best idea wins, informed by context and seniority
+- Disagreement is professional
+- Silence is complicity in bad decisions
+- Context and seniority inform but don't overrule evidence
+
+This doesn't mean ignoring experience or authority. It means authority is earned through good reasoning, not just position.
+
 ---
 
 ## II. Four Principles
@@ -69,6 +87,42 @@ Optimize for outcomes, not just code.
 
 ---
 
+## II.5 When to Challenge, When to Trust
+
+Preamble doesn't mean challenge everything. **Discernment matters.**
+
+### Challenge When:
+- **Assumptions are unstated** — "We need microservices" (why? under what constraints?)
+- **Trade-offs are hidden** — "Simple solution" (simple for whom? what's the cost?)
+- **Risk is glossed over** — "This is production-ready" (have we tested failure modes?)
+- **Scope is unclear** — "Add this feature" (what does done look like?)
+- **Process is unfamiliar** — First time doing something, you don't understand the reasoning
+- **Context has changed** — "We always do X" (still true? constraints changed?)
+- **Your expertise applies** — You have information others don't
+
+### Trust When:
+- **Expert has explained reasoning** — They've shown their thinking, trade-offs are clear
+- **You lack context** — Decision is outside your domain, they have information you don't
+- **Time cost exceeds benefit** — Challenging a button color wastes more time than it's worth
+- **Decision is made, execution is on** — Time to align and execute, not re-litigate
+- **Pattern is proven** — "We've done this 20 times this way, it works" is data
+- **You're learning from them** — Better to understand their reasoning than challenge it
+
+### The Balance
+**Best teams oscillate between:**
+- Healthy challenge (pointing out risks, unstated assumptions)
+- Trust-based execution (alignment once decision is made)
+- Retrospective learning (why did that work or fail)
+
+**Worst teams get stuck in:**
+- Perpetual debate (never deciding)
+- Blind trust (never questioning)
+- Post-mortem blame (only questioning after failure)
+
+The goal is: **Challenge early, decide clearly, execute aligned.**
+
+---
+
 ## III. How Other Commands Embed This
 
 **Every playbook command assumes you're reading with this preamble in mind:**
@@ -76,7 +130,7 @@ Optimize for outcomes, not just code.
 - `/pb-guide` — The framework is a starting point, not dogma. Challenge the tiers, rearrange gates, adapt to your team
 - `/pb-standards` — Principles, not rules. Understand *why* before following *how*
 - `/pb-cycle` — Peer review is designed to surface disagreement, not confirm approval
-- `/pb-adr` — Alternatives are required, not optional. Document trade-offs explicitly
+- `/pb-adr` — Decisions are documented with required alternatives and trade-offs explicitly. Others can challenge the reasoning
 - `/pb-plan` — Scope lock is a negotiation. Challenge estimates, uncover hidden assumptions
 - `/pb-commit` — Clear messages force you to explain *why*, inviting scrutiny
 - `/pb-pr` — Code review assumes critical thinking from both author and reviewer
@@ -84,7 +138,6 @@ Optimize for outcomes, not just code.
 - `/pb-patterns-*` — Trade-offs are always discussed. No pattern is universally right
 - `/pb-security` — Security review explicitly looks for what was missed
 - `/pb-testing` — Tests are designed to catch flawed thinking, not validate it
-- `/pb-adr` — Decisions are documented so others can challenge the reasoning
 - `/pb-deprecation` — Thoughtful decisions require questioning the status quo
 - `/pb-observability` — Multi-perspective thinking: ops, security, product, engineering
 
@@ -271,6 +324,109 @@ Teams with this preamble:
 - **Sustainable pace** — Problems don't surprise you in production
 
 This preamble isn't nice-to-have. It's foundational. Everything else in the playbook depends on it.
+
+---
+
+## VIII. When This Goes Wrong: Failure Modes
+
+### Failure Mode 1: Argumentative Culture
+**What it looks like:** Team challenges everything. Every decision turns into debate. Nothing gets shipped.
+
+**Why it happens:**
+- Preamble interpreted as "challenge everything, always"
+- No distinction between healthy challenge and obstruction
+- Judgment about what's worth challenging never develops
+
+**Prevention:**
+- Emphasize Section II.5: "When to Challenge, When to Trust"
+- Use post-mortems to reflect: "Was this debate valuable?"
+- Leader models when to stop debating and decide
+
+---
+
+### Failure Mode 2: Leader Dismissal
+**What it looks like:** "I'm challenging your concern, not ignoring it" becomes cover for dismissal.
+
+**Why it happens:**
+- Leader uses preamble language as justification to override concerns
+- "Your concern is valid, but I disagree" without genuine engagement
+- Pseudo-listening that doesn't actually consider the challenge
+
+**Prevention:**
+- Leaders must demonstrate they've genuinely considered the challenge
+- Ask: "Am I actually engaging with this concern or just performing engagement?"
+- Team feels free to escalate if dismissal pattern becomes clear
+
+---
+
+### Failure Mode 3: Tone Weaponization
+**What it looks like:** "Just be more direct" becomes code for "shut up and accept it."
+
+**Why it happens:**
+- Preamble emphasizes "truth over tone"
+- Gets misused as "I can say anything harshly and you should accept it"
+- Actual rudeness gets justified as "just being direct"
+
+**Prevention:**
+- Truth over tone ≠ Rudeness
+- Clarify: "Direct and respectful" is the standard, not "direct and harsh"
+- Challenge tone when it's genuinely unhelpful
+
+---
+
+### Failure Mode 4: Pseudo-Psychological Safety
+**What it looks like:** Team publicly invites challenge but subtly punishes it.
+
+**Why it happens:**
+- Leadership says "disagree with me" but reacts badly when people do
+- Preamble becomes theater instead of culture
+- People learn safe disagreement is punished in subtle ways (tone, assignment, promotion)
+
+**Prevention:**
+- Leadership must visibly accept challenges and change decisions
+- Track patterns: does challenging ever affect promotion/assignment? If yes, you have a problem
+- Regular check-in: "Do you feel safe disagreeing with me?" If no, rebuild trust first
+
+---
+
+### Failure Mode 5: Perpetual Indecision
+**What it looks like:** Competing perspectives are all equally valid. Decisions never get made or keep getting reopened.
+
+**Why it happens:**
+- Preamble emphasizes showing trade-offs, all perspectives
+- Confusion between "surface all perspectives" and "all perspectives are equally correct"
+- Leader afraid to decide, hiding behind "we need more input"
+
+**Prevention:**
+- Decision time has a clock. Debate until then, then decide.
+- Decision authority is clear (senior person decides, after hearing challenge)
+- Decisions can be revisited if circumstances change, but not constantly
+
+---
+
+### Failure Mode 6: Senior Person Abuse
+**What it looks like:** Junior team member challenges decision. Senior person says "I've decided, preamble doesn't apply to hierarchy."
+
+**Why it happens:**
+- Preamble is interpreted as "only works among equals"
+- Authority sees preamble as threat instead of improvement
+- Deliberate misreading: "You're trying to override my authority"
+
+**Prevention:**
+- Make explicit: Preamble applies across hierarchy
+- "Senior person decides" doesn't mean "senior person isn't challenged"
+- Senior person's job is to genuinely engage with challenge, not just pretend to
+
+---
+
+## What to Do If You Notice a Failure Mode
+
+1. **Name it** — "I think we're in perpetual debate mode. Should we set a decision deadline?"
+2. **Reference the preamble** — "Preamble says to challenge early and decide clearly"
+3. **Propose the fix** — "I suggest we debate this until Friday, then decide Monday"
+4. **Don't go silent** — If pattern persists, escalate (to leadership, 1-on-1, team retro)
+
+**The test:** Does your team show the benefits listed in "Why This Matters"? If not, something's gone wrong and needs addressing.
 
 ---
 
