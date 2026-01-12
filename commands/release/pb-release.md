@@ -1,6 +1,8 @@
 Lets prepare and make prod release. We will perform pre-release checks, and release code review by a software engineer (instruction follows below), identiy and address gaps, fix issues, ensure ci is success. Review and add crisp updates to project readme, documents under docs/ (only relevant sections updated, created, while ensuring the document itself is structurally is in correct and natural order. Update charts and diagrams, if relevant updates present). Finally we deploy to prod. Run by engineering playbook as applicable.
 
-**Preparation mindset:** This is where `/pb-preamble` thinking becomes critical. Challenge assumptions about readiness. Surface risks directly. Don't hide issues to seem "ready."
+**Preparation mindset:** This is where `/pb-preamble` thinking (challenge readiness assumptions, surface risks) and `/pb-design-rules` thinking (verify Robustness, verify Clarity, verify systems fail loudly) become critical.
+
+Don't hide issues to seem "ready." Surface risks directly. Systems should fail loudly, not silently.
 
 You are a senior software engineer preparing for a **production release**.
 Perform a final code review and cleanup of the current repository.

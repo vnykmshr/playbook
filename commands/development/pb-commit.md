@@ -13,7 +13,9 @@ Good commits:
 - Create clean, readable history
 - Help future developers understand "why"
 
-**Why this matters:** Clear commits invite scrutiny. You explain your reasoning, which invites others to challenge it. That's the point. Commits that force you to articulate "why" are harder to defend when the reasoning is flawed—which is exactly what you want.
+**Why this matters:** Clear commits embody `/pb-preamble` thinking (explain your reasoning so others can challenge it) and `/pb-design-rules` thinking (especially Clarity and Representation: commits should make intent obvious).
+
+You explain your reasoning, which invites others to challenge it. That's the point. Commits that force you to articulate "why" are harder to defend when the reasoning is flawed—which is exactly what you want. Clear reasoning makes flawed thinking obvious.
 
 ---
 

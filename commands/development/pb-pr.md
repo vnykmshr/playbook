@@ -2,7 +2,9 @@
 
 Streamlined workflow for creating a pull request with proper context and description.
 
-**Mindset:** PR review is built on `/pb-preamble` thinking. Reviewers will challenge assumptions and surface issues. That's the point. Welcome that feedback—it makes code better.
+**Mindset:** PR review is built on `/pb-preamble` thinking (challenge assumptions, surface issues) and applies `/pb-design-rules` thinking (reviewers check that code is Clear, Simple, Modular, Robust).
+
+Reviewers will challenge your decisions. That's the point. Welcome that feedback—it makes code better. Your job as author is to explain your reasoning clearly so reviewers can engage meaningfully.
 
 ---
 
