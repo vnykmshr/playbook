@@ -2,7 +2,9 @@
 
 Structured guide for documenting and transferring project knowledge to new team members and stakeholders.
 
-**Teach the preamble first:** The best knowledge transfer includes `/pb-preamble`. New team members need to know: challenge assumptions, prefer correctness, think like peers.
+**Mindset:** The best knowledge transfer includes both frameworks.
+
+Teach `/pb-preamble` first: new team members need to know how to challenge assumptions, prefer correctness, and think like peers. Then teach `/pb-design-rules`: help them understand the design principles (Clarity, Modularity, Robustness, Extensibility) that govern how systems are built in this team.
 
 ---
 

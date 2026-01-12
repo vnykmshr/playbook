@@ -3,9 +3,11 @@
 > **Purpose:** Onboarding context for new developers and session refresh for ongoing work.
 > **Current Version:** vX.Y.Z | **Last Updated:** YYYY-MM-DD
 >
-> **Mindset:** This context assumes `/pb-preamble` thinking. New developers should challenge stated assumptions, question the architecture, and surface issues they find.
+> **Mindset:** This context assumes both `/pb-preamble` and `/pb-design-rules` thinking.
 >
-> **Related Docs:** `pb-guide` (SDLC tiers, gates, checklists) | `pb-standards` (coding standards, conventions)
+> New developers should: (1) Challenge stated assumptions, question the architecture, surface issues; (2) Understand design principles guiding the system (Clarity, Simplicity, Modularity, Robustness).
+>
+> **Related Docs:** `pb-guide` (SDLC tiers, gates, checklists) | `pb-standards` (coding standards, conventions) | `pb-design-rules` (technical design principles)
 
 ---
 

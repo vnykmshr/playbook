@@ -2,6 +2,10 @@
 
 Respond to production incidents quickly and professionally. Clear process, clear communication, minimal impact.
 
+**Mindset:** Incident response requires both `/pb-preamble` and `/pb-design-rules` thinking.
+
+During response: be direct about status (preamble), challenge assumptions about root cause, surface unknowns. Design systems to fail loudly (Repair, Transparency) so incidents are visible immediately. After: conduct honest post-mortems without blame, and improve system robustness.
+
 ---
 
 ## Purpose
@@ -12,8 +16,6 @@ Incidents are inevitable. What matters:
 - **Communication**: Keep stakeholders informed
 - **Recovery**: Get back to normal fast
 - **Learning**: Prevent repeats through post-incident review
-
-**Critical mindset:** Incident response requires `/pb-preamble` thinking. During response: be direct about status, challenge assumptions about cause, surface unknowns. After: conduct honest post-mortems without blame. This is where critical thinking saves lives.
 
 ---
 

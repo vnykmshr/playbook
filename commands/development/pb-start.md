@@ -2,6 +2,8 @@
 
 Begin iterative development on a feature, enhancement, or fix. This command establishes the rhythm for quality-focused, incremental work.
 
+**Mindset:** Development assumes both `/pb-preamble` thinking (challenge assumptions, peer collaboration) and `/pb-design-rules` thinking. Each iteration verifies that code embodies Clarity, Simplicity, and Robustness.
+
 ---
 
 ## Pre-Start Checklist

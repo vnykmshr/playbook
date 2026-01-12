@@ -19,7 +19,9 @@ A healthy engineering team has:
 - **Growth**: People are learning and advancing
 - **Recognition**: Good work is acknowledged
 
-**Foundation:** Psychological safety is directly enabled by `/pb-preamble` thinking. When teams operate from that preamble, challenging assumptions becomes the default, disagreement becomes professional, and silence becomes a risk.
+**Foundation:** High-performance teams operate from both frameworks.
+
+Psychological safety is enabled by `/pb-preamble` thinking: when teams challenge assumptions, disagreement becomes professional, and silence becomes a risk. Technical excellence is enabled by `/pb-design-rules` thinking: teams that understand and apply Clarity, Simplicity, Modularity, and Robustness build systems that scale and evolve. Together: safe collaboration + sound design = high performance.
 
 ---
 

@@ -2,7 +2,9 @@
 
 Quickly get back into context after a break. Use this to resume work on an existing feature branch.
 
-**Context matters:** Resuming work requires understanding assumptions and decisions made. Use `/pb-preamble` thinking: challenge your assumptions about what was decided and why.
+**Mindset:** Resuming work requires understanding assumptions and decisions made.
+
+Use `/pb-preamble` thinking: challenge your assumptions about what was decided and why. Use `/pb-design-rules` thinking: understand how the design embodies Clarity (is the code obvious?), Simplicity (are we solving this the simplest way?), and Robustness (are error cases handled?).
 
 ---
 

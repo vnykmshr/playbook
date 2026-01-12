@@ -14,7 +14,9 @@ Deprecation allows you to:
 
 **The principle**: Give users time and clear guidance to migrate.
 
-**Mindset:** Deprecation decisions should be made with `/pb-preamble` thinking. Challenge whether this change is really necessary. Surface the impact on users. Be honest about the cost vs. benefit. This is where critical thinking matters most.
+**Mindset:** Deprecation decisions should be made with both frameworks.
+
+Use `/pb-preamble` thinking: challenge whether this change is really necessary; surface the impact on users; be honest about the cost vs. benefit. Use `/pb-design-rules` thinking: ensure the new approach is genuinely simpler (Simplicity), clearer (Clarity), and more robust than what it replaces. This is where critical thinking matters most.
 
 ---
 

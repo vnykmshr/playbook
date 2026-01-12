@@ -2,7 +2,9 @@
 
 Keep team aligned on progress without synchronous meetings. Use this template for async standups, progress updates, or team check-ins during distributed work.
 
-**Honesty is critical:** Standups are where you surface blockers and risks. Use `/pb-preamble` thinking: be direct about problems, don't hide issues to seem productive.
+**Mindset:** Standups are where you surface blockers and risks.
+
+Use `/pb-preamble` thinking: be direct about problems, don't hide issues to seem productive. Use `/pb-design-rules` thinking in standups: highlight when code embodies good design (Clarity, Simplicity, Robustness) and flag design risks early.
 
 ---
 

@@ -2,7 +2,14 @@
 
 Clear documentation enables people to work independently, makes knowledge transferable, and saves time.
 
-**Mindset:** Documentation should invite scrutiny. Be clear enough that errors are obvious. This embodies `/pb-preamble`: clear writing enables critical thinking. Ambiguous docs hide flawed thinking.
+**Mindset:** Documentation should invite scrutiny. Be clear enough that errors are obvious.
+
+This embodies `/pb-preamble` thinking (clear writing enables critical thinking, ambiguous docs hide flawed thinking) and applies `/pb-design-rules` thinking, particularly:
+
+**Key Design Rules for Documentation:**
+- **Clarity**: Documentation must be crystal clear so readers immediately understand the system
+- **Representation**: Information architecture matters—organize docs so knowledge is findable, not buried
+- **Least Surprise**: Documentation should behave like readers expect; no hidden gotchas or contradictions
 
 ---
 

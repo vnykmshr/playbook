@@ -2,7 +2,9 @@
 
 Deploy with confidence: minimize risk, maintain uptime, rollback quickly if needed.
 
-**Principle:** Every deployment strategy involves trade-offs. Use `/pb-preamble` thinking: question your actual risk tolerance before choosing. Challenge whether you need the complexity of advanced strategies or if simpler approaches work.
+**Principle:** Every deployment strategy involves trade-offs.
+
+Use `/pb-preamble` thinking: question your actual risk tolerance before choosing. Use `/pb-design-rules` thinking: balance Simplicity (don't use complex strategies you don't need) with Robustness (design for failure and rollback). Challenge whether you need the complexity of advanced strategies or if simpler approaches work.
 
 ---
 

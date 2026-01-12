@@ -19,7 +19,9 @@ Bad onboarding:
 - Knowledge exists only in one person's head
 - People leave quickly (bad first impression)
 
-**Culture First:** Onboarding should teach `/pb-preamble` on day one. New team members need to know: challenge assumptions, disagree when needed, prefer correctness. This is how you set culture from the start.
+**Culture First:** Onboarding should teach both frameworks on day one.
+
+Teach `/pb-preamble`: new team members need to know—challenge assumptions, disagree when needed, prefer correctness. Teach `/pb-design-rules`: introduce the design principles (Clarity, Simplicity, Modularity, Robustness) that guide how this team builds systems. This is how you set culture from the start.
 
 ---
 

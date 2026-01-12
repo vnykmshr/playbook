@@ -2,7 +2,16 @@
 
 Language-specific guide for Python projects. Use alongside `/pb-guide` for general process.
 
-**Principle:** Language-specific guidance still assumes `/pb-preamble` thinking. Challenge Python conventions if they don't fit. Adapt this guide to your project—it's a starting point.
+**Principle:** Language-specific guidance still assumes `/pb-preamble` thinking (challenge conventions if they don't fit) and applies `/pb-design-rules` thinking throughout.
+
+**Design Rules Applied Here:**
+- **Clarity**: Python code is read more often than written; make intent obvious to future readers
+- **Simplicity**: Async/await patterns are powerful but can hide complexity; use when concurrency is genuinely needed
+- **Robustness**: Type hints catch errors early; fail loudly (raise exceptions, don't silently return None)
+- **Modularity**: Layered architecture (handlers → services → repositories) keeps concerns separate
+- **Optimization**: Profile Python with cProfile before optimizing; measure what actually matters
+
+Adapt this guide to your project—it's a starting point, not dogma.
 
 ---
 

@@ -2,7 +2,9 @@
 
 Get context-aware playbook command recommendations based on your current work state.
 
-**Mindset:** This tool assumes `/pb-preamble` thinking. The recommendations are starting points, not rules. Question them. Challenge the suggestion if you think a different path makes more sense. Use this as a thinking tool, not an oracle.
+**Mindset:** This tool assumes both `/pb-preamble` thinking (challenge recommendations, don't follow blindly) and `/pb-design-rules` thinking (verify design decisions at each stage).
+
+The recommendations are starting points, not rules. Question them. Challenge the suggestion if you think a different path makes more sense. Use this as a thinking tool, not an oracle.
 
 ---
 

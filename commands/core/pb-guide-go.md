@@ -2,7 +2,16 @@
 
 Language-specific guide for Go projects. Use alongside `/pb-guide` for general process.
 
-**Principle:** Language-specific guidance still assumes `/pb-preamble` thinking. Challenge Go idioms if they don't fit. Adapt this guide to your project—it's a starting point.
+**Principle:** Language-specific guidance still assumes `/pb-preamble` thinking (challenge idioms if they don't fit) and applies `/pb-design-rules` thinking throughout.
+
+**Design Rules Applied Here:**
+- **Clarity**: Go code should be obvious to readers; favor simplicity over cleverness
+- **Simplicity**: Goroutines and channels are powerful but complex; use only what you need
+- **Robustness**: Error handling must be explicit; systems should fail loudly, not silently
+- **Modularity**: Interfaces and dependency injection enable testability and clear boundaries
+- **Optimization**: Profile before optimizing; measure Go programs with `go test -bench` and pprof
+
+Adapt this guide to your project—it's a starting point, not dogma.
 
 ---
 

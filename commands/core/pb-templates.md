@@ -2,7 +2,15 @@
 
 Reusable templates for consistent implementation across all focus areas.
 
-**Structure matters:** These templates enforce clarity and consistency. Consistent format makes comparison and criticism easier. This embodies `/pb-preamble`: clear structure invites challenge.
+**Structure matters:** These templates enforce clarity and consistency. Consistent format makes comparison and criticism easier.
+
+This embodies `/pb-preamble` thinking (clear structure invites challenge) and applies `/pb-design-rules` thinking, particularly:
+
+**Key Design Rules for Templates:**
+- **Clarity**: Consistent templates make expectations obvious and reduce confusion
+- **Representation**: Templates encode knowledge into structure—what should be documented where
+- **Simplicity**: Templates prevent over-engineering; use only what you need
+- **Modularity**: Reusable templates mean teams solve once, use everywhere
 
 ---
 
