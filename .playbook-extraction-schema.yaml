@@ -1,0 +1,335 @@
+# Playbook Metadata Extraction Schema
+# ===================================
+# Defines rules for extracting metadata from command markdown files.
+# This schema enables ZERO-MAINTENANCE metadata extraction by deriving
+# metadata from command structure, not manual entry.
+#
+# Used by: scripts/extract-playbook-metadata.py
+# Generated: .playbook-metadata.json
+# Version: 1.0
+
+version: "1.0"
+description: "Auto-extraction schema for playbook command metadata"
+
+fields:
+
+  # ========== IDENTITY & CLASSIFICATION ==========
+
+  command:
+    source: "filename"
+    rule: "Extract from pb-<name>.md → pb-<name>"
+    validation:
+      format: "^pb-[a-z-]+$"
+      examples: ["pb-start", "pb-cycle", "pb-commit"]
+    required: true
+    confidence_target: 100
+
+  title:
+    source: "markdown"
+    rule: "First h1 heading (#)"
+    validation:
+      min_length: 5
+      max_length: 80
+      examples: ["Start Development Work", "Engineering SDLC Playbook"]
+    required: true
+    confidence_target: 100
+
+  category:
+    source: "directory"
+    rule: "Directory path: commands/<category>/ where category is the parent directory name"
+    validation:
+      valid_values:
+        - "core"           # Foundation: guide, standards, documentation, templates
+        - "development"    # Development: start, cycle, commit, testing, pr, standup
+        - "planning"       # Architecture: patterns, adr, performance, observability, deprecation
+        - "reviews"        # Code quality: review, security, testing, logging, hygiene
+        - "release"        # Deployment: release
+        - "deployment"     # Operations: incident, deployment
+        - "repo"           # Repository: organize, readme, enhance, blog, about, init
+        - "people"         # Team: onboarding, team
+        - "templates"      # Reference: context
+      examples: ["development", "planning", "reviews"]
+    required: true
+    confidence_target: 100
+
+  # ========== DESCRIPTION ==========
+
+  purpose:
+    source: "markdown"
+    rule: "First non-heading paragraph after h1 (before ---)"
+    validation:
+      min_length: 20
+      max_length: 300
+      should_not_contain: ["TODO", "FIXME"]
+      examples: ["Begin iterative development on a feature", "Comprehensive guide for SDLC"]
+    required: true
+    confidence_target: 95
+
+  description:
+    source: "markdown"
+    rule: "Combine purpose + first 1-2 paragraphs after --- separator"
+    validation:
+      min_length: 50
+      max_length: 800
+    required: false
+    confidence_target: 90
+
+  # ========== COMPLEXITY & TIER ==========
+
+  tier:
+    source: "markdown"
+    rule: |
+      Search for explicit patterns:
+      1. "Tier: S", "Tier: M", "Tier: L", "Tier: XS"
+      2. Change tier tables (S, M, L, XS in rows)
+      3. Complexity mentions: "simple", "medium", "large", "complex"
+      4. Scope indicators: "single-file", "multi-file", "service-wide"
+      5. Fallback: "development" → M, "core" → M, others → S
+    validation:
+      valid_values: ["XS", "S", "M", "L"]
+      allow_multiple: true  # Can be [S, M, L] if applies to multiple tiers
+      examples: ["S", "M", ["S", "M", "L"]]
+    required: false
+    confidence_target: 85
+
+  complexity:
+    source: "markdown"
+    rule: |
+      Map tier to complexity level:
+      - XS/S → simple
+      - M → medium
+      - L → large
+      - If no tier, search content for complexity keywords
+    validation:
+      valid_values: ["simple", "medium", "large"]
+    required: false
+    confidence_target: 80
+
+  # ========== RELATIONSHIPS ==========
+
+  related_commands:
+    source: "markdown"
+    rule: |
+      Find all /pb-<command> references in text:
+      1. Search entire markdown for /pb-[a-z-]+ pattern
+      2. Exclude command's own name
+      3. Remove duplicates
+      4. Filter to valid commands only (cross-validate against command list)
+      5. Return sorted list
+    validation:
+      format: "^/pb-[a-z-]+$"
+      all_must_exist: true  # Cross-validate against known commands
+      examples: ["/pb-cycle", "/pb-commit", "/pb-testing"]
+    required: false
+    confidence_target: 100
+
+  next_steps:
+    source: "markdown"
+    rule: |
+      Extract workflow sequences:
+      1. Look for "next:", "then:", "then use:", "run:" patterns (case-insensitive)
+      2. Extract /pb-* references that follow these keywords
+      3. Look for numbered workflows: "1. Run /pb-x", "2. Run /pb-y"
+      4. Look for "Workflow" or "Development Workflow" sections
+      5. Order by appearance (indicates workflow sequence)
+    validation:
+      all_must_exist: true
+      order_matters: true  # Sequence is important
+      max_items: 10
+      examples: [["/pb-cycle", "/pb-commit"], ["/pb-testing", "/pb-pr"]]
+    required: false
+    confidence_target: 80
+
+  prerequisites:
+    source: "markdown"
+    rule: |
+      Extract required setup steps:
+      1. Look for "Before", "Prerequisites", "Pre-Start Checklist" sections
+      2. Look for "first", "before", "setup", "configure" phrases
+      3. Look for "Definition of Ready" sections
+      4. Extract related /pb-* commands that must run first
+    validation:
+      all_must_exist: true
+    required: false
+    confidence_target: 75
+
+  # ========== USAGE PATTERNS ==========
+
+  frequency:
+    source: "markdown"
+    rule: |
+      Extract how often command is used:
+      1. Look for "When to Use" section explicitly
+      2. Search for frequency patterns: "daily", "weekly", "per-", "every", "each", "iteration"
+      3. Search for trigger patterns: "start of", "beginning of", "before", "after"
+      4. Search for scope: "feature", "release", "hotfix", "refactor", "bug"
+      5. Analyze "Consider using" for context clues
+      6. Default to "as-needed" if unclear
+    validation:
+      valid_values:
+        - "daily"              # Routine daily work
+        - "weekly"             # Weekly activity
+        - "start-of-feature"   # Beginning of feature work
+        - "per-iteration"      # Each iteration cycle
+        - "per-pr"             # Before each pull request
+        - "pre-release"        # Before release
+        - "on-incident"        # During incidents
+        - "one-time"           # Initial setup only
+        - "as-needed"          # Use when appropriate
+      examples: ["start-of-feature", "per-iteration", "as-needed"]
+    required: false
+    confidence_target: 75
+
+  decision_context:
+    source: "markdown"
+    rule: |
+      Extract decision rules and conditions:
+      1. Look for "When to Use" section (required vs optional)
+      2. Extract conditionals: "if", "when", "for", "use...when", "consider...if"
+      3. Extract binary choices: "feature? → use X", "hotfix? → use Y"
+      4. Look for "Do not use" or "Skip" sections
+      5. Extract from "Tier" tables (when tier applies)
+      6. Build simple decision tree structure
+    validation:
+      structure: "key-value pairs or branching logic"
+      examples:
+        - "feature → use /pb-cycle"
+        - "hotfix → use /pb-release"
+        - "multi-tier work → use /pb-security"
+    required: false
+    confidence_target: 70
+
+  # ========== CONTENT PATTERNS ==========
+
+  sections:
+    source: "markdown"
+    rule: |
+      Extract ## section headings:
+      1. Find all ## headings (h2)
+      2. Return ordered list with slugified names
+      3. Exclude separators (---) and markup
+    validation:
+      examples:
+        - ["pre-start-checklist", "branch-strategy", "iteration-cycle"]
+        - ["quick-reference", "checklist", "emergency-path"]
+    required: false
+    confidence_target: 100
+
+  has_examples:
+    source: "markdown"
+    rule: |
+      Detect if command includes code examples:
+      1. Look for markdown code blocks (```)
+      2. Look for "Example" sections
+      3. Boolean: true if found, false otherwise
+    validation:
+      type: "boolean"
+    required: false
+    confidence_target: 100
+
+  has_checklist:
+    source: "markdown"
+    rule: |
+      Detect if command includes checklists:
+      1. Look for [ ] checkbox syntax
+      2. Boolean: true if found
+    validation:
+      type: "boolean"
+    required: false
+    confidence_target: 100
+
+  # ========== METADATA QUALITY ==========
+
+  extraction_metadata:
+    source: "extraction_process"
+    rule: "Generated during extraction"
+    validation:
+      fields:
+        - source_file      # Path to source markdown file
+        - extraction_date  # ISO 8601 timestamp
+        - extractor_version # Version of extraction schema
+        - confidence_scores # Per-field confidence breakdown
+        - warnings          # Any issues found during extraction
+    required: true
+    confidence_target: 100
+
+# ========== VALIDATION RULES ==========
+
+validation:
+
+  required_fields:
+    - command
+    - title
+    - category
+    - purpose
+
+  cross_validation:
+    # All related commands must exist
+    - field: "related_commands"
+      rule: "Each /pb-* reference must exist in commands/"
+
+    - field: "next_steps"
+      rule: "Each command must exist and be reachable"
+
+    - field: "prerequisites"
+      rule: "Each prerequisite command must exist"
+
+  confidence_thresholds:
+    minimum_acceptable: 0.70  # Warn if below 70%
+    target_average: 0.90      # Aim for 90%+ average
+    critical_fields:
+      command: 1.0            # Must be 100%
+      title: 1.0              # Must be 100%
+      category: 1.0           # Must be 100%
+      purpose: 0.95           # Must be >95%
+
+  warnings:
+    - condition: "confidence < 0.70"
+      action: "Include in extraction report with suggestion"
+
+    - condition: "required field missing"
+      action: "Mark as ERROR, prevent .playbook-metadata.json generation"
+
+    - condition: "related_commands reference non-existent command"
+      action: "Include warning, suggest command author fix"
+
+# ========== EXTRACTION QUALITY METRICS ==========
+
+quality_metrics:
+  success_criteria:
+    - "All 49 commands extract with zero ERRORs"
+    - "Average confidence score ≥ 0.90"
+    - "All required fields (command, title, category, purpose) extracted for all commands"
+    - ".playbook-metadata.json is valid JSON"
+    - "No circular dependencies detected"
+    - "All related_commands references are valid"
+    - "No duplicate entries in any array field"
+
+  reporting:
+    generate_extraction_report: true
+    include_per_command_scores: true
+    include_suggestions_for_improvement: true
+    include_warnings: true
+    sort_by: "confidence_score ASC"  # Show lowest confidence first for improvement
+
+# ========== EXAMPLES ==========
+
+examples:
+
+  minimal_command:
+    command: "pb-start"
+    title: "Start Development Work"
+    category: "development"
+    purpose: "Begin iterative development on a feature"
+    confidence: 1.0
+
+  complex_command:
+    command: "pb-guide"
+    title: "Engineering SDLC Playbook"
+    category: "core"
+    purpose: "Comprehensive guide for structured software development"
+    tier: ["XS", "S", "M", "L"]  # Multiple tiers
+    related_commands: ["/pb-standards", "/pb-commit", "/pb-cycle"]
+    next_steps: ["/pb-cycle"]
+    frequency: "per-iteration"
+    confidence: 0.92
