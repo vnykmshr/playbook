@@ -2,7 +2,7 @@
 
 A comprehensive, integrated set of commands and guides for structuring iterative development workflows, architectural decisions, code reviews, and team operations.
 
-[![Latest Release](https://img.shields.io/github/v/release/vnykmshr/playbook?label=v1.3.0)](https://github.com/vnykmshr/playbook/releases/tag/v1.3.0)
+[![Latest Release](https://img.shields.io/github/v/release/vnykmshr/playbook?label=v1.4.0)](https://github.com/vnykmshr/playbook/releases/tag/v1.4.0)
 [![Commands](https://img.shields.io/badge/status-active-brightgreen)](docs/command-index.md)
 [![Documentation](https://img.shields.io/badge/docs-integration%20guide-blue)](docs/integration-guide.md)
 [![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)
@@ -20,6 +20,7 @@ The Engineering Playbook is a **decision framework** that codifies how to approa
 - New team members learning your development culture
 
 **Key capabilities:**
+- **Context-aware command discovery** — `/pb-what-next` analyzes your work and recommends the right commands
 - **Iterative development workflows** — Clear, repeatable patterns from idea to production
 - **Quality gates at every step** — Automatic checks before code moves forward
 - **Multi-perspective code reviews** — Code, security, product, tests, performance
@@ -224,11 +225,12 @@ Design systems before implementation.
 | `/pb-observability` | Monitoring, observability patterns, and alerting strategy |
 | `/pb-deprecation` | Deprecation strategy, communication, and backwards compatibility |
 
-### Development (9 commands)
+### Development (10 commands)
 Iterative feature development with built-in quality gates.
 
 | Command | Purpose |
 |---------|---------|
+| `/pb-what-next` | Intelligent recommendations based on your current work state |
 | `/pb-start` | Create feature branch, establish iteration rhythm |
 | `/pb-resume` | Get back in context after a break |
 | `/pb-cycle` | Self-review + peer review iteration loop |
