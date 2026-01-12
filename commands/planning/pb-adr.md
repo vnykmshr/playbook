@@ -2,7 +2,14 @@
 
 Document significant architectural decisions to capture the context, alternatives considered, and rationale for future reference.
 
-**Why this matters:** ADRs enforce `/pb-preamble` thinking. You must consider alternatives (not skip them), document trade-offs explicitly, and explain your reasoning. This makes decisions reviewable and challengeable—which is how you catch flawed thinking early.
+**Why this matters:** ADRs enforce `/pb-preamble` thinking (peer challenges, transparent reasoning) and apply `/pb-design-rules` (correct system design).
+
+When you write an ADR:
+- **Preamble:** You must consider alternatives, document trade-offs explicitly, and explain reasoning so decisions can be challenged
+- **Design Rules:** Your architecture is guided by Clarity, Simplicity, Modularity, Extensibility—not arbitrary choices
+- **Together:** Better decisions that survive challenge and stand the test of time
+
+Good ADRs show both: sound reasoning (preamble) and sound design (design rules).
 
 ---
 
