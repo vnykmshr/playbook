@@ -15,22 +15,240 @@ Run this command when you're unsure which playbook command to use next. The comm
 
 ## Status
 
-⚠️ **This command is documented for Phase 2, implementation comes in Phase 3 (with CI/CD automation).**
+✅ **Available Now** (Phase 3+)
 
-Currently, this guide helps you understand how context-aware discovery works. The actual `/pb-what-next` implementation will analyze your git state and recommend commands automatically.
+The `/pb-what-next` command is fully implemented and ready to use. It analyzes your git state and recommends the next playbook commands automatically.
 
-## Planned Usage (Phase 3)
+## Usage
 
 ```bash
-# See recommendations for your current state (implementation in Phase 3)
-/pb-what-next
+# Get recommendations for your current state
+python scripts/analyze-playbook-context.py
 
-# This command will analyze:
-# - Git branch and changed files
-# - Work phase (early, mid-feature, ready for review)
-# - Related commands from metadata
-# - Workflow suggestions
+# Get detailed analysis with reasoning
+python scripts/analyze-playbook-context.py --verbose
+
+# Use custom metadata file
+python scripts/analyze-playbook-context.py --metadata /path/to/metadata.json
 ```
+
+This command analyzes:
+- Git branch and changed files
+- Commit count and work phase
+- File types (source, tests, docs, config, CI)
+- Related commands from metadata
+- Workflow patterns
+
+---
+
+## Real-World Examples
+
+### Example 1: Starting a Feature
+
+**Your Situation:**
+- Branch: `feature/user-auth`
+- Commits: 0
+- Changes: None
+
+**Recommendation Output:**
+```
+Recommended Next Steps
+━━━━━━━━━━━━━━━━━━━
+
+1. `/pb-start` — Start Development Work
+   - Begin iterative development
+   - Time: 5 min
+```
+
+**Why:** You've just created the branch. `/pb-start` helps establish the rhythm for your work.
+
+### Example 2: Mid-Feature Development
+
+**Your Situation:**
+- Branch: `feature/user-auth`
+- Commits: 3
+- Changes: Both `src/auth.py` and `tests/test_auth.py` modified
+
+**Recommendation Output:**
+```
+Recommended Next Steps
+━━━━━━━━━━━━━━━━━━━
+
+1. `/pb-cycle` — Development Cycle
+   - Self-review + peer review
+   - Confidence: 90% | Time: 45 min
+
+2. `/pb-testing` — Advanced Testing
+   - Verify test coverage
+   - Confidence: 85% | Time: 5 min
+
+Why These Commands?
+━━━━━━━━━━━━━━━━━━━
+
+• Both source and test files changed → Full development cycle
+• 3 commits → Time to iterate on feedback
+• Active feature branch → In development mode
+```
+
+**Why:** You're actively coding. `/pb-cycle` helps with self-review and peer feedback, while `/pb-testing` ensures your tests match your code.
+
+### Example 3: Ready to Submit
+
+**Your Situation:**
+- Branch: `feature/user-auth`
+- Commits: 5
+- Changes: All staged
+
+**Recommendation Output:**
+```
+Recommended Next Steps
+━━━━━━━━━━━━━━━━━━━
+
+1. `/pb-commit` — Atomic Commits
+   - Organize into logical commits
+   - Confidence: 90% | Time: 10 min
+
+2. `/pb-pr` — Quick PR Creation
+   - Create pull request
+   - Confidence: 90% | Time: varies
+
+Why These Commands?
+━━━━━━━━━━━━━━━━━━━
+
+• 5+ commits → Time to organize with /pb-commit
+• All changes staged → Ready for PR
+• Feature branch → Ready to integrate
+```
+
+**Why:** Your work is ready to submit. `/pb-commit` helps organize into clean commits, then `/pb-pr` creates the pull request.
+
+### Example 4: On Main Branch (Release Time)
+
+**Your Situation:**
+- Branch: `main`
+- Commits: 10+
+- Changes: None
+
+**Recommendation Output:**
+```
+Recommended Next Steps
+━━━━━━━━━━━━━━━━━━━
+
+1. `/pb-release` — Release Preparation
+   - Prepare for production
+   - Time: 45 min
+
+2. `/pb-deployment` — Deployment Strategies
+   - Plan deployment
+   - Time: 5 min
+
+Why These Commands?
+━━━━━━━━━━━━━━━━━━━
+
+• On main branch → Release mode detected
+• Multiple commits → Ready for release checklist
+• Clean working directory → All changes are committed
+```
+
+**Why:** You're on main. It's time to prepare the release and plan deployment.
+
+---
+
+## Output Interpretation Guide
+
+### Current Work State
+- **Branch**: The git branch you're on (feature/*, fix/*, main, etc.)
+- **Phase**: Detected workflow phase (START, DEVELOP, FINALIZE, REVIEW, RELEASE)
+- **Changes**: Number of modified files and their types
+
+### Recommended Next Steps
+Each recommendation includes:
+- **Command name**: Which `/pb-*` command to run next
+- **Purpose**: Brief description of what the command does
+- **Confidence**: 0.6-1.0 score indicating how certain the recommendation is
+- **Time**: Estimated duration (5 min to 2 hours)
+
+### Confidence Levels
+- **0.90-1.0** (Very High): Direct match to your situation
+- **0.80-0.90** (High): Strong pattern match from context
+- **0.70-0.80** (Moderate): Inferred from related changes
+- **0.60-0.70** (Low): Suggested based on workflow
+
+### Why These Commands?
+Explains the reasoning:
+- File types changed (source, tests, docs, config, CI)
+- Commit count and phase detection
+- Detected work patterns
+
+---
+
+## Troubleshooting
+
+### "Metadata file not found"
+**Problem:** The command can't find `.playbook-metadata.json`
+
+**Solution:** Run the metadata extraction command:
+```bash
+python scripts/extract-playbook-metadata.py
+```
+
+This generates the metadata that `/pb-what-next` uses for command details.
+
+### "No recommendations"
+**Problem:** You get an empty recommendations list
+
+**Solution:**
+1. Verify you're in a git repository: `git status`
+2. Create or modify files to establish context
+3. Run with `--verbose` to see detailed analysis: `python scripts/analyze-playbook-context.py --verbose`
+
+### "Unexpected recommendations"
+**Problem:** Recommendations don't match your expectations
+
+**Solution:**
+- Run with `--verbose` to see how the phase was detected
+- Check your git state: `git status`, `git log --oneline -5`
+- Branch name matters: use `feature/*, `fix/*, `refactor/*` naming for best results
+
+### "Can't analyze git state"
+**Problem:** Git analysis fails
+
+**Solution:**
+- Ensure you're in a git repository: `git init` if needed
+- Ensure git is installed: `git --version`
+- Check git permissions: `ls -la .git`
+
+---
+
+## Tips & Best Practices
+
+1. **Run after each unit of work**
+   - After coding a feature, run `/pb-what-next`
+   - After code review feedback, run `/pb-what-next`
+   - At any point when you're unsure what to do next
+
+2. **Use verbose mode to understand decisions**
+   ```bash
+   python scripts/analyze-playbook-context.py --verbose
+   ```
+   See detailed traces of how phases were detected and why
+
+3. **Follow recommendations in order**
+   - First recommendation is the highest priority
+   - Each command builds on the previous one
+   - Complete each step before returning for new recommendations
+
+4. **Use with feature/fix/refactor branch naming**
+   - `feature/new-feature` → Development workflow
+   - `fix/bug-name` → Bug fix workflow
+   - `refactor/cleanup` → Refactor workflow
+   - Naming helps the tool detect your intent
+
+5. **Combine with `/pb-standup` for tracking**
+   - Run `/pb-what-next` to see what's next
+   - Complete that step
+   - Run `/pb-standup` to track progress
+   - Repeat until work is ready to merge
 
 ---
 
@@ -127,32 +345,48 @@ Use `/pb-what-next` when in doubt. It analyzes your situation and points you to 
 
 ---
 
-## How the Implementation Will Work (Phase 3)
+## How the Implementation Works
 
-The `/pb-what-next` command will use intelligent analysis:
+The `/pb-what-next` command analyzes your situation through these steps:
 
-1. **Git State Analysis**
-   ```bash
-   git branch --show-current
-   git status --porcelain
-   git log --oneline -10
-   git diff --name-only
-   ```
+### 1. Git State Analysis
+Runs these git commands to understand your work:
+```bash
+git branch --show-current    # Current branch
+git status --porcelain       # Modified files
+git log --oneline -10        # Recent commits
+git diff --name-only         # Files changed
+```
 
-2. **File Type Detection**
-   - Patterns: `tests/**`, `docs/**`, `src/**`, `.github/workflows/**`
-   - Language: `.go`, `.py`, `.ts`, `.js`, `.md`
-   - Config: `Dockerfile`, `docker-compose.yml`, `package.json`, etc.
+Returns: branch name, changed files, commit count, unstaged/staged changes
 
-3. **Workflow Matching**
-   - Maps current state to one of the 5 key workflows
-   - Shows commands in recommended order
-   - Estimates time per step
+### 2. File Type Detection
+Categorizes changes by type:
+- **Tests**: Files matching `*test*.py`, `*.spec.ts`, etc.
+- **Docs**: Markdown files, documentation directories
+- **Source**: Code files (`.py`, `.ts`, `.js`, `.go`, `.rs`)
+- **Config**: Docker, package.json, pyproject.toml, etc.
+- **CI**: GitHub Actions workflows, CI config files
 
-4. **Metadata-Driven**
-   - Uses `.playbook-metadata.json` for command details
-   - Shows purpose, tier, related commands
-   - Pulls decision_context for conditional logic
+### 3. Workflow Phase Detection
+Maps your situation to one of 5 phases:
+- **START** (0 commits, fresh branch)
+- **DEVELOP** (1-4 commits, active changes)
+- **FINALIZE** (5+ commits, ready to wrap up)
+- **REVIEW** (PR created, in review)
+- **RELEASE** (on main branch, deployment time)
+
+### 4. Recommendation Generation
+Uses your phase + file types to suggest commands:
+- Phase-based: Different commands for each workflow phase
+- File-type-based: Test changes trigger `/pb-testing`, doc changes trigger `/pb-documentation`
+- Confidence scoring: Each recommendation gets 0.6-1.0 confidence based on match strength
+
+### 5. Metadata-Driven
+Uses `.playbook-metadata.json` for:
+- Command titles, purposes, tiers
+- Time estimates per command
+- Related commands and integrations
 
 ---
 
