@@ -14,6 +14,43 @@ Have an idea for a new command or enhancement? [Start a discussion](https://gith
 - Explain why it's needed
 - Discuss the approach before implementing
 
+## Dependency Management
+
+This project uses [Dependabot](https://dependabot.com) to automatically manage dependencies across all ecosystems:
+
+### Dependabot Updates
+
+**Monitored Ecosystems:**
+- npm (examples/node-api/)
+- Python pip (examples/python-data-pipeline/)
+- Go modules (examples/go-backend-api/)
+- GitHub Actions (root)
+
+**Update Policy:**
+- **Patch updates** (e.g., 1.2.3 → 1.2.4): Security fixes and bug fixes
+  - Automatically created as PRs
+  - May be auto-merged after CI passes (future enhancement)
+- **Minor updates** (e.g., 1.2.0 → 1.3.0): New features
+  - Require manual review
+- **Major updates** (e.g., 1.0.0 → 2.0.0): Breaking changes
+  - Require detailed review and possible manual testing
+
+**PR Labels:**
+- `dependencies` - All dependency updates
+- Ecosystem label: `npm`, `python`, `go`, `github-actions`
+- `ci` - GitHub Actions updates
+
+**How to Handle Dependabot PRs:**
+1. Review the changes and CI results
+2. For patches: Check that tests pass, approve and merge
+3. For minor/major: Review release notes, consider impact, test if needed
+4. PRs are grouped by ecosystem and dependency type for easier management
+
+**Security Updates:**
+- Dependabot will flag security vulnerabilities in the [Security tab](../../security/dependabot)
+- Security patches are always recommended immediately
+- Address security updates with priority
+
 ## How to Contribute Code
 
 ### Commands

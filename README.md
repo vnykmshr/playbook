@@ -407,6 +407,33 @@ The playbook provides frameworks you adapt to your team's needs, not commandment
 
 ---
 
+## Dependency Management
+
+This project uses **Dependabot** for automated dependency management across all ecosystems:
+
+### Monitored Dependencies
+- **npm** (Node.js example project) — Daily checks for express, pg, pino, and dev dependencies
+- **pip** (Python example project) — Daily checks for sqlalchemy, pytest, and utilities
+- **Go modules** (Go example project) — Daily checks for pq driver and testing libraries
+- **GitHub Actions** — Weekly checks for workflow dependencies
+
+### Update Policy
+- **Security patches** (1.2.3 → 1.2.4) — Immediate attention required
+- **Patch updates** (1.2.0 → 1.2.5) — Merged after CI passes
+- **Minor updates** (1.2.0 → 1.3.0) — Manual review required
+- **Major updates** (1.0.0 → 2.0.0) — Careful review and testing required
+
+### Keeping Dependencies Current
+To stay up-to-date with dependency improvements and security patches:
+1. Review [GitHub Security Advisories](../../security/dependabot)
+2. Monitor dependency PRs labeled `dependencies`
+3. Prioritize security patches
+4. Test minor/major updates before merging
+
+**See** [.github/CONTRIBUTING.md](.github/CONTRIBUTING.md#dependency-management) for detailed guidelines on reviewing and handling Dependabot PRs.
+
+---
+
 ## Use Cases
 
 ### Perfect for:

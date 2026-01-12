@@ -1,0 +1,89 @@
+version: 2
+updates:
+  # Node.js / npm dependencies in example project
+  - package-ecosystem: "npm"
+    directory: "/examples/node-api"
+    schedule:
+      interval: "daily"
+      time: "05:00"
+      timezone: "UTC"
+    pull-request-branch-name:
+      separator: "/"
+    allow:
+      - dependency-type: "direct"
+      - dependency-type: "indirect"
+    reviewers:
+      - "vnykmshr"
+    labels:
+      - "dependencies"
+      - "npm"
+    open-pull-requests-limit: 5
+    versioning-strategy: "auto"
+    commit-message:
+      prefix: "chore(npm):"
+      prefix-development: "chore(npm):"
+      include: "scope"
+
+  # Python dependencies in example project
+  - package-ecosystem: "pip"
+    directory: "/examples/python-data-pipeline"
+    schedule:
+      interval: "daily"
+      time: "06:00"
+      timezone: "UTC"
+    pull-request-branch-name:
+      separator: "/"
+    reviewers:
+      - "vnykmshr"
+    labels:
+      - "dependencies"
+      - "python"
+    open-pull-requests-limit: 5
+    versioning-strategy: "auto"
+    commit-message:
+      prefix: "chore(python):"
+      prefix-development: "chore(python):"
+      include: "scope"
+
+  # Go dependencies in example project
+  - package-ecosystem: "gomod"
+    directory: "/examples/go-backend-api"
+    schedule:
+      interval: "daily"
+      time: "07:00"
+      timezone: "UTC"
+    pull-request-branch-name:
+      separator: "/"
+    reviewers:
+      - "vnykmshr"
+    labels:
+      - "dependencies"
+      - "go"
+    open-pull-requests-limit: 5
+    versioning-strategy: "auto"
+    commit-message:
+      prefix: "chore(go):"
+      prefix-development: "chore(go):"
+      include: "scope"
+
+  # GitHub Actions
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "08:00"
+      timezone: "UTC"
+    pull-request-branch-name:
+      separator: "/"
+    reviewers:
+      - "vnykmshr"
+    labels:
+      - "dependencies"
+      - "github-actions"
+      - "ci"
+    open-pull-requests-limit: 5
+    versioning-strategy: "auto"
+    commit-message:
+      prefix: "ci(actions):"
+      include: "scope"
