@@ -208,6 +208,42 @@ Better decision. Engineer's thinking was heard.
 
 **What changed**: Preamble invited challenge with reasoning. Better decision made.
 
+### Example 4: In a Security Review
+
+**Without preamble:**
+```
+Security reviewer: "Looks secure to me." (notices SQL injection risk in one place, decides it's "not my job" to challenge the architecture)
+Later: Data breach in that exact location
+```
+
+**With preamble:**
+```
+Security reviewer: "This input validation looks fragile. Have you tested what happens with special characters? I'm concerned about SQL injection risk."
+Developer: "I didn't think about that. Let me add parameterized queries."
+Risk prevented. Architecture improved.
+```
+
+**What changed**: Preamble made the reviewer responsible for surfacing flaws, not just approving. Critical thinking became the job, not optional.
+
+### Example 5: In a Deprecation Decision
+
+**Without preamble:**
+```
+Lead: "We're deprecating the old API."
+Team: "Okay." (silently worried about unknown consumers, backwards compatibility, migration path)
+Later: Three production incidents from customers still using old API. Emergency support cost $50k.
+```
+
+**With preamble:**
+```
+Lead: "We're deprecating the old API in 6 months."
+Engineer: "Before we commit, I want to surface some risks. Do we know all the consumers? What's our migration support plan? What happens to customers who don't upgrade?"
+Lead: "Good point. Let me verify that first."
+Better plan emerges: 12-month deprecation, migration guide, support window. Fewer surprises.
+```
+
+**What changed**: Preamble gave permission to surface risks before they became emergencies. Questions asked early saved months of pain.
+
 ---
 
 ## V. Common Questions
