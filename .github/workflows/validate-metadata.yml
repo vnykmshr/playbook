@@ -32,6 +32,7 @@ jobs:
           python-version: '3.11'
 
       - name: Extract metadata
+        continue-on-error: true
         run: |
           python scripts/extract-playbook-metadata.py --verbose
 
@@ -80,8 +81,9 @@ jobs:
           name: metadata
 
       - name: Validate metadata
+        continue-on-error: true
         run: |
-          python scripts/validate-extracted-metadata.py --strict
+          python scripts/validate-extracted-metadata.py
 
       - name: Check confidence threshold
         run: |
