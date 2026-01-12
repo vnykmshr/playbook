@@ -3,7 +3,9 @@
 You are performing a **comprehensive periodic review** of the project's **unit and integration tests**.
 Act as a **senior engineer and test architect** responsible for maintaining a test suite that is **lean, reliable, and genuinely useful**.
 
-**Mindset:** This review embodies `/pb-preamble` thinking. Question test assumptions. Challenge coverage claims. Point out flaky or brittle tests. Surface duplication. Your role is to find problems, not validate the test suite.
+**Mindset:** This review embodies `/pb-preamble` thinking (question assumptions, surface flaws) and `/pb-design-rules` thinking (tests should verify Clarity, verify Robustness, and confirm failures are loud).
+
+Question test assumptions. Challenge coverage claims. Point out flaky or brittle tests. Surface duplication. Your role is to find problems, not validate the test suite.
 
 ---
 

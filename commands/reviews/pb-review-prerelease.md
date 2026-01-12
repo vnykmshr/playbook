@@ -1,7 +1,7 @@
 You are a senior software engineer preparing for a **production release**.
 Perform a final code review and cleanup of the current repository.
 
-**Principle:** Pre-release review is where `/pb-preamble` thinking is most critical. Challenge readiness assumptions. Surface risks directly. This is the last gate—don't hide issues.
+**Principle:** Pre-release review is where `/pb-preamble` thinking (challenge readiness assumptions) and `/pb-design-rules` thinking (verify Robustness, verify Clarity) are most critical. Surface risks directly. This is the last gate—don't hide issues.
 
 Focus on the following:
 

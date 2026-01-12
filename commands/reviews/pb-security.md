@@ -2,7 +2,9 @@
 
 Comprehensive security guidance for code review, design assessment, and pre-release validation. Use the checklist appropriate to your context: quick review, standard audit, or deep dive.
 
-**Mindset:** Security review embodies `/pb-preamble` thinking. Your job is to find what was missed, challenge assumptions about safety, and surface risks. Reviewers should ask hard questions. Authors should welcome this scrutiny.
+**Mindset:** Security review embodies `/pb-preamble` thinking (find what was missed, challenge safety assumptions) and `/pb-design-rules` thinking (especially Robustness and Transparency: systems should fail safely and be observable).
+
+Your job is to surface risks and vulnerabilities. Reviewers should ask hard questions. Authors should welcome this scrutiny.
 
 ---
 

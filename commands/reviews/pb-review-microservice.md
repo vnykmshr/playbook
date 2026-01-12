@@ -2,7 +2,9 @@
 
 Framework for reviewing microservice design, implementation, and operations.
 
-**Mindset:** Microservice reviews embody `/pb-preamble` thinking. Question whether the service boundary is correct. Challenge the coupling assumptions. Surface design flaws before they become operational problems.
+**Mindset:** Microservice reviews embody `/pb-preamble` thinking (question service boundaries) and `/pb-design-rules` thinking (especially Modularity and Separation: are services correctly decoupled?).
+
+Question whether the service boundary is correct. Challenge the coupling assumptions. Surface design flaws before they become operational problems.
 
 ---
 

@@ -2,7 +2,9 @@
 
 Periodic, in-depth review from four expert perspectives.
 
-**Mindset:** Multi-perspective review embodies `/pb-preamble` thinking. Each perspective should challenge the others. Surface disagreements—they often surface real problems that single views miss.
+**Mindset:** Multi-perspective review embodies `/pb-preamble` thinking (each perspective challenges the others) and `/pb-design-rules` thinking (design decisions should honor Clarity, Simplicity, and user needs).
+
+Surface disagreements—they often surface real problems that single views miss.
 
 ---
 

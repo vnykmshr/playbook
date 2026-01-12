@@ -4,7 +4,9 @@
 
 **Recommended Frequency:** Monthly or before major releases
 
-**Mindset:** This review assumes `/pb-preamble` thinking. The goal is to find problems, challenge assumptions, and surface risks across multiple domains. Reviewers should be thorough and direct. Teams should welcome the scrutiny.
+**Mindset:** This review assumes `/pb-preamble` thinking (challenge assumptions, surface risks) and `/pb-design-rules` thinking (code and design should honor Clarity, Simplicity, Modularity, Robustness).
+
+The goal is to find problems across multiple domains: code quality, test coverage, security, documentation, performance, and architecture. Reviewers should be thorough and direct. Teams should welcome the scrutiny.
 
 ---
 

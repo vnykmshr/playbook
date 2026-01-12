@@ -2,7 +2,9 @@
 
 Comprehensive guidance for designing effective logging that aids troubleshooting without creating noise.
 
-**Principle:** Good logging embodies `/pb-preamble` thinking. Logs must invite scrutiny—they should reveal assumptions and make failures obvious, not hide them with verbosity or silence.
+**Principle:** Good logging embodies `/pb-preamble` thinking (reveal assumptions, surface problems) and `/pb-design-rules` thinking (especially Transparency and Silence: systems should be observable when important, quiet otherwise).
+
+Logs must invite scrutiny. They should reveal assumptions and make failures obvious, not hide them with verbosity or silence.
 
 ---
 

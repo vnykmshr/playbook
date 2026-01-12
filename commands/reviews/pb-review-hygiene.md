@@ -3,7 +3,9 @@
 You are performing a **periodic hygiene check** for this project.
 Your goal is to **assess the project's overall health, completeness, and robustness** — not to make changes, but to identify what needs attention, what's working well, and what can be improved with minimal effort.
 
-**Approach:** Hygiene reviews embody `/pb-preamble` thinking. Challenge hidden assumptions about what "health" means. Surface risks directly, don't soften findings to be diplomatic.
+**Approach:** Hygiene reviews embody `/pb-preamble` thinking (surface risks directly) and `/pb-design-rules` thinking (Simplicity: code should not accumulate unnecessary complexity).
+
+Challenge hidden assumptions about what "health" means. Surface risks directly, don't soften findings to be diplomatic. Focus on reducing complexity and tech debt.
 
 ---
 
