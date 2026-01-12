@@ -16,6 +16,16 @@ Thumbs.db
 *.tmp
 *.bak
 
+# Python cache and compiled files
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.pytest_cache/
+*.egg-info/
+dist/
+build/
+
 # Generated docs (built by mkdocs, deployed by GitHub Actions)
 site/
 
