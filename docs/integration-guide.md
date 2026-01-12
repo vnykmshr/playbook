@@ -2,19 +2,19 @@
 
 Complete reference for how all playbook commands work together to form a unified SDLC framework.
 
-**Last Updated**: 2026-01-11 | **Categories**: 9
+**Last Updated**: 2026-01-12 | **Categories**: 9 | **Commands**: 55
 
 ---
 
 ## Table of Contents
 
 1. [Quick Start: Command Selection](#quick-start)
-2. [Command Inventory](#command-inventory-all-45)
+2. [Command Inventory](#command-inventory-all-55)
 3. [Workflow Maps](#workflow-maps)
 4. [Command Clusters](#command-clusters-groups-that-work-together)
 5. [Reference Matrix](#reference-matrix-which-commands-work-together)
 6. [Integration Patterns](#integration-patterns)
-7. [Common Workflows](#common-workflows)
+7. [Common Workflows](#common-workflows-step-by-step)
 
 ---
 
@@ -51,24 +51,32 @@ Complete reference for how all playbook commands work together to form a unified
 
 ---
 
-## Command Inventory: All 45 Commands
+## Command Inventory: All 55 Commands
 
-### CORE FOUNDATION (4 commands)
+### CORE FOUNDATION & PHILOSOPHY (10 commands)
 
-These establish baseline understanding. **Every engineer should know these.**
+These establish baseline understanding and guiding philosophy. **Every engineer should know these.**
 
 | # | Command | Purpose | Key Sections | When to Use | Tier |
 |---|---------|---------|--------------|------------|------|
 | 1 | **pb-guide** | Master SDLC framework | 11 phases from intake through post-release | Reference for all other commands | All |
-| 2 | **pb-standards** | Working principles and collaboration | Decision-making, scope discipline, quality standards | Before starting any work | All |
-| 3 | **pb-documentation** | Technical documentation at 5 levels | Code comments, APIs, system design, process docs, FAQ | When writing docs (inline with code per /pb-cycle) | M/L |
-| 4 | **pb-templates** | Reusable SDLC templates | Commit strategy, checklists, testing standards | When creating commits, PRs, tests | All |
+| 2 | **pb-preamble** | Peer collaboration philosophy | Correctness, critical thinking, truth, holistic perspective | Foundation for all team interactions | All |
+| 3 | **pb-design-rules** | Technical design principles | 17 rules in 4 clusters (Clarity, Simplicity, Resilience, Extensibility) | When making architectural decisions | M/L |
+| 4 | **pb-standards** | Working principles and collaboration | Decision-making, scope discipline, quality standards | Before starting any work | All |
+| 5 | **pb-documentation** | Technical documentation at 5 levels | Code comments, APIs, system design, process docs, FAQ | When writing docs (inline with code per /pb-cycle) | M/L |
+| 6 | **pb-templates** | Reusable SDLC templates | Commit strategy, checklists, testing standards | When creating commits, PRs, tests | All |
+| 7 | **pb-preamble-async** | Preamble for distributed teams | Async decision-making, communication patterns | For teams working across time zones | M |
+| 8 | **pb-preamble-power** | Power dynamics and challenge | Psychological safety, healthy disagreement, authority | For building stronger team dynamics | M |
+| 9 | **pb-preamble-decisions** | Decision discipline through preamble | Decision frameworks, tradeoff analysis | When making complex technical decisions | M |
+| 10 | **pb-context** | Project context and decision log | Current focus, recent decisions, architecture notes | Quick context refresh, decision tracking | All |
 
 **How they work together**:
-- Read `/pb-standards` to understand working principles
+- Read `/pb-preamble` and `/pb-standards` to understand philosophy and principles
 - Reference `/pb-guide` for framework (11 phases)
+- Use `/pb-design-rules` for technical design guidance
 - Use `/pb-templates` for format/structure
 - Use `/pb-documentation` for content quality
+- Use preamble expansions for specific team contexts
 
 ---
 
@@ -882,4 +890,4 @@ POWERFUL:
 
 **This guide is the map. Use it to navigate the playbook as an integrated system.**
 
-*Last Updated: 2026-01-11 | Playbook Version: v1.2.0+ | Integration Health: Excellent (8.5/10)*
+*Last Updated: 2026-01-12 | Playbook Version: v1.5.0 | Integration Health: Excellent (9/10)*
