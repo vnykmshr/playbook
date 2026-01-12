@@ -13,6 +13,8 @@ Good commits:
 - Create clean, readable history
 - Help future developers understand "why"
 
+**Why this matters:** Clear commits invite scrutiny. You explain your reasoning, which invites others to challenge it. That's the point. Commits that force you to articulate "why" are harder to defend when the reasoning is flawed—which is exactly what you want.
+
 ---
 
 ## When to Commit

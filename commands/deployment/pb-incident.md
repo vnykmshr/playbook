@@ -13,6 +13,8 @@ Incidents are inevitable. What matters:
 - **Recovery**: Get back to normal fast
 - **Learning**: Prevent repeats through post-incident review
 
+**Critical mindset:** Incident response requires `/pb-preamble` thinking. During response: be direct about status, challenge assumptions about cause, surface unknowns. After: conduct honest post-mortems without blame. This is where critical thinking saves lives.
+
 ---
 
 ## Incident Severity Levels

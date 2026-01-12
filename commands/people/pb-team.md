@@ -19,6 +19,8 @@ A healthy engineering team has:
 - **Growth**: People are learning and advancing
 - **Recognition**: Good work is acknowledged
 
+**Foundation:** Psychological safety is directly enabled by `/pb-preamble` thinking. When teams operate from that preamble, challenging assumptions becomes the default, disagreement becomes professional, and silence becomes a risk.
+
 ---
 
 ## Psychological Safety: Foundation of High Performance

@@ -2,6 +2,8 @@
 
 Streamlined workflow for creating a pull request with proper context and description.
 
+**Mindset:** PR review is built on `/pb-preamble` thinking. Reviewers will challenge assumptions and surface issues. That's the point. Welcome that feedback—it makes code better.
+
 ---
 
 ## Pre-PR Checklist

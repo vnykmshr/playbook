@@ -2,6 +2,8 @@
 
 Document significant architectural decisions to capture the context, alternatives considered, and rationale for future reference.
 
+**Why this matters:** ADRs enforce `/pb-preamble` thinking. You must consider alternatives (not skip them), document trade-offs explicitly, and explain your reasoning. This makes decisions reviewable and challengeable—which is how you catch flawed thinking early.
+
 ---
 
 ## When to Write an ADR

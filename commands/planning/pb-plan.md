@@ -6,6 +6,8 @@ A reusable prompt for planning release focus areas across any project. Emphasize
 
 ## Philosophy
 
+**Foundation:** This planning assumes `/pb-preamble` thinking. Clarify means ask hard questions and challenge assumptions. Align means disagreement surfaced early. Do not skip this phase to appear productive.
+
 ### Core Principles
 
 1. **Clarify, Don't Assume** - When in doubt, ask. Assumptions compound into wasted work.

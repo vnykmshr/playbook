@@ -14,6 +14,8 @@ Deprecation allows you to:
 
 **The principle**: Give users time and clear guidance to migrate.
 
+**Mindset:** Deprecation decisions should be made with `/pb-preamble` thinking. Challenge whether this change is really necessary. Surface the impact on users. Be honest about the cost vs. benefit. This is where critical thinking matters most.
+
 ---
 
 ## When to Deprecate

@@ -4,6 +4,14 @@ Quick reference for all playbook commands.
 
 **For detailed integration guide showing how commands work together, see [`/docs/integration-guide.md`](integration-guide.md)**
 
+---
+
+## 🚀 Read First: The Preamble
+
+**→ `/pb-preamble`** — Foundational mindset for all collaboration. Read this before any other command. It establishes the assumptions all playbook commands build on.
+
+---
+
 ## Development Workflow
 
 | Command | When to Use |

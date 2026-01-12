@@ -36,6 +36,8 @@ make test        # All tests pass
 
 Request review from senior engineer perspective.
 
+**Important:** Peer review assumes `/pb-preamble` thinking. Reviewer should challenge assumptions, surface flaws, question trade-offs. Author should welcome and respond to critical feedback. This is how we catch problems early.
+
 ### Architecture Review
 
 - [ ] Changes align with existing patterns

@@ -4,6 +4,8 @@
 
 **Recommended Frequency:** Monthly or before major releases
 
+**Mindset:** This review assumes `/pb-preamble` thinking. The goal is to find problems, challenge assumptions, and surface risks across multiple domains. Reviewers should be thorough and direct. Teams should welcome the scrutiny.
+
 ---
 
 ## Prompt

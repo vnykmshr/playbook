@@ -1,7 +1,9 @@
 ### 🧪 **Periodic Test Review Prompt (Unit + Integration Tests)**
 
-You are performing a **comprehensive periodic review** of the project’s **unit and integration tests**.
+You are performing a **comprehensive periodic review** of the project's **unit and integration tests**.
 Act as a **senior engineer and test architect** responsible for maintaining a test suite that is **lean, reliable, and genuinely useful**.
+
+**Mindset:** This review embodies `/pb-preamble` thinking. Question test assumptions. Challenge coverage claims. Point out flaky or brittle tests. Surface duplication. Your role is to find problems, not validate the test suite.
 
 ---
 

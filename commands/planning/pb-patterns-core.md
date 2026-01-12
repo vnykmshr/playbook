@@ -13,6 +13,8 @@ Patterns:
 - **Improve quality**: Use proven solutions, not experimental ones
 - **Enable communication**: "Let's use the retry pattern" means something
 
+**Mindset:** Every pattern has trade-offs. Use `/pb-preamble` thinking: challenge whether this pattern is the right fit, surface the costs, understand the alternatives. A pattern is a starting point, not a law.
+
 ---
 
 ## When to Use Patterns

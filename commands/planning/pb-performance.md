@@ -13,6 +13,8 @@ Performance matters:
 
 **Key principle:** Measure first, optimize what matters, prove it works.
 
+**Mindset:** Performance optimization requires `/pb-preamble` thinking. Question assumptions about slowness. Challenge whether optimization is worth the complexity cost. Surface trade-offs explicitly (speed vs. maintainability). Measure before and after—don't assume.
+
 ---
 
 ## When to Optimize

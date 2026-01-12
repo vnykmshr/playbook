@@ -1,5 +1,9 @@
 # Project Guidelines & Working Principles
 
+**See `/pb-preamble` first.** These standards assume you're operating from the mindset anchored there: challenge assumptions, prefer correctness over agreement, think like peers.
+
+---
+
 ## I. Collaboration & Decision Making
 
 ### Decision Making

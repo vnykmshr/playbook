@@ -19,6 +19,8 @@ Bad onboarding:
 - Knowledge exists only in one person's head
 - People leave quickly (bad first impression)
 
+**Culture First:** Onboarding should teach `/pb-preamble` on day one. New team members need to know: challenge assumptions, disagree when needed, prefer correctness. This is how you set culture from the start.
+
 ---
 
 ## Onboarding Timeline

@@ -2,6 +2,8 @@
 
 Move beyond unit tests. Test behavior, catch mutations, verify contracts, stress systems.
 
+**Mindset:** Testing embodies `/pb-preamble` thinking. Your tests should challenge assumptions about code behavior. Find edge cases you didn't think of. Question whether tests are actually testing behavior, not just hitting lines of code. Write tests that surface flawed thinking.
+
 ---
 
 ## Purpose

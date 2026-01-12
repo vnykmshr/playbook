@@ -12,6 +12,7 @@ Before writing code, confirm:
 - [ ] Feature branch created from main
 - [ ] Working context reviewed (`/pb-standards`)
 - [ ] Acceptance criteria understood
+- [ ] Team alignment: assumptions are explicit, disagreements surfaced (see `/pb-preamble`)
 
 ---
 
