@@ -18,3 +18,8 @@ Thumbs.db
 
 # Generated docs (built by mkdocs, deployed by GitHub Actions)
 site/
+
+# Generated playbook metadata (auto-extracted from commands)
+.playbook-metadata.json
+.playbook-extraction-report.json
+extraction_report.txt
