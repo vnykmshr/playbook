@@ -6,6 +6,7 @@ on:
     paths:
       - 'docs/**'
       - 'commands/**'
+      - 'scripts/**'
       - 'CHANGELOG.md'
       - 'README.md'
       - '.github/CONTRIBUTING.md'
