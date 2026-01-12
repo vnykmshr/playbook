@@ -35,24 +35,38 @@ The Engineering Playbook is a **decision framework** that codifies how to approa
 
 ---
 
-## Start Here: The Preamble
+## Start Here: The Preamble and Design Rules
 
-**Before using any other command, read `/pb-preamble`.** It establishes the mindset that all playbook commands assume:
+**Before using any other command, read `/pb-preamble` and `/pb-design-rules`.** Together, they establish the complete framework that all playbook commands assume:
 
+### The Preamble: How Teams Think Together
 - Challenge assumptions. Prefer correctness over agreement.
 - Think like peers, not hierarchies. Disagreement is professional.
 - Truth over tone. Direct, clear feedback beats careful politeness.
 - Think holistically. Optimize for outcomes, not just individual concerns.
 
-Every command in this playbook—from `/pb-guide` to `/pb-cycle` to `/pb-security`—is more powerful when you bring this mindset. The preamble is not optional; it's foundational.
+### Design Rules: What We Build
+- 17 classical design principles organized in 4 clusters
+- CLARITY: Obvious, unsurprising interfaces and code
+- SIMPLICITY: Simple design with complexity only where justified
+- RESILIENCE: Reliable systems that fail loudly and recover
+- EXTENSIBILITY: Systems designed to adapt without rebuilds
+
+**Why both matter:**
+- Preamble thinking without design rules = good collaboration building bad systems
+- Design rules without preamble thinking = endless debates about correct design
+- Together = better decisions, clearer discussions, systems that scale
+
+Every command in this playbook—from `/pb-guide` to `/pb-cycle` to `/pb-security`—assumes both mindsets. The preamble and design rules are foundational.
 
 **Learning path:**
-1. Read preamble → understand the mindset
-2. See it in action → Read examples in `/pb-cycle` (peer review) and `/pb-adr` (documenting decisions)
-3. Apply it → Use as anchor for `/pb-plan`, `/pb-commit`, `/pb-pr`, all review commands
-4. Recognize failure modes → Use `/pb-preamble` section "When This Goes Wrong" to self-diagnose
+1. **Read preamble** → Understand how to think together
+2. **Read design rules** → Understand what to build
+3. **See them together** → Read `/pb-preamble` section I.5 (connection) and `/pb-adr` (decisions using both)
+4. **Apply them** → Use as anchor for `/pb-plan`, `/pb-commit`, `/pb-pr`, all review and architecture commands
+5. **Use quick references** → `/docs/preamble-quick-ref.md` and `/docs/design-rules-quick-ref.md` for daily lookup
 
-**Key insight:** The preamble isn't about process—it's about *how* you think and work together. All other commands assume this thinking.
+**Key insight:** The preamble + design rules aren't about process—they're about *how* you think and *what* you build together.
 
 ---
 

@@ -19,7 +19,11 @@ The playbook is a **decision framework** that codifies how to approach developme
 
 ---
 
-## Start Here: The Preamble
+## Start Here: Preamble + Design Rules
+
+The playbook is anchored in two complementary frameworks. Understand both before diving into commands.
+
+### The Preamble: How Teams Think Together
 
 Before diving into commands, understand the collaborative philosophy that all playbook commands assume:
 
@@ -28,9 +32,26 @@ Before diving into commands, understand the collaborative philosophy that all pl
 - **Truth over tone** — Direct, clear feedback beats careful politeness
 - **Think holistically** — Optimize for team outcomes, not just individual concerns
 
-Every command in the playbook is designed around these principles. You'll see them in how code reviews work (surface flaws, don't just approve), how decisions are documented (reasoning, so they can be intelligently challenged), and how failures become learning (not blame).
-
 **[Read the complete Preamble Framework →](../commands/core/pb-preamble.md)**
+
+### Design Rules: What We Build
+
+Technical principles that guide every system decision and architectural choice:
+
+- **4 Clusters of 17 Rules:** CLARITY (obvious, unsurprising), SIMPLICITY (elegant discipline), RESILIENCE (reliable & adaptive), EXTENSIBILITY (future-proof)
+- Each rule with clear reasoning, examples, and when to apply
+- Decision framework for when rules conflict
+- Quick reference for daily use
+
+**[Read the Design Rules Framework →](../commands/core/pb-design-rules.md)**
+
+### Why Both Matter
+
+- **Preamble alone:** Teams collaborate well but build the wrong things
+- **Design rules alone:** Teams know what's right but can't decide together
+- **Together:** Better decisions, clearer discussions, better systems
+
+Every command assumes both preamble thinking (collaboration) and design rules (technical excellence).
 
 ### For New Teams
 Establish engineering practices from day one with clear, repeatable processes covering planning, development, code review, and operations.
