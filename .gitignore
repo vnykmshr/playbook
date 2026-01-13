@@ -1,6 +1,9 @@
 # Dev-only tracking folder
 todos/
 
+# Claude Code context (auto-generated)
+.claude/
+
 # OS files
 .DS_Store
 Thumbs.db
