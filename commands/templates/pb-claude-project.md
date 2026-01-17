@@ -104,6 +104,21 @@ Look for existing documentation:
 - `docs/` — Additional documentation
 - `.env.example` — Environment variables needed
 
+**Working Context Discovery:**
+Check for working context documents that provide rich project state:
+
+```bash
+ls todos/*working-context*.md 2>/dev/null
+```
+
+Common locations: `todos/working-context.md`, `todos/1-working-context.md`
+
+If a working context exists:
+1. **Read it first** — It contains current version, active development context, and session checklists
+2. **Check currency** — Compare version/date with git tags and recent commits
+3. **Update if stale** — If working context is outdated, update it as part of generation
+4. **Extract key info** — Use it to populate Tech Stack, Commands, and Active Development sections
+
 ### Step 7: Detect CI/CD
 
 Check for CI configuration:
@@ -295,6 +310,7 @@ After generation, verify:
 - [ ] Directory structure matches reality
 - [ ] Test commands run successfully
 - [ ] Relevant playbooks are appropriate for this stack
+- [ ] Working context (if exists) is current and referenced
 
 ---
 
@@ -322,6 +338,12 @@ Mark manual sections:
 - When adding new major dependencies
 - When changing build/test tooling
 - Quarterly refresh
+
+**Working context maintenance:**
+If the project has a working context document (typically in `todos/`):
+- Check if it's current before regenerating CLAUDE.md
+- Update working context if version/date is stale
+- Use `/pb-context` command to refresh working context
 
 **Partial updates:**
 For minor changes, edit the file directly rather than full regeneration.

@@ -11,6 +11,33 @@
 
 ---
 
+## Working Context Guidelines
+
+**Location:** `todos/` directory (gitignored, not tracked in repo)
+
+**Common filenames:** `working-context.md`, `1-working-context.md`
+
+**When to use this command:**
+- Starting a new session (run `/pb-context` to review and update)
+- After completing a release (update version, release history)
+- Onboarding to a project (read existing context, then update if stale)
+- Resuming work after a break (verify context is current)
+
+**Currency check:** Before using this context, verify it's up to date:
+```bash
+git describe --tags                    # Compare to version in header
+git log --oneline -5                   # Compare to recent commits section
+```
+
+If the working context is stale (version mismatch, outdated commits), update it before proceeding.
+
+**Integration with other playbooks:**
+- `/pb-claude-project` — Checks for working context during CLAUDE.md generation
+- `/pb-start` — Should review working context before starting work
+- `/pb-resume` — Should check and update working context when resuming
+
+---
+
 ## What is [Project Name]
 
 [One-line description of what the project does]

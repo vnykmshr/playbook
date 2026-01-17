@@ -12,9 +12,31 @@ Before writing code, confirm:
 
 - [ ] Scope is clear (what's in, what's out)
 - [ ] Feature branch created from main
-- [ ] Working context reviewed (`/pb-standards`)
+- [ ] Working context reviewed (see below)
 - [ ] Acceptance criteria understood
 - [ ] Team alignment: assumptions are explicit, disagreements surfaced (see `/pb-preamble`)
+
+---
+
+## Working Context Check
+
+Before starting work, check if the project has a working context document:
+
+```bash
+# Check for working context (location and naming may vary)
+ls todos/*working-context*.md 2>/dev/null
+```
+
+**Common locations:** `todos/working-context.md`, `todos/1-working-context.md`
+
+If working context exists:
+1. **Review it** — Understand current version, active development, recent commits
+2. **Verify currency** — Compare version with `git describe --tags`
+3. **Update if stale** — Run `/pb-context` to refresh if outdated
+
+If no working context exists:
+- For established projects, consider creating one using `/pb-context`
+- For small tasks, `/pb-standards` provides sufficient context
 
 ---
 

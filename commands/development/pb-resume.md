@@ -145,6 +145,7 @@ Before continuing work:
 - [ ] Branch is up to date with main
 - [ ] Understand what was last done
 - [ ] Know what's next
+- [ ] Working context is current (if project has one)
 - [ ] Dev environment running (`make dev`)
 - [ ] Tests pass (`make test`)
 
@@ -165,17 +166,34 @@ Before continuing work:
 
 ---
 
-## Reading Working Context
+## Reading and Updating Working Context
 
 For project-level context:
 
 ```bash
-# Read project working context
-/pb-context (or cat todos/prompts/1-working-context.md)
+# Check for working context (location and naming may vary)
+ls todos/*working-context*.md 2>/dev/null
+
+# Read project working context (or run /pb-context)
+cat todos/working-context.md
 
 # Check release tracker if on a release branch
 cat todos/releases/v1.X.0/00-master-tracker.md
 ```
+
+**Common locations:** `todos/working-context.md`, `todos/1-working-context.md`
+
+**Working context currency check:**
+```bash
+# Compare working context version with actual state
+git describe --tags                    # Current version
+git log --oneline -5                   # Recent commits
+```
+
+If the working context is stale (version mismatch, outdated commits, missing recent releases):
+1. Run `/pb-context` to review and update
+2. Update version, date, recent commits, and active development sections
+3. Verify session checklist commands still work
 
 ---
 
