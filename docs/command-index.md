@@ -77,6 +77,26 @@ Quick reference for all playbook commands.
 | `/pb-review-microservice` | Microservice architecture design review | Before microservice deployment |
 | `/pb-logging` | Logging strategy & standards audit | During code review, pre-release |
 
+## Thinking Partner
+
+Self-sufficient thinking partner methodology for expert-quality collaboration.
+
+| Command | When to Use |
+|---------|-------------|
+| `/pb-query` | Need polished, expert-quality answer (multi-pass refinement) |
+| `/pb-ideate` | Need to explore options, generate possibilities (divergent thinking) |
+| `/pb-synthesize` | Need to combine multiple inputs into coherent insight (integration) |
+
+**Thinking Partner Stack:**
+```
+/pb-ideate      → Explore options (divergent)
+/pb-synthesize  → Combine insights (integration)
+/pb-preamble    → Challenge assumptions (adversarial)
+/pb-plan        → Structure approach (convergent)
+/pb-adr         → Document decision (convergent)
+/pb-query       → Refine output (refinement)
+```
+
 ## Reference Documents
 
 | Command | Purpose |

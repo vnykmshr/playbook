@@ -2,7 +2,7 @@
 
 A comprehensive, integrated set of commands and guides for structuring iterative development workflows, architectural decisions, code reviews, and team operations.
 
-[![Latest Release](https://img.shields.io/github/v/release/vnykmshr/playbook?label=v1.4.0)](https://github.com/vnykmshr/playbook/releases/tag/v1.4.0)
+[![Latest Release](https://img.shields.io/github/v/release/vnykmshr/playbook?label=v1.5.0)](https://github.com/vnykmshr/playbook/releases/tag/v1.5.0)
 [![Commands](https://img.shields.io/badge/status-active-brightgreen)](docs/command-index.md)
 [![Documentation](https://img.shields.io/badge/docs-integration%20guide-blue)](docs/integration-guide.md)
 [![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)
@@ -244,8 +244,8 @@ Production is down. Execute quickly:
 
 ## Command Categories
 
-### Core Foundation (4 commands)
-Master SDLC framework, working standards, and templates.
+### Core Foundation (7 commands)
+Master SDLC framework, working standards, templates, and thinking partner methodology.
 
 | Command | Purpose |
 |---------|---------|
@@ -253,6 +253,9 @@ Master SDLC framework, working standards, and templates.
 | `/pb-standards` | Working principles and collaboration norms |
 | `/pb-documentation` | Writing technical docs at 5 levels |
 | `/pb-templates` | Reusable commit, PR, and testing templates |
+| `/pb-query` | Multi-pass query processing for expert-quality answers |
+| `/pb-ideate` | Divergent exploration and option generation |
+| `/pb-synthesize` | Integrate multiple inputs into coherent insight |
 
 ### Planning & Architecture (10 commands)
 Design systems before implementation.

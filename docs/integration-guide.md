@@ -2,7 +2,7 @@
 
 Complete reference for how all playbook commands work together to form a unified SDLC framework.
 
-**Last Updated**: 2026-01-12 | **Categories**: 9 | **Commands**: 55
+**Last Updated**: 2026-01-17 | **Categories**: 10 | **Commands**: 60
 
 ---
 
@@ -51,9 +51,9 @@ Complete reference for how all playbook commands work together to form a unified
 
 ---
 
-## Command Inventory: All 55 Commands
+## Command Inventory: All 60 Commands
 
-### CORE FOUNDATION & PHILOSOPHY (10 commands)
+### CORE FOUNDATION & PHILOSOPHY (13 commands)
 
 These establish baseline understanding and guiding philosophy. **Every engineer should know these.**
 
@@ -69,6 +69,9 @@ These establish baseline understanding and guiding philosophy. **Every engineer 
 | 8 | **pb-preamble-power** | Power dynamics and challenge | Psychological safety, healthy disagreement, authority | For building stronger team dynamics | M |
 | 9 | **pb-preamble-decisions** | Decision discipline through preamble | Decision frameworks, tradeoff analysis | When making complex technical decisions | M |
 | 10 | **pb-context** | Project context and decision log | Current focus, recent decisions, architecture notes | Quick context refresh, decision tracking | All |
+| 11 | **pb-query** | Multi-pass query processing | Draft → critique → refine for expert answers | Complex questions, research tasks | All |
+| 12 | **pb-ideate** | Divergent exploration | Generate 10+ options, explore adjacent space | Early problem-solving, option generation | All |
+| 13 | **pb-synthesize** | Integration and synthesis | Combine multiple inputs into coherent insight | After research, multi-source analysis | All |
 
 **How they work together**:
 - Read `/pb-preamble` and `/pb-standards` to understand philosophy and principles
@@ -77,6 +80,7 @@ These establish baseline understanding and guiding philosophy. **Every engineer 
 - Use `/pb-templates` for format/structure
 - Use `/pb-documentation` for content quality
 - Use preamble expansions for specific team contexts
+- Use thinking partner commands (`/pb-query`, `/pb-ideate`, `/pb-synthesize`) for expert-quality collaboration
 
 ---
 
@@ -573,6 +577,22 @@ RELEASE
 **Frequency**: Team transitions, regular intervals
 **Who**: Mentors, managers, all engineers
 
+### Cluster 9: Thinking Partner
+**Commands**: pb-query, pb-ideate, pb-synthesize
+**Purpose**: Self-sufficient expert-quality collaboration
+**Frequency**: Throughout development for complex questions, ideation, synthesis
+**Who**: All engineers
+
+**Thinking Partner Stack:**
+```
+/pb-ideate      → Explore options (divergent)
+/pb-synthesize  → Combine insights (integration)
+/pb-preamble    → Challenge assumptions (adversarial)
+/pb-plan        → Structure approach (convergent)
+/pb-adr         → Document decision (convergent)
+/pb-query       → Refine output (refinement)
+```
+
 ---
 
 ## Reference Matrix: Which Commands Work Together
@@ -890,4 +910,4 @@ POWERFUL:
 
 **This guide is the map. Use it to navigate the playbook as an integrated system.**
 
-*Last Updated: 2026-01-12 | Playbook Version: v1.5.0 | Integration Health: Excellent (9/10)*
+*Last Updated: 2026-01-17 | Playbook Version: v1.5.0 | Commands: 60 | Integration Health: Excellent (9/10)*
