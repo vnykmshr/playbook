@@ -54,7 +54,7 @@ PLANNING PHASE        DEVELOPMENT PHASE       CODE REVIEW PHASE     RELEASE PHAS
    - `/pb-security` — Security checklist during review
    - `/pb-logging` — Logging standards validation
    - `/pb-review-*` — Additional specialized reviews as needed:
-     - `/pb-review-code` — Code quality and patterns
+     - `/pb-review-cleanup` — Code quality and patterns
      - `/pb-review-product` — Product alignment (if user-facing)
      - `/pb-review-tests` — Test suite depth and coverage
      - `/pb-review-prerelease` — Final senior engineer review
@@ -199,7 +199,7 @@ Regular check-ins on different aspects of code and team health:
 ```
 MONTHLY CADENCE       QUARTERLY CADENCE       AS-NEEDED
 │                     │                       │
-├─ /pb-review-code    ├─ /pb-review-hygiene  ├─ /pb-review (comprehensive)
+├─ /pb-review-cleanup    ├─ /pb-review-hygiene  ├─ /pb-review (comprehensive)
 │   (Quality)         │   (Tech debt)        │
 │                     │                       ├─ /pb-performance
 ├─ /pb-review-tests   ├─ /pb-review-product  │   (Bottlenecks)
@@ -214,7 +214,7 @@ MONTHLY CADENCE       QUARTERLY CADENCE       AS-NEEDED
 
 | Frequency | Review | Purpose |
 |-----------|--------|---------|
-| Monthly | `/pb-review-code` | Code quality, patterns, maintainability |
+| Monthly | `/pb-review-cleanup` | Code quality, patterns, maintainability |
 | Monthly | `/pb-review-tests` | Test coverage, quality, edge cases |
 | Monthly | `/pb-logging` | Logging strategy, standards, compliance |
 | Quarterly | `/pb-review-hygiene` | Technical debt, cleanup opportunities |

@@ -1456,7 +1456,7 @@ This covers:
 - **§2 Team & Estimation** → `/pb-team`, `/pb-onboarding`, `/pb-knowledge-transfer`
 - **§3 Architecture & Design** → `/pb-patterns-core`, `/pb-patterns-async`, `/pb-patterns-db`, `/pb-patterns-distributed`
 - **§4 Implementation** → `/pb-start`, `/pb-cycle`, `/pb-testing`, `/pb-commit`, `/pb-todo-implement`
-- **§5 Code Review** → `/pb-review-code`, `/pb-security`, `/pb-logging`, `/pb-review-product`
+- **§5 Code Review** → `/pb-review-cleanup`, `/pb-security`, `/pb-logging`, `/pb-review-product`
 - **§6 Quality Gates** → `/pb-review-tests`, `/pb-review-hygiene`, `/pb-review-microservice`
 - **§7 Observability** → `/pb-observability`, `/pb-logging`, `/pb-performance`
 - **§8 Deployment** → `/pb-deployment`, `/pb-release`, `/pb-review-prerelease`

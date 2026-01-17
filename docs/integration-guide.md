@@ -32,7 +32,7 @@ Complete reference for how all playbook commands work together to form a unified
 → `/pb-todo-implement` (structured checkpoint-based implementation)
 
 **Reviewing code before merge?**
-→ `/pb-cycle` (self-review) → `/pb-review-code` (peer review) → `/pb-security` (security review)
+→ `/pb-cycle` (self-review) → `/pb-review-cleanup` (peer review) → `/pb-security` (security review)
 
 **Reviewing quality periodically?**
 → `/pb-review-tests` (monthly) → `/pb-review-hygiene` (quarterly) → `/pb-review-product` (product alignment)
@@ -182,7 +182,7 @@ Quality gates at multiple checkpoints. **Use these during development, before me
 | # | Command | Purpose | Trigger | When to Use | Frequency |
 |---|---------|---------|---------|------------|-----------|
 | 23 | **pb-review** | Periodic project review overview | Feature/release boundaries | Quick reference to all review types | Monthly or pre-release |
-| 24 | **pb-review-code** | Code quality and best practices | Every PR | Before merging code | Every PR |
+| 24 | **pb-review-cleanup** | Code quality and best practices | Every PR | Before merging code | Every PR |
 | 25 | **pb-review-product** | Product alignment + tech perspective | Feature completion | Before merging user-facing changes | Every user-facing PR |
 | 26 | **pb-review-docs** | Documentation accuracy and completeness | Periodic audit | Quarterly documentation review | Quarterly |
 | 27 | **pb-review-tests** | Test suite quality and coverage | Periodic audit | Monthly test health check | Monthly |
@@ -199,7 +199,7 @@ Quality gates at multiple checkpoints. **Use these during development, before me
 /pb-pr (create pull request)
   ↓
 PEER REVIEW GATES:
-  /pb-review-code (code quality)
+  /pb-review-cleanup (code quality)
   /pb-security (security checklist)
   /pb-review-tests (test coverage)
   /pb-logging (logging standards)
@@ -213,7 +213,7 @@ APPROVED
 **Periodic review schedule**:
 ```
 WEEKLY
-  ├─ /pb-review-code (spot check)
+  ├─ /pb-review-cleanup (spot check)
   └─ /pb-logging (log quality)
 
 MONTHLY
@@ -408,7 +408,7 @@ IMPLEMENTATION (iterative daily)
 
 CODE REVIEW
 ├─ /pb-pr                 ← Create pull request
-├─ /pb-review-code        ← Code quality
+├─ /pb-review-cleanup        ← Code quality
 ├─ /pb-review-tests       ← Test coverage
 ├─ /pb-logging            ← Logging standards
 ├─ /pb-security           ← Security review
@@ -505,7 +505,7 @@ CONTINUOUS DEVELOPMENT
 
 ```
 WEEKLY
-├─ /pb-review-code           ← Code quality spot check
+├─ /pb-review-cleanup           ← Code quality spot check
 └─ /pb-logging               ← Log quality check
 
 MONTHLY
@@ -607,7 +607,7 @@ RELEASE
 - pb-security: 7+ references (quality gate)
 
 **Well-Referenced** (important workflow nodes):
-- pb-adr, pb-deployment, pb-incident, pb-observability, pb-review-code (5-9 references each)
+- pb-adr, pb-deployment, pb-incident, pb-observability, pb-review-cleanup (5-9 references each)
 
 **Moderately Referenced** (specialized/optional):
 - pb-documentation, pb-pr, pb-commit, pb-patterns-* (2-4 references each)
@@ -633,7 +633,7 @@ RELEASE
 - pb-patterns → pb-cycle (pattern selection)
 
 **Development → Review**
-- pb-cycle → pb-review-code
+- pb-cycle → pb-review-cleanup
 - pb-commit → pb-review-tests
 - pb-pr → pb-review-product
 
@@ -729,7 +729,7 @@ STEP 2: Implementation
 └─ /pb-pr (create pull request)
 
 STEP 3: Code Review
-├─ /pb-review-code (code quality)
+├─ /pb-review-cleanup (code quality)
 ├─ /pb-review-product (product alignment)
 ├─ /pb-security (security review)
 ├─ /pb-review-tests (test coverage)
@@ -799,7 +799,7 @@ STEP 2: Implementation Phases
 └─ Continue for each component
 
 STEP 3: Code Review
-├─ /pb-review-code (architecture alignment)
+├─ /pb-review-cleanup (architecture alignment)
 ├─ /pb-review-tests (regression test coverage)
 ├─ /pb-security (if security implications)
 └─ Approve / Merge

@@ -414,7 +414,7 @@ These 17 rules don't always agree with each other. Understanding the trade-offs 
 - **Modularity**: Build small, focused pieces
 - **Optimization**: Test first; optimize only if measured
 
-### In Review (`/pb-review-code`, `/pb-review-product`)
+### In Review (`/pb-review-cleanup`, `/pb-review-product`)
 - **Clarity**: Code is understandable
 - **Robustness**: Error handling is appropriate
 - **Modularity**: Pieces are independent
@@ -554,7 +554,7 @@ Add more error handling downstream hoping to catch it eventually.
 - `/pb-preamble` — How teams think together (complement to design rules)
 - `/pb-adr` — Architecture decisions document rules
 - `/pb-patterns*` — Patterns show rules in practice
-- `/pb-review-code` — Code review checks rules
+- `/pb-review-cleanup` — Code review checks rules
 - `/pb-performance` — Optimization respects rules
 - `/pb-observability` — Transparency supports these rules
 

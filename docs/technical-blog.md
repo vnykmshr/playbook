@@ -179,7 +179,7 @@ Code flows through the same review loop repeatedly:
 ### Multi-Perspective Review
 Different reviewers bring different lenses:
 
-- `/pb-review-code` — Code quality and maintainability
+- `/pb-review-cleanup` — Code quality and maintainability
 - `/pb-security` — Security review
 - `/pb-review-tests` — Test coverage
 - `/pb-logging` — Logging standards

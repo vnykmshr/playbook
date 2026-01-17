@@ -348,7 +348,7 @@ Remember: they're operating from this preamble. They're not being rude; they're 
 
 **Reviews & Quality:**
 - `/pb-review` — Comprehensive review assumes critical perspective from multiple experts
-- `/pb-review-code` — "Challenge architectural choices. Point out duplication and complexity. Surface flaws directly."
+- `/pb-review-cleanup` — "Challenge architectural choices. Point out duplication and complexity. Surface flaws directly."
 - `/pb-review-tests` — "Question test assumptions. Challenge coverage claims. Point out flaky or brittle tests."
 - `/pb-review-docs` — "Find unclear sections, challenge stated assumptions, and surface gaps"
 - `/pb-security` — "Your job is to find what was missed, challenge assumptions about safety, and surface risks"

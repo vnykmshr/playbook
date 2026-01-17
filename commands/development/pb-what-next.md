@@ -276,7 +276,7 @@ The command analyzes your current situation and recommends relevant commands:
 - Early in feature? → `/pb-start`, `/pb-cycle`, `/pb-standards`
 - Mid-feature? → `/pb-cycle`, `/pb-testing`
 - Ready to finalize? → `/pb-commit`, `/pb-pr`
-- Code review? → `/pb-review-code`, `/pb-review-tests`, `/pb-security`
+- Code review? → `/pb-review-cleanup`, `/pb-review-tests`, `/pb-security`
 - Release time? → `/pb-release`, `/pb-deployment`
 
 ---
@@ -330,7 +330,7 @@ Status:    Mid-feature, tests need updating
 - `/pb-testing` — Verify test coverage
 - `/pb-commit` — Craft atomic commits
 - `/pb-pr` — Create pull request
-- `/pb-review-code` — Code review
+- `/pb-review-cleanup` — Code review
 - `/pb-security` — Security review
 - `/pb-release` — Release preparation
 
@@ -414,7 +414,7 @@ Typical development session:
                       Time: 15 min
 
 4. REVIEW
-   └─ /pb-review-code Code review
+   └─ /pb-review-cleanup Code review
       /pb-review-tests Test review
       /pb-security     Security check
                        Time: 30-60 min

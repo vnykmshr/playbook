@@ -762,7 +762,7 @@ histogram_quantile(0.99, rate(http_request_duration_seconds_bucket[5m])) > 1
 **Part of design and planning:**
 - `/pb-plan` — Include observability in feature planning
 - `/pb-guide` — Section 4.4 covers monitoring design
-- `/pb-review-code` — Code review checks for logging
+- `/pb-review-cleanup` — Code review checks for logging
 - `/pb-release` — Release checklist includes dashboard setup
 
 **Related Commands:**

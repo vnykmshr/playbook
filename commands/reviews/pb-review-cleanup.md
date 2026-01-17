@@ -1,6 +1,6 @@
-# Periodic Repository Review Prompt
+# Codebase Cleanup Review
 
-You are a senior software engineer performing a **periodic repository review** before starting a fresh round of development.
+You are a senior software engineer performing a **codebase cleanup review** before starting a fresh round of development.
 The goal is to ensure the project remains clean, consistent, and maintainable over time.
 
 **Mindset:** This review embodies `/pb-preamble` thinking (surface flaws directly, challenge assumptions) and applies `/pb-design-rules` (code should be clear, simple, and maintainable).

@@ -148,7 +148,7 @@ Your project already has code and processes. Let's integrate the playbook gradua
 ```bash
 # Step 1: Understand current state
 /pb-context           # Document project context and decisions
-/pb-review-code       # Audit existing code quality
+/pb-review-cleanup       # Audit existing code quality
 /pb-review-hygiene    # Identify technical debt
 
 # Step 2: Establish baseline
@@ -212,7 +212,7 @@ You're in the middle of a feature sprint. Here's your daily rhythm:
 A PR is ready for review. As a reviewer, you can follow a structured approach:
 
 ```bash
-/pb-review-code       # Code quality checklist
+/pb-review-cleanup       # Code quality checklist
 /pb-security          # Security perspective
 /pb-review-tests      # Test coverage and quality
 /pb-logging           # Logging standards verification
@@ -295,7 +295,7 @@ Multiple perspectives on code quality.
 | Command | Purpose |
 |---------|---------|
 | `/pb-review` | Comprehensive multi-perspective periodic review |
-| `/pb-review-code` | Code quality and best practices |
+| `/pb-review-cleanup` | Code quality and best practices |
 | `/pb-review-product` | Technical + product alignment |
 | `/pb-review-tests` | Test suite quality and coverage |
 | `/pb-review-docs` | Periodic documentation review (accuracy, completeness, maintenance) |

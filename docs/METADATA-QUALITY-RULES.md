@@ -38,7 +38,7 @@ assert command_is_unique
 ```
 
 **Examples**:
-- ✅ `pb-start`, `pb-cycle`, `pb-review-code`
+- ✅ `pb-start`, `pb-cycle`, `pb-review-cleanup`
 - ❌ `pb_start`, `pb-Start`, `pb-`, `pbstart`
 
 ---

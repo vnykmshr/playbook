@@ -68,7 +68,7 @@ Quick reference for all playbook commands.
 | Command | When to Use | Frequency |
 |---------|-------------|-----------|
 | `/pb-review` | Comprehensive multi-perspective | Monthly or pre-release |
-| `/pb-review-code` | Code cleanup, repo health | Before new dev cycle |
+| `/pb-review-cleanup` | Code cleanup, repo health | Before new dev cycle |
 | `/pb-review-prerelease` | Pre-release code review | Before each release |
 | `/pb-review-tests` | Test suite quality | Monthly |
 | `/pb-review-docs` | Documentation accuracy | Quarterly |

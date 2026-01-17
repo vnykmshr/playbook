@@ -41,7 +41,7 @@ Data stored in PostgreSQL. Includes connection pooling, graceful shutdown, and s
 
 ### Code Review
 - **`/pb-cycle`** — Peer review each commit
-- **`/pb-review-code`** — Multi-perspective review (testing, performance, security)
+- **`/pb-review-cleanup`** — Multi-perspective review (testing, performance, security)
 
 ### Release & Deployment
 - **`/pb-release`** — Pre-release checks, smoke tests
@@ -130,7 +130,7 @@ make run          # Run locally
 #### Review code
 ```bash
 # Use /pb-cycle at each iteration
-# Use /pb-review-code for final review
+# Use /pb-review-cleanup for final review
 ```
 
 #### Create PR
@@ -239,7 +239,7 @@ git checkout -b feature/v1.0.0-new-endpoint main
 # - Test (make test)
 # - Commit (git commit with clear message)
 
-# Step 4: Final review (using /pb-review-code)
+# Step 4: Final review (using /pb-review-cleanup)
 # - Security perspective (pb-security checklist)
 # - Testing perspective (pb-testing coverage)
 # - Performance perspective (pb-performance profiling)

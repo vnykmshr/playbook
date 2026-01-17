@@ -50,7 +50,7 @@ Features:
 
 ### Code Review
 - **`/pb-cycle`** — Peer review each commit
-- **`/pb-review-code`** — Multi-perspective review (testing, performance, async safety)
+- **`/pb-review-cleanup`** — Multi-perspective review (testing, performance, async safety)
 
 ### Release & Deployment
 - **`/pb-release`** — Pre-release checks
@@ -154,7 +154,7 @@ make test-cov     # Tests with coverage
 #### Review code
 ```bash
 # Use /pb-cycle at each iteration
-# Use /pb-review-code for final review
+# Use /pb-review-cleanup for final review
 ```
 
 #### Create PR
@@ -296,7 +296,7 @@ git checkout -b feature/v1.0.0-new-stage main
 # - Test (make test)
 # - Commit (git commit with clear message)
 
-# Step 4: Final review (using /pb-review-code)
+# Step 4: Final review (using /pb-review-cleanup)
 # - Security perspective (pb-security checklist)
 # - Testing perspective (pb-testing coverage)
 # - Performance perspective (pb-performance profiling)
