@@ -5,6 +5,38 @@ All notable changes to this project are documented here.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v1.5.1] - 2026-01-17
+
+### Added
+
+**Thinking Partner Commands**
+- Added 3 new commands establishing Claude as a self-sufficient thinking partner:
+  - `/pb-query` — Multi-pass query processing (draft → critique → refine) for expert-quality answers
+  - `/pb-ideate` — Divergent exploration with 6 lenses for option generation (10+ options before evaluating)
+  - `/pb-synthesize` — Integration mode for combining multiple inputs into coherent, actionable insight
+
+**Thinking Partner Stack**
+- Complete cognitive mode framework:
+  - Divergent: `/pb-ideate` (explore options)
+  - Integration: `/pb-synthesize` (combine insights)
+  - Adversarial: `/pb-preamble` (challenge assumptions)
+  - Convergent: `/pb-plan`, `/pb-adr` (decide and structure)
+  - Refinement: `/pb-query` (polish output)
+
+### Documentation
+
+- Updated README: Added thinking partner commands to Core Foundation (now 7 commands)
+- Updated command-index: Added Thinking Partner section with stack diagram
+- Updated integration-guide: Command count 55→60, added Cluster 9 (Thinking Partner)
+
+### Status
+
+- 60 commands across 10 categories
+- Complete thinking partner methodology
+- All quality gates passing
+
+---
+
 ## [v1.5.0] - 2026-01-12
 
 ### Added
