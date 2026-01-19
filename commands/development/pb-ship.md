@@ -68,14 +68,38 @@ Establish a clean baseline before specialized reviews.
 make lint        # or: npm run lint / ruff check
 make typecheck   # or: npm run typecheck / mypy
 make test        # or: npm test / pytest
-
-# Verify CI status
-gh run list --limit 1
 ```
 
 **Checkpoint:** All gates must pass before proceeding. Fix failures now, not later.
 
-### Step 1.2: Basic Self-Review
+### Step 1.2: Verify CI Status (If Configured)
+
+If the project has CI configured, verify it passes before proceeding:
+
+```bash
+# Check latest CI run status
+gh run list --limit 3
+
+# View details of a specific run
+gh run view [RUN_ID]
+
+# Wait for CI to complete if running
+gh run watch
+
+# Check PR-specific CI status (if PR already exists)
+gh pr checks [PR-NUMBER]
+```
+
+**CI Verification Checklist:**
+- [ ] Latest CI run on current branch is passing
+- [ ] No flaky test failures (if failures, investigate root cause)
+- [ ] All required checks are green
+
+**Non-negotiable:** If CI is configured for the project, it MUST pass before shipping. Do not proceed with "it was passing yesterday" or "it's just a flaky test." Fix the CI first.
+
+**No CI configured?** Skip this step, but consider adding CI as a follow-up task (`/pb-review-hygiene`).
+
+### Step 1.3: Basic Self-Review
 
 Run `/pb-cycle` for a quick self-review:
 
@@ -85,7 +109,7 @@ Run `/pb-cycle` for a quick self-review:
 - [ ] No TODO/FIXME for critical items
 - [ ] Changes match the intended scope
 
-### Step 1.3: Release Artifacts Check
+### Step 1.4: Release Artifacts Check
 
 **Required for any versioned release (vX.Y.Z):**
 
@@ -251,6 +275,7 @@ This is the senior engineer final gate. Review with fresh eyes:
 **Go/No-Go Checklist:**
 
 - [ ] All quality gates pass
+- [ ] **CI passes** (if configured) ← REQUIRED
 - [ ] All CRITICAL issues fixed
 - [ ] All HIGH issues fixed (or explicitly deferred with approval)
 - [ ] **CHANGELOG.md updated with this version's entry** ← REQUIRED
@@ -360,13 +385,23 @@ gh pr ready [PR-NUMBER]
 **Approval criteria:**
 - All blocking items addressed
 - Reviewer explicitly approves
-- CI passes on final commit
+- **CI passes on final commit** (non-negotiable if CI is configured)
 
 ```bash
-# Check PR status
+# Check PR status and CI checks
 gh pr checks [PR-NUMBER]
 gh pr status
+
+# Ensure all checks pass - DO NOT merge with failing CI
+gh pr checks [PR-NUMBER] --required
 ```
+
+**CI Gate:** If CI is configured, all required checks must be green before merge. No exceptions. If CI is red:
+1. Investigate the failure
+2. Fix the issue (don't dismiss as flaky)
+3. Push the fix
+4. Wait for CI to pass
+5. Then proceed with approval
 
 **Approval comment template:**
 
@@ -387,7 +422,19 @@ LGTM - Ship it!
 
 ## Phase 5: Merge & Release
 
-### Step 5.1: Merge PR
+### Step 5.1: Final CI Check & Merge PR
+
+**Before merging, verify CI one final time:**
+
+```bash
+# Verify all checks pass
+gh pr checks [PR-NUMBER]
+
+# If any checks are failing, DO NOT proceed
+# Fix the issue first, then return here
+```
+
+**Only when all checks are green:**
 
 ```bash
 # Squash merge (recommended for clean history)
@@ -396,6 +443,8 @@ gh pr merge [PR-NUMBER] --squash --delete-branch
 # Or merge commit if preserving history matters
 gh pr merge [PR-NUMBER] --merge --delete-branch
 ```
+
+**Note:** If your repository has branch protection rules requiring CI to pass, the merge will be blocked automatically. If not, enforce this discipline manually.
 
 ### Step 5.2: Release
 
@@ -480,6 +529,7 @@ For genuinely trivial changes (typo fix, comment update, README tweak):
 ```bash
 # Phase 1: Foundation (still required)
 make lint && make test
+gh run list --limit 1  # Verify CI passes (if configured)
 
 # Phase 2: Pick ONE relevant review
 # /pb-review-cleanup (if code touched)
@@ -620,8 +670,9 @@ gh release edit vX.Y.Z --notes "..."
 ```
 PHASE 1: FOUNDATION
 [ ] Quality gates pass (lint, typecheck, test)
+[ ] CI passes (if configured) ← REQUIRED
 [ ] Basic self-review complete (/pb-cycle)
-[ ] Release artifacts verified (CHANGELOG, version) ← NEW
+[ ] Release artifacts verified (CHANGELOG, version)
 
 PHASE 2: SPECIALIZED REVIEWS
 [ ] /pb-review-docs — REQUIRED for versioned releases ← CLARIFIED
@@ -641,8 +692,10 @@ PHASE 4: PR & PEER REVIEW
 [ ] Peer review complete
 [ ] Feedback addressed
 [ ] Approved sign-off received
+[ ] CI passes on final commit ← REQUIRED
 
 PHASE 5: MERGE & RELEASE
+[ ] Final CI verification (all checks green)
 [ ] PR merged
 [ ] Release tagged and deployed (/pb-release)
 [ ] Verification passed
@@ -651,4 +704,4 @@ PHASE 5: MERGE & RELEASE
 
 ---
 
-*Ship with confidence. Every review is a gift. Never skip CHANGELOG.*
+*Ship with confidence. Every review is a gift. Never skip CHANGELOG. Never merge with red CI.*
