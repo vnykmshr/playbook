@@ -75,10 +75,14 @@ Every change follows this cycle without shortcuts:
 │  4. PEER REVIEW  Get feedback on approach and quality       │
 │         ↓                                                    │
 │  5. COMMIT       Logical, atomic commit with clear message  │
+│         ↓                                                    │
+│  6. UPDATE       Update tracker: mark done, identify next   │
 └─────────────────────────────────────────────────────────────┘
 ```
 
 **Run `/pb-cycle` for guided self-review and peer review at each iteration.**
+
+**Tracker discipline:** After each commit, update your master tracker or phase docs. This keeps you aligned with original goals and prevents "guessed" next steps.
 
 ---
 
@@ -88,6 +92,15 @@ Every change follows this cycle without shortcuts:
 - Each commit addresses a single feature, fix, or refactor
 - Every commit leaves the codebase in a working state
 - Never batch unrelated changes into one commit
+
+**Stage files intentionally:**
+```bash
+git add [specific files]    # NEVER use git add . or git add -A
+git status                  # Verify what's staged
+git diff --staged           # Review before committing
+```
+
+**Warning:** `git add .` and `git add -A` are dangerous. Always stage specific files to maintain atomic commits and avoid committing debug code, secrets, or unrelated changes.
 
 **Commit Message Format:**
 ```

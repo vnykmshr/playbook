@@ -241,6 +241,24 @@ Closes #234"
 
 ---
 
+## Staging Files: Never Use Blind Adds
+
+```bash
+git add [specific files]    # ALWAYS stage specific files
+git status                  # Verify what's staged
+git diff --staged           # Review staged changes
+```
+
+**NEVER use `git add .` or `git add -A`.** These are dangerous because:
+- You lose track of what's in each commit
+- Debug code, secrets, or unrelated changes slip in
+- Atomic commit discipline breaks down
+- Code review becomes harder
+
+**Rule:** If you can't name the files you're adding, you're not ready to commit.
+
+---
+
 ## Commit Discipline Checklist
 
 Before committing, verify:
@@ -252,6 +270,7 @@ Before committing, verify:
 - [ ] No debug code, print statements, or TODOs
 
 ### Commit Quality
+- [ ] Staged specific files (not `git add .` or `-A`)
 - [ ] One logical change per commit
 - [ ] Commit message follows Conventional Commits
 - [ ] Subject is clear and specific (not vague)
@@ -265,12 +284,35 @@ Before committing, verify:
 
 ---
 
+## After Committing: Update Tracker
+
+After each commit, update your master tracker or phase docs:
+
+```bash
+# Check for tracker
+ls todos/*.md
+ls todos/releases/*/
+```
+
+**Update:**
+- [ ] Mark completed task as done
+- [ ] Note commit hash for reference
+- [ ] Identify next task
+
+**Why:** Keeps you aligned with original goals. Without tracker updates:
+- Progress gets lost
+- Next steps become guesses
+- Scope creep goes unnoticed
+
+---
+
 ## Integration with Playbook
 
 **Part of workflow:**
 - `/pb-start` → Create feature branch, work begins
 - `/pb-cycle` → Iteration with self-review and peer review
 - `/pb-commit` → Craft atomic commits (YOU ARE HERE)
+- **Update tracker** → Mark done, identify next
 - `/pb-pr` → Create pull request with commits
 - `/pb-release` → Deploy
 

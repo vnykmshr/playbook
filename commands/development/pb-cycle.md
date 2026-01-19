@@ -99,7 +99,7 @@ If issues identified:
 After reviews pass, create a logical commit:
 
 ```bash
-git add [specific files]    # Never use git add .
+git add [specific files]    # NEVER use git add . or git add -A
 git status                  # Verify what's staged
 git diff --staged           # Review staged changes
 git commit -m "$(cat <<'EOF'
@@ -109,6 +109,11 @@ Body explaining what and why
 EOF
 )"
 ```
+
+**Warning:** Never use `git add .` or `git add -A`. Always stage specific files intentionally. Blind adds lead to:
+- Committing debug code, secrets, or unrelated changes
+- Losing track of what's in each commit
+- Breaking atomic commit discipline
 
 ### Commit Message Guidelines
 
@@ -137,6 +142,47 @@ update code
 
 ---
 
+## Step 6: Update Tracker
+
+After each commit, update your progress tracker to capture what's done and what remains.
+
+```bash
+# Check for master tracker / phase docs
+ls todos/*.md
+ls todos/releases/*/
+```
+
+**Update in tracker:**
+- [ ] Mark completed task as done
+- [ ] Note commit hash for reference
+- [ ] Review remaining tasks
+- [ ] Identify next task for upcoming iteration
+
+**Why this matters:** Trackers keep you aligned with original goals. Without updates:
+- You lose track of progress
+- Next steps become "guessed" instead of planned
+- Scope creep goes unnoticed
+- Context is lost between sessions
+
+**Tracker update template:**
+```markdown
+## [Date] Iteration Update
+
+**Completed:**
+- [x] Task description — commit: abc1234
+
+**In Progress:**
+- [ ] Next task — starting next iteration
+
+**Remaining:**
+- [ ] Task 3
+- [ ] Task 4
+```
+
+**Tip:** If no tracker exists, create one. Even a simple `todos/tracker.md` prevents drift.
+
+---
+
 ## Quick Cycle Summary
 
 ```
@@ -145,8 +191,9 @@ update code
 3. Run: make lint && make typecheck && make test
 4. Request peer review (senior engineer perspective)
 5. Address any feedback
-6. Commit with clear message
-7. Repeat for next unit of work
+6. Commit with clear message (specific files, not git add -A)
+7. Update tracker (mark done, note commit, identify next)
+8. Repeat for next unit of work
 ```
 
 ---
