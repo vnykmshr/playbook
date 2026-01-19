@@ -273,7 +273,7 @@ Design systems before implementation.
 | `/pb-observability` | Monitoring, observability patterns, and alerting strategy |
 | `/pb-deprecation` | Deprecation strategy, communication, and backwards compatibility |
 
-### Development (11 commands)
+### Development (12 commands)
 Iterative feature development with built-in quality gates.
 
 | Command | Purpose |
@@ -283,6 +283,7 @@ Iterative feature development with built-in quality gates.
 | `/pb-resume` | Get back in context after a break |
 | `/pb-pause` | Gracefully pause work, preserve context for later |
 | `/pb-cycle` | Self-review + peer review iteration loop |
+| `/pb-ship` | Complete review suite → PR → merge → release → verify |
 | `/pb-standup` | Daily async status updates for distributed teams |
 | `/pb-commit` | Craft atomic, meaningful commits |
 | `/pb-pr` | Streamlined pull request creation |

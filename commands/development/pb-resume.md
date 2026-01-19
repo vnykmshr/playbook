@@ -285,13 +285,14 @@ git add -A && git commit -m "wip: [state]" && git push
 
 **Part of development workflow:**
 ```
-/pb-start → /pb-cycle → /pb-commit → /pb-pr
-     ↑
-     │         ┌─────────────┐
-     │         │   SESSION   │
-     └─────────│   BOUNDARY  │────────────┐
-               └─────────────┘            │
-                     ↑                    ↓
+/pb-start → /pb-cycle → /pb-commit → /pb-ship
+     ↑                                   │
+     │         ┌─────────────┐           │
+     │         │   SESSION   │           ↓
+     └─────────│   BOUNDARY  │       Reviews →
+               └─────────────┘       PR → Merge →
+                     ↑               Release
+                     ↓
               /pb-resume ←──────── /pb-pause
               (recover)            (preserve)
 ```
@@ -302,7 +303,7 @@ git add -A && git commit -m "wip: [state]" && git push
 - `/pb-cycle` → Iterate with reviews
 - `/pb-pause` → Gracefully pause, preserve context
 - `/pb-commit` → Atomic commits
-- `/pb-pr` → Pull request
+- `/pb-ship` → Full review → PR → release workflow
 
 **When to use `/pb-resume`:**
 - After a context switch (lunch break, context switching)
@@ -314,6 +315,7 @@ git add -A && git commit -m "wip: [state]" && git push
 **Related commands:**
 - `/pb-start` — Starting new feature (before /pb-resume context recovery)
 - `/pb-pause` — Gracefully pause work (complement to /pb-resume)
+- `/pb-ship` — When ready to ship (reviews → PR → release)
 - `/pb-context` — Read project context (use alongside /pb-resume)
 - `/pb-standup` — Write after resuming (post status for team)
 - `/pb-standards` — Refresh working principles

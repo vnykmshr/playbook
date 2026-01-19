@@ -2,7 +2,7 @@
 
 Complete reference for how all playbook commands work together to form a unified SDLC framework.
 
-**Last Updated**: 2026-01-19 | **Categories**: 10 | **Commands**: 61
+**Last Updated**: 2026-01-19 | **Categories**: 10 | **Commands**: 62
 
 ---
 
@@ -51,7 +51,7 @@ Complete reference for how all playbook commands work together to form a unified
 
 ---
 
-## Command Inventory: All 61 Commands
+## Command Inventory: All 62 Commands
 
 ### CORE FOUNDATION & PHILOSOPHY (13 commands)
 
@@ -84,7 +84,7 @@ These establish baseline understanding and guiding philosophy. **Every engineer 
 
 ---
 
-### DEVELOPMENT WORKFLOW (9 commands)
+### DEVELOPMENT WORKFLOW (10 commands)
 
 Daily iterative development. **Use these multiple times per week.**
 
@@ -95,10 +95,11 @@ Daily iterative development. **Use these multiple times per week.**
 | 7 | **pb-pause** | Gracefully pause work | Preserve state, update trackers, document handoff | End of day/session, before break | All |
 | 8 | **pb-cycle** | Self-review + peer review iteration | Self-review → peer review → refine → commit | Multiple times per feature | All |
 | 9 | **pb-commit** | Craft atomic, meaningful commits | One concern per commit, good messages | Before merging to main | S/M/L |
-| 10 | **pb-pr** | Streamlined pull request creation | PR title, description template, merge strategy | When ready for code review | All |
-| 11 | **pb-testing** | Testing philosophy and patterns | Unit/integration/E2E, test data, CI/CD | Alongside code in /pb-cycle | S/M/L |
-| 12 | **pb-knowledge-transfer** | KT session preparation | 12-section guide for knowledge sharing | Team transitions, onboarding | M |
-| 13 | **pb-todo-implement** | Guided implementation with checkpoints | 5 phases: INIT → SELECT → REFINE → IMPLEMENT → COMMIT | After /pb-plan, before /pb-cycle (for major work) | All |
+| 10 | **pb-ship** | Complete ship workflow | Reviews → PR → peer review → merge → release → verify | When focus area is code-complete | All |
+| 11 | **pb-pr** | Streamlined pull request creation | PR title, description template, merge strategy | When ready for code review (standalone) | All |
+| 12 | **pb-testing** | Testing philosophy and patterns | Unit/integration/E2E, test data, CI/CD | Alongside code in /pb-cycle | S/M/L |
+| 13 | **pb-knowledge-transfer** | KT session preparation | 12-section guide for knowledge sharing | Team transitions, onboarding | M |
+| 14 | **pb-todo-implement** | Guided implementation with checkpoints | 5 phases: INIT → SELECT → REFINE → IMPLEMENT → COMMIT | After /pb-plan, before /pb-cycle (for major work) | All |
 
 **Development flow**:
 ```
@@ -112,21 +113,25 @@ ITERATION LOOP (repeat per task):
     └─ Peer review
   /pb-commit (atomic commit)
   ↓
-/pb-pr (create pull request)
-  ↓
-CODE REVIEW (see Reviews section)
-  ↓
-Merge → Continue or:
+SESSION BOUNDARY (if needed):
   ├─ /pb-pause (end of session: preserve context)
   └─ /pb-resume (next session: recover context)
+  ↓
+READY TO SHIP:
+  /pb-ship (comprehensive workflow)
+    ├─ Specialized reviews (cleanup, hygiene, tests, security, docs)
+    ├─ Final gate (prerelease)
+    ├─ PR creation and peer review
+    ├─ Merge and release
+    └─ Verification
 ```
 
 **Key integration points**:
 - `/pb-start` → `/pb-cycle` (iterative development)
 - `/pb-cycle` includes `/pb-testing` and `/pb-standards`
 - `/pb-cycle` → `/pb-commit` (after self-review)
-- `/pb-commit` → `/pb-pr` (when ready for merge)
 - `/pb-pause` ↔ `/pb-resume` (session boundary bookends)
+- `/pb-ship` orchestrates: reviews → PR → merge → release → verify
 - `/pb-todo-implement` provides **structured checkpoint-based alternative** to direct `/pb-cycle` workflow
 
 ---
@@ -540,8 +545,8 @@ RELEASE
 **Who**: Every engineer
 
 ### Cluster 2: Daily Development
-**Commands**: pb-start, pb-cycle, pb-pause, pb-resume, pb-commit, pb-pr, pb-testing
-**Purpose**: Iterative feature development with quality gates and session management
+**Commands**: pb-start, pb-cycle, pb-pause, pb-resume, pb-commit, pb-ship, pb-pr, pb-testing
+**Purpose**: Iterative feature development with quality gates, session management, and shipping
 **Frequency**: Use multiple times per week per feature
 **Who**: All developers
 
@@ -914,4 +919,4 @@ POWERFUL:
 
 **This guide is the map. Use it to navigate the playbook as an integrated system.**
 
-*Last Updated: 2026-01-19 | Playbook Version: v1.5.1 | Commands: 61 | Integration Health: Excellent (9/10)*
+*Last Updated: 2026-01-19 | Playbook Version: v1.5.2 | Commands: 62 | Integration Health: Excellent (9/10)*

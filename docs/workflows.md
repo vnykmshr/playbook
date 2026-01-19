@@ -299,8 +299,8 @@ MORNING               MIDDAY                AFTERNOON               END OF DAY
 ├─ /pb-resume         ├─ /pb-context         ├─ /pb-cycle            ├─ /pb-pause
 │ (Get context)       │ (Big picture)        │ (Final self-review)   │ (Preserve context)
 │                     │                      │                      │
-├─ /pb-standup        ├─ /pb-patterns        ├─ /pb-pr               └─ Update trackers,
-│ (Write standup)     │ (Plan next work)     │ (Create PR)            document state
+├─ /pb-standup        ├─ /pb-patterns        ├─ Ready to ship?       └─ Update trackers,
+│ (Write standup)     │ (Plan next work)     │  → /pb-ship             document state
 │                     │                      │
 └─ /pb-cycle          └─ /pb-cycle           └─ Code review feedback
   (Self-review)         (Develop feature)        (Address if needed)
@@ -308,6 +308,8 @@ MORNING               MIDDAY                AFTERNOON               END OF DAY
 ```
 
 **Session boundaries:** `/pb-pause` and `/pb-resume` work as bookends—pause preserves context at end of session, resume recovers it at start of next.
+
+**Shipping:** When focus area is code-complete, use `/pb-ship` for the full journey: specialized reviews → PR → peer review → merge → release → verify.
 
 ---
 

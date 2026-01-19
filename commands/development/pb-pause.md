@@ -272,13 +272,14 @@ For vacations, handoffs, or long breaks:
 
 **Part of development workflow:**
 ```
-/pb-start → /pb-cycle → /pb-commit → /pb-pr
-     ↑
-     │         ┌─────────────┐
-     │         │   SESSION   │
-     └─────────│   BOUNDARY  │────────────┐
-               └─────────────┘            │
-                     ↑                    ↓
+/pb-start → /pb-cycle → /pb-commit → /pb-ship
+     ↑                                   │
+     │         ┌─────────────┐           │
+     │         │   SESSION   │           ↓
+     └─────────│   BOUNDARY  │       Reviews →
+               └─────────────┘       PR → Merge →
+                     ↑               Release
+                     ↓
               /pb-resume ←──────── /pb-pause
               (recover)            (preserve)
 ```
@@ -289,15 +290,16 @@ For vacations, handoffs, or long breaks:
 - `/pb-cycle` → Iterate with reviews
 - **`/pb-pause`** → Gracefully pause work (YOU ARE HERE)
 - `/pb-commit` → Atomic commits
-- `/pb-pr` → Pull request
+- `/pb-ship` → Full review → PR → release workflow
 
 **Commands to run during pause:**
 - `/pb-context` — Update working context
 - `/pb-claude-project` — Update CLAUDE.md (if needed)
 
 **Related commands:**
-- `/pb-standup` — Post async status update
 - `/pb-resume` — Resume after pause
+- `/pb-ship` — When ready to ship (reviews → PR → release)
+- `/pb-standup` — Post async status update
 - `/pb-what-next` — Plan next session
 
 ---
