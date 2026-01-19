@@ -61,7 +61,10 @@ nav:
   - Technical Blog: technical-blog.md
   - Getting Started: getting-started.md
   - Adoption Guide: adoption-guide.md
-  - Workflows: workflows.md
+  - Workflows:
+      - Overview: workflows.md
+      - Recipes: recipes.md
+      - Frontend Workflow: frontend-workflow.md
   - Command Reference: command-index.md
   - Integration Guide: integration-guide.md
   - Quality:

@@ -334,6 +334,11 @@ Status:    Mid-feature, tests need updating
 - `/pb-security` — Security review
 - `/pb-release` — Release preparation
 
+**Frontend Development:**
+- `/pb-design-language` → `/pb-patterns-frontend` — Starting frontend work
+- `/pb-a11y` — Check accessibility during development
+- See `/docs/frontend-workflow.md` for complete frontend guide
+
 ---
 
 ## How It Differs from Other Commands
