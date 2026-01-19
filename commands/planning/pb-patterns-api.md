@@ -1,0 +1,676 @@
+# API Design Patterns
+
+Patterns for designing APIs that are consistent, intuitive, and maintainable. Covers REST, GraphQL, and RPC styles.
+
+**Trade-offs exist:** API design is permanent once clients depend on it. Use `/pb-preamble` thinking (challenge assumptions about what clients need) and `/pb-design-rules` thinking (especially Clarity in naming, Least Surprise in behavior, and Extensibility for evolution).
+
+Design for the consumer, not the implementation.
+
+---
+
+## API Style Decision
+
+### When to Use Each Style
+
+| Style | Best For | Avoid When |
+|-------|----------|------------|
+| **REST** | CRUD operations, resource-oriented systems, public APIs | Complex queries, real-time, tight coupling acceptable |
+| **GraphQL** | Complex data requirements, multiple clients with different needs | Simple CRUD, strict caching needs, small team |
+| **gRPC** | Service-to-service, high performance, streaming | Browser clients, public APIs, simple requests |
+
+### Decision Framework
+
+```
+Is this a public API consumed by third parties?
+├─ Yes → REST (widest compatibility, simplest tooling)
+└─ No → Is performance critical (service-to-service)?
+    ├─ Yes → gRPC (binary protocol, streaming)
+    └─ No → Do clients have varied data needs?
+        ├─ Yes → GraphQL (client-driven queries)
+        └─ No → REST (simplest option)
+```
+
+---
+
+## REST Patterns
+
+### Resource Naming
+
+Resources are nouns, not verbs:
+
+```
+# [YES] Nouns
+GET    /users
+GET    /users/{id}
+POST   /users
+PUT    /users/{id}
+DELETE /users/{id}
+
+# [NO] Verbs
+GET    /getUsers
+POST   /createUser
+POST   /deleteUser/{id}
+```
+
+**Plurals for collections:**
+
+```
+# [YES] Plural
+/users
+/users/{id}/orders
+
+# [NO] Singular (inconsistent)
+/user
+/user/{id}/order
+```
+
+**Hierarchical relationships:**
+
+```
+# [YES] Nested resources
+GET /users/{userId}/orders
+GET /users/{userId}/orders/{orderId}
+
+# [NO] Flat with query params for relationships
+GET /orders?userId=123  (OK for filtering, not for hierarchy)
+```
+
+### HTTP Methods
+
+| Method | Purpose | Idempotent | Safe |
+|--------|---------|------------|------|
+| GET | Read resource(s) | Yes | Yes |
+| POST | Create resource | No | No |
+| PUT | Replace resource | Yes | No |
+| PATCH | Partial update | Yes* | No |
+| DELETE | Remove resource | Yes | No |
+
+*PATCH is idempotent if the same patch produces the same result.
+
+**Idempotent means:** Calling multiple times produces the same result as calling once.
+
+```
+# Idempotent (safe to retry)
+PUT /users/123 { "name": "Alice" }  # Always results in name = Alice
+
+# Not idempotent (retry creates duplicates)
+POST /users { "name": "Alice" }  # Creates new user each time
+```
+
+### Status Codes
+
+| Code | Meaning | Use When |
+|------|---------|----------|
+| 200 | OK | Successful GET, PUT, PATCH |
+| 201 | Created | Successful POST that creates resource |
+| 204 | No Content | Successful DELETE, or PUT with no body |
+| 400 | Bad Request | Invalid input, validation error |
+| 401 | Unauthorized | Missing or invalid authentication |
+| 403 | Forbidden | Authenticated but not authorized |
+| 404 | Not Found | Resource doesn't exist |
+| 409 | Conflict | Duplicate resource, version conflict |
+| 422 | Unprocessable Entity | Validation failed (alternative to 400) |
+| 429 | Too Many Requests | Rate limit exceeded |
+| 500 | Internal Server Error | Server-side failure |
+| 503 | Service Unavailable | Temporary outage, maintenance |
+
+### Request/Response Format
+
+**Consistent envelope:**
+
+```json
+// Success response
+{
+  "data": { /* resource or array */ },
+  "meta": {
+    "page": 1,
+    "totalPages": 10,
+    "totalCount": 100
+  }
+}
+
+// Error response
+{
+  "error": {
+    "code": "VALIDATION_ERROR",
+    "message": "Invalid email address",
+    "details": [
+      {
+        "field": "email",
+        "message": "Must be a valid email"
+      }
+    ]
+  }
+}
+```
+
+**Alternatively, no envelope (simpler):**
+
+```json
+// Success: Just the data
+{ "id": 1, "name": "Alice" }
+
+// Success: Array
+[{ "id": 1 }, { "id": 2 }]
+
+// Error: Standard error object
+{
+  "error": "VALIDATION_ERROR",
+  "message": "Invalid email address"
+}
+```
+
+Pick one style and be consistent.
+
+---
+
+## Error Handling
+
+### Error Response Standard
+
+```json
+{
+  "error": {
+    "code": "RESOURCE_NOT_FOUND",
+    "message": "User not found",
+    "details": {
+      "resourceType": "user",
+      "resourceId": "123"
+    },
+    "requestId": "req_abc123",
+    "documentation": "https://api.example.com/docs/errors#RESOURCE_NOT_FOUND"
+  }
+}
+```
+
+**Components:**
+- `code` — Machine-readable error type (for client logic)
+- `message` — Human-readable description (for debugging/display)
+- `details` — Additional context (varies by error type)
+- `requestId` — For support/debugging correlation
+- `documentation` — Link to error documentation (optional)
+
+### Error Codes
+
+Define a consistent error taxonomy:
+
+```
+# Authentication/Authorization
+UNAUTHORIZED           # Not authenticated
+FORBIDDEN              # Authenticated but not allowed
+TOKEN_EXPIRED          # Auth token needs refresh
+
+# Validation
+VALIDATION_ERROR       # Input validation failed
+MISSING_FIELD          # Required field not provided
+INVALID_FORMAT         # Field format wrong
+
+# Resources
+RESOURCE_NOT_FOUND     # Requested resource doesn't exist
+RESOURCE_CONFLICT      # Duplicate or version conflict
+RESOURCE_GONE          # Resource was deleted
+
+# Rate Limiting
+RATE_LIMITED           # Too many requests
+QUOTA_EXCEEDED         # Usage quota exceeded
+
+# Server Errors
+INTERNAL_ERROR         # Generic server error
+SERVICE_UNAVAILABLE    # Temporary outage
+```
+
+### Client Error Handling
+
+```typescript
+async function fetchUser(id: string): Promise<User> {
+  const response = await fetch(`/api/users/${id}`);
+
+  if (!response.ok) {
+    const error = await response.json();
+
+    switch (error.error.code) {
+      case 'RESOURCE_NOT_FOUND':
+        throw new UserNotFoundError(id);
+      case 'UNAUTHORIZED':
+        throw new AuthenticationError();
+      case 'RATE_LIMITED':
+        // Retry after delay
+        await sleep(error.error.details.retryAfter);
+        return fetchUser(id);
+      default:
+        throw new ApiError(error.error.message);
+    }
+  }
+
+  return response.json();
+}
+```
+
+---
+
+## Pagination
+
+### Cursor-Based (Recommended)
+
+Best for real-time data, no "page drift" when items are added/removed:
+
+```
+GET /users?cursor=abc123&limit=20
+
+Response:
+{
+  "data": [ ... ],
+  "pagination": {
+    "nextCursor": "def456",
+    "prevCursor": "xyz789",
+    "hasMore": true
+  }
+}
+```
+
+**Cursor is opaque:** Client doesn't decode it, just passes it back.
+
+### Offset-Based (Simple)
+
+Easier to implement, allows jumping to pages:
+
+```
+GET /users?page=2&limit=20
+GET /users?offset=20&limit=20
+
+Response:
+{
+  "data": [ ... ],
+  "pagination": {
+    "page": 2,
+    "limit": 20,
+    "totalPages": 10,
+    "totalCount": 200
+  }
+}
+```
+
+**Problem:** "Page drift" when items added/removed during pagination.
+
+### Keyset-Based
+
+For sorted data with unique keys:
+
+```
+GET /users?after_id=123&limit=20
+
+Response:
+{
+  "data": [ ... ],
+  "pagination": {
+    "lastId": 143
+  }
+}
+```
+
+**Most efficient** for large datasets (uses index).
+
+---
+
+## Versioning
+
+### URL Versioning (Recommended for REST)
+
+```
+/v1/users
+/v2/users
+```
+
+**Pros:** Explicit, easy to route, cacheable
+**Cons:** URL pollution, can't version individual endpoints
+
+### Header Versioning
+
+```
+GET /users
+Accept: application/vnd.api+json; version=2
+```
+
+**Pros:** Clean URLs, per-request versioning
+**Cons:** Hidden, harder to test, caching complexity
+
+### Query Parameter
+
+```
+GET /users?version=2
+```
+
+**Pros:** Explicit, easy to test
+**Cons:** Pollutes query string, caching issues
+
+### Versioning Strategy
+
+1. **Avoid breaking changes** — Add fields, don't remove or rename
+2. **Deprecation period** — Warn before removing (6-12 months)
+3. **Version when necessary** — Not every release needs a version bump
+
+```
+# Non-breaking (no version needed)
+- Adding new optional field
+- Adding new endpoint
+- Adding new optional query param
+
+# Breaking (needs version)
+- Removing field
+- Renaming field
+- Changing field type
+- Changing error format
+- Removing endpoint
+```
+
+---
+
+## Authentication
+
+### API Key (Simple)
+
+```
+GET /api/users
+Authorization: Bearer api_key_abc123
+
+# Or header
+X-API-Key: api_key_abc123
+```
+
+**Use for:** Server-to-server, simple integrations
+**Don't use for:** User authentication, browser apps
+
+### JWT (Token-based)
+
+```
+POST /auth/login
+{ "email": "...", "password": "..." }
+
+Response:
+{
+  "accessToken": "eyJ...",
+  "refreshToken": "...",
+  "expiresIn": 3600
+}
+
+# Subsequent requests
+GET /api/users
+Authorization: Bearer eyJ...
+```
+
+**Token refresh:**
+
+```
+POST /auth/refresh
+{ "refreshToken": "..." }
+
+Response:
+{
+  "accessToken": "eyJ...(new)...",
+  "expiresIn": 3600
+}
+```
+
+### OAuth 2.0 (Third-party)
+
+For "Login with Google" etc. See OAuth 2.0 spec for flows.
+
+---
+
+## Rate Limiting
+
+### Response Headers
+
+```
+HTTP/1.1 200 OK
+X-RateLimit-Limit: 100
+X-RateLimit-Remaining: 95
+X-RateLimit-Reset: 1640000000
+```
+
+### Rate Limited Response
+
+```
+HTTP/1.1 429 Too Many Requests
+Retry-After: 60
+
+{
+  "error": {
+    "code": "RATE_LIMITED",
+    "message": "Rate limit exceeded",
+    "details": {
+      "limit": 100,
+      "window": "1 minute",
+      "retryAfter": 60
+    }
+  }
+}
+```
+
+### Rate Limit Strategies
+
+| Strategy | Description |
+|----------|-------------|
+| Fixed window | X requests per minute/hour |
+| Sliding window | X requests in rolling window |
+| Token bucket | Burst allowed, refills over time |
+
+---
+
+## GraphQL Patterns
+
+### Schema Design
+
+```graphql
+type User {
+  id: ID!
+  email: String!
+  name: String!
+  orders(first: Int, after: String): OrderConnection!
+}
+
+type Order {
+  id: ID!
+  total: Money!
+  status: OrderStatus!
+  items: [OrderItem!]!
+}
+
+type OrderConnection {
+  edges: [OrderEdge!]!
+  pageInfo: PageInfo!
+}
+
+type OrderEdge {
+  node: Order!
+  cursor: String!
+}
+
+type PageInfo {
+  hasNextPage: Boolean!
+  endCursor: String
+}
+```
+
+### Query Patterns
+
+```graphql
+# Good: Specific fields
+query GetUserOrders($userId: ID!) {
+  user(id: $userId) {
+    name
+    orders(first: 10) {
+      edges {
+        node {
+          id
+          total
+        }
+      }
+    }
+  }
+}
+
+# Bad: Over-fetching
+query GetEverything($userId: ID!) {
+  user(id: $userId) {
+    ...AllUserFields
+    orders {
+      ...AllOrderFields
+      items {
+        ...AllItemFields
+      }
+    }
+  }
+}
+```
+
+### Mutation Patterns
+
+```graphql
+type Mutation {
+  createOrder(input: CreateOrderInput!): CreateOrderPayload!
+  updateOrder(input: UpdateOrderInput!): UpdateOrderPayload!
+  deleteOrder(id: ID!): DeleteOrderPayload!
+}
+
+input CreateOrderInput {
+  userId: ID!
+  items: [OrderItemInput!]!
+}
+
+type CreateOrderPayload {
+  order: Order
+  errors: [UserError!]!
+}
+
+type UserError {
+  field: String
+  message: String!
+}
+```
+
+**Pattern:** Return both success data AND errors in payload.
+
+### GraphQL Pitfalls
+
+Common issues to avoid:
+
+- **N+1 queries** — Use DataLoader for batching
+- **Over-fetching in resolvers** — Fetch only requested fields
+- **Schema complexity** — Start simple, evolve carefully
+- **Missing error handling** — Return errors in payload, not HTTP errors
+
+**Future consideration:** For comprehensive GraphQL guidance (subscriptions, federation, caching, tooling), see `/pb-patterns-graphql` when available.
+
+---
+
+## Documentation
+
+### OpenAPI (REST)
+
+```yaml
+openapi: 3.0.0
+info:
+  title: User API
+  version: 1.0.0
+
+paths:
+  /users:
+    get:
+      summary: List users
+      parameters:
+        - name: page
+          in: query
+          schema:
+            type: integer
+            default: 1
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserList'
+
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        id:
+          type: string
+        email:
+          type: string
+          format: email
+        name:
+          type: string
+      required:
+        - id
+        - email
+```
+
+### Documentation Checklist
+
+- [ ] All endpoints documented
+- [ ] Request/response examples for each endpoint
+- [ ] Error responses documented
+- [ ] Authentication explained
+- [ ] Rate limits documented
+- [ ] Changelog maintained
+
+---
+
+## API Design Checklist
+
+### Before Building
+
+- [ ] Who are the consumers? (Frontend, mobile, third-party)
+- [ ] What style fits? (REST, GraphQL, gRPC)
+- [ ] What's the versioning strategy?
+- [ ] What's the authentication method?
+- [ ] What are the rate limits?
+
+### During Design
+
+- [ ] Resource names are nouns, plural
+- [ ] HTTP methods used correctly
+- [ ] Status codes are appropriate
+- [ ] Error format is consistent
+- [ ] Pagination strategy chosen
+- [ ] Fields are named consistently (camelCase or snake_case, pick one)
+
+### Before Release
+
+- [ ] Documentation complete
+- [ ] Examples for all endpoints
+- [ ] Error codes documented
+- [ ] Rate limits communicated
+- [ ] Breaking changes identified
+
+---
+
+## Related Commands
+
+- `/pb-patterns-frontend` — Frontend data fetching patterns (client-side API consumption)
+- `/pb-security` — API security patterns
+- `/pb-patterns-core` — Circuit breaker, retry patterns
+- `/pb-patterns-async` — Async API patterns
+- `/pb-testing` — API contract testing
+- `/pb-documentation` — Documentation standards
+
+---
+
+## Design Rules Applied
+
+| Rule | Application |
+|------|-------------|
+| **Clarity** | Consistent naming, predictable behavior |
+| **Least Surprise** | Standard HTTP methods and status codes |
+| **Simplicity** | REST for simple needs, complexity only when justified |
+| **Extensibility** | Add fields without breaking, versioning strategy |
+| **Robustness** | Clear error handling, rate limiting |
+
+---
+
+**Last Updated:** 2026-01-19
+**Version:** 1.0

@@ -662,6 +662,7 @@ orders = OrderFactory.create_batch(10)  # Create 10 orders
 - `/pb-cycle` — Testing in peer review
 - `/pb-performance` — Performance testing
 - `/pb-deployment` — Test before deploying
+- `/pb-a11y` — Accessibility testing (axe-core, Lighthouse, screen reader)
 
 ---
 

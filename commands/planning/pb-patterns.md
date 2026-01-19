@@ -21,7 +21,7 @@ Patterns provide:
 
 ## Pattern Family Overview
 
-v1.2.0 organizes patterns into four specialized commands:
+The playbook organizes patterns into specialized commands:
 
 ### 1. Core Patterns (`/pb-patterns-core`)
 
@@ -303,6 +303,8 @@ All patterns in this family follow these standards:
 - `/pb-patterns-async` — Asynchronous patterns
 - `/pb-patterns-db` — Database patterns
 - `/pb-patterns-distributed` — Distributed systems patterns
+- `/pb-patterns-frontend` — Frontend architecture patterns (components, state, theming)
+- `/pb-patterns-api` — API design patterns (REST, GraphQL, gRPC)
 
 **Using Patterns:**
 - `/pb-guide` — System design guide (applies patterns)
