@@ -432,25 +432,23 @@ Update `todos/ship-review-YYYY-MM-DD.md`:
 
 ---
 
-## Quick Ship (Small Changes)
+## Escape Hatch: Trivial Changes Only
 
-For small, low-risk changes, use abbreviated flow:
+For genuinely trivial changes (typo fix, comment update, README tweak):
 
 ```bash
-# Phase 1: Foundation
+# Phase 1: Foundation (still required)
 make lint && make test
 
-# Phase 2: Quick review (pick relevant ones)
-# /pb-review-cleanup (if code changes)
-# /pb-security (if security-relevant)
-# /pb-review-tests (if test changes)
+# Phase 2: Pick ONE relevant review
+# /pb-review-cleanup (if code touched)
+# /pb-review-docs (if docs touched)
 
-# Phase 3: Skip (small change)
+# Phase 3: Skip
 
-# Phase 4: PR
+# Phase 4: PR (streamlined)
 /pb-pr
 # Quick peer review
-# Address feedback
 # Get approval
 
 # Phase 5: Ship
@@ -458,6 +456,21 @@ gh pr merge --squash --delete-branch
 git checkout main && git pull
 make deploy
 ```
+
+**Use full workflow by default. This escape hatch is for exceptions, not convenience.**
+
+Examples of trivial changes:
+- Fixing a typo in documentation
+- Updating a comment
+- Bumping a version number
+- Adding a missing log message
+
+Examples that are NOT trivial (use full workflow):
+- Any logic change
+- Any new functionality
+- Any test changes
+- Any configuration changes
+- Anything touching security, auth, or data
 
 ---
 
