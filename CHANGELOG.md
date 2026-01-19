@@ -5,6 +5,55 @@ All notable changes to this project are documented here.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v1.6.0] - 2026-01-19
+
+### Added
+
+**Session Management & Shipping Workflow**
+- Added 2 new commands for development lifecycle management:
+  - `/pb-pause` — Gracefully pause work, preserve context for later sessions
+  - `/pb-ship` — Complete shipping workflow from code-complete to production
+
+**`/pb-pause` (Session Management)**
+- 7-step pause checklist: preserve state, update trackers, review docs, update context, update CLAUDE.md, document handoff, cleanup
+- Standardized pause notes location (`todos/pause-notes.md`)
+- Quick pause flow for short breaks
+- Extended pause checklist for vacations/handoffs
+- Integrates with `/pb-resume` as session boundary bookends
+
+**`/pb-ship` (Complete Shipping Workflow)**
+- Phase 1: Foundation — Quality gates + basic self-review
+- Phase 2: Specialized Reviews (optimally ordered):
+  - `/pb-review-cleanup` (code quality first)
+  - `/pb-review-hygiene` (project health)
+  - `/pb-review-tests` (coverage)
+  - `/pb-security` (vulnerabilities)
+  - `/pb-logging` (standards, optional)
+  - `/pb-review-docs` (accuracy)
+- Phase 3: Final Gate — `/pb-review-prerelease` + go/no-go decision
+- Phase 4: PR & Peer Review — Create PR, peer review, iterate, get approval
+- Phase 5: Merge & Release — Merge, deploy, verify, summarize
+- Issue tracking template for review findings
+- Escape hatch for trivial changes (typos, comments)
+- Philosophy: "review does not harm, better safe than sorry"
+
+### Documentation
+
+- Updated README: Development commands 11→12
+- Updated command-index: Added pb-pause, pb-ship to workflow tables
+- Updated integration-guide: Command count 60→62, updated development flow
+- Updated workflows: Daily workflow now shows pb-pause/pb-ship
+- Updated pb-resume: Added pause notes reading, references pb-ship
+
+### Status
+
+- 62 commands across 10 categories
+- Complete session management (pause ↔ resume)
+- Complete shipping workflow (reviews → PR → release)
+- All quality gates passing
+
+---
+
 ## [v1.5.1] - 2026-01-17
 
 ### Added
