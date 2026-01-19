@@ -53,6 +53,15 @@ Create `docs/TECHNICAL_BLOG.md`:
 - Real-world applications
 - Practical conclusion
 
+### 5. Documentation Site (Optional)
+**Reference:** `/pb-repo-docsite`
+
+Transform docs into professional static site:
+- Choose SSG based on project language (Hugo/MkDocs/Docusaurus)
+- Set up CI/CD for GitHub Pages
+- Migrate existing markdown docs
+- Add Mermaid diagram support
+
 ---
 
 ## Process
