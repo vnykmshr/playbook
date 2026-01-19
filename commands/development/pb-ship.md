@@ -23,24 +23,37 @@ Ship when ready, not when tired. Every review step is an opportunity to find iss
 PHASE 1              PHASE 2                PHASE 3           PHASE 4              PHASE 5
 FOUNDATION           SPECIALIZED REVIEWS    FINAL GATE        PR & PEER REVIEW     MERGE & RELEASE
 │                    │                      │                 │                    │
-├─ Quality gates     ├─ /pb-review-cleanup  ├─ /pb-review-    ├─ /pb-pr            ├─ Merge PR
-│  (lint,test,type)  │  (code quality)      │  prerelease     │                    │
+├─ Quality gates     ├─ /pb-review-docs     ├─ /pb-review-    ├─ /pb-pr            ├─ Merge PR
+│  (lint,test,type)  │  (REQUIRED)          │  prerelease     │                    │
 │                    │                      │  (senior gate)  ├─ Peer review       ├─ /pb-release
-└─ /pb-cycle         ├─ /pb-review-hygiene  │                 │  (scoped to PR)    │
-   (self-review)     │  (project health)    └─ Ship decision  │                    ├─ Verify
-                     │                         (go/no-go)     ├─ Address feedback  │
-                     ├─ /pb-review-tests                      │                    └─ Summarize
-                     │  (coverage)                            └─ Approved sign-off
+├─ /pb-cycle         ├─ /pb-review-cleanup  │                 │  (scoped to PR)    │
+│  (self-review)     │  (code quality)      └─ Ship decision  │                    ├─ Verify
+│                    │                         (go/no-go)     ├─ Address feedback  │
+└─ Release artifacts ├─ /pb-review-hygiene                    │                    └─ Summarize
+   (CHANGELOG etc)   │  (project health)                      └─ Approved sign-off
+                     │
+                     ├─ /pb-review-tests
+                     │  (coverage)
                      │
                      ├─ /pb-security
                      │  (vulnerabilities)
                      │
-                     ├─ /pb-logging
-                     │  (standards)
-                     │
-                     └─ /pb-review-docs
-                        (accuracy)
+                     └─ /pb-logging
+                        (standards)
 ```
+
+---
+
+## Release Type Quick Reference
+
+| Release Type | Phase 1 | Phase 2 | Phase 3 | Phase 4-5 |
+|--------------|---------|---------|---------|-----------|
+| Versioned (vX.Y.Z) | Full + Artifacts | At least `/pb-review-docs` | Required | Required |
+| S-tier versioned | Full + Artifacts | `/pb-review-docs` only | Quick check | Required |
+| Hotfix (no tag) | Quality gates | Optional | Skip | Streamlined |
+| Trivial (typo) | Lint only | Skip | Skip | Quick merge |
+
+**Key rule:** Any release that will be tagged (vX.Y.Z) requires CHANGELOG verification.
 
 ---
 
@@ -72,59 +85,55 @@ Run `/pb-cycle` for a quick self-review:
 - [ ] No TODO/FIXME for critical items
 - [ ] Changes match the intended scope
 
+### Step 1.3: Release Artifacts Check
+
+**Required for any versioned release (vX.Y.Z):**
+
+```bash
+# Verify CHANGELOG has entry for this version
+grep -E "## \[v?X\.Y\.Z\]" CHANGELOG.md docs/CHANGELOG.md 2>/dev/null
+
+# Verify version tag doesn't already exist
+git tag -l "vX.Y.Z"
+
+# Check version in package files (if applicable)
+# For Go: no version file typically
+# For Node: grep version package.json
+# For Python: grep version pyproject.toml
+```
+
+**Release Artifacts Checklist:**
+- [ ] CHANGELOG.md has entry for this version with date
+- [ ] All changes documented in CHANGELOG (Added, Changed, Fixed, Removed)
+- [ ] Version links added at bottom of CHANGELOG
+- [ ] Version number updated in package files (if applicable)
+- [ ] Release notes drafted (can use CHANGELOG entry)
+
+**This check is NOT optional for versioned releases. No exceptions.**
+
 ---
 
 ## Phase 2: Specialized Reviews
 
-Run each review sequentially. Track issues found and address them before moving to the next.
+Run reviews based on release type. Track issues found and address them before moving to the next.
 
-### Issue Tracking Template
+### Minimum Required (ALL versioned releases)
 
-Create or update `todos/ship-review-YYYY-MM-DD.md`:
+**Step 2.1: Documentation Review (REQUIRED)**
 
-```markdown
-# Ship Review: [Feature/Focus Area]
-**Date:** YYYY-MM-DD
-**Branch:** [branch-name]
+Run `/pb-review-docs`:
 
-## Issues Found
+- [ ] CHANGELOG.md updated with this version's entry
+- [ ] README accurate (installation, usage examples)
+- [ ] API docs updated (if applicable)
+- [ ] Code comments meaningful (not obvious)
+- [ ] Migration guide updated (if breaking changes)
 
-### From pb-review-cleanup
-| # | Issue | Severity | Status |
-|---|-------|----------|--------|
-| 1 | [description] | HIGH/MED/LOW | FIXED/DEFERRED |
+**Do not proceed without completing this review for versioned releases.**
 
-### From pb-review-hygiene
-| # | Issue | Severity | Status |
-|---|-------|----------|--------|
+### Full Suite (M/L tier releases, recommended for all)
 
-### From pb-review-tests
-| # | Issue | Severity | Status |
-|---|-------|----------|--------|
-
-### From pb-security
-| # | Issue | Severity | Status |
-|---|-------|----------|--------|
-
-### From pb-logging
-| # | Issue | Severity | Status |
-|---|-------|----------|--------|
-
-### From pb-review-docs
-| # | Issue | Severity | Status |
-|---|-------|----------|--------|
-
-## Summary
-- Total issues: X
-- Critical: X (must fix)
-- High: X (should fix)
-- Medium: X (address if time)
-- Low: X (defer)
-- Fixed: X
-- Deferred: X (with rationale)
-```
-
-### Step 2.1: Code Quality Review
+**Step 2.2: Code Quality Review**
 
 Run `/pb-review-cleanup`:
 
@@ -136,7 +145,7 @@ Run `/pb-review-cleanup`:
 
 **Address issues before proceeding.**
 
-### Step 2.2: Project Hygiene Review
+**Step 2.3: Project Hygiene Review**
 
 Run `/pb-review-hygiene`:
 
@@ -148,7 +157,7 @@ Run `/pb-review-hygiene`:
 
 **Address issues before proceeding.**
 
-### Step 2.3: Test Coverage Review
+**Step 2.4: Test Coverage Review**
 
 Run `/pb-review-tests`:
 
@@ -160,7 +169,7 @@ Run `/pb-review-tests`:
 
 **Address issues before proceeding.**
 
-### Step 2.4: Security Review
+**Step 2.5: Security Review**
 
 Run `/pb-security`:
 
@@ -173,7 +182,7 @@ Run `/pb-security`:
 
 **Address CRITICAL/HIGH issues before proceeding. Document deferred items.**
 
-### Step 2.5: Logging Review (Optional)
+**Step 2.6: Logging Review (Optional)**
 
 Run `/pb-logging` if backend/API changes:
 
@@ -183,15 +192,43 @@ Run `/pb-logging` if backend/API changes:
 - [ ] Request tracing in place
 - [ ] Error context preserved
 
-### Step 2.6: Documentation Review
+### Issue Tracking Template
 
-Run `/pb-review-docs`:
+Create or update `todos/ship-review-YYYY-MM-DD.md`:
 
-- [ ] README accurate
-- [ ] API docs updated (if applicable)
-- [ ] Code comments meaningful (not obvious)
-- [ ] Architecture docs current
-- [ ] CHANGELOG updated
+```markdown
+# Ship Review: [Feature/Focus Area]
+**Date:** YYYY-MM-DD
+**Branch:** [branch-name]
+**Version:** vX.Y.Z
+
+## Release Artifacts
+- [ ] CHANGELOG.md updated
+- [ ] Version links added
+- [ ] Release notes drafted
+
+## Issues Found
+
+### From pb-review-docs (REQUIRED)
+| # | Issue | Severity | Status |
+|---|-------|----------|--------|
+| 1 | [description] | HIGH/MED/LOW | FIXED/DEFERRED |
+
+### From pb-review-cleanup
+| # | Issue | Severity | Status |
+|---|-------|----------|--------|
+
+[... other sections ...]
+
+## Summary
+- Total issues: X
+- Critical: X (must fix)
+- High: X (should fix)
+- Medium: X (address if time)
+- Low: X (defer)
+- Fixed: X
+- Deferred: X (with rationale)
+```
 
 ---
 
@@ -216,6 +253,8 @@ This is the senior engineer final gate. Review with fresh eyes:
 - [ ] All quality gates pass
 - [ ] All CRITICAL issues fixed
 - [ ] All HIGH issues fixed (or explicitly deferred with approval)
+- [ ] **CHANGELOG.md updated with this version's entry** ← REQUIRED
+- [ ] **Version links added to CHANGELOG** ← REQUIRED
 - [ ] Documentation is accurate
 - [ ] Team is aware of the release
 - [ ] Rollback plan tested
@@ -248,6 +287,7 @@ gh pr create --title "[type]: brief description" --body "$(cat <<'EOF'
 [How to verify this works]
 
 ## Ship Review
+- Release artifacts: PASS (CHANGELOG updated)
 - Code quality: PASS
 - Hygiene: PASS
 - Tests: PASS
@@ -337,6 +377,7 @@ gh pr status
 - [x] Security considerations reviewed
 - [x] Test coverage adequate
 - [x] Documentation accurate
+- [x] CHANGELOG updated
 - [x] Ready for production
 
 LGTM - Ship it!
@@ -368,7 +409,7 @@ git checkout main && git pull
 git tag -a vX.Y.Z -m "vX.Y.Z - Brief description"
 git push origin vX.Y.Z
 
-# Create GitHub release
+# Create GitHub release (use CHANGELOG entry for notes)
 gh release create vX.Y.Z --title "vX.Y.Z - Title" --notes "..."
 
 # Deploy
@@ -457,20 +498,27 @@ git checkout main && git pull
 make deploy
 ```
 
-**Use full workflow by default. This escape hatch is for exceptions, not convenience.**
+**IMPORTANT: This escape hatch is NOT for versioned releases.**
 
-Examples of trivial changes:
+Any release that will be tagged (vX.Y.Z) requires:
+1. Phase 1 **including Release Artifacts Check**
+2. `/pb-review-docs` from Phase 2 (CHANGELOG verification) — **MANDATORY**
+3. Phase 3 Go/No-Go checklist
+4. Full Phase 4-5
+
+The escape hatch is for:
 - Fixing a typo in documentation
 - Updating a comment
-- Bumping a version number
-- Adding a missing log message
+- Minor config tweaks
+- Hotfixes that don't warrant a version bump
 
-Examples that are NOT trivial (use full workflow):
+**NOT for:**
 - Any logic change
 - Any new functionality
 - Any test changes
 - Any configuration changes
 - Anything touching security, auth, or data
+- **Any versioned release (vX.Y.Z)**
 
 ---
 
@@ -480,7 +528,7 @@ For faster shipping, some reviews can run in parallel:
 
 ```
 Sequential (dependencies):
-  pb-review-cleanup → pb-review-hygiene
+  pb-review-docs (REQUIRED FIRST) → pb-review-cleanup → pb-review-hygiene
 
 Parallel (independent):
   ├─ pb-review-tests
@@ -488,7 +536,7 @@ Parallel (independent):
   └─ pb-logging
 
 Sequential (needs stable code):
-  pb-review-docs → pb-review-prerelease
+  All above → pb-review-prerelease
 ```
 
 ---
@@ -515,6 +563,24 @@ Sequential (needs stable code):
 - **Hotfix or disable:** Choose based on severity
 - **Run /pb-incident:** If production impact
 
+### Forgot to update CHANGELOG
+
+If discovered after merge but before tag:
+```bash
+# Update CHANGELOG on main
+git checkout main && git pull
+# Edit CHANGELOG.md
+git add CHANGELOG.md && git commit -m "docs: add vX.Y.Z changelog entry"
+git push
+# Then proceed with tagging
+```
+
+If discovered after tag:
+```bash
+# Update CHANGELOG and create patch release or amend release notes
+gh release edit vX.Y.Z --notes "..."
+```
+
 ---
 
 ## Integration with Playbook
@@ -526,10 +592,13 @@ Sequential (needs stable code):
                                     ┌───────────────────┘
                                     ↓
                               Foundation
+                              + Release Artifacts ← NEW
                                     ↓
                            Specialized Reviews
+                           (docs REQUIRED)      ← CLARIFIED
                                     ↓
                               Final Gate
+                              (CHANGELOG check) ← ADDED
                                     ↓
                             PR & Peer Review
                                     ↓
@@ -552,17 +621,19 @@ Sequential (needs stable code):
 PHASE 1: FOUNDATION
 [ ] Quality gates pass (lint, typecheck, test)
 [ ] Basic self-review complete (/pb-cycle)
+[ ] Release artifacts verified (CHANGELOG, version) ← NEW
 
 PHASE 2: SPECIALIZED REVIEWS
-[ ] /pb-review-cleanup — code quality
-[ ] /pb-review-hygiene — project health
-[ ] /pb-review-tests — test coverage
-[ ] /pb-security — vulnerabilities
+[ ] /pb-review-docs — REQUIRED for versioned releases ← CLARIFIED
+[ ] /pb-review-cleanup — code quality (recommended)
+[ ] /pb-review-hygiene — project health (recommended)
+[ ] /pb-review-tests — test coverage (recommended)
+[ ] /pb-security — vulnerabilities (recommended)
 [ ] /pb-logging — logging standards (optional)
-[ ] /pb-review-docs — documentation
 
 PHASE 3: FINAL GATE
 [ ] /pb-review-prerelease — senior engineer gate
+[ ] CHANGELOG.md verified ← NEW
 [ ] Ship decision: GO
 
 PHASE 4: PR & PEER REVIEW
@@ -580,4 +651,4 @@ PHASE 5: MERGE & RELEASE
 
 ---
 
-*Ship with confidence. Every review is a gift.*
+*Ship with confidence. Every review is a gift. Never skip CHANGELOG.*
