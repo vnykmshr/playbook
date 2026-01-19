@@ -1454,14 +1454,15 @@ This covers:
 
 - **§1 Intake & Planning** → `/pb-plan`, `/pb-adr`, `/pb-patterns-core`
 - **§2 Team & Estimation** → `/pb-team`, `/pb-onboarding`, `/pb-knowledge-transfer`
-- **§3 Architecture & Design** → `/pb-patterns-core`, `/pb-patterns-async`, `/pb-patterns-db`, `/pb-patterns-distributed`
-- **§4 Implementation** → `/pb-start`, `/pb-cycle`, `/pb-testing`, `/pb-commit`, `/pb-todo-implement`
-- **§5 Code Review** → `/pb-review-cleanup`, `/pb-security`, `/pb-logging`, `/pb-review-product`
+- **§3 Architecture & Design** → `/pb-patterns-core`, `/pb-patterns-async`, `/pb-patterns-db`, `/pb-patterns-distributed`, `/pb-patterns-frontend`, `/pb-patterns-api`
+- **§4 Implementation** → `/pb-start`, `/pb-cycle`, `/pb-testing`, `/pb-commit`, `/pb-todo-implement`, `/pb-debug`
+- **§5 Code Review** → `/pb-review-cleanup`, `/pb-security`, `/pb-logging`, `/pb-review-product`, `/pb-a11y`
 - **§6 Quality Gates** → `/pb-review-tests`, `/pb-review-hygiene`, `/pb-review-microservice`
 - **§7 Observability** → `/pb-observability`, `/pb-logging`, `/pb-performance`
 - **§8 Deployment** → `/pb-deployment`, `/pb-release`, `/pb-review-prerelease`
 - **§9 Post-Release** → `/pb-incident`, `/pb-observability` (monitoring)
 - **Team & Growth** → `/pb-team`, `/pb-onboarding`, `/pb-documentation`
+- **Frontend Development** → `/pb-design-language`, `/pb-patterns-frontend`, `/pb-a11y` (see `/docs/frontend-workflow.md`)
 
 **See also:**
 - `/docs/integration-guide.md` — Comprehensive guide showing all commands, workflows, and how they work together
