@@ -127,6 +127,9 @@ git fetch origin
 git log --oneline origin/main..HEAD  # Your changes
 git log --oneline HEAD..origin/main  # What you missed
 
+# Check for pause notes (left by /pb-pause)
+cat todos/pause-notes.md 2>/dev/null | tail -50
+
 # Read relevant docs/issues for context
 # Review your branch changes thoroughly
 git diff origin/main...HEAD
@@ -134,6 +137,8 @@ git diff origin/main...HEAD
 # Rebase and continue
 git rebase origin/main
 ```
+
+**If pause notes exist:** Follow documented next steps, verify blockers resolved.
 
 ---
 
@@ -143,6 +148,7 @@ Before continuing work:
 
 - [ ] On correct branch
 - [ ] Branch is up to date with main
+- [ ] Checked pause notes (`todos/pause-notes.md`)
 - [ ] Understand what was last done
 - [ ] Know what's next
 - [ ] Working context is current (if project has one)
@@ -197,6 +203,38 @@ If the working context is stale (version mismatch, outdated commits, missing rec
 
 ---
 
+## Reading Pause Notes
+
+If you (or someone else) used `/pb-pause` before stopping, look for handoff context:
+
+```bash
+# Check for pause notes
+cat todos/pause-notes.md 2>/dev/null | tail -50
+
+# Or grep for your branch
+grep -A 30 "$(git branch --show-current)" todos/pause-notes.md
+```
+
+**Pause notes contain:**
+- Where work left off (last commit, in-progress items)
+- Current task status
+- Next steps (prioritized)
+- Open questions and blockers
+- Gotchas and environment notes
+
+**After reading pause notes:**
+1. Verify current state matches documented state
+2. Check if blockers have been resolved
+3. Review next steps and adjust if needed
+4. Clear old pause notes once context is recovered
+
+```bash
+# Archive old pause notes (optional)
+mv todos/pause-notes.md todos/pause-notes-$(date +%Y%m%d).md
+```
+
+---
+
 ## If Completely Lost
 
 ```bash
@@ -219,12 +257,19 @@ git log --all --oneline --graph -20
 
 ## Tips for Better Resume
 
-### Before Stopping Work
+### Before Stopping Work (Use `/pb-pause`)
 
-1. **Commit or stash** - Never leave uncommitted work overnight
-2. **Write a note** - Quick TODO comment or session end note
-3. **Push to remote** - Backup your work
-4. **Leave context** - Update /pb-context decision log or standup
+Run `/pb-pause` before stepping away. It guides you through:
+
+1. **Preserve work state** — Commit or stash, push to remote
+2. **Update trackers** — Mark progress, document blockers
+3. **Update context** — Run `/pb-context`, `/pb-claude-project` if needed
+4. **Write pause notes** — Document where you left off in `todos/pause-notes.md`
+
+**Quick pause (short breaks):**
+```bash
+git add -A && git commit -m "wip: [state]" && git push
+```
 
 ### When Resuming
 
@@ -239,10 +284,23 @@ git log --all --oneline --graph -20
 ## Integration with Playbook
 
 **Part of development workflow:**
+```
+/pb-start → /pb-cycle → /pb-commit → /pb-pr
+     ↑
+     │         ┌─────────────┐
+     │         │   SESSION   │
+     └─────────│   BOUNDARY  │────────────┐
+               └─────────────┘            │
+                     ↑                    ↓
+              /pb-resume ←──────── /pb-pause
+              (recover)            (preserve)
+```
+
+**Commands:**
 - `/pb-start` → Create branch, set iteration rhythm
 - **`/pb-resume`** → Get back in context after break (YOU ARE HERE)
 - `/pb-cycle` → Iterate with reviews
-- `/pb-standup` → Daily async visibility (write after resuming)
+- `/pb-pause` → Gracefully pause, preserve context
 - `/pb-commit` → Atomic commits
 - `/pb-pr` → Pull request
 
@@ -255,6 +313,7 @@ git log --all --oneline --graph -20
 
 **Related commands:**
 - `/pb-start` — Starting new feature (before /pb-resume context recovery)
+- `/pb-pause` — Gracefully pause work (complement to /pb-resume)
 - `/pb-context` — Read project context (use alongside /pb-resume)
 - `/pb-standup` — Write after resuming (post status for team)
 - `/pb-standards` — Refresh working principles
