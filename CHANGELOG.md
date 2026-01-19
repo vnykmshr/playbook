@@ -5,6 +5,77 @@ All notable changes to this project are documented here.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v1.7.0] - 2026-01-19
+
+### Added
+
+**Frontend & Fullstack Quality**
+- Added 5 new commands for frontend development and debugging:
+  - `/pb-patterns-frontend` — Mobile-first, theme-aware frontend architecture patterns
+  - `/pb-design-language` — Project-specific design specification template
+  - `/pb-a11y` — WCAG 2.1 AA accessibility guidance and testing
+  - `/pb-patterns-api` — REST, GraphQL, gRPC design patterns
+  - `/pb-debug` — Systematic debugging methodology
+
+**`/pb-patterns-frontend` (Frontend Architecture)**
+- Component patterns: atomic design, compound components, container/presentational
+- State management: location decision tree, server vs client state, URL state
+- UI states: loading, error, empty states with code examples
+- Form patterns: layout, validation, multi-step forms
+- Performance: code splitting, lazy loading, memoization
+- Theming: design tokens, dark mode, skinnable interfaces
+- Responsive: mobile-first breakpoints, fluid typography, container queries
+
+**`/pb-design-language` (Design Specification)**
+- Bootstrap template for new projects
+- Voice & tone guidelines
+- Color, typography, spacing, motion tokens
+- Component vocabulary standardization
+- Constraints documentation (what we don't do)
+- Decision log for rationale
+
+**`/pb-a11y` (Accessibility)**
+- Philosophy: semantic HTML first, ARIA as enhancement, keyboard-first
+- WCAG 2.1 AA baseline with 2.2 recommended enhancements
+- Semantic structure, interactive elements, focus management
+- Screen reader support, color/contrast, motion considerations
+- Tiered testing tools and manual testing checklist
+
+**`/pb-patterns-api` (API Design)**
+- Decision framework: REST vs GraphQL vs gRPC
+- REST patterns: resource naming, HTTP methods, status codes
+- Error handling, pagination, versioning strategies
+- Authentication: API keys, JWT, OAuth 2.0
+- Rate limiting and GraphQL patterns
+
+**`/pb-debug` (Debugging Methodology)**
+- 6-step process: reproduce, isolate, hypothesize, test, fix, prevent
+- Techniques: print, debugger, network, database, performance
+- Frontend debugging: DevTools, network waterfall, React/Vue DevTools
+- Common bug patterns and production debugging
+
+### Documentation
+
+- Added `docs/recipes.md`: Pre-built command sequences for common scenarios
+- Added `docs/frontend-workflow.md`: Complete frontend development guide
+- Updated command-index: Added all 5 new commands
+- Updated pb-patterns: Added pb-patterns-frontend and pb-patterns-api
+- Updated pb-what-next: Added frontend development recommendations
+- Updated pb-testing: Added pb-a11y for accessibility testing
+- Updated pb-guide: Added v1.7.0 commands to phase integrations
+
+### Maintenance
+
+- Removed hardcoded version references and command counts for maintainability
+
+### Status
+
+- 67 commands across 10 categories
+- Complete frontend development workflow
+- Accessibility-first approach integrated
+
+---
+
 ## [v1.6.0] - 2026-01-19
 
 ### Added
