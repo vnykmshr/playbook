@@ -5,6 +5,35 @@ All notable changes to this project are documented here.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v1.8.0] - 2026-01-20
+
+### Added
+
+**Repository Documentation Infrastructure**
+- Added `/pb-repo-docsite` — Transform project documentation into professional static sites
+  - Tech stack selection: Hugo (Go), MkDocs (Python), Docusaurus (Node.js)
+  - Phase workflow: Infrastructure → Migration → Content → Hygiene → Release
+  - CI/CD templates for GitHub Pages deployment
+  - Mermaid diagram support across all SSGs
+  - Editorial guidelines aligned with `/pb-documentation` standards
+
+**`/pb-repo-docsite` Features**
+- Transformation workflow for existing markdown docs
+- Greenfield setup for new projects
+- Tech-specific appendices (setup, config, workflows)
+- Content migration map (ALLCAPS → lowercase-hyphenated)
+- Standard 10-12 page documentation structure
+- Anti-patterns and troubleshooting sections
+- Integration with `/pb-repo-enhance` suite
+
+### Status
+
+- 68 commands across 10 categories
+- Complete repository documentation workflow
+- Standardized docsite transformation across projects
+
+---
+
 ## [v1.7.0] - 2026-01-19
 
 ### Added

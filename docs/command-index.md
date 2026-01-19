@@ -67,6 +67,7 @@ Quick reference for all playbook commands.
 | `/pb-repo-about` | Generate GitHub About section + tags |
 | `/pb-repo-readme` | Write or rewrite project README |
 | `/pb-repo-blog` | Create technical blog post |
+| `/pb-repo-docsite` | Transform docs into professional static site |
 | `/pb-repo-enhance` | Full repository polish (combines above) |
 
 ## Reviews
@@ -165,6 +166,12 @@ Real-world implementations of the playbook in action:
 ### Repository Polish
 ```
 /pb-repo-enhance   → Full suite (organize + docs + presentation)
+```
+
+### Documentation Site Setup
+```
+/pb-repo-docsite   → Transform existing docs into professional static site
+                   → Includes CI/CD, GitHub Pages, Mermaid support
 ```
 
 ### Periodic Maintenance
