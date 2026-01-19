@@ -21,7 +21,7 @@ Patterns provide:
 
 ## Pattern Family Overview
 
-v1.2.0 organizes patterns into four specialized commands:
+The playbook organizes patterns into specialized commands:
 
 ### 1. Core Patterns (`/pb-patterns-core`)
 

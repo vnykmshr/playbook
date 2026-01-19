@@ -1448,7 +1448,7 @@ This covers:
 
 ## Integration with Playbook Ecosystem
 
-**This is the master SDLC framework.** All 45 other commands implement phases described in this guide.
+**This is the master SDLC framework.** All other commands implement phases described in this guide.
 
 **Key command integrations by phase:**
 
