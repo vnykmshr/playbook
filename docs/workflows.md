@@ -296,16 +296,18 @@ A typical day for an engineer using the playbook:
 ```
 MORNING               MIDDAY                AFTERNOON               END OF DAY
 │                     │                      │                      │
-├─ /pb-resume         ├─ /pb-context         ├─ /pb-cycle            ├─ /pb-standup
-│ (Get context)       │ (Big picture)        │ (Final self-review)   │ (Update team)
+├─ /pb-resume         ├─ /pb-context         ├─ /pb-cycle            ├─ /pb-pause
+│ (Get context)       │ (Big picture)        │ (Final self-review)   │ (Preserve context)
 │                     │                      │                      │
-├─ /pb-standup        ├─ /pb-patterns        ├─ /pb-pr               └─ Reflect on
-│ (Write standup)     │ (Plan next work)     │ (Create PR)            progress
+├─ /pb-standup        ├─ /pb-patterns        ├─ /pb-pr               └─ Update trackers,
+│ (Write standup)     │ (Plan next work)     │ (Create PR)            document state
 │                     │                      │
 └─ /pb-cycle          └─ /pb-cycle           └─ Code review feedback
   (Self-review)         (Develop feature)        (Address if needed)
   (Peer review if ready)
 ```
+
+**Session boundaries:** `/pb-pause` and `/pb-resume` work as bookends—pause preserves context at end of session, resume recovers it at start of next.
 
 ---
 

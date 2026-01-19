@@ -199,8 +199,8 @@ You're in the middle of a feature sprint. Here's your daily rhythm:
 /pb-cycle             # Final self-review
 /pb-pr                # Create pull request with context
 
-# End of day: Status
-/pb-standup           # Update team on progress, blockers
+# End of day: Wrap up
+/pb-pause             # Preserve context, update trackers, document state
 ```
 
 **See**: `/docs/integration-guide.md` → "Workflow 1: Feature Development"
@@ -273,7 +273,7 @@ Design systems before implementation.
 | `/pb-observability` | Monitoring, observability patterns, and alerting strategy |
 | `/pb-deprecation` | Deprecation strategy, communication, and backwards compatibility |
 
-### Development (10 commands)
+### Development (11 commands)
 Iterative feature development with built-in quality gates.
 
 | Command | Purpose |
@@ -281,6 +281,7 @@ Iterative feature development with built-in quality gates.
 | `/pb-what-next` | Intelligent recommendations based on your current work state |
 | `/pb-start` | Create feature branch, establish iteration rhythm |
 | `/pb-resume` | Get back in context after a break |
+| `/pb-pause` | Gracefully pause work, preserve context for later |
 | `/pb-cycle` | Self-review + peer review iteration loop |
 | `/pb-standup` | Daily async status updates for distributed teams |
 | `/pb-commit` | Craft atomic, meaningful commits |
@@ -397,7 +398,7 @@ playbook/
 ├── commands/
 │   ├── core/           # pb-guide, pb-standards, pb-templates, pb-documentation
 │   ├── planning/       # pb-plan, pb-adr, pb-patterns-*, pb-performance, pb-observability
-│   ├── development/    # pb-start, pb-cycle, pb-resume, pb-pr, pb-testing, pb-todo-implement, pb-standup
+│   ├── development/    # pb-start, pb-cycle, pb-resume, pb-pause, pb-pr, pb-testing, pb-todo-implement
 │   ├── release/        # pb-release, pb-incident
 │   ├── reviews/        # pb-review-*, pb-security, pb-logging
 │   ├── repo/           # pb-repo-*, pb-documentation

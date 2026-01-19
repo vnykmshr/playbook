@@ -2,7 +2,7 @@
 
 Complete reference for how all playbook commands work together to form a unified SDLC framework.
 
-**Last Updated**: 2026-01-17 | **Categories**: 10 | **Commands**: 60
+**Last Updated**: 2026-01-19 | **Categories**: 10 | **Commands**: 61
 
 ---
 
@@ -51,7 +51,7 @@ Complete reference for how all playbook commands work together to form a unified
 
 ---
 
-## Command Inventory: All 60 Commands
+## Command Inventory: All 61 Commands
 
 ### CORE FOUNDATION & PHILOSOPHY (13 commands)
 
@@ -84,20 +84,21 @@ These establish baseline understanding and guiding philosophy. **Every engineer 
 
 ---
 
-### DEVELOPMENT WORKFLOW (8 commands)
+### DEVELOPMENT WORKFLOW (9 commands)
 
 Daily iterative development. **Use these multiple times per week.**
 
 | # | Command | Purpose | Flow | When to Use | Tier |
 |---|---------|---------|------|------------|------|
 | 5 | **pb-start** | Begin feature development | Create branch, set iteration rhythm | Start of feature/bug | All |
-| 6 | **pb-resume** | Get back in context after break | Restore working state, update mental model | After context switch or day break | All |
-| 7 | **pb-cycle** | Self-review + peer review iteration | Self-review → peer review → refine → commit | Multiple times per feature | All |
-| 8 | **pb-commit** | Craft atomic, meaningful commits | One concern per commit, good messages | Before merging to main | S/M/L |
-| 9 | **pb-pr** | Streamlined pull request creation | PR title, description template, merge strategy | When ready for code review | All |
-| 10 | **pb-testing** | Testing philosophy and patterns | Unit/integration/E2E, test data, CI/CD | Alongside code in /pb-cycle | S/M/L |
-| 11 | **pb-knowledge-transfer** | KT session preparation | 12-section guide for knowledge sharing | Team transitions, onboarding | M |
-| 12 | **pb-todo-implement** | Guided implementation with checkpoints | 5 phases: INIT → SELECT → REFINE → IMPLEMENT → COMMIT | After /pb-plan, before /pb-cycle (for major work) | All |
+| 6 | **pb-resume** | Get back in context after break | Restore working state, read pause notes | After context switch or day break | All |
+| 7 | **pb-pause** | Gracefully pause work | Preserve state, update trackers, document handoff | End of day/session, before break | All |
+| 8 | **pb-cycle** | Self-review + peer review iteration | Self-review → peer review → refine → commit | Multiple times per feature | All |
+| 9 | **pb-commit** | Craft atomic, meaningful commits | One concern per commit, good messages | Before merging to main | S/M/L |
+| 10 | **pb-pr** | Streamlined pull request creation | PR title, description template, merge strategy | When ready for code review | All |
+| 11 | **pb-testing** | Testing philosophy and patterns | Unit/integration/E2E, test data, CI/CD | Alongside code in /pb-cycle | S/M/L |
+| 12 | **pb-knowledge-transfer** | KT session preparation | 12-section guide for knowledge sharing | Team transitions, onboarding | M |
+| 13 | **pb-todo-implement** | Guided implementation with checkpoints | 5 phases: INIT → SELECT → REFINE → IMPLEMENT → COMMIT | After /pb-plan, before /pb-cycle (for major work) | All |
 
 **Development flow**:
 ```
@@ -115,7 +116,9 @@ ITERATION LOOP (repeat per task):
   ↓
 CODE REVIEW (see Reviews section)
   ↓
-Merge → Continue or /pb-resume for next feature
+Merge → Continue or:
+  ├─ /pb-pause (end of session: preserve context)
+  └─ /pb-resume (next session: recover context)
 ```
 
 **Key integration points**:
@@ -123,6 +126,7 @@ Merge → Continue or /pb-resume for next feature
 - `/pb-cycle` includes `/pb-testing` and `/pb-standards`
 - `/pb-cycle` → `/pb-commit` (after self-review)
 - `/pb-commit` → `/pb-pr` (when ready for merge)
+- `/pb-pause` ↔ `/pb-resume` (session boundary bookends)
 - `/pb-todo-implement` provides **structured checkpoint-based alternative** to direct `/pb-cycle` workflow
 
 ---
@@ -536,8 +540,8 @@ RELEASE
 **Who**: Every engineer
 
 ### Cluster 2: Daily Development
-**Commands**: pb-start, pb-cycle, pb-commit, pb-pr, pb-testing
-**Purpose**: Iterative feature development with quality gates
+**Commands**: pb-start, pb-cycle, pb-pause, pb-resume, pb-commit, pb-pr, pb-testing
+**Purpose**: Iterative feature development with quality gates and session management
 **Frequency**: Use multiple times per week per feature
 **Who**: All developers
 
@@ -910,4 +914,4 @@ POWERFUL:
 
 **This guide is the map. Use it to navigate the playbook as an integrated system.**
 
-*Last Updated: 2026-01-17 | Playbook Version: v1.5.0 | Commands: 60 | Integration Health: Excellent (9/10)*
+*Last Updated: 2026-01-19 | Playbook Version: v1.5.1 | Commands: 61 | Integration Health: Excellent (9/10)*

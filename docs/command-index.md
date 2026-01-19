@@ -20,6 +20,7 @@ Quick reference for all playbook commands.
 | `/pb-todo-implement` | Structured implementation of individual todos with checkpoint-based review |
 | `/pb-cycle` | Each iteration (develop → review → commit) |
 | `/pb-resume` | Resuming after a break |
+| `/pb-pause` | Pausing work, preserving context for later |
 | `/pb-pr` | Creating a pull request |
 | `/pb-knowledge-transfer` | Preparing KT session for new developer or team handoff |
 
@@ -133,6 +134,8 @@ Real-world implementations of the playbook in action:
 /pb-todo-implement    → Implement todos with checkpoint-based approval
 /pb-cycle             → Self-review → Peer review iteration
 /pb-pr                → Create with proper context
+/pb-pause             → End of day: preserve context
+/pb-resume            → Next day: recover context
 /pb-release           → Checks, deploy, verify
 ```
 
@@ -142,6 +145,8 @@ Real-world implementations of the playbook in action:
 /pb-start    → Create branch, set rhythm
 /pb-cycle    → Develop → Review → Commit (repeat)
 /pb-pr       → Create with proper context
+/pb-pause    → End of session: preserve context
+/pb-resume   → Resume: recover context
 /pb-release  → Checks, deploy, verify
 ```
 
