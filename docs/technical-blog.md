@@ -189,7 +189,7 @@ Different reviewers bring different lenses:
 Before production:
 
 - `/pb-release` — Pre-release checklist
-- `/pb-review-prerelease` — Final gate by senior engineer
+- `/pb-release` — Final gate by senior engineer
 - `/pb-deployment` — Strategy choice (blue-green, canary, rolling)
 
 ### Incident Response

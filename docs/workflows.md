@@ -57,7 +57,7 @@ PLANNING PHASE        DEVELOPMENT PHASE       CODE REVIEW PHASE     RELEASE PHAS
      - `/pb-review-cleanup` — Code quality and patterns
      - `/pb-review-product` — Product alignment (if user-facing)
      - `/pb-review-tests` — Test suite depth and coverage
-     - `/pb-review-prerelease` — Final senior engineer review
+     - `/pb-release` — Final senior engineer review
 
 4. **Commit & PR Phase**
    - `/pb-commit` — Create atomic, well-formatted commit(s)
@@ -206,7 +206,7 @@ MONTHLY CADENCE       QUARTERLY CADENCE       AS-NEEDED
 │   (Coverage)        │   (Fit & vision)     │
 │                     │                       ├─ /pb-review-docs
 └─ /pb-logging        └─ Team retrospective   │   (Accuracy)
-   (Standards)                               └─ /pb-review-prerelease
+   (Standards)                               └─ /pb-release
                                                 (Before release)
 ```
 
@@ -220,7 +220,7 @@ MONTHLY CADENCE       QUARTERLY CADENCE       AS-NEEDED
 | Quarterly | `/pb-review-hygiene` | Technical debt, cleanup opportunities |
 | Quarterly | `/pb-review-product` | Feature fit, user feedback, roadmap alignment |
 | Quarterly | Team retrospective | Team health, communication, growth |
-| As-needed | `/pb-review-prerelease` | Final gate before production release |
+| As-needed | `/pb-release` | Final gate before production release |
 | As-needed | `/pb-review` | Comprehensive multi-perspective audit |
 
 ---

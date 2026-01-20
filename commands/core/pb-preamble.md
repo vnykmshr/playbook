@@ -355,7 +355,7 @@ Remember: they're operating from this preamble. They're not being rude; they're 
 - `/pb-review-product` — "Each perspective should challenge the others. Surface disagreements—they surface real problems."
 - `/pb-review-microservice` — "Question service boundaries. Challenge coupling. Surface design flaws early."
 - `/pb-logging` — "Logs must reveal assumptions and make failures obvious, not hide them"
-- `/pb-review-prerelease` — "Challenge readiness assumptions. Surface risks directly. Don't hide issues at last gate."
+- `/pb-release` — "Challenge readiness assumptions. Surface risks directly. Don't hide issues at last gate."
 
 **Team & Operations:**
 - `/pb-team` — "Psychological safety is directly enabled by preamble thinking. When teams operate from that preamble, challenging assumptions becomes the default."

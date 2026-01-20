@@ -154,7 +154,7 @@ Integrating the engineering playbook into your team's workflow. This guide shows
 | **Low-risk** | Move fast, minimal gates | XS/S tier commands only |
 | **Medium-risk** | Balanced approach | S/M tier with `/pb-review-cleanup` |
 | **High-risk** | Multiple gates, documentation | M/L tier with `/pb-adr`, `/pb-security` |
-| **Mission-critical** | All gates, design review | M/L with `/pb-review-prerelease`, `/pb-incident` |
+| **Mission-critical** | All gates, design review | M/L with `/pb-release`, `/pb-incident` |
 
 ---
 

@@ -82,7 +82,7 @@ This guide helps you find the right command for any situation. Answer the questi
 → Use `/pb-deployment` to choose strategy (blue-green, canary, rolling)
 
 **Doing final code review before release?**
-→ Use `/pb-review-prerelease` for senior engineer final review
+→ Use `/pb-release` for senior engineer final review
 
 **Is this a major release?**
 → Use `/pb-review` for comprehensive multi-perspective audit
@@ -200,7 +200,7 @@ START
 ├─ "I'm releasing"
 │  ├─ "Pre-release?" → /pb-release
 │  ├─ "How to deploy?" → /pb-deployment
-│  └─ "Final check?" → /pb-review-prerelease
+│  └─ "Final check?" → /pb-release
 │
 ├─ "Production issue"
 │  ├─ "Incident?" → /pb-incident
@@ -248,7 +248,7 @@ START
 ### Per Release
 - `/pb-release` — Pre-release checks
 - `/pb-deployment` — Choose strategy
-- `/pb-review-prerelease` — Final review
+- `/pb-release` — Final review
 
 ### Monthly
 - `/pb-review-cleanup` — Code quality
@@ -292,12 +292,12 @@ START
 
 ### Code Reviewer / Senior Engineer
 - Per PR: `/pb-cycle`, `/pb-security`, `/pb-review-tests`, `/pb-review-cleanup`, `/pb-logging`
-- Per release: `/pb-review-prerelease`
+- Per release: `/pb-release`
 - Periodically: `/pb-review-product`, `/pb-review-hygiene`
 
 ### Tech Lead / Architect
 - Per feature: `/pb-plan`, `/pb-adr`, `/pb-patterns-*`
-- Per release: `/pb-release`, `/pb-deployment`, `/pb-review-prerelease`
+- Per release: `/pb-release`, `/pb-deployment`, `/pb-release`
 - Periodically: `/pb-review`, `/pb-performance`, `/pb-observability`
 
 ### Engineering Manager

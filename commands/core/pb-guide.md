@@ -1459,7 +1459,7 @@ This covers:
 - **§5 Code Review** → `/pb-review-cleanup`, `/pb-security`, `/pb-logging`, `/pb-review-product`, `/pb-a11y`
 - **§6 Quality Gates** → `/pb-review-tests`, `/pb-review-hygiene`, `/pb-review-microservice`
 - **§7 Observability** → `/pb-observability`, `/pb-logging`, `/pb-performance`
-- **§8 Deployment** → `/pb-deployment`, `/pb-release`, `/pb-review-prerelease`
+- **§8 Deployment** → `/pb-deployment`, `/pb-release`, `/pb-patterns-deployment`
 - **§9 Post-Release** → `/pb-incident`, `/pb-observability` (monitoring)
 - **Team & Growth** → `/pb-team`, `/pb-onboarding`, `/pb-documentation`
 - **Frontend Development** → `/pb-design-language`, `/pb-patterns-frontend`, `/pb-a11y` (see `/docs/frontend-workflow.md`)

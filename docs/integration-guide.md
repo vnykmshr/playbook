@@ -193,9 +193,8 @@ Quality gates at multiple checkpoints. **Use these during development, before me
 | 27 | **pb-review-tests** | Test suite quality and coverage | Periodic audit | Monthly test health check | Monthly |
 | 28 | **pb-review-hygiene** | Codebase cleanup (dead code, deps, etc.) | Periodic maintenance | Quarterly code cleanup | Quarterly |
 | 29 | **pb-review-microservice** | Microservice architecture review | Microservice development | Before microservice deployment | Per microservice |
-| 30 | **pb-review-prerelease** | Senior engineer final release gate | Before production deployment | Final sign-off before releasing | Before each release |
-| 31 | **pb-security** | Security checklist (quick/standard/deep) | Code review, pre-release, incidents | Quick (5min), Standard (20min), Deep (1+ hr) | Every PR, pre-release |
-| 32 | **pb-logging** | Logging strategy & standards | Code review, pre-release | Verify structured logging, no secrets | Every PR, pre-release |
+| 30 | **pb-security** | Security checklist (quick/standard/deep) | Code review, pre-release, incidents | Quick (5min), Standard (20min), Deep (1+ hr) | Every PR, pre-release |
+| 31 | **pb-logging** | Logging strategy & standards | Code review, pre-release | Verify structured logging, no secrets | Every PR, pre-release |
 
 **Code review flow** (per PR):
 ```
@@ -233,7 +232,7 @@ QUARTERLY
   └─ /pb-team (team retrospective)
 
 RELEASE
-  ├─ /pb-review-prerelease (final gate)
+  ├─ /pb-release (final gate)
   ├─ /pb-security (security review)
   └─ /pb-review-microservice (if applicable)
 ```
@@ -419,7 +418,7 @@ CODE REVIEW
 
 PRE-RELEASE
 ├─ /pb-release            ← Release checklist
-├─ /pb-review-prerelease  ← Senior engineer final gate
+├─ /pb-release  ← Senior engineer final gate
 ├─ /pb-deployment         ← Choose deployment strategy
 └─ /pb-observability      ← Verify monitoring ready
 
@@ -522,7 +521,7 @@ QUARTERLY
 └─ /pb-team                  ← Team retrospective
 
 RELEASE
-├─ /pb-review-prerelease     ← Final release gate
+├─ /pb-release     ← Final release gate
 ├─ /pb-security              ← Security review
 └─ /pb-review-microservice   ← If applicable
 ```
@@ -640,7 +639,7 @@ RELEASE
 - pb-pr → pb-review-product
 
 **Review → Deployment**
-- pb-review-prerelease → pb-release
+- pb-review-cleanup → pb-release (readiness gate)
 - pb-security → pb-release
 - pb-release → pb-deployment
 
@@ -739,7 +738,7 @@ STEP 3: Code Review
 
 STEP 4: Release Preparation
 ├─ /pb-release (pre-release checks)
-├─ /pb-review-prerelease (senior review)
+├─ /pb-release (senior review)
 ├─ /pb-deployment (choose strategy)
 └─ /pb-observability (verify monitoring)
 

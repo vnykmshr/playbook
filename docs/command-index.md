@@ -44,6 +44,7 @@ Quick reference for all playbook commands.
 | `/pb-patterns-cloud` | Cloud deployment patterns (AWS EC2/RDS, ECS, Lambda; GCP Cloud Run, GKE; Azure App Service, Functions) |
 | `/pb-patterns-frontend` | Frontend architecture patterns (mobile-first, theme-aware, component patterns, state management) |
 | `/pb-patterns-api` | API design patterns (REST, GraphQL, gRPC, versioning, error handling, pagination) |
+| `/pb-patterns-deployment` | Deployment strategies (blue-green, canary, rolling, feature flags, rollback) |
 
 ## Planning
 
@@ -59,8 +60,8 @@ Quick reference for all playbook commands.
 
 | Command | When to Use |
 |---------|-------------|
-| `/pb-release` | Pre-release checks and deployment |
-| `/pb-deployment` | Deployment strategies (blue-green, canary, rolling) |
+| `/pb-release` | Release orchestrator: readiness gate, version/tag, trigger deployment |
+| `/pb-deployment` | Execute deployment: discovery, pre-flight, execute, verify, rollback |
 | `/pb-incident` | P0/P1 production incidents |
 | `/pb-sre-practices` | Toil reduction, error budgets, on-call health, blameless culture |
 | `/pb-dr` | Disaster recovery planning, RTO/RPO, backup strategies, game days |
@@ -93,7 +94,6 @@ Quick reference for all playbook commands.
 | `/pb-review` | Comprehensive multi-perspective | Monthly or pre-release |
 | `/pb-review-code` | Dedicated code review for reviewers (peer review checklist) | Every PR review |
 | `/pb-review-cleanup` | Code cleanup, repo health | Before new dev cycle |
-| `/pb-review-prerelease` | Pre-release code review | Before each release |
 | `/pb-review-tests` | Test suite quality | Monthly |
 | `/pb-review-docs` | Documentation accuracy | Quarterly |
 | `/pb-review-hygiene` | Multi-role health check | Quarterly |

@@ -303,7 +303,6 @@ Multiple perspectives on code quality.
 | `/pb-review-docs` | Periodic documentation review (accuracy, completeness, maintenance) |
 | `/pb-review-microservice` | Microservice architecture design |
 | `/pb-review-hygiene` | Code cleanup and technical debt |
-| `/pb-review-prerelease` | Senior engineer final release gate |
 | `/pb-security` | Security checklist (quick/standard/deep) |
 | `/pb-logging` | Logging standards and structured logging |
 
@@ -312,8 +311,8 @@ Safe production deployment and incident response.
 
 | Command | Purpose |
 |---------|---------|
-| `/pb-release` | Pre-release checks and sign-off |
-| `/pb-deployment` | Deployment strategies (blue-green, canary, rolling) |
+| `/pb-release` | Release orchestrator: readiness gate, versioning, deploy trigger |
+| `/pb-deployment` | Execute deployment with surgical precision |
 | `/pb-incident` | Incident assessment and response (P0-P3) |
 
 ### Repository Management (6 commands)
@@ -353,11 +352,11 @@ Project context and reference.
 ```
 PLAN                    DEVELOP                    RELEASE
 │                       │                          │
-├─ /pb-plan ────────────┼─ /pb-start ──────────────┼─ /pb-release
-├─ /pb-adr              │   /pb-cycle (iterate)    ├─ /pb-deployment
-├─ /pb-patterns-*       │   ├─ /pb-testing         ├─ /pb-review-prerelease
-├─ /pb-observability    │   ├─ /pb-security       └─ Verify in production
-└─ /pb-performance      │   ├─ /pb-standards
+├─ /pb-plan ────────────┼─ /pb-start ──────────────┼─ /pb-release (orchestrator)
+├─ /pb-adr              │   /pb-cycle (iterate)    │   ├─ Readiness gate
+├─ /pb-patterns-*       │   ├─ /pb-testing         │   ├─ Version & tag
+├─ /pb-observability    │   ├─ /pb-security        │   └─ /pb-deployment
+└─ /pb-performance      │   ├─ /pb-standards       └─ Verify in production
                         │   └─ /pb-documentation
                         ├─ /pb-commit
                         └─ /pb-pr (+ reviews)

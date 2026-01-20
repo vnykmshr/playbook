@@ -355,7 +355,7 @@ Week 3+:
    └─ Test coverage analysis
    └─ Code quality review
 
-2. /pb-review-prerelease (final gate)
+2. /pb-release (final gate)
    └─ Senior engineer sign-off
    └─ Go/no-go decision
 
