@@ -74,5 +74,7 @@ nav:
       - Decision Guide: decision-guide.md
       - FAQ: faq.md
       - Glossary: glossary.md
+  - Contributing:
+      - Metadata Extraction: metadata-extraction.md
 
 copyright: Copyright &copy; 2026 vnykmshr - MIT License

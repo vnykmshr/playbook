@@ -51,10 +51,9 @@ Complete reference for how all playbook commands work together to form a unified
 
 ---
 
-## Command Inventory: All 62 Commands
+## Command Inventory
 
-### CORE FOUNDATION & PHILOSOPHY (13 commands)
-
+### CORE FOUNDATION & PHILOSOPHY
 These establish baseline understanding and guiding philosophy. **Every engineer should know these.**
 
 | # | Command | Purpose | Key Sections | When to Use | Tier |
@@ -84,8 +83,7 @@ These establish baseline understanding and guiding philosophy. **Every engineer 
 
 ---
 
-### DEVELOPMENT WORKFLOW (10 commands)
-
+### DEVELOPMENT WORKFLOW
 Daily iterative development. **Use these multiple times per week.**
 
 | # | Command | Purpose | Flow | When to Use | Tier |
@@ -136,8 +134,7 @@ READY TO SHIP:
 
 ---
 
-### PLANNING & ARCHITECTURE (8 commands)
-
+### PLANNING & ARCHITECTURE
 Technical planning before implementation. **Use these once per release.**
 
 | # | Command | Purpose | Phases | When to Use | Tier |
@@ -184,8 +181,7 @@ READY FOR IMPLEMENTATION
 
 ---
 
-### REVIEWS & QUALITY (9 commands)
-
+### REVIEWS & QUALITY
 Quality gates at multiple checkpoints. **Use these during development, before merge, and periodically.**
 
 | # | Command | Purpose | Trigger | When to Use | Frequency |
@@ -244,8 +240,7 @@ RELEASE
 
 ---
 
-### DEPLOYMENT & OPERATIONS (2 commands)
-
+### DEPLOYMENT & OPERATIONS
 Infrastructure, deployment, and incident response.
 
 | # | Command | Purpose | When to Use | Tier |
@@ -288,8 +283,7 @@ INCIDENT DETECTED
 
 ---
 
-### REPOSITORY MANAGEMENT (6 commands)
-
+### REPOSITORY MANAGEMENT
 Professional repository structure and presentation.
 
 | # | Command | Purpose | Use | Tier |
@@ -320,8 +314,7 @@ ENHANCE EXISTING:
 
 ---
 
-### TEAM & CONTINUITY (2 commands)
-
+### TEAM & CONTINUITY
 Knowledge sharing and team development.
 
 | # | Command | Purpose | When to Use | Tier |
@@ -365,7 +358,7 @@ Create action items for improvement
 
 ---
 
-### REFERENCE & CONTEXT (1 command)
+### REFERENCE & CONTEXT
 
 Project working context and decision log.
 
@@ -608,7 +601,7 @@ RELEASE
 
 ### By Incoming References
 
-**Most Referenced** (critical hub commands):
+**Most Referenced** (critical hub):
 - pb-guide: 25+ references (master framework)
 - pb-standards: 15+ references (working principles)
 - pb-cycle: 10+ references (core development loop)

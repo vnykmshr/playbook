@@ -326,4 +326,4 @@ MIT License — See [LICENSE](https://github.com/vnykmshr/playbook/blob/main/LIC
 
 ---
 
-**Last Updated**: 2026-01-12 | **Version**: v1.3.0 | **Commands**: 49 | **Integration**: 9 command clusters | **Status**: Production Ready
+**Status**: Production Ready | **Integration**: 9 command clusters | [View Changelog](https://github.com/vnykmshr/playbook/blob/main/CHANGELOG.md)

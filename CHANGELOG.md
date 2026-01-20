@@ -327,8 +327,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Enhanced `/commands/development/pb-what-next.md` with comprehensive usage guide
 - Added `.playbook-metadata.json` for command metadata reference
 - Added `.playbook-quick-ref.md` auto-generated quick reference guide
-- Added `/docs/EXTRACTION-GUIDE.md` for metadata extraction details
-- Added `/docs/METADATA-QUALITY-RULES.md` for quality threshold definitions
+- Added `/docs/metadata-extraction.md` for metadata extraction and authoring guide
 - Phase review documents: `todos/PHASE3-REVIEW.md`, `todos/PHASE4-REVIEW.md`
 - Pre-release cleanup review: `todos/PRE-RELEASE-CLEANUP.md`
 
