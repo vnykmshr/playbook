@@ -19,11 +19,15 @@ Quick reference for all playbook commands.
 | `/pb-start` | Starting work on a feature branch |
 | `/pb-todo-implement` | Structured implementation of individual todos with checkpoint-based review |
 | `/pb-cycle` | Each iteration (develop → review → commit) |
+| `/pb-commit` | Crafting atomic, meaningful commits |
 | `/pb-resume` | Resuming after a break |
 | `/pb-pause` | Pausing work, preserving context for later |
 | `/pb-ship` | Ready to ship: full reviews → PR → merge → release |
 | `/pb-pr` | Creating a pull request (standalone) |
+| `/pb-testing` | Testing philosophy (unit, integration, E2E strategies) |
+| `/pb-standup` | Daily async status updates for distributed teams |
 | `/pb-knowledge-transfer` | Preparing KT session for new developer or team handoff |
+| `/pb-what-next` | Context-aware command recommendations based on git state |
 | `/pb-debug` | Systematic debugging methodology (reproduce, isolate, hypothesize, test, fix) |
 | `/pb-design-language` | Create and evolve project-specific design specification (tokens, vocabulary, constraints) |
 
@@ -87,6 +91,7 @@ Quick reference for all playbook commands.
 | Command | When to Use | Frequency |
 |---------|-------------|-----------|
 | `/pb-review` | Comprehensive multi-perspective | Monthly or pre-release |
+| `/pb-review-code` | Dedicated code review for reviewers (peer review checklist) | Every PR review |
 | `/pb-review-cleanup` | Code cleanup, repo health | Before new dev cycle |
 | `/pb-review-prerelease` | Pre-release code review | Before each release |
 | `/pb-review-tests` | Test suite quality | Monthly |
@@ -126,7 +131,26 @@ Self-sufficient thinking partner methodology for expert-quality collaboration.
 | `/pb-guide-python` | Python-specific SDLC guide with async/await and testing |
 | `/pb-templates` | Templates for commits, phases, reviews |
 | `/pb-standards` | Coding standards, quality principles |
+| `/pb-documentation` | Writing technical docs at 5 levels |
+| `/pb-design-rules` | 17 classical design principles (Clarity, Simplicity, Resilience, Extensibility) |
+| `/pb-preamble-async` | Async/distributed team collaboration patterns |
+| `/pb-preamble-power` | Power dynamics and psychological safety |
+| `/pb-preamble-decisions` | Decision-making and constructive dissent |
+
+## Team & People
+
+| Command | When to Use |
+|---------|-------------|
+| `/pb-onboarding` | Structured team member onboarding |
+| `/pb-team` | Team dynamics, feedback, and retrospectives |
+
+## Context & Templates
+
+| Command | When to Use |
+|---------|-------------|
 | `/pb-context` | Project onboarding context template |
+| `/pb-claude-global` | Generate global ~/.claude/CLAUDE.md from playbooks |
+| `/pb-claude-project` | Generate project .claude/CLAUDE.md by analyzing codebase |
 
 ## Example Projects
 
