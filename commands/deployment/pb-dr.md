@@ -162,7 +162,7 @@ psql -h test-db -U admin -d restore_test < /tmp/restore-test/db.sql
 
 # 3. Verify data integrity
 EXPECTED_ROWS=1000000  # Known approximate count
-ACTUAL_ROWS=$(psql -h test-db -U admin -d restore_test -t -c "SELECT COUNT(*) FROM users")
+ACTUAL_ROWS=$(psql -h test-db -U admin -d restore_test -t -A -c "SELECT COUNT(*) FROM users")
 
 if [ "$ACTUAL_ROWS" -lt "$EXPECTED_ROWS" ]; then
   echo "ERROR: Row count mismatch. Expected ~$EXPECTED_ROWS, got $ACTUAL_ROWS"
@@ -421,12 +421,16 @@ Attackers demand 10 BTC. Last known good backup was Friday 6pm.
 # 1. Stop application
 sudo systemctl stop myapp
 
-# 2. Create recovery configuration
-cat > /var/lib/postgresql/data/recovery.conf << EOF
+# 2. Create recovery configuration (PostgreSQL 12+)
+# Note: recovery.conf was removed in PostgreSQL 12
+cat >> /var/lib/postgresql/data/postgresql.conf << EOF
 restore_command = 'cp /backup/wal/%f %p'
 recovery_target_time = '2026-01-20 14:30:00'
 recovery_target_action = 'promote'
 EOF
+
+# Create recovery signal file
+touch /var/lib/postgresql/data/recovery.signal
 
 # 3. Restore base backup
 pg_basebackup -h backup-server -D /var/lib/postgresql/data-new

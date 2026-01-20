@@ -135,9 +135,12 @@ SOPS (Secrets OPerationS) with age encryption is the recommended approach for fi
 # macOS
 brew install sops
 
-# Linux
-curl -LO https://github.com/getsops/sops/releases/download/v3.8.1/sops-v3.8.1.linux.amd64
-sudo mv sops-v3.8.1.linux.amd64 /usr/local/bin/sops
+# Linux (check https://github.com/getsops/sops/releases for latest version)
+VERSION=3.8.1
+curl -LO https://github.com/getsops/sops/releases/download/v${VERSION}/sops-v${VERSION}.linux.amd64
+curl -LO https://github.com/getsops/sops/releases/download/v${VERSION}/sops-v${VERSION}.checksums.txt
+sha256sum --check --ignore-missing sops-v${VERSION}.checksums.txt
+sudo mv sops-v${VERSION}.linux.amd64 /usr/local/bin/sops
 sudo chmod +x /usr/local/bin/sops
 
 # Install age
@@ -152,7 +155,11 @@ sudo apt install age
 
 ```bash
 # Generate age key pair
+mkdir -p ~/.config/sops/age
 age-keygen -o ~/.config/sops/age/keys.txt
+
+# Secure the key file (IMPORTANT!)
+chmod 600 ~/.config/sops/age/keys.txt
 
 # Output shows public key:
 # Public key: age1ql3z7hjy54pw3hyww5ayyfg7zqgvc7w3j2elw8zmrj2kg5sfn9aqmcac8p

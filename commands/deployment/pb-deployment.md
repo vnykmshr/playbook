@@ -996,6 +996,10 @@ export default function() {
 - `/pb-guide` — CD requirements
 - `/pb-incident` — Recovery if deployment breaks
 - `/pb-security` — Deploy-time security checks
+- `/pb-hardening` — Infrastructure security before deployment
+- `/pb-secrets` — Secrets management during deployment
+- `/pb-database-ops` — Database migration patterns
+- `/pb-dr` — Disaster recovery planning
 
 ---
 

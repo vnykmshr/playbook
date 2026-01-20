@@ -838,6 +838,8 @@ du -sh /*  # Show which directory consuming space
 - `/pb-observability` — Set up monitoring to detect incidents
 - `/pb-guide` — Section 8.2 (rollback plan)
 - `/pb-release` — On-call contacts and escalation
+- `/pb-sre-practices` — On-call health, blameless culture, toil reduction
+- `/pb-dr` — Disaster recovery for major incidents
 
 ---
 

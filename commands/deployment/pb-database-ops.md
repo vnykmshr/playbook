@@ -213,7 +213,7 @@ psql -h test-db -U admin -d verify_test -f /tmp/verify/*.sql
 
 # Check row counts
 EXPECTED_USERS=100000
-ACTUAL_USERS=$(psql -h test-db -U admin -d verify_test -t -c \
+ACTUAL_USERS=$(psql -h test-db -U admin -d verify_test -t -A -c \
   "SELECT COUNT(*) FROM users")
 
 if [ "$ACTUAL_USERS" -lt "$EXPECTED_USERS" ]; then
@@ -222,7 +222,7 @@ if [ "$ACTUAL_USERS" -lt "$EXPECTED_USERS" ]; then
 fi
 
 # Check recent data exists (should have data from yesterday)
-RECENT=$(psql -h test-db -U admin -d verify_test -t -c \
+RECENT=$(psql -h test-db -U admin -d verify_test -t -A -c \
   "SELECT COUNT(*) FROM users WHERE created_at > NOW() - INTERVAL '2 days'")
 
 if [ "$RECENT" -eq "0" ]; then
@@ -410,9 +410,11 @@ max_wal_senders = 10
 synchronous_commit = on          # For zero data loss
 synchronous_standby_names = '*'  # Any replica
 
-# Replica: recovery.conf (PostgreSQL < 12) or postgresql.conf
+# Replica: postgresql.conf (PostgreSQL 12+)
+# Note: recovery.conf was removed in PostgreSQL 12
 primary_conninfo = 'host=primary port=5432 user=replication'
 restore_command = 'cp /backup/wal/%f %p'
+# Create standby signal file: touch $PGDATA/standby.signal
 ```
 
 ### Connection Routing
@@ -473,7 +475,7 @@ if [ $? -eq 0 ]; then
 fi
 
 # 2. Check replica lag
-LAG=$(psql -h replica -t -c "SELECT pg_wal_lsn_diff(pg_last_wal_receive_lsn(), pg_last_wal_replay_lsn())")
+LAG=$(psql -h replica -t -A -c "SELECT pg_wal_lsn_diff(pg_last_wal_receive_lsn(), pg_last_wal_replay_lsn())")
 echo "Replica lag: $LAG bytes"
 
 if [ "$LAG" -gt 1048576 ]; then  # 1MB
@@ -489,9 +491,9 @@ psql -h replica -c "SELECT pg_promote();"
 
 # 4. Verify promotion
 pg_isready -h replica -p 5432
-IS_PRIMARY=$(psql -h replica -t -c "SELECT NOT pg_is_in_recovery()")
+IS_PRIMARY=$(psql -h replica -t -A -c "SELECT NOT pg_is_in_recovery()")
 
-if [ "$IS_PRIMARY" = " t" ]; then
+if [ "$IS_PRIMARY" = "t" ]; then
   echo "Replica promoted successfully"
 else
   echo "ERROR: Promotion failed"
@@ -626,9 +628,12 @@ SELECT
     ELSE EXTRACT(EPOCH FROM now() - pg_last_xact_replay_timestamp())
   END AS lag_seconds;
 
--- Cache hit ratio
+-- Cache hit ratio (handles zero activity case)
 SELECT
-  sum(heap_blks_hit) / (sum(heap_blks_hit) + sum(heap_blks_read)) as cache_hit_ratio
+  CASE
+    WHEN sum(heap_blks_hit) + sum(heap_blks_read) = 0 THEN NULL
+    ELSE sum(heap_blks_hit)::float / (sum(heap_blks_hit) + sum(heap_blks_read))
+  END as cache_hit_ratio
 FROM pg_statio_user_tables;
 
 -- Lock contention
@@ -802,7 +807,7 @@ Production deployment (/pb-deployment)
     ↓
 Monitoring (/pb-observability)
     ↓
-Operational issues → This runbooks
+Operational issues → These runbooks
     ↓
 Major failures → /pb-dr
 ```

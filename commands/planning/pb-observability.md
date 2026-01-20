@@ -769,6 +769,7 @@ histogram_quantile(0.99, rate(http_request_duration_seconds_bucket[5m])) > 1
 - `/pb-plan` — Feature planning (include observability)
 - `/pb-guide` — SDLC workflow
 - `/pb-adr` — Architecture decision (monitoring tools)
+- `/pb-sre-practices` — SRE operational practices, error budgets
 
 ---
 
