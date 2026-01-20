@@ -56,7 +56,19 @@ Quick reference for all playbook commands.
 | Command | When to Use |
 |---------|-------------|
 | `/pb-release` | Pre-release checks and deployment |
+| `/pb-deployment` | Deployment strategies (blue-green, canary, rolling) |
 | `/pb-incident` | P0/P1 production incidents |
+| `/pb-sre-practices` | Toil reduction, error budgets, on-call health, blameless culture |
+| `/pb-dr` | Disaster recovery planning, RTO/RPO, backup strategies, game days |
+| `/pb-database-ops` | Database migrations, backups, performance, connection pooling |
+
+## Security & Hardening
+
+| Command | When to Use |
+|---------|-------------|
+| `/pb-security` | Application security review |
+| `/pb-hardening` | Server, container, and network security hardening |
+| `/pb-secrets` | Secrets management (SOPS, Vault, rotation, incident response) |
 
 ## Repository Management
 

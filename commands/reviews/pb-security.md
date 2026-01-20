@@ -518,6 +518,8 @@ Additional: Privacy by design, user data export/deletion
 - `/pb-cycle` — Daily development with security checks
 - `/pb-guide` — Security design section
 - `/pb-review-cleanup` — Code quality including security
+- `/pb-hardening` — Infrastructure security (servers, containers, networks)
+- `/pb-secrets` — Secrets management lifecycle
 
 ---
 
