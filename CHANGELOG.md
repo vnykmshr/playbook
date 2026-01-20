@@ -5,6 +5,74 @@ All notable changes to this project are documented here.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v1.9.0] - 2026-01-20
+
+### Added
+
+**Production Readiness & Operational Excellence**
+- Added 5 new commands for production operations and security:
+  - `/pb-hardening` — Server, container, and network security hardening
+  - `/pb-secrets` — Secrets management lifecycle (SOPS, Vault, rotation, incident response)
+  - `/pb-sre-practices` — SRE operational practices (toil, error budgets, on-call health)
+  - `/pb-dr` — Disaster recovery planning (RTO/RPO, backups, game days)
+  - `/pb-database-ops` — Database operations (migrations, backups, performance, failover)
+
+**`/pb-hardening` (Security Hardening)**
+- Server setup: SSH hardening, UFW firewall, fail2ban, auditd
+- Docker container security: cap_drop ALL, no-new-privileges, non-root users, read-only fs
+- Network isolation: internal Docker networks, service authentication, port exposure rules
+- Host hardening: kernel parameters, automatic security updates
+- Pre-deployment and post-deployment security checklists
+- Defense-in-depth philosophy
+
+**`/pb-secrets` (Secrets Management)**
+- Secrets hierarchy: local dev → CI/CD → staging → production
+- SOPS + age encryption workflow with detailed setup guide
+- HashiCorp Vault patterns for dynamic secrets
+- Cloud secrets managers comparison (AWS, GCP, Azure)
+- Rotation strategies: manual checklist, automated, zero-downtime
+- Incident response: immediate rotation, investigation, prevention tools
+
+**`/pb-sre-practices` (SRE Practices)**
+- Toil identification and reduction with tracking templates
+- Error budget policies: healthy, concerning, critical, exhausted
+- Capacity planning with forecasting and quarterly review templates
+- Service ownership model with handoff protocol
+- Blameless culture and psychological safety
+- On-call health: rotation patterns, load metrics, burnout prevention
+- Operational review cadence: weekly, monthly, quarterly, annually
+
+**`/pb-dr` (Disaster Recovery)**
+- RTO/RPO definitions with business alignment guidance
+- Backup strategies: 3-2-1 rule, immutable backups, verification
+- Failover procedures: manual runbook, automated, DNS-based
+- Recovery testing: game day exercises, chaos engineering, tabletop exercises
+- Data recovery workflows: point-in-time, file system, application state
+- Communication templates: status page, stakeholder, customer email
+- DR plan template for critical services
+
+**`/pb-database-ops` (Database Operations)**
+- Migration patterns: expand/contract for zero-downtime schema changes
+- Backup operations: automated scripts, verification, retention policies
+- Performance baselines and query optimization guidelines
+- Connection pooling with PgBouncer configuration patterns
+- Common runbooks: slow queries, connection exhaustion, replication lag
+- Failover procedures for high availability
+- Production checklist for database deployments
+
+### Documentation
+
+- Updated command-index: Added Security & Hardening section, expanded Release & Operations
+- Created new command category structure for operations-focused commands
+
+### Status
+
+- 73 commands across 10 categories
+- Complete production readiness workflow
+- Defense-in-depth security approach integrated
+
+---
+
 ## [v1.8.0] - 2026-01-20
 
 ### Added
