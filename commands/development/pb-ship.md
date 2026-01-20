@@ -23,15 +23,15 @@ Ship when ready, not when tired. Every review step is an opportunity to find iss
 PHASE 1              PHASE 2                PHASE 3           PHASE 4              PHASE 5
 FOUNDATION           SPECIALIZED REVIEWS    FINAL GATE        PR & PEER REVIEW     MERGE & RELEASE
 │                    │                      │                 │                    │
-├─ Quality gates     ├─ /pb-review-docs     ├─ /pb-review-    ├─ /pb-pr            ├─ Merge PR
-│  (lint,test,type)  │  (REQUIRED)          │  prerelease     │                    │
-│                    │                      │  (senior gate)  ├─ Peer review       ├─ /pb-release
-├─ /pb-cycle         ├─ /pb-review-cleanup  │                 │  (scoped to PR)    │
-│  (self-review)     │  (code quality)      └─ Ship decision  │                    ├─ Verify
+├─ Quality gates     ├─ /pb-review-docs     ├─ /pb-release    ├─ /pb-pr            ├─ Merge PR
+│  (lint,test,type)  │  (REQUIRED)          │  Phase 1        │                    │
+│                    │                      │  (readiness)    ├─ Peer review       ├─ /pb-release
+├─ /pb-cycle         ├─ /pb-review-cleanup  │                 │  (scoped to PR)    │  Phase 2-3
+│  (self-review)     │  (code quality)      └─ Ship decision  │                    │  (tag, deploy)
 │                    │                         (go/no-go)     ├─ Address feedback  │
-└─ Release artifacts ├─ /pb-review-hygiene                    │                    └─ Summarize
-   (CHANGELOG etc)   │  (project health)                      └─ Approved sign-off
-                     │
+└─ Release artifacts ├─ /pb-review-hygiene                    │                    ├─ /pb-deployment
+   (CHANGELOG etc)   │  (project health)                      └─ Approved sign-off │
+                     │                                                             └─ Summarize
                      ├─ /pb-review-tests
                      │  (coverage)
                      │
@@ -258,9 +258,9 @@ Create or update `todos/ship-review-YYYY-MM-DD.md`:
 
 ## Phase 3: Final Gate
 
-### Step 3.1: Pre-Release Review
+### Step 3.1: Release Readiness Review
 
-Run `/pb-review-prerelease`:
+Run `/pb-release` Phase 1 (Readiness Gate):
 
 This is the senior engineer final gate. Review with fresh eyes:
 
@@ -586,7 +586,7 @@ Parallel (independent):
   └─ pb-logging
 
 Sequential (needs stable code):
-  All above → pb-review-prerelease
+  All above → pb-release (Phase 1: Readiness Gate)
 ```
 
 ---
@@ -683,8 +683,8 @@ PHASE 2: SPECIALIZED REVIEWS
 [ ] /pb-logging — logging standards (optional)
 
 PHASE 3: FINAL GATE
-[ ] /pb-review-prerelease — senior engineer gate
-[ ] CHANGELOG.md verified ← NEW
+[ ] /pb-release Phase 1 — readiness gate (senior sign-off)
+[ ] CHANGELOG.md verified
 [ ] Ship decision: GO
 
 PHASE 4: PR & PEER REVIEW
@@ -697,8 +697,8 @@ PHASE 4: PR & PEER REVIEW
 PHASE 5: MERGE & RELEASE
 [ ] Final CI verification (all checks green)
 [ ] PR merged
-[ ] Release tagged and deployed (/pb-release)
-[ ] Verification passed
+[ ] /pb-release Phase 2-3 — version, tag, GitHub release
+[ ] /pb-deployment — execute deployment, verify
 [ ] Summary documented
 ```
 
