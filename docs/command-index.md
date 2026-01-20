@@ -91,12 +91,11 @@ Quick reference for all playbook commands.
 
 | Command | When to Use | Frequency |
 |---------|-------------|-----------|
-| `/pb-review` | Comprehensive multi-perspective | Monthly or pre-release |
+| `/pb-review` | Orchestrate comprehensive multi-perspective review | Monthly or pre-release |
 | `/pb-review-code` | Dedicated code review for reviewers (peer review checklist) | Every PR review |
-| `/pb-review-cleanup` | Code cleanup, repo health | Before new dev cycle |
+| `/pb-review-hygiene` | Code quality + operational readiness | Before new dev cycle, monthly |
 | `/pb-review-tests` | Test suite quality | Monthly |
 | `/pb-review-docs` | Documentation accuracy | Quarterly |
-| `/pb-review-hygiene` | Multi-role health check | Quarterly |
 | `/pb-review-product` | Technical + product review | Monthly |
 | `/pb-review-microservice` | Microservice architecture design review | Before microservice deployment |
 | `/pb-logging` | Logging strategy & standards audit | During code review, pre-release |
@@ -108,18 +107,19 @@ Self-sufficient thinking partner methodology for expert-quality collaboration.
 
 | Command | When to Use |
 |---------|-------------|
-| `/pb-query` | Need polished, expert-quality answer (multi-pass refinement) |
-| `/pb-ideate` | Need to explore options, generate possibilities (divergent thinking) |
-| `/pb-synthesize` | Need to combine multiple inputs into coherent insight (integration) |
+| `/pb-think` | Complete thinking toolkit with modes: ideate, synthesize, refine |
+| `/pb-think mode=ideate` | Divergent exploration - generate options and possibilities |
+| `/pb-think mode=synthesize` | Integration - combine multiple inputs into coherent insight |
+| `/pb-think mode=refine` | Convergent refinement - polish to expert-quality |
 
 **Thinking Partner Stack:**
 ```
-/pb-ideate      → Explore options (divergent)
-/pb-synthesize  → Combine insights (integration)
-/pb-preamble    → Challenge assumptions (adversarial)
-/pb-plan        → Structure approach (convergent)
-/pb-adr         → Document decision (convergent)
-/pb-query       → Refine output (refinement)
+/pb-think mode=ideate     → Explore options (divergent)
+/pb-think mode=synthesize → Combine insights (integration)
+/pb-preamble              → Challenge assumptions (adversarial)
+/pb-plan                  → Structure approach (convergent)
+/pb-adr                   → Document decision (convergent)
+/pb-think mode=refine     → Refine output (refinement)
 ```
 
 ## Reference Documents
@@ -143,6 +143,7 @@ Self-sufficient thinking partner methodology for expert-quality collaboration.
 |---------|-------------|
 | `/pb-onboarding` | Structured team member onboarding |
 | `/pb-team` | Team dynamics, feedback, and retrospectives |
+| `/pb-knowledge-transfer` | Team knowledge sharing and KT sessions |
 
 ## Context & Templates
 

@@ -244,7 +244,7 @@ Production is down. Execute quickly:
 
 ## Command Categories
 
-### Core Foundation (7 commands)
+### Core Foundation (5 commands)
 Master SDLC framework, working standards, templates, and thinking partner methodology.
 
 | Command | Purpose |
@@ -253,9 +253,7 @@ Master SDLC framework, working standards, templates, and thinking partner method
 | `/pb-standards` | Working principles and collaboration norms |
 | `/pb-documentation` | Writing technical docs at 5 levels |
 | `/pb-templates` | Reusable commit, PR, and testing templates |
-| `/pb-query` | Multi-pass query processing for expert-quality answers |
-| `/pb-ideate` | Divergent exploration and option generation |
-| `/pb-synthesize` | Integrate multiple inputs into coherent insight |
+| `/pb-think` | Unified thinking partner (modes: ideate, synthesize, refine) |
 
 ### Planning & Architecture (10 commands)
 Design systems before implementation.
@@ -273,7 +271,7 @@ Design systems before implementation.
 | `/pb-observability` | Monitoring, observability patterns, and alerting strategy |
 | `/pb-deprecation` | Deprecation strategy, communication, and backwards compatibility |
 
-### Development (12 commands)
+### Development (11 commands)
 Iterative feature development with built-in quality gates.
 
 | Command | Purpose |
@@ -289,22 +287,21 @@ Iterative feature development with built-in quality gates.
 | `/pb-pr` | Streamlined pull request creation |
 | `/pb-testing` | Testing philosophy (unit, integration, E2E) |
 | `/pb-todo-implement` | Structured implementation with checkpoint approval |
-| `/pb-knowledge-transfer` | Knowledge transfer session preparation and execution |
 
-### Code Review & Quality (10 commands)
+### Code Review & Quality (9 commands)
 Multiple perspectives on code quality.
 
 | Command | Purpose |
 |---------|---------|
-| `/pb-review` | Comprehensive multi-perspective periodic review |
-| `/pb-review-cleanup` | Code quality and best practices |
+| `/pb-review` | Orchestrate multi-perspective reviews (Quick/Standard/Deep) |
+| `/pb-review-hygiene` | Code quality + operational readiness |
 | `/pb-review-product` | Technical + product alignment |
 | `/pb-review-tests` | Test suite quality and coverage |
-| `/pb-review-docs` | Periodic documentation review (accuracy, completeness, maintenance) |
+| `/pb-review-docs` | Documentation review (accuracy, completeness, maintenance) |
 | `/pb-review-microservice` | Microservice architecture design |
-| `/pb-review-hygiene` | Code cleanup and technical debt |
 | `/pb-security` | Security checklist (quick/standard/deep) |
 | `/pb-logging` | Logging standards and structured logging |
+| `/pb-a11y` | Accessibility audit |
 
 ### Release & Operations (3 commands)
 Safe production deployment and incident response.
@@ -327,7 +324,7 @@ Professional repository structure and presentation.
 | `/pb-repo-blog` | Write technical blog post |
 | `/pb-repo-enhance` | Full repository enhancement (combines all above) |
 
-### Team & Growth (2 commands)
+### Team & Growth (3 commands)
 Team development and knowledge sharing.
 
 | Command | Purpose |

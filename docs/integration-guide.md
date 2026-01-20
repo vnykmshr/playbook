@@ -32,7 +32,7 @@ Complete reference for how all playbook commands work together to form a unified
 → `/pb-todo-implement` (structured checkpoint-based implementation)
 
 **Reviewing code before merge?**
-→ `/pb-cycle` (self-review) → `/pb-review-cleanup` (peer review) → `/pb-security` (security review)
+→ `/pb-cycle` (self-review) → `/pb-review-hygiene` (peer review) → `/pb-security` (security review)
 
 **Reviewing quality periodically?**
 → `/pb-review-tests` (monthly) → `/pb-review-hygiene` (quarterly) → `/pb-review-product` (product alignment)
@@ -68,9 +68,7 @@ These establish baseline understanding and guiding philosophy. **Every engineer 
 | 8 | **pb-preamble-power** | Power dynamics and challenge | Psychological safety, healthy disagreement, authority | For building stronger team dynamics | M |
 | 9 | **pb-preamble-decisions** | Decision discipline through preamble | Decision frameworks, tradeoff analysis | When making complex technical decisions | M |
 | 10 | **pb-context** | Project context and decision log | Current focus, recent decisions, architecture notes | Quick context refresh, decision tracking | All |
-| 11 | **pb-query** | Multi-pass query processing | Draft → critique → refine for expert answers | Complex questions, research tasks | All |
-| 12 | **pb-ideate** | Divergent exploration | Generate 10+ options, explore adjacent space | Early problem-solving, option generation | All |
-| 13 | **pb-synthesize** | Integration and synthesis | Combine multiple inputs into coherent insight | After research, multi-source analysis | All |
+| 11 | **pb-think** | Unified thinking partner | Complete toolkit: ideate, synthesize, refine modes | Complex questions, research, multi-perspective | All |
 
 **How they work together**:
 - Read `/pb-preamble` and `/pb-standards` to understand philosophy and principles
@@ -79,7 +77,7 @@ These establish baseline understanding and guiding philosophy. **Every engineer 
 - Use `/pb-templates` for format/structure
 - Use `/pb-documentation` for content quality
 - Use preamble expansions for specific team contexts
-- Use thinking partner commands (`/pb-query`, `/pb-ideate`, `/pb-synthesize`) for expert-quality collaboration
+- Use `/pb-think` for expert-quality collaboration (modes: ideate, synthesize, refine)
 
 ---
 
@@ -187,7 +185,7 @@ Quality gates at multiple checkpoints. **Use these during development, before me
 | # | Command | Purpose | Trigger | When to Use | Frequency |
 |---|---------|---------|---------|------------|-----------|
 | 23 | **pb-review** | Periodic project review overview | Feature/release boundaries | Quick reference to all review types | Monthly or pre-release |
-| 24 | **pb-review-cleanup** | Code quality and best practices | Every PR | Before merging code | Every PR |
+| 24 | **pb-review-hygiene** | Code quality and best practices | Every PR | Before merging code | Every PR |
 | 25 | **pb-review-product** | Product alignment + tech perspective | Feature completion | Before merging user-facing changes | Every user-facing PR |
 | 26 | **pb-review-docs** | Documentation accuracy and completeness | Periodic audit | Quarterly documentation review | Quarterly |
 | 27 | **pb-review-tests** | Test suite quality and coverage | Periodic audit | Monthly test health check | Monthly |
@@ -203,7 +201,7 @@ Quality gates at multiple checkpoints. **Use these during development, before me
 /pb-pr (create pull request)
   ↓
 PEER REVIEW GATES:
-  /pb-review-cleanup (code quality)
+  /pb-review-hygiene (code quality)
   /pb-security (security checklist)
   /pb-review-tests (test coverage)
   /pb-logging (logging standards)
@@ -217,7 +215,7 @@ APPROVED
 **Periodic review schedule**:
 ```
 WEEKLY
-  ├─ /pb-review-cleanup (spot check)
+  ├─ /pb-review-hygiene (spot check)
   └─ /pb-logging (log quality)
 
 MONTHLY
@@ -409,7 +407,7 @@ IMPLEMENTATION (iterative daily)
 
 CODE REVIEW
 ├─ /pb-pr                 ← Create pull request
-├─ /pb-review-cleanup        ← Code quality
+├─ /pb-review-hygiene        ← Code quality
 ├─ /pb-review-tests       ← Test coverage
 ├─ /pb-logging            ← Logging standards
 ├─ /pb-security           ← Security review
@@ -506,7 +504,7 @@ CONTINUOUS DEVELOPMENT
 
 ```
 WEEKLY
-├─ /pb-review-cleanup           ← Code quality spot check
+├─ /pb-review-hygiene           ← Code quality spot check
 └─ /pb-logging               ← Log quality check
 
 MONTHLY
@@ -579,19 +577,19 @@ RELEASE
 **Who**: Mentors, managers, all engineers
 
 ### Cluster 9: Thinking Partner
-**Commands**: pb-query, pb-ideate, pb-synthesize
+**Commands**: pb-think
 **Purpose**: Self-sufficient expert-quality collaboration
 **Frequency**: Throughout development for complex questions, ideation, synthesis
 **Who**: All engineers
 
 **Thinking Partner Stack:**
 ```
-/pb-ideate      → Explore options (divergent)
-/pb-synthesize  → Combine insights (integration)
-/pb-preamble    → Challenge assumptions (adversarial)
-/pb-plan        → Structure approach (convergent)
-/pb-adr         → Document decision (convergent)
-/pb-query       → Refine output (refinement)
+/pb-think mode=ideate     → Explore options (divergent)
+/pb-think mode=synthesize → Combine insights (integration)
+/pb-preamble              → Challenge assumptions (adversarial)
+/pb-plan                  → Structure approach (convergent)
+/pb-adr                   → Document decision (convergent)
+/pb-think mode=refine     → Refine output (refinement)
 ```
 
 ---
@@ -608,7 +606,7 @@ RELEASE
 - pb-security: 7+ references (quality gate)
 
 **Well-Referenced** (important workflow nodes):
-- pb-adr, pb-deployment, pb-incident, pb-observability, pb-review-cleanup (5-9 references each)
+- pb-adr, pb-deployment, pb-incident, pb-observability, pb-review-hygiene (5-9 references each)
 
 **Moderately Referenced** (specialized/optional):
 - pb-documentation, pb-pr, pb-commit, pb-patterns-* (2-4 references each)
@@ -634,12 +632,12 @@ RELEASE
 - pb-patterns → pb-cycle (pattern selection)
 
 **Development → Review**
-- pb-cycle → pb-review-cleanup
+- pb-cycle → pb-review-hygiene
 - pb-commit → pb-review-tests
 - pb-pr → pb-review-product
 
 **Review → Deployment**
-- pb-review-cleanup → pb-release (readiness gate)
+- pb-review-hygiene → pb-release (readiness gate)
 - pb-security → pb-release
 - pb-release → pb-deployment
 
@@ -730,7 +728,7 @@ STEP 2: Implementation
 └─ /pb-pr (create pull request)
 
 STEP 3: Code Review
-├─ /pb-review-cleanup (code quality)
+├─ /pb-review-hygiene (code quality)
 ├─ /pb-review-product (product alignment)
 ├─ /pb-security (security review)
 ├─ /pb-review-tests (test coverage)
@@ -800,7 +798,7 @@ STEP 2: Implementation Phases
 └─ Continue for each component
 
 STEP 3: Code Review
-├─ /pb-review-cleanup (architecture alignment)
+├─ /pb-review-hygiene (architecture alignment)
 ├─ /pb-review-tests (regression test coverage)
 ├─ /pb-security (if security implications)
 └─ Approve / Merge

@@ -66,7 +66,7 @@ This guide helps you find the right command for any situation. Answer the questi
 → Use `/pb-review-product` for product alignment review
 
 **Doing a comprehensive code review?**
-→ Use `/pb-review-cleanup` for code quality and maintainability
+→ Use `/pb-review-hygiene` for code quality and maintainability
 
 **Is this a microservice change?**
 → Use `/pb-review-microservice` for service design and contract review
@@ -195,7 +195,7 @@ START
 │  ├─ "Tests?" → /pb-review-tests
 │  ├─ "Product fit?" → /pb-review-product
 │  ├─ "Logging?" → /pb-logging
-│  └─ "Full review?" → /pb-review-cleanup
+│  └─ "Full review?" → /pb-review-hygiene
 │
 ├─ "I'm releasing"
 │  ├─ "Pre-release?" → /pb-release
@@ -251,7 +251,7 @@ START
 - `/pb-release` — Final review
 
 ### Monthly
-- `/pb-review-cleanup` — Code quality
+- `/pb-review-hygiene` — Code quality
 - `/pb-review-tests` — Test coverage
 - `/pb-logging` — Logging standards
 
@@ -291,7 +291,7 @@ START
 - As needed: `/pb-patterns-*`, `/pb-context`
 
 ### Code Reviewer / Senior Engineer
-- Per PR: `/pb-cycle`, `/pb-security`, `/pb-review-tests`, `/pb-review-cleanup`, `/pb-logging`
+- Per PR: `/pb-cycle`, `/pb-security`, `/pb-review-tests`, `/pb-review-hygiene`, `/pb-logging`
 - Per release: `/pb-release`
 - Periodically: `/pb-review-product`, `/pb-review-hygiene`
 

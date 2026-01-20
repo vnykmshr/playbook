@@ -5,6 +5,43 @@ All notable changes to this project are documented here.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v2.0.0] - 2026-01-21
+
+### Breaking Changes
+
+#### Thinking Partner Consolidation
+- **REMOVED**: `/pb-query`, `/pb-ideate`, `/pb-synthesize`
+- **ADDED**: `/pb-think` — Unified thinking command with modes
+  - `/pb-think` (default) — Full cycle: ideate → synthesize → refine
+  - `/pb-think mode=ideate` — Divergent exploration
+  - `/pb-think mode=synthesize` — Integration and combination
+  - `/pb-think mode=refine` — Convergent refinement
+
+#### Review Command Hierarchy
+- **REMOVED**: `/pb-review-cleanup` (merged into pb-review-hygiene)
+- **CHANGED**: `/pb-review` now acts as orchestrator, guiding users to specialized review commands
+- **CHANGED**: `/pb-review-hygiene` now covers both code quality and operational readiness
+
+#### Category Reorganization
+- **MOVED**: `/pb-knowledge-transfer` from development → people
+- **MOVED**: `/pb-design-language` from development → planning
+
+### Improvements
+
+- All review commands now have Related Commands sections
+- Removed emojis from titles for consistent text-only style
+- Fixed cross-reference issues in pb-hardening and pb-sre-practices
+- Added Related Commands to all repo commands
+- Added Related Commands to pb-context
+- Fixed structure consistency in pb-review-docs, pb-review-tests, pb-review-product
+
+### Command Count
+
+- Before: 75 commands
+- After: 72 commands (-3 due to consolidation)
+
+---
+
 ## [v1.9.0] - 2026-01-20
 
 ### Added

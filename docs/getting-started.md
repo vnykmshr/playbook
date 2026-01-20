@@ -76,7 +76,7 @@ Your project already has code and processes. Let's integrate the playbook gradua
 ```bash
 # Step 1: Understand current state
 /pb-context           # Document project context and decisions
-/pb-review-cleanup       # Audit existing code quality
+/pb-review-hygiene       # Audit existing code quality
 /pb-review-hygiene    # Identify technical debt
 
 # Step 2: Establish baseline
@@ -140,7 +140,7 @@ You're in the middle of a feature sprint. Here's your daily rhythm:
 A PR is ready for review. As a reviewer, you can follow a structured approach:
 
 ```bash
-/pb-review-cleanup       # Code quality checklist
+/pb-review-hygiene       # Code quality checklist
 /pb-security          # Security perspective
 /pb-review-tests      # Test coverage and quality
 /pb-logging           # Logging standards verification
