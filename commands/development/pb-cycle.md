@@ -36,6 +36,8 @@ make test        # All tests pass
 
 Request review from senior engineer perspective.
 
+**For reviewers:** Use `/pb-review-code` for the complete code review checklist.
+
 **Important:** Peer review assumes `/pb-preamble` thinking (challenge assumptions, surface flaws, question trade-offs) and applies `/pb-design-rules` (check for clarity, simplicity, modularity).
 
 Reviewer should:
@@ -247,12 +249,14 @@ ls todos/releases/*/
 - `/pb-resume` → Get back in context (if context switching)
 - **`/pb-cycle`** → Self-review + peer review (YOU ARE HERE)
   - Includes: `/pb-testing` (write tests), `/pb-standards` (check principles), `/pb-security` (security gate)
+  - Peer reviewer uses: `/pb-review-code` (code review checklist)
 - `/pb-commit` → Craft atomic commits (after approval)
 - `/pb-pr` → Create pull request
 - `/pb-review-*` → Additional reviews if needed
 - `/pb-release` → Deploy
 
 **Key integrations during /pb-cycle:**
+- **Peer Review**: `/pb-review-code` for reviewer's code review checklist
 - **Testing**: `/pb-testing` for test patterns (unit, integration, E2E)
 - **Security**: `/pb-security` checklist during self-review
 - **Logging**: `/pb-logging` standards for logging validation

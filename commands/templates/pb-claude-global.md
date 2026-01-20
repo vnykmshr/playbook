@@ -153,7 +153,7 @@ For detailed guidance: `/pb-pr`
 - `/pb-patterns-*` — Reference patterns
 
 **Quality gates:**
-- `/pb-review-cleanup` — Code quality checklist
+- `/pb-review-code` — Code review checklist
 - `/pb-security` — Security checklist
 - `/pb-testing` — Test coverage guidance
 
@@ -171,7 +171,7 @@ For detailed guidance: `/pb-pr`
 | During development | `/pb-cycle` |
 | Ready to commit | `/pb-commit` |
 | Creating PR | `/pb-pr` |
-| Code review | `/pb-review-cleanup` |
+| Code review | `/pb-review-code` |
 | Security check | `/pb-security` |
 | Architecture decision | `/pb-adr` |
 | Unsure what's next | `/pb-what-next` |
