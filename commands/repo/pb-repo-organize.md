@@ -173,4 +173,12 @@ project/
 
 ---
 
+## Related Commands
+
+- `/pb-repo-init` — Initialize new project structure
+- `/pb-repo-enhance` — Full repository enhancement suite
+- `/pb-review-hygiene` — Codebase quality review
+
+---
+
 *Clean roots lead to clear thinking.*

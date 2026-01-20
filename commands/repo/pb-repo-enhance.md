@@ -167,4 +167,15 @@ After enhancement, verify:
 
 ---
 
+## Related Commands
+
+- `/pb-repo-init` — Initialize new project structure
+- `/pb-repo-organize` — Clean up repository structure
+- `/pb-repo-readme` — Generate comprehensive README
+- `/pb-repo-about` — Generate GitHub About section
+- `/pb-repo-blog` — Write technical blog post
+- `/pb-repo-docsite` — Set up documentation site
+
+---
+
 *Professional repository, professional impression.*

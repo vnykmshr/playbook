@@ -213,4 +213,12 @@ stateDiagram-v2
 
 ---
 
+## Related Commands
+
+- `/pb-repo-readme` — Generate comprehensive README
+- `/pb-documentation` — Technical documentation guidance
+- `/pb-repo-enhance` — Full repository enhancement suite
+
+---
+
 *Technical depth, practical focus.*

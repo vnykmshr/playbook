@@ -489,13 +489,13 @@ People who have good onboarding stay longer. Key factors:
 
 | Factor | Importance | How to Provide |
 |--------|-----------|----------------|
-| Clear expectations | ⭐⭐⭐ | Manager explains goals, metrics, culture |
-| Technical ramp support | ⭐⭐⭐ | Buddy, pairing, documentation |
-| Belonging | ⭐⭐⭐ | Include in team, welcome openly |
-| Competence | ⭐⭐⭐ | Achievable first tasks, support |
-| Growth path | ⭐⭐ | Discuss long-term goals in first month |
-| Fair compensation | ⭐⭐ | Set clear salary/equity upfront |
-| Interesting work | ⭐⭐ | Assign meaningful first project |
+| Clear expectations | Critical | Manager explains goals, metrics, culture |
+| Technical ramp support | Critical | Buddy, pairing, documentation |
+| Belonging | Critical | Include in team, welcome openly |
+| Competence | Critical | Achievable first tasks, support |
+| Growth path | Important | Discuss long-term goals in first month |
+| Fair compensation | Important | Set clear salary/equity upfront |
+| Interesting work | Important | Assign meaningful first project |
 
 People who feel lost after month 1 often leave by month 6.
 

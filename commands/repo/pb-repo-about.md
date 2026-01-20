@@ -127,4 +127,11 @@ Tags: tag1, tag2, tag3, tag4, tag5, tag6
 
 ---
 
+## Related Commands
+
+- `/pb-repo-readme` — Generate comprehensive README
+- `/pb-repo-enhance` — Full repository enhancement suite
+
+---
+
 *Clear description, discoverable tags.*

@@ -138,4 +138,14 @@ project/
 
 ---
 
+## Related Commands
+
+- `/pb-repo-organize` — Clean up existing repository structure
+- `/pb-repo-readme` — Generate comprehensive README
+- `/pb-repo-enhance` — Full repository enhancement suite
+- `/pb-plan` — Feature/release scope planning
+- `/pb-adr` — Architecture decision records
+
+---
+
 *Lean and practical. Value over ceremony.*

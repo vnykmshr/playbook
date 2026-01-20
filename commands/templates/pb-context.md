@@ -311,4 +311,13 @@ git log --oneline -10                  # Recent commits
 
 ---
 
+## Related Commands
+
+- `/pb-claude-project` — Generate project CLAUDE.md
+- `/pb-start` — Begin development work
+- `/pb-resume` — Resume after break
+- `/pb-onboarding` — New team member integration
+
+---
+
 *Update when making significant changes.*

@@ -218,4 +218,13 @@ MIT
 
 ---
 
+## Related Commands
+
+- `/pb-repo-about` — Generate GitHub About section
+- `/pb-repo-blog` — Write technical blog post
+- `/pb-repo-enhance` — Full repository enhancement suite
+- `/pb-documentation` — Technical documentation guidance
+
+---
+
 *Clear README, happy developers.*
