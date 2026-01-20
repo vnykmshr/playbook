@@ -26,7 +26,7 @@ FOUNDATION           SPECIALIZED REVIEWS    FINAL GATE        PR & PEER REVIEW  
 ├─ Quality gates     ├─ /pb-review-docs     ├─ /pb-release    ├─ /pb-pr            ├─ Merge PR
 │  (lint,test,type)  │  (REQUIRED)          │  Phase 1        │                    │
 │                    │                      │  (readiness)    ├─ Peer review       ├─ /pb-release
-├─ /pb-cycle         ├─ /pb-review-cleanup  │                 │  (scoped to PR)    │  Phase 2-3
+├─ /pb-cycle         ├─ /pb-review-hygiene  │                 │  (scoped to PR)    │  Phase 2-3
 │  (self-review)     │  (code quality)      └─ Ship decision  │                    │  (tag, deploy)
 │                    │                         (go/no-go)     ├─ Address feedback  │
 └─ Release artifacts ├─ /pb-review-hygiene                    │                    ├─ /pb-deployment
@@ -159,7 +159,7 @@ Run `/pb-review-docs`:
 
 **Step 2.2: Code Quality Review**
 
-Run `/pb-review-cleanup`:
+Run `/pb-review-hygiene`:
 
 - [ ] Code patterns are consistent
 - [ ] No duplication (DRY)
@@ -238,7 +238,7 @@ Create or update `todos/ship-review-YYYY-MM-DD.md`:
 |---|-------|----------|--------|
 | 1 | [description] | HIGH/MED/LOW | FIXED/DEFERRED |
 
-### From pb-review-cleanup
+### From pb-review-hygiene
 | # | Issue | Severity | Status |
 |---|-------|----------|--------|
 
@@ -532,7 +532,7 @@ make lint && make test
 gh run list --limit 1  # Verify CI passes (if configured)
 
 # Phase 2: Pick ONE relevant review
-# /pb-review-cleanup (if code touched)
+# /pb-review-hygiene (if code touched)
 # /pb-review-docs (if docs touched)
 
 # Phase 3: Skip
@@ -578,7 +578,7 @@ For faster shipping, some reviews can run in parallel:
 
 ```
 Sequential (dependencies):
-  pb-review-docs (REQUIRED FIRST) → pb-review-cleanup → pb-review-hygiene
+  pb-review-docs (REQUIRED FIRST) → pb-review-hygiene → pb-review-hygiene
 
 Parallel (independent):
   ├─ pb-review-tests
@@ -676,7 +676,7 @@ PHASE 1: FOUNDATION
 
 PHASE 2: SPECIALIZED REVIEWS
 [ ] /pb-review-docs — REQUIRED for versioned releases ← CLARIFIED
-[ ] /pb-review-cleanup — code quality (recommended)
+[ ] /pb-review-hygiene — code quality (recommended)
 [ ] /pb-review-hygiene — project health (recommended)
 [ ] /pb-review-tests — test coverage (recommended)
 [ ] /pb-security — vulnerabilities (recommended)

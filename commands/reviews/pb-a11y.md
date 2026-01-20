@@ -877,7 +877,7 @@ Test with real screen readers:
 
 - `/pb-patterns-frontend` — Accessible component patterns
 - `/pb-design-language` — Accessibility constraints in design tokens
-- `/pb-review-cleanup` — Include accessibility in code review
+- `/pb-review-hygiene` — Include accessibility in code review
 - `/pb-testing` — Accessibility testing integration
 - `/pb-security` — CSP and CORS (overlap with a11y testing tools)
 

@@ -23,7 +23,7 @@ Don't hide issues to seem "ready." Surface risks directly. A delayed release bea
 Phase 1: READINESS GATE          Phase 2: VERSION & TAG         Phase 3: DEPLOY & VERIFY
 │                                │                              │
 ├─ Code quality verified         ├─ Version bumped              ├─ /pb-deployment
-│  (via /pb-review-cleanup)      │                              │  (execute deployment)
+│  (via /pb-review-hygiene)      │                              │  (execute deployment)
 │                                ├─ CHANGELOG updated           │
 ├─ CI passing                    │                              ├─ Health check
 │                                ├─ Git tag created             │
@@ -401,7 +401,7 @@ PHASE 3: DEPLOY & VERIFY
 - `/pb-ship` — Full review workflow before release
 - `/pb-deployment` — Execute deployment
 - `/pb-incident` — If release causes issues
-- `/pb-review-cleanup` — Code quality review
+- `/pb-review-hygiene` — Code quality review
 - `/pb-review-hygiene` — Comprehensive project health
 - `/pb-security` — Security checklist
 

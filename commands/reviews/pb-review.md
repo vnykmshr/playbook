@@ -1,210 +1,244 @@
-# Periodic Project Review Prompt
+# Comprehensive Project Review
 
-**Purpose:** Conduct a comprehensive multi-perspective review of the entire codebase to identify issues, improvements, and ensure production readiness.
+**Purpose:** Orchestrate multi-perspective reviews by coordinating specialized review commands. Consolidate findings into actionable priorities.
 
 **Recommended Frequency:** Monthly or before major releases
 
-**Mindset:** This review assumes `/pb-preamble` thinking (challenge assumptions, surface risks) and `/pb-design-rules` thinking (code and design should honor Clarity, Simplicity, Modularity, Robustness).
-
-The goal is to find problems across multiple domains: code quality, test coverage, security, documentation, performance, and architecture. Reviewers should be thorough and direct. Teams should welcome the scrutiny.
+**Mindset:** This review embodies `/pb-preamble` thinking (challenge assumptions, surface risks) and `/pb-design-rules` thinking (verify Clarity, Simplicity, Robustness across the codebase).
 
 ---
 
-## Prompt
+## When to Use
+
+- Pre-release comprehensive audit
+- Monthly project health check
+- After major architectural changes
+- Post-incident review
+- New team member onboarding (codebase assessment)
+
+---
+
+## Review Tiers
+
+Choose based on available time and review depth needed.
+
+### Quick Review (30 min - 1 hour)
+
+For rapid health check or time-constrained situations.
+
+**Run in parallel:**
+
+| Command | Focus |
+|---------|-------|
+| `/pb-review-code` | Recent changes quality |
+| `/pb-security quick` | Critical security issues |
+| `/pb-review-tests` | Test suite health |
+
+**Consolidate:** Top 3 critical issues, immediate next actions.
+
+### Standard Review (2-3 hours)
+
+For monthly reviews or pre-feature-release checks.
+
+**Run in parallel (add to Quick Review):**
+
+| Command | Focus |
+|---------|-------|
+| `/pb-review-hygiene` | Code quality + operational readiness |
+| `/pb-review-docs` | Documentation currency |
+| `/pb-logging` | Logging standards |
+
+**Consolidate:** Prioritized issue list with effort estimates.
+
+### Deep Review (Half day)
+
+For major releases, quarterly reviews, or comprehensive audits.
+
+**Run in parallel (add to Standard Review):**
+
+| Command | Focus |
+|---------|-------|
+| `/pb-review-product` | Engineering + product alignment |
+| `/pb-review-microservice` | Architecture (if applicable) |
+| `/pb-security deep` | Full security audit |
+| `/pb-a11y` | Accessibility compliance |
+| `/pb-performance` | Performance review |
+
+**Consolidate:** Full report with executive summary.
+
+---
+
+## Orchestration Process
+
+### Step 1: Scope the Review
+
+Before starting, clarify:
 
 ```
-Conduct a comprehensive multi-perspective project review of this codebase. Use parallel agents for each perspective to maximize coverage and minimize bias.
+- Review tier: Quick / Standard / Deep
+- Focus areas: Any specific concerns?
+- Scope: Full codebase or changes since [commit/date]?
+- Time budget: For review and for fixes?
+- Pre-release? If yes, what version?
+```
 
-## Review Perspectives
+### Step 2: Launch Parallel Reviews
 
-Launch the following review agents in parallel:
+Run the appropriate review commands concurrently:
 
-### 1. Security Audit
-- Authentication/authorization vulnerabilities
-- Input validation and sanitization
-- SQL injection, XSS, CSRF protection
-- Secrets management and exposure
-- Dependency vulnerabilities (outdated packages)
-- Rate limiting and abuse prevention
-- Session management security
-- Production configuration validation
+```
+For Quick Review:
+  - Launch /pb-review-code for recent changes
+  - Launch /pb-security quick
+  - Launch /pb-review-tests
 
-### 2. Performance Review
-- Database query efficiency (N+1, missing indexes)
-- API response times and bottlenecks
-- Frontend bundle size and code splitting
-- Caching strategy effectiveness
-- Memory leaks and resource cleanup
-- Connection pool configuration
-- Background job performance
+For Standard Review (add):
+  - Launch /pb-review-hygiene
+  - Launch /pb-review-docs
+  - Launch /pb-logging
 
-### 3. Accessibility Audit
-- WCAG 2.1 AA compliance
-- Keyboard navigation completeness
-- Screen reader compatibility
-- Focus management and skip links
-- Color contrast and visual indicators
-- Error announcements and form labels
-- Touch target sizes (mobile)
+For Deep Review (add):
+  - Launch /pb-review-product
+  - Launch /pb-review-microservice (if applicable)
+  - Launch /pb-security deep
+  - Launch /pb-a11y
+```
 
-### 4. Architecture Review
-- Code organization and separation of concerns
-- Dependency management and coupling
-- Error handling consistency
-- Logging and observability
-- Configuration management
-- Database schema design
-- API design consistency
+### Step 3: Consolidate Findings
 
-### 5. Test Coverage Analysis
-- Unit test coverage by module
-- Integration test coverage for critical paths
-- Missing test scenarios
-- Test quality and maintainability
-- Edge cases and error paths
-- Mock usage appropriateness
+After all reviews complete, synthesize into unified report:
 
-### 6. Code Quality Review
-- Code duplication and DRY violations
-- Function/method complexity (cyclomatic)
-- Dead code and unused imports
-- Naming conventions consistency
-- Documentation completeness
-- Type safety (TypeScript strict, Python mypy)
-- Linting compliance
+```markdown
+## Executive Summary
 
-### 7. Documentation Review
-- README accuracy and completeness
-- API documentation (OpenAPI/Swagger)
-- Code comments quality
-- Architecture decision records
-- Deployment and operations guides
-- Troubleshooting documentation
+**Overall Health:** [Good / Needs Attention / At Risk]
+**Production Readiness:** [Ready / Conditional / Not Ready]
 
-### 8. UX Consistency Review
-- Design system adherence
-- Component reuse patterns
-- Loading states and error handling
-- Mobile responsiveness
-- Dark/light mode consistency
-- Micro-interactions and feedback
+### Top 5 Priorities
+1. [Issue] - [Severity] - [Source review]
+2. ...
 
-### 9. Domain Expert Review (if applicable)
-- Domain model accuracy
-- Business logic correctness
-- Content quality and accuracy
-- Terminology consistency
+---
 
-### 10. End User Perspective
-- User journey friction points
-- Onboarding experience
-- Error message clarity
-- Feature discoverability
-- Performance perception
+## Issue Tracker
 
-## Output Format
+| # | Issue | Severity | Source | Location | Effort |
+|---|-------|----------|--------|----------|--------|
+| 1 | [Issue description] | CRITICAL | Security | [file:line] | S |
+| 2 | [Issue description] | HIGH | Code Quality | [file:line] | M |
+...
 
-For each perspective, provide:
+---
 
-1. **Grade:** A-F with brief justification
-2. **Strengths:** What's working well (2-3 items)
-3. **Issues Found:** Categorized by severity
-   - CRITICAL: Must fix before production
-   - HIGH: Should fix soon
-   - MEDIUM: Address when convenient
-   - LOW: Nice to have
-4. **Specific Recommendations:** With file locations
+## Quick Wins (< 15 min each)
+- [ ] [Action item]
+- [ ] [Action item]
 
-## Consolidation
+## Technical Debt (Track for later)
+- [ ] [Item with rationale]
 
-After all perspectives complete, create a consolidated report:
+## Deferred (Intentionally not addressing)
+- [ ] [Item] - Rationale: [why]
+```
 
-1. **Executive Summary**
-   - Overall health score
-   - Production readiness assessment
-   - Top 5 priorities
+### Step 4: Create Action Plan
 
-2. **Issue Tracker**
-   | # | Issue | Severity | Perspective | Location | Est. Effort |
-   |---|-------|----------|-------------|----------|-------------|
+Prioritize findings into:
 
-3. **Quick Wins**
-   - Items fixable in <15 minutes
+1. **CRITICAL** — Must fix before production/release
+2. **HIGH** — Should fix soon (this sprint)
+3. **MEDIUM** — Address when convenient
+4. **LOW** — Nice to have
 
-4. **Technical Debt**
-   - Items to track for future sprints
+### Step 5: Track Progress
 
-5. **Deferred Items**
-   - Items intentionally not addressing (with rationale)
+Create/update review document:
 
-## Session Tracking
+```
+todos/project-review-YYYY-MM-DD.md
+```
 
-Create/update a review document at `todos/project-review-YYYY-MM-DD.md` with:
-- Session number and duration
-- Items completed this session
+Include:
+- Review tier and duration
+- Issues found per category
+- Items completed
 - Remaining items with status
-- Commits created
-
-## Verification Steps
-
-After identifying issues, run:
-1. `npm run lint` / `npm run build` (frontend)
-2. `mypy` / `pytest` (backend)
-3. Verify no regressions introduced
-
-## Review Cadence
-
-- **Pre-release:** Full review before major versions
-- **Monthly:** Security + Test Coverage + Code Quality
-- **Quarterly:** All perspectives
-- **Post-incident:** Targeted review of affected areas
-```
+- Commits created for fixes
 
 ---
 
-## Usage Notes
+## Specialized Review Commands
 
-1. **Scope Control:** For large codebases, focus on changed files since last review:
-   ```
-   git diff --name-only <last-review-commit>..HEAD
-   ```
+| Command | Focus | Use When |
+|---------|-------|----------|
+| `/pb-review-code` | PR/code change review | Reviewing specific changes |
+| `/pb-review-hygiene` | Code quality + operational readiness | Periodic maintenance |
+| `/pb-review-tests` | Test suite health | Test coverage concerns |
+| `/pb-review-docs` | Documentation quality | Docs need updating |
+| `/pb-review-product` | Engineering + product alignment | Strategy alignment |
+| `/pb-review-microservice` | Architecture review | Distributed systems |
+| `/pb-security` | Security audit | Security-focused review |
+| `/pb-logging` | Logging standards | Observability concerns |
+| `/pb-a11y` | Accessibility audit | Accessibility compliance |
+| `/pb-performance` | Performance review | Performance concerns |
+| `/pb-review-playbook` | Playbook meta-review | Reviewing playbook commands |
 
-2. **Incremental Reviews:** Track review commit hash to enable delta reviews
+---
 
-3. **Priority Alignment:** Before starting, confirm with stakeholders:
-   - Is this a pre-release review?
-   - Any specific concerns to prioritize?
-   - Time budget for fixes?
+## Review Cadence Recommendations
 
-4. **Follow-up:** Schedule remediation session after review to address findings
+| Cadence | Tier | Focus |
+|---------|------|-------|
+| Weekly | Quick | Recent changes, CI health |
+| Monthly | Standard | Hygiene, docs, test coverage |
+| Quarterly | Deep | Full audit, architecture, security |
+| Pre-release | Standard/Deep | Based on release scope |
+| Post-incident | Targeted | Affected areas only |
 
 ---
 
 ## Example Invocation
 
 ```
-Conduct a periodic project review of this codebase. Focus on changes since
-commit abc1234. This is a pre-release review for v1.12.0.
+Conduct a Standard Review of this codebase.
+
+Context:
+- Pre-release review for v2.0.0
+- Changes since commit abc1234
+- Time budget: 2 hours review, 4 hours fixes
 
 Priorities:
-1. Security (we're adding user auth features)
-2. Test coverage (new newsletter module)
-3. Performance (users reported slow loading)
+1. Security (adding user auth features)
+2. Test coverage (new payment module)
+3. Documentation (API changes)
 
-Time budget: 2 hours for review, 4 hours for fixes.
-
-Create the review document at todos/project-review-2025-01-15.md
+Create review document at todos/project-review-2026-01-21.md
 ```
 
 ---
 
-## Evolution Notes
+## Tips for Effective Reviews
 
-This prompt should evolve based on:
-- Recurring issues found in reviews
-- New perspectives relevant to the project
-- Tooling improvements (e.g., automated scanners)
-- Team feedback on review usefulness
+1. **Parallelize** — Run independent reviews concurrently
+2. **Focus scope** — Use `git diff` to limit to changed files
+3. **Time-box** — Set review duration upfront
+4. **Prioritize ruthlessly** — Not every finding needs immediate action
+5. **Track progress** — Use the review document across sessions
+6. **Follow up** — Schedule remediation session after review
 
-**Last Updated:** 2025-12-20
-**Version:** 1.0
+---
+
+## Related Commands
+
+- `/pb-review-code` — Code change review
+- `/pb-review-hygiene` — Code quality and operational readiness
+- `/pb-review-tests` — Test suite health
+- `/pb-review-docs` — Documentation quality
+- `/pb-review-product` — Engineering + product alignment
+- `/pb-security` — Security audit
+- `/pb-cycle` — Self-review + peer review iteration
+
+---
+
+**Last Updated:** 2026-01-21
+**Version:** 2.0

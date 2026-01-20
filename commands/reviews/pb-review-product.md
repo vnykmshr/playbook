@@ -1,10 +1,22 @@
 # Technical + Product Review
 
-Periodic, in-depth review from four expert perspectives.
+**Purpose:** Periodic, in-depth review from four expert perspectives: Senior Engineer, Technical Architect, Security Expert, and Product Manager.
+
+**Recommended Frequency:** Quarterly or before major product decisions
 
 **Mindset:** Multi-perspective review embodies `/pb-preamble` thinking (each perspective challenges the others) and `/pb-design-rules` thinking (design decisions should honor Clarity, Simplicity, and user needs).
 
 Surface disagreements—they often surface real problems that single views miss.
+
+---
+
+## When to Use
+
+- Quarterly strategic alignment check
+- Before major product decisions or pivots
+- After significant feature launches
+- When engineering and product seem misaligned
+- Before annual planning
 
 ---
 
@@ -177,4 +189,15 @@ Trade-offs, effort estimates, or risks of inaction.
 
 ---
 
-*Profound, actionable insights over minor nitpicks.*
+## Related Commands
+
+- `/pb-review` — Orchestrate comprehensive multi-perspective review
+- `/pb-review-code` — Code change review for PRs
+- `/pb-review-hygiene` — Code quality and operational readiness
+- `/pb-plan` — Feature and release planning
+- `/pb-adr` — Architecture decision records
+
+---
+
+**Last Updated:** 2026-01-21
+**Version:** 2.0

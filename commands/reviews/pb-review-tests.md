@@ -1,7 +1,8 @@
-### 🧪 **Periodic Test Review Prompt (Unit + Integration Tests)**
+# Periodic Test Review
 
-You are performing a **comprehensive periodic review** of the project's **unit and integration tests**.
-Act as a **senior engineer and test architect** responsible for maintaining a test suite that is **lean, reliable, and genuinely useful**.
+**Purpose:** Comprehensive review of the project's unit and integration tests. Ensure the test suite is lean, reliable, and genuinely useful.
+
+**Recommended Frequency:** Monthly or when test suite feels slow/flaky
 
 **Mindset:** This review embodies `/pb-preamble` thinking (question assumptions, surface flaws) and `/pb-design-rules` thinking (tests should verify Clarity, verify Robustness, and confirm failures are loud).
 
@@ -9,36 +10,194 @@ Question test assumptions. Challenge coverage claims. Point out flaky or brittle
 
 ---
 
-### **Your Review Goals**
+## When to Use
 
-1. **Prune Bloat**
-
-   * Identify redundant, outdated, or overly defensive tests.
-   * Remove or merge tests that don’t add new coverage or business value.
-   * Flag duplicated logic or repetitive data setups.
-
-2. **Evaluate Practicality**
-
-   * Ensure tests validate meaningful behavior — not just implementation details.
-   * Detect tests that are too brittle, rely on unstable mocks, or overfit specific code structures.
-   * Check if test naming, descriptions, and organization remain clear and human-friendly.
-
-3. **Assess Integration Depth**
-
-   * For integration tests, confirm they test real system interactions (APIs, DB, queues, etc.), not what unit tests already cover.
-   * Identify areas where integration tests have drifted toward slow, flaky, or unmaintainable behavior.
-
-4. **Recommend Improvements**
-
-   * Suggest refactoring, restructuring, or re-authoring tests for clarity and focus.
-   * Propose new high-value tests for uncovered edge cases or new features.
-   * Recommend better test data management or faster CI execution strategies.
+- Monthly test suite maintenance
+- When tests are slow or flaky
+- After major refactoring (verify tests still make sense)
+- When coverage numbers don't match confidence
+- Before major releases (test suite health check)
 
 ---
 
-### **Deliverables**
+## Review Perspectives
 
-1. A **summary of key issues**: bloat, duplication, poor coverage, or misaligned focus.
-2. **Concrete recommendations** — what to delete, merge, or rewrite, and why.
-3. A **“next steps” plan** for restoring balance (e.g., split slow suites, remove mocks, improve naming).
-4. Optionally: note **metrics to track** over time (e.g., test runtime, coverage %, flakiness, stability).
+Act as **senior engineer and test architect** responsible for a test suite that is:
+- Lean (no redundant tests)
+- Reliable (no flaky tests)
+- Meaningful (tests behavior, not implementation)
+- Maintainable (easy to update when code changes)
+
+---
+
+## Review Goals
+
+### 1. Prune Bloat
+
+- [ ] Identify redundant, outdated, or overly defensive tests
+- [ ] Remove or merge tests that don't add new coverage
+- [ ] Flag duplicated logic or repetitive data setups
+- [ ] Delete tests that test framework behavior, not your code
+
+### 2. Evaluate Practicality
+
+- [ ] Tests validate meaningful behavior, not implementation details
+- [ ] Tests are not too brittle or reliant on unstable mocks
+- [ ] Test naming and descriptions are clear and human-friendly
+- [ ] Failures produce useful error messages
+
+### 3. Assess Integration Depth
+
+- [ ] Integration tests verify real system interactions (APIs, DB, queues)
+- [ ] Integration tests don't duplicate what unit tests already cover
+- [ ] No slow, flaky, or unmaintainable integration tests
+- [ ] E2E tests focus on critical user journeys only
+
+### 4. Check Test Organization
+
+- [ ] Tests are co-located or logically organized
+- [ ] Shared fixtures and helpers are reusable
+- [ ] Test data is sane and isolated
+- [ ] No hidden dependencies between tests
+
+---
+
+## Test Quality Checklist
+
+### Unit Tests
+
+| Check | Question |
+|-------|----------|
+| Coverage | Are critical code paths covered? |
+| Isolation | Do tests run independently? |
+| Speed | Do unit tests run in < 30 seconds total? |
+| Clarity | Can you understand what failed from the error? |
+| Maintainability | Will tests break if implementation changes? |
+
+### Integration Tests
+
+| Check | Question |
+|-------|----------|
+| Real interactions | Do they test actual service boundaries? |
+| No duplication | Do they avoid re-testing unit-covered logic? |
+| Reliability | Do they pass consistently (no flakiness)? |
+| Speed | Are they fast enough for CI? |
+| Cleanup | Do they clean up test data properly? |
+
+### Test Data
+
+| Check | Question |
+|-------|----------|
+| Isolation | Is test data independent per test? |
+| Realism | Does test data reflect real scenarios? |
+| Maintenance | Is test data easy to update? |
+| Security | No production data or secrets in tests? |
+
+---
+
+## Common Problems to Find
+
+| Problem | Signal | Fix |
+|---------|--------|-----|
+| Flaky tests | Random failures, works on retry | Find race condition or mock issue |
+| Brittle tests | Break when refactoring | Test behavior, not implementation |
+| Slow tests | CI takes > 10 min | Parallelize or reduce scope |
+| Low value tests | Test trivial getters/setters | Delete them |
+| Duplicate tests | Same assertion in multiple tests | Consolidate |
+| Missing tests | Critical paths untested | Add focused tests |
+
+---
+
+## Deliverables
+
+### 1. Summary of Key Issues
+
+Overview of:
+- Bloat (redundant tests)
+- Duplication (same test logic repeated)
+- Poor coverage (critical paths missing)
+- Misaligned focus (testing wrong things)
+- Reliability issues (flaky tests)
+
+### 2. Concrete Recommendations
+
+What to:
+- **Delete** — Tests that add no value
+- **Merge** — Duplicate tests
+- **Rewrite** — Brittle or unclear tests
+- **Add** — Missing coverage for critical paths
+
+### 3. Next Steps Plan
+
+Specific actions:
+- Split slow suites
+- Remove problematic mocks
+- Improve naming conventions
+- Add missing edge case tests
+
+### 4. Metrics to Track
+
+- Test runtime (total and by suite)
+- Coverage % (lines, branches, critical paths)
+- Flakiness rate (failures per run)
+- Test count (unit vs integration vs E2E)
+
+---
+
+## Example Output
+
+```markdown
+## Summary of Key Issues
+
+**Overall Health:** Needs Attention
+
+- Test suite runs in 8 minutes (target: < 5 min)
+- 3 flaky tests in API suite causing CI failures
+- 15% of tests are redundant (same assertions repeated)
+- Missing coverage for payment flow error handling
+- Integration tests duplicate unit test coverage
+
+## Concrete Recommendations
+
+### Delete
+- `test_user_exists.py` — Duplicates `test_user_creation.py`
+- `test_config_defaults.py` — Tests framework, not our code
+
+### Rewrite
+- `test_api_auth.py` — Brittle, breaks on header changes
+- `test_payment_flow.py` — No error path coverage
+
+### Add
+- Error handling tests for payment service
+- Edge cases for user validation
+
+## Next Steps
+
+1. [1 hour] Fix 3 flaky tests in API suite
+2. [2 hours] Delete 12 redundant tests
+3. [4 hours] Add payment error handling tests
+4. [1 hour] Split slow integration suite
+
+## Metrics
+
+| Metric | Current | Target |
+|--------|---------|--------|
+| Total runtime | 8 min | < 5 min |
+| Flaky tests | 3 | 0 |
+| Unit test coverage | 72% | 80% |
+| Integration tests | 45 | 30 (reduce) |
+```
+
+---
+
+## Related Commands
+
+- `/pb-review` — Orchestrate comprehensive multi-perspective review
+- `/pb-review-hygiene` — Code quality and operational readiness
+- `/pb-testing` — Testing guidance and patterns
+- `/pb-cycle` — Self-review + peer review iteration
+
+---
+
+**Last Updated:** 2026-01-21
+**Version:** 2.0

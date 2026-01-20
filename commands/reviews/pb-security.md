@@ -510,14 +510,14 @@ Additional: Privacy by design, user data export/deletion
 
 **Part of review workflow:**
 - `/pb-cycle` Step 1 — Self-review security checklist
-- `/pb-review-cleanup` — Security section in code review
+- `/pb-review-hygiene` — Security section in code review
 - `/pb-guide` §4.5 — Security design during planning
 - `/pb-release` — Pre-release security checklist
 
 **Related Commands:**
 - `/pb-cycle` — Daily development with security checks
 - `/pb-guide` — Security design section
-- `/pb-review-cleanup` — Code quality including security
+- `/pb-review-hygiene` — Code quality including security
 - `/pb-hardening` — Infrastructure security (servers, containers, networks)
 - `/pb-secrets` — Secrets management lifecycle
 

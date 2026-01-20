@@ -1,67 +1,203 @@
-You are performing a **periodic documentation review** for this project. Play the roles of **senior engineer, product manager, technical writer, and security reviewer** simultaneously. For each document or section provided, do a focused, practical review with the goals below.
+# Documentation Review
+
+**Purpose:** Conduct a comprehensive review of project documentation for accuracy, completeness, and maintainability. Ensure docs remain human-readable and actionable.
+
+**Recommended Frequency:** Monthly or before major releases
 
 **Mindset:** Documentation review embodies `/pb-preamble` thinking (surface gaps, challenge assumptions) and `/pb-design-rules` thinking (especially Clarity: documentation should be obviously correct).
 
-Your job is to find unclear sections, challenge stated assumptions, and surface gaps. Good documentation invites scrutiny and makes the system's reasoning transparent.
+Find unclear sections, challenge stated assumptions, and surface gaps. Good documentation invites scrutiny and makes the system's reasoning transparent.
 
-### Goals
+---
 
-1. Keep documentation **concise and accurate**.
-2. Remove or consolidate **redundant or low-value** content.
-3. Ensure nothing important is missing for engineering, product, security, or onboarding.
-4. Identify and flag **telltale signs of AI-generated** or overly templated content.
-5. Make language **human, actionable, and readable**.
-6. Remove personal identifers (name,email,etc) from all documentation.
+## When to Use
 
-### Process / checklist (apply to each doc or logical group)
+- Before major releases (verify docs match new features)
+- Monthly maintenance check
+- After significant code changes
+- When onboarding reveals confusion
+- When support tickets indicate doc gaps
 
-1. Quick summary: one or two lines describing the doc’s intended purpose and audience.
-2. Relevance check: does this doc serve that purpose? If not, mark for rewrite or removal.
-3. Accuracy check: verify facts, architecture diagrams, API signatures, environment variables, commands, and links. Note items that are outdated or broken.
-4. Conciseness and focus: identify paragraphs, sections, or examples that are repetitive, irrelevant, or too verbose. Recommend precise deletions or merges.
-5. Actionability: ensure any instruction, command, or code snippet is copy-paste ready and validated. Mark unclear steps or missing context.
-6. Completeness: for critical areas, ensure the docs include:
+---
 
-   * Quickstart that actually works for a new contributor
-   * Architecture overview with responsibilities and data flows
-   * API reference or examples that match current code
-   * Runbooks for common failures and recovery steps
-   * Security notes: secrets, scopes, approvals, and audit links
-   * Onboarding checklist for new engineers
-   * Changelog or releases summary for recent major changes
-7. Ownership and maintenance: check front matter for owner, last updated date, and review cadence. Recommend owners where missing.
-8. Links and references: surface broken links, outdated external refs, or docs that duplicate each other.
-9. Readability and tone: ensure plain human language, sensible headings, clear bullets, and example usage. Replace passive or robotic phrasing with active, pragmatic wording.
-10. Triage for action: classify findings into: Immediate fix (blocker), Short term (within sprint), Long term (nice to have), Remove.
+## Review Perspectives
 
-### Detecting telltale signs of AI or templated content
+Act as these roles simultaneously:
 
-Flag sections that match one or more of these signals (not definitive proof, but worth human review):
+1. **Senior Engineer** — Technical accuracy, API correctness
+2. **Product Manager** — User journey, feature coverage
+3. **Technical Writer** — Clarity, structure, readability
+4. **Security Reviewer** — Secrets exposure, compliance gaps
+5. **New Engineer** — Onboarding experience, setup clarity
 
-* Repetitive phrasing or identical sentences across different docs.
-* Overly generic examples that use placeholders like `<thing>` repeatedly without concrete values.
-* Extremely polished but shallow prose that explains nothing actionable.
-* Confident incorrect specifics (dates, versions, config values) with no source.
-* Jargon-heavy paragraphs that avoid concrete steps or examples.
-* Mirrored marketing or PR tone in technical docs.
-* Unnatural phrasing, overly long sentences, and odd metadata or token artifacts.
-  When you flag a section, suggest a replacement or concrete edits that make it concrete, human, and actionable.
+---
 
-### Deliverables (for each review run)
+## Review Checklist
 
-1. A short executive summary (3–5 bullets) of overall health and top priorities.
-2. Per-document findings: one line summary + list of issues with recommended change (include exact suggested text or diff-style note when possible).
-3. A prioritized action list with owners, estimated effort, and target dates.
-4. Suggested edits for any sections flagged as likely AI-generated (either rewrite or mark for human rewrite).
-5. Suggested metrics to track between runs: number of docs changed, average doc length, number of broken links, coverage of quickstart/runbooks, and number of flagged AI-like passages.
+### 1. Quick Summary
 
-### Sample output format (concise)
+For each document:
+- One or two lines describing intended purpose and audience
+- Does it serve that purpose? If not, mark for rewrite or removal
 
-* Executive summary: 3 bullets
-* File: `README.md`
+### 2. Accuracy Check
 
-  * Purpose: quickstart + overview
-  * Issues: outdated command on line 45, verbose background section lines 70–120.
-  * Recommended fix: update command to `docker compose up --build`, remove background paragraph or move to `docs/history.md`.
-  * Priority: Short term — owner: @alice — est: 1 hour
-* File: `docs/security.md` ... and so on.
+- [ ] Facts, architecture diagrams, API signatures are correct
+- [ ] Environment variables and configuration are current
+- [ ] Commands are copy-paste ready and validated
+- [ ] Links are not broken
+- [ ] Code examples match current codebase
+
+### 3. Conciseness and Focus
+
+- [ ] No repetitive, irrelevant, or verbose sections
+- [ ] No unnecessary background or history
+- [ ] Each section has clear purpose
+- [ ] Examples are minimal but complete
+
+### 4. Actionability
+
+- [ ] Instructions are copy-paste ready
+- [ ] All steps are explicit (no assumed knowledge)
+- [ ] Missing context is identified and added
+- [ ] Next steps are clear
+
+### 5. Completeness
+
+For critical areas, ensure docs include:
+
+- [ ] **Quickstart** — Works for a new contributor
+- [ ] **Architecture overview** — Responsibilities and data flows
+- [ ] **API reference** — Matches current code
+- [ ] **Runbooks** — Common failures and recovery steps
+- [ ] **Security notes** — Secrets, scopes, approvals
+- [ ] **Onboarding checklist** — For new engineers
+- [ ] **Changelog** — Recent major changes
+
+### 6. Ownership and Maintenance
+
+- [ ] Owner/maintainer identified
+- [ ] Last updated date is present and recent
+- [ ] Review cadence is specified
+- [ ] Stale docs are flagged
+
+### 7. Links and References
+
+- [ ] No broken links
+- [ ] No outdated external references
+- [ ] No docs that duplicate each other unnecessarily
+
+### 8. Readability and Tone
+
+- [ ] Plain human language
+- [ ] Sensible headings and clear bullets
+- [ ] Example usage provided
+- [ ] Active, pragmatic wording (not passive/robotic)
+
+---
+
+## AI Content Detection
+
+Flag sections matching these signals:
+
+| Signal | Example | Action |
+|--------|---------|--------|
+| Repetitive phrasing | Same sentences across docs | Deduplicate or rewrite |
+| Generic placeholders | `<thing>` used repeatedly | Add concrete values |
+| Shallow polish | Confident but no actionable content | Rewrite with specifics |
+| Incorrect specifics | Wrong dates, versions, configs | Verify and correct |
+| Jargon without steps | Technical terms, no examples | Add concrete examples |
+| Marketing tone | PR-speak in technical docs | Rewrite for engineers |
+
+When flagging, suggest replacement text or mark for human rewrite.
+
+---
+
+## Deliverables
+
+### 1. Executive Summary
+
+3-5 bullets of overall documentation health and top priorities.
+
+### 2. Per-Document Findings
+
+For each doc reviewed:
+
+```markdown
+**File:** `README.md`
+- **Purpose:** Quickstart + project overview
+- **Audience:** New contributors
+- **Issues:**
+  - Outdated command on line 45
+  - Verbose background section (lines 70-120)
+- **Recommended fix:**
+  - Update command to `docker compose up --build`
+  - Move background to `docs/history.md`
+- **Priority:** Short term
+- **Owner:** @alice
+- **Effort:** 1 hour
+```
+
+### 3. Prioritized Action List
+
+| Priority | File | Issue | Fix | Owner | Effort |
+|----------|------|-------|-----|-------|--------|
+| Immediate | security.md | Missing auth flow | Add diagram | @bob | 2h |
+| Short term | README.md | Stale commands | Update | @alice | 1h |
+| Long term | api.md | Incomplete | Expand | TBD | 4h |
+| Remove | old-setup.md | Obsolete | Delete | @alice | 15m |
+
+### 4. AI Content Flagged
+
+Sections likely AI-generated, with suggested rewrites.
+
+### 5. Metrics to Track
+
+- Number of docs changed
+- Average doc length
+- Number of broken links
+- Coverage of quickstart/runbooks
+- Number of flagged AI-like passages
+
+---
+
+## Sample Output
+
+```markdown
+## Executive Summary
+
+- README is current but verbose in background section
+- API docs are 3 months stale, missing new endpoints
+- Runbooks exist but lack troubleshooting steps
+- No broken links found
+- 2 sections flagged as potentially AI-generated
+
+## Per-Document Findings
+
+### README.md
+- Purpose: Quickstart + overview
+- Issues: Lines 70-120 too verbose, command on line 45 outdated
+- Fix: Update command, move background to separate doc
+- Priority: Short term | Owner: @alice | Effort: 1 hour
+
+### docs/api.md
+- Purpose: API reference
+- Issues: Missing /users/profile endpoint, wrong auth header
+- Fix: Add endpoint, correct header example
+- Priority: Immediate | Owner: @bob | Effort: 2 hours
+```
+
+---
+
+## Related Commands
+
+- `/pb-review` — Orchestrate comprehensive multi-perspective review
+- `/pb-review-hygiene` — Code quality and operational readiness
+- `/pb-documentation` — Documentation writing guidance
+- `/pb-repo-readme` — Generate comprehensive README
+- `/pb-repo-docsite` — Set up documentation site
+
+---
+
+**Last Updated:** 2026-01-21
+**Version:** 2.0

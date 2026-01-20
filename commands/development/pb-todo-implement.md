@@ -469,7 +469,7 @@ Move completed todo to "Completed" section in `todos/todos.md`:
 - **Before this**: `/pb-plan` - Plan the focus area and phases
 - **After implementation**: `/pb-cycle` - Self-review + peer review
 - **Finalizing**: `/pb-pr` - Create pull request, `/pb-commit` - Direct commit
-- **Code quality**: `/pb-review-cleanup` - Code cleanup and review
+- **Code quality**: `/pb-review-hygiene` - Code cleanup and review
 
 ### Directory Structure
 
