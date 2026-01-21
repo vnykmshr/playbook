@@ -255,6 +255,86 @@ git log --all --oneline --graph -20
 
 ---
 
+## Session State Preservation
+
+### Why This Matters
+
+Claude's context window is finite. When it fills, automatic compaction summarizes the conversation — potentially losing important details. Strategic preservation ensures continuity across compaction boundaries and session restarts.
+
+### What to Preserve
+
+Before ending a session or when context is getting full:
+
+| Category | What to Capture | Example |
+|----------|-----------------|---------|
+| **Current state** | What's working, what's broken, where you stopped | "Auth flow works, payment integration in progress, stopped at webhook handler" |
+| **Decisions made** | Why you chose approach X over Y | "Used JWT over sessions for stateless scaling" |
+| **Blockers** | What's preventing progress, what you tried | "API rate limit hit, tried backoff, need to contact vendor" |
+| **Next steps** | Concrete actions for next session | "1. Implement retry logic 2. Add error handling 3. Write tests" |
+
+### Strategic Compaction Timing
+
+Compact at **logical transition points**, not mid-task:
+
+| Good Time to Compact | Bad Time to Compact |
+|----------------------|---------------------|
+| After exploration, before implementation | Middle of debugging |
+| After completing a phase | While holding multiple file contexts in memory |
+| Before starting a new task | During a complex refactor |
+| After a major decision is made | While iterating on a solution |
+
+**Key insight**: Manual compaction at logical boundaries preserves context better than automatic compaction at arbitrary points.
+
+### Session Notes Template
+
+Before ending a session or triggering compaction:
+
+```markdown
+## Session State - [DATE]
+
+### Completed This Session
+- [What got done]
+
+### Current State
+- [Where things stand now]
+- [Any work in progress]
+
+### Key Decisions
+- [Choice made] — [Why]
+
+### Blockers
+- [What's stuck]
+- [What was tried]
+
+### Next Session
+- [ ] [Specific next action]
+- [ ] [Following action]
+
+### Files in Focus
+- [Key files being modified]
+```
+
+**Storage locations:**
+- `.claude/session-notes.md` — For Claude-specific context
+- `todos/1-working-context.md` — For project-wide context
+
+### Resuming After Compaction
+
+When starting fresh after compaction:
+
+1. **Read your session notes first** — Before doing anything else
+2. **Provide explicit context**: "Resuming work on X. Last session completed Y, decided Z because of W, next step is V."
+3. **Reference specific files** — "Working on `src/api/auth.js`, implementing the token refresh logic"
+4. **State your immediate goal** — "This session: complete the retry logic and add tests"
+
+### Automating Preservation
+
+For automated session state handling, see [Hook Patterns](../../hooks/README.md) — specifically:
+- `PreCompact` — Save state before compaction
+- `SessionStart` — Load context when resuming
+
+---
+
 ## Tips for Better Resume
 
 ### Before Stopping Work (Use `/pb-pause`)
