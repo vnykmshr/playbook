@@ -29,6 +29,7 @@ Quick reference for all playbook commands.
 | `/pb-knowledge-transfer` | Preparing KT session for new developer or team handoff |
 | `/pb-what-next` | Context-aware command recommendations based on git state |
 | `/pb-debug` | Systematic debugging methodology (reproduce, isolate, hypothesize, test, fix) |
+| `/pb-learn` | Capture reusable patterns from sessions (errors, debugging, workarounds) |
 | `/pb-design-language` | Create and evolve project-specific design specification (tokens, vocabulary, constraints) |
 
 ## Patterns & Architecture
