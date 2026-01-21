@@ -129,6 +129,41 @@ QUESTION: Why did you choose to handle this error silently? Is there
 a recovery path I'm missing?
 ```
 
+### Approval Decision Matrix
+
+Map findings to merge decisions:
+
+| Finding Level | Maps To | Can Merge? |
+|---------------|---------|------------|
+| **Critical** | MUST | No — must fix first |
+| **Warning** | SHOULD | With documented justification |
+| **Suggestion** | CONSIDER, NIT | Yes |
+
+### Review Verdicts
+
+After completing review, provide an explicit verdict:
+
+| Verdict | When to Use |
+|---------|-------------|
+| **APPROVED** | No critical or warning-level issues found |
+| **CONDITIONAL** | Warning-level items only; author acknowledges trade-offs |
+| **BLOCKED** | Critical issues detected; must resolve before merge |
+
+**Example verdict:**
+
+```
+VERDICT: CONDITIONAL
+
+Critical: 0
+Warning: 2
+  - Missing input validation (src/api/users.js:45)
+  - No error handling for network timeout (src/services/fetch.js:78)
+Suggestions: 3
+
+Approve if author confirms validation will be added in follow-up PR,
+or resolves inline before merge.
+```
+
 ---
 
 ## Receiving Feedback

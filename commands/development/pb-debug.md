@@ -540,6 +540,7 @@ When production is down, see `/pb-incident` for the full process. Quick reminder
 - `/pb-observability` — Metrics and tracing
 - `/pb-incident` — Production incident response
 - `/pb-testing` — Tests that catch bugs early
+- `/pb-learn` — Capture debugging patterns for future reuse
 
 ---
 

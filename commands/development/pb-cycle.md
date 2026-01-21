@@ -282,6 +282,7 @@ ls todos/releases/*/
 - `/pb-standards` — Working principles reference
 - `/pb-logging` — Logging standards validation
 - `/pb-documentation` — Documentation alongside code
+- `/pb-learn` — Capture patterns discovered during iteration
 
 ---
 
