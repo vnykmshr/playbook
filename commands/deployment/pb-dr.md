@@ -690,4 +690,13 @@ After changes: Verify DR still works
 
 ---
 
+## Related Commands
+
+- `/pb-incident` — Respond to incidents during disaster scenarios
+- `/pb-sre-practices` — Sustainable operations and toil reduction
+- `/pb-database-ops` — Database backup and failover procedures
+- `/pb-deployment` — Deploy recovery infrastructure
+
+---
+
 *Hope for the best, plan for the worst, test the plan.*

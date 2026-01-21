@@ -578,4 +578,12 @@ Production (secrets manager or SOPS)
 
 ---
 
+## Related Commands
+
+- `/pb-hardening` — Production security hardening for infrastructure
+- `/pb-security` — Application-level security review
+- `/pb-deployment` — Deploy with secure secrets handling
+
+---
+
 *A secret is only secret if no one who shouldn't know it, knows it.*

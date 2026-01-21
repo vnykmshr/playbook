@@ -316,11 +316,12 @@ ls todos/releases/*/
 - `/pb-pr` → Create pull request with commits
 - `/pb-release` → Deploy
 
-**Related Commands:**
-- `/pb-start` — Starting a feature (before commits)
-- `/pb-cycle` — Code quality and testing (before commits)
-- `/pb-pr` — Creating pull request (after commits)
-- `/pb-guide` — SDLC tiers and workflow
+## Related Commands
+
+- `/pb-cycle` — Self-review and peer review before committing
+- `/pb-pr` — Create pull request after commits are ready
+- `/pb-standards` — Code quality and working principles
+- `/pb-review-code` — Code review checklist for reviewers
 
 ---
 

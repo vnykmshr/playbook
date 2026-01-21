@@ -397,13 +397,12 @@ PHASE 3: DEPLOY & VERIFY
 - Version management
 - `/pb-deployment` trigger
 
-**Related commands:**
+## Related Commands
+
+- `/pb-deployment` — Execute deployment to target environments
 - `/pb-ship` — Full review workflow before release
-- `/pb-deployment` — Execute deployment
-- `/pb-incident` — If release causes issues
-- `/pb-review-hygiene` — Code quality review
-- `/pb-review-hygiene` — Comprehensive project health
-- `/pb-security` — Security checklist
+- `/pb-pr` — Create pull requests for release branches
+- `/pb-review-hygiene` — Comprehensive project health review
 
 ---
 

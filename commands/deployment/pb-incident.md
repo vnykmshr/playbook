@@ -834,12 +834,12 @@ du -sh /*  # Show which directory consuming space
 - `/pb-release` — Release runbook includes incident contacts
 - `/pb-adr` — Architecture decisions affect failure modes
 
-**Related Commands:**
-- `/pb-observability` — Set up monitoring to detect incidents
-- `/pb-guide` — Section 8.2 (rollback plan)
-- `/pb-release` — On-call contacts and escalation
+## Related Commands
+
+- `/pb-observability` — Set up monitoring and alerting to detect incidents early
 - `/pb-sre-practices` — On-call health, blameless culture, toil reduction
-- `/pb-dr` — Disaster recovery for major incidents
+- `/pb-dr` — Disaster recovery planning for major incidents
+- `/pb-logging` — Logging strategy for incident investigation
 
 ---
 

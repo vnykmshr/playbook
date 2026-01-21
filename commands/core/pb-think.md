@@ -728,12 +728,15 @@ Use the right mode for the task:
 ## Related Commands
 
 - `/pb-preamble` — Challenge assumptions mindset (adversarial mode)
+- `/pb-design-rules` — Technical principles for clarity, simplicity, modularity
 - `/pb-plan` — Structure implementation approach
 - `/pb-adr` — Document architecture decisions
 - `/pb-debug` — Systematic debugging methodology
 - `/pb-cycle` — Development iteration loop
+- `/pb-standards` — Working principles reference
+- `/pb-patterns-core` — Core architecture patterns
 
 ---
 
 **Last Updated:** 2026-01-21
-**Version:** 2.0
+**Version:** 2.0.0

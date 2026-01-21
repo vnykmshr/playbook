@@ -1508,6 +1508,14 @@ func (ep *EventProcessor) Start(ctx context.Context) {
 
 ---
 
+## Related Commands
+
+- `/pb-patterns-core` — Foundation patterns (SOA, Event-Driven)
+- `/pb-patterns-async` — Async patterns needed for distributed operations
+- `/pb-observability` — Tracing and monitoring distributed systems
+
+---
+
 *Created: 2026-01-11 | Category: Distributed Systems | Tier: L*
 *Updated: 2026-01-11 | Added Go examples*
 

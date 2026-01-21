@@ -217,11 +217,16 @@ For smaller changes or when time is limited:
 - Combine with `/pb-security` for security-critical changes
 - Combine with `/pb-review-tests` for test coverage analysis
 
-**Related commands:**
+---
+
+## Related Commands
+
 - `/pb-cycle` — Author's development iteration (includes self-review)
-- `/pb-security` — Deep security review
+- `/pb-review` — Comprehensive periodic project review orchestrator
+- `/pb-review-hygiene` — Code quality and operational readiness
 - `/pb-review-tests` — Test coverage review
-- `/pb-review` — Comprehensive periodic project review
+- `/pb-security` — Security audit
+- `/pb-standards` — Working principles reference
 
 ---
 

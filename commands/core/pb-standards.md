@@ -219,3 +219,15 @@ make test        # All tests pass
 | Iteration cycle | `/pb-cycle` |
 | Release prep | `/pb-release` |
 | Full review | `/pb-review` |
+
+---
+
+## Related Commands
+
+- `/pb-preamble` — Collaboration philosophy (mindset)
+- `/pb-design-rules` — Technical principles (clarity, simplicity, modularity)
+- `/pb-guide` — Master SDLC framework
+- `/pb-cycle` — Development iteration loop
+- `/pb-review-hygiene` — Code quality review
+- `/pb-commit` — Atomic commit practices
+- `/pb-testing` — Test patterns and strategies

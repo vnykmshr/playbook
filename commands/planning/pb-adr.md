@@ -654,4 +654,13 @@ docs/
 
 ---
 
+## Related Commands
+
+- `/pb-plan` — Planning workflow that may generate ADRs
+- `/pb-think` — Deep analysis for complex architectural decisions
+- `/pb-design-rules` — Design principles that inform ADR decisions
+- `/pb-patterns-core` — Reference patterns when documenting alternatives
+
+---
+
 *Decisions as code. Future you will thank present you.*

@@ -518,3 +518,13 @@ This workflow:
 5. **Test meaningfully** - Catch real bugs, not coverage numbers
 6. **Ship incrementally** - Working software over comprehensive plans
 7. **Delete liberally** - Less code is better code
+
+---
+
+## Related Commands
+
+- `/pb-adr` — Document architectural decisions made during planning
+- `/pb-todo-implement` — Implement individual todos from the planning phases
+- `/pb-cycle` — Iterate through development with self-review and peer review
+- `/pb-think` — Deep thinking for complex planning decisions
+- `/pb-patterns-core` — Reference architectural patterns during design

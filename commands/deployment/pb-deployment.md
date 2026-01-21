@@ -361,4 +361,13 @@ PHASE 5: FINALIZE
 
 ---
 
+## Related Commands
+
+- `/pb-release` — Orchestrate versioned releases to production
+- `/pb-patterns-deployment` — Deployment strategy reference (blue-green, canary, rolling)
+- `/pb-incident` — Respond to production incidents caused by deployments
+- `/pb-observability` — Set up monitoring and alerting for deployment verification
+
+---
+
 *Deploy with confidence. Verify before celebrating. Rollback without hesitation.*

@@ -797,6 +797,14 @@ If lag > 5 minutes and not recovering, escalate.
 - `/pb-observability` — Database metrics and alerting
 - `/pb-database-ops` — Full database operations (this command)
 
+---
+
+## Related Commands
+
+- `/pb-patterns-db` — Database architecture and design patterns
+- `/pb-dr` — Disaster recovery planning and backup verification
+- `/pb-deployment` — Deploy database migrations safely
+
 **Workflow:**
 ```
 Schema design → Migration development

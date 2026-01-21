@@ -592,4 +592,12 @@ Development → Security Review (/pb-security)
 
 ---
 
+## Related Commands
+
+- `/pb-secrets` — Manage secrets securely across environments
+- `/pb-security` — Application-level security review
+- `/pb-deployment` — Deploy hardened infrastructure
+
+---
+
 *Defense-in-depth: if one layer fails, others still protect.*

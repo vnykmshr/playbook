@@ -657,11 +657,13 @@ gh release edit vX.Y.Z --notes "..."
                                 Verify
 ```
 
-**Related commands:**
-- `/pb-cycle` — Self-review before shipping
-- `/pb-pause` — If shipping spans multiple sessions
-- `/pb-release` — Detailed release process
-- `/pb-incident` — If release causes issues
+## Related Commands
+
+- `/pb-cycle` — Self-review and peer review before shipping
+- `/pb-pr` — Create pull request for review
+- `/pb-release` — Detailed release tagging and notes
+- `/pb-review-hygiene` — Code and project health review
+- `/pb-deployment` — Deployment strategies and verification
 
 ---
 

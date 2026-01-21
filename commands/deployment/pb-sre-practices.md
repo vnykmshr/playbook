@@ -517,4 +517,13 @@ Improve (back to operate)
 
 ---
 
+## Related Commands
+
+- `/pb-incident` — Respond to production incidents
+- `/pb-observability` — Set up monitoring, SLOs, and alerting
+- `/pb-dr` — Disaster recovery planning and testing
+- `/pb-team` — Build high-performance engineering teams
+
+---
+
 *Reliability is a feature. Invest in it deliberately.*

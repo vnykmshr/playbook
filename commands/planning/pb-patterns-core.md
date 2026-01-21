@@ -1293,5 +1293,14 @@ pb-patterns-distributed → Multi-service coordination (saga, CQRS)
 
 ---
 
+## Related Commands
+
+- `/pb-patterns-async` — Async patterns for non-blocking operations
+- `/pb-patterns-db` — Database patterns for data access
+- `/pb-patterns-distributed` — Distributed patterns for multi-service coordination
+- `/pb-adr` — Document pattern selection decisions
+
+---
+
 *Created: 2026-01-11 | Category: Architecture | Tier: L*
 

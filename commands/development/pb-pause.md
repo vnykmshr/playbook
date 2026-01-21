@@ -296,11 +296,11 @@ For vacations, handoffs, or long breaks:
 - `/pb-context` — Update working context
 - `/pb-claude-project` — Update CLAUDE.md (if needed)
 
-**Related commands:**
-- `/pb-resume` — Resume after pause
-- `/pb-ship` — When ready to ship (reviews → PR → release)
-- `/pb-standup` — Post async status update
-- `/pb-what-next` — Plan next session
+## Related Commands
+
+- `/pb-resume` — Get back into context after a break
+- `/pb-start` — Begin work on a new feature or fix
+- `/pb-standup` — Post async status update to team
 
 ---
 

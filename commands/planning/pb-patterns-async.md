@@ -1057,6 +1057,14 @@ func fetchMultipleResources(ctx context.Context, ids []int) ([]Resource, error) 
 
 ---
 
+## Related Commands
+
+- `/pb-patterns-core` — Foundation patterns (SOA, Event-Driven, Retry)
+- `/pb-patterns-distributed` — Distributed patterns that build on async
+- `/pb-observability` — Monitor and trace async operations
+
+---
+
 *Created: 2026-01-11 | Category: Architecture | Tier: L*
 *Updated: 2026-01-11 | Added Go examples*
 

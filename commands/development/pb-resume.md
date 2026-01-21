@@ -312,14 +312,11 @@ git add -A && git commit -m "wip: [state]" && git push
 - When resuming work from a different branch
 - When you've been on a different task for hours
 
-**Related commands:**
-- `/pb-start` — Starting new feature (before /pb-resume context recovery)
-- `/pb-pause` — Gracefully pause work (complement to /pb-resume)
-- `/pb-ship` — When ready to ship (reviews → PR → release)
-- `/pb-context` — Read project context (use alongside /pb-resume)
-- `/pb-standup` — Write after resuming (post status for team)
-- `/pb-standards` — Refresh working principles
-- `/pb-guide` — SDLC framework reference
+## Related Commands
+
+- `/pb-start` — Begin work on a new feature or fix
+- `/pb-pause` — Gracefully pause work and preserve context
+- `/pb-cycle` — Self-review and peer review during development
 
 **See also:** `/docs/integration-guide.md` for how all commands work together
 

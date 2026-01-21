@@ -657,12 +657,12 @@ orders = OrderFactory.create_batch(10)  # Create 10 orders
 - `/pb-review-tests` — Periodic test review
 - `/pb-observability` — Monitoring catches regression
 
-**Related Commands:**
-- `/pb-guide` — Test requirements by tier
-- `/pb-cycle` — Testing in peer review
-- `/pb-performance` — Performance testing
-- `/pb-deployment` — Test before deploying
-- `/pb-a11y` — Accessibility testing (axe-core, Lighthouse, screen reader)
+## Related Commands
+
+- `/pb-cycle` — Testing as part of development iteration
+- `/pb-review-tests` — Periodic test coverage review
+- `/pb-standards` — Code quality and testing principles
+- `/pb-debug` — Debugging methodology when tests fail
 
 ---
 

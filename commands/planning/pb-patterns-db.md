@@ -1439,6 +1439,14 @@ func transferMoney(db *sql.DB, fromAcct, toAcct int, amount float64) error {
 
 ---
 
+## Related Commands
+
+- `/pb-patterns-core` — Core architectural patterns that inform database design
+- `/pb-database-ops` — Database operations and migration workflows
+- `/pb-performance` — Performance optimization for database queries
+
+---
+
 *Created: 2026-01-11 | Category: Database | Tier: L*
 *Updated: 2026-01-11 | Added Go examples*
 

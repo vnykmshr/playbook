@@ -169,4 +169,13 @@ Before merging:
 
 ---
 
+## Related Commands
+
+- `/pb-commit` — Craft atomic commits before creating PR
+- `/pb-cycle` — Self-review and peer review workflow
+- `/pb-review-code` — Code review checklist for reviewers
+- `/pb-ship` — Full review, merge, and release workflow
+
+---
+
 *Good PRs are small, focused, and well-described.*

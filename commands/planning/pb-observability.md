@@ -807,4 +807,13 @@ Deployment Phase:
 
 ---
 
+## Related Commands
+
+- `/pb-logging` — Logging strategy and standards for structured logging
+- `/pb-incident` — Incident response when observability alerts fire
+- `/pb-sre-practices` — SRE operational practices and error budgets
+- `/pb-performance` — Performance optimization using observability data
+
+---
+
 *Created: 2026-01-11 | Category: Planning | Tier: M/L*

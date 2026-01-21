@@ -218,4 +218,14 @@ Next: [What I'm doing this session]
 
 ---
 
+## Related Commands
+
+- `/pb-resume` — Get back into context after a break
+- `/pb-cycle` — Self-review and peer review during development
+- `/pb-commit` — Craft atomic, well-explained commits
+- `/pb-plan` — Plan new features before starting work
+- `/pb-standup` — Post async status updates to team
+
+---
+
 *Every iteration deserves the full cycle. Quality over speed.*

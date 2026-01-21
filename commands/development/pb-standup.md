@@ -281,14 +281,11 @@ Standups create a paper trail of:
 - **Blockers**: Write immediately when blocked (don't wait for next day)
 - **Weekly**: Summarize week on Friday for distributed teams
 
-**Related commands:**
-- `/pb-start` — Starting a feature (first standup after creating branch)
-- `/pb-resume` — Resuming after break (write standup as first step)
-- `/pb-cycle` — Iteration & reviews (happens during standups)
-- `/pb-context` — Reference project context when writing standup
-- `/pb-standards` — Working principles guide team culture
-- `/pb-pr` — Opening PR (reference PR in standup when ready)
-- `/pb-release` — Deploy (include deployment status in standup)
+## Related Commands
+
+- `/pb-start` — Begin work on a new feature or fix
+- `/pb-resume` — Get back into context after a break
+- `/pb-cycle` — Self-review and peer review during development
 
 **See also:** `/docs/integration-guide.md` for how all commands work together
 

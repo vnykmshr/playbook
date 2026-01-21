@@ -433,7 +433,7 @@ This development workflow follows:
 - `/pb-cycle` — Develop → Self-review → Test → Commit
 - `/pb-guide-go` — Go-specific patterns and tools
 - `/pb-testing` — Testing strategy
-- `/pb-review-cleanup` — Code review checklist
+- `/pb-review-hygiene` — Code review checklist
 
 ---
 

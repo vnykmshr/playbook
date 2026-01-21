@@ -235,10 +235,14 @@ Create review document at todos/project-review-2026-01-21.md
 - `/pb-review-tests` — Test suite health
 - `/pb-review-docs` — Documentation quality
 - `/pb-review-product` — Engineering + product alignment
+- `/pb-review-microservice` — Architecture review
 - `/pb-security` — Security audit
+- `/pb-a11y` — Accessibility audit
+- `/pb-logging` — Logging standards
+- `/pb-performance` — Performance review
 - `/pb-cycle` — Self-review + peer review iteration
 
 ---
 
 **Last Updated:** 2026-01-21
-**Version:** 2.0
+**Version:** 2.0.0

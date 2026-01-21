@@ -271,4 +271,18 @@ ls todos/releases/*/
 
 ---
 
+## Related Commands
+
+- `/pb-review-code` — Code review checklist for peer reviewers
+- `/pb-start` — Begin new development work
+- `/pb-commit` — Create atomic commits
+- `/pb-pr` — Create pull request
+- `/pb-testing` — Test patterns and strategies
+- `/pb-security` — Security review checklist
+- `/pb-standards` — Working principles reference
+- `/pb-logging` — Logging standards validation
+- `/pb-documentation` — Documentation alongside code
+
+---
+
 *Every iteration gets the full cycle. No shortcuts.*

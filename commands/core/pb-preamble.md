@@ -520,4 +520,16 @@ These expansions deepen the philosophy with context-specific guidance while keep
 
 ---
 
+## Related Commands
+
+- `/pb-preamble-async` — Async and distributed team collaboration
+- `/pb-preamble-power` — Power dynamics and psychological safety
+- `/pb-preamble-decisions` — Decision making and dissent
+- `/pb-design-rules` — Technical principles (complement to preamble)
+- `/pb-think` — Structured thinking with preamble mindset
+- `/pb-standards` — Working principles and code quality
+- `/pb-guide` — Master SDLC framework
+
+---
+
 *Read this before any other command. Reference it when you feel hesitation about speaking up. Build it into your culture from day one.*

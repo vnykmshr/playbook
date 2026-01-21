@@ -1042,5 +1042,13 @@ export default function() {
 
 ---
 
+## Related Commands
+
+- `/pb-deployment` — Execute deployment workflows
+- `/pb-release` — Release orchestration and version management
+- `/pb-dr` — Disaster recovery planning for deployment failures
+
+---
+
 *Category: Patterns | Reference Document | See `/pb-deployment` for actionable workflow*
 
