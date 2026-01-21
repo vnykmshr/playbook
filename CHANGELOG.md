@@ -5,6 +5,48 @@ All notable changes to this project are documented here.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v2.1.0] - 2026-01-21
+
+### Added
+
+**Operational Automation Patterns**
+
+Selective imports from `everything-claude-code` analysis to add automation capabilities while preserving philosophy-first approach.
+
+- **`/pb-learn`** — New command for capturing reusable patterns from sessions
+  - Error resolutions, debugging techniques, workarounds, project conventions
+  - Project-local storage (`.claude/patterns/`) by default
+  - Global storage (`~/.claude/learned/`) with `--global` flag
+  - Comprehensive template and real-world examples
+
+- **`hooks/` directory** — Hook patterns documentation
+  - README explaining Claude Code hook lifecycles (PreToolUse, PostToolUse, PreCompact, SessionStart, Stop)
+  - Example patterns for console.log detection, tmux reminders, session state preservation
+  - Copy-and-adapt approach (not auto-installed)
+
+### Changed
+
+- **`/pb-review-code`** — Added approval decision matrix and review verdicts
+  - Severity mapping: Critical (MUST) → Warning (SHOULD) → Suggestion (CONSIDER/NIT)
+  - Explicit verdicts: APPROVED, CONDITIONAL, BLOCKED
+  - Example verdict format for consistent reviews
+
+- **`/pb-resume`** — Added session state preservation guidance
+  - What to preserve before compaction (state, decisions, blockers, next steps)
+  - Strategic compaction timing (good vs bad transition points)
+  - Session notes template
+  - Cross-reference to hooks for automation
+
+- **`/pb-debug`** — Added cross-reference to `/pb-learn` for pattern capture
+- **`/pb-cycle`** — Added cross-reference to `/pb-learn` for pattern capture
+
+### Command Count
+
+- Before: 72 commands
+- After: 73 commands (+1 new command)
+
+---
+
 ## [v2.0.0] - 2026-01-21
 
 ### Breaking Changes
