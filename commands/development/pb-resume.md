@@ -259,7 +259,7 @@ git log --all --oneline --graph -20
 
 ### Why This Matters
 
-Claude's context window is finite. When it fills, automatic compaction summarizes the conversation — potentially losing important details. Strategic preservation ensures continuity across compaction boundaries and session restarts.
+The context window is finite. When it fills, automatic compaction summarizes the conversation — potentially losing important details. Strategic preservation ensures continuity across compaction boundaries and session restarts.
 
 ### What to Preserve
 
@@ -315,7 +315,7 @@ Before ending a session or triggering compaction:
 ```
 
 **Storage locations:**
-- `.claude/session-notes.md` — For Claude-specific context
+- `.claude/session-notes.md` — For AI assistant context
 - `todos/1-working-context.md` — For project-wide context
 
 ### Resuming After Compaction

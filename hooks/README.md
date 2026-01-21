@@ -142,7 +142,7 @@ Hooks are **not auto-installed** by the playbook install script. They require ma
 - Blocking hooks that take more than a few seconds
 - Complex scripts that may fail silently
 - Hooks that modify files without user awareness
-- Over-automation that hides what Claude is doing
+- Over-automation that hides what the assistant is doing
 
 ---
 
