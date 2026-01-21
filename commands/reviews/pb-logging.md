@@ -459,14 +459,17 @@ Before deploying, verify:
 
 ---
 
-## Integration with Playbook
+## Related Commands
 
-**Related to logging:**
 - `/pb-security` — Logging sensitive data safely
 - `/pb-observability` — Logging as part of observability
 - `/pb-incident` — Using logs during incident investigation
 - `/pb-guide` — Implementing logging in development
 - `/pb-testing` — Testing logging behavior
+
+---
+
+## Tools Reference
 
 **Tools to consider:**
 - **Local**: Python `logging`, Node.js `winston`, Go `zap`

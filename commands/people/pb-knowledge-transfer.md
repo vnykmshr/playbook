@@ -714,9 +714,8 @@ A: See [feature development guide](#feature-development). Stripe has good docs f
 
 ---
 
-## Integration with Playbook
+## Related Commands
 
-**Related to KT:**
 - `/pb-onboarding` — Full team onboarding (includes KT)
 - `/pb-guide` — SDLC guide (referenced in KT)
 - `/pb-security` — Security considerations during KT

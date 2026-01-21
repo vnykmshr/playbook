@@ -514,7 +514,10 @@ Additional: Privacy by design, user data export/deletion
 - `/pb-guide` §4.5 — Security design during planning
 - `/pb-release` — Pre-release security checklist
 
-**Related Commands:**
+---
+
+## Related Commands
+
 - `/pb-cycle` — Daily development with security checks
 - `/pb-guide` — Security design section
 - `/pb-review-hygiene` — Code quality including security

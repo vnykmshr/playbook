@@ -583,10 +583,14 @@ Before last day:
 - `/pb-commit` — Code review process training
 - `/pb-standards` — Code style to learn
 
-**Related Commands:**
+---
+
+## Related Commands
+
 - `/pb-team` — Where onboarding fits in team
 - `/pb-documentation` — How to write for onboarding
 - `/pb-cycle` — Code review process they'll follow
+- `/pb-knowledge-transfer` — KT session preparation
 
 ---
 

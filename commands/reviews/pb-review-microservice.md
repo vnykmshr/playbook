@@ -802,9 +802,8 @@ Status: APPROVED / APPROVED WITH CONDITIONS / REJECTED
 
 ---
 
-## Integration with Playbook
+## Related Commands
 
-**Related to microservice reviews:**
 - `/pb-patterns-core` — SOA and Event-Driven architecture
 - `/pb-patterns-distributed` — Saga, CQRS patterns
 - `/pb-deployment` — Deployment strategies

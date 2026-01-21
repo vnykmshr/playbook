@@ -735,10 +735,14 @@ Engineer: "Yes, added new endpoint and examples"
 - `/pb-adr` — Documenting decisions
 - `/pb-security` — Documenting security practices
 
-**Related Commands:**
+---
+
+## Related Commands
+
 - `/pb-adr` — How to document decisions
 - `/pb-onboarding` — Using docs for training
 - `/pb-team` — Knowledge transfer
+- `/pb-review-docs` — Documentation quality review
 
 ---
 
