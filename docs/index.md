@@ -2,7 +2,7 @@
 
 A comprehensive, integrated set of commands and guides for structuring iterative development workflows, architectural decisions, code reviews, and team operations.
 
-[![Latest Release](https://img.shields.io/github/v/release/vnykmshr/playbook?label=v1.3.0)](https://github.com/vnykmshr/playbook/releases/tag/v1.3.0)
+[![Latest Release](https://img.shields.io/github/v/release/vnykmshr/playbook)](https://github.com/vnykmshr/playbook/releases/latest)
 [![Commands](https://img.shields.io/badge/status-active-brightgreen)](command-index.md)
 [![Documentation](https://img.shields.io/badge/docs-integration%20guide-blue)](integration-guide.md)
 [![License](https://img.shields.io/badge/license-MIT-green)](https://github.com/vnykmshr/playbook/blob/main/LICENSE)
@@ -116,15 +116,15 @@ Organized by category:
 
 | Category | Count | Purpose |
 |----------|-------|---------|
-| **Core Foundation** | 4 | SDLC framework, standards, templates |
-| **Planning & Architecture** | 8 | Design, patterns, decisions |
-| **Development** | 8 | Feature development, iteration, reviews |
-| **Code Review & Quality** | 9 | Multiple perspectives, quality gates |
-| **Release & Operations** | 4 | Deployment, incidents, observability |
-| **Repository Management** | 6 | Structure, README, documentation |
-| **Team & Growth** | 2 | Onboarding, feedback, growth |
-| **Reference** | 1 | Project context |
-| **Total** | All | **Unified ecosystem** |
+| **Core Foundation** | 12 | SDLC framework, standards, preamble, design rules |
+| **Planning & Architecture** | 16 | Design patterns, ADRs, observability |
+| **Development** | 12 | Feature development, iteration, testing |
+| **Code Review & Quality** | 11 | Multiple perspectives, quality gates |
+| **Release & Deployment** | 8 | Deployment, incidents, DR, SRE practices |
+| **Repository Management** | 7 | Structure, README, documentation |
+| **Team & People** | 3 | Onboarding, knowledge transfer, team building |
+| **Templates** | 3 | Project context, CLAUDE.md generation |
+| **Total** | **72** | **Unified ecosystem** |
 
 [See full command reference →](command-index.md)
 

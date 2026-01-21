@@ -578,7 +578,7 @@ For faster shipping, some reviews can run in parallel:
 
 ```
 Sequential (dependencies):
-  pb-review-docs (REQUIRED FIRST) → pb-review-hygiene → pb-review-hygiene
+  pb-review-docs (REQUIRED FIRST) → pb-review-hygiene
 
 Parallel (independent):
   ├─ pb-review-tests
