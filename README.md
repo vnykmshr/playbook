@@ -244,7 +244,10 @@ Production is down. Execute quickly:
 
 ## Command Categories
 
-### Core Foundation (5 commands)
+> **72 total commands** organized into 9 categories. Key commands shown below.
+> See [command-index](https://vnykmshr.github.io/playbook/command-index/) for the complete list.
+
+### Core Foundation
 Master SDLC framework, working standards, templates, and thinking partner methodology.
 
 | Command | Purpose |
@@ -255,7 +258,7 @@ Master SDLC framework, working standards, templates, and thinking partner method
 | `/pb-templates` | Reusable commit, PR, and testing templates |
 | `/pb-think` | Unified thinking partner (modes: ideate, synthesize, refine) |
 
-### Planning & Architecture (10 commands)
+### Planning & Architecture
 Design systems before implementation.
 
 | Command | Purpose |
@@ -271,7 +274,7 @@ Design systems before implementation.
 | `/pb-observability` | Monitoring, observability patterns, and alerting strategy |
 | `/pb-deprecation` | Deprecation strategy, communication, and backwards compatibility |
 
-### Development (11 commands)
+### Development
 Iterative feature development with built-in quality gates.
 
 | Command | Purpose |
@@ -288,7 +291,7 @@ Iterative feature development with built-in quality gates.
 | `/pb-testing` | Testing philosophy (unit, integration, E2E) |
 | `/pb-todo-implement` | Structured implementation with checkpoint approval |
 
-### Code Review & Quality (9 commands)
+### Code Review & Quality
 Multiple perspectives on code quality.
 
 | Command | Purpose |
@@ -303,7 +306,7 @@ Multiple perspectives on code quality.
 | `/pb-logging` | Logging standards and structured logging |
 | `/pb-a11y` | Accessibility audit |
 
-### Release & Operations (3 commands)
+### Release & Operations
 Safe production deployment and incident response.
 
 | Command | Purpose |
@@ -312,7 +315,7 @@ Safe production deployment and incident response.
 | `/pb-deployment` | Execute deployment with surgical precision |
 | `/pb-incident` | Incident assessment and response (P0-P3) |
 
-### Repository Management (6 commands)
+### Repository Management
 Professional repository structure and presentation.
 
 | Command | Purpose |
@@ -324,7 +327,7 @@ Professional repository structure and presentation.
 | `/pb-repo-blog` | Write technical blog post |
 | `/pb-repo-enhance` | Full repository enhancement (combines all above) |
 
-### Team & Growth (3 commands)
+### Team & People
 Team development and knowledge sharing.
 
 | Command | Purpose |
@@ -333,7 +336,7 @@ Team development and knowledge sharing.
 | `/pb-team` | Team dynamics, feedback, and retrospectives |
 | `/pb-knowledge-transfer` | Knowledge transfer session preparation |
 
-### Reference (1 command)
+### Templates & Reference
 Project context and reference.
 
 | Command | Purpose |
@@ -406,7 +409,7 @@ playbook/
 ├── docs/
 │   ├── command-index.md           # Quick reference for all commands
 │   ├── integration-guide.md        # How commands work together (workflows, clusters)
-│   ├── INTEGRATION-SUMMARY.md      # Integration improvements and patterns
+│   ├── decision-guide.md           # When to use which command
 │   └── checklists.md               # Reusable quality checklists
 │
 ├── scripts/
