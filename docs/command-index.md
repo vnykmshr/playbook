@@ -146,6 +146,18 @@ Self-sufficient thinking partner methodology for expert-quality collaboration.
 | `/pb-team` | Team dynamics, feedback, and retrospectives |
 | `/pb-knowledge-transfer` | Team knowledge sharing and KT sessions |
 
+## System Utilities
+
+Developer machine health and maintenance.
+
+| Command | When to Use |
+|---------|-------------|
+| `/pb-doctor` | System health check (disk, memory, CPU, processes) |
+| `/pb-storage` | Tiered disk cleanup (caches, packages, Docker) |
+| `/pb-update` | Update all package managers and tools |
+| `/pb-ports` | Find/kill processes on ports |
+| `/pb-setup` | Bootstrap new dev machine |
+
 ## Context & Templates
 
 | Command | When to Use |
@@ -215,6 +227,20 @@ Real-world implementations of the playbook in action:
 ### Periodic Maintenance
 ```
 /pb-review-*       → Various reviews as scheduled
+```
+
+### System Maintenance
+```
+/pb-doctor         → Diagnose system health
+/pb-storage        → Clean up disk space
+/pb-update         → Update tools and packages
+/pb-ports          → Resolve port conflicts
+```
+
+### New Machine Setup
+```
+/pb-setup          → Bootstrap dev environment
+/pb-doctor         → Verify system health
 ```
 
 ## Browse All Commands
