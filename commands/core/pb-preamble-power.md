@@ -516,7 +516,7 @@ If it's the latter, you have hierarchy working despite preamble thinking.
 
 ---
 
-## See Also
+## Related Commands
 
 - `/pb-preamble` — Core principles (Part 1)
 - `/pb-preamble-async` — How these apply in async (Part 2)

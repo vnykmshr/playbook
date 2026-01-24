@@ -1,4 +1,4 @@
-# **Engineering SDLC Playbook**
+# Engineering SDLC Playbook
 
 A reusable end-to-end guide for any feature, enhancement, refactor, or bug fix.
 Right-size your process using **Change Tiers**, then follow required sections.
@@ -1464,6 +1464,12 @@ This covers:
 - **Team & Growth** → `/pb-team`, `/pb-onboarding`, `/pb-documentation`
 - **Frontend Development** → `/pb-design-language`, `/pb-patterns-frontend`, `/pb-a11y` (see `/docs/frontend-workflow.md`)
 
-**See also:**
-- `/docs/integration-guide.md` — Comprehensive guide showing all commands, workflows, and how they work together
-- `/docs/command-index.md` — Quick reference by category
+---
+
+## Related Commands
+
+- `/pb-preamble` — How teams think together (collaboration philosophy)
+- `/pb-design-rules` — What systems should be (technical principles)
+- `/pb-standards` — Working principles and code standards
+- `/pb-start` — Begin development work
+- `/pb-cycle` — Self-review and peer review iteration

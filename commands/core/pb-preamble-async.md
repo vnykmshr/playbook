@@ -368,7 +368,7 @@ Teams that master async apply preamble thinking harder, not differently.
 
 ---
 
-## See Also
+## Related Commands
 
 - `/pb-preamble` — Core principles (Part 1)
 - `/pb-standup` — Async communication for status

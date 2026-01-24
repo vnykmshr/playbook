@@ -549,7 +549,7 @@ Add more error handling downstream hoping to catch it eventually.
 
 ---
 
-## See Also
+## Related Commands
 
 - `/pb-preamble` — How teams think together (complement to design rules)
 - `/pb-adr` — Architecture decisions document rules

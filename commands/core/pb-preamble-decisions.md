@@ -649,7 +649,7 @@ Decision discipline adds:
 
 ---
 
-## See Also
+## Related Commands
 
 - `/pb-preamble` — Core principles (Part 1)
 - `/pb-preamble-async` — How these apply async (Part 2)
