@@ -46,9 +46,7 @@ Create `~/.claude/CLAUDE.md` with this structure:
 
 ---
 
-## How We Work Together (Preamble)
-
-[Extract 5-7 key principles from /pb-preamble]
+## How We Work (Preamble)
 
 - **Challenge assumptions** — Correctness matters more than agreement
 - **Think like peers** — Best ideas win regardless of source
@@ -62,22 +60,38 @@ For full philosophy: `/pb-preamble`
 
 ## What We Build (Design Rules)
 
-17 classical design principles in 4 clusters:
-
 | Cluster | Core Principle |
 |---------|----------------|
-| **CLARITY** | Obvious interfaces, unsurprising behavior, self-documenting code |
+| **CLARITY** | Obvious interfaces, unsurprising behavior |
 | **SIMPLICITY** | Simple design first, complexity only where justified |
-| **RESILIENCE** | Fail loudly, recover gracefully, no silent failures |
+| **RESILIENCE** | Fail loudly, recover gracefully |
 | **EXTENSIBILITY** | Adapt without rebuilds, stable interfaces |
 
 For full design rules: `/pb-design-rules`
 
 ---
 
-## Code Quality Standards
+## Guardrails
 
-[Extract from /pb-standards, /pb-guide]
+- **Verify before done** — "It should work" is not acceptable; test the change
+- **Preserve functionality** — Never fix a bug by removing a feature
+- **Plan multi-file changes** — Outline approach for cross-file work, confirm before acting
+- **Git safety** — Pull before writing, use Edit over Rewrite, diff after changes
+
+---
+
+## Quality Bar (MLP)
+
+Before declaring done, ask:
+- Would you use this daily without frustration?
+- Can you recommend it without apology?
+- Did you build the smallest thing that feels complete?
+
+If no: keep refining. If yes: ship it.
+
+---
+
+## Code Quality
 
 - **Atomic changes** — One concern per commit, one concern per PR
 - **No dead code** — Delete unused code, don't comment it out
@@ -86,7 +100,7 @@ For full design rules: `/pb-design-rules`
 - **Error handling** — Fail loudly, no silent swallowing of errors
 - **Security awareness** — No hardcoded secrets, validate inputs at boundaries
 
-For full standards: `/pb-standards`
+For detailed standards: `/pb-standards`
 
 ---
 
@@ -214,7 +228,7 @@ After generation, verify:
 - [ ] Version and date are current
 - [ ] All sections are populated
 - [ ] Playbook references are correct
-- [ ] File is under 300 lines (concise)
+- [ ] File is under 150 lines (concise)
 
 ---
 

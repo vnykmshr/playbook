@@ -246,6 +246,35 @@ Based on this project's tech stack:
 
 ---
 
+## Guardrails
+
+[Project-specific safety constraints — customize as needed]
+
+- **Infrastructure** — [Lock level: strict/moderate/flexible]
+- **Dependencies** — [Approval required: yes/no]
+- **Ports** — [List fixed ports if any]
+- **Data** — [Database modification rules]
+
+---
+
+## Project Guardrails
+
+Project-specific safety constraints (supplement global guardrails):
+
+```markdown
+## Guardrails
+
+- **Infrastructure lock** — No Docker/DB/environment changes without approval
+- **Dependency lock** — No new dependencies without approval
+- **Port lock** — Backend: [port], Frontend: [port] — do not change
+- **Design system** — Follow existing UI patterns in [path]
+- **Data safety** — No database deletions without explicit approval
+```
+
+Customize based on project needs. Remove irrelevant constraints.
+
+---
+
 ## Project-Specific Guidelines
 
 ### [Area 1]

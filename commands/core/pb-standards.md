@@ -153,7 +153,40 @@ Each phase doc includes:
 
 ---
 
-## VII. SDLC Discipline & Code Quality Commitment
+## VII. Quality Bar: Minimum Lovable
+
+Design Rules tell you *how* to build. This tells you *when you're done*.
+
+### The MLP Criteria
+
+Before declaring work complete, ask:
+
+- **Would you use this daily without frustration?** — Not just functional, but pleasant
+- **Can you recommend it without apology?** — "It works, but..." means it's not done
+- **Did you build the smallest thing that feels complete?** — Scope discipline, not scope creep
+
+If any answer is "no": keep refining. If all are "yes": ship it.
+
+### What MLP Is Not
+
+- **Feature-rich** — MLP is about care, not quantity
+- **Polished to perfection** — Good enough to love, not flawless
+- **Over-engineered** — Simplicity is part of lovability
+
+### The Mindset Shift
+
+| MVP Thinking | MLP Thinking |
+|--------------|--------------|
+| "It works" | "It works well" |
+| "We'll fix it later" | "We'll ship when it's ready" |
+| "Users won't care" | "Would we use this?" |
+| "Just an MVP" | "Is this lovable?" |
+
+MLP is a discipline, not a milestone. Build less. Care more.
+
+---
+
+## VIII. SDLC Discipline & Code Quality Commitment
 
 ### Our Commitment
 We commit to **bug-free, rock-solid results** through disciplined adherence to a full Software Development Life Cycle. Every iteration, regardless of size, follows the same rigorous process. We do not cut corners.
@@ -231,3 +264,4 @@ make test        # All tests pass
 - `/pb-review-hygiene` — Code quality review
 - `/pb-commit` — Atomic commit practices
 - `/pb-testing` — Test patterns and strategies
+- `/pb-review-code` — Code review with MLP quality bar

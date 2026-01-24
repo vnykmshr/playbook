@@ -76,6 +76,24 @@ Every command in this playbook—from `/pb-guide` to `/pb-cycle` to `/pb-securit
 
 ---
 
+## Genesis & Hierarchy
+
+### Why This Playbook Exists
+
+Good engineering requires both *how to think together* and *what to build*. Without collaboration principles, teams build wrong things together. Without design rules, teams collaborate well toward poor outcomes. Together: better decisions, better systems, better teams.
+
+### Document Hierarchy
+
+When guidance conflicts, specificity wins:
+
+1. **Project CLAUDE.md** — Project-specific needs take precedence
+2. **Global CLAUDE.md** — Personal standards apply across projects
+3. **Playbook commands** — Framework defaults
+
+Preamble + Design Rules are foundational. All other commands assume them.
+
+---
+
 ## Installation
 
 ### Prerequisites
