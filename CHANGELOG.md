@@ -5,6 +5,43 @@ All notable changes to this project are documented here.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v2.2.0] - 2026-01-24
+
+### Added
+
+**Playbook Philosophy Evolution**
+
+Integrates three foundational concepts into the playbook DNA:
+
+- **Guardrails section** — Added to `/pb-claude-global` and `/pb-claude-project` templates
+  - 4 universal rules for global (verify before done, preserve functionality, plan multi-file changes, git safety)
+  - 5 project-specific constraints template (infrastructure, dependencies, ports, design system, data safety)
+
+- **MLP Quality Bar** — Added Section VII to `/pb-standards`
+  - 3 criteria: daily use without frustration, recommend without apology, smallest complete thing
+  - Mindset shift table: MVP thinking vs MLP thinking
+  - "Build less. Care more." discipline
+
+- **Genesis & Hierarchy** — Added to README.md
+  - Why this playbook exists (genesis statement)
+  - Document hierarchy: Project > Global > Playbook precedence
+
+### Changed
+
+- `/pb-claude-global` template streamlined, target reduced from 300 to 150 lines
+- `/pb-standards` section numbering updated (VII → VIII for SDLC Discipline)
+- Global CLAUDE.md: removed Technology Guidelines (project-level concern)
+
+### Philosophy
+
+This release elevates the playbook DNA from:
+- Preamble + Design Rules
+
+To:
+- Preamble (how we think) + Design Rules (what we build) + Guardrails (what we protect) + Quality Bar (when we're done)
+
+---
+
 ## [v2.1.0] - 2026-01-21
 
 ### Added
@@ -609,3 +646,11 @@ When releasing a new version:
 3. Keep "Unreleased" section at top for in-progress work (remove when releasing)
 
 4. Link versions at bottom: `[vX.Y.Z]: https://github.com/vnykmshr/playbook/releases/tag/vX.Y.Z`
+
+---
+
+[v2.2.0]: https://github.com/vnykmshr/playbook/releases/tag/v2.2.0
+[v2.1.0]: https://github.com/vnykmshr/playbook/releases/tag/v2.1.0
+[v2.0.0]: https://github.com/vnykmshr/playbook/releases/tag/v2.0.0
+[v1.8.0]: https://github.com/vnykmshr/playbook/releases/tag/v1.8.0
+[v1.7.0]: https://github.com/vnykmshr/playbook/releases/tag/v1.7.0
