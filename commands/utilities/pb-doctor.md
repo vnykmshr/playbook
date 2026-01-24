@@ -347,6 +347,7 @@ brew outdated 2>/dev/null | head -5 || echo "N/A"
 - `/pb-ports` — Check port usage and conflicts
 - `/pb-update` — Update outdated tools
 - `/pb-debug` — Deep debugging methodology
+- `/pb-git-hygiene` — Git repository health audit (branches, large objects, secrets)
 
 ---
 

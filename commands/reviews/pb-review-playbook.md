@@ -256,6 +256,7 @@ Create review document at `todos/playbook-review-YYYY-MM-DD.md`:
 
 ## Related Commands
 
+- `/pb-new-playbook` — Create new playbooks (classification, scaffold, validation)
 - `/pb-review` — General codebase review (different perspectives)
 - `/pb-review-docs` — Documentation quality review
 - `/pb-standards` — Quality standards the playbook should meet
