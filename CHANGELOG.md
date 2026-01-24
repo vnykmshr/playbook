@@ -5,6 +5,54 @@ All notable changes to this project are documented here.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v2.3.0] - 2026-01-24
+
+### Changed
+
+**Documentation Hygiene & Consistency**
+
+Addresses periodic review findings to improve maintainability and reduce drift.
+
+- **Removed hardcoded counts** — README and docs no longer reference specific command counts
+  - Prevents maintenance burden when adding/removing commands
+  - Uses generic language ("comprehensive set" instead of "78 commands")
+
+- **Fixed broken mkdocs links** — 3 links in technical-blog.md corrected
+  - Now point to quick-ref pages instead of non-existent command files
+
+- **H1 title consistency** — Fixed bold formatting in pb-guide.md
+  - Standard: `# Title` (no bold, no special formatting)
+
+- **Standardized Related Commands** — Renamed "See Also" to "Related Commands" in 4 files
+  - pb-design-rules, pb-preamble-async, pb-preamble-decisions, pb-preamble-power
+
+- **Category consolidation** — Merged release/ into deployment/
+  - pb-release.md moved to commands/deployment/
+  - 9 categories reduced to 9 (release was single-file category)
+
+- **Trimmed verbose pattern files** — 876 lines removed (21% reduction)
+  - pb-patterns-distributed: 1521 → 1266 lines (-17%)
+  - pb-patterns-db: 1452 → 1113 lines (-23%)
+  - pb-patterns-async: 1070 → 802 lines (-25%)
+  - Removed redundant Go Examples sections, kept representative examples
+
+### Added
+
+- **"When to Use" sections** — Added to 15 commands for better discoverability
+  - development: pb-commit, pb-cycle, pb-debug, pb-pr
+  - deployment: pb-incident, pb-database-ops, pb-dr, pb-hardening, pb-sre-practices
+  - core: pb-documentation
+  - reviews: pb-security
+  - people: pb-onboarding, pb-knowledge-transfer
+  - repo: pb-repo-init, pb-repo-organize
+
+### Command Count
+
+- Commands: 78 (unchanged)
+- Categories: 9 (release/ merged into deployment/)
+
+---
+
 ## [v2.2.0] - 2026-01-24
 
 ### Added
@@ -649,6 +697,7 @@ When releasing a new version:
 
 ---
 
+[v2.3.0]: https://github.com/vnykmshr/playbook/releases/tag/v2.3.0
 [v2.2.0]: https://github.com/vnykmshr/playbook/releases/tag/v2.2.0
 [v2.1.0]: https://github.com/vnykmshr/playbook/releases/tag/v2.1.0
 [v2.0.0]: https://github.com/vnykmshr/playbook/releases/tag/v2.0.0
