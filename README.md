@@ -417,10 +417,9 @@ playbook/
 │   ├── core/           # pb-guide, pb-standards, pb-templates, pb-documentation
 │   ├── planning/       # pb-plan, pb-adr, pb-patterns-*, pb-performance, pb-observability
 │   ├── development/    # pb-start, pb-cycle, pb-resume, pb-pause, pb-pr, pb-testing, pb-todo-implement
-│   ├── release/        # pb-release, pb-incident
+│   ├── deployment/     # pb-deployment, pb-release, pb-incident, pb-dr, pb-sre-practices
 │   ├── reviews/        # pb-review-*, pb-security, pb-logging
 │   ├── repo/           # pb-repo-*, pb-documentation
-│   ├── deployment/     # pb-deployment
 │   ├── people/         # pb-onboarding, pb-team, pb-knowledge-transfer
 │   └── templates/      # pb-context
 │
