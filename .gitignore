@@ -4,6 +4,18 @@ todos/
 # Claude Code context (auto-generated)
 .claude/
 
+# Secrets and credentials
+.env
+.env.*
+*.pem
+*.key
+credentials.json
+secrets/
+
+# Dependencies
+node_modules/
+vendor/
+
 # OS files
 .DS_Store
 Thumbs.db
