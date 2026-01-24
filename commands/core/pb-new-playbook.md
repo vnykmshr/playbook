@@ -26,8 +26,8 @@ What type of playbook is this? Classification determines required sections.
 | **Executor** | Runs a specific workflow | Has steps/process to follow | pb-commit, pb-deployment, pb-start |
 | **Orchestrator** | Coordinates multiple commands | References other pb-* commands | pb-release, pb-ship, pb-repo-enhance |
 | **Guide** | Provides philosophy/framework | Principles over procedures | pb-guide, pb-preamble, pb-design-rules |
-| **Reference** | Pattern library, templates | Lookup material | pb-patterns-*, pb-templates |
-| **Review** | Evaluates against criteria | Checklists and deliverables | pb-review-*, pb-security |
+| **Reference** | Pattern library, templates | Lookup material | `pb-patterns-*`, pb-templates |
+| **Review** | Evaluates against criteria | Checklists and deliverables | `pb-review-*`, pb-security |
 
 **Decision aid:**
 - Does it have steps to execute? → **Executor**
@@ -55,17 +55,17 @@ What type of playbook is this? Classification determines required sections.
 - Verb-first for actions (pb-commit, pb-deploy, pb-review)
 - Noun-first for concepts (pb-security, pb-patterns)
 - Avoid generic names (not pb-do-stuff, pb-misc)
-- Match existing family patterns (pb-review-* for reviews, pb-patterns-* for patterns)
+- Match existing family patterns (`pb-review-*` for reviews, `pb-patterns-*` for patterns)
 
 ### Category Placement
 
 | Category | Purpose | Examples |
 |----------|---------|----------|
 | `core/` | Foundation, philosophy, meta | pb-guide, pb-preamble, pb-standards |
-| `planning/` | Architecture, patterns, decisions | pb-plan, pb-adr, pb-patterns-* |
+| `planning/` | Architecture, patterns, decisions | pb-plan, pb-adr, `pb-patterns-*` |
 | `development/` | Daily workflow commands | pb-start, pb-commit, pb-cycle |
 | `deployment/` | Release, ops, infrastructure | pb-deployment, pb-release, pb-incident |
-| `reviews/` | Quality gates, audits | pb-review-*, pb-security |
+| `reviews/` | Quality gates, audits | `pb-review-*`, pb-security |
 | `repo/` | Repository management | pb-repo-init, pb-repo-enhance |
 | `people/` | Team operations | pb-team, pb-onboarding |
 | `templates/` | Context generators | pb-claude-global, pb-context |
