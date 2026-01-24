@@ -137,6 +137,7 @@ Self-sufficient thinking partner methodology for expert-quality collaboration.
 | `/pb-preamble-async` | Async/distributed team collaboration patterns |
 | `/pb-preamble-power` | Power dynamics and psychological safety |
 | `/pb-preamble-decisions` | Decision-making and constructive dissent |
+| `/pb-new-playbook` | Meta-playbook for creating new playbook commands (classification, scaffold, validation) |
 
 ## Team & People
 
@@ -157,6 +158,7 @@ Developer machine health and maintenance.
 | `/pb-update` | Update all package managers and tools |
 | `/pb-ports` | Find/kill processes on ports |
 | `/pb-setup` | Bootstrap new dev machine |
+| `/pb-git-hygiene` | Periodic git repo audit (tracked files, stale branches, large objects, secrets) |
 
 ## Context & Templates
 
@@ -227,6 +229,7 @@ Real-world implementations of the playbook in action:
 ### Periodic Maintenance
 ```
 /pb-review-*       → Various reviews as scheduled
+/pb-git-hygiene    → Monthly git repo audit (branches, large files, secrets)
 ```
 
 ### System Maintenance
