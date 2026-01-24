@@ -8,6 +8,15 @@ Don't copy patterns blindly—understand why you're choosing them. Question conv
 
 ---
 
+## When to Use This Command
+
+- **Starting a new project** — Greenfield development from scratch
+- **New microservice** — Adding a service to existing architecture
+- **Project restructure** — Major reorganization of existing codebase
+- **Technology migration** — Rebuilding with new stack/framework
+
+---
+
 ## Role
 
 You are a senior engineering lead. Create a lean, practical plan that adds real value without unnecessary complexity.

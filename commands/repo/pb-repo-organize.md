@@ -8,6 +8,15 @@ Clear, obvious organization beats clever categorization. The structure should ma
 
 ---
 
+## When to Use This Command
+
+- **Project root cluttered** — Too many files at top level
+- **Structure unclear** — Hard to find things in the codebase
+- **After major changes** — Reorganizing after feature additions
+- **Code review feedback** — Addressing structure concerns
+
+---
+
 ## Objective
 
 Review all files and directories in the project root. Keep only essential files at the top level, move everything else into logical subfolders.

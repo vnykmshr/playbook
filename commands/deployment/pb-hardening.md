@@ -8,6 +8,16 @@ The goal is defense-in-depth: multiple layers of protection so that if one fails
 
 ---
 
+## When to Use This Command
+
+- **New production deployment** — Hardening servers before go-live
+- **Security audit** — Reviewing and improving security posture
+- **Container security** — Locking down container runtime
+- **Compliance requirements** — Meeting security standards (SOC2, etc.)
+- **After security incident** — Strengthening defenses
+
+---
+
 ## Quick Reference
 
 | Layer | Key Actions |

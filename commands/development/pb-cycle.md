@@ -4,6 +4,15 @@ Run this after completing a unit of work. Guides you through self-review, qualit
 
 ---
 
+## When to Use This Command
+
+- **After completing a feature/fix** — Before committing changes
+- **During development iterations** — Each cycle of code → review → refine
+- **Before creating a PR** — Final self-review pass
+- **When unsure if code is ready** — Checklist helps verify completeness
+
+---
+
 ## Step 1: Self-Review
 
 Review your own changes critically before requesting peer review.

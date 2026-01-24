@@ -8,6 +8,15 @@ Systematic approach to finding and fixing bugs. Hypothesis-driven, reproducible,
 
 ---
 
+## When to Use This Command
+
+- **Stuck on a bug** — Need a systematic approach instead of random poking
+- **Bug is elusive** — Can't reproduce or isolate the issue
+- **Complex debugging** — Multiple systems, unclear root cause
+- **Teaching debugging** — Share methodology with team members
+
+---
+
 ## The Debugging Process
 
 ### 1. Reproduce

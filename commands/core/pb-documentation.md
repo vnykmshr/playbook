@@ -13,6 +13,16 @@ This embodies `/pb-preamble` thinking (clear writing enables critical thinking, 
 
 ---
 
+## When to Use This Command
+
+- **Writing new docs** — Creating READMEs, guides, API docs
+- **Improving existing docs** — Docs review found issues to fix
+- **Onboarding prep** — Ensuring docs support new team members
+- **Knowledge transfer** — Capturing tribal knowledge before someone leaves
+- **Architecture documentation** — Documenting system design decisions
+
+---
+
 ## Purpose
 
 Good documentation:

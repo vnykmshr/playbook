@@ -4,6 +4,15 @@ Effective onboarding reduces time to productivity, builds confidence, and preven
 
 ---
 
+## When to Use This Command
+
+- **New team member joining** — Setting up their onboarding plan
+- **Creating onboarding docs** — Building onboarding materials
+- **Improving onboarding process** — Reviewing and enhancing experience
+- **Contractor/intern onboarding** — Adapting for shorter engagements
+
+---
+
 ## Purpose
 
 Good onboarding:

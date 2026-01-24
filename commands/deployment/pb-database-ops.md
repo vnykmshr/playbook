@@ -8,6 +8,16 @@ Data is the most valuable asset. Treat database operations with appropriate care
 
 ---
 
+## When to Use This Command
+
+- **Planning database migration** — Schema changes, data migrations
+- **Setting up backups** — Establishing backup and recovery strategy
+- **Performance issues** — Database slow, queries timing out
+- **Disaster recovery** — Failover planning and testing
+- **Pre-deployment** — Reviewing database changes for safety
+
+---
+
 ## Quick Reference
 
 | Operation | Frequency | Risk Level |

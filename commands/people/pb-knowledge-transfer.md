@@ -8,6 +8,15 @@ Teach `/pb-preamble` first: new team members need to know how to challenge assum
 
 ---
 
+## When to Use This Command
+
+- **Planning a KT session** — Structuring effective knowledge transfer
+- **Team member leaving** — Capturing their knowledge before departure
+- **New hire starting** — Preparing materials for their ramp-up
+- **Service handoff** — Transferring ownership between teams
+
+---
+
 ## Purpose
 
 Knowledge transfer (KT) ensures:

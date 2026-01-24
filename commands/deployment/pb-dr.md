@@ -8,6 +8,16 @@ The best time to plan for disaster is before it happens. The second best time is
 
 ---
 
+## When to Use This Command
+
+- **Creating DR plan** — Establishing recovery strategy for your system
+- **Defining RTO/RPO** — Setting recovery objectives with stakeholders
+- **DR testing** — Running game days and failover exercises
+- **After an incident** — Reviewing and improving DR procedures
+- **Compliance requirements** — Documenting DR capabilities
+
+---
+
 ## Quick Reference
 
 | Term | Definition |

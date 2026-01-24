@@ -8,6 +8,16 @@ Reliability is a feature. Invest in it deliberately, not reactively.
 
 ---
 
+## When to Use This Command
+
+- **Reducing toil** — Automating repetitive operational tasks
+- **Setting SLOs** — Defining reliability targets and error budgets
+- **On-call review** — Improving rotation health and reducing burnout
+- **Capacity planning** — Preventing resource exhaustion
+- **Building SRE culture** — Establishing sustainable operations practices
+
+---
+
 ## Quick Reference
 
 | Practice | Purpose | Frequency |

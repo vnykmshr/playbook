@@ -8,6 +8,14 @@ Reviewers will challenge your decisions. That's the point. Welcome that feedback
 
 ---
 
+## When to Use This Command
+
+- **Ready to create PR** — Code complete, reviewed, and tested
+- **Need PR guidance** — Unsure about PR structure or description
+- **PR description help** — Want template for clear PR descriptions
+
+---
+
 ## Pre-PR Checklist
 
 Before creating PR, verify:

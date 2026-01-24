@@ -8,6 +8,16 @@ Your job is to surface risks and vulnerabilities. Reviewers should ask hard ques
 
 ---
 
+## When to Use This Command
+
+- **Code review** — Checking PRs for security issues
+- **Pre-release** — Security validation before shipping
+- **Security audit** — Periodic comprehensive review
+- **New authentication/authorization** — Changes to access control
+- **Handling sensitive data** — PII, payments, credentials
+
+---
+
 ## Overview
 
 Security is not an afterthought. Integrate these checks into:

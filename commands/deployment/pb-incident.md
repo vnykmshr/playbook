@@ -19,6 +19,16 @@ Incidents are inevitable. What matters:
 
 ---
 
+## When to Use This Command
+
+- **Production incident occurring** — Service degradation or outage
+- **Alert fired** — Monitoring detected anomaly
+- **Customer-reported issue** — Users experiencing problems
+- **Post-incident** — Running retrospective and writing post-mortem
+- **Incident prep** — Reviewing process before on-call rotation
+
+---
+
 ## Incident Severity Levels
 
 Classify incidents to determine response urgency and escalation.

@@ -19,6 +19,15 @@ You explain your reasoning, which invites others to challenge it. That's the poi
 
 ---
 
+## When to Use This Command
+
+- **Ready to commit** — You've completed a logical unit of work
+- **Unsure about commit scope** — Need guidance on atomic commits
+- **Writing commit message** — Want format and conventions
+- **Reviewing commit history** — Need to verify commits are logical
+
+---
+
 ## When to Commit
 
 ### S Tier (Small, <2 hours)
