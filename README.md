@@ -262,7 +262,7 @@ Production is down. Execute quickly:
 
 ## Command Categories
 
-> **72 total commands** organized into 9 categories. Key commands shown below.
+> Comprehensive command library organized by category. Key commands shown below.
 > See [command-index](https://vnykmshr.github.io/playbook/command-index/) for the complete list.
 
 ### Core Foundation

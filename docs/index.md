@@ -36,7 +36,7 @@ Before diving into commands, understand the collaborative philosophy that all pl
 - **Truth over tone** — Direct, clear feedback beats careful politeness
 - **Think holistically** — Optimize for team outcomes, not just individual concerns
 
-**[Read the complete Preamble Framework →](../commands/core/pb-preamble.md)**
+**[Preamble Quick Reference →](preamble-quick-ref.md)** | Full framework: `/pb-preamble`
 
 ### Design Rules: What We Build
 
@@ -47,7 +47,7 @@ Technical principles that guide every system decision and architectural choice:
 - Decision framework for when rules conflict
 - Quick reference for daily use
 
-**[Read the Design Rules Framework →](../commands/core/pb-design-rules.md)**
+**[Design Rules Quick Reference →](design-rules-quick-ref.md)** | Full framework: `/pb-design-rules`
 
 ### The Two Frameworks Enable Each Other
 

@@ -552,10 +552,10 @@ Quality becomes the default. Not because of individual heroics, but because:
 
 ### Learn the Foundations First
 
-**[The Preamble →](/commands/core/pb-preamble.md)**
+**[The Preamble →](preamble-quick-ref.md)**
 Understand how teams think together: peer collaboration, challenge assumptions, correctness over agreement.
 
-**[Design Rules →](/commands/core/pb-design-rules.md)**
+**[Design Rules →](design-rules-quick-ref.md)**
 Understand what you build: 17 principles organized in 4 clusters (Clarity, Simplicity, Resilience, Extensibility).
 
 ### Then Pick Your Scenario
@@ -577,7 +577,7 @@ Respond to production issues systematically, learning from failures.
 
 ### Or Explore by Category
 
-Browse the [full command reference](command-index.md), [decision guide](decision-guide.md), or [quick references](../commands/core/pb-preamble.md) for daily use.
+Browse the [full command reference](command-index.md), [decision guide](decision-guide.md), or [quick references](preamble-quick-ref.md) for daily use.
 
 ---
 
