@@ -492,6 +492,60 @@ Regular reviews prevent drift and maintain operational health.
 
 ---
 
+## Server Migration Checklist
+
+### Database Migrations
+
+**Always use full dump/restore:**
+
+```bash
+# WRONG: Selective table export (misses users, tokens, etc.)
+pg_dump -t verses -t cases dbname > partial.sql
+
+# RIGHT: Full database dump
+pg_dump -U user dbname > backup.sql
+psql -U user dbname < backup.sql
+```
+
+**Pre-migration:**
+- [ ] Document all table row counts on source
+- [ ] Verify auth tables included (users, refresh_tokens, sessions)
+- [ ] Plan for downtime window
+
+**Post-migration verification:**
+```sql
+SELECT 'users', count(*) FROM users
+UNION ALL SELECT 'refresh_tokens', count(*) FROM refresh_tokens
+UNION ALL SELECT 'cases', count(*) FROM cases;
+```
+
+- [ ] Row counts match source
+- [ ] Login flow works
+- [ ] Existing sessions remain valid
+
+**Rollback plan:**
+- Keep source database running (read-only) until verification complete
+- Document rollback steps before starting migration
+- Test rollback procedure in staging first
+
+### New Server Security Verification
+
+Before deploying services, verify hardening (Linux servers):
+
+| Item | Command | Expected |
+|------|---------|----------|
+| SSH key-only | `grep PasswordAuth /etc/ssh/sshd_config` | `no` |
+| Root restricted | `grep PermitRootLogin /etc/ssh/sshd_config` | `prohibit-password` |
+| UFW enabled | `ufw status` | `Status: active` |
+| Fail2ban running | `systemctl status fail2ban` | `active` |
+| Auditd running | `systemctl status auditd` | `active` |
+| Kernel hardened | `sysctl net.ipv4.tcp_syncookies` | `1` |
+| Secrets protected | `stat -c %a .env` | `600` |
+
+**Note:** `stat` syntax varies by platform. Use `-c %a` on Linux, `-f%Lp` on macOS.
+
+---
+
 ## Integration with Playbook
 
 **Complements existing commands:**

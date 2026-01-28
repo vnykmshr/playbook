@@ -813,6 +813,7 @@ Deployment Phase:
 - `/pb-incident` — Incident response when observability alerts fire
 - `/pb-sre-practices` — SRE operational practices and error budgets
 - `/pb-performance` — Performance optimization using observability data
+- `/pb-maintenance` — Preventive maintenance (monitoring detects; maintenance prevents)
 
 ---
 

@@ -706,6 +706,7 @@ After changes: Verify DR still works
 - `/pb-sre-practices` — Sustainable operations and toil reduction
 - `/pb-database-ops` — Database backup and failover procedures
 - `/pb-deployment` — Deploy recovery infrastructure
+- `/pb-maintenance` — Backup verification and ongoing maintenance scheduling
 
 ---
 

@@ -163,13 +163,28 @@ Date locked: [Date]
 
 Create structured documentation for tracking and execution.
 
+### Context-Efficient Plan Structure
+
+Plans are loaded into conversation context. Structure them for **resumability without full reload**:
+
+**Principles:**
+1. **Current state at top** — What phase, what's done, what's next
+2. **Completed work collapsed** — Move done phases to bottom or separate file
+3. **Active phase expanded** — Only current phase needs full detail
+4. **Scope lock is permanent** — Don't repeat in every session
+
+**Anti-pattern:** Full plan in every session consumes context for work already done.
+
+**Pattern:** Master tracker with current status + pointer to active phase file.
+
 ### Directory Structure
 
 ```
 todos/releases/vX.Y.Z/
-├── 00-master-tracker.md    # Overview, phases, checkpoints
+├── 00-master-tracker.md    # Overview, phases, checkpoints, CURRENT STATUS
 ├── phase-1-*.md            # Detailed phase 1 tasks
 ├── phase-2-*.md            # Detailed phase 2 tasks
+├── done/                   # Completed phases (archived)
 └── ...
 ```
 
@@ -177,6 +192,16 @@ todos/releases/vX.Y.Z/
 
 ```markdown
 # vX.Y.Z - [Release Theme]
+
+## Current Status (Update Each Session)
+
+**Phase**: [N] - [Name]
+**Last commit**: [hash] - [date]
+**Next**: [Specific next task]
+
+> This section is the entry point. Update it each session so resuming is instant.
+
+---
 
 ## Overview
 

@@ -850,6 +850,7 @@ du -sh /*  # Show which directory consuming space
 - `/pb-sre-practices` — On-call health, blameless culture, toil reduction
 - `/pb-dr` — Disaster recovery planning for major incidents
 - `/pb-logging` — Logging strategy for incident investigation
+- `/pb-maintenance` — Systematic maintenance prevents incident categories (expired certs, full disks)
 
 ---
 

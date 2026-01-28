@@ -6,6 +6,8 @@ Generate a project-specific `.claude/CLAUDE.md` by analyzing the current project
 
 **Philosophy:** Project CLAUDE.md should capture what's unique about this project—tech stack, structure, commands, patterns—so Claude Code understands the project context across sessions.
 
+**Context efficiency:** This file is loaded every conversation turn. Keep it **under 2K tokens** (~150 lines). Move detailed documentation to `docs/` and reference it.
+
 ---
 
 ## When to Use
@@ -313,6 +315,47 @@ git status
 
 ---
 
+## Conciseness Guidelines
+
+**Target: Under 2K tokens (~150 lines)**
+
+Project CLAUDE.md is loaded every turn. Large files consume context that could be used for actual work.
+
+**Keep in CLAUDE.md:**
+- Tech stack table (essential)
+- Key commands (daily use)
+- Project structure (high-level only)
+- Current version and status
+- Critical patterns unique to this project
+
+**Move to docs/:**
+- Full API reference
+- Detailed architecture explanations
+- All environment variables (keep only critical ones)
+- Extended examples
+- Historical context
+
+**Trim aggressively:**
+- Remove sections that duplicate global CLAUDE.md
+- Collapse verbose explanations to one-liners
+- Use tables over prose
+- Reference playbooks instead of repeating their content
+
+**Example trimming:**
+```markdown
+# Before (verbose)
+## Environment Variables
+The following environment variables are required for the application to function...
+DATABASE_URL - The PostgreSQL connection string...
+[20 more lines]
+
+# After (concise)
+## Environment
+See `.env.example`. Critical: `DATABASE_URL`, `API_KEY`, `JWT_SECRET`
+```
+
+---
+
 ## Output Location
 
 Write to: `.claude/CLAUDE.md` in project root
@@ -334,12 +377,14 @@ cp .claude/CLAUDE.md .claude/CLAUDE.md.backup
 After generation, verify:
 
 - [ ] `.claude/CLAUDE.md` exists in project root
+- [ ] **File is under 150 lines / 2K tokens** (critical for context efficiency)
 - [ ] Tech stack is correctly identified
 - [ ] Key commands are accurate and work
-- [ ] Directory structure matches reality
+- [ ] Directory structure matches reality (high-level only)
 - [ ] Test commands run successfully
 - [ ] Relevant playbooks are appropriate for this stack
 - [ ] Working context (if exists) is current and referenced
+- [ ] Detailed docs moved to `docs/`, not duplicated in CLAUDE.md
 
 ---
 

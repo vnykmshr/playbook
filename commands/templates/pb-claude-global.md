@@ -176,6 +176,24 @@ For detailed guidance: `/pb-pr`
 
 ---
 
+## Context Management
+
+**Use subagents for exploration** — When searching across codebase or understanding how something works, prefer `Task` tool with `Explore` agent. Subagents have their own context window and don't consume main conversation context.
+
+**Commit frequently** — Each commit is a natural checkpoint. Consider new session after major milestones.
+
+**Plans stay in files** — Reference plan files by task ID, don't paste full plans into chat.
+
+**Surgical file reads** — When you know the area, specify line ranges. Full file reads consume context.
+
+**When context is exhausted mid-task:**
+1. Document current state in tracker (commit hash, exact next step)
+2. Start fresh session
+3. Load only what's needed: tracker + active file(s)
+4. Reference previous work by commit, not by re-reading everything
+
+---
+
 ## Quick Reference
 
 | Situation | Command |
@@ -228,7 +246,8 @@ After generation, verify:
 - [ ] Version and date are current
 - [ ] All sections are populated
 - [ ] Playbook references are correct
-- [ ] File is under 150 lines (concise)
+- [ ] **File is under 150 lines / 2K tokens** (context efficiency)
+- [ ] No duplication of content available in playbooks (reference instead)
 
 ---
 

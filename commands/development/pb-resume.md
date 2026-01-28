@@ -359,6 +359,18 @@ git add -A && git commit -m "wip: [state]" && git push
 4. **Run tests** - Confirm baseline is green
 5. **Post standup** - Write /pb-standup to align with team
 
+### Context Efficiency on Resume
+
+If previous session was long or context-heavy:
+
+1. **Start fresh** — Don't try to continue exhausted context
+2. **Load minimal context** — Tracker + active file only
+3. **Reference by commit** — Use git log, not re-reading entire files
+4. **Use subagents** — Exploration tasks in separate context
+
+See `/pb-cycle` Step 7 for context checkpoint guidance.
+See `/pb-claude-global` Context Management section for efficiency patterns.
+
 ---
 
 ## Integration with Playbook

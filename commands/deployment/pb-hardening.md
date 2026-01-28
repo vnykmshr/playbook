@@ -148,6 +148,13 @@ sudo systemctl start auditd
 
 # Log SSH config changes
 -w /etc/ssh/sshd_config -p wa -k sshd_config
+
+# Log Docker config changes
+-w /etc/docker/daemon.json -p wa -k docker_config
+
+# Log sudoers changes
+-w /etc/sudoers -p wa -k sudoers
+-w /etc/sudoers.d/ -p wa -k sudoers
 ```
 
 **Query audit logs:**
@@ -285,6 +292,67 @@ Or in Docker daemon config (`/etc/docker/daemon.json`):
   }
 }
 ```
+
+### SSL Certificate Access for Containers
+
+When containers need Let's Encrypt certs, use a dedicated group with fixed GID:
+
+```bash
+# Create group with fixed GID (matches docker-compose group_add)
+groupadd -g 1002 ssl-docker
+
+# Set group ownership on cert directories
+chgrp -R ssl-docker /etc/letsencrypt/live/example.com
+chgrp -R ssl-docker /etc/letsencrypt/archive/example.com
+chmod 750 /etc/letsencrypt/live/example.com
+chmod 750 /etc/letsencrypt/archive/example.com
+chmod 640 /etc/letsencrypt/archive/example.com/privkey*.pem
+```
+
+**In docker-compose.yml:**
+```yaml
+services:
+  frontend:
+    volumes:
+      - /etc/letsencrypt/live/example.com:/etc/letsencrypt/live/example.com:ro
+      - /etc/letsencrypt/archive/example.com:/etc/letsencrypt/archive/example.com:ro
+    group_add:
+      - "1002"  # Must match ssl-docker GID
+```
+
+**Note:** Use numeric GID to avoid name resolution issues in containers.
+
+### Certbot Renewal with Docker
+
+When using certbot standalone mode with Docker services on port 80, create pre/post hooks:
+
+```bash
+# Pre-hook: Stop service to free port 80
+cat > /etc/letsencrypt/renewal-hooks/pre/stop-frontend.sh << 'EOF'
+#!/bin/bash
+cd /opt/myapp && docker compose stop frontend
+EOF
+chmod +x /etc/letsencrypt/renewal-hooks/pre/stop-frontend.sh
+
+# Post-hook: Restart service after renewal
+cat > /etc/letsencrypt/renewal-hooks/post/start-frontend.sh << 'EOF'
+#!/bin/bash
+cd /opt/myapp && docker compose start frontend
+EOF
+chmod +x /etc/letsencrypt/renewal-hooks/post/start-frontend.sh
+```
+
+**Verify:** `certbot renew --dry-run`
+
+**Alternative:** Use webroot authentication with nginx serving `.well-known/acme-challenge/` to avoid service interruption.
+
+**Troubleshooting common issues:**
+
+| Issue | Cause | Fix |
+|-------|-------|-----|
+| "Could not bind to port 80" | Service still running | Verify pre-hook stopped service |
+| Permission denied on privkey | Wrong GID | Verify ssl-docker group exists with correct GID |
+| Renewal succeeds but service fails | Missing post-hook | Add post-hook to restart service |
 
 ### Complete Secure Container Example
 

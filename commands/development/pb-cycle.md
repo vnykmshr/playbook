@@ -194,6 +194,37 @@ ls todos/releases/*/
 
 ---
 
+## Step 7: Context Checkpoint
+
+After committing, assess context health:
+
+**Signs context is filling up:**
+- Session has been long (many file reads, edits, tool calls)
+- Multiple iterations completed
+- Large files were read in full
+- Compaction warning appeared
+- Responses becoming slower or less coherent
+
+**Concrete thresholds (approximate):**
+- 5+ full file reads in session → consider checkpoint
+- 3+ completed iterations → natural breakpoint
+- Working on 3rd distinct feature → definitely checkpoint
+
+**If context is heavy:**
+1. Update tracker with current status (commit hash, next task)
+2. Consider `/compact` or starting fresh session
+3. Next session: resume from tracker, not from memory
+
+**Why this matters:** Auto-compaction can lose nuance of recent discussion. Proactive checkpoints preserve intent.
+
+**Natural breakpoints:**
+- After shipping a phase
+- After deploy
+- After 3+ commits in a session
+- When switching focus areas
+
+---
+
 ## Quick Cycle Summary
 
 ```
@@ -204,7 +235,8 @@ ls todos/releases/*/
 5. Address any feedback
 6. Commit with clear message (specific files, not git add -A)
 7. Update tracker (mark done, note commit, identify next)
-8. Repeat for next unit of work
+8. Context checkpoint (assess if session should continue or refresh)
+9. Repeat for next unit of work
 ```
 
 ---
