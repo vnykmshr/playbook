@@ -198,6 +198,21 @@ EOF
 
 **Tip:** `/pb-resume` will look for this file — keep notes structured for easy scanning.
 
+### Context State Preservation
+
+Before pausing, assess context health:
+
+**If context is heavy (long session, many file reads):**
+- Update tracker with exact next step and commit hash
+- Note that next session should start fresh
+- Don't try to preserve conversation — preserve state in files
+
+**If context is light (short session, focused work):**
+- Standard pause notes sufficient
+- Can potentially continue same session later
+
+See `/pb-claude-global` Context Management section for efficiency patterns.
+
 ---
 
 ### Step 7: Clean Up (Optional)
