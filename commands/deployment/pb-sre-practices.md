@@ -530,7 +530,7 @@ UNION ALL SELECT 'cases', count(*) FROM cases;
 
 ### New Server Security Verification
 
-Before deploying services, verify hardening:
+Before deploying services, verify hardening (Linux servers):
 
 | Item | Command | Expected |
 |------|---------|----------|
@@ -541,6 +541,8 @@ Before deploying services, verify hardening:
 | Auditd running | `systemctl status auditd` | `active` |
 | Kernel hardened | `sysctl net.ipv4.tcp_syncookies` | `1` |
 | Secrets protected | `stat -c %a .env` | `600` |
+
+**Note:** `stat` syntax varies by platform. Use `-c %a` on Linux, `-f%Lp` on macOS.
 
 ---
 

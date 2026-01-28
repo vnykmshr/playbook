@@ -124,9 +124,11 @@ Backups are worthless until tested. Schedule periodic restore tests:
 ```bash
 # Pattern: verify backup is not empty/corrupted
 # Adapt to your backup format
-BACKUP_SIZE=$(stat -c%s "$BACKUP_FILE")
+# Note: stat flags differ by platform (-c%s on Linux, -f%z on macOS)
+BACKUP_SIZE=$(stat -c%s "$BACKUP_FILE" 2>/dev/null || stat -f%z "$BACKUP_FILE")
 if [[ "$BACKUP_SIZE" -lt 1000 ]]; then
-    alert "Backup suspiciously small"
+    echo "ALERT: Backup suspiciously small: $BACKUP_FILE ($BACKUP_SIZE bytes)"
+    # Send to your alerting system (Slack, PagerDuty, etc.)
 fi
 ```
 
@@ -269,14 +271,17 @@ set -e
 
 # Configuration
 APP_DIR="/opt/myapp"
+LOG_FILE="/var/log/maintenance.log"
 
 # Utility functions
-log() { echo "[$(date '+%Y-%m-%d %H:%M:%S')] $1"; }
-alert() { ... }
+log() { echo "[$(date '+%Y-%m-%d %H:%M:%S')] $1" | tee -a "$LOG_FILE"; }
+alert() { log "ALERT: $1"; curl -X POST "$WEBHOOK_URL" -d "text=$1" 2>/dev/null || true; }
 
 # Task functions (idempotent, can run multiple times safely)
-task_backup() { ... }
-task_health_check() { ... }
+task_backup() { log "Running backup"; pg_dump ... }
+task_health_check() { log "Health check"; curl -sf "$HEALTH_URL" || alert "Health check failed"; }
+task_vacuum() { log "Running vacuum"; psql -c "VACUUM ANALYZE;" ... }
+task_report() { log "Generating report"; ... }
 
 # Main dispatch
 case "${1:-daily}" in
