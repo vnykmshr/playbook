@@ -248,29 +248,6 @@ def charge_payment():
 call_with_retry(charge_payment)
 ```
 
-**TypeScript example:**
-```typescript
-async function callWithRetry<T>(
-  fn: () => Promise<T>,
-  maxRetries = 5
-): Promise<T> {
-  for (let attempt = 0; attempt < maxRetries; attempt++) {
-    try {
-      return await fn();
-    } catch (error) {
-      if (attempt === maxRetries - 1) throw error;
-
-      const waitTime = Math.pow(2, attempt) * 1000; // milliseconds
-      console.log(`Attempt ${attempt + 1} failed, retrying in ${waitTime}ms`);
-      await new Promise(resolve => setTimeout(resolve, waitTime));
-    }
-  }
-}
-
-// Usage
-await callWithRetry(() => paymentService.charge(99.99));
-```
-
 **When to use:**
 - Calling external APIs (network timeouts happen)
 - Database operations (short temporary outages)
@@ -475,58 +452,6 @@ if limiter.allow_request():
 else:
     print("Rate limit exceeded")
     # Return 429 Too Many Requests
-```
-
-**JavaScript example (per-client limit):**
-```javascript
-const requestCounts = new Map();
-
-function rateLimit(clientId, maxRequests = 100, windowSeconds = 60) {
-  const now = Date.now();
-  const windowStart = now - (windowSeconds * 1000);
-
-  if (!requestCounts.has(clientId)) {
-    requestCounts.set(clientId, []);
-  }
-
-  const requests = requestCounts.get(clientId);
-  const recentRequests = requests.filter(time => time > windowStart);
-
-  if (recentRequests.length >= maxRequests) {
-    return false;  // Rate limit exceeded
-  }
-
-  recentRequests.push(now);
-  requestCounts.set(clientId, recentRequests);
-  return true;  // Request allowed
-}
-
-// Cleanup old entries
-setInterval(() => {
-  const now = Date.now();
-  for (const [clientId, requests] of requestCounts.entries()) {
-    const recent = requests.filter(time => time > now - 600000);  // 10 minutes
-    if (recent.length === 0) {
-      requestCounts.delete(clientId);
-    } else {
-      requestCounts.set(clientId, recent);
-    }
-  }
-}, 60000);  // Cleanup every minute
-
-// API endpoint
-app.get('/api/data', (req, res) => {
-  const clientId = req.ip;
-  if (!rateLimit(clientId)) {
-    return res.status(429).json({
-      error: 'Too many requests',
-      retryAfter: 60
-    });
-  }
-
-  // Process request
-  res.json({data: 'success'});
-});
 ```
 
 **Where to implement:**

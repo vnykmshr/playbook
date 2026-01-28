@@ -87,43 +87,7 @@ def get_user(user_id):
         connection_pool.putconn(conn)
 ```
 
-**JavaScript Example (using node-postgres):**
-```javascript
-const { Pool } = require('pg');
-
-const pool = new Pool({
-  user: process.env.DB_USER || 'postgres',
-  password: process.env.DB_PASSWORD,
-  host: process.env.DB_HOST || 'localhost',
-  port: process.env.DB_PORT || 5432,
-  database: process.env.DB_NAME || 'myapp',
-  max: 20,           // Maximum connections
-  idleTimeoutMillis: 30000,
-  connectionTimeoutMillis: 2000,
-});
-
-async function getUser(userId) {
-  const client = await pool.connect();
-  try {
-    const result = await client.query(
-      'SELECT * FROM users WHERE id = $1',
-      [userId]
-    );
-    return result.rows[0];
-  } finally {
-    client.release();
-  }
-}
-
-// Or use pool.query directly (simpler, handles pooling automatically)
-async function getUser(userId) {
-  const result = await pool.query(
-    'SELECT * FROM users WHERE id = $1',
-    [userId]
-  );
-  return result.rows[0];
-}
-```
+**JavaScript:** Use `pg.Pool` with `max`, `idleTimeoutMillis` configuration. Always `client.release()` in finally block.
 
 **Gotchas:**
 ```
@@ -895,61 +859,6 @@ def create_order(user_id, items):
         db.execute("REFRESH MATERIALIZED VIEW user_orders_mv")
 
     return order
-```
-
-**JavaScript Example:**
-```javascript
-// Application-managed denormalization
-class OrderService {
-  async createOrder(userId, items) {
-    const client = await db.connect();
-
-    try {
-      await client.query('BEGIN');
-
-      // Insert into normalized tables
-      const orderResult = await client.query(
-        'INSERT INTO orders (user_id, total) VALUES ($1, $2) RETURNING id',
-        [userId, items.reduce((sum, i) => sum + i.price * i.qty, 0)]
-      );
-      const orderId = orderResult.rows[0].id;
-
-      // Insert order items
-      for (const item of items) {
-        await client.query(
-          'INSERT INTO order_items (order_id, product_id, quantity, price) VALUES ($1, $2, $3, $4)',
-          [orderId, item.productId, item.qty, item.price]
-        );
-      }
-
-      // Denormalize for fast reads
-      const user = await client.query('SELECT name FROM users WHERE id = $1', [userId]);
-      for (const item of items) {
-        const product = await client.query(
-          'SELECT name, category FROM products WHERE id = $1',
-          [item.productId]
-        );
-
-        await client.query(
-          `INSERT INTO user_orders_denormalized
-           (user_id, user_name, order_id, item_name, item_qty, category)
-           VALUES ($1, $2, $3, $4, $5, $6)`,
-          [userId, user.rows[0].name, orderId, product.rows[0].name, item.qty, product.rows[0].category]
-        );
-      }
-
-      await client.query('COMMIT');
-      return { orderId };
-
-    } catch (error) {
-      await client.query('ROLLBACK');
-      throw error;
-
-    } finally {
-      client.release();
-    }
-  }
-}
 ```
 
 **When to use:**
