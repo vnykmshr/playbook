@@ -64,6 +64,7 @@ Quick reference for all playbook commands.
 | `/pb-release` | Release orchestrator: readiness gate, version/tag, trigger deployment |
 | `/pb-deployment` | Execute deployment: discovery, pre-flight, execute, verify, rollback |
 | `/pb-incident` | P0/P1 production incidents |
+| `/pb-maintenance` | Production maintenance patterns — database, backups, health monitoring |
 | `/pb-sre-practices` | Toil reduction, error budgets, on-call health, blameless culture |
 | `/pb-dr` | Disaster recovery planning, RTO/RPO, backup strategies, game days |
 | `/pb-database-ops` | Database migrations, backups, performance, connection pooling |

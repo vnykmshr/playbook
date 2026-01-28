@@ -5,6 +5,66 @@ All notable changes to this project are documented here.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v2.4.0] - 2026-01-29
+
+### Added
+
+- **pb-maintenance** — New command for production maintenance patterns
+  - Question-driven maintenance philosophy
+  - Tier-based scheduling (daily/weekly/monthly)
+  - Database maintenance patterns (PostgreSQL focus)
+  - Backup verification strategy (3-2-1 principle)
+  - Health monitoring dimensions
+  - Alerting quality checklist
+
+- **pb-hardening** — SSL certificate and certbot patterns for Docker
+  - SSL certificate access for containers with fixed GID
+  - Certbot renewal hooks for Docker service coordination
+  - Additional auditd rules (Docker config, sudoers)
+  - Troubleshooting table for common issues
+
+- **pb-sre-practices** — Server migration checklist
+  - Full database dump/restore patterns
+  - Post-migration verification queries
+  - New server security verification table
+  - Rollback plan guidance
+
+- **pb-cycle** — Context checkpoint step (Step 7)
+  - Signs of context filling up with concrete thresholds
+  - Natural breakpoints guidance
+  - Updated Quick Cycle Summary
+
+- **pb-plan** — Context-efficient plan structure
+  - Principles for resumability without full reload
+  - Directory structure with done/ folder for archives
+  - Updated master tracker template with Current Status section
+
+- **pb-claude-global** — Context management section
+  - Subagent usage for exploration
+  - Context exhaustion recovery patterns
+  - Updated output checklist with 2K token target
+
+- **pb-claude-project** — Conciseness guidelines
+  - 2K token / 150 line target
+  - Keep vs move to docs/ guidance
+  - Aggressive trimming examples
+
+### Changed
+
+- **pb-observability** — Added cross-reference to pb-maintenance
+- **pb-dr** — Added cross-reference to pb-maintenance
+- **pb-incident** — Added cross-reference to pb-maintenance (prevention)
+- **pb-resume** — Added context efficiency guidance
+- **pb-pause** — Added context state preservation guidance
+
+### Stats
+
+- Total commands: 81 (was 80)
+- Files modified: 12
+- Themes: Operations lifecycle, Context efficiency
+
+---
+
 ## [v2.3.0] - 2026-01-24
 
 ### Changed
