@@ -503,8 +503,6 @@ Requirements:
 - `/pb-repo-readme` — README enhancement (complementary)
 - `/pb-documentation` — Writing standards for documentation content
 - `/pb-review-docs` — Review documentation quality
-- `/pb-deployment` — General deployment patterns
-- `/pb-plan` — Plan the documentation transformation
 - `/pb-ship` — Ship the documentation release
 
 ---

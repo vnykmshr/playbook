@@ -314,16 +314,11 @@ After committing, assess context health:
 
 ## Related Commands
 
-- `/pb-review-code` — Code review checklist for peer reviewers
 - `/pb-start` — Begin new development work
-- `/pb-commit` — Create atomic commits
-- `/pb-pr` — Create pull request
+- `/pb-commit` — Create atomic commits after cycle
+- `/pb-pr` — Create pull request when ready
+- `/pb-review-code` — Code review checklist for peer reviewers
 - `/pb-testing` — Test patterns and strategies
-- `/pb-security` — Security review checklist
-- `/pb-standards` — Working principles reference
-- `/pb-logging` — Logging standards validation
-- `/pb-documentation` — Documentation alongside code
-- `/pb-learn` — Capture patterns discovered during iteration
 
 ---
 

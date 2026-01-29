@@ -5,6 +5,66 @@ All notable changes to this project are documented here.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v2.5.0] - 2026-01-29
+
+### Changed
+
+- **pb-guide** — Removed 847 lines of duplicate async/distributed pattern examples
+  - Content now cross-references `/pb-patterns-async` and `/pb-patterns-distributed`
+  - Removed Appendix B (redundant with Quick Reference)
+  - 1475 → 628 lines (-57%)
+
+- **pb-incident** — Moved on-call scheduling content to pb-sre-practices
+  - Now focuses purely on incident response
+  - Cross-references `/pb-sre-practices` for on-call setup
+  - 893 → 681 lines (-24%)
+
+- **pb-sre-practices** — Received on-call scheduling and setup content
+  - On-call rotation structure, tools, expectations
+  - Mock incident training guidance
+  - 593 → 646 lines (+9%)
+
+- **pb-patterns-core** — Removed duplicate TypeScript/JavaScript examples
+  - Kept Python as canonical language per pattern
+  - 1306 → 1231 lines (-6%)
+
+- **pb-patterns-distributed** — Condensed duplicate language examples
+  - Removed Python Saga Idempotency (kept JS)
+  - Condensed JS Outbox to outline (kept Python)
+  - 1266 → 1124 lines (-11%)
+
+- **pb-patterns-db** — Removed duplicate JavaScript examples
+  - Kept Python connection pooling and denormalization
+  - 1113 → 1022 lines (-8%)
+
+- **pb-patterns-security** — Condensed Go OAuth/JWT examples to outlines
+  - Kept Python as full examples
+  - 929 → 769 lines (-17%)
+
+- **pb-patterns-async** — Condensed Python examples to brief outlines
+  - JavaScript is canonical for async patterns
+  - Kept unique Python patterns (multiprocessing, Celery)
+  - 802 → 705 lines (-12%)
+
+- **Related Commands standardized** — Trimmed to ≤5 items across all commands
+  - pb-cycle: 10 → 5
+  - pb-what-next: 11 → 5
+  - pb-review: 11 → 5
+  - pb-review-microservice: 6 → 5
+  - pb-repo-docsite: 7 → 5
+
+- **Integration sections trimmed** — Removed verbose workflow diagrams
+  - pb-resume: Removed redundant workflow diagram
+  - pb-standup: Removed verbose command list
+
+### Stats
+
+- **Total lines**: 44,251 → 42,605 (-1,646 lines, -3.7%)
+- **Files modified**: 15
+- **Commits**: 8
+
+---
+
 ## [v2.4.0] - 2026-01-29
 
 ### Added
@@ -757,6 +817,7 @@ When releasing a new version:
 
 ---
 
+[v2.5.0]: https://github.com/vnykmshr/playbook/releases/tag/v2.5.0
 [v2.4.0]: https://github.com/vnykmshr/playbook/releases/tag/v2.4.0
 [v2.3.0]: https://github.com/vnykmshr/playbook/releases/tag/v2.3.0
 [v2.2.0]: https://github.com/vnykmshr/playbook/releases/tag/v2.2.0

@@ -806,7 +806,6 @@ Status: APPROVED / APPROVED WITH CONDITIONS / REJECTED
 
 - `/pb-patterns-core` — SOA and Event-Driven architecture
 - `/pb-patterns-distributed` — Saga, CQRS patterns
-- `/pb-deployment` — Deployment strategies
 - `/pb-observability` — Health checks, monitoring
 - `/pb-testing` — Integration and contract testing
 - `/pb-incident` — Handling microservice failures

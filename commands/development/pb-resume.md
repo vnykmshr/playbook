@@ -373,44 +373,11 @@ See `/pb-claude-global` Context Management section for efficiency patterns.
 
 ---
 
-## Integration with Playbook
-
-**Part of development workflow:**
-```
-/pb-start → /pb-cycle → /pb-commit → /pb-ship
-     ↑                                   │
-     │         ┌─────────────┐           │
-     │         │   SESSION   │           ↓
-     └─────────│   BOUNDARY  │       Reviews →
-               └─────────────┘       PR → Merge →
-                     ↑               Release
-                     ↓
-              /pb-resume ←──────── /pb-pause
-              (recover)            (preserve)
-```
-
-**Commands:**
-- `/pb-start` → Create branch, set iteration rhythm
-- **`/pb-resume`** → Get back in context after break (YOU ARE HERE)
-- `/pb-cycle` → Iterate with reviews
-- `/pb-pause` → Gracefully pause, preserve context
-- `/pb-commit` → Atomic commits
-- `/pb-ship` → Full review → PR → release workflow
-
-**When to use `/pb-resume`:**
-- After a context switch (lunch break, context switching)
-- After a day off or weekend
-- After a long meeting
-- When resuming work from a different branch
-- When you've been on a different task for hours
-
 ## Related Commands
 
 - `/pb-start` — Begin work on a new feature or fix
 - `/pb-pause` — Gracefully pause work and preserve context
 - `/pb-cycle` — Self-review and peer review during development
-
-**See also:** `/docs/integration-guide.md` for how all commands work together
 
 ---
 

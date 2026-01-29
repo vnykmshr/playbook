@@ -377,6 +377,59 @@ Notice: No individual blamed. Focus on system improvement.
 
 ---
 
+## On-Call Scheduling & Setup
+
+Before incidents happen, establish clear on-call coverage. This section covers setup; see "On-Call Health" below for sustainability.
+
+### Rotation Structure
+
+```
+Primary On-Call: Responds immediately (paged on SEV-1/2)
+  - Expected to join call within 5 minutes
+  - Use 1 week rotations (high interrupt cost)
+
+Secondary On-Call: Backup if primary unavailable
+  - Called if primary doesn't respond in 5 minutes
+
+Weekly Rotation:
+  - Handoff: Friday 5pm (or end of week)
+  - Ramp-up: New person shadows for 1 week first
+```
+
+### On-Call Tools
+
+**PagerDuty / Opsgenie (Recommended):**
+- Escalation policy: Primary → Secondary (5 min) → Manager (5 min)
+- Alert routing: SEV-1/2 page immediately, SEV-3 creates ticket
+- Calendar integration for swaps and visibility
+
+**Simple Alternative:** Google Calendar + Slack bot (`/whois-oncall`)
+
+### On-Call Expectations
+
+**During on-call week:**
+- Respond to SEV-1/2 pages within 5 minutes
+- Work from location where you can join calls
+- Avoid travel to areas without cell service
+
+**Company should:**
+- Pay on-call stipend
+- Limit to 1 week per month if possible
+- Provide recovery time after heavy rotations
+- Never force on-call against will
+
+### Mock Incident Training
+
+**Required before first live on-call (30-45 min):**
+
+1. **Scenario:** Simulate realistic incident (e.g., API down after deployment)
+2. **Practice:** New person declares incident, checks dashboards, identifies root cause
+3. **Debrief:** Review decision speed, communication frequency, escalation awareness
+
+**This prevents:** Chaotic first incidents, decision paralysis under pressure
+
+---
+
 ## On-Call Health
 
 Sustainable on-call prevents burnout and maintains quality.

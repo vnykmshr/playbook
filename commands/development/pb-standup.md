@@ -263,31 +263,11 @@ Standups create a paper trail of:
 
 ---
 
-## Integration with Playbook
-
-**Part of development workflow:**
-- `/pb-start` → Create branch, set iteration rhythm
-- `/pb-resume` → Get back in context after break (write standup after this)
-- **`/pb-standup`** → Daily async visibility (YOU ARE HERE)
-- `/pb-cycle` → Iterate with reviews
-- `/pb-commit` → Atomic commits
-- `/pb-pr` → Pull request
-- `/pb-release` → Deploy
-
-**When to write standups:**
-- **Daily**: Post standup at start of work day (or end of previous day)
-- **Context switching**: Write standup when resuming different task
-- **After `/pb-resume`**: Write standup after context recovery from break
-- **Blockers**: Write immediately when blocked (don't wait for next day)
-- **Weekly**: Summarize week on Friday for distributed teams
-
 ## Related Commands
 
 - `/pb-start` — Begin work on a new feature or fix
 - `/pb-resume` — Get back into context after a break
 - `/pb-cycle` — Self-review and peer review during development
-
-**See also:** `/docs/integration-guide.md` for how all commands work together
 
 ---
 
