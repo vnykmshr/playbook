@@ -60,34 +60,7 @@ fetchUser(123, (error, user) => {
 });
 ```
 
-**Python Example (using callbacks):**
-```python
-def fetch_user(user_id, callback):
-    """Simulate async operation with callback."""
-    def worker():
-        try:
-            # Simulate network delay
-            import time
-            time.sleep(1)
-            user = {"id": user_id, "name": "John"}
-            callback(None, user)
-        except Exception as e:
-            callback(e, None)
-
-    # Execute in background
-    import threading
-    thread = threading.Thread(target=worker)
-    thread.start()
-
-# Usage
-def handle_result(error, user):
-    if error:
-        print(f'Failed: {error}')
-    else:
-        print(f'User: {user}')
-
-fetch_user(123, handle_result)
-```
+**Python:** Use `threading.Thread` with callback function, or prefer `asyncio` for modern async.
 
 **Callback Hell (Anti-pattern):**
 ```javascript
@@ -256,38 +229,7 @@ processOrder(123).then(result => {
 });
 ```
 
-**Python Example (using asyncio):**
-```python
-import asyncio
-
-async def fetch_user(user_id):
-    """Simulate async operation."""
-    await asyncio.sleep(1)  # Simulate network delay
-    return {"id": user_id, "name": "John"}
-
-async def fetch_orders(user_id):
-    """Simulate async operation."""
-    await asyncio.sleep(0.5)
-    return [{"id": 1, "total": 99.99}]
-
-async def process_user(user_id):
-    """Process user data asynchronously."""
-    try:
-        # Execute sequentially
-        user = await fetch_user(user_id)
-        orders = await fetch_orders(user_id)
-
-        print(f"User: {user}")
-        print(f"Orders: {orders}")
-
-        return {"user": user, "orders": orders}
-    except Exception as e:
-        print(f"Failed: {e}")
-        raise
-
-# Run
-result = asyncio.run(process_user(123))
-```
+**Python:** Use `asyncio` with `async def` / `await` syntax. Run with `asyncio.run(coro())`.
 
 **Parallel Operations with async/await:**
 ```javascript
@@ -309,25 +251,7 @@ async function processOrder(orderId) {
 }
 ```
 
-**Python Parallel Example:**
-```python
-async def process_user(user_id):
-    """Process user data asynchronously in parallel."""
-    try:
-        # Fetch user first
-        user = await fetch_user(user_id)
-
-        # Then fetch orders and payments in parallel
-        orders, payments = await asyncio.gather(
-            fetch_orders(user_id),
-            fetch_payments(user_id)
-        )
-
-        return {"user": user, "orders": orders, "payments": payments}
-    except Exception as e:
-        print(f"Failed: {e}")
-        raise
-```
+**Python Parallel:** Use `asyncio.gather(coro1(), coro2())` for concurrent execution.
 
 **Gotchas:**
 ```
@@ -417,28 +341,7 @@ searchStream
   );
 ```
 
-**Python Example (using asyncio and aiostream):**
-```python
-import asyncio
-from aiostream import stream
-
-async def fetch_events():
-    """Simulate event stream."""
-    for i in range(10):
-        await asyncio.sleep(0.5)
-        yield i
-
-async def process_events():
-    """Process event stream with transformations."""
-    async with stream.streamcontext(fetch_events()) as streamer:
-        async for value in streamer:
-            if value % 2 == 0:  # Filter even
-                result = value * 2  # Transform
-                print(f"Result: {result}")
-
-# Run
-asyncio.run(process_events())
-```
+**Python:** Use `aiostream` library for reactive streams, or `async for` with async generators.
 
 **Pros:**
 - Powerful for complex event flows
