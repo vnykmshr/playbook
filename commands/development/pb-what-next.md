@@ -327,17 +327,9 @@ Status:    Mid-feature, tests need updating
 
 - `/pb-start` — Begin feature work (creates branch)
 - `/pb-cycle` — Self-review + peer review loop
-- `/pb-testing` — Verify test coverage
 - `/pb-commit` — Craft atomic commits
 - `/pb-pr` — Create pull request
-- `/pb-review-hygiene` — Code review
-- `/pb-security` — Security review
 - `/pb-release` — Release preparation
-
-**Frontend Development:**
-- `/pb-design-language` → `/pb-patterns-frontend` — Starting frontend work
-- `/pb-a11y` — Check accessibility during development
-- See `/docs/frontend-workflow.md` for complete frontend guide
 
 ---
 
