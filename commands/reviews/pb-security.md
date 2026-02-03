@@ -124,6 +124,8 @@ Use for feature development, API changes, multi-file changes.
 - [ ] Cross-tenant data isolation (if multi-tenant)
 - [ ] Admin functions only accessible to admins
 - [ ] API endpoints check user ownership before returning data
+- [ ] API responses don't expose internal model attributes (workflow states, processing flags, internal scores, admin metadata)
+- [ ] Data layer models not serialized directly to API responses (use explicit response shapes)
 
 ### Secrets Management
 - [ ] No hardcoded secrets (API keys, tokens, passwords)

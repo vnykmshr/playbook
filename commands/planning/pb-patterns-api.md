@@ -162,6 +162,111 @@ POST /users { "name": "Alice" }  # Creates new user each time
 
 Pick one style and be consistent.
 
+### Response Design
+
+API responses are contracts. What you return defines what consumers depend on. Returning your internal model directly is the "SELECT *" of API design — easy now, costly forever.
+
+**The core discipline:** Separate your data layer from your API contract. Return what consumers need, not what the database has.
+
+**Why this matters:**
+
+| Concern | Risk of Returning Everything |
+|---------|------------------------------|
+| **Performance** | Large text fields, blobs, nested objects add latency and bandwidth cost — multiplied by every request, every user |
+| **Security** | Internal attributes leak implementation details: workflow states, generation prompts, internal IDs, admin flags |
+| **Coupling** | Consumers depend on your database schema shape; renaming a column breaks the API |
+| **Clarity** | Consumer can't tell which fields are for them vs. internal bookkeeping |
+
+#### Pattern: Response DTOs
+
+Never serialize your data model directly. Define explicit response shapes per consumer need.
+
+```python
+# [NO] Data layer leaking through API
+@app.get("/api/tracks/{id}")
+def get_track(id):
+    track = db.query(Track).get(id)
+    return jsonify(track.to_dict())  # Everything: embeddings, prompts, workflow_state
+
+# [YES] Explicit response shape
+@app.get("/api/tracks/{id}")
+def get_track(id):
+    track = db.query(Track).get(id)
+    return jsonify({
+        "id": track.id,
+        "title": track.title,
+        "artist": track.artist,
+        "duration": track.duration,
+        "coverUrl": track.cover_url,
+    })
+```
+
+```go
+// [NO] Struct tags expose everything
+type Track struct {
+    ID                 string `json:"id"`
+    Title              string `json:"title"`
+    EmbeddingVector    []float64 `json:"embedding_vector"`    // Internal
+    GenerationPrompt   string    `json:"generation_prompt"`   // Internal
+    WorkflowState      string    `json:"workflow_state"`      // Internal
+}
+
+// [YES] Separate response type
+type TrackResponse struct {
+    ID       string `json:"id"`
+    Title    string `json:"title"`
+    Artist   string `json:"artist"`
+    Duration int    `json:"duration"`
+    CoverURL string `json:"coverUrl"`
+}
+```
+
+#### Field Selection Guidance
+
+Ask these questions for every field in a response:
+
+1. **Does the consumer need this?** If no, don't return it.
+2. **Is this an internal implementation detail?** Workflow states, processing flags, internal IDs, embeddings — keep these server-side.
+3. **Is this large?** Text blobs, HTML content, base64 data — return only in detail endpoints, not in list endpoints.
+4. **Is this sensitive?** Even non-secret data can be sensitive in aggregate (usage patterns, internal scores, admin metadata).
+
+#### List vs. Detail Responses
+
+A common and effective pattern: return lean summaries in lists, full detail on individual fetch.
+
+```
+GET /api/tracks          → id, title, artist, duration, coverUrl
+GET /api/tracks/{id}     → id, title, artist, duration, coverUrl, description, lyrics
+```
+
+Don't return `description` and `lyrics` for 50 tracks in a list response when the UI shows titles and cover art.
+
+#### Large Fields
+
+For fields that are legitimately large (content bodies, transcripts, generated text):
+
+- **Exclude from list endpoints** — Always
+- **Consider lazy loading** — Separate endpoint or query parameter (`?fields=lyrics`)
+- **Set size expectations** — Document max sizes in API docs
+- **Compress** — Use gzip/brotli for text-heavy responses
+
+#### When NOT to Optimize
+
+This is not about premature optimization. It's about informed decisions:
+
+- **Internal tools with 3 users** — Returning the full model is fine; don't build DTO layers for admin dashboards
+- **Prototyping** — Ship fast, shape later. But track the debt.
+- **Single consumer, small payloads** — If the response is 200 bytes, field selection adds complexity without benefit
+
+The question isn't "always optimize" — it's "know what you're sending and why."
+
+#### Design Rules Applied
+
+- **Rule of Separation** — API contract is separate from data model
+- **Rule of Clarity** — Response shape communicates what consumers should use
+- **Rule of Repair** — Large unintended payloads should be noticed, not silently tolerated
+- **Rule of Simplicity** — Don't build DTO layers where they aren't needed, but don't skip them where they are
+
 ---
 
 ## Error Handling
@@ -638,6 +743,10 @@ components:
 - [ ] Error format is consistent
 - [ ] Pagination strategy chosen
 - [ ] Fields are named consistently (camelCase or snake_case, pick one)
+- [ ] Response shapes are explicit (not serialized data models)
+- [ ] No internal/backend-only attributes in responses (workflow states, embeddings, processing flags)
+- [ ] List endpoints return lean summaries; detail endpoints return full data
+- [ ] Large text fields excluded from collection responses
 
 ### Before Release
 
@@ -664,13 +773,14 @@ components:
 
 | Rule | Application |
 |------|-------------|
-| **Clarity** | Consistent naming, predictable behavior |
+| **Clarity** | Consistent naming, predictable behavior, response shapes communicate intent |
 | **Least Surprise** | Standard HTTP methods and status codes |
 | **Simplicity** | REST for simple needs, complexity only when justified |
+| **Separation** | API contract decoupled from data layer; explicit DTOs over model serialization |
 | **Extensibility** | Add fields without breaking, versioning strategy |
 | **Robustness** | Clear error handling, rate limiting |
 
 ---
 
-**Last Updated:** 2026-01-19
-**Version:** 1.0
+**Last Updated:** 2026-02-03
+**Version:** 1.1

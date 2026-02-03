@@ -43,6 +43,7 @@
 - [ ] Dependencies appropriate (not pulling in large libs for small tasks)
 - [ ] Changes don't break existing interfaces without good reason
 - [ ] Error boundaries and recovery points are well-placed
+- [ ] API responses use explicit shapes, not serialized data models (see `/pb-patterns-api` Response Design)
 
 ### Correctness Review
 
@@ -68,6 +69,7 @@
 - [ ] Authorization properly enforced
 - [ ] Sensitive operations properly audited/logged
 - [ ] No information leakage in error responses
+- [ ] No internal attributes in API responses (workflow states, processing flags, embeddings, admin metadata)
 - [ ] No hardcoded secrets or credentials
 - [ ] Input validation at trust boundaries
 
@@ -219,7 +221,7 @@ Stop and discuss if you see:
 - **Breaking changes** without migration path
 - **Security vulnerabilities** (injection, auth bypass, data exposure)
 - **Data loss potential** (destructive operations without backup/undo)
-- **Performance regression** (N+1 queries, unbounded loops, missing pagination)
+- **Performance regression** (N+1 queries, unbounded loops, missing pagination, oversized API payloads)
 - **Scope creep** — Changes unrelated to stated purpose
 - **Missing tests** for critical paths
 - **Hardcoded secrets** or credentials
