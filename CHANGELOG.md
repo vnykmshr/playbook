@@ -5,6 +5,66 @@ All notable changes to this project are documented here.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v2.6.0] - 2026-02-03
+
+### Added
+
+- **pb-patterns-api** — Response Design section
+  - DTO discipline: separate data layer from API contracts
+  - Field selection guidance (4 questions per field)
+  - List vs. detail response patterns
+  - Large field handling (exclude from lists, lazy load, compress)
+  - "When NOT to optimize" guardrails
+  - TypeScript, Python, Go examples
+  - 676 → 845 lines (+25%)
+
+- **pb-patterns-api** — Input Binding Discipline section
+  - Mass assignment prevention patterns
+  - Allowlisted writable fields per operation
+  - Mirror of Response Design: explicit about what goes in, not just out
+
+- **pb-patterns-api** — GraphQL Security section
+  - Query depth and complexity limiting
+  - Introspection disabled in production
+  - Batching attack prevention
+  - Field-level authorization
+
+- **pb-security** — Web application vulnerability depth
+  - CSRF prevention checklist (7 items + SPA bearer-token note)
+  - Open redirect prevention with bypass catalog
+  - XXE prevention by language (Python, Node.js, Go)
+  - File upload attack catalog (double extensions, polyglot, SVG XSS, ZIP slip)
+  - SSRF bypass techniques table with DNS resolution pattern
+  - Security headers reference with exact values
+  - IDOR, mass assignment, JWT-specific attacks, race conditions (TOCTOU)
+  - XSS indirect input sources (WebSocket, postMessage, localStorage)
+  - 540 → 660 lines (+22%)
+
+### Changed
+
+- **pb-security** — Deep Dive consolidation
+  - Security headers deduplicated (Advanced API Security now cross-references)
+  - CSRF contradiction between tiers resolved
+  - Go: replaced archived `gorilla/mux` with `net/http` and `go-chi/chi`
+  - Added `defusedxml` to Python recommended packages
+
+- **pb-review-code** — API payload awareness
+  - Architecture Review: explicit response shapes check
+  - Security Review: consolidated API exposure items to cross-reference `/pb-security`
+  - Red Flags: oversized API payloads added
+
+- **pb-patterns-api** — Design Rules Applied table
+  - Added Separation rule (API contract decoupled from data layer)
+  - Updated Clarity rule (response shapes communicate intent)
+
+### Stats
+
+- **Files modified**: 3
+- **Net change**: +327 lines across security and API design coverage
+- **Commits**: 3
+
+---
+
 ## [v2.5.0] - 2026-01-29
 
 ### Changed
