@@ -69,14 +69,18 @@ Use for feature development, API changes, multi-file changes.
 ### Input Validation & Data Processing
 - [ ] All user inputs validated and sanitized
 - [ ] Input size limits enforced (prevent buffer overflow, DoS)
-- [ ] File uploads restricted (type, size, content scanning)
+- [ ] File uploads restricted: extension allowlist, magic byte verification, content validation, size limits per type
+- [ ] File upload bypasses considered: double extensions (`shell.jpg.php`), null bytes, MIME spoofing, polyglot files, SVG with JS, XXE via DOCX/XLSX, ZIP slip (`../` in archive paths)
+- [ ] Uploaded files renamed (UUID), stored outside webroot, served with `Content-Disposition: attachment` and `X-Content-Type-Options: nosniff`
 - [ ] Data type validation (not just format, but values)
 - [ ] Null/empty input handling
 - [ ] SQL injection prevention (parameterized queries, ORMs)
+- [ ] SQL edge cases: ORDER BY and table/column names cannot be parameterized — use allowlist
 - [ ] NoSQL injection prevention (use proper query builders)
 - [ ] Command injection prevention (no shell execution)
-- [ ] Path traversal prevention (validate file paths)
+- [ ] Path traversal prevention (canonicalize path, validate against base directory, reject `..` and absolute paths)
 - [ ] Deserialization safety (validate JSON/XML structure)
+- [ ] XXE prevention: disable DTD processing, external entity resolution, and XInclude in all XML parsers
 
 ### Output Encoding & XSS Prevention
 - [ ] HTML output properly encoded
@@ -85,6 +89,23 @@ Use for feature development, API changes, multi-file changes.
 - [ ] CSS escaping where needed
 - [ ] Content-Security-Policy headers configured
 - [ ] No `innerHTML` with user input (use `textContent` or sanitize)
+- [ ] Indirect input sources sanitized (URL fragments, WebSocket messages, postMessage, localStorage/sessionStorage values rendered in DOM)
+- [ ] Often-overlooked vectors checked (error messages reflecting input, PDF/email generators with user data, SVG uploads, markdown rendering allowing HTML, admin log viewers)
+
+### CSRF Prevention
+- [ ] All state-changing endpoints protected (POST, PUT, PATCH, DELETE)
+- [ ] CSRF tokens cryptographically random and tied to user session
+- [ ] Missing token = rejected request (never skip validation when token is absent)
+- [ ] SameSite cookie attribute set (`Strict` or `Lax`)
+- [ ] Session cookies use `Secure` and `HttpOnly` flags
+- [ ] JSON APIs also protected (Content-Type header alone does not prevent CSRF; validate Origin/Referer AND use tokens)
+- [ ] Pre-auth endpoints covered (login, signup, password reset)
+
+### Open Redirect Prevention
+- [ ] Redirect URLs validated against allowlist of trusted domains
+- [ ] Or: only relative paths accepted (starts with `/`, no `//`)
+- [ ] Common bypasses blocked: `@` symbol (`https://legit.com@evil.com`), protocol-relative (`//evil.com`), `javascript:` protocol, double URL encoding, backslash normalization
+- [ ] For sensitive redirects: consider blocking non-ASCII domains (IDN homograph attacks)
 
 ### Authentication
 - [ ] Authentication mechanism appropriate (basic auth not over HTTP, etc.)
@@ -222,6 +243,14 @@ Use for security-critical features, payment processing, authentication systems, 
 - [ ] API rate limiting per user and IP
 - [ ] API request timeout configured
 
+### Security Headers
+- [ ] `Strict-Transport-Security: max-age=31536000; includeSubDomains; preload`
+- [ ] `Content-Security-Policy` configured (avoid `unsafe-inline` and `unsafe-eval` for scripts)
+- [ ] `X-Content-Type-Options: nosniff`
+- [ ] `X-Frame-Options: DENY` (or CSP `frame-ancestors 'none'`)
+- [ ] `Referrer-Policy: strict-origin-when-cross-origin`
+- [ ] `Cache-Control: no-store` on sensitive pages
+
 ### Infrastructure Security
 - [ ] Network isolation (not all services accessible from everywhere)
 - [ ] Firewall rules minimal (default deny)
@@ -279,6 +308,8 @@ const obj = JSON.parse(userInput); // Safe to parse
 if (!allowedKeys.includes(key)) throw new Error('Invalid key');
 ```
 
+**XXE**: If parsing XML, use libraries that disable DTD by default. With `libxmljs`: `{ noent: false, dtdload: false }`.
+
 **Recommended packages:**
 - `helmet` — Security headers middleware
 - `express-rate-limit` — Rate limiting
@@ -307,12 +338,15 @@ query = db.session.query(User).filter_by(id=user_id)  # SQLAlchemy ORM
 # Execute only trusted code, not user input
 ```
 
+**XXE**: Use `defusedxml` instead of stdlib `xml.etree`. With `lxml`: `etree.XMLParser(resolve_entities=False, no_network=True)`.
+
 **Recommended packages:**
 - `flask` — Web framework with security features
 - `sqlalchemy` — ORM with parameterized queries
 - `cryptography` — Encryption library
 - `bcrypt` — Password hashing
 - `pydantic` — Input validation and serialization
+- `defusedxml` — Safe XML parsing
 
 ### Go
 
@@ -336,12 +370,14 @@ json.Unmarshal(data, &obj)
 validator.Validate(obj)
 ```
 
+**XXE**: Go's `encoding/xml` is safe by default (no external entity resolution). Verify third-party XML parsers disable DTD processing.
+
 **Recommended packages:**
 - `database/sql` — Parameterized queries
 - `gorilla/mux` — Secure routing
 - `golang-jwt/jwt` — JWT handling
 - `golang.org/x/crypto` — Cryptography
-- `https://github.com/asaskevich/govalidator` — Input validation
+- `github.com/asaskevich/govalidator` — Input validation
 
 ---
 
@@ -458,6 +494,18 @@ data = requests.get(user_url).text
 
 **Why**: Without validation, attacker can access internal services, cloud metadata APIs (AWS, GCP credentials), or local services.
 
+**Common SSRF bypasses to block:**
+
+| Bypass | Example |
+|--------|---------|
+| Decimal/octal/hex IP | `http://2130706433`, `http://0177.0.0.1`, `http://0x7f.0.0.1` |
+| IPv6 localhost | `http://[::1]`, `http://[::ffff:127.0.0.1]` |
+| Shortened IP | `http://127.1` |
+| DNS rebinding | Attacker DNS returns internal IP on second resolution |
+| Redirect chains | External URL 302s to internal address |
+
+**Always**: resolve DNS before requesting, validate resolved IP is not private, pin resolved IP (don't re-resolve), block cloud metadata IPs (`169.254.169.254`) explicitly.
+
 ### Example 7: Unsafe Deserialization
 
 ```python
@@ -475,6 +523,65 @@ user_data = json.loads(request.data)  # Safe parsing, no code execution
 ```
 
 **Why**: `pickle` and `eval` can execute arbitrary code. JSON is data-only format, safe to deserialize untrusted input.
+
+### Example 8: XXE (XML External Entity)
+
+```xml
+<!-- Malicious XML payload -->
+<?xml version="1.0"?>
+<!DOCTYPE foo [
+  <!ENTITY xxe SYSTEM "file:///etc/passwd">
+]>
+<data>&xxe;</data>
+```
+
+**Prevention by language:**
+
+```python
+# Python — use defusedxml
+from defusedxml import ElementTree
+tree = ElementTree.parse(xml_file)  # Safe: external entities disabled
+
+# Or with lxml
+from lxml import etree
+parser = etree.XMLParser(resolve_entities=False, no_network=True)
+```
+
+```javascript
+// Node.js — disable DTD in your XML library
+// If using libxmljs: { noent: false, dtdload: false }
+// Prefer libraries that disable DTD by default
+```
+
+```go
+// Go — xml.Decoder is safe by default (no external entity resolution)
+// If using third-party parsers, verify DTD processing is disabled
+```
+
+**Why**: XML parsers that resolve external entities can read local files, make network requests, or cause DoS. Disable DTD processing entirely when possible.
+
+### Example 9: Open Redirect
+
+```python
+# [NO] VULNERABLE (no validation)
+redirect_url = request.args.get('next')
+return redirect(redirect_url)
+# Attacker: ?next=https://evil.com (phishing via your domain)
+
+# [YES] SAFE (allowlist)
+from urllib.parse import urlparse
+
+redirect_url = request.args.get('next', '/')
+parsed = urlparse(redirect_url)
+
+# Only allow relative paths
+if parsed.netloc or parsed.scheme:
+    redirect_url = '/'  # Fall back to safe default
+
+return redirect(redirect_url)
+```
+
+**Why**: Open redirects enable phishing (victim trusts your domain in the URL) and can chain with SSRF or OAuth token theft.
 
 ---
 
@@ -536,4 +643,4 @@ Additional: Privacy by design, user data export/deletion
 
 ---
 
-*Created: 2026-01-11 | Category: Reviews | Last updated: When shipped*
+*Created: 2026-01-11 | Category: Reviews | Last updated: 2026-02-03*
