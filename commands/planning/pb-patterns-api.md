@@ -201,6 +201,35 @@ def get_track(id):
     })
 ```
 
+```typescript
+// [NO] Returning the database entity
+app.get("/api/tracks/:id", async (req, res) => {
+  const track = await db.track.findUnique({ where: { id: req.params.id } });
+  res.json(track);  // Includes embeddingVector, generationPrompt, workflowState
+});
+
+// [YES] Explicit response type
+interface TrackResponse {
+  id: string;
+  title: string;
+  artist: string;
+  duration: number;
+  coverUrl: string;
+}
+
+app.get("/api/tracks/:id", async (req, res) => {
+  const track = await db.track.findUnique({ where: { id: req.params.id } });
+  const response: TrackResponse = {
+    id: track.id,
+    title: track.title,
+    artist: track.artist,
+    duration: track.duration,
+    coverUrl: track.coverUrl,
+  };
+  res.json(response);
+});
+```
+
 ```go
 // [NO] Struct tags expose everything
 type Track struct {
@@ -266,6 +295,38 @@ The question isn't "always optimize" — it's "know what you're sending and why.
 - **Rule of Clarity** — Response shape communicates what consumers should use
 - **Rule of Repair** — Large unintended payloads should be noticed, not silently tolerated
 - **Rule of Simplicity** — Don't build DTO layers where they aren't needed, but don't skip them where they are
+
+### Input Binding Discipline
+
+The inbound counterpart to Response Design: don't bind request bodies directly into your data model.
+
+**The problem:**
+
+```python
+# [NO] Mass assignment — attacker sends {"role": "admin", "name": "Alice"}
+@app.put("/api/users/{id}")
+def update_user(id):
+    user = db.query(User).get(id)
+    user.update(**request.json)  # Binds ALL fields, including role
+    db.commit()
+
+# [YES] Allowlisted fields per operation
+UPDATABLE_FIELDS = {'name', 'email', 'bio'}
+
+@app.put("/api/users/{id}")
+def update_user(id):
+    user = db.query(User).get(id)
+    data = {k: v for k, v in request.json.items() if k in UPDATABLE_FIELDS}
+    user.update(**data)
+    db.commit()
+```
+
+**Discipline:**
+- **Allowlist writable fields per operation** — Create and update may accept different fields
+- **Readonly fields are never writable** — `id`, `createdAt`, `role`, `internalScore` cannot be set via API
+- **Validate types and constraints** — Don't just filter fields; validate values (use Pydantic, Zod, Go struct validation)
+
+This is the mirror of Response Design: be explicit about what goes in, not just what comes out.
 
 ---
 
@@ -664,6 +725,14 @@ Common issues to avoid:
 - **Over-fetching in resolvers** — Fetch only requested fields
 - **Schema complexity** — Start simple, evolve carefully
 - **Missing error handling** — Return errors in payload, not HTTP errors
+
+### GraphQL Security
+
+- **Query depth limiting** — Without limits, nested queries (`{ user { friends { friends { ... } } } }`) exhaust the server. Set max depth (typically 7-10 levels).
+- **Query complexity/cost analysis** — Assign cost to fields and reject queries exceeding a budget. Prevents expensive queries even within depth limits.
+- **Disable introspection in production** — Introspection exposes every type, field, and relation. Enable only in development.
+- **Batching limits** — GraphQL allows multiple operations per request. Without limits, an attacker sends thousands of mutations in one HTTP call, bypassing per-request rate limiting.
+- **Field-level authorization** — In REST you protect endpoints; in GraphQL you must protect individual fields and nested resolvers. Authorization middleware must run per-field, not just per-query.
 
 **Future consideration:** For comprehensive GraphQL guidance (subscriptions, federation, caching, tooling), see `/pb-patterns-graphql` when available.
 

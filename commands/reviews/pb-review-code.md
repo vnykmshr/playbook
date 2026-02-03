@@ -68,8 +68,7 @@
 - [ ] No injection vulnerabilities (SQL, command, XSS, etc.)
 - [ ] Authorization properly enforced
 - [ ] Sensitive operations properly audited/logged
-- [ ] No information leakage in error responses
-- [ ] No internal attributes in API responses (workflow states, processing flags, embeddings, admin metadata)
+- [ ] No information leakage in error responses or API payloads (see `/pb-security` Authorization & Access Control)
 - [ ] No hardcoded secrets or credentials
 - [ ] Input validation at trust boundaries
 

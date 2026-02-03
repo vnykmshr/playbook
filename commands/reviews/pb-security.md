@@ -100,6 +100,7 @@ Use for feature development, API changes, multi-file changes.
 - [ ] Session cookies use `Secure` and `HttpOnly` flags
 - [ ] JSON APIs also protected (Content-Type header alone does not prevent CSRF; validate Origin/Referer AND use tokens)
 - [ ] Pre-auth endpoints covered (login, signup, password reset)
+- [ ] Note: APIs using Authorization header with bearer tokens (not cookies) are inherently CSRF-immune — the browser does not attach the header automatically. CSRF tokens are unnecessary in this case.
 
 ### Open Redirect Prevention
 - [ ] Redirect URLs validated against allowlist of trusted domains
@@ -116,6 +117,7 @@ Use for feature development, API changes, multi-file changes.
 - [ ] Session timeout configured (15-30 min recommended)
 - [ ] Session tokens invalidated on logout
 - [ ] Token/session storage secure (secure HttpOnly cookies preferred)
+- [ ] JWT-specific: algorithm validated server-side (`alg: none` rejected), secret/key appropriate for algorithm (HMAC vs RSA), tokens not stored in localStorage for web apps
 
 ### Authorization & Access Control
 - [ ] Authorization checks at correct layer (server-side, not client)
@@ -123,7 +125,8 @@ Use for feature development, API changes, multi-file changes.
 - [ ] All restricted endpoints protected
 - [ ] Cross-tenant data isolation (if multi-tenant)
 - [ ] Admin functions only accessible to admins
-- [ ] API endpoints check user ownership before returning data
+- [ ] API endpoints check user ownership before returning data (IDOR: verify requesting user has access to the specific resource ID)
+- [ ] Mass assignment prevented: filter writable fields per operation, don't bind request body directly to models
 - [ ] API responses don't expose internal model attributes (workflow states, processing flags, internal scores, admin metadata)
 - [ ] Data layer models not serialized directly to API responses (use explicit response shapes)
 
@@ -213,6 +216,11 @@ Use for security-critical features, payment processing, authentication systems, 
 - [ ] Delegation of permissions possible and auditable
 - [ ] Temporary elevated privileges possible (not permanent admin accounts)
 
+### Security-Relevant Race Conditions
+- [ ] Financial/transactional operations are atomic (double-spend, double-enrollment, coupon reuse)
+- [ ] Check-then-act sequences use proper locking or database constraints (TOCTOU)
+- [ ] Rate limiting checks are atomic (not vulnerable to race between check and increment)
+
 ### Data Protection
 - [ ] PII identification complete (name, email, phone, SSN, IP, etc.)
 - [ ] PII storage justified (do we actually need to store this?)
@@ -236,12 +244,8 @@ Use for security-critical features, payment processing, authentication systems, 
 
 ### Advanced API Security
 - [ ] OAuth2/OIDC implementation correct (not homemade auth)
-- [ ] CSRF tokens for state-changing operations (if not using CORS properly)
-- [ ] HSTS headers configured (forces HTTPS)
-- [ ] CSP headers configured (restrict script execution)
-- [ ] X-Frame-Options configured (prevent clickjacking)
-- [ ] X-Content-Type-Options configured (prevent MIME sniffing)
-- [ ] Referrer-Policy configured
+- [ ] CSRF prevention verified per Standard Checklist above
+- [ ] Security headers configured (see Security Headers section below)
 - [ ] API rate limiting per user and IP
 - [ ] API request timeout configured
 
@@ -376,7 +380,8 @@ validator.Validate(obj)
 
 **Recommended packages:**
 - `database/sql` — Parameterized queries
-- `gorilla/mux` — Secure routing
+- `net/http` — Standard library routing (Go 1.22+ supports path parameters)
+- `go-chi/chi` — Lightweight router (actively maintained)
 - `golang-jwt/jwt` — JWT handling
 - `golang.org/x/crypto` — Cryptography
 - `github.com/asaskevich/govalidator` — Input validation
@@ -475,23 +480,32 @@ user_url = request.args.get('url')
 data = requests.get(user_url).text  # Could fetch internal services
 # Attacker passes: http://internal-api:8080/admin or http://localhost:6379
 
-# [YES] SAFE (Allowlist + validation)
+# [YES] SAFE (Allowlist + DNS validation)
 import requests
+import ipaddress
+import socket
 from urllib.parse import urlparse
 
 user_url = request.args.get('url')
 parsed = urlparse(user_url)
 
-# Allowlist safe domains
+# Step 1: Scheme must be http/https
+if parsed.scheme not in ('http', 'https'):
+    raise ValueError("Invalid scheme")
+
+# Step 2: Allowlist safe domains
 ALLOWED_DOMAINS = ['example.com', 'api.example.com']
-if parsed.netloc not in ALLOWED_DOMAINS:
+if parsed.hostname not in ALLOWED_DOMAINS:
     raise ValueError("Domain not allowed")
 
-# Reject private IPs
-if any(ip in parsed.netloc for ip in ['localhost', '127.', '10.', '172.', '192.168']):
-    raise ValueError("Private IPs not allowed")
+# Step 3: Resolve DNS and validate IP is not private
+resolved_ip = socket.getaddrinfo(parsed.hostname, None)[0][4][0]
+ip = ipaddress.ip_address(resolved_ip)
+if ip.is_private or ip.is_loopback or ip.is_link_local:
+    raise ValueError("Private/internal IPs not allowed")
 
-data = requests.get(user_url).text
+# Step 4: Request using resolved IP (pin it, don't re-resolve)
+data = requests.get(user_url, timeout=5).text
 ```
 
 **Why**: Without validation, attacker can access internal services, cloud metadata APIs (AWS, GCP credentials), or local services.
