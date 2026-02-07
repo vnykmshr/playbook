@@ -5,6 +5,41 @@ All notable changes to this project are documented here.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v2.9.0] - 2026-02-07
+
+### Added
+
+- **pb-patterns-resilience** — New focused command for resilience and protection patterns
+  - Retry with Exponential Backoff, Circuit Breaker, Rate Limiting, Cache-Aside, Bulkhead
+  - Pattern interactions (Circuit Breaker + Retry, Cache-Aside + Bulkhead)
+  - Antipattern: Circuit Breaker Gone Wrong
+  - ~560 lines extracted from pb-patterns-core by decision context (structure vs protect)
+
+- **test_command_conventions.py** — Pytest convention validation test
+  - Validates Resource Hint, When to Use, Related Commands across all commands
+  - Complements scripts/validate-conventions.py for CI integration
+
+### Changed
+
+- **pb-patterns-core** — Slimmed from 1,233 to ~650 lines (47% reduction)
+  - Resilience patterns extracted to `/pb-patterns-resilience`
+  - API Design Patterns (Pagination, Versioning) replaced with cross-reference to `/pb-patterns-api`
+  - Cross-references added for moved content
+
+- **pb-patterns** (hub) — Updated for new resilience sub-command
+  - Added Section 5: Resilience Patterns
+  - Updated Core Patterns description, decision tree, quick reference table
+  - Updated common scenarios to reference correct pattern commands
+
+### Stats
+
+- **Total commands**: 84 (was 83)
+- **Files modified**: 6
+- **New files**: 2 (pb-patterns-resilience.md, test_command_conventions.py)
+- **Theme**: Pattern discoverability and context efficiency
+
+---
+
 ## [v2.8.1] - 2026-02-07
 
 ### Added

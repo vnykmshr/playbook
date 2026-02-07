@@ -33,13 +33,11 @@ The playbook organizes patterns into specialized commands:
 
 ### 1. Core Patterns (`/pb-patterns-core`)
 
-Foundational architectural and design patterns.
+Foundational architectural and structural patterns.
 
 **Topics:**
 - Architectural: Service-Oriented Architecture (SOA), Event-Driven
-- Design: Retry, Circuit Breaker, Cache-Aside, Bulkhead
 - Data Access: Repository, DTO
-- API: Pagination, Versioning
 - Integration: Strangler Fig
 - Antipatterns: When patterns fail
 - **Pattern Interactions**: How patterns work together in real systems
@@ -47,13 +45,13 @@ Foundational architectural and design patterns.
 **When to read:**
 - Designing new system architecture
 - Understanding SOA/Event-Driven tradeoffs
-- Learning when Circuit Breaker meets Retry
+- Choosing data access patterns (Repository, DTO)
 - Real-world composition examples
 
 **Examples:**
-- E-commerce order processing (SOA + Event-Driven)
-- Service communication (Circuit Breaker + Retry)
-- Cache handling (Cache-Aside + Bulkhead)
+- E-commerce order processing (SOA + Event-Driven + Saga)
+- Payment processing (SOA + Event-Driven + Circuit Breaker)
+- API evolution (DTO + Pagination + Versioning)
 
 ---
 
@@ -140,6 +138,31 @@ Patterns for coordinating across services/databases.
 
 ---
 
+### 5. Resilience Patterns (`/pb-patterns-resilience`)
+
+Patterns for making systems reliable under failure conditions.
+
+**Topics:**
+- Retry with Exponential Backoff (transient failure recovery)
+- Circuit Breaker (prevent cascading failures)
+- Rate Limiting (protect against abuse)
+- Cache-Aside (performance + resilience)
+- Bulkhead (resource isolation)
+
+**When to read:**
+- Service calls fail intermittently
+- Need to protect against cascading failures
+- API needs rate limiting
+- Adding caching layer for reliability
+
+**Examples:**
+- Payment service retry with backoff
+- Circuit breaker protecting external API calls
+- Token bucket rate limiting implementation
+- Cache stampede prevention with locks
+
+---
+
 ## How to Use This Guide
 
 ### Quick Pattern Selection
@@ -147,12 +170,14 @@ Patterns for coordinating across services/databases.
 **Question: I need to design something. Which pattern?**
 
 1. **Service boundaries?** → `/pb-patterns-core` → SOA
-2. **Service communication?** → `/pb-patterns-core` → Event-Driven, Retry, Circuit Breaker
-3. **Database operations?** → `/pb-patterns-db` → Pooling, Optimization, Replication
-4. **Background processing?** → `/pb-patterns-async` → Job Queues
-5. **Multi-step across services?** → `/pb-patterns-distributed` → Saga
-6. **Slow database?** → `/pb-patterns-db` → Connection Pooling, Indexes, Caching
-7. **Complex UI events?** → `/pb-patterns-async` → Reactive/RxJS
+2. **Service communication?** → `/pb-patterns-core` → Event-Driven
+3. **Service failing?** → `/pb-patterns-resilience` → Circuit Breaker, Retry
+4. **Rate limit API?** → `/pb-patterns-resilience` → Rate Limiting
+5. **Database operations?** → `/pb-patterns-db` → Pooling, Optimization, Replication
+6. **Background processing?** → `/pb-patterns-async` → Job Queues
+7. **Multi-step across services?** → `/pb-patterns-distributed` → Saga
+8. **Slow database?** → `/pb-patterns-db` → Connection Pooling, Indexes, Caching
+9. **Complex UI events?** → `/pb-patterns-async` → Reactive/RxJS
 
 ### Common Scenarios
 
@@ -160,24 +185,25 @@ Patterns for coordinating across services/databases.
 1. Read `/pb-patterns-core` (SOA section)
 2. Read `/pb-patterns-distributed` (Saga)
 3. Design service boundary
-4. Read `/pb-patterns-core` (API section)
+4. Read `/pb-patterns-api` (API design)
 5. Read `/pb-review-microservice` for review checklist
 
 **System is slow:**
 1. Measure bottleneck first (database query logs, network traces, CPU profiling)
 2. Identify bottleneck (database, network, CPU?)
 3. If database: Read `/pb-patterns-db`
-4. If network/service communication: Read `/pb-patterns-core` (Circuit Breaker, Cache-Aside)
+4. If network/service communication: Read `/pb-patterns-resilience` (Circuit Breaker, Cache-Aside)
 5. If CPU-intensive: Read `/pb-patterns-async` (Worker Threads)
 
 **Payment/Order processing:**
 1. Read `/pb-patterns-core` (Event-Driven)
-2. Read `/pb-patterns-distributed` (Saga)
-3. Read `/pb-incident` (handling Saga failures)
+2. Read `/pb-patterns-resilience` (Retry, Circuit Breaker)
+3. Read `/pb-patterns-distributed` (Saga)
+4. Read `/pb-incident` (handling Saga failures)
 
 **Scaling to 1M users:**
 1. Read `/pb-patterns-db` (Replication, Sharding)
-2. Read `/pb-patterns-core` (Caching)
+2. Read `/pb-patterns-resilience` (Cache-Aside)
 3. Read `/pb-patterns-async` (Job Queues)
 4. Read `/pb-deployment` (deployment strategies)
 
@@ -192,7 +218,13 @@ Problem: Need to...
 │  └─ /pb-patterns-core: Event-Driven
 │
 ├─ Handle external service failure?
-│  └─ /pb-patterns-core: Circuit Breaker + Retry
+│  └─ /pb-patterns-resilience: Circuit Breaker + Retry
+│
+├─ Rate limit API?
+│  └─ /pb-patterns-resilience: Rate Limiting
+│
+├─ Add caching layer?
+│  └─ /pb-patterns-resilience: Cache-Aside
 │
 ├─ Scale database reads?
 │  └─ /pb-patterns-db: Replication, Connection Pooling
@@ -289,24 +321,26 @@ All patterns in this family follow these standards:
 
 ## Quick Reference
 
-| Pattern | Category | Use When | Avoid When |
-|---------|----------|----------|-----------|
-| **SOA** | Architecture | Services need independence | Single team project |
-| **Event-Driven** | Architecture | Loose coupling needed | Strict ordering required |
-| **Retry** | Resilience | Transient failures possible | Permanent failure (auth) |
-| **Circuit Breaker** | Resilience | Service might be down | One-time operations |
-| **Cache-Aside** | Performance | High read load | Strict consistency |
-| **Bulkhead** | Resilience | Different load per service | Single service |
-| **Saga** | Distributed | Multi-step across services | Single service transaction |
-| **CQRS** | Data | Different read/write patterns | Simple CRUD |
-| **Eventual Consistency** | Consistency | Consistency delay acceptable | Strong consistency required |
-| **2PC** | Consistency | Must have all-or-nothing | Poor availability acceptable |
+| Pattern | Command | Use When | Avoid When |
+|---------|---------|----------|-----------|
+| **SOA** | `/pb-patterns-core` | Services need independence | Single team project |
+| **Event-Driven** | `/pb-patterns-core` | Loose coupling needed | Strict ordering required |
+| **Repository** | `/pb-patterns-core` | Complex data access | Simple CRUD |
+| **Retry** | `/pb-patterns-resilience` | Transient failures possible | Permanent failure (auth) |
+| **Circuit Breaker** | `/pb-patterns-resilience` | Service might be down | One-time operations |
+| **Rate Limiting** | `/pb-patterns-resilience` | API abuse protection | Internal-only services |
+| **Cache-Aside** | `/pb-patterns-resilience` | High read load | Strict consistency |
+| **Bulkhead** | `/pb-patterns-resilience` | Different load per service | Single service |
+| **Saga** | `/pb-patterns-distributed` | Multi-step across services | Single service transaction |
+| **CQRS** | `/pb-patterns-distributed` | Different read/write patterns | Simple CRUD |
+| **Eventual Consistency** | `/pb-patterns-distributed` | Consistency delay acceptable | Strong consistency required |
 
 ---
 
 ## Related Commands
 
-- `/pb-patterns-core` — Core architectural and design patterns
+- `/pb-patterns-core` — Core architectural and structural patterns (SOA, Event-Driven, Repository, DTO)
+- `/pb-patterns-resilience` — Resilience patterns (Retry, Circuit Breaker, Rate Limiting, Cache-Aside, Bulkhead)
 - `/pb-patterns-async` — Asynchronous patterns
 - `/pb-patterns-db` — Database patterns
 - `/pb-patterns-distributed` — Distributed systems patterns

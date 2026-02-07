@@ -37,7 +37,8 @@ Quick reference for all playbook commands.
 | Command | When to Use |
 |---------|-------------|
 | `/pb-patterns` | Overview & quick reference for all patterns |
-| `/pb-patterns-core` | Core architectural & design patterns (SOA, Event-Driven, Retry, Circuit Breaker, etc.) |
+| `/pb-patterns-core` | Core architectural & structural patterns (SOA, Event-Driven, Repository, DTO, Strangler Fig) |
+| `/pb-patterns-resilience` | Resilience patterns (Retry, Circuit Breaker, Rate Limiting, Cache-Aside, Bulkhead) |
 | `/pb-patterns-async` | Async/concurrent patterns (callbacks, promises, async/await, reactive, workers, job queues) |
 | `/pb-patterns-db` | Database patterns (pooling, optimization, replication, sharding) |
 | `/pb-patterns-distributed` | Distributed patterns (saga, CQRS, eventual consistency, 2PC) |

@@ -678,6 +678,7 @@ Development → Security Review (/pb-security)
 - `/pb-security` — Application-level security review
 - `/pb-deployment` — Deploy hardened infrastructure
 - `/pb-server-hygiene` — Periodic server health and hygiene review
+- `/pb-patterns-resilience` — Resilience patterns (Circuit Breaker, Rate Limiting, Bulkhead)
 
 ---
 
