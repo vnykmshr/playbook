@@ -5,6 +5,54 @@ All notable changes to this project are documented here.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v2.7.0] - 2026-02-07
+
+### Added
+
+- **pb-claude-orchestration** — New orchestration guide for Claude Code
+  - Three model tiers: Architect (opus), Engineer (sonnet), Scout (haiku)
+  - Task-to-model mapping with decision criteria
+  - Task delegation patterns (parallel vs sequential, when to delegate)
+  - Context budget management and efficiency principles
+  - Playbook-to-model mapping by classification
+  - Self-healing behaviors and auto-memory feedback loops
+  - Continuous improvement: observe outcomes, record learnings, surface gaps
+  - Anti-patterns table for common orchestration mistakes
+
+- **pb-review-playbook** — Quick Review Mode
+  - Abbreviated 4-perspective review for 1-3 changed commands
+  - Escalation criteria for full review
+  - Model delegation hints per review phase (haiku/opus/opus)
+  - Self-improvement trigger for systemic patterns
+
+### Changed
+
+- **pb-review-playbook** — Fixed stale category counts
+  - Replaced hardcoded counts with dynamic shell command
+  - Removed stale "Release (1)" category (merged into deployment in v2.3.0)
+  - Added missing "Utilities" category
+
+- **pb-new-playbook** — Resource awareness (v1.0.0 → v1.1.0)
+  - Added Resource Hint field to scaffold template
+  - Added classification-to-model table
+  - Added quality validation: resource hint, context budget
+  - Added integration validation: CLAUDE.md regeneration, quick review
+
+- **pb-claude-global** — Template trimmed and enriched
+  - Replaced Context Management with Context & Resource Efficiency
+  - Added model selection table and continuous improvement directive
+  - Merged Commits + PRs into single concise section
+  - Trimmed Quick Reference to 8 essential entries
+  - Generated CLAUDE.md: 212 → 144 lines (under 150-line target)
+
+### Stats
+
+- **Total commands**: 82 (was 81)
+- **Files modified**: 5
+- **Themes**: Model orchestration, resource efficiency, operational self-improvement
+
+---
+
 ## [v2.6.0] - 2026-02-03
 
 ### Added
@@ -877,6 +925,8 @@ When releasing a new version:
 
 ---
 
+[v2.7.0]: https://github.com/vnykmshr/playbook/releases/tag/v2.7.0
+[v2.6.0]: https://github.com/vnykmshr/playbook/releases/tag/v2.6.0
 [v2.5.0]: https://github.com/vnykmshr/playbook/releases/tag/v2.5.0
 [v2.4.0]: https://github.com/vnykmshr/playbook/releases/tag/v2.4.0
 [v2.3.0]: https://github.com/vnykmshr/playbook/releases/tag/v2.3.0

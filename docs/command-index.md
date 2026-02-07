@@ -168,6 +168,7 @@ Developer machine health and maintenance.
 | `/pb-context` | Project onboarding context template |
 | `/pb-claude-global` | Generate global ~/.claude/CLAUDE.md from playbooks |
 | `/pb-claude-project` | Generate project .claude/CLAUDE.md by analyzing codebase |
+| `/pb-claude-orchestration` | Model selection, task delegation, and resource efficiency guide |
 
 ## Example Projects
 
