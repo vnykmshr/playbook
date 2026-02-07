@@ -92,7 +92,7 @@ DELETE /users/1
 - `/pb-start` — Create feature branch
 - `/pb-cycle` — Develop → test → commit workflow
 - `/pb-testing` — Unit tests with table-driven patterns
-- `/pb-patterns-core` — Error handling, connection pooling
+- `/pb-patterns-core` — Architecture patterns (SOA, event-driven)
 - `/pb-security` — Parameterized queries, input validation
 
 **Development Workflow:**
@@ -170,7 +170,7 @@ summaries = await pipeline.get_all_summaries()
 - `/pb-start` — Create feature branch
 - `/pb-cycle` — Develop → test → commit workflow
 - `/pb-testing` — Pytest async fixtures and parametrized tests
-- `/pb-patterns-core` — Async error handling, type hints
+- `/pb-patterns-core` — Architecture patterns, data access (Repository, DTO)
 - `/pb-standards` — Black formatting, isort, mypy type checking
 
 **Development Workflow:**
@@ -253,7 +253,7 @@ DELETE /users/1
 - `/pb-start` — Create feature branch
 - `/pb-cycle` — Develop → test → commit workflow
 - `/pb-testing` — Jest unit and integration tests with Supertest
-- `/pb-patterns-core` — Type-safe error handling, request tracing
+- `/pb-patterns-core` — Architecture patterns, event-driven design
 - `/pb-observability` — Structured logging, request ID tracking
 
 **Development Workflow:**
@@ -502,7 +502,7 @@ This guides you through:
 
 This feature demonstrates:
 - `/pb-testing` - Comprehensive test coverage
-- `/pb-patterns-core` - Type-safe error handling
+- `/pb-patterns-core` - Architecture and design patterns
 - `/pb-observability` - Request tracing
 ```
 
@@ -651,7 +651,7 @@ All three example projects demonstrate:
 | Development cycle | `/pb-cycle` | Develop → test → commit |
 | Testing | `/pb-testing` | Test strategy and patterns |
 | Code standards | `/pb-standards` | Formatting and linting |
-| Error handling | `/pb-patterns-core` | Design patterns |
+| Architecture | `/pb-patterns-core` | Design patterns |
 | Security | `/pb-security` | Input validation, injection prevention |
 | Create PR | `/pb-pr` | Submit work for review |
 | Commit message | `/pb-commit` | Write atomic commits |

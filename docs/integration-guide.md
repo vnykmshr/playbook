@@ -141,7 +141,8 @@ Technical planning before implementation. **Use these once per release.**
 | 14 | **pb-adr** | Architecture Decision Records | When/how/format, examples, review process | When documenting technical decisions | M |
 | 15 | **pb-patterns** | Pattern family overview | Links to 4 specialized pattern commands | Quick reference, pattern selection | M/L |
 | 16 | **pb-patterns-async** | Async/concurrent patterns | Async/await, job queues, concurrency models | Designing concurrent systems | M/L |
-| 17 | **pb-patterns-core** | Core architectural patterns | SOA, event-driven, circuit breaker, etc. | Designing system architecture | M/L |
+| 17 | **pb-patterns-core** | Core architectural patterns | SOA, event-driven, repository, DTO | Designing system architecture | M/L |
+| 17b | **pb-patterns-resilience** | Resilience patterns | Retry, circuit breaker, rate limiting, cache-aside | Protecting system reliability | M/L |
 | 18 | **pb-patterns-db** | Database patterns | Queries, optimization, N+1, sharding | Designing database layer | M/L |
 | 19 | **pb-patterns-distributed** | Distributed system patterns | Saga, CQRS, eventual consistency, 2PC | Designing distributed systems | M/L |
 | 20 | **pb-performance** | Performance optimization | Profiling, optimization strategies, monitoring | When performance is requirement | M/L |
@@ -158,7 +159,8 @@ Technical planning before implementation. **Use these once per release.**
   ├─ /pb-patterns-async (if async work needed)
   ├─ /pb-patterns-db (if database changes)
   ├─ /pb-patterns-distributed (if microservices)
-  └─ /pb-patterns-core (core architecture)
+  ├─ /pb-patterns-core (core architecture)
+  └─ /pb-patterns-resilience (if reliability concerns)
   ↓
 /pb-observability (plan monitoring strategy)
 /pb-performance (set performance targets)
@@ -173,7 +175,8 @@ READY FOR IMPLEMENTATION
 **Pattern selection guide**:
 - **Async work?** Use `/pb-patterns-async` (goroutines, channels, job queues, etc.)
 - **Database layer?** Use `/pb-patterns-db` (pooling, optimization, replication, sharding)
-- **Core architecture?** Use `/pb-patterns-core` (SOA, event-driven, circuit breaker)
+- **Core architecture?** Use `/pb-patterns-core` (SOA, event-driven, repository, DTO)
+- **Reliability?** Use `/pb-patterns-resilience` (circuit breaker, retry, rate limiting)
 - **Microservices?** Use `/pb-patterns-distributed` (Saga, CQRS, eventual consistency)
 - **Uncertain?** Start with `/pb-patterns` (overview, then jump to specialized)
 

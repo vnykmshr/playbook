@@ -285,7 +285,8 @@ Design systems before implementation.
 | `/pb-adr` | Architecture Decision Records (format, examples, review) |
 | `/pb-patterns` | Pattern family overview (async, core, database, distributed) |
 | `/pb-patterns-async` | Async patterns (callbacks, promises, job queues, goroutines) |
-| `/pb-patterns-core` | Core patterns (SOA, event-driven, circuit breaker) |
+| `/pb-patterns-core` | Core architectural patterns (SOA, event-driven, repository, DTO) |
+| `/pb-patterns-resilience` | Resilience patterns (retry, circuit breaker, rate limiting, cache-aside) |
 | `/pb-patterns-db` | Database patterns (pooling, optimization, sharding) |
 | `/pb-patterns-distributed` | Distributed patterns (saga, CQRS, eventual consistency) |
 | `/pb-performance` | Performance optimization and profiling |

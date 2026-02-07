@@ -816,9 +816,9 @@ Status: APPROVED / APPROVED WITH CONDITIONS / REJECTED
 ## Related Commands
 
 - `/pb-patterns-core` — SOA and Event-Driven architecture
+- `/pb-patterns-resilience` — Resilience patterns (Circuit Breaker, Retry, Rate Limiting)
 - `/pb-patterns-distributed` — Saga, CQRS patterns
 - `/pb-observability` — Health checks, monitoring
-- `/pb-testing` — Integration and contract testing
 - `/pb-incident` — Handling microservice failures
 
 ---

@@ -238,7 +238,8 @@ Shorthand for commands used throughout documentation:
 | `/pb-observability` | Observability Setup | Monitor, log, trace systems |
 | `/pb-patterns` | Pattern Overview | Architecture patterns |
 | `/pb-patterns-async` | Async Patterns | Async/concurrent patterns |
-| `/pb-patterns-core` | Core Patterns | SOA, events, retry, circuit breaker |
+| `/pb-patterns-core` | Core Patterns | SOA, events, repository, DTO |
+| `/pb-patterns-resilience` | Resilience Patterns | Retry, circuit breaker, rate limiting |
 | `/pb-patterns-db` | Database Patterns | Pooling, optimization, sharding |
 | `/pb-patterns-distributed` | Distributed Patterns | Saga, CQRS, eventual consistency |
 | `/pb-performance` | Performance Optimization | Profiling and optimization |

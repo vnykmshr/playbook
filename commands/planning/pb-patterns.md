@@ -50,8 +50,8 @@ Foundational architectural and structural patterns.
 
 **Examples:**
 - E-commerce order processing (SOA + Event-Driven + Saga)
-- Payment processing (SOA + Event-Driven + Circuit Breaker)
-- API evolution (DTO + Pagination + Versioning)
+- Data layer design (Repository + DTO + Strangler Fig)
+- Cross-pattern composition (see Pattern Interactions section)
 
 ---
 

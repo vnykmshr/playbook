@@ -46,7 +46,7 @@ Data stored in PostgreSQL. Includes connection pooling, graceful shutdown, and s
 ### Release & Deployment
 - **`/pb-release`** — Pre-release checks, smoke tests
 - **`/pb-deployment`** — Container deployment, rollback strategy
-- **`/pb-patterns-core`** — Circuit breaker, retry patterns for client calls
+- **`/pb-patterns-resilience`** — Circuit breaker, retry, rate limiting for client calls
 
 ---
 
@@ -294,7 +294,7 @@ Key points:
 - ✅ Input validation before database
 - ✅ Environment variables for secrets (no hardcoding)
 - ✅ CORS headers (if needed)
-- ✅ Rate limiting (implement from `/pb-patterns-core`)
+- ✅ Rate limiting (implement from `/pb-patterns-resilience`)
 - ✅ Structured error logging (no sensitive data)
 
 ---
@@ -302,7 +302,7 @@ Key points:
 ## Related Playbook Commands
 
 - `/pb-guide-go` — Go-specific SDLC guide (concurrency, testing, deployment)
-- `/pb-patterns-core` — Core architectural patterns (connection pooling, error handling)
+- `/pb-patterns-resilience` — Resilience patterns (circuit breaker, retry, rate limiting)
 - `/pb-patterns-db` — Database patterns (pooling, optimization, replication)
 - `/pb-security` — Security checklist and patterns
 - `/pb-testing` — Testing strategy and best practices
