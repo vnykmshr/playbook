@@ -46,6 +46,9 @@ jobs:
           pip install yamllint
           yamllint -c .yamllint mkdocs.yml
 
+      - name: Validate command conventions
+        run: python scripts/validate-conventions.py
+
   build:
     name: Build & Validate
     runs-on: ubuntu-latest

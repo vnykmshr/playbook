@@ -4,6 +4,8 @@
 
 **Mindset:** Playbooks should exemplify what they preach. Apply `/pb-preamble` thinking (clear reasoning invites challenge—your playbook should be easy to critique and improve) and `/pb-design-rules` thinking (Clarity, Modularity, Representation: structure should make intent obvious).
 
+**Resource Hint:** sonnet — Structured command creation; follows established conventions.
+
 Before writing a playbook, understand what type it is. Classification drives structure.
 
 ---
