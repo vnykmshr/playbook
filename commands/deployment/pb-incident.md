@@ -6,6 +6,8 @@ Respond to production incidents quickly and professionally. Clear process, clear
 
 During response: be direct about status (preamble), challenge assumptions about root cause, surface unknowns. Design systems to fail loudly (Repair, Transparency) so incidents are visible immediately. After: conduct honest post-mortems without blame, and improve system robustness.
 
+**Resource Hint:** opus — critical incident triage requires deep analysis and careful judgment
+
 ---
 
 ## Purpose
@@ -646,14 +648,13 @@ du -sh /*  # Show which directory consuming space
 
 ### Before Incidents Happen
 
-- [ ] On-call schedule set up and published
+See `/pb-sre-practices` for on-call setup, rotation health, and escalation policies.
+
 - [ ] Incident commander role defined
 - [ ] #incidents Slack channel created
 - [ ] Runbooks written (database, CPU, payment, disk)
-- [ ] Phone bridge number documented
-- [ ] Customer support knows how to handle incident-related inquiries
 - [ ] Post-incident review process defined
-- [ ] Monitoring configured (see /pb-observability)
+- [ ] Monitoring configured (see `/pb-observability`)
 
 ### During Incident
 

@@ -17,6 +17,8 @@ Good commits:
 
 You explain your reasoning, which invites others to challenge it. That's the point. Commits that force you to articulate "why" are harder to defend when the reasoning is flawed—which is exactly what you want. Clear reasoning makes flawed thinking obvious.
 
+**Resource Hint:** sonnet — commit crafting and message formatting
+
 ---
 
 ## When to Use This Command
@@ -295,23 +297,7 @@ Before committing, verify:
 
 ## After Committing: Update Tracker
 
-After each commit, update your master tracker or phase docs:
-
-```bash
-# Check for tracker
-ls todos/*.md
-ls todos/releases/*/
-```
-
-**Update:**
-- [ ] Mark completed task as done
-- [ ] Note commit hash for reference
-- [ ] Identify next task
-
-**Why:** Keeps you aligned with original goals. Without tracker updates:
-- Progress gets lost
-- Next steps become guesses
-- Scope creep goes unnoticed
+After each commit, update your tracker: mark task done, note commit hash, identify next task. See `/pb-cycle` Step 6 for the full tracker update workflow.
 
 ---
 

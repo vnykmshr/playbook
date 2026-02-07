@@ -2,14 +2,18 @@
 
 **Purpose:** Extract reusable patterns from the current session — error resolutions, debugging techniques, workarounds, and project conventions.
 
-**Use when:**
+**Mindset:** Design Rules say "measure before optimizing" — learn from what you measure, not what you assume. Capture knowledge that would help future you (or teammates) solve similar problems faster. Focus on patterns that are **reusable**, not one-time fixes.
 
-- After resolving a non-trivial bug
-- After discovering a useful debugging technique
-- After finding a workaround for a library quirk
-- After establishing a project convention worth documenting
+**Resource Hint:** sonnet — pattern extraction and documentation
 
-**Mindset:** Capture knowledge that would help future you (or teammates) solve similar problems faster. Focus on patterns that are **reusable**, not one-time fixes.
+---
+
+## When to Use
+
+- After resolving a non-trivial bug worth documenting
+- After discovering a debugging technique or library workaround
+- After establishing a project convention that teammates should follow
+- After a session where hard-won insights would otherwise be lost
 
 ---
 

@@ -6,6 +6,8 @@ Gracefully pause or conclude work on a project. Use this when stepping away for 
 
 Use `/pb-preamble` thinking: be honest about blockers and incomplete work. Use `/pb-design-rules` thinking: document decisions and trade-offs made during development.
 
+**Resource Hint:** sonnet — state preservation and handoff documentation
+
 ---
 
 ## When to Use This Command
@@ -200,18 +202,9 @@ EOF
 
 ### Context State Preservation
 
-Before pausing, assess context health:
+Before pausing, assess context health. See `/pb-claude-orchestration` for detailed context management strategies.
 
-**If context is heavy (long session, many file reads):**
-- Update tracker with exact next step and commit hash
-- Note that next session should start fresh
-- Don't try to preserve conversation — preserve state in files
-
-**If context is light (short session, focused work):**
-- Standard pause notes sufficient
-- Can potentially continue same session later
-
-See `/pb-claude-global` Context Management section for efficiency patterns.
+**Quick rule:** If the session was long (many file reads, multiple iterations), update tracker with exact next step and commit hash. Preserve state in files, not conversation.
 
 ---
 

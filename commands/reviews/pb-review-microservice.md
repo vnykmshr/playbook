@@ -6,6 +6,17 @@ Framework for reviewing microservice design, implementation, and operations.
 
 Question whether the service boundary is correct. Challenge the coupling assumptions. Surface design flaws before they become operational problems.
 
+**Resource Hint:** opus — microservice review requires deep analysis of boundaries, coupling, data ownership, and operational concerns
+
+---
+
+## When to Use
+
+- Evaluating a new service before it goes to production
+- Periodic architecture review of existing microservices
+- After splitting a monolith or extracting a new service
+- When inter-service communication issues arise
+
 ---
 
 ## Purpose

@@ -17,6 +17,8 @@ Patterns:
 
 Challenge whether this pattern is the right fit for your constraints. Surface the actual costs. Understand the alternatives. A pattern is a starting point, not a law.
 
+**Resource Hint:** sonnet — Pattern reference and application; implementation-level design decisions.
+
 ---
 
 ## When to Use Patterns

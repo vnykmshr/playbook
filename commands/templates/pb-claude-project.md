@@ -8,6 +8,10 @@ Generate a project-specific `.claude/CLAUDE.md` by analyzing the current project
 
 **Context efficiency:** This file is loaded every conversation turn. Keep it **under 2K tokens** (~150 lines). Move detailed documentation to `docs/` and reference it.
 
+**Mindset:** Design Rules emphasize "clarity over cleverness" — generated context should be immediately useful, not comprehensive.
+
+**Resource Hint:** sonnet — project analysis and template generation from existing structure.
+
 ---
 
 ## When to Use

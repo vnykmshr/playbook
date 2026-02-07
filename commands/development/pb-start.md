@@ -4,6 +4,16 @@ Begin iterative development on a feature, enhancement, or fix. This command esta
 
 **Mindset:** Development assumes both `/pb-preamble` thinking (challenge assumptions, peer collaboration) and `/pb-design-rules` thinking. Each iteration verifies that code embodies Clarity, Simplicity, and Robustness.
 
+**Resource Hint:** sonnet — routine development workflow orchestration
+
+---
+
+## When to Use
+
+- Starting a new feature, enhancement, or bug fix from scratch
+- Establishing branch strategy and iteration rhythm for a work item
+- Onboarding to a codebase and need the full development ceremony
+
 ---
 
 ## Pre-Start Checklist
@@ -62,68 +72,13 @@ git checkout -b refactor/short-description main
 
 ## Iteration Cycle
 
-Every change follows this cycle without shortcuts:
-
-```
-┌─────────────────────────────────────────────────────────────┐
-│  1. DEVELOP      Write code following standards             │
-│         ↓                                                    │
-│  2. SELF-REVIEW  Review your own changes critically         │
-│         ↓                                                    │
-│  3. TEST         Verify: lint, typecheck, tests pass        │
-│         ↓                                                    │
-│  4. PEER REVIEW  Get feedback on approach and quality       │
-│         ↓                                                    │
-│  5. COMMIT       Logical, atomic commit with clear message  │
-│         ↓                                                    │
-│  6. UPDATE       Update tracker: mark done, identify next   │
-└─────────────────────────────────────────────────────────────┘
-```
-
-**Run `/pb-cycle` for guided self-review and peer review at each iteration.**
-
-**Tracker discipline:** After each commit, update your master tracker or phase docs. This keeps you aligned with original goals and prevents "guessed" next steps.
+See `/pb-cycle` for the full iteration workflow (develop, self-review, test, peer review, commit, update tracker).
 
 ---
 
 ## Commit Discipline
 
-**One concern per commit:**
-- Each commit addresses a single feature, fix, or refactor
-- Every commit leaves the codebase in a working state
-- Never batch unrelated changes into one commit
-
-**Stage files intentionally:**
-```bash
-git add [specific files]    # NEVER use git add . or git add -A
-git status                  # Verify what's staged
-git diff --staged           # Review before committing
-```
-
-**Warning:** `git add .` and `git add -A` are dangerous. Always stage specific files to maintain atomic commits and avoid committing debug code, secrets, or unrelated changes.
-
-**Commit Message Format:**
-```
-<type>(<scope>): <subject>
-
-<body - what and why>
-```
-
-**Types:** `feat`, `fix`, `refactor`, `docs`, `test`, `chore`, `perf`
-
-**Examples:**
-```
-feat(audio): add study mode section tracking
-
-- SectionTrack component with labeled pipeline
-- Progress calculation across sections
-- Visual states: completed, current, upcoming
-
-fix(auth): handle expired token redirect loop
-
-- Check token expiry before redirect
-- Clear stale tokens on 401 response
-```
+See `/pb-commit` for atomic commit practices, staging discipline, and message format.
 
 ---
 

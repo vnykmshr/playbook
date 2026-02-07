@@ -6,6 +6,16 @@ Create a crisp, practical technical blog post explaining this project to a techn
 
 Explain the problems you solved, the trade-offs you made, what you'd do differently. Honest technical writing builds trust.
 
+**Resource Hint:** sonnet — blog post writing follows a structured outline with code examples and diagrams
+
+---
+
+## When to Use
+
+- Announcing a new project or major release
+- Sharing design decisions and architecture with the community
+- Creating content for the project's documentation site
+
 ---
 
 ## Role

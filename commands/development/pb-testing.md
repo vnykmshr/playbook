@@ -6,6 +6,16 @@ Move beyond unit tests. Test behavior, catch mutations, verify contracts, stress
 
 Your tests should challenge assumptions about code behavior. Find edge cases you didn't think of. Question whether tests are actually testing behavior, not just hitting lines of code. Write tests that surface flawed thinking and verify design rules are honored.
 
+**Resource Hint:** sonnet — test strategy design and implementation patterns
+
+---
+
+## When to Use
+
+- Moving beyond unit tests to property-based, mutation, or contract testing
+- Designing test strategy for a new service or critical path
+- Strengthening weak tests identified by code review or mutation analysis
+
 ---
 
 ## Purpose

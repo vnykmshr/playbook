@@ -6,6 +6,8 @@ Complete a focus area through comprehensive review, PR creation, peer review, me
 
 Ship when ready, not when tired. Every review step is an opportunity to find issues—embrace them.
 
+**Resource Hint:** sonnet — review orchestration and release coordination
+
 ---
 
 ## When to Use This Command

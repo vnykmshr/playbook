@@ -2,6 +2,14 @@
 
 A reusable prompt for planning release focus areas across any project. Emphasizes **alignment before implementation**, **surgical execution**, and **meaningful outcomes over busywork**.
 
+**Resource Hint:** sonnet — Planning follows structured phases; implementation-level scoping and execution.
+
+## When to Use
+
+- Kicking off a new release cycle or focus area
+- Aligning a team on scope, approach, and success criteria before building
+- Breaking down ambiguous goals into actionable phases
+
 ---
 
 ## Philosophy
@@ -550,6 +558,6 @@ This workflow:
 
 - `/pb-adr` — Document architectural decisions made during planning
 - `/pb-todo-implement` — Implement individual todos from the planning phases
-- `/pb-cycle` — Iterate through development with self-review and peer review
 - `/pb-think` — Deep thinking for complex planning decisions
-- `/pb-patterns-core` — Reference architectural patterns during design
+- `/pb-repo-init` — Initialize new greenfield project from plan
+- `/pb-start` — Begin development work from plan

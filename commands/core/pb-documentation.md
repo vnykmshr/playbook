@@ -11,6 +11,8 @@ This embodies `/pb-preamble` thinking (clear writing enables critical thinking, 
 - **Representation**: Information architecture matters—organize docs so knowledge is findable, not buried
 - **Least Surprise**: Documentation should behave like readers expect; no hidden gotchas or contradictions
 
+**Resource Hint:** sonnet — Documentation writing is implementation-level work; routine quality standards.
+
 ---
 
 ## When to Use This Command
@@ -750,9 +752,10 @@ Engineer: "Yes, added new endpoint and examples"
 ## Related Commands
 
 - `/pb-adr` — How to document decisions
-- `/pb-onboarding` — Using docs for training
-- `/pb-team` — Knowledge transfer
 - `/pb-review-docs` — Documentation quality review
+- `/pb-repo-readme` — Generate project README
+- `/pb-repo-blog` — Write technical blog post
+- `/pb-onboarding` — Using docs for training
 
 ---
 

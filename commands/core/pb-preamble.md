@@ -2,6 +2,15 @@
 
 This anchors how we think and work together. Not a process, but a mindset that every other playbook command assumes you bring.
 
+**Resource Hint:** opus — Foundational philosophy; requires deep reasoning about collaboration dynamics.
+
+## When to Use
+
+- Setting team culture norms at the start of a project or engagement
+- Resolving collaboration friction (deference, silence, performative agreement)
+- Onboarding new team members to the "how we think" foundation
+- Referencing when other playbooks cite `/pb-preamble` thinking
+
 ---
 
 ## I. The Core Anchor
@@ -527,8 +536,6 @@ These expansions deepen the philosophy with context-specific guidance while keep
 - `/pb-preamble-decisions` — Decision making and dissent
 - `/pb-design-rules` — Technical principles (complement to preamble)
 - `/pb-think` — Structured thinking with preamble mindset
-- `/pb-standards` — Working principles and code quality
-- `/pb-guide` — Master SDLC framework
 
 ---
 

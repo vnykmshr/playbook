@@ -6,6 +6,8 @@ Clean up and reorganize the project root for clarity and maintainability.
 
 Clear, obvious organization beats clever categorization. The structure should make it easy for others to find code and understand it.
 
+**Resource Hint:** haiku — file organization is mechanical: audit, move, verify
+
 ---
 
 ## When to Use This Command

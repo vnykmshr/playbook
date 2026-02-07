@@ -4,6 +4,8 @@ Structured implementation of individual todos with checkpoint-based approval. Tr
 
 **Checkpoint thinking:** Each checkpoint is a gate where `/pb-preamble` thinking (challenge assumptions, surface risks) and `/pb-design-rules` thinking (verify Clarity, verify Simplicity) apply. Challenge assumptions at each stage. Don't proceed past a gate without genuine confidence that design is sound and risks are surfaced.
 
+**Resource Hint:** sonnet — structured task implementation with checkpoints
+
 ---
 
 ## Philosophy

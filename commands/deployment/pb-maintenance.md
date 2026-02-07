@@ -4,6 +4,8 @@ Establish systematic maintenance patterns to prevent production incidents. This 
 
 **Mindset:** Maintenance embodies `/pb-design-rules` thinking: Robustness (systems fail gracefully when maintenance lapses) and Transparency (make system health visible). Apply `/pb-preamble` thinking to challenge assumptions about what's "good enough" maintenance.
 
+**Resource Hint:** sonnet — maintenance planning and automation patterns
+
 ---
 
 ## When to Use This Command
@@ -104,35 +106,9 @@ ORDER BY n_dead_tup DESC;
 
 ## Backup Strategy
 
-### Questions to Ask
+See `/pb-dr` for comprehensive backup strategy (3-2-1 rule, retention policies, verification procedures).
 
-- When did you last verify a backup by restoring it?
-- How long would recovery take?
-- What's not in your backup? (uploads, generated files, external services)
-- Do you have off-site copies?
-
-### 3-2-1 Principle
-
-- **3** copies of data
-- **2** different storage types
-- **1** offsite
-
-### Verification Trigger
-
-Backups are worthless until tested. Schedule periodic restore tests:
-
-```bash
-# Pattern: verify backup is not empty/corrupted
-# Adapt to your backup format
-# Note: stat flags differ by platform (-c%s on Linux, -f%z on macOS)
-BACKUP_SIZE=$(stat -c%s "$BACKUP_FILE" 2>/dev/null || stat -f%z "$BACKUP_FILE")
-if [[ "$BACKUP_SIZE" -lt 1000 ]]; then
-    echo "ALERT: Backup suspiciously small: $BACKUP_FILE ($BACKUP_SIZE bytes)"
-    # Send to your alerting system (Slack, PagerDuty, etc.)
-fi
-```
-
-**Ask:** What would you do at 2 AM if you needed to restore?
+**Key question:** When did you last verify a backup by restoring it? If the answer isn't recent, schedule a restore test now.
 
 ---
 

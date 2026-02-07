@@ -5,6 +5,16 @@ Find processes using ports, kill stale listeners, and resolve port conflicts. A 
 **Platform:** macOS/Linux
 **Use Case:** "What's using port 3000?" / "Kill whatever's blocking my server"
 
+**Mindset:** Design Rules say "silence when nothing to say" — only report conflicts that need action.
+
+**Resource Hint:** haiku — port scanning and process lookup are mechanical tasks.
+
+## When to Use
+
+- Dev server fails to start with "port already in use" error
+- After a crash left orphan processes holding ports open
+- Before starting a multi-service stack to ensure ports are free
+
 ---
 
 ## Quick Commands

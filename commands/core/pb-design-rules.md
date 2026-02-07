@@ -2,6 +2,15 @@
 
 > **The preamble tells us HOW teams think together. Design rules tell us WHAT we build. Together, they form the complete framework for engineering excellence.**
 
+**Resource Hint:** sonnet — Reference material for applying established design principles.
+
+## When to Use
+
+- Making architectural or design trade-off decisions
+- Reviewing code or designs against core principles
+- Settling disagreements about "the right way" to build something
+- Onboarding engineers to the team's technical philosophy
+
 ---
 
 ## Anchor: Why These 17 Rules Matter
@@ -553,10 +562,9 @@ Add more error handling downstream hoping to catch it eventually.
 
 - `/pb-preamble` — How teams think together (complement to design rules)
 - `/pb-adr` — Architecture decisions document rules
-- `/pb-patterns*` — Patterns show rules in practice
+- `/pb-patterns` — Patterns show rules in practice
 - `/pb-review-hygiene` — Code review checks rules
-- `/pb-performance` — Optimization respects rules
-- `/pb-observability` — Transparency supports these rules
+- `/pb-standards` — Working principles and code quality
 
 ---
 

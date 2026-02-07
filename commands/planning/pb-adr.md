@@ -11,6 +11,8 @@ When you write an ADR:
 
 Good ADRs show both: sound reasoning (preamble) and sound design (design rules).
 
+**Resource Hint:** opus — Architectural decisions require deep trade-off analysis and long-term reasoning.
+
 ---
 
 ## When to Write an ADR

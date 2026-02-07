@@ -6,6 +6,8 @@ Create and evolve a project-specific design specification. A living document tha
 
 **Mindset:** Use `/pb-preamble` thinking to challenge aesthetic assumptions. Use `/pb-design-rules` thinking — especially Clarity (is the intent obvious?), Simplicity (are we over-designing?), and Representation (fold design knowledge into data/tokens).
 
+**Resource Hint:** sonnet — Design language creation follows structured process; implementation-level guidance.
+
 ---
 
 ## What is a Design Language?

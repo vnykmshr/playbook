@@ -5,6 +5,16 @@ Tiered storage cleanup for developer machines. Reclaim disk space safely with us
 **Platform:** macOS only
 **Risk Model:** Safe → Moderate → Aggressive (each tier requires explicit confirmation)
 
+**Mindset:** Design Rules say "measure before optimizing" — check what's using space before cleaning.
+
+**Resource Hint:** haiku — scanning directories and executing cleanup commands.
+
+## When to Use
+
+- Disk usage exceeds 80% (run `/pb-doctor` first to confirm)
+- Build tools failing due to insufficient disk space
+- Quarterly maintenance to prevent space issues from accumulating
+
 ---
 
 ## Execution Flow

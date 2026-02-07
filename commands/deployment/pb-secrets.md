@@ -6,6 +6,16 @@ Manage secrets securely across development, CI/CD, and production environments. 
 
 A leaked secret is a security incident. Treat secrets as radioactive: minimize exposure, contain carefully, dispose properly.
 
+**Resource Hint:** sonnet — secrets workflow implementation and rotation patterns
+
+---
+
+## When to Use
+
+- Setting up secrets management for a new project or environment
+- Rotating credentials after a team member departure or suspected leak
+- Reviewing secrets hygiene during a security audit or compliance check
+
 ---
 
 ## Quick Reference

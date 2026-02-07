@@ -6,6 +6,14 @@ Overview and navigation guide for the pattern family.
 
 Question whether this pattern fits your constraints. Challenge the costs. Explore alternatives. Good patterns are tools you understand and choose, not dogma you follow.
 
+**Resource Hint:** sonnet — Pattern navigation and selection; index-level reference material.
+
+## When to Use
+
+- Choosing which pattern family applies to your design problem
+- Getting an overview of available architectural patterns before diving deep
+- Navigating to the right specialized pattern command
+
 ---
 
 ## Purpose
@@ -298,24 +306,14 @@ All patterns in this family follow these standards:
 
 ## Related Commands
 
-**Pattern Family (Specialized):**
 - `/pb-patterns-core` — Core architectural and design patterns
 - `/pb-patterns-async` — Asynchronous patterns
 - `/pb-patterns-db` — Database patterns
 - `/pb-patterns-distributed` — Distributed systems patterns
 - `/pb-patterns-frontend` — Frontend architecture patterns (components, state, theming)
 - `/pb-patterns-api` — API design patterns (REST, GraphQL, gRPC)
-
-**Using Patterns:**
-- `/pb-guide` — System design guide (applies patterns)
-- `/pb-adr` — Architecture Decision Records (documents pattern choices)
-- `/pb-review-microservice` — Microservice review (evaluates pattern usage)
-
-**Implementing Patterns:**
-- `/pb-testing` — Testing pattern implementations
-- `/pb-performance` — Performance optimization
-- `/pb-deployment` — Deployment strategies
-- `/pb-incident` — Incident response (patterns fail)
+- `/pb-patterns-deployment` — Deployment strategies and patterns
+- `/pb-patterns-cloud` — Cloud deployment patterns (AWS, GCP, Azure)
 
 ---
 

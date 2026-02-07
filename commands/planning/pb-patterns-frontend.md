@@ -6,6 +6,14 @@ Patterns for building scalable, maintainable user interfaces. Mobile-first and t
 
 Question whether that library is necessary. Challenge whether that abstraction earns its complexity. Understand the constraints before adding patterns.
 
+**Resource Hint:** sonnet — Frontend pattern reference; implementation-level UI architecture decisions.
+
+## When to Use
+
+- Designing component architecture for a new frontend project
+- Choosing state management, styling, or rendering patterns
+- Reviewing frontend code against scalability and maintainability principles
+
 ---
 
 ## Philosophy
@@ -907,8 +915,6 @@ Frontend patterns MUST be accessible by default. See `/pb-a11y` for comprehensiv
 - `/pb-patterns-async` — Data fetching patterns
 - `/pb-patterns-api` — API design patterns
 - `/pb-testing` — Component testing patterns
-- `/pb-performance` — Performance optimization
-- `/pb-security` — Frontend security (XSS, CSP)
 
 ---
 

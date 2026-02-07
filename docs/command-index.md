@@ -103,6 +103,7 @@ Quick reference for all playbook commands.
 | `/pb-review-microservice` | Microservice architecture design review | Before microservice deployment |
 | `/pb-logging` | Logging strategy & standards audit | During code review, pre-release |
 | `/pb-a11y` | Accessibility deep-dive (semantic HTML, keyboard, ARIA, screen readers) | During frontend development, every PR |
+| `/pb-review-playbook` | Review playbook commands for quality, consistency, and completeness | Every PR, monthly |
 
 ## Thinking Partner
 

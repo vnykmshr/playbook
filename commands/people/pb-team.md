@@ -2,6 +2,15 @@
 
 Create an environment where engineers thrive, collaborate effectively, and produce excellent work.
 
+**Resource Hint:** sonnet — structured guidance and team assessment, not deep architectural reasoning.
+
+## When to Use
+
+- Building or restructuring an engineering team
+- Diagnosing team health issues (low morale, high turnover, communication gaps)
+- Preparing for team growth (scaling from small to medium or large)
+- Establishing or refining team rituals (standups, retros, 1-on-1s)
+
 ---
 
 ## Purpose
@@ -324,23 +333,7 @@ Live Q&A optional for those who want to join
 
 ### Remote Onboarding
 
-**First day:**
-- Equipment arrives and works (important!)
-- Welcome message from manager
-- Video 1-on-1 (get to know each other)
-- Tour of key docs/dashboards (async video)
-
-**First week:**
-- Daily 15 min check-ins (build rapport)
-- Pairing sessions for key systems
-- Read documentation
-- Set up development environment
-
-**First month:**
-- Weekly 1-on-1s with manager (1 hour)
-- Code review training and pairing
-- Incident response training (if applicable)
-- Small first PR to learn process
+See `/pb-onboarding` for detailed remote onboarding checklists (first day, first week, first month).
 
 ---
 

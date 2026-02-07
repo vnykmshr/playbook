@@ -6,6 +6,14 @@ Build visibility into your system's behavior: metrics, logs, and traces that hel
 
 Question your assumptions about what's happening in production. Systems should be observable; you shouldn't need to guess.
 
+**Resource Hint:** sonnet — Observability design follows structured instrumentation patterns.
+
+## When to Use
+
+- Designing monitoring and observability for a new service
+- Diagnosing gaps in production visibility (missing metrics, logs, or traces)
+- Planning instrumentation before a major deployment
+
 ---
 
 ## Observability vs Monitoring

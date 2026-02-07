@@ -6,6 +6,17 @@
 
 **Mindset:** Apply `/pb-preamble` thinking (challenge assumptions, surface flaws) and `/pb-design-rules` principles to the playbook itself. The playbook should exemplify what it preaches.
 
+**Resource Hint:** opus — meta-review of playbook commands requires nuanced evaluation of intent, design alignment, and ecosystem coherence
+
+---
+
+## When to Use
+
+- After adding multiple new commands to the playbook
+- Before major playbook releases
+- Monthly playbook health check
+- When commands feel overlapping or inconsistent
+
 ---
 
 ## Review Perspectives

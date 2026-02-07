@@ -6,6 +6,8 @@ Streamlined workflow for creating a pull request with proper context and descrip
 
 Reviewers will challenge your decisions. That's the point. Welcome that feedback—it makes code better. Your job as author is to explain your reasoning clearly so reviewers can engage meaningfully.
 
+**Resource Hint:** sonnet — PR creation and description formatting
+
 ---
 
 ## When to Use This Command

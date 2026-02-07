@@ -6,6 +6,8 @@ Non-blocking execution patterns for concurrent operations. Essential for scalabl
 
 Question whether async is necessary. Challenge the complexity cost. Understand the actual constraints before choosing.
 
+**Resource Hint:** sonnet — Async pattern reference; implementation-level concurrency decisions.
+
 ---
 
 ## Purpose

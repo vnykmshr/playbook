@@ -8,6 +8,8 @@
 
 Question test assumptions. Challenge coverage claims. Point out flaky or brittle tests. Surface duplication. Your role is to find problems, not validate the test suite.
 
+**Resource Hint:** opus — evaluating test quality requires deep reasoning about coverage gaps, brittleness, and test design
+
 ---
 
 ## When to Use

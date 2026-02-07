@@ -10,6 +10,8 @@ This guide covers proven security patterns for microservices, showing when to us
 
 Question threat models. Challenge assumed attack surfaces. Surface the real risk vs. implementation cost trade-off. Don't add complexity without understanding the actual risk.
 
+**Resource Hint:** sonnet — Security pattern reference; implementation-level authentication and authorization decisions.
+
 ---
 
 ## Authentication Patterns

@@ -6,6 +6,8 @@
 
 **Mindset:** Apply `/pb-preamble` thinking (challenge assumptions) throughout. Look for non-obvious angles, hidden patterns, and actionable insights.
 
+**Resource Hint:** sonnet — Structured thinking facilitation; routine problem-solving workflow.
+
 ---
 
 ## Modes Overview
@@ -732,9 +734,6 @@ Use the right mode for the task:
 - `/pb-plan` — Structure implementation approach
 - `/pb-adr` — Document architecture decisions
 - `/pb-debug` — Systematic debugging methodology
-- `/pb-cycle` — Development iteration loop
-- `/pb-standards` — Working principles reference
-- `/pb-patterns-core` — Core architecture patterns
 
 ---
 

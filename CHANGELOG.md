@@ -22,11 +22,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **pb-maintenance** — Updated Related Commands (swapped pb-hardening for pb-server-hygiene)
 - **pb-hardening** — Added pb-server-hygiene back-link to Related Commands
 
+### Fixed
+
+- **Comprehensive audit** — Cross-references, conventions, deduplication across all 83 commands
+  - Added `pb-review-playbook` to command-index.md (orphan fix)
+  - Added Related Commands to `pb-patterns-db` (was missing)
+  - Fixed 6 bidirectional link failures (pb-security↔pb-review, pb-plan→pb-repo-init, pb-documentation→pb-repo-readme/pb-repo-blog, pb-review-hygiene→pb-repo-organize)
+  - Trimmed 11 commands with >5 Related Commands to ≤5 (pb-patterns hub kept 8 sub-command links)
+  - Added Resource Hint (model tier) to all 83 commands
+  - Added When to Use section to ~40 commands missing it
+  - Added Mindset line to 7 utility/template commands
+  - Deduplicated ~400 lines: replaced copied content blocks with cross-references in 10 files (pb-start, pb-cycle, pb-resume, pb-pause, pb-commit, pb-maintenance, pb-incident, pb-team, pb-onboarding)
+
 ### Stats
 
 - **Total commands**: 83 (was 82)
-- **Files modified**: 4
-- **Theme**: Server operations, periodic hygiene ritual
+- **Files modified**: 82
+- **Theme**: Server operations, comprehensive audit
 
 ---
 

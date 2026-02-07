@@ -5,6 +5,17 @@ Update all package managers, development tools, and system software with appropr
 **Platform:** macOS (primary), Linux (alternatives noted)
 **Risk Model:** Safe updates first, major version bumps require confirmation
 
+**Mindset:** Design Rules say "distrust one true way" — update selectively, verify after each tool.
+
+**Resource Hint:** haiku — detecting outdated packages and running update commands.
+
+## When to Use
+
+- Weekly routine to apply safe patch updates
+- Monthly full maintenance cycle (safe + moderate tiers)
+- After a security advisory requiring immediate tool updates
+- Setting up a recently bootstrapped dev machine
+
 ---
 
 ## Execution Flow

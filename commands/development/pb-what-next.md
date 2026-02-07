@@ -6,6 +6,8 @@ Get context-aware playbook command recommendations based on your current work st
 
 The recommendations are starting points, not rules. Question them. Challenge the suggestion if you think a different path makes more sense. Use this as a thinking tool, not an oracle.
 
+**Resource Hint:** haiku — git state analysis and command recommendation
+
 ---
 
 ## When to Use

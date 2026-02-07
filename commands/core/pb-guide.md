@@ -7,6 +7,15 @@ Right-size your process using **Change Tiers**, then follow required sections.
 
 Challenge the tiers, rearrange gates, adapt to your team—this is a starting point, not dogma. Every gate should verify design rules are being honored, not just that work is complete.
 
+**Resource Hint:** sonnet — Structured process reference; implementation-level guidance.
+
+## When to Use
+
+- Starting any new feature, enhancement, refactor, or bug fix
+- Determining the right change tier and required process gates
+- Onboarding team members to the development lifecycle
+- Reviewing whether your process matches the scope of the change
+
 ---
 
 ## **Quick Reference: Change Tiers**

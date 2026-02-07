@@ -6,6 +6,8 @@
 
 **Mindset:** This review embodies `/pb-preamble` thinking (challenge assumptions, surface risks) and `/pb-design-rules` thinking (verify Clarity, Simplicity, Robustness across the codebase).
 
+**Resource Hint:** opus — orchestrates multiple review perspectives requiring deep cross-cutting analysis
+
 ---
 
 ## When to Use

@@ -6,6 +6,8 @@ Keep team aligned on progress without synchronous meetings. Use this template fo
 
 Use `/pb-preamble` thinking: be direct about problems, don't hide issues to seem productive. Use `/pb-design-rules` thinking in standups: highlight when code embodies good design (Clarity, Simplicity, Robustness) and flag design risks early.
 
+**Resource Hint:** sonnet — status reporting and team communication
+
 ---
 
 ## Purpose

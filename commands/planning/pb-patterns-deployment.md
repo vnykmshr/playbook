@@ -8,6 +8,14 @@ Reference guide for deployment strategies, patterns, and best practices. Use thi
 
 Use `/pb-preamble` thinking: question your actual risk tolerance before choosing. Use `/pb-design-rules` thinking: balance Simplicity (don't use complex strategies you don't need) with Robustness (design for failure and rollback). Challenge whether you need the complexity of advanced strategies or if simpler approaches work.
 
+**Resource Hint:** sonnet — Deployment pattern reference; implementation-level release strategy decisions.
+
+## When to Use
+
+- Choosing a deployment strategy for a new service or major release
+- Evaluating risk tolerance and rollback requirements
+- Planning blue-green, canary, or rolling deployments
+
 ---
 
 ## Purpose

@@ -9,6 +9,8 @@
 >
 > **Related Docs:** `pb-guide` (SDLC tiers, gates, checklists) | `pb-standards` (coding standards, conventions) | `pb-design-rules` (technical design principles)
 
+**Resource Hint:** sonnet — project analysis and context generation require balanced judgment.
+
 ---
 
 ## Working Context Guidelines

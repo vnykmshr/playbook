@@ -6,6 +6,8 @@ Harden servers and containers before deploying to production. Defense-in-depth a
 
 The goal is defense-in-depth: multiple layers of protection so that if one fails, others still protect. Never rely on a single security control.
 
+**Resource Hint:** opus — security hardening requires deep infrastructure and threat analysis
+
 ---
 
 ## When to Use This Command

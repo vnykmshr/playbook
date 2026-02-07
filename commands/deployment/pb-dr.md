@@ -6,6 +6,8 @@ Plan, test, and execute recovery from major system failures. When everything goe
 
 The best time to plan for disaster is before it happens. The second best time is now.
 
+**Resource Hint:** opus — disaster recovery planning demands careful architecture and risk analysis
+
 ---
 
 ## When to Use This Command

@@ -8,6 +8,8 @@
 
 Surface disagreements—they often surface real problems that single views miss.
 
+**Resource Hint:** opus — multi-perspective review spanning engineering, architecture, security, and product strategy
+
 ---
 
 ## When to Use

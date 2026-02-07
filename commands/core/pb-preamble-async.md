@@ -2,6 +2,14 @@
 
 Extending core preamble thinking to asynchronous communication, distributed teams, and remote-first cultures.
 
+**Resource Hint:** opus — Deep collaboration philosophy applied to async contexts; nuanced reasoning required.
+
+## When to Use
+
+- Transitioning a team to remote-first or async-heavy workflows
+- Diagnosing communication breakdowns in distributed teams
+- Establishing async norms for cross-timezone collaboration
+
 ---
 
 ## I. The Async Challenge

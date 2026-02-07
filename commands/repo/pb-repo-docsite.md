@@ -4,6 +4,8 @@ Transform project documentation into a professional, publicly consumable static 
 
 **Mindset:** Documentation sites are the public interface to your project. Apply `/pb-preamble` thinking (organize for scrutiny, make assumptions visible) and `/pb-design-rules` thinking (Clarity: obvious navigation; Simplicity: minimal configuration; Robustness: automated deployment).
 
+**Resource Hint:** sonnet — documentation site setup follows established SSG patterns and CI/CD templates
+
 ---
 
 ## When to Use

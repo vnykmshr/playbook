@@ -6,6 +6,8 @@ Build sustainable, reliable operations through toil reduction, error budgets, an
 
 Reliability is a feature. Invest in it deliberately, not reactively.
 
+**Resource Hint:** opus — SRE strategy requires architectural thinking and reliability trade-off analysis
+
 ---
 
 ## When to Use This Command

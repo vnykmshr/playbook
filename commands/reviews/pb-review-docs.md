@@ -8,6 +8,8 @@
 
 Find unclear sections, challenge stated assumptions, and surface gaps. Good documentation invites scrutiny and makes the system's reasoning transparent.
 
+**Resource Hint:** opus — documentation review requires nuanced judgment across accuracy, clarity, completeness, and audience fit
+
 ---
 
 ## When to Use

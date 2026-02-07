@@ -6,6 +6,8 @@ Execute deployment to target environment with surgical precision. This command g
 
 **Mindset:** Deployments are controlled risk. Use `/pb-preamble` thinking: challenge readiness assumptions, surface risks before deploying. Use `/pb-design-rules` thinking: prefer Simplicity (don't over-engineer deployment), ensure Robustness (have rollback ready), maintain Clarity (know exactly what's deploying).
 
+**Resource Hint:** sonnet — deployment execution and verification
+
 ---
 
 ## When to Use This Command

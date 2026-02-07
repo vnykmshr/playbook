@@ -2,6 +2,14 @@
 
 Extending core preamble thinking to decision finality, execution alignment, and organizational learning.
 
+**Resource Hint:** opus — Decision frameworks require careful reasoning about trade-offs and organizational dynamics.
+
+## When to Use
+
+- Teams stuck in endless debate without reaching decisions
+- Establishing decision clocks and commitment protocols
+- Balancing challenge culture with the need to ship
+
 ---
 
 ## I. The Tension: Challenge vs. Movement
@@ -656,7 +664,6 @@ Decision discipline adds:
 - `/pb-preamble-power` — Power dynamics (Part 3)
 - `/pb-adr` — Architecture Decision Records (decision documentation)
 - `/pb-incident` — Learning from failures
-- `/pb-cycle` — Retrospectives (post-decision learning)
 
 ---
 

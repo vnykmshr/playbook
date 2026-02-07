@@ -6,6 +6,8 @@ Create a meticulous, incremental execution plan for a new project from scratch.
 
 Don't copy patterns blindly—understand why you're choosing them. Question conventions if they don't fit your needs.
 
+**Resource Hint:** sonnet — project scaffolding follows established patterns and language conventions
+
 ---
 
 ## When to Use This Command

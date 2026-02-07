@@ -6,6 +6,8 @@ Orchestrate a production release: readiness gate, version management, deployment
 
 Don't hide issues to seem "ready." Surface risks directly. A delayed release beats a broken release.
 
+**Resource Hint:** sonnet — release orchestration, versioning, and tagging
+
 ---
 
 ## When to Use This Command

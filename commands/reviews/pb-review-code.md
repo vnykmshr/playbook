@@ -9,6 +9,17 @@
 
 **Mindset:** This review assumes `/pb-preamble` thinking (challenge assumptions, surface flaws, question trade-offs) and applies `/pb-design-rules` (check for clarity, simplicity, modularity, robustness).
 
+**Resource Hint:** opus — code review demands deep reasoning across architecture, correctness, security, and maintainability
+
+---
+
+## When to Use
+
+- Reviewing a pull request before merge
+- Peer reviewing during `/pb-cycle` iteration
+- Evaluating code changes after a significant refactor
+- Spot-checking critical paths before a release
+
 ---
 
 ## Before You Start
@@ -262,7 +273,6 @@ For smaller changes or when time is limited:
 - `/pb-review-hygiene` — Code quality and operational readiness
 - `/pb-review-tests` — Test coverage review
 - `/pb-security` — Security audit
-- `/pb-standards` — Working principles reference
 
 ---
 

@@ -17,6 +17,8 @@ Performance matters:
 
 Question assumptions about slowness. Challenge whether optimization is worth the complexity cost. Measure before and after—don't assume. Surface trade-offs explicitly (speed vs. maintainability, simplicity vs. performance).
 
+**Resource Hint:** sonnet — Performance optimization follows structured measurement and analysis workflows.
+
 ---
 
 ## When to Optimize

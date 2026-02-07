@@ -13,6 +13,14 @@ Language-specific guide for Go projects. Use alongside `/pb-guide` for general p
 
 Adapt this guide to your project—it's a starting point, not dogma.
 
+**Resource Hint:** sonnet — Language-specific implementation guidance; routine code standards.
+
+## When to Use
+
+- Starting a Go project or adding Go-specific workflow gates
+- Reviewing Go code quality practices (testing, linting, error handling)
+- Onboarding developers to Go project conventions
+
 ---
 
 ## **Go-Specific Change Tiers**

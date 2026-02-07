@@ -6,6 +6,16 @@ Create a concise, search-optimized GitHub "About" description and relevant topic
 
 Describe what the project actually does, not what you wish it did. Honest descriptions help the right people find you.
 
+**Resource Hint:** haiku — crafting a short description and selecting tags is a focused formatting task
+
+---
+
+## When to Use
+
+- Setting up a new GitHub repository
+- Refreshing an outdated or vague About section
+- Improving discoverability after a project pivot or rename
+
 ---
 
 ## Objective

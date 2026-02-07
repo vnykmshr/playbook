@@ -5,6 +5,17 @@ Set up a new Mac for development from scratch. Opinionated defaults with escape 
 **Platform:** macOS
 **Use Case:** New machine, nuke-and-pave, or standardizing team setups
 
+**Mindset:** Design Rules emphasize "simple by default" — install only what's needed, configure minimally.
+
+**Resource Hint:** haiku — installation commands and configuration are mechanical and well-defined.
+
+## When to Use
+
+- Setting up a brand new Mac for development
+- Reinstalling after an OS wipe or nuke-and-pave
+- Standardizing team dev environments with a shared Brewfile
+- Onboarding a new team member who needs a working setup quickly
+
 ---
 
 ## Execution Flow

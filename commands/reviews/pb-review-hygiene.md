@@ -8,6 +8,8 @@
 
 Challenge hidden assumptions about what "health" means. Surface risks directly. Focus on reducing complexity and tech debt. Don't soften findings to be diplomatic.
 
+**Resource Hint:** opus — comprehensive hygiene review spans code quality, operations, security, and documentation
+
 ---
 
 ## When to Use
@@ -218,9 +220,8 @@ Areas that need deeper follow-up next cycle.
 - `/pb-review` — Orchestrate comprehensive multi-perspective review
 - `/pb-review-code` — Code change review for PRs
 - `/pb-review-tests` — Test suite health review
-- `/pb-review-docs` — Documentation quality review
 - `/pb-security` — Security audit
-- `/pb-cycle` — Self-review + peer review iteration
+- `/pb-repo-organize` — Clean up repository structure
 
 ---
 

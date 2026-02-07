@@ -8,6 +8,8 @@ Cloud platforms (AWS, GCP, Azure) offer multiple ways to deploy the same archite
 
 Question your actual constraints before choosing. Challenge vendor recommendations. The cheapest or most featured pattern isn't always the right one. Choose based on your requirements, not vendor features.
 
+**Resource Hint:** sonnet — Cloud deployment pattern reference; platform-specific implementation guidance.
+
 ---
 
 ## AWS Patterns

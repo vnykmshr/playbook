@@ -18,6 +18,8 @@ Deprecation allows you to:
 
 Use `/pb-preamble` thinking: challenge whether this change is really necessary; surface the impact on users; be honest about the cost vs. benefit. Use `/pb-design-rules` thinking: ensure the new approach is genuinely simpler (Simplicity), clearer (Clarity), and more robust than what it replaces. This is where critical thinking matters most.
 
+**Resource Hint:** sonnet — Deprecation planning follows structured process; implementation-level guidance.
+
 ---
 
 ## When to Deprecate

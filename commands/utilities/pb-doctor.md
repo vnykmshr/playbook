@@ -5,6 +5,16 @@ Diagnose system health issues: disk space, memory pressure, CPU usage, and commo
 **Platform:** macOS (with Linux alternatives noted)
 **Use Case:** "Something's slow" / "Builds are failing" / "Machine feels sluggish"
 
+**Mindset:** Design Rules say "fail noisily and early" — surface system problems before they cascade.
+
+**Resource Hint:** haiku — mechanical system checks and status reporting.
+
+## When to Use
+
+- Machine feels slow or unresponsive during development
+- Builds or tests are failing unexpectedly
+- Before running storage cleanup or tool updates (baseline check)
+
 ---
 
 ## Execution Flow

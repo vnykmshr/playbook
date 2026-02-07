@@ -6,6 +6,8 @@ Comprehensive security guidance for code review, design assessment, and pre-rele
 
 Your job is to surface risks and vulnerabilities. Reviewers should ask hard questions. Authors should welcome this scrutiny.
 
+**Resource Hint:** opus — security review demands thorough analysis of attack surfaces, threat models, and vulnerability patterns
+
 ---
 
 ## When to Use This Command
@@ -651,11 +653,11 @@ Additional: Privacy by design, user data export/deletion
 
 ## Related Commands
 
-- `/pb-cycle` — Daily development with security checks
-- `/pb-guide` — Security design section
+- `/pb-review` — Comprehensive multi-perspective review orchestrator
 - `/pb-review-hygiene` — Code quality including security
 - `/pb-hardening` — Infrastructure security (servers, containers, networks)
 - `/pb-secrets` — Secrets management lifecycle
+- `/pb-patterns-security` — Security patterns for microservices
 
 ---
 

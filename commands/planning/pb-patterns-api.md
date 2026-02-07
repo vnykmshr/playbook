@@ -6,6 +6,8 @@ Patterns for designing APIs that are consistent, intuitive, and maintainable. Co
 
 Design for the consumer, not the implementation.
 
+**Resource Hint:** sonnet — API pattern reference; implementation-level interface design decisions.
+
 ---
 
 ## API Style Decision
@@ -834,7 +836,6 @@ components:
 - `/pb-patterns-core` — Circuit breaker, retry patterns
 - `/pb-patterns-async` — Async API patterns
 - `/pb-testing` — API contract testing
-- `/pb-documentation` — Documentation standards
 
 ---
 

@@ -13,6 +13,14 @@ Language-specific guide for Python projects. Use alongside `/pb-guide` for gener
 
 Adapt this guide to your project—it's a starting point, not dogma.
 
+**Resource Hint:** sonnet — Language-specific implementation guidance; routine code standards.
+
+## When to Use
+
+- Starting a Python project or adding Python-specific workflow gates
+- Reviewing Python code quality practices (typing, testing, linting)
+- Onboarding developers to Python project conventions
+
 ---
 
 ## **Python-Specific Change Tiers**

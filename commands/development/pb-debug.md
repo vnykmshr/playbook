@@ -6,6 +6,8 @@ Systematic approach to finding and fixing bugs. Hypothesis-driven, reproducible,
 
 **Mindset:** Use `/pb-preamble` thinking to challenge your assumptions about what's broken. Use `/pb-design-rules` thinking — especially Transparency (make the invisible visible), Repair (fail noisily to aid debugging), and Clarity (simple code is easier to debug).
 
+**Resource Hint:** sonnet — systematic bug investigation and resolution
+
 ---
 
 ## When to Use This Command

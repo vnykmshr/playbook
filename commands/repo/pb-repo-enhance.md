@@ -6,6 +6,17 @@ Comprehensive repository polish: organize, document, and present.
 
 Organize for scrutiny. Document clearly. Present honestly. Let others understand and challenge your work.
 
+**Resource Hint:** sonnet — repository enhancement orchestrates structured tasks across organization, docs, and presentation
+
+---
+
+## When to Use
+
+- Preparing a repository for public release or open source
+- Periodic repository polish after a development milestone
+- When the repo looks unprofessional or is hard to navigate
+- Before onboarding new team members
+
 ---
 
 ## Objective
@@ -173,7 +184,6 @@ After enhancement, verify:
 - `/pb-repo-organize` — Clean up repository structure
 - `/pb-repo-readme` — Generate comprehensive README
 - `/pb-repo-about` — Generate GitHub About section
-- `/pb-repo-blog` — Write technical blog post
 - `/pb-repo-docsite` — Set up documentation site
 
 ---

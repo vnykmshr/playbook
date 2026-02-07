@@ -2,6 +2,8 @@
 
 Effective onboarding reduces time to productivity, builds confidence, and prevents knowledge loss.
 
+**Resource Hint:** sonnet — structured planning and documentation, not deep architectural reasoning.
+
 ---
 
 ## When to Use This Command
@@ -274,136 +276,12 @@ Mentorship: If they show strength, pair them with junior
 
 ## Knowledge Transfer Essentials
 
-Most knowledge in engineering is in people's heads. Capture it.
+See `/pb-knowledge-transfer` for comprehensive KT session preparation, documentation templates, and knowledge capture strategies.
 
-### What to Document
-
-**Critical (Must document):**
-```
+**Key principle:** Most knowledge in engineering is in people's heads. Capture the critical items first:
 - System architecture (diagrams, how pieces connect)
-- How to set up development environment
-- How to deploy and rollback
+- How to set up, deploy, and rollback
 - Common troubleshooting (fixes, not explanations)
-- Company policies and processes
-- Security practices (how to handle secrets)
-```
-
-**Important (Should document):**
-```
-- Key design decisions (why built this way)
-- Common gotchas ("Don't use X, it causes Y")
-- How to test locally
-- How to debug common issues
-- Code organization (why code is where it is)
-```
-
-**Nice to have (Could document):**
-```
-- Detailed code explanations (good code is self-documenting)
-- Historical context (why we chose X over Y 2 years ago)
-- Personal preferences (I like comments here)
-```
-
-### Documentation for Onboarding
-
-**README for new developers:**
-```markdown
-# Getting Started as a Developer
-
-## Before you start
-- Clone the repo
-- Install Docker
-- Install Node 18+
-
-## First 5 minutes
-```bash
-npm install
-npm run dev
-```
-Should see "Server running on localhost:3000"
-
-## First hour
-- Read architecture.md (5 min)
-- Watch system-overview.mp4 (10 min)
-- Explore `/src/components` (15 min)
-- Ask buddy any questions (30 min)
-
-## First day
-- Set up local database (with buddy's help)
-- Run test suite
-- Make a small change (fix typo)
-- Submit PR (buddy will review)
-
-## Useful commands
-- `npm test` — Run tests
-- `npm run dev` — Start server
-- `npm run deploy-staging` — Deploy to staging
-- `npm run lint` — Check code style
-
-## Getting help
-- Slack #engineering for questions
-- Buddy: [Name] (@slack-handle)
-- Common issues: See TROUBLESHOOTING.md
-```
-
-**Architecture document:**
-```markdown
-# System Architecture
-
-## Overview
-[Diagram showing: Frontend → API → Database]
-
-## Key components
-1. **Frontend** (React)
-   - Location: `/src`
-   - Entry point: `/src/index.js`
-   - Build: `npm run build`
-
-2. **API** (Node.js)
-   - Location: `/api`
-   - Entry point: `/api/server.js`
-   - Port: 5000
-
-3. **Database** (PostgreSQL)
-   - Lives in Docker
-   - Schema: `/database/schema.sql`
-   - How to reset: `npm run reset-db`
-
-## How they connect
-Frontend makes HTTP requests to API at http://localhost:5000
-API talks to database
-```
-
-**Troubleshooting document:**
-```markdown
-# Common Issues
-
-## "npm install fails"
-Solution: Delete node_modules, clear npm cache, reinstall
-```bash
-rm -rf node_modules
-npm cache clean --force
-npm install
-```
-
-## "Database connection refused"
-Solution: Make sure Docker is running
-```bash
-docker ps
-docker-compose up -d
-```
-
-## "Tests fail locally but pass in CI"
-Likely cause: Different Node version
-Solution: `nvm use 18.0.0` (see .nvmrc)
-
-## "Port 3000 already in use"
-Solution: Kill the process
-```bash
-lsof -i :3000
-kill -9 [PID]
-```
-```
 
 ### Video Documentation
 

@@ -4,6 +4,15 @@
 - **Preamble**: Challenge assumptions, prefer correctness over agreement, think like peers
 - **Design Rules**: Build systems that are clear, simple, modular, robust, and extensible
 
+**Resource Hint:** sonnet — Practical standards reference; implementation-level guidance.
+
+## When to Use
+
+- Setting up project conventions for a new codebase
+- Reviewing code against quality and collaboration standards
+- Resolving disagreements about coding practices or workflow norms
+- Onboarding team members to working principles
+
 ---
 
 ## I. Collaboration & Decision Making
@@ -260,8 +269,5 @@ make test        # All tests pass
 - `/pb-preamble` — Collaboration philosophy (mindset)
 - `/pb-design-rules` — Technical principles (clarity, simplicity, modularity)
 - `/pb-guide` — Master SDLC framework
-- `/pb-cycle` — Development iteration loop
-- `/pb-review-hygiene` — Code quality review
 - `/pb-commit` — Atomic commit practices
 - `/pb-testing` — Test patterns and strategies
-- `/pb-review-code` — Code review with MLP quality bar

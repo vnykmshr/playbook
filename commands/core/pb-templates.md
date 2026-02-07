@@ -12,6 +12,14 @@ This embodies `/pb-preamble` thinking (clear structure invites challenge) and ap
 - **Simplicity**: Templates prevent over-engineering; use only what you need
 - **Modularity**: Reusable templates mean teams solve once, use everywhere
 
+**Resource Hint:** sonnet — Template reference; mechanical application of established formats.
+
+## When to Use
+
+- Writing commit messages, PR descriptions, or changelogs
+- Creating ADRs, runbooks, or other structured documents
+- Ensuring consistency across team artifacts
+
 ---
 
 ## Commit Strategy

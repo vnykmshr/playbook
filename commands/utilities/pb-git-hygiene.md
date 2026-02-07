@@ -8,6 +8,8 @@
 
 A healthy git repo is fast to clone, safe from leaked secrets, and free of accumulated cruft. This audit surfaces issues; you decide what to fix.
 
+**Resource Hint:** sonnet — multi-step audit with remediation judgment, beyond mechanical checking.
+
 ---
 
 ## When to Use

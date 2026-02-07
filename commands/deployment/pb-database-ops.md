@@ -6,6 +6,8 @@ Operate databases reliably: migrations, backups, performance tuning, and failove
 
 Data is the most valuable asset. Treat database operations with appropriate care.
 
+**Resource Hint:** sonnet — database operations, migration design, and performance tuning
+
 ---
 
 ## When to Use This Command

@@ -6,6 +6,17 @@ Comprehensive guidance for designing effective logging that aids troubleshooting
 
 Logs must invite scrutiny. They should reveal assumptions and make failures obvious, not hide them with verbosity or silence.
 
+**Resource Hint:** sonnet — logging standards review is structured and pattern-based
+
+---
+
+## When to Use
+
+- Setting up logging for a new service or module
+- Reviewing logging practices during code review
+- Investigating noisy or insufficient logs in production
+- Standardizing logging across a codebase
+
 ---
 
 ## Purpose

@@ -2,6 +2,8 @@
 
 Run this after completing a unit of work. Guides you through self-review, quality gates, and peer review before committing.
 
+**Resource Hint:** sonnet — iterative code review and quality gate checks
+
 ---
 
 ## When to Use This Command
@@ -196,32 +198,9 @@ ls todos/releases/*/
 
 ## Step 7: Context Checkpoint
 
-After committing, assess context health:
+After committing, assess context health. See `/pb-claude-orchestration` for detailed context management strategies (compaction timing, thresholds, preservation techniques).
 
-**Signs context is filling up:**
-- Session has been long (many file reads, edits, tool calls)
-- Multiple iterations completed
-- Large files were read in full
-- Compaction warning appeared
-- Responses becoming slower or less coherent
-
-**Concrete thresholds (approximate):**
-- 5+ full file reads in session → consider checkpoint
-- 3+ completed iterations → natural breakpoint
-- Working on 3rd distinct feature → definitely checkpoint
-
-**If context is heavy:**
-1. Update tracker with current status (commit hash, next task)
-2. Consider `/compact` or starting fresh session
-3. Next session: resume from tracker, not from memory
-
-**Why this matters:** Auto-compaction can lose nuance of recent discussion. Proactive checkpoints preserve intent.
-
-**Natural breakpoints:**
-- After shipping a phase
-- After deploy
-- After 3+ commits in a session
-- When switching focus areas
+**Quick check:** If 3+ iterations completed or 5+ files read this session, consider checkpointing — update tracker, start fresh session.
 
 ---
 

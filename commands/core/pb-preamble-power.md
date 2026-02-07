@@ -2,6 +2,14 @@
 
 Extending core preamble thinking to hierarchies, authority, and the psychological reality of power differences.
 
+**Resource Hint:** opus — Nuanced reasoning about power dynamics and psychological safety.
+
+## When to Use
+
+- Addressing situations where juniors hesitate to challenge seniors
+- Building structures that make honest feedback safe across levels
+- Diagnosing why "think like peers" is not working in practice
+
 ---
 
 ## I. The Reality: Power Isn't Irrelevant

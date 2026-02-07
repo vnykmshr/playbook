@@ -6,6 +6,8 @@ Patterns for efficient, scalable database operations.
 
 Challenge the assumption that the database is the bottleneck. Question whether you need this complexity. Measure before optimizing.
 
+**Resource Hint:** sonnet — Database pattern reference; implementation-level data layer decisions.
+
 ---
 
 ## Purpose
@@ -1020,3 +1022,11 @@ Other patterns (Query Optimization, Replication, Sharding, Transactions, Batch O
 - Always close rows with `defer rows.Close()`
 
 ---
+
+## Related Commands
+
+- `/pb-patterns-core` — Core architectural and design patterns
+- `/pb-patterns-distributed` — Distributed patterns (saga, CQRS, eventual consistency)
+- `/pb-database-ops` — Database operations (migrations, backups, connection pooling)
+- `/pb-performance` — Performance optimization and profiling strategies
+- `/pb-patterns` — Pattern overview and quick reference

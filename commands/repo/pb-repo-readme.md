@@ -6,6 +6,17 @@ Write or rewrite a clear, professional, developer-friendly README.
 
 Examples and assumptions must be clear enough that errors are obvious. Unclear READMEs hide problems.
 
+**Resource Hint:** sonnet — README writing follows structured templates with clear technical examples
+
+---
+
+## When to Use
+
+- Creating a README for a new project
+- Rewriting a stale or unclear README
+- Preparing a project for open source release
+- After major feature changes that affect usage or setup
+
 ---
 
 ## Objective

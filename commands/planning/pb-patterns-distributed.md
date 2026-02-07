@@ -6,6 +6,8 @@ Patterns for coordinating operations across multiple services/databases.
 
 Question whether you truly need distributed systems. Challenge the assumption that you can't keep things simple. Understand the real constraints before choosing.
 
+**Resource Hint:** sonnet — Distributed pattern reference; implementation-level coordination decisions.
+
 ---
 
 ## Purpose

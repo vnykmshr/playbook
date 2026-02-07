@@ -4,6 +4,8 @@
 
 **Mindset:** Apply `/pb-design-rules` thinking (Simplicity — cheapest model that produces correct results; Clarity — make delegation explicit) and `/pb-preamble` thinking (challenge assumptions about model choice — is opus actually needed here, or is it habit?).
 
+**Resource Hint:** sonnet — reference guide for model selection and delegation patterns.
+
 ---
 
 ## When to Use

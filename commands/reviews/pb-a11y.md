@@ -6,6 +6,17 @@ Comprehensive accessibility guidance for web applications. Semantic HTML first, 
 
 **Mindset:** Use `/pb-preamble` thinking to challenge "works for me" assumptions. Use `/pb-design-rules` thinking — especially Clarity (is the interface obvious to ALL users?), Robustness (does it work with assistive technology?), and Repair (fail accessibly when things break).
 
+**Resource Hint:** sonnet — accessibility audit follows structured WCAG checklists and component patterns
+
+---
+
+## When to Use
+
+- Building new UI components or pages
+- Pre-release accessibility compliance check
+- After receiving accessibility-related bug reports or user feedback
+- Periodic audit of existing web application
+
 ---
 
 ## Philosophy
