@@ -24,13 +24,14 @@ Generate or regenerate the global `~/.claude/CLAUDE.md` file from Engineering Pl
 Read these playbooks to extract key principles:
 
 ```
-/pb-preamble          → Collaboration philosophy
-/pb-design-rules      → Technical design principles
-/pb-standards         → Coding standards
-/pb-commit            → Commit conventions
-/pb-pr                → PR practices
-/pb-guide             → SDLC framework overview
-/pb-cycle             → Development iteration pattern
+/pb-preamble              → Collaboration philosophy
+/pb-design-rules          → Technical design principles
+/pb-standards             → Coding standards
+/pb-commit                → Commit conventions
+/pb-pr                    → PR practices
+/pb-guide                 → SDLC framework overview
+/pb-cycle                 → Development iteration pattern
+/pb-claude-orchestration  → Model selection and resource efficiency
 ```
 
 ### Step 2: Generate CLAUDE.md
@@ -104,93 +105,49 @@ For detailed standards: `/pb-standards`
 
 ---
 
-## Commits
+## Commits & PRs
 
-[Extract from /pb-commit]
+**Commits:** Conventional format (`<type>(<scope>): <subject>`), atomic, explain WHY not what, present tense. Types: `feat:`, `fix:`, `refactor:`, `docs:`, `test:`, `chore:`, `perf:`. For detailed guidance: `/pb-commit`
 
-**Format:** Conventional commits
-```
-<type>(<scope>): <description>
-
-[optional body explaining WHY]
-```
-
-**Types:** `feat:`, `fix:`, `refactor:`, `docs:`, `test:`, `chore:`, `perf:`
-
-**Principles:**
-- Atomic — One logical change per commit
-- Explain WHY, not just WHAT
-- Present tense ("add feature" not "added feature")
-- Reference issues when relevant
-
-For detailed guidance: `/pb-commit`
-
----
-
-## Pull Requests
-
-[Extract from /pb-pr]
-
-**Structure:**
-```
-## Summary
-[1-3 bullet points: what and why]
-
-## Changes
-[Key changes, not line-by-line]
-
-## Test Plan
-[How to verify this works]
-```
-
-**Principles:**
-- One concern per PR
-- Self-review before requesting review
-- Respond to all review comments
-- Squash merge to keep history clean
-
-For detailed guidance: `/pb-pr`
+**PRs:** One concern per PR. Summary (what + why), Changes, Test Plan. Self-review before requesting review. Squash merge. For detailed guidance: `/pb-pr`
 
 ---
 
 ## Development Workflow
 
-**Daily rhythm:**
 1. `/pb-start` or `/pb-resume` — Begin or resume work
 2. `/pb-cycle` — Iterate: code → self-review → refine
 3. `/pb-commit` — Atomic, well-explained commits
 4. `/pb-pr` — Create PR when ready
 
-**Planning:**
-- `/pb-plan` — Scope and phase planning
-- `/pb-adr` — Architecture decisions
-- `/pb-patterns-*` — Reference patterns
-
-**Quality gates:**
-- `/pb-review-code` — Code review checklist
-- `/pb-security` — Security checklist
-- `/pb-testing` — Test coverage guidance
-
-**Unsure what to do?**
-- `/pb-what-next` — Context-aware recommendations
+**Non-negotiables:** Never ship known bugs. Never skip testing. Never ignore warnings.
 
 ---
 
-## Context Management
+## Context & Resource Efficiency
 
-**Use subagents for exploration** — When searching across codebase or understanding how something works, prefer `Task` tool with `Explore` agent. Subagents have their own context window and don't consume main conversation context.
+### Model Selection
 
-**Commit frequently** — Each commit is a natural checkpoint. Consider new session after major milestones.
+| Tier | Model | Use For |
+|------|-------|---------|
+| Architect | opus | Planning, architecture, security deep-dives, critical reviews |
+| Engineer | sonnet | Code implementation, test writing, routine reviews |
+| Scout | haiku | File search, validation, formatting, status checks |
 
-**Plans stay in files** — Reference plan files by task ID, don't paste full plans into chat.
+When unsure, start with sonnet. Upgrade if results lack depth. Downgrade if task is mechanical.
 
-**Surgical file reads** — When you know the area, specify line ranges. Full file reads consume context.
+### Context Efficiency
 
-**When context is exhausted mid-task:**
-1. Document current state in tracker (commit hash, exact next step)
-2. Start fresh session
-3. Load only what's needed: tracker + active file(s)
-4. Reference previous work by commit, not by re-reading everything
+- **Subagents for exploration** — Separate context window, doesn't pollute main
+- **Surgical file reads** — Specify line ranges when you know the area
+- **Plans in files** — Reference by path, don't paste into chat
+- **Commit frequently** — Each commit is a context checkpoint
+
+### Continuous Improvement
+
+Record operational learnings in auto-memory. Surface playbook gaps when discovered. Propose improvements — don't self-modify silently.
+
+For detailed guidance: `/pb-claude-orchestration`
 
 ---
 
@@ -199,7 +156,6 @@ For detailed guidance: `/pb-pr`
 | Situation | Command |
 |-----------|---------|
 | Starting new work | `/pb-start` |
-| Resuming after break | `/pb-resume` |
 | During development | `/pb-cycle` |
 | Ready to commit | `/pb-commit` |
 | Creating PR | `/pb-pr` |
@@ -248,6 +204,8 @@ After generation, verify:
 - [ ] Playbook references are correct
 - [ ] **File is under 150 lines / 2K tokens** (context efficiency)
 - [ ] No duplication of content available in playbooks (reference instead)
+- [ ] Context & Resource Efficiency section includes model selection table
+- [ ] Continuous improvement directive present (auto-memory, surface gaps)
 
 ---
 
@@ -286,10 +244,10 @@ head -5 ~/.claude/CLAUDE.md
 ## Related Commands
 
 - `/pb-claude-project` — Generate project-specific CLAUDE.md
+- `/pb-claude-orchestration` — Model selection and resource efficiency guide
 - `/pb-preamble` — Full collaboration philosophy
 - `/pb-design-rules` — Complete design rules reference
 - `/pb-standards` — Detailed coding standards
-- `/pb-guide` — Full SDLC framework
 
 ---
 
