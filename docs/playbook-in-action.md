@@ -10,7 +10,7 @@ This guide demonstrates how development teams use the Engineering Playbook comma
 2. [Example Projects](#example-projects)
 3. [Development Workflow](#development-workflow)
 4. [Code Quality Gates](#code-quality-gates)
-5. [Testing & Validation](#testing--validation)
+5. [Testing & Validation](#testing-validation)
 6. [Creating Pull Requests](#creating-pull-requests)
 7. [Common Scenarios](#common-scenarios)
 

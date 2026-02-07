@@ -8,8 +8,8 @@ Complete reference for how all playbook commands work together to form a unified
 
 ## Table of Contents
 
-1. [Quick Start: Command Selection](#quick-start)
-2. [Command Inventory](#command-inventory-all-55)
+1. [Quick Start: Command Selection](#quick-start-command-selection)
+2. [Command Inventory](#command-inventory)
 3. [Workflow Maps](#workflow-maps)
 4. [Command Clusters](#command-clusters-groups-that-work-together)
 5. [Reference Matrix](#reference-matrix-which-commands-work-together)
