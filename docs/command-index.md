@@ -67,6 +67,7 @@ Quick reference for all playbook commands.
 | `/pb-maintenance` | Production maintenance patterns — database, backups, health monitoring |
 | `/pb-sre-practices` | Toil reduction, error budgets, on-call health, blameless culture |
 | `/pb-dr` | Disaster recovery planning, RTO/RPO, backup strategies, game days |
+| `/pb-server-hygiene` | Periodic server health and hygiene review (drift, bloat, cleanup) |
 | `/pb-database-ops` | Database migrations, backups, performance, connection pooling |
 
 ## Security & Hardening

@@ -5,6 +5,31 @@ All notable changes to this project are documented here.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Added
+
+- **pb-server-hygiene** — Periodic server health and hygiene review
+  - 5-phase ritual: snapshot, health signals, drift detection, cleanup, future readiness
+  - Weekly/monthly/quarterly cadence with phase mapping
+  - Safe cleanup patterns with dry-run-first discipline
+  - Drift and bloat detection checklists (disk, service, config, security)
+  - Server manifest template for living documentation
+  - Red flags section for recognizing neglected servers
+
+### Changed
+
+- **pb-maintenance** — Updated Related Commands (swapped pb-hardening for pb-server-hygiene)
+- **pb-hardening** — Added pb-server-hygiene back-link to Related Commands
+
+### Stats
+
+- **Total commands**: 83 (was 82)
+- **Files modified**: 4
+- **Theme**: Server operations, periodic hygiene ritual
+
+---
+
 ## [v2.7.0] - 2026-02-07
 
 ### Added

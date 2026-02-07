@@ -369,7 +369,7 @@ Then automate the answers.
 - `/pb-sre-practices` — Toil reduction and operational health
 - `/pb-incident` — Good maintenance reduces incident frequency
 - `/pb-dr` — Disaster recovery (backups are foundation)
-- `/pb-hardening` — Security hardening before deployment
+- `/pb-server-hygiene` — Periodic server health and hygiene review
 
 ---
 
