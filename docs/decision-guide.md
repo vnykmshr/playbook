@@ -29,7 +29,8 @@ This guide helps you find the right command for any situation. Answer the questi
 
 **Want to reference design patterns for what you're building?**
 → Use `/pb-patterns` for overview, then:
-- `/pb-patterns-core` for core patterns (SOA, events, retry, circuit breaker)
+- `/pb-patterns-core` for architectural patterns (SOA, events, repository, DTO)
+- `/pb-patterns-resilience` for resilience patterns (retry, circuit breaker, rate limiting)
 - `/pb-patterns-async` for async/concurrency patterns
 - `/pb-patterns-db` for database patterns
 - `/pb-patterns-distributed` for distributed system patterns

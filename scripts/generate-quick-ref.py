@@ -118,7 +118,7 @@ class QuickRefGenerator:
             workflows.append(("Code Review", review_workflow))
 
         # Planning workflow
-        planning_workflow = ["pb-plan", "pb-adr", "pb-patterns-core"]
+        planning_workflow = ["pb-plan", "pb-adr", "pb-patterns"]
         if all(cmd in self.commands for cmd in planning_workflow):
             workflows.append(("Architecture Planning", planning_workflow))
 
@@ -261,7 +261,7 @@ class QuickRefGenerator:
         sections.append("")
         sections.append("1. `/pb-plan` — Define scope and requirements")
         sections.append("2. `/pb-adr` — Document design decisions")
-        sections.append("3. `/pb-patterns-core` — Review relevant patterns")
+        sections.append("3. `/pb-patterns` — Review relevant patterns")
         sections.append("4. `/pb-security` — Plan security review")
 
         return "\n".join(sections)

@@ -696,7 +696,8 @@ Go uses goroutines and channels for concurrency. Key patterns:
 
 ## Related Commands
 
-- `/pb-patterns-core` — Foundation patterns (SOA, Event-Driven, Retry)
+- `/pb-patterns-core` — Foundation patterns (SOA, Event-Driven, Repository)
+- `/pb-patterns-resilience` — Resilience patterns (Retry, Circuit Breaker, Cache-Aside)
 - `/pb-patterns-distributed` — Distributed patterns that build on async
 - `/pb-observability` — Monitor and trace async operations
 

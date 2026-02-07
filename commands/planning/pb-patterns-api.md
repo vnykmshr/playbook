@@ -833,7 +833,7 @@ components:
 
 - `/pb-patterns-frontend` — Frontend data fetching patterns (client-side API consumption)
 - `/pb-security` — API security patterns
-- `/pb-patterns-core` — Circuit breaker, retry patterns
+- `/pb-patterns-resilience` — Resilience patterns (Circuit Breaker, Retry, Rate Limiting)
 - `/pb-patterns-async` — Async API patterns
 - `/pb-testing` — API contract testing
 

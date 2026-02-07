@@ -252,8 +252,9 @@ UNDERSTAND PROBLEM    SELECT CORE PATTERN     IDENTIFY ASYNC NEEDS  COMPLETE DES
    - Identify scalability goals
    - List non-functional requirements (latency, throughput, consistency)
 
-2. **Select Core Pattern** (`/pb-patterns-core`)
-   - SOA, Event-Driven, Request-Reply, Retry, Circuit Breaker, etc.
+2. **Select Architectural Pattern** (`/pb-patterns-core` + `/pb-patterns-resilience`)
+   - Architecture: SOA, Event-Driven, Strangler Fig (core)
+   - Resilience: Retry, Circuit Breaker, Rate Limiting (resilience)
    - Match pattern to problem
    - Check for conflicts with existing architecture
 

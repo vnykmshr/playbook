@@ -171,12 +171,13 @@ Even co-located teams benefit from written standups.
 
 ## Patterns & Architecture
 
-### Q: How do I choose between `/pb-patterns-core`, `/pb-patterns-async`, etc.?
+### Q: How do I choose between `/pb-patterns-core`, `/pb-patterns-resilience`, etc.?
 **A:** Use the decision guide:
-1. Start with `/pb-patterns-core` for fundamental patterns
-2. If you need async/concurrent behavior, check `/pb-patterns-async`
-3. If you need database concerns, check `/pb-patterns-db`
-4. If you're building distributed systems, check `/pb-patterns-distributed`
+1. Start with `/pb-patterns-core` for architectural patterns (SOA, Event-Driven)
+2. If you need reliability (retry, circuit breaker), check `/pb-patterns-resilience`
+3. If you need async/concurrent behavior, check `/pb-patterns-async`
+4. If you need database concerns, check `/pb-patterns-db`
+5. If you're building distributed systems, check `/pb-patterns-distributed`
 
 All patterns can be combined; they're not mutually exclusive.
 
