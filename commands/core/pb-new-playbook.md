@@ -529,7 +529,7 @@ Match depth to purpose. Simple commands don't need 500 lines.
 - `/pb-claude-orchestration` — Model tier guidance for new commands
 - `/pb-templates` — Reusable templates and patterns
 - `/pb-standards` — Code quality standards
-- `/pb-design-rules` — Technical principles for clarity and simplicity
+- `/pb-documentation` — Writing great documentation
 
 ---
 

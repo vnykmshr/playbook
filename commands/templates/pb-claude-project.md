@@ -448,6 +448,7 @@ Project CLAUDE.md complements global:
 ## Related Commands
 
 - `/pb-claude-global` — Generate/update global CLAUDE.md
+- `/pb-claude-orchestration` — Model selection and resource efficiency guide
 - `/pb-context` — Project working context template
 - `/pb-onboarding` — New developer onboarding
 - `/pb-repo-init` — Initialize new project structure

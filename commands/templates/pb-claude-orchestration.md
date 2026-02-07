@@ -250,7 +250,6 @@ This creates a virtuous cycle: use playbooks → discover gaps → propose impro
 - `/pb-claude-global` — Generate global CLAUDE.md (concise orchestration rules)
 - `/pb-claude-project` — Generate project CLAUDE.md
 - `/pb-learn` — Pattern learning from debugging (complements operational learning here)
-- `/pb-cycle` — Development iteration (model choice per step)
 - `/pb-review-playbook` — Playbook review (model delegation by phase)
 - `/pb-new-playbook` — Meta-playbook (resource hint in scaffold)
 
