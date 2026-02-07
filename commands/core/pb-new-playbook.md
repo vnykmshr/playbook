@@ -68,7 +68,7 @@ What type of playbook is this? Classification determines required sections.
 | `reviews/` | Quality gates, audits | `pb-review-*`, pb-security |
 | `repo/` | Repository management | pb-repo-init, pb-repo-enhance |
 | `people/` | Team operations | pb-team, pb-onboarding |
-| `templates/` | Context generators | pb-claude-global, pb-context |
+| `templates/` | Context generators, Claude Code configuration | pb-claude-global, pb-context |
 | `utilities/` | System maintenance | pb-doctor, pb-storage, pb-ports |
 
 ---
@@ -294,6 +294,8 @@ Copy this template and fill in:
 
 **Mindset:** Apply /pb-preamble thinking ([aspect]) and /pb-design-rules thinking ([rules]).
 
+**Resource Hint:** [Model tier — see /pb-claude-orchestration]
+
 [Orienting statement]
 
 ---
@@ -334,6 +336,18 @@ Copy this template and fill in:
 **Version:** 1.0.0
 ```
 
+### Resource Hint by Classification
+
+| Classification | Default Model | Rationale |
+|---------------|---------------|-----------|
+| Executor | sonnet | Procedural steps, well-defined scope |
+| Orchestrator | opus (main) | Coordinates subtasks, judgment needed |
+| Guide | opus | Deep reasoning about principles |
+| Reference | sonnet | Pattern application, lookup |
+| Review | opus + haiku | Automated checks (haiku), evaluation (opus) |
+
+See `/pb-claude-orchestration` for full model selection strategy.
+
 ---
 
 ## Step 6: Validate
@@ -366,6 +380,8 @@ Run this checklist before finalizing:
 - [ ] Professional tone throughout
 - [ ] No banned phrases
 - [ ] Could be understood by someone new to the playbook
+- [ ] Resource Hint present and appropriate for classification
+- [ ] Command is context-budget-appropriate (<300 lines for Standard tier)
 
 ### Integration Validation
 
@@ -374,6 +390,8 @@ Run this checklist before finalizing:
 - [ ] All /pb-* references point to existing commands
 - [ ] Added to `docs/command-index.md`
 - [ ] At least one other command references this (edit a related command's "Related Commands" section to add back-link)
+- [ ] If command affects CLAUDE.md content, regenerate with `/pb-claude-global`
+- [ ] Run `/pb-review-playbook` quick review on the new command
 
 ### Final Test
 
@@ -508,12 +526,12 @@ Match depth to purpose. Simple commands don't need 500 lines.
 ## Related Commands
 
 - `/pb-review-playbook` — Review existing playbooks for quality
+- `/pb-claude-orchestration` — Model tier guidance for new commands
 - `/pb-templates` — Reusable templates and patterns
 - `/pb-standards` — Code quality standards
-- `/pb-documentation` — Writing great documentation
 - `/pb-design-rules` — Technical principles for clarity and simplicity
 
 ---
 
-**Last Updated:** 2026-01-24
-**Version:** 1.0.0
+**Last Updated:** 2026-02-07
+**Version:** 1.1.0
