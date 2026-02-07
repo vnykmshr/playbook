@@ -128,9 +128,42 @@ Is content duplicated unnecessarily?
 
 ---
 
+## Quick Review Mode
+
+For reviewing a small number of changed commands (after adding 1-3 commands or making targeted edits), use this abbreviated flow instead of the full review process.
+
+### Scope
+
+```bash
+# Find commands changed since last tag
+git diff $(git describe --tags --abbrev=0)..HEAD --name-only -- commands/
+```
+
+### Abbreviated Perspectives (4 of 10)
+
+Apply these four perspectives to each changed command:
+
+1. **Intent Clarity** — Name matches action? Purpose obvious in 10 seconds?
+2. **Structure Consistency** — Follows heading/section patterns?
+3. **Cross-reference Accuracy** — All `/pb-*` refs valid? Bidirectional links?
+4. **Completeness** — Core use case covered? No TODOs?
+
+### Escalation to Full Review
+
+Escalate to the full review process if:
+
+- More than 5 commands changed
+- New category added or existing category restructured
+- Cross-category dependencies modified
+- Preparing for a major release
+
+---
+
 ## Review Process
 
 ### Phase 1: Automated Checks
+
+**Resource:** Delegate to haiku via Task tool — mechanical checks.
 
 ```bash
 # Count commands
@@ -149,25 +182,41 @@ diff <(find commands -name "pb-*.md" -exec basename {} .md \; | sort) \
 
 ### Phase 2: Category-by-Category Review
 
+**Resource:** Use opus — nuanced evaluation of intent, quality, design alignment.
+
 Review commands by category, applying all 10 perspectives:
 
-1. **Core** (14) — Foundation commands
-2. **Planning** (15) — Architecture and patterns
-3. **Development** (14) — Daily workflow
-4. **Deployment** (7) — Operations
-5. **Release** (1) — Release management
-6. **Reviews** (11) — Quality gates
-7. **Repo** (7) — Repository management
-8. **People** (2) — Team operations
-9. **Templates** (3) — Context and generators
+```bash
+# Get current counts per category
+for dir in commands/*/; do
+  category=$(basename "$dir")
+  count=$(find "$dir" -name "*.md" | wc -l | tr -d ' ')
+  echo "$count $category"
+done
+```
+
+1. **Core** — Foundation, philosophy, meta-playbook commands
+2. **Planning** — Architecture, patterns, decisions
+3. **Development** — Daily workflow commands
+4. **Deployment** — Release, operations, infrastructure
+5. **Reviews** — Quality gates, audits
+6. **Repo** — Repository management
+7. **People** — Team operations
+8. **Templates** — Context generators, Claude Code configuration
+9. **Utilities** — System maintenance
 
 ### Phase 3: Cross-Category Analysis
 
+**Resource:** Use opus in main context — cross-cutting pattern recognition.
+
 After individual review:
+
 - Identify commands that should be merged
 - Identify commands that should be split
 - Identify missing commands (gaps in workflows)
 - Verify workflow continuity (can user flow through without dead ends?)
+
+**Self-improvement trigger:** After review, record systemic patterns in auto-memory. If a gap appears in 3+ commands, propose a playbook update rather than noting the same issue repeatedly.
 
 ---
 
@@ -257,8 +306,7 @@ Create review document at `todos/playbook-review-YYYY-MM-DD.md`:
 ## Related Commands
 
 - `/pb-new-playbook` — Create new playbooks (classification, scaffold, validation)
-- `/pb-review` — General codebase review (different perspectives)
+- `/pb-claude-orchestration` — Model delegation guidance for review phases
 - `/pb-review-docs` — Documentation quality review
 - `/pb-standards` — Quality standards the playbook should meet
 - `/pb-design-rules` — Principles commands should embody
-- `/pb-preamble` — Philosophy commands should enable
