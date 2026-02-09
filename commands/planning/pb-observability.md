@@ -3,10 +3,9 @@ name: "pb-observability"
 title: "Observability & Monitoring Design"
 category: "planning"
 difficulty: "advanced"
-model_hint: "opus"
+model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-logging', 'pb-incident', 'pb-sre-practices', 'pb-performance', 'pb-maintenance']
-tags: ['design', 'testing', 'security', 'workflow', 'review']
 last_reviewed: "2026-02-09"
 last_evolved: ""
 ---

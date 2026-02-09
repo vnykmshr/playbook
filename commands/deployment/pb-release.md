@@ -3,10 +3,9 @@ name: "pb-release"
 title: "Release to Production"
 category: "deployment"
 difficulty: "advanced"
-model_hint: "opus"
+model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-deployment', 'pb-ship', 'pb-pr', 'pb-review-hygiene']
-tags: ['design', 'testing', 'security', 'workflow', 'review']
 last_reviewed: "2026-02-09"
 last_evolved: ""
 ---

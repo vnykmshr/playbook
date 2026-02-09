@@ -6,7 +6,6 @@ difficulty: "advanced"
 model_hint: "sonnet"
 execution_pattern: "interactive"
 related_commands: ['pb-logging', 'pb-observability', 'pb-incident', 'pb-testing', 'pb-learn']
-tags: ['design', 'testing', 'security', 'workflow', 'review']
 last_reviewed: "2026-02-09"
 last_evolved: ""
 ---

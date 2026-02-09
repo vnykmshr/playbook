@@ -3,10 +3,9 @@ name: "pb-patterns-frontend"
 title: "Frontend Architecture Patterns"
 category: "planning"
 difficulty: "advanced"
-model_hint: "opus"
+model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-design-language', 'pb-a11y', 'pb-patterns-async', 'pb-patterns-api', 'pb-testing']
-tags: ['design', 'testing', 'workflow', 'review', 'documentation']
 last_reviewed: "2026-02-09"
 last_evolved: ""
 ---

@@ -3,10 +3,9 @@ name: "pb-logging"
 title: "Logging Strategy & Standards"
 category: "reviews"
 difficulty: "advanced"
-model_hint: "opus"
+model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-security', 'pb-observability', 'pb-incident', 'pb-guide', 'pb-testing']
-tags: ['design', 'testing', 'security', 'workflow', 'review']
 last_reviewed: "2026-02-09"
 last_evolved: ""
 ---

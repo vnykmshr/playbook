@@ -6,7 +6,6 @@ difficulty: "advanced"
 model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-repo-organize', 'pb-repo-readme', 'pb-repo-enhance', 'pb-plan', 'pb-adr']
-tags: ['design', 'testing', 'security', 'workflow', 'review']
 last_reviewed: "2026-02-09"
 last_evolved: ""
 ---

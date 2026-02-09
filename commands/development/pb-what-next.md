@@ -3,10 +3,9 @@ name: "pb-what-next"
 title: "What's Next?"
 category: "development"
 difficulty: "advanced"
-model_hint: "sonnet"
+model_hint: "haiku"
 execution_pattern: "sequential"
 related_commands: ['pb-start', 'pb-cycle', 'pb-commit', 'pb-pr', 'pb-release']
-tags: ['design', 'testing', 'security', 'workflow', 'review']
 last_reviewed: "2026-02-09"
 last_evolved: ""
 ---

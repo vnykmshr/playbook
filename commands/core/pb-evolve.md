@@ -3,10 +3,9 @@ name: "pb-evolve"
 title: "Evolve Playbooks to Match Claude Capabilities"
 category: "core"
 difficulty: "beginner"
-model_hint: "sonnet"
+model_hint: "opus"
 execution_pattern: "sequential"
 related_commands: ['pb-claude-global', 'pb-claude-project', 'pb-standards', 'pb-preamble', 'pb-design-rules']
-tags: ['design', 'testing', 'security', 'workflow', 'review']
 last_reviewed: "2026-02-09"
 last_evolved: ""
 ---

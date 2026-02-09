@@ -6,7 +6,6 @@ difficulty: "advanced"
 model_hint: "opus"
 execution_pattern: "sequential"
 related_commands: ['pb-new-playbook', 'pb-claude-orchestration', 'pb-review-docs', 'pb-standards', 'pb-design-rules']
-tags: ['design', 'testing', 'security', 'workflow', 'review']
 last_reviewed: "2026-02-09"
 last_evolved: ""
 ---

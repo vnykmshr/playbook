@@ -6,7 +6,6 @@ difficulty: "advanced"
 model_hint: "haiku"
 execution_pattern: "sequential"
 related_commands: ['pb-storage', 'pb-ports', 'pb-update', 'pb-debug', 'pb-git-hygiene']
-tags: ['design', 'testing', 'workflow', 'review', 'documentation']
 last_reviewed: "2026-02-09"
 last_evolved: ""
 ---

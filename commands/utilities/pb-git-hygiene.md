@@ -3,10 +3,9 @@ name: "pb-git-hygiene"
 title: "Git Hygiene"
 category: "utilities"
 difficulty: "advanced"
-model_hint: "haiku"
+model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-review-hygiene', 'pb-security', 'pb-repo-organize', 'pb-repo-enhance', 'pb-doctor']
-tags: ['design', 'security', 'workflow', 'review', 'deployment']
 last_reviewed: "2026-02-09"
 last_evolved: ""
 ---

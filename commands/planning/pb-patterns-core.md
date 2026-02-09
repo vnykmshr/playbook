@@ -3,10 +3,9 @@ name: "pb-patterns-core"
 title: "Core Architecture & Design Patterns"
 category: "planning"
 difficulty: "advanced"
-model_hint: "opus"
+model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-patterns-resilience', 'pb-patterns-async', 'pb-patterns-db', 'pb-patterns-distributed', 'pb-adr']
-tags: ['design', 'testing', 'security', 'workflow', 'review']
 last_reviewed: "2026-02-09"
 last_evolved: ""
 ---

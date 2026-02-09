@@ -3,10 +3,9 @@ name: "pb-patterns-deployment"
 title: "Deployment Patterns & Strategies"
 category: "planning"
 difficulty: "advanced"
-model_hint: "opus"
+model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-deployment', 'pb-release', 'pb-dr']
-tags: ['design', 'testing', 'security', 'workflow', 'review']
 last_reviewed: "2026-02-09"
 last_evolved: ""
 ---

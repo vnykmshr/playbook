@@ -6,7 +6,6 @@ difficulty: "advanced"
 model_hint: "haiku"
 execution_pattern: "sequential"
 related_commands: ['pb-doctor', 'pb-update', 'pb-storage', 'pb-start']
-tags: ['design', 'security', 'workflow', 'review', 'documentation']
 last_reviewed: "2026-02-09"
 last_evolved: ""
 ---

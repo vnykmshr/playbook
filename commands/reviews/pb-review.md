@@ -6,7 +6,6 @@ difficulty: "advanced"
 model_hint: "opus"
 execution_pattern: "reference"
 related_commands: ['pb-review-code', 'pb-review-hygiene', 'pb-review-tests', 'pb-security', 'pb-cycle']
-tags: ['design', 'testing', 'security', 'workflow', 'review']
 last_reviewed: "2026-02-09"
 last_evolved: ""
 ---

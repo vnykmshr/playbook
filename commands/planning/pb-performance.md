@@ -3,10 +3,9 @@ name: "pb-performance"
 title: "Performance Optimization & Scalability"
 category: "planning"
 difficulty: "advanced"
-model_hint: "opus"
+model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-observability', 'pb-review-hygiene', 'pb-patterns-core']
-tags: ['design', 'testing', 'workflow', 'review', 'deployment']
 last_reviewed: "2026-02-09"
 last_evolved: ""
 ---

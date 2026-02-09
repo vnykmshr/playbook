@@ -3,10 +3,9 @@ name: "pb-preamble"
 title: "Collaboration Preamble: Thinking Like Peers"
 category: "core"
 difficulty: "beginner"
-model_hint: "sonnet"
+model_hint: "opus"
 execution_pattern: "reference"
 related_commands: ['pb-preamble-async', 'pb-preamble-power', 'pb-preamble-decisions', 'pb-design-rules', 'pb-think']
-tags: ['design', 'testing', 'security', 'workflow', 'review']
 last_reviewed: "2026-02-09"
 last_evolved: ""
 ---

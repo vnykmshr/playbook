@@ -6,7 +6,6 @@ difficulty: "advanced"
 model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-start', 'pb-pause', 'pb-cycle']
-tags: ['design', 'testing', 'workflow', 'review', 'deployment']
 last_reviewed: "2026-02-09"
 last_evolved: ""
 ---

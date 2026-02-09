@@ -6,7 +6,6 @@ difficulty: "advanced"
 model_hint: "opus"
 execution_pattern: "sequential"
 related_commands: ['pb-incident', 'pb-sre-practices', 'pb-database-ops', 'pb-deployment', 'pb-maintenance']
-tags: ['design', 'testing', 'security', 'workflow', 'review']
 last_reviewed: "2026-02-09"
 last_evolved: ""
 ---

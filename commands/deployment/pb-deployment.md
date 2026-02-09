@@ -3,10 +3,9 @@ name: "pb-deployment"
 title: "Deploy to Environment"
 category: "deployment"
 difficulty: "advanced"
-model_hint: "opus"
+model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-release', 'pb-patterns-deployment', 'pb-incident', 'pb-observability']
-tags: ['design', 'testing', 'security', 'workflow', 'review']
 last_reviewed: "2026-02-09"
 last_evolved: ""
 ---

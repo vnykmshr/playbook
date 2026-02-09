@@ -6,7 +6,6 @@ difficulty: "beginner"
 model_hint: "sonnet"
 execution_pattern: "interactive"
 related_commands: ['pb-preamble', 'pb-design-rules', 'pb-plan', 'pb-adr', 'pb-debug']
-tags: ['design', 'testing', 'workflow', 'review', 'deployment']
 last_reviewed: "2026-02-09"
 last_evolved: ""
 ---

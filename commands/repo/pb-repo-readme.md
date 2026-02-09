@@ -6,7 +6,6 @@ difficulty: "advanced"
 model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-repo-about', 'pb-repo-blog', 'pb-repo-enhance', 'pb-documentation']
-tags: ['design', 'workflow', 'deployment', 'documentation', 'optimization']
 last_reviewed: "2026-02-09"
 last_evolved: ""
 ---

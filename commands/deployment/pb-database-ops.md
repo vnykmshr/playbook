@@ -3,10 +3,9 @@ name: "pb-database-ops"
 title: "Database Operations"
 category: "deployment"
 difficulty: "advanced"
-model_hint: "opus"
+model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-patterns-db', 'pb-dr', 'pb-deployment']
-tags: ['design', 'testing', 'security', 'workflow', 'review']
 last_reviewed: "2026-02-09"
 last_evolved: ""
 ---

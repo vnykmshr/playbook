@@ -3,10 +3,9 @@ name: "pb-plan"
 title: "New Focus Area Planning Prompt (Generic)"
 category: "planning"
 difficulty: "advanced"
-model_hint: "opus"
+model_hint: "sonnet"
 execution_pattern: "interactive"
 related_commands: ['pb-adr', 'pb-todo-implement', 'pb-think', 'pb-repo-init', 'pb-start']
-tags: ['design', 'testing', 'workflow', 'review', 'deployment']
 last_reviewed: "2026-02-09"
 last_evolved: ""
 ---

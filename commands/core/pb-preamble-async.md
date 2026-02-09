@@ -3,10 +3,9 @@ name: "pb-preamble-async"
 title: "Preamble Part 2: Async & Distributed Teams"
 category: "core"
 difficulty: "beginner"
-model_hint: "sonnet"
+model_hint: "opus"
 execution_pattern: "sequential"
 related_commands: ['pb-preamble', 'pb-standup', 'pb-pr', 'pb-cycle', 'pb-team']
-tags: ['design', 'security', 'workflow', 'review', 'deployment']
 last_reviewed: "2026-02-09"
 last_evolved: ""
 ---

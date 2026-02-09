@@ -3,10 +3,9 @@ name: "pb-secrets"
 title: "Secrets Management"
 category: "deployment"
 difficulty: "advanced"
-model_hint: "opus"
+model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-hardening', 'pb-security', 'pb-deployment']
-tags: ['design', 'testing', 'security', 'workflow', 'review']
 last_reviewed: "2026-02-09"
 last_evolved: ""
 ---

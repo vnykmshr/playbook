@@ -3,10 +3,9 @@ name: "pb-preamble-power"
 title: "Preamble Part 3: Power Dynamics & Psychology"
 category: "core"
 difficulty: "beginner"
-model_hint: "sonnet"
+model_hint: "opus"
 execution_pattern: "sequential"
 related_commands: ['pb-preamble', 'pb-preamble-async', 'pb-team', 'pb-incident', 'pb-onboarding']
-tags: ['design', 'testing', 'security', 'workflow', 'review']
 last_reviewed: "2026-02-09"
 last_evolved: ""
 ---

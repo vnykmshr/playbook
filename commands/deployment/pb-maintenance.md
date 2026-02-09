@@ -3,10 +3,9 @@ name: "pb-maintenance"
 title: "Production Maintenance"
 category: "deployment"
 difficulty: "advanced"
-model_hint: "opus"
+model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-observability', 'pb-sre-practices', 'pb-incident', 'pb-dr', 'pb-server-hygiene']
-tags: ['design', 'testing', 'security', 'workflow', 'review']
 last_reviewed: "2026-02-09"
 last_evolved: ""
 ---

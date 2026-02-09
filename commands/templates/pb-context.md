@@ -3,10 +3,9 @@ name: "pb-context"
 title: "[Project Name] Working Context"
 category: "templates"
 difficulty: "beginner"
-model_hint: "haiku"
+model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-claude-project', 'pb-start', 'pb-resume', 'pb-onboarding']
-tags: ['design', 'testing', 'security', 'workflow', 'review']
 last_reviewed: "2026-02-09"
 last_evolved: ""
 ---
