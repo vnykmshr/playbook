@@ -1,3 +1,14 @@
+---
+name: "pb-context"
+title: "[Project Name] Working Context"
+category: "templates"
+difficulty: "beginner"
+model_hint: "sonnet"
+execution_pattern: "sequential"
+related_commands: ['pb-claude-project', 'pb-start', 'pb-resume', 'pb-onboarding']
+last_reviewed: "2026-02-09"
+last_evolved: ""
+---
 # [Project Name] Working Context
 
 > **Purpose:** Onboarding context for new developers and session refresh for ongoing work.

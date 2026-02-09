@@ -1,3 +1,14 @@
+---
+name: "pb-setup"
+title: "Bootstrap Dev Machine"
+category: "utilities"
+difficulty: "advanced"
+model_hint: "haiku"
+execution_pattern: "sequential"
+related_commands: ['pb-doctor', 'pb-update', 'pb-storage', 'pb-start']
+last_reviewed: "2026-02-09"
+last_evolved: ""
+---
 # Bootstrap Dev Machine
 
 Set up a new Mac for development from scratch. Opinionated defaults with escape hatches for customization.

@@ -1,3 +1,14 @@
+---
+name: "pb-think"
+title: "Unified Thinking Partner"
+category: "core"
+difficulty: "beginner"
+model_hint: "sonnet"
+execution_pattern: "interactive"
+related_commands: ['pb-preamble', 'pb-design-rules', 'pb-plan', 'pb-adr', 'pb-debug']
+last_reviewed: "2026-02-09"
+last_evolved: ""
+---
 # Unified Thinking Partner
 
 **Purpose:** Complete thinking toolkit for problem-solving: ideate (divergent) → synthesize (integration) → refine (convergent). Process complex queries through structured thinking cycles.

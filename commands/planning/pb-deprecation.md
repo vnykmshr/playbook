@@ -1,3 +1,14 @@
+---
+name: "pb-deprecation"
+title: "Deprecation & Backwards Compatibility Strategy"
+category: "planning"
+difficulty: "advanced"
+model_hint: "sonnet"
+execution_pattern: "sequential"
+related_commands: ['pb-adr', 'pb-release', 'pb-documentation']
+last_reviewed: "2026-02-09"
+last_evolved: ""
+---
 # Deprecation & Backwards Compatibility Strategy
 
 Plan, communicate, and execute deprecations with zero surprises. Keep users moving forward while respecting their timelines.

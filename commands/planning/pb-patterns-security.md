@@ -1,3 +1,14 @@
+---
+name: "pb-patterns-security"
+title: "Security Patterns & Microservice Security"
+category: "planning"
+difficulty: "advanced"
+model_hint: "sonnet"
+execution_pattern: "sequential"
+related_commands: ['pb-security', 'pb-review-microservice', 'pb-patterns-core', 'pb-logging']
+last_reviewed: "2026-02-09"
+last_evolved: ""
+---
 # Security Patterns & Microservice Security
 
 ## Overview

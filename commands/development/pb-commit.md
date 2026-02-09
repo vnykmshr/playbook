@@ -1,3 +1,14 @@
+---
+name: "pb-commit"
+title: "Atomic Commits & Commit Messages"
+category: "development"
+difficulty: "advanced"
+model_hint: "sonnet"
+execution_pattern: "sequential"
+related_commands: ['pb-cycle', 'pb-pr', 'pb-standards', 'pb-review-code']
+last_reviewed: "2026-02-09"
+last_evolved: ""
+---
 # Atomic Commits & Commit Messages
 
 Craft focused, logical commits that tell the story of your work. Each commit should be one complete thought.

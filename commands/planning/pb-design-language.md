@@ -1,3 +1,14 @@
+---
+name: "pb-design-language"
+title: "Project Design Language"
+category: "planning"
+difficulty: "advanced"
+model_hint: "sonnet"
+execution_pattern: "sequential"
+related_commands: ['pb-patterns-frontend', 'pb-a11y', 'pb-adr', 'pb-repo-init', 'pb-documentation']
+last_reviewed: "2026-02-09"
+last_evolved: ""
+---
 # Project Design Language
 
 Create and evolve a project-specific design specification. A living document that captures the "why" of design decisions and grows with your project.

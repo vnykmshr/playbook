@@ -1,3 +1,14 @@
+---
+name: "pb-secrets"
+title: "Secrets Management"
+category: "deployment"
+difficulty: "advanced"
+model_hint: "sonnet"
+execution_pattern: "sequential"
+related_commands: ['pb-hardening', 'pb-security', 'pb-deployment']
+last_reviewed: "2026-02-09"
+last_evolved: ""
+---
 # Secrets Management
 
 Manage secrets securely across development, CI/CD, and production environments. Never hardcode, always encrypt, rotate regularly.

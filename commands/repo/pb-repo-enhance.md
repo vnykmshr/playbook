@@ -1,3 +1,14 @@
+---
+name: "pb-repo-enhance"
+title: "Repository Enhancement Suite"
+category: "repo"
+difficulty: "advanced"
+model_hint: "sonnet"
+execution_pattern: "sequential"
+related_commands: ['pb-repo-init', 'pb-repo-organize', 'pb-repo-readme', 'pb-repo-about', 'pb-repo-docsite']
+last_reviewed: "2026-02-09"
+last_evolved: ""
+---
 # Repository Enhancement Suite
 
 Comprehensive repository polish: organize, document, and present.

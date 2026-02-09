@@ -1,3 +1,14 @@
+---
+name: "pb-plan"
+title: "New Focus Area Planning Prompt (Generic)"
+category: "planning"
+difficulty: "advanced"
+model_hint: "sonnet"
+execution_pattern: "interactive"
+related_commands: ['pb-adr', 'pb-todo-implement', 'pb-think', 'pb-repo-init', 'pb-start']
+last_reviewed: "2026-02-09"
+last_evolved: ""
+---
 # New Focus Area Planning Prompt (Generic)
 
 A reusable prompt for planning release focus areas across any project. Emphasizes **alignment before implementation**, **surgical execution**, and **meaningful outcomes over busywork**.

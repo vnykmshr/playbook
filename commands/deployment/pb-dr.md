@@ -1,3 +1,14 @@
+---
+name: "pb-dr"
+title: "Disaster Recovery"
+category: "deployment"
+difficulty: "advanced"
+model_hint: "opus"
+execution_pattern: "sequential"
+related_commands: ['pb-incident', 'pb-sre-practices', 'pb-database-ops', 'pb-deployment', 'pb-maintenance']
+last_reviewed: "2026-02-09"
+last_evolved: ""
+---
 # Disaster Recovery
 
 Plan, test, and execute recovery from major system failures. When everything goes wrong, have a plan that works.

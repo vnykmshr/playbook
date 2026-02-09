@@ -1,3 +1,14 @@
+---
+name: "pb-preamble"
+title: "Collaboration Preamble: Thinking Like Peers"
+category: "core"
+difficulty: "beginner"
+model_hint: "opus"
+execution_pattern: "reference"
+related_commands: ['pb-preamble-async', 'pb-preamble-power', 'pb-preamble-decisions', 'pb-design-rules', 'pb-think']
+last_reviewed: "2026-02-09"
+last_evolved: ""
+---
 # Collaboration Preamble: Thinking Like Peers
 
 This anchors how we think and work together. Not a process, but a mindset that every other playbook command assumes you bring.

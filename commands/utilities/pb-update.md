@@ -1,3 +1,14 @@
+---
+name: "pb-update"
+title: "Update All Tools"
+category: "utilities"
+difficulty: "advanced"
+model_hint: "haiku"
+execution_pattern: "sequential"
+related_commands: ['pb-doctor', 'pb-storage', 'pb-setup', 'pb-security']
+last_reviewed: "2026-02-09"
+last_evolved: ""
+---
 # Update All Tools
 
 Update all package managers, development tools, and system software with appropriate safety tiers. Keep your dev environment current without breaking things.

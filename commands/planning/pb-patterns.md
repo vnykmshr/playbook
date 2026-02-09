@@ -1,3 +1,14 @@
+---
+name: "pb-patterns"
+title: "Architecture & Design Patterns"
+category: "planning"
+difficulty: "advanced"
+model_hint: "sonnet"
+execution_pattern: "reference"
+related_commands: ['pb-patterns-core', 'pb-patterns-resilience', 'pb-patterns-async', 'pb-patterns-db', 'pb-patterns-distributed']
+last_reviewed: "2026-02-09"
+last_evolved: ""
+---
 # Architecture & Design Patterns
 
 Overview and navigation guide for the pattern family.

@@ -1,3 +1,14 @@
+---
+name: "pb-review-microservice"
+title: "Microservice Architecture Review"
+category: "reviews"
+difficulty: "advanced"
+model_hint: "opus"
+execution_pattern: "sequential"
+related_commands: ['pb-patterns-core', 'pb-patterns-resilience', 'pb-patterns-distributed', 'pb-observability', 'pb-incident']
+last_reviewed: "2026-02-09"
+last_evolved: ""
+---
 # Microservice Architecture Review
 
 Framework for reviewing microservice design, implementation, and operations.

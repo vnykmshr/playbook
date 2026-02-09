@@ -1,3 +1,14 @@
+---
+name: "pb-guide-go"
+title: "Go SDLC Playbook"
+category: "core"
+difficulty: "beginner"
+model_hint: "sonnet"
+execution_pattern: "sequential"
+related_commands: []
+last_reviewed: "2026-02-09"
+last_evolved: ""
+---
 # Go SDLC Playbook
 
 Language-specific guide for Go projects. Use alongside `/pb-guide` for general process.

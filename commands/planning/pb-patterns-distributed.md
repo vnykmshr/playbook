@@ -1,3 +1,14 @@
+---
+name: "pb-patterns-distributed"
+title: "Distributed Patterns"
+category: "planning"
+difficulty: "advanced"
+model_hint: "sonnet"
+execution_pattern: "sequential"
+related_commands: ['pb-patterns-core', 'pb-patterns-async', 'pb-observability']
+last_reviewed: "2026-02-09"
+last_evolved: ""
+---
 # Distributed Patterns
 
 Patterns for coordinating operations across multiple services/databases.

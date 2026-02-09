@@ -1,3 +1,14 @@
+---
+name: "pb-resume"
+title: "Resume Development Work"
+category: "development"
+difficulty: "advanced"
+model_hint: "sonnet"
+execution_pattern: "sequential"
+related_commands: ['pb-start', 'pb-pause', 'pb-cycle']
+last_reviewed: "2026-02-09"
+last_evolved: ""
+---
 # Resume Development Work
 
 Quickly get back into context after a break. Use this to resume work on an existing feature branch.

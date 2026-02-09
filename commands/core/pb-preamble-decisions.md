@@ -1,3 +1,14 @@
+---
+name: "pb-preamble-decisions"
+title: "Preamble Part 4: Decision Making & Dissent"
+category: "core"
+difficulty: "beginner"
+model_hint: "opus"
+execution_pattern: "sequential"
+related_commands: ['pb-preamble', 'pb-preamble-async', 'pb-preamble-power', 'pb-adr', 'pb-incident']
+last_reviewed: "2026-02-09"
+last_evolved: ""
+---
 # Preamble Part 4: Decision Making & Dissent
 
 Extending core preamble thinking to decision finality, execution alignment, and organizational learning.

@@ -1,3 +1,14 @@
+---
+name: "pb-patterns-db"
+title: "Database Patterns"
+category: "planning"
+difficulty: "advanced"
+model_hint: "sonnet"
+execution_pattern: "sequential"
+related_commands: ['pb-patterns-core', 'pb-patterns-distributed', 'pb-database-ops', 'pb-performance', 'pb-patterns']
+last_reviewed: "2026-02-09"
+last_evolved: ""
+---
 # Database Patterns
 
 Patterns for efficient, scalable database operations.

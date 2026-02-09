@@ -1,3 +1,14 @@
+---
+name: "pb-hardening"
+title: "Production Security Hardening"
+category: "deployment"
+difficulty: "advanced"
+model_hint: "opus"
+execution_pattern: "sequential"
+related_commands: ['pb-secrets', 'pb-security', 'pb-deployment', 'pb-server-hygiene', 'pb-patterns-resilience']
+last_reviewed: "2026-02-09"
+last_evolved: ""
+---
 # Production Security Hardening
 
 Harden servers and containers before deploying to production. Defense-in-depth across OS, container runtime, network, and application layers.

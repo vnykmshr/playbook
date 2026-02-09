@@ -1,3 +1,14 @@
+---
+name: "pb-repo-docsite"
+title: "Documentation Site Setup"
+category: "repo"
+difficulty: "advanced"
+model_hint: "sonnet"
+execution_pattern: "sequential"
+related_commands: ['pb-repo-enhance', 'pb-repo-readme', 'pb-documentation', 'pb-review-docs', 'pb-ship']
+last_reviewed: "2026-02-09"
+last_evolved: ""
+---
 # Documentation Site Setup
 
 Transform project documentation into a professional, publicly consumable static site with CI/CD deployment.

@@ -1,3 +1,14 @@
+---
+name: "pb-team"
+title: "Building High-Performance Engineering Teams"
+category: "people"
+difficulty: "advanced"
+model_hint: "sonnet"
+execution_pattern: "sequential"
+related_commands: ['pb-preamble', 'pb-onboarding', 'pb-knowledge-transfer', 'pb-sre-practices']
+last_reviewed: "2026-02-09"
+last_evolved: ""
+---
 # Building High-Performance Engineering Teams
 
 Create an environment where engineers thrive, collaborate effectively, and produce excellent work.

@@ -1,3 +1,14 @@
+---
+name: "pb-observability"
+title: "Observability & Monitoring Design"
+category: "planning"
+difficulty: "advanced"
+model_hint: "sonnet"
+execution_pattern: "sequential"
+related_commands: ['pb-logging', 'pb-incident', 'pb-sre-practices', 'pb-performance', 'pb-maintenance']
+last_reviewed: "2026-02-09"
+last_evolved: ""
+---
 # Observability & Monitoring Design
 
 Build visibility into your system's behavior: metrics, logs, and traces that help you understand what's happening in production.

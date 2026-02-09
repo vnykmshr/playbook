@@ -1,3 +1,14 @@
+---
+name: "pb-repo-init"
+title: "Initialize Greenfield Project"
+category: "repo"
+difficulty: "advanced"
+model_hint: "sonnet"
+execution_pattern: "sequential"
+related_commands: ['pb-repo-organize', 'pb-repo-readme', 'pb-repo-enhance', 'pb-plan', 'pb-adr']
+last_reviewed: "2026-02-09"
+last_evolved: ""
+---
 # Initialize Greenfield Project
 
 Create a meticulous, incremental execution plan for a new project from scratch.

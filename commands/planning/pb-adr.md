@@ -1,3 +1,14 @@
+---
+name: "pb-adr"
+title: "Architecture Decision Record (ADR)"
+category: "planning"
+difficulty: "advanced"
+model_hint: "opus"
+execution_pattern: "sequential"
+related_commands: ['pb-plan', 'pb-think', 'pb-design-rules', 'pb-patterns-core']
+last_reviewed: "2026-02-09"
+last_evolved: ""
+---
 # Architecture Decision Record (ADR)
 
 Document significant architectural decisions to capture the context, alternatives considered, and rationale for future reference.

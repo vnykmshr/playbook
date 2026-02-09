@@ -1,3 +1,14 @@
+---
+name: "pb-patterns-cloud"
+title: "Cloud Deployment Patterns (AWS, GCP, Azure)"
+category: "planning"
+difficulty: "advanced"
+model_hint: "sonnet"
+execution_pattern: "sequential"
+related_commands: ['pb-deployment', 'pb-patterns-core', 'pb-observability', 'pb-patterns-distributed']
+last_reviewed: "2026-02-09"
+last_evolved: ""
+---
 # Cloud Deployment Patterns (AWS, GCP, Azure)
 
 ## Overview

@@ -1,3 +1,14 @@
+---
+name: "pb-review-playbook"
+title: "Playbook Command Review"
+category: "reviews"
+difficulty: "advanced"
+model_hint: "opus"
+execution_pattern: "sequential"
+related_commands: ['pb-new-playbook', 'pb-claude-orchestration', 'pb-review-docs', 'pb-standards', 'pb-design-rules']
+last_reviewed: "2026-02-09"
+last_evolved: ""
+---
 # Playbook Command Review
 
 **Purpose:** Comprehensive multi-perspective review of playbook commands to ensure correct intent, quality implementation, and ecosystem coherence.

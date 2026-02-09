@@ -1,3 +1,14 @@
+---
+name: "pb-review-docs"
+title: "Documentation Review"
+category: "reviews"
+difficulty: "advanced"
+model_hint: "opus"
+execution_pattern: "sequential"
+related_commands: ['pb-review', 'pb-review-hygiene', 'pb-documentation', 'pb-repo-readme', 'pb-repo-docsite']
+last_reviewed: "2026-02-09"
+last_evolved: ""
+---
 # Documentation Review
 
 **Purpose:** Conduct a comprehensive review of project documentation for accuracy, completeness, and maintainability. Ensure docs remain human-readable and actionable.

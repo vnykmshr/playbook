@@ -1,3 +1,14 @@
+---
+name: "pb-knowledge-transfer"
+title: "Knowledge Transfer (KT) Session Preparation"
+category: "people"
+difficulty: "advanced"
+model_hint: "sonnet"
+execution_pattern: "sequential"
+related_commands: ['pb-onboarding', 'pb-guide', 'pb-security', 'pb-adr', 'pb-incident']
+last_reviewed: "2026-02-09"
+last_evolved: ""
+---
 # Knowledge Transfer (KT) Session Preparation
 
 Structured guide for documenting and transferring project knowledge to new team members and stakeholders.

@@ -1,3 +1,14 @@
+---
+name: "pb-voice"
+title: "Voice Review"
+category: "reviews"
+difficulty: "advanced"
+model_hint: "sonnet"
+execution_pattern: "sequential"
+related_commands: ['pb-think', 'pb-review-docs', 'pb-documentation', 'pb-design-rules', 'pb-preamble']
+last_reviewed: "2026-02-09"
+last_evolved: ""
+---
 # Voice Review
 
 **Purpose:** Post-process AI-assisted prose to detect and remove mechanical patterns. Two-stage pipeline: detect AI tells first, then rewrite only flagged sections while preserving author voice.

@@ -1,3 +1,14 @@
+---
+name: "pb-sre-practices"
+title: "SRE Practices"
+category: "deployment"
+difficulty: "advanced"
+model_hint: "opus"
+execution_pattern: "sequential"
+related_commands: ['pb-incident', 'pb-observability', 'pb-dr', 'pb-team']
+last_reviewed: "2026-02-09"
+last_evolved: ""
+---
 # SRE Practices
 
 Build sustainable, reliable operations through toil reduction, error budgets, and healthy on-call practices. This command focuses on prevention and culture—complementing `/pb-incident` (response) and `/pb-observability` (monitoring).

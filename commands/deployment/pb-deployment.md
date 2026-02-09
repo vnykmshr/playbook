@@ -1,3 +1,14 @@
+---
+name: "pb-deployment"
+title: "Deploy to Environment"
+category: "deployment"
+difficulty: "advanced"
+model_hint: "sonnet"
+execution_pattern: "sequential"
+related_commands: ['pb-release', 'pb-patterns-deployment', 'pb-incident', 'pb-observability']
+last_reviewed: "2026-02-09"
+last_evolved: ""
+---
 # Deploy to Environment
 
 Execute deployment to target environment with surgical precision. This command guides you through discovery, pre-flight checks, execution, and verification.

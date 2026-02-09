@@ -1,3 +1,14 @@
+---
+name: "pb-incident"
+title: "Incident Response & Recovery"
+category: "deployment"
+difficulty: "advanced"
+model_hint: "opus"
+execution_pattern: "sequential"
+related_commands: ['pb-observability', 'pb-sre-practices', 'pb-dr', 'pb-logging', 'pb-maintenance']
+last_reviewed: "2026-02-09"
+last_evolved: ""
+---
 # Incident Response & Recovery
 
 Respond to production incidents quickly and professionally. Clear process, clear communication, minimal impact.

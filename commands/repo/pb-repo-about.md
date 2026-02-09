@@ -1,3 +1,14 @@
+---
+name: "pb-repo-about"
+title: "Generate GitHub About & Tags"
+category: "repo"
+difficulty: "advanced"
+model_hint: "haiku"
+execution_pattern: "sequential"
+related_commands: ['pb-repo-readme', 'pb-repo-enhance']
+last_reviewed: "2026-02-09"
+last_evolved: ""
+---
 # Generate GitHub About & Tags
 
 Create a concise, search-optimized GitHub "About" description and relevant topic tags.

@@ -1,3 +1,14 @@
+---
+name: "pb-claude-global"
+title: "Generate Global CLAUDE.md"
+category: "templates"
+difficulty: "beginner"
+model_hint: "sonnet"
+execution_pattern: "sequential"
+related_commands: ['pb-claude-project', 'pb-claude-orchestration', 'pb-preamble', 'pb-design-rules', 'pb-standards']
+last_reviewed: "2026-02-09"
+last_evolved: ""
+---
 # Generate Global CLAUDE.md
 
 Generate or regenerate the global `~/.claude/CLAUDE.md` file from Engineering Playbook principles.

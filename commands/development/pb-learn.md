@@ -1,3 +1,14 @@
+---
+name: "pb-learn"
+title: "Pattern Learning"
+category: "development"
+difficulty: "advanced"
+model_hint: "sonnet"
+execution_pattern: "sequential"
+related_commands: ['pb-debug', 'pb-cycle', 'pb-resume', 'pb-documentation', 'pb-standards']
+last_reviewed: "2026-02-09"
+last_evolved: ""
+---
 # Pattern Learning
 
 **Purpose:** Extract reusable patterns from the current session — error resolutions, debugging techniques, workarounds, and project conventions.

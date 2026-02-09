@@ -1,3 +1,14 @@
+---
+name: "pb-security"
+title: "Security Review & Checklist"
+category: "reviews"
+difficulty: "advanced"
+model_hint: "opus"
+execution_pattern: "sequential"
+related_commands: ['pb-review', 'pb-review-hygiene', 'pb-hardening', 'pb-secrets', 'pb-patterns-security']
+last_reviewed: "2026-02-09"
+last_evolved: ""
+---
 # Security Review & Checklist
 
 Comprehensive security guidance for code review, design assessment, and pre-release validation. Use the checklist appropriate to your context: quick review, standard audit, or deep dive.

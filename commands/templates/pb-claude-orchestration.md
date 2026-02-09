@@ -1,3 +1,14 @@
+---
+name: "pb-claude-orchestration"
+title: "Claude Code Orchestration"
+category: "templates"
+difficulty: "beginner"
+model_hint: "sonnet"
+execution_pattern: "sequential"
+related_commands: ['pb-claude-global', 'pb-claude-project', 'pb-learn', 'pb-review-playbook', 'pb-new-playbook']
+last_reviewed: "2026-02-09"
+last_evolved: ""
+---
 # Claude Code Orchestration
 
 **Purpose:** Guide model selection, task delegation, context management, and continuous self-improvement for efficient Claude Code usage.

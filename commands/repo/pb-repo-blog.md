@@ -1,3 +1,14 @@
+---
+name: "pb-repo-blog"
+title: "Write Technical Blog Post"
+category: "repo"
+difficulty: "advanced"
+model_hint: "sonnet"
+execution_pattern: "sequential"
+related_commands: ['pb-repo-readme', 'pb-documentation', 'pb-repo-enhance']
+last_reviewed: "2026-02-09"
+last_evolved: ""
+---
 # Write Technical Blog Post
 
 Create a crisp, practical technical blog post explaining this project to a technical audience.

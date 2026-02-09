@@ -1,3 +1,14 @@
+---
+name: "pb-templates"
+title: "SDLC Templates & Quality Standards"
+category: "core"
+difficulty: "beginner"
+model_hint: "sonnet"
+execution_pattern: "sequential"
+related_commands: ['pb-context', 'pb-documentation', 'pb-standards']
+last_reviewed: "2026-02-09"
+last_evolved: ""
+---
 # SDLC Templates & Quality Standards
 
 Reusable templates for consistent implementation across all focus areas.

@@ -1,3 +1,14 @@
+---
+name: "pb-start"
+title: "Start Development Work"
+category: "development"
+difficulty: "advanced"
+model_hint: "sonnet"
+execution_pattern: "sequential"
+related_commands: ['pb-resume', 'pb-cycle', 'pb-commit', 'pb-plan', 'pb-standup']
+last_reviewed: "2026-02-09"
+last_evolved: ""
+---
 # Start Development Work
 
 Begin iterative development on a feature, enhancement, or fix. This command establishes the rhythm for quality-focused, incremental work.

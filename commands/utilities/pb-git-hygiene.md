@@ -1,3 +1,14 @@
+---
+name: "pb-git-hygiene"
+title: "Git Hygiene"
+category: "utilities"
+difficulty: "advanced"
+model_hint: "sonnet"
+execution_pattern: "sequential"
+related_commands: ['pb-review-hygiene', 'pb-security', 'pb-repo-organize', 'pb-repo-enhance', 'pb-doctor']
+last_reviewed: "2026-02-09"
+last_evolved: ""
+---
 # Git Hygiene
 
 **Purpose:** Periodic audit of git repository health. Identify tracked files that shouldn't be, clean stale branches, detect large objects, scan for secret exposure, and remediate with options from safe amendments to full history rewrites.

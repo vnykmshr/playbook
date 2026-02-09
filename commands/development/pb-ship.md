@@ -1,3 +1,14 @@
+---
+name: "pb-ship"
+title: "Ship Focus Area to Production"
+category: "development"
+difficulty: "advanced"
+model_hint: "sonnet"
+execution_pattern: "sequential"
+related_commands: ['pb-cycle', 'pb-pr', 'pb-release', 'pb-review-hygiene', 'pb-deployment']
+last_reviewed: "2026-02-09"
+last_evolved: ""
+---
 # Ship Focus Area to Production
 
 Complete a focus area through comprehensive review, PR creation, peer review, merge, release, and verification. This is the full journey from "code complete" to "in production."

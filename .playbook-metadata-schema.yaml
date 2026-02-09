@@ -1,0 +1,214 @@
+# Playbook Command Metadata Schema
+
+# This schema defines the YAML front-matter for all command files.
+# Every command file (commands/**/*.md) MUST include this front-matter.
+#
+# YAML front-matter lives at the top of the file between --- delimiters:
+#
+# ---
+# name: pb-command-name
+# title: "Command Title"
+# ...
+# ---
+#
+# # Command Title
+# [rest of markdown content]
+
+version: "1.0"
+updated: "2026-02-09"
+
+fields:
+  # IDENTITY (required)
+  # Unique identifier and display name
+  name:
+    type: string
+    description: "Command identifier (pb-...). Must match filename without .md"
+    example: "pb-start"
+    required: true
+
+  title:
+    type: string
+    description: "Human-readable command title"
+    example: "Start Development Work"
+    required: true
+
+  # CATEGORIZATION (required)
+  # Where does this command live in the mental model?
+  category:
+    type: enum
+    values: [core, planning, development, deployment, reviews, repo, people, templates, utilities]
+    description: "Command category / folder location"
+    required: true
+
+  # DIFFICULTY (required)
+  # Learning curve for new users
+  difficulty:
+    type: enum
+    values: [beginner, intermediate, advanced, expert]
+    description: "How experienced do you need to be to use this effectively?"
+    required: true
+
+  # MODEL SELECTION (required)
+  # Which Claude model should run this playbook?
+  model_hint:
+    type: enum
+    values: [haiku, sonnet, opus]
+    description: "Recommended Claude model. Used by orchestration logic for routing."
+    rationale_options:
+      haiku: "File search, status checks, formatting, simple validation"
+      sonnet: "Standard implementation tasks, code review, feature development"
+      opus: "Security reviews, architecture decisions, critical design, complex synthesis"
+    required: true
+
+  # EXECUTION (required)
+  # How is this playbook used?
+  execution_pattern:
+    type: enum
+    values: [sequential, parallel, interactive, exploratory, reference]
+    description: "How does this playbook execute?"
+    examples:
+      sequential: "Linear steps, one after another (pb-start, pb-cycle)"
+      parallel: "Multiple agents work simultaneously (pb-evolve fan-out analysis)"
+      interactive: "Requires user input mid-execution (AskUserQuestion)"
+      exploratory: "Open-ended investigation (pb-explore, pb-think)"
+      reference: "Lookup / deep-dive, not prescriptive flow (pb-design-rules)"
+    required: true
+
+  # RELATIONSHIPS (required)
+  # What other commands are related?
+  related_commands:
+    type: array[string]
+    description: "List of related pb-* commands. Max 5 items. No circular references."
+    examples: ["pb-resume", "pb-cycle", "pb-pause"]
+    required: true
+    max_items: 5
+
+  # DISCOVERABILITY (required)
+  # How do users find this playbook?
+  tags:
+    type: array[string]
+    description: "Searchable tags for discoverability. Max 5 items."
+    examples: ["workflow", "onboarding", "code-review"]
+    required: true
+    max_items: 5
+
+  # MAINTENANCE (required)
+  # When was this last reviewed?
+  last_reviewed:
+    type: iso-8601-date
+    description: "Date this command was last reviewed for accuracy (YYYY-MM-DD)"
+    example: "2026-02-09"
+    required: true
+
+  # EVOLUTION (optional but tracked)
+  # When was this last evolved?
+  last_evolved:
+    type: iso-8601-date
+    description: "Date this command was last evolved by pb-evolve (YYYY-MM-DD)"
+    example: "2026-02-09"
+    required: false
+
+  # DESCRIPTORS (optional for automated summaries)
+  # Brief summary for indices and decision trees
+  summary:
+    type: string
+    description: "One-line summary for indices. No period, max 80 chars."
+    example: "Begin work on a new feature or fix with proper setup and context"
+    required: false
+
+  # PREREQUISITE KNOWLEDGE (optional)
+  # What should users know before using this?
+  prerequisites:
+    type: array[string]
+    description: "Other pb-* commands to read first"
+    examples: ["pb-preamble", "pb-design-rules"]
+    required: false
+    max_items: 3
+
+  # ESTIMATED TIME (optional)
+  # How long does this take to execute?
+  execution_time_estimate:
+    type: string
+    description: "Estimated time to execute. Use ranges for variability."
+    examples: ["5 minutes", "15-30 minutes", "1-2 hours", "varies"]
+    required: false
+
+  # FREQUENCY (optional)
+  # How often do users typically use this?
+  frequency:
+    type: enum
+    values: [daily, weekly, monthly, quarterly, on-demand, rare]
+    description: "How frequently is this command typically used?"
+    required: false
+
+  # CONSTRAINTS (optional)
+  # Special constraints or limitations
+  constraints:
+    type: array[string]
+    description: "Known limitations, edge cases, or preconditions"
+    examples:
+      - "Requires git repository initialized"
+      - "Only works on main branch"
+      - "Needs network connectivity for remote sync"
+    required: false
+    max_items: 5
+
+# VALIDATION RULES
+# These are enforced by scripts/evolve.py
+
+validation:
+  rules:
+    - "name must match filename (without .md)"
+    - "category must be one of: core, planning, development, deployment, reviews, repo, people, templates, utilities"
+    - "related_commands must not exceed 5 items"
+    - "related_commands must not include self-references"
+    - "tags must not exceed 5 items"
+    - "no circular cross-references in related_commands"
+    - "last_reviewed must be within 90 days (for active commands)"
+    - "last_evolved must be <= last_reviewed (cannot evolve before review)"
+
+# EXAMPLES
+
+examples:
+  - name: pb-start
+    title: "Start Development Work"
+    category: development
+    difficulty: beginner
+    model_hint: sonnet
+    execution_pattern: sequential
+    related_commands: [pb-resume, pb-cycle, pb-pause]
+    tags: [workflow, onboarding]
+    last_reviewed: "2026-02-09"
+    summary: "Begin work on a new feature or fix with proper setup and context"
+    prerequisites: [pb-preamble]
+    execution_time_estimate: "5 minutes"
+    frequency: daily
+
+  - name: pb-think
+    title: "Unified Thinking Partner"
+    category: utilities
+    difficulty: intermediate
+    model_hint: sonnet
+    execution_pattern: interactive
+    related_commands: [pb-preamble, pb-plan, pb-adr, pb-debug]
+    tags: [thinking, decision-making]
+    last_reviewed: "2026-02-07"
+    summary: "Complete thinking toolkit: ideate, synthesize, refine"
+    execution_time_estimate: "varies"
+    frequency: on-demand
+
+  - name: pb-security
+    title: "Security Review & Checklist"
+    category: planning
+    difficulty: advanced
+    model_hint: opus
+    execution_pattern: reference
+    related_commands: [pb-hardening, pb-patterns-security, pb-review-code]
+    tags: [security, review, compliance]
+    last_reviewed: "2026-02-05"
+    summary: "Comprehensive security checklist and threat modeling framework"
+    execution_time_estimate: "1-2 hours"
+    frequency: monthly
+    constraints:
+      - "Requires understanding of OWASP Top 10"
+      - "For security-critical systems only"

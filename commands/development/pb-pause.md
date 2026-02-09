@@ -1,3 +1,14 @@
+---
+name: "pb-pause"
+title: "Pause Development Work"
+category: "development"
+difficulty: "advanced"
+model_hint: "sonnet"
+execution_pattern: "sequential"
+related_commands: ['pb-resume', 'pb-start', 'pb-standup']
+last_reviewed: "2026-02-09"
+last_evolved: ""
+---
 # Pause Development Work
 
 Gracefully pause or conclude work on a project. Use this when stepping away for an extended period (days, weeks) or wrapping up a phase of work.

@@ -1,3 +1,14 @@
+---
+name: "pb-standards"
+title: "Project Guidelines & Working Principles"
+category: "core"
+difficulty: "beginner"
+model_hint: "sonnet"
+execution_pattern: "reference"
+related_commands: ['pb-preamble', 'pb-design-rules', 'pb-guide', 'pb-commit', 'pb-testing']
+last_reviewed: "2026-02-09"
+last_evolved: ""
+---
 # Project Guidelines & Working Principles
 
 **See `/pb-preamble` and `/pb-design-rules` first.** These standards assume you're operating from both mindsets:
