@@ -5,6 +5,83 @@ All notable changes to this project are documented here.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v2.10.0] - 2026-02-09
+
+### Added
+
+- **Self-Evolving Playbook System** — Complete governance infrastructure for quarterly playbook evolution
+  - `pb-evolve` playbook: Quarterly capability assessment and playbook regeneration workflow
+  - YAML front-matter metadata schema (14 fields) for all 86 commands as single source of truth
+  - `evolve.py`: Analysis engine with capability assessment and command validation
+  - `parse-metadata.py`: Pure Python metadata parser (no external dependencies)
+  - `reconcile-metadata.py`: Metadata-body conflict detection and resolution
+  - `cleanup-tags.py`: Auto-generated tag deduplication tool
+  - `generate-metadata.py`: Batch metadata generation for all commands
+
+- **Operational Safety & Governance** — Production-ready evolution system with approval gates
+  - `evolution-snapshot.py`: Git-backed snapshots with rollback capability
+  - `evolution-log.py`: Structured JSON audit trail with pattern analysis
+  - `evolution-diff.py`: Markdown diff previews for peer review
+  - `evolution-trigger-detector.py`: Automated trigger detection (time, staleness, version, feedback)
+  - `test_evolution_execution.py`: 40-test suite validating metadata consistency and dependencies
+
+- **Documentation & Procedures** — Complete operational guide and examples
+  - `docs/evolution-operational-guide.md`: 700+ line step-by-step walkthrough (PREPARE, ANALYZE, VALIDATE, APPROVE, APPLY, COMPLETE, ROLLBACK phases)
+  - Metadata schema with 14 required fields and complete examples
+  - 5 metadata example files showing patterns for different command types
+
+- **Quality Assurance** — Enhanced convention validation
+  - Updated `test_command_conventions.py` with metadata-body consistency check
+  - All 86 commands now have: Resource Hint, When to Use, Related Commands, metadata front-matter
+  - Convention tests wired into CI validation
+
+### Changed
+
+- **pb-evolve.md** — Complete rewrite (620 lines)
+  - 10-step executable workflow from PREPARE through ROLLBACK
+  - New: Snapshot before evolution, structured logging, diff preview, approval gates
+  - Governance procedures for safe quarterly evolution cycles
+  - Examples for all tools with expected output
+
+- **Command Metadata** — Applied to all 86 commands
+  - YAML front-matter with: name, title, category, difficulty, model_hint, execution_pattern, related_commands, tags, last_reviewed, last_evolved
+  - Body Resource Hint verified to match metadata model_hint (38 conflicts reconciled from auto-generation)
+  - Tags auto-generated noise removed, clean slate for curation
+
+### Fixed
+
+- **Metadata-Body Conflicts** — Reconciled 38 mismatches between metadata model_hint and body Resource Hint
+  - 5 core/preamble: sonnet→opus (upgraded for security)
+  - 11 deployment: opus→sonnet (downgraded for efficiency)
+  - 17 planning patterns: opus→sonnet (downgraded for efficiency)
+  - 5 templates: haiku→sonnet (upgraded for capability)
+  - 2 utilities: sonnet→haiku (downgraded for efficiency)
+
+- **Convention Validation** — Updated for 86 commands (was 85 after pb-voice addition)
+  - `test_command_conventions.py`: EXPECTED_COUNT updated to 86
+  - Added TestMetadataConsistency class to prevent future regressions
+
+### Stats
+
+- **Total commands**: 86 (was 85)
+- **New files created**: 14 (6 scripts, 1 test file, 1 operational guide, 4 utilities, plus schema)
+- **Commands with metadata**: 86/86 (100%)
+- **Model distribution**: 19 Opus, 59 Sonnet, 8 Haiku (optimized for Claude 4.5/4.6)
+- **Files modified**: 90+ (all commands + scripts + tests + docs)
+- **Theme**: Automated quarterly evolution framework enabling continuous alignment with Claude capabilities
+
+### Breaking Changes
+
+None. All changes are backwards-compatible. Metadata is additive (YAML front-matter prepended to existing command content).
+
+### Migration Notes
+
+- `pb-evolve` should be run quarterly (Feb, May, Aug, Nov) or on major Claude version changes
+- First evolution cycle expected Q1 2026 (post-release)
+- Snapshot system provides safe rollback if evolution produces unintended changes
+
+---
+
 ## [v2.9.0] - 2026-02-07
 
 ### Added
