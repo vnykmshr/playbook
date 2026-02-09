@@ -105,6 +105,7 @@ Quick reference for all playbook commands.
 | `/pb-logging` | Logging strategy & standards audit | During code review, pre-release |
 | `/pb-a11y` | Accessibility deep-dive (semantic HTML, keyboard, ARIA, screen readers) | During frontend development, every PR |
 | `/pb-review-playbook` | Review playbook commands for quality, consistency, and completeness | Every PR, monthly |
+| `/pb-voice` | Detect and remove AI tells from prose (two-stage: detect → rewrite) | After AI-assisted drafting, before publishing |
 
 ## Thinking Partner
 
