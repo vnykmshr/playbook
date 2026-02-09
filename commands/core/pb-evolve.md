@@ -49,6 +49,27 @@ cat .playbook-metadata-schema.yaml            # Review schema
 ls docs/metadata-example-*.md                 # Review examples
 ```
 
+### Step 1.5: Snapshot Before Evolution
+
+**Critical:** Create a snapshot before making changes. This enables safe rollback if anything breaks.
+
+```bash
+# Create snapshot of current state
+python3 scripts/evolution-snapshot.py \
+  --create "Before Q1 2026 evolution"
+
+# Record the evolution cycle in structured log
+python3 scripts/evolution-log.py \
+  --record-cycle "2026-Q1" \
+  --trigger quarterly \
+  --capability-changes "Sonnet 4.6: 30% faster, no cost change"
+```
+
+This creates:
+- **Git tag** as backup (can revert to this if needed)
+- **Snapshot metadata** for audit trail
+- **Evolution log entry** to track this cycle
+
 ### Step 2: Run Analysis
 
 ```bash
@@ -169,9 +190,53 @@ Record results:
 **Result:** 43% faster. Impact = HIGH. Implement.
 ```
 
-### Step 7: Apply Changes
+### Step 7: Generate Diff and Request Approval
 
-Once validated, apply changes to playbooks:
+**Before applying changes**, generate a diff to see exactly what will change:
+
+```bash
+# Generate detailed diff comparing current to proposed
+python3 scripts/evolution-diff.py \
+  --detailed main HEAD
+
+# Generate markdown report for PR
+python3 scripts/evolution-diff.py \
+  --report main HEAD
+```
+
+This creates `todos/evolution-diff-report.md` showing:
+- Which playbooks are affected
+- What fields change (old → new values)
+- Why changes are being proposed
+
+**GOVERNANCE GATE:** Create a PR and request peer review BEFORE applying changes.
+
+```bash
+# Create feature branch for changes
+git checkout -b evolution/$(date +%Y-Q$((($(date +%m)-1)/3+1)))
+
+# Commit proposed changes
+git add commands/
+git commit -m "evolution: proposed changes for review"
+
+# Push and create PR
+git push origin evolution/...
+gh pr create --title "evolution(quarterly): Q1 2026" \
+  --body "See todos/evolution-diff-report.md for details"
+```
+
+**Peer review checklist:**
+- ✅ Capability changes documented accurately
+- ✅ Proposed changes make sense given new capabilities
+- ✅ No unintended side effects
+- ✅ Metadata is consistent (run test suite)
+- ✅ Related commands still exist and are reachable
+
+**Only proceed after peer approval and merge to main.**
+
+### Step 7.5: Apply Approved Changes
+
+Once PR is approved and merged to main, apply the changes:
 
 ```bash
 # Example: Update pb-claude-orchestration
@@ -222,7 +287,7 @@ python3 scripts/evolve.py --generate
 mkdocs build --strict
 ```
 
-### Step 10: Commit and Release
+### Step 10: Complete Evolution Cycle
 
 ```bash
 # Stage changes
@@ -232,10 +297,41 @@ git add commands/ docs/ scripts/ .claude/ CHANGELOG.md
 git commit -m "evolve(quarterly): $(date +%Y-Q$((($(date +%m)-1)/3+1)))"
 
 # Tag release (if this is a versioned release)
-git tag -a v2.10.0 -m "v2.10.0: [theme]"
+git tag -a v2.X.0 -m "v2.X.0: Q1 2026 evolution"
+
+# Record cycle completion
+python3 scripts/evolution-log.py \
+  --complete "2026-Q1" \
+  --pr <pr-number>
 
 # Push
-git push origin evolve/$(date +%Y-%m-%d) --tags
+git push origin main --tags
+```
+
+### Step 11: If Evolution Breaks Something (Rollback)
+
+If you discover issues after applying evolution changes:
+
+```bash
+# List available snapshots
+python3 scripts/evolution-snapshot.py --list
+
+# Show details of specific snapshot
+python3 scripts/evolution-snapshot.py --show evolution-20260209-HHMMSS
+
+# Rollback to snapshot (interactive confirmation)
+python3 scripts/evolution-snapshot.py --rollback evolution-20260209-HHMMSS
+
+# Or force rollback without confirmation
+python3 scripts/evolution-snapshot.py --rollback evolution-20260209-HHMMSS --force
+
+# Record the revert in evolution log
+python3 scripts/evolution-log.py \
+  --revert "2026-Q1" \
+  --reason "Parallel patterns caused context bloat; needs refinement"
+
+# Push rollback commit
+git push origin main
 ```
 
 ---
@@ -284,44 +380,75 @@ git push origin evolve/$(date +%Y-%m-%d) --tags
 
 ## Evolution Log Structure
 
-Keep `todos/evolution-log.md` as a living document:
+The evolution system maintains **two logs**:
+
+### 1. Structured Audit Log (todos/evolution-audit.json)
+
+Machine-readable JSON format for pattern analysis and automation:
+
+```json
+{
+  "cycles": [
+    {
+      "cycle": "2026-Q1",
+      "started_at": "2026-02-09T12:00:00",
+      "trigger": "quarterly",
+      "capability_changes": "Sonnet 4.6: 30% faster, same cost",
+      "changes": [
+        {
+          "command": "pb-claude-orchestration",
+          "field": "execution_pattern",
+          "before": "sequential",
+          "after": "parallel",
+          "rationale": "Sonnet 4.6 fast enough for concurrent agents"
+        }
+      ],
+      "status": "completed",
+      "snapshot_id": "evolution-20260209-143022",
+      "pr_number": 42
+    }
+  ]
+}
+```
+
+**Use this log to:**
+- Detect patterns (what fields change most often?)
+- Measure impact (did evolution help or hurt?)
+- Enable automation (future cycles can suggest changes)
+- Audit decisions (why did we make this change?)
+
+```bash
+# View evolution history
+python3 scripts/evolution-log.py --show
+
+# Analyze patterns
+python3 scripts/evolution-log.py --analyze
+
+# Export timeline
+python3 scripts/evolution-log.py --export
+```
+
+### 2. Narrative Release Notes (CHANGELOG.md)
+
+Human-readable summary for each release:
 
 ```markdown
-# Playbook Evolution Log
-
-## 2026-Q2 (May 15)
+## v2.11.0 (2026-05-15) — Q2 Evolution
 
 ### Capability Changes
-- Sonnet 4.5 → 4.6: +30% speed, same cost
-- No context window changes
-- Reasoning depth: unchanged
+- Sonnet 4.6 → 4.7: +15% reasoning depth
+- No speed or cost changes
+- New tool: structured output
 
-### Changes Made
-1. Parallel research pattern added to pb-claude-orchestration
-   - Impact: -30% session time for exploration tasks
-   - Status: Implemented, validated
-   - Date: 2026-05-15
-
-2. Model routing decision tree refactored
-   - Haiku now handles 5 more task types
-   - Opus reserved for security/architecture only
-   - Impact: -15% cost per session
-   - Status: Implemented
+### Improvements
+- Parallel research patterns now standard in exploration tasks
+- Model routing optimized (Haiku handles 10 more utility cases)
+- Context efficiency improved 12% via better compression
 
 ### Metrics
-- Before: average session 45 min, 150K tokens
-- After: average session 32 min, 127K tokens
-- Efficiency gain: 28%
-
-### Feedback Collected
-- Users report faster turnaround
-- Parallelization pattern adopted in 3 new playbooks
-
----
-
-## 2026-Q1 (Feb 9)
-
-[Previous cycle...]
+- Average session time: -8% (from 32 min to 29 min)
+- Cost per session: -3% (minor optimization)
+- User satisfaction: +5% (feedback survey)
 ```
 
 ---
