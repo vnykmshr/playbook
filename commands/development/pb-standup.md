@@ -1,3 +1,15 @@
+---
+name: "pb-standup"
+title: "Async Standup & Status Updates"
+category: "development"
+difficulty: "advanced"
+model_hint: "sonnet"
+execution_pattern: "sequential"
+related_commands: ['pb-start', 'pb-resume', 'pb-cycle']
+tags: ['design', 'testing', 'security', 'workflow', 'review']
+last_reviewed: "2026-02-09"
+last_evolved: ""
+---
 # Async Standup & Status Updates
 
 Keep team aligned on progress without synchronous meetings. Use this template for async standups, progress updates, or team check-ins during distributed work.

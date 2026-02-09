@@ -1,3 +1,15 @@
+---
+name: "pb-debug"
+title: "Debugging Methodology"
+category: "development"
+difficulty: "advanced"
+model_hint: "sonnet"
+execution_pattern: "interactive"
+related_commands: ['pb-logging', 'pb-observability', 'pb-incident', 'pb-testing', 'pb-learn']
+tags: ['design', 'testing', 'security', 'workflow', 'review']
+last_reviewed: "2026-02-09"
+last_evolved: ""
+---
 # Debugging Methodology
 
 Systematic approach to finding and fixing bugs. Hypothesis-driven, reproducible, methodical.

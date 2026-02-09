@@ -1,3 +1,15 @@
+---
+name: "pb-patterns-security"
+title: "Security Patterns & Microservice Security"
+category: "planning"
+difficulty: "advanced"
+model_hint: "opus"
+execution_pattern: "sequential"
+related_commands: ['pb-security', 'pb-review-microservice', 'pb-patterns-core', 'pb-logging']
+tags: ['design', 'testing', 'security', 'workflow', 'review']
+last_reviewed: "2026-02-09"
+last_evolved: ""
+---
 # Security Patterns & Microservice Security
 
 ## Overview

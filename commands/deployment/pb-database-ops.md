@@ -1,3 +1,15 @@
+---
+name: "pb-database-ops"
+title: "Database Operations"
+category: "deployment"
+difficulty: "advanced"
+model_hint: "opus"
+execution_pattern: "sequential"
+related_commands: ['pb-patterns-db', 'pb-dr', 'pb-deployment']
+tags: ['design', 'testing', 'security', 'workflow', 'review']
+last_reviewed: "2026-02-09"
+last_evolved: ""
+---
 # Database Operations
 
 Operate databases reliably: migrations, backups, performance tuning, and failover. This guide covers the full lifecycle of database operations in production.

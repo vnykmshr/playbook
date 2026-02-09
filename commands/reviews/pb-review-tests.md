@@ -1,3 +1,15 @@
+---
+name: "pb-review-tests"
+title: "Periodic Test Review"
+category: "reviews"
+difficulty: "advanced"
+model_hint: "opus"
+execution_pattern: "sequential"
+related_commands: ['pb-review', 'pb-review-hygiene', 'pb-testing', 'pb-cycle']
+tags: ['design', 'testing', 'security', 'workflow', 'review']
+last_reviewed: "2026-02-09"
+last_evolved: ""
+---
 # Periodic Test Review
 
 **Purpose:** Comprehensive review of the project's unit and integration tests. Ensure the test suite is lean, reliable, and genuinely useful.

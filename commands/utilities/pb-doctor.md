@@ -1,3 +1,15 @@
+---
+name: "pb-doctor"
+title: "System Health Check"
+category: "utilities"
+difficulty: "advanced"
+model_hint: "haiku"
+execution_pattern: "sequential"
+related_commands: ['pb-storage', 'pb-ports', 'pb-update', 'pb-debug', 'pb-git-hygiene']
+tags: ['design', 'testing', 'workflow', 'review', 'documentation']
+last_reviewed: "2026-02-09"
+last_evolved: ""
+---
 # System Health Check
 
 Diagnose system health issues: disk space, memory pressure, CPU usage, and common developer environment problems. The "what's wrong" before "how to fix."

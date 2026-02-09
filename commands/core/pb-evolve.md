@@ -1,22 +1,14 @@
 ---
-name: pb-evolve
+name: "pb-evolve"
 title: "Evolve Playbooks to Match Claude Capabilities"
-category: core
-difficulty: advanced
-model_hint: opus
-execution_pattern: exploratory
-related_commands: [pb-claude-global, pb-claude-project, pb-standards]
-tags: [evolution, self-improvement, maintenance]
+category: "core"
+difficulty: "beginner"
+model_hint: "sonnet"
+execution_pattern: "sequential"
+related_commands: ['pb-claude-global', 'pb-claude-project', 'pb-standards', 'pb-preamble', 'pb-design-rules']
+tags: ['design', 'testing', 'security', 'workflow', 'review']
 last_reviewed: "2026-02-09"
 last_evolved: ""
-summary: "Quarterly review of Claude capabilities and playbook regeneration"
-prerequisites: [pb-preamble, pb-design-rules]
-execution_time_estimate: "3-5 hours (quarterly)"
-frequency: quarterly
-constraints:
-  - "Requires git repository"
-  - "Opus recommended for capability assessment"
-  - "Run on clean main branch"
 ---
 
 # Evolve Playbooks to Match Claude Capabilities

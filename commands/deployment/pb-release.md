@@ -1,3 +1,15 @@
+---
+name: "pb-release"
+title: "Release to Production"
+category: "deployment"
+difficulty: "advanced"
+model_hint: "opus"
+execution_pattern: "sequential"
+related_commands: ['pb-deployment', 'pb-ship', 'pb-pr', 'pb-review-hygiene']
+tags: ['design', 'testing', 'security', 'workflow', 'review']
+last_reviewed: "2026-02-09"
+last_evolved: ""
+---
 # Release to Production
 
 Orchestrate a production release: readiness gate, version management, deployment trigger, and verification. This is the central command for shipping releases.

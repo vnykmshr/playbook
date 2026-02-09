@@ -1,3 +1,15 @@
+---
+name: "pb-ports"
+title: "Port Management"
+category: "utilities"
+difficulty: "advanced"
+model_hint: "haiku"
+execution_pattern: "sequential"
+related_commands: ['pb-doctor', 'pb-debug', 'pb-storage']
+tags: ['design', 'workflow', 'review', 'deployment', 'documentation']
+last_reviewed: "2026-02-09"
+last_evolved: ""
+---
 # Port Management
 
 Find processes using ports, kill stale listeners, and resolve port conflicts. A common developer pain point solved.

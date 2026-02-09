@@ -1,3 +1,15 @@
+---
+name: "pb-review"
+title: "Comprehensive Project Review"
+category: "reviews"
+difficulty: "advanced"
+model_hint: "opus"
+execution_pattern: "reference"
+related_commands: ['pb-review-code', 'pb-review-hygiene', 'pb-review-tests', 'pb-security', 'pb-cycle']
+tags: ['design', 'testing', 'security', 'workflow', 'review']
+last_reviewed: "2026-02-09"
+last_evolved: ""
+---
 # Comprehensive Project Review
 
 **Purpose:** Orchestrate multi-perspective reviews by coordinating specialized review commands. Consolidate findings into actionable priorities.

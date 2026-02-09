@@ -1,3 +1,15 @@
+---
+name: "pb-patterns-deployment"
+title: "Deployment Patterns & Strategies"
+category: "planning"
+difficulty: "advanced"
+model_hint: "opus"
+execution_pattern: "sequential"
+related_commands: ['pb-deployment', 'pb-release', 'pb-dr']
+tags: ['design', 'testing', 'security', 'workflow', 'review']
+last_reviewed: "2026-02-09"
+last_evolved: ""
+---
 # Deployment Patterns & Strategies
 
 Reference guide for deployment strategies, patterns, and best practices. Use this to learn about and plan deployment approaches.

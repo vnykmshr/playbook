@@ -1,3 +1,15 @@
+---
+name: "pb-patterns-resilience"
+title: "Resilience & Protection Patterns"
+category: "planning"
+difficulty: "advanced"
+model_hint: "opus"
+execution_pattern: "sequential"
+related_commands: ['pb-patterns-core', 'pb-patterns-distributed', 'pb-patterns-async', 'pb-hardening', 'pb-incident']
+tags: ['design', 'testing', 'security', 'workflow', 'review']
+last_reviewed: "2026-02-09"
+last_evolved: ""
+---
 # Resilience & Protection Patterns
 
 Patterns for making systems reliable under failure. These are defensive patterns added during or after implementation to protect against transient failures, cascading outages, resource exhaustion, and abuse.

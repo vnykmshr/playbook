@@ -1,3 +1,15 @@
+---
+name: "pb-todo-implement"
+title: "Todo-Based Implementation Workflow"
+category: "development"
+difficulty: "advanced"
+model_hint: "sonnet"
+execution_pattern: "sequential"
+related_commands: ['pb-plan', 'pb-cycle', 'pb-pr', 'pb-commit', 'pb-review-hygiene']
+tags: ['design', 'testing', 'security', 'workflow', 'review']
+last_reviewed: "2026-02-09"
+last_evolved: ""
+---
 # Todo-Based Implementation Workflow
 
 Structured implementation of individual todos with checkpoint-based approval. Transforms vague todos into concrete, tested features with full audit trail.

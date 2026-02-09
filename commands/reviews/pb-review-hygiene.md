@@ -1,3 +1,15 @@
+---
+name: "pb-review-hygiene"
+title: "Codebase Hygiene Review"
+category: "reviews"
+difficulty: "advanced"
+model_hint: "opus"
+execution_pattern: "sequential"
+related_commands: ['pb-review', 'pb-review-code', 'pb-review-tests', 'pb-security', 'pb-repo-organize']
+tags: ['design', 'testing', 'security', 'workflow', 'review']
+last_reviewed: "2026-02-09"
+last_evolved: ""
+---
 # Codebase Hygiene Review
 
 **Purpose:** Periodic review of code quality and operational readiness. Combines cleanup (code quality) and hygiene (operational health) into a single comprehensive review.

@@ -1,3 +1,15 @@
+---
+name: "pb-storage"
+title: "macOS Storage Cleanup"
+category: "utilities"
+difficulty: "advanced"
+model_hint: "haiku"
+execution_pattern: "sequential"
+related_commands: ['pb-debug', 'pb-start']
+tags: ['design', 'workflow', 'review', 'documentation', 'debugging']
+last_reviewed: "2026-02-09"
+last_evolved: ""
+---
 # macOS Storage Cleanup
 
 Tiered storage cleanup for developer machines. Reclaim disk space safely with user confirmation at each tier.

@@ -1,3 +1,15 @@
+---
+name: "pb-performance"
+title: "Performance Optimization & Scalability"
+category: "planning"
+difficulty: "advanced"
+model_hint: "opus"
+execution_pattern: "sequential"
+related_commands: ['pb-observability', 'pb-review-hygiene', 'pb-patterns-core']
+tags: ['design', 'testing', 'workflow', 'review', 'deployment']
+last_reviewed: "2026-02-09"
+last_evolved: ""
+---
 # Performance Optimization & Scalability
 
 Make systems faster without breaking them. Measure, optimize the right thing, verify improvements.

@@ -1,3 +1,15 @@
+---
+name: "pb-claude-project"
+title: "Generate Project CLAUDE.md"
+category: "templates"
+difficulty: "beginner"
+model_hint: "haiku"
+execution_pattern: "sequential"
+related_commands: ['pb-claude-global', 'pb-claude-orchestration', 'pb-context', 'pb-onboarding', 'pb-repo-init']
+tags: ['design', 'testing', 'security', 'workflow', 'review']
+last_reviewed: "2026-02-09"
+last_evolved: ""
+---
 # Generate Project CLAUDE.md
 
 Generate a project-specific `.claude/CLAUDE.md` by analyzing the current project structure, tech stack, and patterns.

@@ -1,3 +1,15 @@
+---
+name: "pb-new-playbook"
+title: "New Playbook"
+category: "core"
+difficulty: "beginner"
+model_hint: "sonnet"
+execution_pattern: "sequential"
+related_commands: []
+tags: ['design', 'testing', 'security', 'workflow', 'review']
+last_reviewed: "2026-02-09"
+last_evolved: ""
+---
 # New Playbook
 
 **Purpose:** Meta-playbook for creating new playbook commands. Ensures every new command meets quality standards, follows conventions, and integrates coherently with the existing ecosystem.

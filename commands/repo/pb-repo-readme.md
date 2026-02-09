@@ -1,3 +1,15 @@
+---
+name: "pb-repo-readme"
+title: "Generate Project README"
+category: "repo"
+difficulty: "advanced"
+model_hint: "sonnet"
+execution_pattern: "sequential"
+related_commands: ['pb-repo-about', 'pb-repo-blog', 'pb-repo-enhance', 'pb-documentation']
+tags: ['design', 'workflow', 'deployment', 'documentation', 'optimization']
+last_reviewed: "2026-02-09"
+last_evolved: ""
+---
 # Generate Project README
 
 Write or rewrite a clear, professional, developer-friendly README.

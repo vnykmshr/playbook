@@ -1,3 +1,15 @@
+---
+name: "pb-what-next"
+title: "What's Next?"
+category: "development"
+difficulty: "advanced"
+model_hint: "sonnet"
+execution_pattern: "sequential"
+related_commands: ['pb-start', 'pb-cycle', 'pb-commit', 'pb-pr', 'pb-release']
+tags: ['design', 'testing', 'security', 'workflow', 'review']
+last_reviewed: "2026-02-09"
+last_evolved: ""
+---
 # What's Next?
 
 Get context-aware playbook command recommendations based on your current work state.

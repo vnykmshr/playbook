@@ -1,3 +1,15 @@
+---
+name: "pb-review-code"
+title: "Code Review"
+category: "reviews"
+difficulty: "advanced"
+model_hint: "opus"
+execution_pattern: "sequential"
+related_commands: ['pb-cycle', 'pb-review', 'pb-review-hygiene', 'pb-review-tests', 'pb-security']
+tags: ['design', 'testing', 'security', 'workflow', 'review']
+last_reviewed: "2026-02-09"
+last_evolved: ""
+---
 # Code Review
 
 **Purpose:** Conduct thorough code review for pull requests, peer review during development iterations, or any code changes requiring review.

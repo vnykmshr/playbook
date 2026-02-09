@@ -1,3 +1,15 @@
+---
+name: "pb-patterns-async"
+title: "Asynchronous Patterns"
+category: "planning"
+difficulty: "advanced"
+model_hint: "opus"
+execution_pattern: "sequential"
+related_commands: ['pb-patterns-core', 'pb-patterns-resilience', 'pb-patterns-distributed', 'pb-observability']
+tags: ['design', 'testing', 'workflow', 'documentation', 'optimization']
+last_reviewed: "2026-02-09"
+last_evolved: ""
+---
 # Asynchronous Patterns
 
 Non-blocking execution patterns for concurrent operations. Essential for scalable systems.

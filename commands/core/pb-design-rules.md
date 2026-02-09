@@ -1,3 +1,15 @@
+---
+name: "pb-design-rules"
+title: "Design Rules: Core Technical Principles"
+category: "core"
+difficulty: "beginner"
+model_hint: "sonnet"
+execution_pattern: "sequential"
+related_commands: ['pb-preamble', 'pb-adr', 'pb-patterns', 'pb-review-hygiene', 'pb-standards']
+tags: ['design', 'testing', 'security', 'workflow', 'review']
+last_reviewed: "2026-02-09"
+last_evolved: ""
+---
 # Design Rules: Core Technical Principles
 
 > **The preamble tells us HOW teams think together. Design rules tell us WHAT we build. Together, they form the complete framework for engineering excellence.**

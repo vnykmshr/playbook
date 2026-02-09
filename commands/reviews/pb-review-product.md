@@ -1,3 +1,15 @@
+---
+name: "pb-review-product"
+title: "Technical + Product Review"
+category: "reviews"
+difficulty: "advanced"
+model_hint: "opus"
+execution_pattern: "sequential"
+related_commands: ['pb-review', 'pb-review-code', 'pb-review-hygiene', 'pb-plan', 'pb-adr']
+tags: ['design', 'testing', 'security', 'workflow', 'review']
+last_reviewed: "2026-02-09"
+last_evolved: ""
+---
 # Technical + Product Review
 
 **Purpose:** Periodic, in-depth review from four expert perspectives: Senior Engineer, Technical Architect, Security Expert, and Product Manager.

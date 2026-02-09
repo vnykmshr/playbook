@@ -1,3 +1,15 @@
+---
+name: "pb-cycle"
+title: "Development Cycle: Self-Review + Peer Review"
+category: "development"
+difficulty: "advanced"
+model_hint: "sonnet"
+execution_pattern: "sequential"
+related_commands: ['pb-start', 'pb-commit', 'pb-pr', 'pb-review-code', 'pb-testing']
+tags: ['design', 'testing', 'security', 'workflow', 'review']
+last_reviewed: "2026-02-09"
+last_evolved: ""
+---
 # Development Cycle: Self-Review + Peer Review
 
 Run this after completing a unit of work. Guides you through self-review, quality gates, and peer review before committing.

@@ -1,3 +1,15 @@
+---
+name: "pb-onboarding"
+title: "Developer Onboarding & Knowledge Transfer"
+category: "people"
+difficulty: "advanced"
+model_hint: "sonnet"
+execution_pattern: "sequential"
+related_commands: ['pb-team', 'pb-documentation', 'pb-cycle', 'pb-knowledge-transfer']
+tags: ['design', 'testing', 'workflow', 'review', 'deployment']
+last_reviewed: "2026-02-09"
+last_evolved: ""
+---
 # Developer Onboarding & Knowledge Transfer
 
 Effective onboarding reduces time to productivity, builds confidence, and prevents knowledge loss.

@@ -1,3 +1,15 @@
+---
+name: "pb-logging"
+title: "Logging Strategy & Standards"
+category: "reviews"
+difficulty: "advanced"
+model_hint: "opus"
+execution_pattern: "sequential"
+related_commands: ['pb-security', 'pb-observability', 'pb-incident', 'pb-guide', 'pb-testing']
+tags: ['design', 'testing', 'security', 'workflow', 'review']
+last_reviewed: "2026-02-09"
+last_evolved: ""
+---
 # Logging Strategy & Standards
 
 Comprehensive guidance for designing effective logging that aids troubleshooting without creating noise.

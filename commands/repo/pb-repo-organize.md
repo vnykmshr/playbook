@@ -1,3 +1,15 @@
+---
+name: "pb-repo-organize"
+title: "Organize Repository Structure"
+category: "repo"
+difficulty: "advanced"
+model_hint: "sonnet"
+execution_pattern: "sequential"
+related_commands: ['pb-repo-init', 'pb-repo-enhance', 'pb-review-hygiene']
+tags: ['design', 'testing', 'security', 'workflow', 'review']
+last_reviewed: "2026-02-09"
+last_evolved: ""
+---
 # Organize Repository Structure
 
 Clean up and reorganize the project root for clarity and maintainability.

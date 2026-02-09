@@ -1,3 +1,15 @@
+---
+name: "pb-testing"
+title: "Advanced Testing Scenarios"
+category: "development"
+difficulty: "advanced"
+model_hint: "sonnet"
+execution_pattern: "sequential"
+related_commands: ['pb-cycle', 'pb-review-tests', 'pb-standards', 'pb-debug']
+tags: ['design', 'testing', 'security', 'workflow', 'review']
+last_reviewed: "2026-02-09"
+last_evolved: ""
+---
 # Advanced Testing Scenarios
 
 Move beyond unit tests. Test behavior, catch mutations, verify contracts, stress systems.

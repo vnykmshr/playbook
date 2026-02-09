@@ -1,3 +1,15 @@
+---
+name: "pb-documentation"
+title: "Writing Great Engineering Documentation"
+category: "core"
+difficulty: "beginner"
+model_hint: "sonnet"
+execution_pattern: "sequential"
+related_commands: ['pb-adr', 'pb-review-docs', 'pb-repo-readme', 'pb-repo-blog', 'pb-onboarding']
+tags: ['design', 'testing', 'security', 'workflow', 'review']
+last_reviewed: "2026-02-09"
+last_evolved: ""
+---
 # Writing Great Engineering Documentation
 
 Clear documentation enables people to work independently, makes knowledge transferable, and saves time.

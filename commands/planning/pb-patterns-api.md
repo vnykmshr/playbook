@@ -1,3 +1,15 @@
+---
+name: "pb-patterns-api"
+title: "API Design Patterns"
+category: "planning"
+difficulty: "advanced"
+model_hint: "opus"
+execution_pattern: "sequential"
+related_commands: ['pb-patterns-frontend', 'pb-security', 'pb-patterns-resilience', 'pb-patterns-async', 'pb-testing']
+tags: ['design', 'testing', 'security', 'workflow', 'review']
+last_reviewed: "2026-02-09"
+last_evolved: ""
+---
 # API Design Patterns
 
 Patterns for designing APIs that are consistent, intuitive, and maintainable. Covers REST, GraphQL, and RPC styles.

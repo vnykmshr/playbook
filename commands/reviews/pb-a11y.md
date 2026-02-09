@@ -1,3 +1,15 @@
+---
+name: "pb-a11y"
+title: "Accessibility Deep-Dive"
+category: "reviews"
+difficulty: "advanced"
+model_hint: "opus"
+execution_pattern: "sequential"
+related_commands: ['pb-patterns-frontend', 'pb-design-language', 'pb-review-hygiene', 'pb-testing', 'pb-security']
+tags: ['design', 'testing', 'security', 'workflow', 'review']
+last_reviewed: "2026-02-09"
+last_evolved: ""
+---
 # Accessibility Deep-Dive
 
 Comprehensive accessibility guidance for web applications. Semantic HTML first, ARIA as enhancement, keyboard-first interaction model.

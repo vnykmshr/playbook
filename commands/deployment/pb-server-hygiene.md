@@ -1,3 +1,15 @@
+---
+name: "pb-server-hygiene"
+title: "Server Hygiene"
+category: "deployment"
+difficulty: "advanced"
+model_hint: "opus"
+execution_pattern: "sequential"
+related_commands: ['pb-maintenance', 'pb-hardening', 'pb-dr', 'pb-sre-practices', 'pb-observability']
+tags: ['design', 'testing', 'security', 'workflow', 'review']
+last_reviewed: "2026-02-09"
+last_evolved: ""
+---
 # Server Hygiene
 
 Periodic health and hygiene review for servers and VPS instances. A calm, repeatable ritual for detecting drift, bloat, and silent degradation before they become incidents.
