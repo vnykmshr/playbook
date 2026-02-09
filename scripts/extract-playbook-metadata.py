@@ -171,7 +171,16 @@ class PlaybookMetadataExtractor:
         self.metadata[command] = metadata
 
     def _extract_title(self, content: str) -> Optional[str]:
-        """Extract title from first h1 heading."""
+        """Extract title from first h1 heading, skipping YAML front-matter."""
+        # Handle YAML front-matter (---.....---)
+        if content.startswith("---"):
+            # Find the closing --- that ends the YAML front-matter
+            yaml_end = content.find("\n---\n", 4)  # Start search after initial ---
+            if yaml_end != -1:
+                # Skip past the YAML front-matter
+                content = content[yaml_end + 5:]  # +5 to skip \n---\n
+
+        # Extract title from first h1 heading
         match = re.search(r"^#\s+([^#\n]+)", content, re.MULTILINE)
         if match:
             title = match.group(1).strip()
@@ -181,15 +190,36 @@ class PlaybookMetadataExtractor:
         return None
 
     def _extract_purpose(self, content: str) -> Optional[str]:
-        """Extract purpose from first paragraph after h1."""
-        # Split on --- separator or first double newline after heading
-        parts = re.split(r"\n---\n|\n\n", content, maxsplit=2)
+        """Extract purpose from first paragraph after h1, skipping YAML front-matter."""
+        # Handle YAML front-matter (---.....---)
+        if content.startswith("---"):
+            # Find the closing --- that ends the YAML front-matter
+            yaml_end = content.find("\n---\n", 4)  # Start search after initial ---
+            if yaml_end != -1:
+                # Skip past the YAML front-matter
+                content = content[yaml_end + 5:]  # +5 to skip \n---\n
 
-        if len(parts) >= 2:
-            # Get text after h1 but before separator
-            text = parts[1].strip()
-            if text and not text.startswith("#"):
-                return text.split("\n")[0]
+        # Extract purpose: first non-empty, non-heading line after h1
+        lines = content.split("\n")
+
+        # Find h1 heading first
+        h1_index = -1
+        for i, line in enumerate(lines):
+            if line.startswith("# "):
+                h1_index = i
+                break
+
+        if h1_index >= 0:
+            # Look for first non-empty, non-heading line after h1
+            for line in lines[h1_index + 1:]:
+                line = line.strip()
+                if line and not line.startswith("#") and not line.startswith("---"):
+                    # Return first meaningful line, removing markdown if needed
+                    # Remove leading markdown syntax (>, *, **, etc.)
+                    line = re.sub(r"^[>*_`\-]+\s*", "", line)
+                    # Clean up inline markdown markers
+                    line = re.sub(r"\*\*|\*|__|`", "", line)
+                    return line if line else None
 
         return None
 
