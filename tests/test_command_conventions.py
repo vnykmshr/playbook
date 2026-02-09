@@ -7,14 +7,16 @@ Verifies all command files follow audit conventions established in v2.8.0:
 - When to Use section present (or recognized variant)
 - Related Commands count within limits
 - Expected command count
+- Metadata model_hint matches body Resource Hint (consistency)
 """
 
+import re
 from pathlib import Path
 
 import pytest
 
 COMMANDS_DIR = Path(__file__).parent.parent / "commands"
-EXPECTED_COUNT = 84
+EXPECTED_COUNT = 86
 
 # Hub commands allowed to exceed the 5-link limit
 HUB_COMMANDS = {"pb-patterns.md"}
@@ -113,3 +115,40 @@ class TestRelatedCommands:
             if count > limit:
                 over_limit.append(f"{path.name} ({count}/{limit})")
         assert not over_limit, f"Over Related Commands limit: {over_limit}"
+
+
+class TestMetadataConsistency:
+    """Verify metadata front-matter matches body Resource Hint.
+
+    This prevents regressions where bulk metadata generation overwrites
+    carefully audited Resource Hints from v2.8.0 audit.
+    """
+
+    @staticmethod
+    def extract_body_resource_hint(content: str) -> str | None:
+        """Extract model from body Resource Hint line."""
+        match = re.search(r'\*\*Resource Hint:\*\*\s+(sonnet|opus|haiku)', content)
+        return match.group(1) if match else None
+
+    @staticmethod
+    def extract_metadata_model_hint(content: str) -> str | None:
+        """Extract model_hint from YAML front-matter."""
+        match = re.search(r'^model_hint:\s*"([^"]+)"', content, re.MULTILINE)
+        return match.group(1) if match else None
+
+    def test_metadata_matches_body_resource_hint(self):
+        """All commands must have consistent model_hint in metadata and body."""
+        conflicts = []
+        for path in get_command_files():
+            content = path.read_text()
+            body_hint = self.extract_body_resource_hint(content)
+            meta_hint = self.extract_metadata_model_hint(content)
+
+            if body_hint and meta_hint and body_hint != meta_hint:
+                conflicts.append(
+                    f"{path.name}: body={body_hint}, metadata={meta_hint}"
+                )
+
+        assert not conflicts, f"Metadata-body conflicts:\n" + "\n".join(
+            f"  {c}" for c in conflicts
+        )
