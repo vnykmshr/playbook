@@ -54,6 +54,7 @@ Quick reference for all playbook commands.
 |---------|-------------|
 | `/pb-plan` | Planning a new feature/release |
 | `/pb-adr` | Documenting architectural decisions |
+| `/pb-maya-product` | Product & user strategy review (features as expenses, scope discipline) |
 | `/pb-deprecation` | Planning deprecations, breaking changes, migration paths |
 | `/pb-observability` | Planning monitoring, observability, and alerting strategy |
 | `/pb-performance` | Performance optimization and profiling strategy |
