@@ -5,6 +5,173 @@ All notable changes to this project are documented here.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v2.12.0] - 2026-02-12
+
+### Added
+
+**Phase 1: Context Minimization (Foundation)**
+- **BEACON System** — 9 critical guidelines with dual-presence architecture
+  - 6 global BEACONs (~/.claude/CLAUDE.md): Preamble, Design Rules, Code Quality, Non-Negotiables, Quality Bar, Model Selection
+  - 3 project BEACONs (.claude/CLAUDE.md): Project Guardrails, Audit Conventions, Key Patterns
+  - BEACON Quick Reference in memory/MEMORY.md (336 lines of persistent patterns)
+
+- **Four-Layer Context Architecture**
+  - Layer 1: Global principles (190 lines, universal across projects)
+  - Layer 2: Project structure (178 lines, project-specific)
+  - Layer 3: Learned patterns (336 lines, persistent, auto-memory)
+  - Layer 4: Session state (durable working-context + ephemeral pause-notes)
+  - Enables efficient context management while preserving critical guidance
+
+- **Session State Preservation**
+  - Durable working-context.md (survives sessions, updated on releases)
+  - Ephemeral pause-notes.md (session-specific, for handoff)
+  - Strategic checkpoint system preventing guideline loss
+
+**Phase 2: Session Boundary Protection (Safety)**
+- **Enhanced /pb-pause** — Explicit BEACON verification before pausing
+  - Step 6.5: Displays all 9 BEACONs and verifies they're loaded
+  - Creates BEACON checkpoint in pause-notes
+  - Recovery guidance for missing BEACONs
+  - File: commands/templates/pb-pause-enhanced.md (370 lines)
+
+- **Enhanced /pb-resume** — Explicit BEACON verification after resuming
+  - Step 3.5: Loads all 4 context layers in sequence with progress display
+  - Step 3.6: Verifies all 9 BEACONs active after loading
+  - Displays context layer loading status (Global → Project → Memory → Session)
+  - Recovery guidance for missing BEACONs/layers
+  - File: commands/templates/pb-resume-enhanced.md (376 lines)
+
+- **BEACON Verification at Session Boundaries**
+  - Comprehensive guide explaining pause/resume cycle with real examples
+  - Four-layer loading documentation
+  - BEACON mapping to workflow
+  - Troubleshooting with 3 common scenarios
+  - File: docs/beacon-verification-at-boundaries.md (530 lines)
+
+**Phase 3: Data-Driven Insights (Intelligence)**
+- **/pb-git-signals** — New command for analyzing git history
+  - Adoption metrics: Which commands/files are touched most frequently
+  - Churn analysis: Identifies high-volatility areas
+  - Pain point detection: Revert patterns, bug fixes, hotfixes
+  - Pain score calculation: Composite metric for troubled areas
+  - Snapshot support: Historical comparison capability
+  - File: commands/core/pb-git-signals.md (220 lines)
+
+- **GitSignalsAnalyzer** — Analysis engine (440 lines, Python)
+  - Four core methods: _parse_commits(), _extract_adoption_metrics(), _extract_churn_metrics(), _extract_pain_points()
+  - Robust error handling: Timeouts, malformed input, graceful degradation
+  - Four output files: adoption-metrics.json, churn-analysis.json, pain-points-report.json, signals-summary.md
+  - CLI interface: --since, --output, --snapshot flags
+  - File: scripts/git-signals.py
+
+- **Comprehensive Test Suite** — 60+ test cases (400+ lines)
+  - Unit tests for all analysis functions
+  - Edge case coverage: Empty output, malformed input, special characters
+  - Pattern detection accuracy tests
+  - Integration tests (full pipeline)
+  - File: tests/test_git_signals.py
+
+**v2.12.0 Integration Guide**
+- Comprehensive documentation explaining all three phases and integration
+  - Phase 1-3 architecture overview
+  - Real-world workflow examples (Friday pause → Monday resume)
+  - Decision tree for when to use each capability
+  - Integration with quarterly /pb-evolve planning
+  - FAQ and troubleshooting
+  - File: docs/v2.12.0-integration-guide.md (460+ lines)
+
+### Changed
+
+- **Context files updated** with v2.12.0 capabilities
+  - .claude/CLAUDE.md: References to BEACON system and git-signals
+  - Metadata: All 97 commands now tracked with versioning
+
+- **Command evolution**: Foundation set for quarterly planning
+  - /pb-evolve can now use git-signals pain_score_by_file for prioritization
+  - Adoption metrics inform which areas are active vs stale
+  - Churn analysis guides stability work
+
+### How They Work Together
+
+v2.12.0 implements a complete ecosystem:
+
+1. **Context Minimization (Phase 1)** — 4-layer architecture with 9 BEACONs
+   - Efficient context management
+   - Guidelines always present (no silent loss)
+
+2. **Session Boundary Protection (Phase 2)** — Verify guidelines at pause/resume
+   - Explicit BEACON verification before pausing
+   - Load and verify after resuming
+   - Prevents context loss during transitions
+
+3. **Data-Driven Planning (Phase 3)** — Git history analysis
+   - Weekly trends: "What was hot this week?"
+   - Quarterly input: Use signals to prioritize evolution work
+   - Ad-hoc investigation: Understand area health
+
+**Real-world integration example**:
+- Friday 5pm: Developer uses /pb-pause (verifies all 9 BEACONs)
+- Pause-notes documents state and BEACON checkpoint
+- Monday 9am: Developer uses /pb-resume (loads 4 layers, verifies BEACONs)
+- Full context restored with verified guidelines
+- Before Q2 planning: Run /pb-git-signals
+- Use pain_score_by_file and adoption metrics to guide /pb-evolve
+- Quarterly evolution cycle informed by data
+
+### Backwards Compatibility
+
+✅ No breaking changes. All v2.12.0 features are opt-in:
+- Phase 1 (context minimization): Automatic, transparent
+- Phase 2 (session verification): Use /pb-pause and /pb-resume when needed
+- Phase 3 (git-signals): Run when planning or investigating
+
+Existing workflows continue to work unchanged.
+
+### Migration from v2.11.0
+
+No action required. All features are backwards compatible:
+- Global context still loads automatically
+- Project context still available
+- New capabilities available for opt-in use
+
+Recommended first steps:
+1. Read v2.12.0 Integration Guide
+2. Try /pb-git-signals on your repository
+3. Use /pb-pause at end of workday
+4. Use /pb-resume when resuming work
+
+### Files Added
+
+```
+Commands:
+- commands/core/pb-git-signals.md (220 lines)
+- commands/templates/pb-pause-enhanced.md (370 lines) [reference impl]
+- commands/templates/pb-resume-enhanced.md (376 lines) [reference impl]
+
+Scripts:
+- scripts/git-signals.py (440 lines)
+
+Tests:
+- tests/test_git_signals.py (400+ lines)
+
+Documentation:
+- docs/v2.12.0-integration-guide.md (460+ lines)
+- docs/beacon-verification-at-boundaries.md (530 lines)
+
+Total new code/docs: 3,200+ lines
+```
+
+### Metrics
+
+- **Command count**: 86 (v2.10.0) → 97 (current state)
+- **New in v2.12.0**: 1 command (pb-git-signals)
+- **BEACON system**: 9 guidelines with dual presence
+- **Context layers**: 4-layer architecture documented
+- **Test coverage**: 60+ tests for git-signals
+- **Documentation**: 3,200+ lines of new content
+
+---
+
 ## [v2.11.0] - 2026-02-12
 
 ### Added

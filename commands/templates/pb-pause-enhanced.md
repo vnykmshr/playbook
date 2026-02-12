@@ -1,4 +1,21 @@
+---
+name: "pb-pause-enhanced"
+title: "Pause Development Work (v2.12.0 Enhanced Reference)"
+category: "templates"
+status: "reference_implementation"
+references_actual_command: "pb-pause"
+document_type: "enhanced_reference"
+last_reviewed: "2026-02-12"
+version: "1.0.0"
+version_notes: "v2.12.0 Phase 2: Enhanced pause with BEACON verification (Step 6.5)"
+breaking_changes: []
+---
+
 # Pause Development Work (v2.12.0 Enhanced)
+
+**Integration Status:** This document is a reference implementation for v2.12.0 Phase 2 (Session Boundary Protection). **Recommendation:** Merge enhanced Step 6.5 (BEACON Verification) into actual `/pb-pause` command - this is core functionality, not optional.
+
+---
 
 Gracefully pause or conclude work on a project. Use this when stepping away for an extended period (days, weeks) or wrapping up a phase of work.
 
@@ -409,6 +426,12 @@ When resuming, use `/pb-resume` to:
 ---
 
 *Future you will thank present you. Leave context, not mysteries. Preserve BEACONs, prevent silent guideline loss.*
+
+---
+
+## Related Reference Implementations
+
+- [`commands/templates/pb-resume-enhanced.md`](pb-resume-enhanced.md) — Companion reference for enhanced resume with BEACON verification
 
 ---
 

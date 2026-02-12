@@ -90,13 +90,15 @@ python scripts/git-signals.py --help
 - Low frequency = stale, abandoned, or stable
 - Single author = potential knowledge bottleneck
 
-**Example:**
+**Example** (from playbook repository, 2026-02-12):
 ```
 Most active: pb-guide (47 touches, 8 authors)
   → Core content, actively maintained, distributed ownership
 Least active: pb-legacy-tool (2 touches, 1 author)
   → Likely deprecated or superseded
 ```
+
+**Note:** Examples show data from a specific point in time. Your repository will show different values. Run `python scripts/git-signals.py` on your own project to see current signals.
 
 ### Churn Analysis (`churn-analysis.json`)
 
@@ -227,6 +229,14 @@ python3 -c "import json; data = json.load(open('todos/git-signals/latest/pain-po
 # Use signals to guide evolution priorities
 # Example: If pb-guide has pain_score 8, consider refactoring in Q2
 ```
+
+**Pain Score Interpretation Guide:**
+| Score | Status | Action |
+|-------|--------|--------|
+| 0-2 | Healthy | No action needed |
+| 3-5 | Monitor | May need attention in next cycle |
+| 6-8 | Investigate | Consider for next quarter's evolution work |
+| 9+ | Priority | Address soon; may indicate systemic issues |
 
 ### When Investigating an Area
 

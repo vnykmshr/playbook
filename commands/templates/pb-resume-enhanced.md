@@ -1,4 +1,21 @@
+---
+name: "pb-resume-enhanced"
+title: "Resume Development Work (v2.12.0 Enhanced Reference)"
+category: "templates"
+status: "reference_implementation"
+references_actual_command: "pb-resume"
+document_type: "enhanced_reference"
+last_reviewed: "2026-02-12"
+version: "1.0.0"
+version_notes: "v2.12.0 Phase 2: Enhanced resume with context layer loading and BEACON verification (Steps 3.5-3.6)"
+breaking_changes: []
+---
+
 # Resume Development Work (v2.12.0 Enhanced)
+
+**Integration Status:** This document is a reference implementation for v2.12.0 Phase 2 (Session Boundary Protection). **Recommendation:** Merge enhanced Steps 3.5-3.6 (Load Context Layers, Verify BEACONs) into actual `/pb-resume` command - this is core functionality, not optional.
+
+---
 
 Quickly get back into context after a break. Use this to resume work on an existing feature branch.
 
@@ -461,6 +478,12 @@ See `/pb-claude-global` Context Management section for efficiency patterns.
 ---
 
 *Context is expensive to rebuild. Leave breadcrumbs for future you. Load all layers. Verify BEACONs.*
+
+---
+
+## Related Reference Implementations
+
+- [`commands/templates/pb-pause-enhanced.md`](pb-pause-enhanced.md) — Companion reference for enhanced pause with BEACON verification
 
 ---
 

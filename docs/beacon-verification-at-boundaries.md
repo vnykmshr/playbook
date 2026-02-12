@@ -1,3 +1,15 @@
+---
+name: "beacon-verification"
+title: "BEACON Verification at Session Boundaries"
+category: "documentation"
+document_type: "guide"
+audience: ["developers", "claude-code-users"]
+related_commands: ['pb-pause', 'pb-resume', 'pb-context', 'pb-claude-project']
+last_reviewed: "2026-02-12"
+version: "1.0.0"
+version_notes: "v2.12.0 Phase 1: Foundation for BEACON system"
+---
+
 # BEACON Verification at Session Boundaries
 
 **Context:** This guide explains how the BEACON system (critical guidelines) works at pause/resume boundaries to prevent silent loss of important constraints during session transitions.
@@ -155,11 +167,17 @@ Display to user:
 === PAUSING: Verifying Active BEACONs ===
 
 Global BEACONs (6):
-✓ Preamble, Design Rules, Code Quality
-✓ Non-Negotiables, Quality Bar, Model Selection
+✓ BEACON: Preamble
+✓ BEACON: Design Rules
+✓ BEACON: Code Quality
+✓ BEACON: Non-Negotiables
+✓ BEACON: Quality Bar (MLP)
+✓ BEACON: Model Selection
 
 Project BEACONs (3):
-✓ Project Guardrails, Audit Conventions, Key Patterns
+✓ BEACON: Project Guardrails
+✓ BEACON: Audit Conventions
+✓ BEACON: Key Patterns
 
 Critical guidelines preserved: All 9 BEACONs loaded ✓
 ```
