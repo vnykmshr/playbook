@@ -8,6 +8,9 @@ execution_pattern: "reference"
 related_commands: ['pb-preamble-async', 'pb-preamble-power', 'pb-preamble-decisions', 'pb-design-rules', 'pb-think']
 last_reviewed: "2026-02-09"
 last_evolved: ""
+version: "1.0.0"
+version_notes: "v2.10.0 baseline"
+breaking_changes: []
 ---
 # Collaboration Preamble: Thinking Like Peers
 

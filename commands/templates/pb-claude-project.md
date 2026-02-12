@@ -8,6 +8,9 @@ execution_pattern: "sequential"
 related_commands: ['pb-claude-global', 'pb-claude-orchestration', 'pb-context', 'pb-onboarding', 'pb-repo-init']
 last_reviewed: "2026-02-09"
 last_evolved: ""
+version: "1.0.0"
+version_notes: "v2.10.0 baseline"
+breaking_changes: []
 ---
 # Generate Project CLAUDE.md
 

@@ -8,6 +8,9 @@ execution_pattern: "reference"
 related_commands: ['pb-patterns-core', 'pb-patterns-resilience', 'pb-patterns-async', 'pb-patterns-db', 'pb-patterns-distributed']
 last_reviewed: "2026-02-09"
 last_evolved: ""
+version: "1.0.0"
+version_notes: "v2.10.0 baseline"
+breaking_changes: []
 ---
 # Architecture & Design Patterns
 

@@ -8,6 +8,9 @@ execution_pattern: "interactive"
 related_commands: ['pb-logging', 'pb-observability', 'pb-incident', 'pb-testing', 'pb-learn']
 last_reviewed: "2026-02-09"
 last_evolved: ""
+version: "1.0.0"
+version_notes: "v2.10.0 baseline"
+breaking_changes: []
 ---
 # Debugging Methodology
 

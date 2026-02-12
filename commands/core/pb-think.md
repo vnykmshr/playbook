@@ -8,6 +8,9 @@ execution_pattern: "interactive"
 related_commands: ['pb-preamble', 'pb-design-rules', 'pb-plan', 'pb-adr', 'pb-debug']
 last_reviewed: "2026-02-09"
 last_evolved: ""
+version: "1.0.0"
+version_notes: "v2.10.0 baseline"
+breaking_changes: []
 ---
 # Unified Thinking Partner
 

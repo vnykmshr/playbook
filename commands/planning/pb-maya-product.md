@@ -8,6 +8,9 @@ execution_pattern: "sequential"
 related_commands: ['pb-plan', 'pb-adr', 'pb-review-product', 'pb-preamble', 'pb-design-rules']
 last_reviewed: "2026-02-12"
 last_evolved: ""
+version: "1.1.0"
+version_notes: "Initial v2.11.0 (Phase 1-4 enhancements)"
+breaking_changes: []
 ---
 
 # Maya Sharma Agent: Product & User Strategy

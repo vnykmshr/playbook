@@ -8,6 +8,9 @@ execution_pattern: "sequential"
 related_commands: ['pb-claude-global', 'pb-claude-project', 'pb-standards', 'pb-preamble', 'pb-design-rules']
 last_reviewed: "2026-02-09"
 last_evolved: ""
+version: "1.1.0"
+version_notes: "Initial v2.11.0 (Phase 1-4 enhancements)"
+breaking_changes: []
 ---
 
 # Evolve Playbooks to Match Claude Capabilities

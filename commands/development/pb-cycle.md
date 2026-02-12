@@ -8,6 +8,9 @@ execution_pattern: "sequential"
 related_commands: ['pb-start', 'pb-commit', 'pb-pr', 'pb-review-code', 'pb-testing']
 last_reviewed: "2026-02-09"
 last_evolved: ""
+version: "1.1.0"
+version_notes: "Initial v2.11.0 (Phase 1-4 enhancements)"
+breaking_changes: []
 ---
 # Development Cycle: Self-Review + Peer Review
 

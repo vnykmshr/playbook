@@ -8,6 +8,9 @@ execution_pattern: "reference"
 related_commands: ['pb-preamble', 'pb-design-rules', 'pb-guide', 'pb-commit', 'pb-testing']
 last_reviewed: "2026-02-09"
 last_evolved: ""
+version: "1.0.0"
+version_notes: "v2.10.0 baseline"
+breaking_changes: []
 ---
 # Project Guidelines & Working Principles
 

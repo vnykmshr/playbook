@@ -8,6 +8,9 @@ execution_pattern: "reference"
 related_commands: ['pb-review-code', 'pb-review-hygiene', 'pb-review-tests', 'pb-security', 'pb-cycle']
 last_reviewed: "2026-02-09"
 last_evolved: ""
+version: "1.0.0"
+version_notes: "v2.10.0 baseline"
+breaking_changes: []
 ---
 # Comprehensive Project Review
 

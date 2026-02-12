@@ -8,6 +8,9 @@ execution_pattern: "interactive"
 related_commands: ['pb-adr', 'pb-todo-implement', 'pb-think', 'pb-repo-init', 'pb-start']
 last_reviewed: "2026-02-09"
 last_evolved: ""
+version: "1.0.0"
+version_notes: "v2.10.0 baseline"
+breaking_changes: []
 ---
 # New Focus Area Planning Prompt (Generic)
 
