@@ -25,6 +25,7 @@ Quick reference for all playbook commands.
 | `/pb-ship` | Ready to ship: full reviews → PR → merge → release |
 | `/pb-pr` | Creating a pull request (standalone) |
 | `/pb-testing` | Testing philosophy (unit, integration, E2E strategies) |
+| `/pb-jordan-testing` | Testing & reliability review (gap detection, edge case coverage, failure mode analysis) |
 | `/pb-standup` | Daily async status updates for distributed teams |
 | `/pb-knowledge-transfer` | Preparing KT session for new developer or team handoff |
 | `/pb-what-next` | Context-aware command recommendations based on git state |
@@ -141,6 +142,7 @@ Self-sufficient thinking partner methodology for expert-quality collaboration.
 | `/pb-templates` | Templates for commits, phases, reviews |
 | `/pb-standards` | Coding standards, quality principles |
 | `/pb-documentation` | Writing technical docs at 5 levels |
+| `/pb-sam-documentation` | Documentation & clarity review (reader-centric, assumption surfacing, structural clarity) |
 | `/pb-design-rules` | 17 classical design principles (Clarity, Simplicity, Resilience, Extensibility) |
 | `/pb-preamble-async` | Async/distributed team collaboration patterns |
 | `/pb-preamble-power` | Power dynamics and psychological safety |
