@@ -59,6 +59,16 @@ Code is read far more often than it's written. A clever solution that only the a
 **When It Costs:**
 Clarity sometimes means writing more code. Sometimes it means passing more parameters. That's a trade-off you accept because clarity enables all future work on this code.
 
+**Philosophy: Sam Rivera's Perspective**
+
+See `/pb-sam-documentation` for the complete clarity philosophy applied to documentation and knowledge transfer.
+
+**Core insight:** Clarity is an act of respect for future readers. When you write code that's easy to understand, you're saying "I believe your time is valuable, so I wrote this for you, not for myself."
+
+- **For yourself:** You read code once and write it once.
+- **For everyone else:** They read it dozens of times without your context.
+- **The math:** 1 author, 10 readers over 3 years = clarity pays dividends.
+
 ---
 
 ### 2. Rule of Least Surprise: Always Do the Least Surprising Thing
@@ -140,6 +150,19 @@ Complex systems fail in ways you didn't anticipate. Simple systems fail in ways 
 
 **When It's Hard:**
 Simplicity requires discipline. It's harder in the moment: "Let me add support for X even though we don't need it yet." But you're paying a cost every single day the code exists. That one "nice to have" feature might never be needed and costs you 1000 days of maintenance.
+
+**Philosophy: Simplicity as Product Discipline**
+
+See `/pb-maya-product` for the product lens on simplicity.
+
+Core insight: **Simplicity and scope discipline are inseparable.** Every feature is an expense, paid daily in maintenance cost, complexity tax, and cognitive load. The simplest design isn't about minimalist aesthetics—it's about ruthlessly eliminating what you don't need *now*.
+
+- **Shipping simple is faster** — You know when code is done because it does exactly one thing well
+- **Debugging simple is faster** — Fewer moving parts, fewer places where bugs hide
+- **Learning simple is faster** — New developers read and understand in minutes, not hours
+- **Changing simple is faster** — When requirements shift, you change less code
+
+Trade-off clarity: You can have simple+slow or complex+fast. Prefer simple+slow every time—you can optimize later. Complex+fast almost always becomes complex+slow when you try to maintain it.
 
 ---
 
@@ -223,6 +246,19 @@ Complex error handling hides bugs. Transparent systems reveal bugs immediately. 
 Bad: Complex error handling that tries to recover from any failure
 Good: Fail immediately when invariants are violated, so you know exactly what went wrong
 
+**Philosophy: Transparency as Defense**
+
+See `/pb-alex-infra` for resilience thinking and `/pb-jordan-testing` for failure mode discovery.
+
+Core insight: **Robust systems don't hide problems; they broadcast them.** Every layer of abstraction that conceals state increases the time between failure and discovery. Long detection latency means cascading failures.
+
+- **Fail at the boundary** — Catch invalid input early, before it corrupts state
+- **Assert invariants** — If data should never reach this state, assert it and crash
+- **Transparent state** — Make it obvious what the system is doing (logs, metrics, traces)
+- **Test for failure** — Don't test "it works"; test "it fails correctly"
+
+The paradox: Systems that fail loud and fast feel fragile. Systems that hide errors feel stable—until they corrupt your data.
+
 ---
 
 ### 10. Rule of Repair: When You Must Fail, Fail Noisily and As Soon As Possible
@@ -241,6 +277,21 @@ Silent failures compound. By the time you discover a problem, you've processed g
 
 **Example:**
 Don't silently return null. Throw an exception. The exception tells you where the real problem is; null hides the problem until it causes cascading failures.
+
+**Philosophy: Fail at the Source**
+
+See `/pb-linus-agent` for pragmatic security thinking that applies here: catch problems early, before they propagate.
+
+Core insight: **Silent failures are worse than crashes.** When code swallows an error, you delay diagnosis. The longer an error hides, the further it propagates. By the time you discover it, you've lost data, accumulated corruption, or exposed a security issue.
+
+Loud failures cost you hours of debugging. Silent failures cost you days of data recovery and customer trust.
+
+- **Error at the edge** — Validate input; reject early
+- **Crash on invariant violation** — If state is impossible, stop immediately
+- **Clear error context** — Stack traces, logs, and metadata that enable diagnosis
+- **No recovery guessing** — If you can't recover safely, don't pretend to
+
+The measure: "Time from failure to diagnosis." Loud systems are fast; silent systems bury the information you need.
 
 ---
 
@@ -279,6 +330,22 @@ Optimization is expensive: added complexity, reduced readability, hard-to-predic
 
 **The Anti-pattern:**
 "This might be slow, so let me optimize it." You're adding complexity to solve a problem that doesn't exist.
+
+**Philosophy: Clarity Before Speed**
+
+See `/pb-sam-documentation` for clarity thinking and `/pb-alex-infra` for measuring infrastructure performance.
+
+Core insight: **Premature optimization trades clarity for speed nobody measures.** Before you optimize, you must:
+1. Know what's actually slow (measure, don't guess)
+2. Understand the code so well you can optimize it safely
+3. Document why the optimization exists (so future maintainers don't remove it thinking it's dead code)
+
+- **Measure first** — Profiling is cheaper than guessing
+- **Optimize after clarity** — Code you understand is code you can safely optimize
+- **Document the optimization** — Why is it this way? What's the payoff vs cost?
+- **Accept performance debt** — If you don't know where the problem is, accept slower code rather than introduce complexity
+
+The arithmetic: 1 hour measuring + 1 hour optimizing the right thing = 100x better ROI than 4 hours optimizing the wrong thing.
 
 ---
 
