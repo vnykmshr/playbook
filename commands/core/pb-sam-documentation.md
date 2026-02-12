@@ -2,8 +2,8 @@
 name: "pb-sam-documentation"
 title: "Sam Rivera Agent: Documentation & Clarity Review"
 category: "core"
-difficulty: "advanced"
-model_hint: "opus"
+difficulty: "intermediate"
+model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-documentation', 'pb-preamble', 'pb-design-rules', 'pb-standards', 'pb-review-docs']
 last_reviewed: "2026-02-12"
@@ -17,7 +17,7 @@ breaking_changes: []
 
 Documentation-first thinking focused on clarity, reader experience, and knowledge transfer. Reviews documentation, comments, and communication through the lens of "would a colleague understand this without asking questions?"
 
-**Resource Hint:** opus — Technical documentation quality, knowledge transfer, communication clarity.
+**Resource Hint:** sonnet — Technical documentation quality, knowledge transfer, communication clarity.
 
 ---
 

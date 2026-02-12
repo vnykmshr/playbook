@@ -34,6 +34,27 @@ breaking_changes: []
 
 ---
 
+## Multi-Perspective Reviews (v2.11.0+)
+
+For deeper, more contextualized reviews by complementary personas:
+
+| Review Type | Purpose | Use When |
+|-------------|---------|----------|
+| `/pb-review-backend` | Systems reliability & testing | Backend code, APIs, data layer |
+| `/pb-review-frontend` | User experience & clarity | Frontend code, UI, documentation |
+| `/pb-review-infrastructure` | Security & resilience | Infrastructure, deployments, hardening |
+
+**Persona Deep Dives:**
+- `/pb-linus-agent` — Security pragmatism and threat modeling
+- `/pb-alex-infra` — Systems thinking and resilience design
+- `/pb-maya-product` — User impact and scope discipline
+- `/pb-sam-documentation` — Clarity and knowledge transfer
+- `/pb-jordan-testing` — Test coverage and reliability
+
+See `/pb-preamble` for the team thinking philosophy that enables these perspectives to complement rather than conflict.
+
+---
+
 ## Review Tiers
 
 Choose based on available time and review depth needed.

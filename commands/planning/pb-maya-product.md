@@ -2,8 +2,8 @@
 name: "pb-maya-product"
 title: "Maya Sharma Agent: Product & User Strategy"
 category: "planning"
-difficulty: "advanced"
-model_hint: "opus"
+difficulty: "intermediate"
+model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-plan', 'pb-adr', 'pb-review-product', 'pb-preamble', 'pb-design-rules']
 last_reviewed: "2026-02-12"
@@ -17,7 +17,7 @@ breaking_changes: []
 
 User-centric strategic thinking focused on solving the right problems for the right users. Reviews features, scope, and product decisions through the lens of "who is this for, and what are they trying to accomplish?"
 
-**Resource Hint:** opus — Strategic product thinking, user research insights, scope discipline.
+**Resource Hint:** sonnet — Strategic product thinking, user research insights, scope discipline.
 
 ---
 

@@ -437,18 +437,23 @@ def login(username, password):
     # Find user (case-insensitive usernames)
     user = User.query.filter(User.username.ilike(username)).first()
 
-    # Always hash input (prevents timing attacks by constant time)
-    input_hash = hashlib.pbkdf2_hmac('sha256', password.encode(), b'salt', 100000)
+    # Hash input with bcrypt (handles salt internally with per-password random salt)
+    # Bcrypt provides constant-time comparison and prevents timing attacks
+    # Use dummy hash when user not found to prevent timing attacks on username enumeration
+    dummy_hash = b'$2b$12$R9h7cIPz0giKT4MVaVJZu.1U6Fp5WxdWP.oWOHvL0pRpFNO/s6e.'
+    user_hash = user.password_hash if user else dummy_hash
+
+    password_correct = bcrypt.checkpw(password.encode(), user_hash)
 
     if not user:
-        # Timing: same as wrong password (prevents username enumeration)
-        hashlib.pbkdf2_hmac('sha256', password.encode(), b'salt', 100000)
+        # Timing: same hashing cost as wrong password (prevents username enumeration)
+        # bcrypt.checkpw always takes ~100ms regardless of input validity
         logger.info(f"Login failed: user {username} not found")
         cache.set(attempt_key, cache.get(attempt_key, 0) + 1, 3600)
         return {"status": "fail"}, 401
 
-    # Verify password with constant-time comparison
-    if not secrets.compare_digest(user.password_hash, input_hash):
+    # Verify password (bcrypt.checkpw provides constant-time comparison)
+    if not password_correct:
         logger.info(f"Login failed: wrong password for {username}")
         cache.set(attempt_key, cache.get(attempt_key, 0) + 1, 3600)
         return {"status": "fail"}, 401
