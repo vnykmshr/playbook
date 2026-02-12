@@ -5,11 +5,11 @@ category: "core"
 difficulty: "beginner"
 model_hint: "sonnet"
 execution_pattern: "reference"
-related_commands: ['pb-preamble', 'pb-design-rules', 'pb-guide', 'pb-commit', 'pb-testing']
+related_commands: ['pb-preamble', 'pb-design-rules', 'pb-calm-design', 'pb-guide', 'pb-testing']
 last_reviewed: "2026-02-09"
 last_evolved: ""
-version: "1.0.0"
-version_notes: "v2.10.0 baseline"
+version: "1.1.0"
+version_notes: "v2.12.0 Phase 3: Added Calm Quality Bar to MLP criteria"
 breaking_changes: []
 ---
 # Project Guidelines & Working Principles
@@ -189,6 +189,17 @@ Before declaring work complete, ask:
 - **Did you build the smallest thing that feels complete?** — Scope discipline, not scope creep
 
 If any answer is "no": keep refining. If all are "yes": ship it.
+
+### Calm Quality Bar (v2.12.0)
+
+Extend the MLP criteria with attention-respect:
+
+- **Does this respect user attention?** — Works silently? Alerts only when critical? Optional instead of mandatory?
+- **Are errors clear and recoverable?** — User knows what went wrong and what to do next?
+- **Does this fail gracefully?** — Does it degrade to partial functionality, or does it break completely?
+- **Would you use this daily without thinking about it?** — Does it recede into the background?
+
+See `/pb-calm-design` for the complete 10-question calm design checklist and philosophy.
 
 ### What MLP Is Not
 

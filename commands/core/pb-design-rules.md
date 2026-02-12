@@ -5,11 +5,11 @@ category: "core"
 difficulty: "beginner"
 model_hint: "sonnet"
 execution_pattern: "sequential"
-related_commands: ['pb-preamble', 'pb-adr', 'pb-patterns', 'pb-review-hygiene', 'pb-standards']
+related_commands: ['pb-preamble', 'pb-calm-design', 'pb-standards', 'pb-adr', 'pb-patterns']
 last_reviewed: "2026-02-09"
 last_evolved: ""
-version: "1.1.0"
-version_notes: "Initial v2.11.0 (Phase 1-4 enhancements)"
+version: "1.2.0"
+version_notes: "v2.12.0 Phase 3: Added Rule 18 (Attention as Resource) for Calm Tech integration"
 breaking_changes: []
 ---
 # Design Rules: Core Technical Principles
@@ -39,7 +39,7 @@ These are 17 classical software design principles that have proven themselves ac
 - **Review** — Reviewers challenge based on which rules are violated
 - **Operations** — Systems designed by these rules stay maintainable and adaptable
 
-**The four clusters** below group the 17 rules into memorable themes: CLARITY, SIMPLICITY, RESILIENCE, and EXTENSIBILITY. Together, they provide a complete framework for technical decision-making.
+**The four clusters** below group the first 17 rules into memorable themes: CLARITY, SIMPLICITY, RESILIENCE, and EXTENSIBILITY. A fifth theme, ATTENTION, captures Rule 18 (Attention as a Finite Resource). Together, these 18 rules provide a complete framework for technical decision-making.
 
 ---
 
@@ -457,6 +457,39 @@ Debugging invisible systems takes forever. Systems designed for transparency rev
 
 **Example:**
 A system that logs every significant state change is much easier to debug than a system that requires stepping through a debugger.
+
+---
+
+### 18. Rule of Attention: Respect Attention as a Finite Resource
+
+**The Principle:**
+Attention is finite. Systems that demand constant vigilance create friction. Design systems that communicate necessary information while respecting user and operator focus.
+
+**Why It Matters:**
+Information overload reduces signal-to-noise ratio. When everything is urgent, nothing is. When systems demand constant attention, users disable alerts, miss real problems, or abandon the system entirely.
+
+**In Practice:**
+- Distinguish critical from secondary information
+- Alert only when user action is required
+- Provide status through non-intrusive channels (icons, colors, optional indicators)
+- Silent operation for background work
+- Clear, actionable errors that don't demand constant vigilance
+- Graceful degradation when something fails
+
+**Example:**
+A sync system that works silently and shows status via an icon is calm. A system that interrupts with modal dialogs for every operation is demanding. Same functionality; vastly different attention cost.
+
+**Philosophy: Extending Clarity to Users**
+
+See `/pb-calm-design` for the complete calm design framework and 10-question checklist.
+
+Core insight: **The same clarity principle that makes code readable makes interfaces calm.** Clarity for engineers means explicit, obvious code. Clarity for users means: "What's happening?" and "What do I do?" are always obvious.
+
+- **For engineers**: Clear code prevents bugs, aids debugging, enables modification
+- **For users**: Clear interfaces enable understanding, reduce anxiety, support confidence
+- **For operators**: Clear systems are observable; failures are visible, not hidden
+
+The unified principle: Minimize cognitive load. Whether you're reading code or using a system, respect that attention is finite. Design accordingly.
 
 ---
 

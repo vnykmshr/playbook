@@ -5,11 +5,11 @@ category: "core"
 difficulty: "beginner"
 model_hint: "opus"
 execution_pattern: "reference"
-related_commands: ['pb-preamble-async', 'pb-preamble-power', 'pb-preamble-decisions', 'pb-design-rules', 'pb-think']
+related_commands: ['pb-calm-design', 'pb-design-rules', 'pb-preamble-async', 'pb-preamble-power', 'pb-think']
 last_reviewed: "2026-02-09"
 last_evolved: ""
-version: "1.0.0"
-version_notes: "v2.10.0 baseline"
+version: "1.1.0"
+version_notes: "v2.12.0 Phase 3: Added Principle E (Attention Respect) for Calm Tech integration"
 breaking_changes: []
 ---
 # Collaboration Preamble: Thinking Like Peers
@@ -135,6 +135,19 @@ Optimize for outcomes, not just code.
 - Think end-to-end: will this scale? Is it secure? Can we operate it?
 
 **In practice**: "This is architecturally clean, but our ops team can't monitor it. Can we add observability hooks?"
+
+### Principle E: Respect Attention as a Finite Resource
+
+Thinking like peers means respecting each other's attention.
+
+- Your time is finite. So is everyone else's. Code that's hard to understand wastes attention.
+- User attention is finite. Systems that demand constant vigilance create friction.
+- Operator attention is finite. Systems that hide problems force constant vigilance.
+- Clear, calm systems are an act of respect: "I built this thinking about your attention."
+
+**In practice**: "This feature is powerful, but it demands constant tweaking. Can we make it self-tuning so operators don't have to think about it?"
+
+See `/pb-calm-design` for the complete calm design framework—how to build systems that respect user attention.
 
 ---
 
