@@ -67,6 +67,9 @@ nav:
       - Frontend Workflow: frontend-workflow.md
   - Command Reference: command-index.md
   - Integration Guide: integration-guide.md
+  - Command Versioning:
+      - Version History: command-changelog.md
+      - Versioning Guide: command-versioning.md
   - Quality:
       - Best Practices: best-practices.md
       - Checklists: checklists.md
