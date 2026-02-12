@@ -769,7 +769,6 @@ Engineer: "Yes, added new endpoint and examples"
 - `/pb-review-docs` — Documentation quality review
 - `/pb-sam-documentation` — Clarity-first documentation review (see "When to Use" for integration)
 - `/pb-repo-readme` — Generate project README
-- `/pb-repo-blog` — Write technical blog post
 - `/pb-onboarding` — Using docs for training
 
 ---

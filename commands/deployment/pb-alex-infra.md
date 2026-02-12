@@ -658,8 +658,7 @@ app.get('/api/users', async (req, res) => {
 - `/pb-hardening` — Security hardening for infrastructure
 - `/pb-patterns-resilience` — Resilience design patterns
 - `/pb-observability` — Monitoring and observability strategy
-- `/pb-maintenance` — Production maintenance and operations
-- `/pb-linus-agent` — Code security and pragmatism (sibling persona)
+- `/pb-linus-agent` — Security assumptions and threat modeling (sibling persona)
 
 ---
 
