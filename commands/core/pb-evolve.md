@@ -6,10 +6,10 @@ difficulty: "beginner"
 model_hint: "opus"
 execution_pattern: "sequential"
 related_commands: ['pb-claude-global', 'pb-claude-project', 'pb-standards', 'pb-preamble', 'pb-design-rules']
-last_reviewed: "2026-02-09"
-last_evolved: ""
+last_reviewed: "2026-02-14"
+last_evolved: "2026-02-14"
 version: "1.1.0"
-version_notes: "Initial v2.11.0 (Phase 1-4 enhancements)"
+version_notes: "v2.12.0 Phase 3: Complete operationalization with quarterly schedule, team roles, rollback procedures, and metrics framework"
 breaking_changes: []
 ---
 
@@ -32,6 +32,95 @@ breaking_changes: []
 - **Context limit stress** — If hitting session limits regularly
 - **Latency complaints** — If playbooks feel slow
 - **User feedback** — When patterns don't work in practice
+
+---
+
+## Quarterly Schedule & Operational Framework
+
+### Fixed Quarterly Calendar
+
+Evolution cycles run on a **fixed quarterly schedule**, not ad-hoc:
+
+| Quarter | Cycle Window | Development Period | Evolution Period | Release Date |
+|---------|--------------|-------------------|-----------------|--------------|
+| Q1 | Jan 20 - Feb 15 | Jan 1 - Feb 9 | Feb 10 - Feb 15 | Feb 16 (tag vX.Y.0) |
+| Q2 | Apr 20 - May 15 | Apr 1 - May 9 | May 10 - May 15 | May 16 (tag vX.Y.0) |
+| Q3 | Jul 20 - Aug 15 | Jul 1 - Aug 9 | Aug 10 - Aug 15 | Aug 16 (tag vX.Y.0) |
+| Q4 | Oct 20 - Nov 15 | Oct 1 - Nov 9 | Nov 10 - Nov 15 | Nov 16 (tag vX.Y.0) |
+
+**Fixed dates enable:**
+- Team predictability (everyone knows when evolution happens)
+- Planning visibility (teams budget for evolution work)
+- Consistent rhythm (quarterly on schedule, not whenever convenient)
+
+### Evolution Manager Role
+
+**Responsibility:** One person per quarter manages the evolution cycle end-to-end.
+
+**Qualifications:**
+- Familiar with playbooks and architecture
+- Can make judgment calls on evolution priorities
+- Access to git tags, GitHub releases, merge permissions
+- 4-6 hours of focused time
+
+**Responsibilities:**
+
+1. **Week Before Evolution (Preparation)**
+   - Review capability changes since last quarter
+   - Run git signals (if not already done)
+   - Prepare evolution input document
+   - Schedule team review session (30-45 min)
+
+2. **Evolution Period (Monday-Friday)**
+   - Facilitate playbook review and change proposals
+   - Lead capability analysis with team
+   - Consolidate findings into prioritized change list
+   - Manage PR review and approval process
+   - Ensure testing validates all changes
+   - Prepare release notes
+
+3. **Release Day (Friday)**
+   - Merge evolution PR to main
+   - Create git tag and GitHub release
+   - Update project CLAUDE.md
+   - Post evolution summary to team
+
+4. **Post-Release (Following Monday)**
+   - Verify documentation builds correctly
+   - Run verification checks
+   - Document any post-release fixes needed
+   - Plan next quarter's evolution inputs
+
+### Team Coordination
+
+**Evolution Review Meeting** (Tuesday of evolution week)
+
+- **Duration:** 45 minutes
+- **Attendees:** Evolution Manager, 1-2 senior engineers, playbook steward
+- **Agenda:**
+  1. Capability changes since last quarter (10 min)
+  2. Git signals analysis (if applicable) (10 min)
+  3. Proposed changes discussion (20 min)
+  4. Approval and prioritization (5 min)
+
+**Decision Criteria:**
+- ✅ Changes based on new Claude capabilities or user feedback
+- ✅ Changes improve clarity, simplicity, or efficiency
+- ❌ Changes that break established patterns without strong justification
+- ❌ Changes that contradict preamble or design rules
+
+### Pre-Evolution Checklist
+
+**Before starting evolution work, Evolution Manager verifies:**
+
+- [ ] Current date is within evolution period (e.g., Feb 10-15)
+- [ ] All capability changes documented (Claude model versions, new features, etc.)
+- [ ] Git signals run (if applicable, use `python scripts/git-signals.py`)
+- [ ] Team knows evolution is happening (Slack/standup announcement)
+- [ ] Main branch is clean and up to date
+- [ ] Previous quarter's changes are stable in production
+- [ ] Snapshot created (`git tag v-pre-evolution-YYYY-Q[N]`)
+- [ ] Evolution input document prepared for review meeting
 
 ---
 
@@ -601,6 +690,254 @@ Before publishing an evolution cycle, define and verify success metrics:
 - [ ] Evolution log entry written
 - [ ] Tests pass
 - [ ] Tested on 2-3 real tasks
+
+---
+
+## Rollback Procedures
+
+If evolution introduces issues after merging, follow these steps:
+
+### Immediate Response (Within 1 hour of issue discovery)
+
+```bash
+# 1. Identify the problem
+# - Review recent changes
+# - Check which playbooks caused the issue
+
+# 2. Assess severity
+# - Does this break user workflows? (CRITICAL)
+# - Does this cause confusion? (HIGH)
+# - Is this a minor clarity issue? (MEDIUM)
+
+# 3. Decide: Fix Forward vs Rollback
+# CRITICAL: Rollback immediately
+# HIGH: Rollback if fix takes >30 min, fix forward if quick fix available
+# MEDIUM: Fix forward (don't rollback for minor issues)
+```
+
+### Rolling Back Evolution (If Needed)
+
+```bash
+# Step 1: Retrieve pre-evolution snapshot
+python3 scripts/evolution-snapshot.py --list
+# Shows: evolution-20260210-143022, evolution-20260211-091845, etc.
+
+# Step 2: Review what will be restored
+python3 scripts/evolution-snapshot.py --show evolution-20260210-143022
+
+# Step 3: Restore (interactive confirmation)
+python3 scripts/evolution-snapshot.py --rollback evolution-20260210-143022
+
+# Step 4: Verify restoration
+git log --oneline -3
+mkdocs build --strict
+
+# Step 5: Record the revert
+python3 scripts/evolution-log.py \
+  --revert "2026-Q1" \
+  --reason "Caused confusion in pb-guide, needs refinement"
+
+# Step 6: Push rollback commit
+git push origin main
+
+# Step 7: Communicate
+# Announce rollback in team Slack/standup with reason
+```
+
+### Post-Rollback Analysis
+
+After rollback, document:
+
+```markdown
+# Evolution Rollback Report: 2026-Q1
+
+**Date:** Feb 15, 2026
+**Reason:** Proposed changes to pb-guide clarity caused more confusion than before
+
+## What Went Wrong
+- Change assumed users familiar with concept X (they weren't)
+- New section headings created ambiguity about scope
+- Examples didn't match current usage patterns
+
+## Learning for Next Cycle
+- Earlier user validation before committing large doc changes
+- Test changes with actual users (2-3 people) before merging
+- Include examples that match documented patterns exactly
+
+## Re-Planning
+- Keep current pb-guide as-is for Q1
+- Plan more targeted clarity improvements for Q2
+- Assign to different reviewer with user feedback focus
+```
+
+---
+
+## Evolution Metrics & Reporting
+
+### Measuring Evolution Success
+
+Track these metrics for each evolution cycle:
+
+**Quality Metrics:**
+- ✅ No bugs introduced (zero rollbacks needed)
+- ✅ No regressions (existing functionality preserved)
+- ✅ Documentation builds successfully
+- ✅ All tests pass
+
+**Adoption Metrics:**
+- When was the evolution PR merged? (commits per day unchanged)
+- Any user feedback about changes? (watch for GitHub issues)
+- Are new patterns being adopted? (track in next cycle's signals)
+
+**Efficiency Metrics:**
+- Time taken for evolution cycle (hours)
+- Lines of code/documentation changed
+- Number of playbooks touched
+
+### Quarterly Evolution Report Template
+
+Create `todos/evolution-report-YYYY-Q[N].md` after each cycle:
+
+```markdown
+# Evolution Report: Q1 2026
+
+**Evolution Manager:** [Name]
+**Cycle Period:** Feb 10-15, 2026
+**Release Date:** Feb 16, 2026
+
+## Capability Changes Assessed
+- Claude Sonnet: [version change, if any]
+- Claude Opus: [version change, if any]
+- New capabilities: [e.g., tool use, structured output]
+
+## Changes Made
+
+### Playbooks Updated
+- pb-guide (3 sections clarified)
+- pb-cycle (added parallel review pattern)
+- pb-git-signals (integrated with evolution planning)
+
+### Impact Assessment
+- Breaking changes: 0
+- Potentially confusing changes: 0 (no rollbacks needed)
+- User-facing improvements: 3
+
+### Metrics
+- Evolution time: 4 hours
+- Lines changed: 280
+- Tests run: 40 (all passed)
+
+## User Feedback (If Any)
+- [Positive feedback on changes]
+- [Questions or confusion]
+- [Suggestions for next cycle]
+
+## Learnings & Improvements for Q2
+1. [What went well]
+2. [What to improve]
+3. [Process improvements]
+
+## Next Quarter Priorities
+- [Based on feedback and evolution planning]
+```
+
+---
+
+## Post-Evolution Review
+
+**One week after evolution release** (e.g., Feb 23), evaluate:
+
+### Stability Check
+
+```bash
+# 1. Verify no regressions
+# - No user bug reports related to evolution changes
+# - CI/CD still green
+# - Deployment still smooth
+
+# 2. Document any minor issues
+# - Typos or clarity gaps found by users
+# - Add to next quarter's evolution input
+
+# 3. Measure actual impact
+# - Did playbook improvements help? (user feedback)
+# - Are new patterns being used? (git commits)
+# - Did efficiency improve? (session times)
+```
+
+### Updating Evolution Log
+
+```bash
+python3 scripts/evolution-log.py --complete-review "2026-Q1" \
+  --stability "green" \
+  --feedback "[user feedback summary]"
+```
+
+### Planning Next Cycle
+
+**By end of week after evolution:**
+- Document learnings for next Evolution Manager
+- Capture early user feedback for next evolution input
+- Update MEMORY.md with patterns discovered
+- Plan Q2 evolution inputs
+
+---
+
+## Evolution Tracking System
+
+### Central Evolution Dashboard
+
+Maintain `todos/evolution-dashboard.md` for quarter-at-a-glance status:
+
+```markdown
+# Evolution Dashboard: 2026
+
+## Q1 (Feb 10-15) — COMPLETE
+- Evolution Manager: [Name]
+- Status: ✅ Released Feb 16
+- Capability focus: Sonnet 4.6 performance improvements
+- Changes: 3 playbooks, 280 lines
+- Impact: No regressions, positive feedback
+- Post-review: Stable, metrics good
+
+## Q2 (May 10-15) — UPCOMING
+- Evolution Manager: [TBD - assign by April 20]
+- Preliminary capability focus: Context window, reasoning improvements
+- Estimated changes: TBD
+- Key questions: [To be researched in May]
+
+## Q3 (Aug 10-15) — PLANNING
+- Evolution Manager: [Rotate from Q1]
+- Preliminary focus: TBD
+
+## Q4 (Nov 10-15) — PLANNING
+- Evolution Manager: [Rotate from Q2]
+- Preliminary focus: TBD
+```
+
+### Pre-Evolution Preparation Tracking
+
+30 days before evolution cycle:
+
+```markdown
+# Q2 2026 Evolution Prep (30 days before May 10)
+
+**Timeline:**
+- April 10: Evolution Manager assigned, research phase begins
+- April 15: Capability analysis draft completed
+- April 20: Review meeting scheduled
+- May 1: Evolution input document finalized
+- May 9: Team review meeting
+- May 10: Evolution work begins
+
+**Checklist:**
+- [ ] Evolution Manager assigned (person + backup)
+- [ ] Capability changes researched
+- [ ] Git signals run (if applicable)
+- [ ] Evolution meeting scheduled
+- [ ] Input document drafted
+- [ ] Team notified
+```
 
 ---
 
