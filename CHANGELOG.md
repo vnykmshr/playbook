@@ -5,6 +5,116 @@ All notable changes to this project are documented here.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v2.11.0] - 2026-02-12
+
+### Added
+
+**Phase 1: Multi-Persona Review Architecture (8 new commands)**
+- **pb-linus-agent** (v1.1.0) — Pragmatic security & direct technical feedback
+  - 584 lines, 18KB, specialized review agent
+  - 5 review categories: Correctness & Assumptions, Security Assumptions, Backward Compatibility, Code Clarity, Performance & Reasoning
+  - Automatic rejection criteria for critical security issues
+
+- **pb-alex-infra** (v1.1.0) — Infrastructure resilience & failure recovery
+  - 438 lines, 18KB, specialized review agent
+  - Philosophy: "Everything fails—excellence = recovery speed"
+  - Categories: Failure modes, degradation, deployment, observability, capacity planning
+
+- **pb-maya-product** (v1.1.0) — Product strategy & user value focus
+  - 1000+ lines, 15KB, specialized review agent
+  - Philosophy: "Features are expenses; value determined by users"
+  - 6-step decision framework for feature evaluation
+
+- **pb-sam-documentation** (v1.1.0) — Documentation clarity & knowledge transfer
+  - 1000+ lines, 21KB, specialized review agent
+  - Philosophy: "Documentation is first-class infrastructure"
+  - Three-layer documentation approach
+
+- **pb-jordan-testing** (v1.1.0) — Testing quality & reliability review
+  - 1200+ lines, 22KB, specialized review agent
+  - Philosophy: "Tests reveal gaps, not correctness"
+  - Gap detection and failure mode analysis
+
+**Phase 2: Multi-Perspective Review Commands (3 new commands)**
+- **pb-review-backend** (v1.1.0) — Combined Alex (infrastructure) + Jordan (testing)
+  - 16KB, structured multi-perspective decision tree
+  - Methodology for synthesizing infrastructure and testing perspectives
+
+- **pb-review-frontend** (v1.1.0) — Combined Maya (product) + Sam (documentation)
+  - 17KB, structured multi-perspective decision tree
+  - Product-centric and clarity-centric review synthesis
+
+- **pb-review-infrastructure** (v1.1.0) — Combined Alex (infrastructure) + Linus (security)
+  - 18KB, structured multi-perspective decision tree
+  - Resilience and security perspective integration
+
+**Phase 3: Outcome-First Workflows**
+- **pb-start** (v1.1.0) — Added "Outcome Clarification (Critical)" section
+  - 5-step outcome definition: Define outcome, success criteria, approval path, blockers, Definition of Done
+  - Template: `todos/work/[task-date]-outcome.md` for documentation
+  - Prevents scope creep and "finished but doesn't solve the problem" problems
+
+- **pb-cycle** (v1.1.0) — Added "Step 0: Outcome Verification (Critical)"
+  - Placed before self-review to verify problem is solved
+  - Enhanced Step 3 peer review to include outcome verification
+  - Validates solution before reviewing code quality
+
+- **pb-evolve** (v1.1.0) — Added evolution success criteria validation
+  - Three evolution types with measurable success criteria
+  - Pre-release checklist requiring success criteria verification
+  - Makes evolution cycles accountable to outcomes
+
+**Phase 4: Philosophy Expansion**
+- **pb-design-rules** (v1.1.0) — Added philosophy sections to 5 core design rules
+  - Rule 1 (Clarity): "Clarity is an act of respect for future readers" → `/pb-sam-documentation`
+  - Rule 5 (Simplicity): "Scope discipline and feature-as-expense" → `/pb-maya-product`
+  - Rule 9 (Robustness): "Transparency as defense" → `/pb-alex-infra`, `/pb-jordan-testing`
+  - Rule 10 (Repair): "Fail loudly at source" → `/pb-linus-agent`
+  - Rule 12 (Optimization): "Measure before optimizing" → `/pb-sam-documentation`, `/pb-alex-infra`
+
+**Phase 5: Command Versioning (94 commands, comprehensive tracking)**
+- **Version metadata** added to all 94 commands
+  - Semantic versioning (MAJOR.MINOR.PATCH)
+  - 82 baseline commands: v1.0.0
+  - 12 enhanced/new commands: v1.1.0
+
+- **docs/command-changelog.md** — Version history for all commands
+  - Catalogs v1.1.0 changes with detailed descriptions
+  - Deprecation process documented
+  - Breaking changes policy (none in v1.1.0)
+
+- **docs/command-versioning.md** — Versioning guide for users & maintainers
+  - MAJOR/MINOR/PATCH bump criteria with examples
+  - Migration guide for breaking changes
+  - Version stability guarantees
+
+### Changed
+
+- **Command count:** 86 → 94 (8 new review agents + 3 multi-perspective reviews)
+- **Model distribution optimized:**
+  - Opus: 19 commands (security, reviews, architecture)
+  - Sonnet: 59 commands (development, planning, reviews)
+  - Haiku: 8 commands (utilities, status checks)
+
+- **Command metadata enhanced:**
+  - Added: version, version_notes, breaking_changes fields
+  - All 94 commands now have complete YAML front-matter
+
+### Documentation
+
+- **docs/command-changelog.md** — New comprehensive version tracking
+- **docs/command-versioning.md** — New semantic versioning guide
+- **Related Commands:** Updated all persona commands with cross-references
+
+### Technical
+
+- **No breaking changes** — All v1.1.0 changes are additive (new commands, added sections)
+- **Backward compatible** — Existing workflows unchanged; new features opt-in
+- **Build validation:** All changes pass linting and documentation build
+- **Quality gates:** 253 convention tests pass, metadata consistency verified
+
+---
+
 ## [v2.10.0] - 2026-02-09
 
 ### Added
