@@ -172,6 +172,56 @@ Total new code/docs: 3,200+ lines
 
 ---
 
+### Enhancements (2026-02-14)
+
+**Phase 2 Workflow Integration** — BEACON Verification in Production
+- `/pb-pause` Step 6.5: Verify Active BEACONs before pausing
+  - Displays all 9 critical guidelines
+  - Creates checkpoint in pause-notes
+  - Recovery guidance for missing BEACONs
+- `/pb-resume` Steps 3.5-3.6: Load and verify context layers and BEACONs
+  - Step 3.5: Load all 4 context layers with progress display
+  - Step 3.6: Verify all 9 BEACONs active after loading
+  - Guided recovery if layers or BEACONs missing
+
+**Phase 3 Workflow Enhancement** — Git-Signals Integration with Evolution
+- `/pb-git-signals` complete workflow documentation:
+  - Operational Workflow: Weekly/quarterly/ad-hoc adoption patterns
+  - Pain Score Response Framework: Decision matrix for acting on signals (0-2/3-5/6-8/9-10)
+  - Signal Response Decision Trees: How to interpret adoption, churn, pain signals
+  - Integration with `/pb-evolve`: How signals feed into quarterly evolution planning
+  - Real-world quarterly planning example (May Q2 cycle walkthrough)
+
+- `/pb-evolve` operationalization for quarterly cycles:
+  - Fixed quarterly schedule (Feb 10-15, May 10-15, Aug 10-15, Nov 10-15)
+  - Evolution Manager role definition and responsibilities
+  - Team coordination framework with review meeting template
+  - Pre-evolution checklist (8-point verification)
+  - Rollback procedures with snapshot system
+  - Evolution metrics framework for measuring success
+  - Post-evolution review process
+  - Evolution tracking dashboard system
+
+**User Adoption** — v2.12.0 Quick Start Guide
+- Progressive disclosure guide for new users
+- Level 1 (5-min): What is v2.12.0 and why it matters
+- Level 2 (30-min): How each capability works with real examples
+- Level 3: References to comprehensive documentation
+- Decision tree for capability selection
+- Real-world workflow examples (Friday PM → Monday AM)
+- FAQ and troubleshooting
+
+### Metrics (v2.12.0 Complete)
+
+- **Commands**: 86 total (19 Opus, 59 Sonnet, 8 Haiku)
+- **Metadata coverage**: 100% (all commands have YAML front-matter)
+- **Documentation**: 6,400+ lines (integration guide, quick start, guides)
+- **Test coverage**: 40+ tests validating metadata consistency
+- **Operational procedures**: 3 quarterly cycles documented with examples
+- **Breaking changes**: 0 (all features opt-in)
+
+---
+
 ## [v2.11.0] - 2026-02-12
 
 ### Added
