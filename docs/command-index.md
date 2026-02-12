@@ -101,6 +101,9 @@ Quick reference for all playbook commands.
 | `/pb-review` | Orchestrate comprehensive multi-perspective review | Monthly or pre-release |
 | `/pb-review-code` | Dedicated code review for reviewers (peer review checklist) | Every PR review |
 | `/pb-linus-agent` | Direct, unfiltered technical feedback grounded in pragmatism | Security-critical code, architecture decisions |
+| `/pb-review-backend` | Backend review (Alex infrastructure + Jordan testing) | Backend PRs |
+| `/pb-review-frontend` | Frontend review (Maya product + Sam documentation) | Frontend PRs |
+| `/pb-review-infrastructure` | Infrastructure review (Alex resilience + Linus security) | Infrastructure PRs |
 | `/pb-review-hygiene` | Code quality + operational readiness | Before new dev cycle, monthly |
 | `/pb-review-tests` | Test suite quality | Monthly |
 | `/pb-review-docs` | Documentation accuracy | Quarterly |
