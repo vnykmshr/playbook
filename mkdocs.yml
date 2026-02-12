@@ -67,6 +67,9 @@ nav:
       - Frontend Workflow: frontend-workflow.md
   - Command Reference: command-index.md
   - Integration Guide: integration-guide.md
+  - v2.12.0 Release:
+      - Overview: v2.12.0-integration-guide.md
+      - BEACON System: beacon-verification-at-boundaries.md
   - Command Versioning:
       - Version History: command-changelog.md
       - Versioning Guide: command-versioning.md
