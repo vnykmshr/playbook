@@ -26,6 +26,33 @@ Run this after completing a unit of work. Guides you through self-review, qualit
 
 ---
 
+## Step 0: Outcome Verification (Critical)
+
+Before self-review, verify you've achieved the defined outcomes.
+
+**Pull up the outcome clarification document** (created during `/pb-start`):
+
+```bash
+cat todos/work/[task-date]-outcome.md
+```
+
+**Verify each success criterion:**
+- [ ] Success criterion 1: VERIFIED? (How? Measured? Tested?)
+- [ ] Success criterion 2: VERIFIED?
+- [ ] Success criterion 3: VERIFIED?
+
+**If outcomes are NOT met:**
+- Stop. Don't proceed to self-review.
+- Ask: "What's missing?" "Why wasn't this done?"
+- Either complete the work, or escalate if blocked.
+
+**If outcomes ARE met:**
+- Proceed to Step 1 (Self-Review)
+
+**Why this matters:** Outcome verification prevents the common trap of "code is done but doesn't solve the problem." Verify the problem is solved before polishing the code.
+
+---
+
 ## Step 1: Self-Review
 
 Review your own changes critically before requesting peer review.
@@ -60,6 +87,16 @@ Request review from senior engineer perspective.
 
 **For reviewers:** Use `/pb-review-code` for the complete code review checklist.
 
+**CRITICAL: Reviewers must verify outcomes before approving.**
+
+Before approving, reviewer should check:
+- [ ] Outcomes were defined (in outcome clarification document)
+- [ ] Success criteria are met (verified in code/tests)
+- [ ] If outcomes not met: Ask author to complete work or explain why criteria changed
+- [ ] If outcomes met: Proceed to code review
+
+**Why this matters:** A perfectly written feature that doesn't solve the problem is waste. Verify the problem is solved before approving.
+
 **Important:** Peer review assumes `/pb-preamble` thinking (challenge assumptions, surface flaws, question trade-offs) and applies `/pb-design-rules` (check for clarity, simplicity, modularity).
 
 Reviewer should:
@@ -67,6 +104,7 @@ Reviewer should:
 - Check that code follows design rules: Clarity, Simplicity, Modularity
 - Ask clarifying questions about trade-offs
 - Surface flaws directly
+- **Verify outcomes and success criteria met** (not just code quality)
 
 Author should welcome and respond to critical feedback. This is how we catch problems early—in code review, not production.
 

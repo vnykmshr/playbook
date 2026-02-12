@@ -541,8 +541,53 @@ Human-readable summary for each release:
 
 ---
 
+## Success Criteria for Evolution
+
+Before publishing an evolution cycle, define and verify success metrics:
+
+### For Capability-Driven Evolution (e.g., Claude 4.6 release)
+
+**Define:**
+- "What efficiency improvements do we expect?" (e.g., 15% faster sessions)
+- "Which playbooks can be simplified?" (list specific commands)
+- "Will model routing change?" (document before/after)
+
+**Verify:**
+- [ ] Session timing improved by X% (measured on real tasks)
+- [ ] User satisfaction feedback positive
+- [ ] Cost per session unchanged or lower
+- [ ] No regressions in code quality
+
+### For User Feedback Evolution (e.g., Patterns don't work)
+
+**Define:**
+- "What feedback were we acting on?" (reference issue/comment)
+- "What's the new pattern?" (specific changes to command)
+- "Who validates the fix?" (team member, user, or self-test)
+
+**Verify:**
+- [ ] User can achieve the goal using updated docs/command
+- [ ] New pattern validated with 2+ real use cases
+- [ ] Existing related commands still work with new approach
+
+### For Technical Debt Evolution (e.g., Stale patterns)
+
+**Define:**
+- "What pattern is now outdated?" (specific reason)
+- "What replaces it?" (new approach, with rationale)
+- "Is this a breaking change?" (affects users? need migration guide?)
+
+**Verify:**
+- [ ] Migration guide written (if breaking)
+- [ ] Existing projects tested with new approach
+- [ ] Related commands still integrate properly
+
+---
+
 ## Checklist: Before Publishing Evolution
 
+- [ ] Success criteria defined (see section above)
+- [ ] Success criteria verified
 - [ ] All playbooks validated (python3 scripts/evolve.py --validate)
 - [ ] No circular cross-references
 - [ ] Metadata coverage > 95%

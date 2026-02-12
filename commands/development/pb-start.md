@@ -36,6 +36,118 @@ Before writing code, confirm:
 - [ ] Working context reviewed (see below)
 - [ ] Acceptance criteria understood
 - [ ] Team alignment: assumptions are explicit, disagreements surfaced (see `/pb-preamble`)
+- [ ] **Outcomes clarified** (see section below) — Don't skip this
+- [ ] Success criteria measurable (not vague)
+- [ ] Approval path defined (who needs to approve before merging?)
+
+---
+
+## Outcome Clarification (Critical)
+
+**Before writing a single line of code, define what success looks like.**
+
+This prevents drift, scope creep, and surprises at review time.
+
+### Step 1: Define the Outcome (Not the Solution)
+
+**Bad (solution-focused):**
+- "Refactor the payment service to use async/await"
+- "Add dark mode toggle to UI"
+
+**Good (outcome-focused):**
+- "Payment processing latency < 500ms under peak load"
+- "40% of users who use app at night have a way to reduce eye strain"
+
+The difference: Outcomes define what success looks like. Solutions are how you achieve it.
+
+### Step 2: Define Success Criteria (Measurable)
+
+For the outcome above, what proves you succeeded?
+
+**Payment example:**
+- [ ] P95 latency ≤ 500ms (measured in production)
+- [ ] No performance degradation vs current async/await version
+- [ ] All existing tests pass
+- [ ] Load test to 10k requests/min shows consistent latency
+
+**Dark mode example:**
+- [ ] Dark mode toggle present in settings
+- [ ] All UI components render correctly in dark mode
+- [ ] User preference persists across sessions
+- [ ] Accessibility contrast ratios maintained in dark mode
+
+**Anti-pattern:** "Code compiles" or "tests pass" (these are prerequisites, not outcomes)
+
+### Step 3: Define the Approval Path
+
+Who needs to approve this work before it ships?
+
+**Example approval workflow:**
+1. **Self-review (you)** — Does code match the planned approach?
+2. **Peer review (Linus/Alex/Maya/etc)** — Is design sound? Are assumptions valid?
+3. **Product approval (if needed)** — Does this solve the problem we committed to?
+4. **QA verification (if needed)** — Do success criteria pass?
+
+**Document this upfront.** Prevents "surprise denials" at the end.
+
+### Step 4: Identify Blockers
+
+What could prevent you from achieving the outcome?
+
+**Examples:**
+- "Need database access to staging environment"
+- "Waiting on API from third-party service"
+- "Need design approval from team lead"
+
+**If blockers exist, resolve them now.** Don't start coding with unknown blockers.
+
+### Step 5: Define the Definition of Done
+
+What does "finished" look like? Be specific.
+
+**Bad:** "Implement the feature"
+**Good:**
+- Code is written and tested
+- Success criteria are verified
+- Documentation is updated
+- PR is reviewed and approved
+- Deployed to staging and verified
+- Ready to merge to main
+
+### Outcome Documentation Template
+
+Create `todos/work/[task-date]-outcome.md`:
+
+```markdown
+# [Task Name] — Outcome Clarification
+
+## Outcome
+[What success looks like, not how to achieve it]
+
+## Success Criteria
+- [ ] [Measurable criterion 1]
+- [ ] [Measurable criterion 2]
+- [ ] [Measurable criterion 3]
+
+## Approval Path
+1. Self-review (author)
+2. Peer review (Linus agent for security-critical)
+3. [Product approval / QA verification / etc]
+
+## Blockers & Dependencies
+- [Blocker 1 and resolution plan]
+- [Dependency 2 and timeline]
+
+## Definition of Done
+- [ ] Code written and tested
+- [ ] Success criteria verified
+- [ ] Docs updated
+- [ ] PR reviewed and approved
+- [ ] Ready to merge
+
+## Notes
+[Any assumptions, trade-offs, or context]
+```
 
 ---
 
