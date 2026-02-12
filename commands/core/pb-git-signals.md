@@ -5,11 +5,11 @@ category: "core"
 difficulty: "beginner"
 model_hint: "haiku"
 execution_pattern: "sequential"
-related_commands: ['pb-evolve', 'pb-context', 'pb-learn']
-last_reviewed: "2026-02-12"
-last_evolved: ""
+related_commands: ['pb-evolve', 'pb-context', 'pb-learn', 'pb-cycle']
+last_reviewed: "2026-02-14"
+last_evolved: "2026-02-14"
 version: "1.0.0"
-version_notes: "v2.12.0 Phase 3: Initial release with adoption, churn, pain point analysis"
+version_notes: "v2.12.0 Phase 3: Complete workflow integration with quarterly evolution planning, pain score response framework, and real-world examples"
 breaking_changes: []
 ---
 
@@ -207,6 +207,210 @@ Top pain areas:
 - Indicator: Issues reach production, requiring urgent fixes
 - Action: Improve testing, design review
 - Risk: Quality and stability concerns
+
+---
+
+## Operational Workflow: How to Adopt Git-Signals
+
+### Weekly Adoption Routine
+
+Run signals every week to stay aware of what's actually happening:
+
+```bash
+# Every Monday or Friday (pick a consistent day)
+python scripts/git-signals.py
+
+# Review the summary
+cat todos/git-signals/latest/signals-summary.md
+
+# Check top pain areas this week
+python3 -c "import json; \
+  data = json.load(open('todos/git-signals/latest/pain-points-report.json')); \
+  [print(f\"{x['file']}: pain={x['pain_score']}\") for x in data['pain_score_by_file'][:5]]"
+
+# Reflect: What surprised you? What's worth investigating?
+```
+
+**Weekly Check Questions:**
+- What files changed the most? Is that expected?
+- Any new high-pain areas? Should we investigate?
+- Adoption shifting? Are we working in the right areas?
+
+### Quarterly Planning Workflow (Integration with `/pb-evolve`)
+
+Before running `/pb-evolve` quarterly evolution, get fresh signals:
+
+```bash
+# Step 1: Run signals with 3-month time range
+python scripts/git-signals.py --since "3 months ago"
+
+# Step 2: Save as snapshot for this quarter
+python scripts/git-signals.py --snapshot $(date +%Y-Q$((($(($(date +%m)-1)/3))+1)))
+
+# Step 3: Extract key inputs for evolution planning
+python3 << 'SIGNALS_EXTRACT'
+import json
+signals = json.load(open('todos/git-signals/latest/pain-points-report.json'))
+print("\n=== PAIN SCORE PRIORITIES FOR EVOLUTION ===")
+for item in signals['pain_score_by_file'][:10]:
+    print(f"{item['file']}: {item['pain_score']}")
+SIGNALS_EXTRACT
+
+# Step 4: Use pain scores to guide /pb-evolve priorities
+# Run /pb-evolve and reference pain_score_by_file in decisions
+```
+
+**Quarterly Planning Questions:**
+- Which high-pain areas should be our evolution focus this quarter?
+- Are there stale areas that should be deprecated?
+- Which adoption patterns surprise us?
+
+### Ad-Hoc Investigation Workflow
+
+When you notice a specific problem or want to investigate an area:
+
+```bash
+# 1. Analyze the specific area's history
+python scripts/git-signals.py --since "6 months ago"
+
+# 2. Extract metrics for that file
+git log --oneline commands/area/specific-file.md | wc -l  # Total commits
+git log --follow -p commands/area/specific-file.md | grep -c "^+" # Lines added
+git log --oneline commands/area/specific-file.md | grep -i "fix\|bug" | wc -l  # Fixes
+
+# 3. Review the commits
+git log --oneline commands/area/specific-file.md | head -20
+
+# 4. Examine specific fixes
+git log --oneline -p commands/area/specific-file.md | grep -B5 -A5 "fix\|bug" | head -50
+
+# 5. Determine action
+# Based on patterns, decide: refactor, deprecate, monitor, or accept
+```
+
+---
+
+## Pain Score Response Framework
+
+### Understanding Pain Scores
+
+Pain scores combine three signals: **reverts** + **bug fixes** + **hotfixes**
+
+A file with pain_score 6 might have:
+- 2 commits that were reverted (explicitly undone)
+- 3 commits tagged "fix:" (identified problems)
+- 1 commit tagged "hotfix:" (urgent fixes)
+
+**Total pain = 2 + 3 + 1 = 6**
+
+### Response Matrix by Score Range
+
+| Pain Score | Status | What It Means | Recommended Action | Priority |
+|-----------|--------|---------------|-------------------|----------|
+| **0-2** | Healthy | Stable, working well, minimal fixes | Monitor only. Make changes carefully | Low |
+| **3-5** | Moderate | Some issues but manageable | Review recent changes. Monitor for patterns | Medium |
+| **6-8** | High | Area has real problems | Investigate root cause. Plan refactoring | High |
+| **9-10** | Critical | Systemic issues, repeatedly broken | Urgent: redesign or rewrite required | Critical |
+
+### Response Actions by Score
+
+**Score 0-2 (Healthy):**
+- ✓ Stable foundation, trusted implementation
+- ✓ Preserve carefully, minimal changes
+- → Action: Review before changes, light touch
+
+**Score 3-5 (Moderate):**
+- ⚠ Occasional issues, worth monitoring
+- ⚠ May need attention in next quarter
+- → Action: Track trends, review commits, prioritize in next cycle
+
+**Score 6-8 (High):**
+- ⚠️ Real problems, needs investigation
+- ⚠️ Candidate for refactoring or redesign
+- → Action: Deep investigation → refactoring plan → prioritize in quarterly evolution
+
+**Score 9-10 (Critical):**
+- 🚨 Systemic failure, cannot continue as-is
+- 🚨 Urgent: affecting reliability or productivity
+- → Action: Root cause analysis → redesign/rewrite → make it priority this quarter
+
+---
+
+## Signal Response Decision Trees
+
+### Decision Tree 1: High Adoption + Any Pain Score
+
+```
+High Adoption area with pain score?
+
+├─ Pain 0-2?
+│  └─ "Solved problem" - Keep working carefully
+│     • Light changes only
+│     • Extensive testing for any modifications
+│
+├─ Pain 3-5?
+│  └─ "Active area with some issues"
+│     • Monitor trends closely
+│     • Plan improvements for next quarter
+│     • Document workarounds
+│
+├─ Pain 6-8?
+│  └─ "High-value target for improvement"
+│     • This is where evolution effort pays off
+│     • High adoption = impact is significant
+│     • Prioritize in quarterly planning
+│
+└─ Pain 9+?
+   └─ "URGENT: Used heavily but broken"
+      • Reliability risk
+      • Prioritize immediately
+      • Consider temporary workarounds while fixing
+```
+
+### Decision Tree 2: Responding to Churn
+
+```
+Found an area with high churn?
+
+├─ High commits + High lines changed?
+│  └─ "Volatile area"
+│     • Is this refactoring? If yes, normal
+│     • Is this instability? If yes, investigate quality
+│     • Check: Are tests adequate?
+│     • Check: Is design clear?
+│
+├─ Many small commits + Few lines?
+│  └─ "Polishing phase"
+│     • Normal for stable areas getting refinement
+│     • Could consolidate commits for cleaner history
+│
+└─ Few commits + Many lines?
+   └─ "Large infrequent changes"
+      • Was this planned? If yes, normal
+      • Is this technical debt accumulating? If yes, address
+      • Check: Are changes coherent and well-tested?
+```
+
+### Decision Tree 3: Responding to Pain Signals
+
+```
+Found high pain score?
+
+├─ Multiple reverts (fixes undone)?
+│  └─ "Systemic issue - solutions don't work"
+│     • Root cause: Design flaw? Testing gap? Unclear requirements?
+│     • Action: Don't patch more - redesign
+│
+├─ Clustered bug fixes (many small fixes)?
+│  └─ "Area has real problems"
+│     • Root cause: Complexity too high? Wrong approach?
+│     • Action: Consider refactoring vs rewrite
+│
+└─ Frequent hotfixes (urgent patches)?
+   └─ "Quality issue - reaching production broken"
+      • Root cause: Testing gap? Process issue?
+      • Action: Improve testing + review before action
+```
 
 ---
 
@@ -416,6 +620,241 @@ $ python3 -c "import json; data=json.load(open('todos/git-signals/latest/pain-po
 #
 # Action: These are candidates for refactoring/redesign
 ```
+
+---
+
+## Integration with /pb-evolve: Quarterly Planning
+
+Git signals exist to feed data-driven decision-making into quarterly playbook evolution cycles.
+
+### Before Running /pb-evolve
+
+**Step 1: Generate signals with 3-month window**
+
+```bash
+# Get quarterly data for planning input
+python scripts/git-signals.py --since "3 months ago"
+
+# Verify outputs exist
+ls -la todos/git-signals/latest/
+# Should show: adoption-metrics.json, churn-analysis.json, pain-points-report.json, signals-summary.md
+```
+
+**Step 2: Analyze pain_score_by_file**
+
+```bash
+# Extract high-pain areas
+python3 << 'EOF'
+import json
+
+with open('todos/git-signals/latest/pain-points-report.json') as f:
+    data = json.load(f)
+
+# Sort by pain score descending
+pain_areas = sorted(data['pain_score_by_file'], key=lambda x: x['pain_score'], reverse=True)
+
+print("=== HIGH-PAIN EVOLUTION CANDIDATES ===\n")
+for area in pain_areas[:10]:
+    score = area['pain_score']
+    file = area['file']
+    status = "CRITICAL" if score >= 9 else "HIGH" if score >= 6 else "MODERATE"
+    print(f"{status:10} | Score: {score:2} | {file}")
+EOF
+```
+
+### Using Signals to Shape /pb-evolve
+
+**Before the evolution session, create an input document:**
+
+```markdown
+# Input to /pb-evolve: Signal-Based Priorities
+
+## Critical Pain Areas (Score 9-10)
+- [file]: [pain_score] - [reverts/bug_fixes/hotfixes pattern]
+  - Action: Review for redesign or rewrite
+  - Effort: Likely 4+ hours
+
+## High Pain Areas (Score 6-8)
+- [file]: [pain_score] - [pattern]
+  - Action: Plan refactoring
+  - Effort: 2-4 hours
+
+## High-Activity Areas (Many touches, low pain)
+- [file]: [touches] touches - Stable, working well
+  - Action: Monitor for performance regression
+  - Action: Use as exemplar pattern
+
+## Stale Areas (Low activity, no pain)
+- [file]: [touches] touches - Candidate for deprecation
+  - Action: Review for removal
+  - Action: Archive if not needed
+```
+
+**During /pb-evolve, these become:**
+- **Priority 1 (Critical):** Redesign/rewrite high-pain areas
+- **Priority 2 (Optimization):** Refactor high-churn areas
+- **Priority 3 (Monitoring):** Verify stable high-activity areas stay healthy
+- **Priority 4 (Deprecation):** Remove or archive stale code
+
+### Real Quarterly Evolution Workflow
+
+**Month 1 of quarter (e.g., February):**
+```bash
+# Week 1
+python scripts/git-signals.py --since "3 months ago"
+# Analyze outputs, create priority document
+
+# Week 2: Kickoff /pb-evolve session
+/pb-evolve
+# Use signal-based priorities to shape decisions
+# Update playbooks based on findings
+
+# Week 3-4: Implement evolution changes
+# Per the /pb-evolve decisions
+```
+
+**Integration checkpoint:**
+
+Before committing evolution changes, verify:
+- [ ] Evolution decisions referenced pain scores where applicable
+- [ ] High-pain areas from signals are addressed
+- [ ] Evolution changelog documents signal-based prioritization
+- [ ] Next quarter's signals will measure evolution impact
+
+---
+
+## Real-World Workflow Example
+
+### Scenario: Playbook Quarterly Evolution (Q1 → Q2)
+
+**Monday, May 5 (Start of Q2)**
+
+Developer runs:
+```bash
+python scripts/git-signals.py --since "3 months ago"
+cat todos/git-signals/latest/signals-summary.md
+```
+
+Output shows:
+```
+ADOPTION SIGNALS (Q1):
+- pb-guide: 47 touches (most active)
+- pb-cycle: 32 touches
+- pb-pause: 18 touches
+- pb-legacy-pattern: 2 touches (candidate for removal)
+
+CHURN ANALYSIS:
+- commands/core/pb-guide.md: 5000 line changes (high activity)
+- commands/development/pb-cycle.md: 3200 line changes
+- scripts/validate.py: 2100 line changes
+
+PAIN SCORE ANALYSIS:
+- commands/core/pb-guide.md: pain_score 8 (3 reverts, 5 bug fixes)
+- commands/planning/pb-plan.md: pain_score 6 (2 reverts, 3 bug fixes)
+- commands/core/pb-patterns.md: pain_score 3 (stable)
+- commands/legacy/pb-old-pattern.md: pain_score 0 (stale, no activity)
+```
+
+**Tuesday, May 6 (Analysis & Planning)**
+
+Developer reviews and documents:
+```markdown
+# Q1 Signal Analysis → Q2 Evolution Priorities
+
+## Critical Areas Needing Attention
+1. **pb-guide** (pain_score 8)
+   - Issue: Multiple reverts and fixes in Q1
+   - Root cause: Ambiguous wording in several sections
+   - Action: Clarity refactor, simplify sections 3-5
+   - Effort: 2-3 hours
+
+2. **pb-plan** (pain_score 6)
+   - Issue: Users reported confusion in planning workflow
+   - Root cause: Missing decision trees and examples
+   - Action: Add concrete examples, clarify decision paths
+   - Effort: 1-2 hours
+
+## Stable Areas (Monitor)
+3. **pb-patterns** (pain_score 3)
+   - Status: Working well, few issues
+   - Action: Use as exemplar pattern for future commands
+   - Next: Expand with new patterns discovered this quarter
+
+## Deprecation Candidates
+4. **pb-old-pattern** (pain_score 0, 2 touches in 6 months)
+   - Status: Stale, no adoption
+   - Action: Archive or remove in Q2
+   - Effort: 30 minutes
+```
+
+**Wednesday-Friday, May 7-9 (Evolution Implementation)**
+
+1. Run `/pb-evolve` with signal-based priorities as input
+2. Implement changes to pb-guide (clarity refactoring)
+3. Implement changes to pb-plan (add examples)
+4. Archive pb-old-pattern
+5. Update CHANGELOG with evolution summary
+
+**Friday, May 9 (Signal-Based Outcome Measurement)**
+
+Document in evolution log:
+```
+## Evolution Impact (Q2 Planning)
+
+**Input signals:**
+- pb-guide pain_score: 8 (3 reverts, 5 bug fixes)
+- pb-plan pain_score: 6 (2 reverts, 3 bug fixes)
+
+**Changes made:**
+- Rewrote pb-guide sections 3-5 for clarity
+- Added decision trees to pb-plan
+- Removed pb-old-pattern (stale)
+
+**Success metrics (check in 4 weeks):**
+- pb-guide pain_score should drop to ≤4
+- pb-plan usage and quality feedback improve
+- No new reverts in updated sections
+
+**Measurement date: June 6 (Check after 4 weeks of Q2 usage)**
+```
+
+**June 6 (Validate Evolution Impact)**
+
+```bash
+# Check if pain scores improved
+python scripts/git-signals.py --since "4 weeks ago"
+
+# Expected outcome:
+# pb-guide pain_score: 2-3 (down from 8) ← Evolution worked
+# pb-plan pain_score: 3-4 (down from 6) ← Evolution helped
+# pb-old-pattern: 0 (removed) ← Deprecation successful
+
+# If scores didn't improve:
+# - Root cause analysis
+# - Plan additional work for Q2
+# - Document learning in evolution log
+```
+
+### Integration Verification Checklist
+
+✅ **Signal Generation Phase**
+- [ ] Signals run with correct time window (--since "3 months ago")
+- [ ] pain_score_by_file analyzed for evolution input
+- [ ] High-pain areas documented with context
+
+✅ **Evolution Planning Phase**
+- [ ] /pb-evolve uses signal-based priorities
+- [ ] Evolution decisions reference specific pain scores
+- [ ] Critical areas (score 6+) addressed in evolution plan
+
+✅ **Evolution Implementation Phase**
+- [ ] Changes implemented per signal-informed priorities
+- [ ] Evolution log documents signal input
+
+✅ **Outcome Measurement Phase**
+- [ ] Signals rerun after 4 weeks
+- [ ] Pain scores tracked for improved vs stable vs regressed
+- [ ] Learning documented for next evolution cycle
 
 ---
 
