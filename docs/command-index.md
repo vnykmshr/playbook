@@ -64,6 +64,7 @@ Quick reference for all playbook commands.
 |---------|-------------|
 | `/pb-release` | Release orchestrator: readiness gate, version/tag, trigger deployment |
 | `/pb-deployment` | Execute deployment: discovery, pre-flight, execute, verify, rollback |
+| `/pb-alex-infra` | Infrastructure & resilience review (systems thinking, failure modes, recovery) |
 | `/pb-incident` | P0/P1 production incidents |
 | `/pb-maintenance` | Production maintenance patterns — database, backups, health monitoring |
 | `/pb-sre-practices` | Toil reduction, error budgets, on-call health, blameless culture |
