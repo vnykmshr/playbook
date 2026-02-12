@@ -6,21 +6,23 @@ difficulty: "advanced"
 model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-resume', 'pb-start', 'pb-standup']
-last_reviewed: "2026-02-09"
-last_evolved: ""
-version: "1.0.0"
-version_notes: "v2.10.0 baseline"
+last_reviewed: "2026-02-13"
+last_evolved: "2026-02-13"
+version: "1.1.0"
+version_notes: "v2.12.0 Phase 2: Integrated BEACON verification (Step 6.5) for session boundary protection"
 breaking_changes: []
 ---
 # Pause Development Work
 
 Gracefully pause or conclude work on a project. Use this when stepping away for an extended period (days, weeks) or wrapping up a phase of work.
 
-**Mindset:** Future you (or a teammate) will resume this work. Leave breadcrumbs that make context recovery effortless.
+**v2.12.0 Phase 2 Integration:** This command now includes BEACON verification (Step 6.5). Before pausing, critical guidelines are verified to prevent silent loss during session transitions. This is core functionality that protects your development practice.
+
+**Mindset:** Future you (or a teammate) will resume this work. Leave breadcrumbs that make context recovery effortless. Critical guidelines must be verified and preserved.
 
 Use `/pb-preamble` thinking: be honest about blockers and incomplete work. Use `/pb-design-rules` thinking: document decisions and trade-offs made during development.
 
-**Resource Hint:** sonnet — state preservation and handoff documentation
+**Resource Hint:** sonnet — state preservation, handoff documentation, and BEACON verification
 
 ---
 
@@ -219,6 +221,73 @@ EOF
 Before pausing, assess context health. See `/pb-claude-orchestration` for detailed context management strategies.
 
 **Quick rule:** If the session was long (many file reads, multiple iterations), update tracker with exact next step and commit hash. Preserve state in files, not conversation.
+
+---
+
+### Step 6.5: Verify Active BEACONs (v2.12.0 Phase 2)
+
+Before finalizing pause, verify that critical guidelines are loaded and documented.
+
+**What are BEACONs?** Critical guidelines explicitly marked in CLAUDE.md files to prevent oversight when guidance is deferred to playbooks. Every BEACON has dual presence: summary in context file + full detail in playbook.
+
+**Checkpoint: Verify all 9 BEACONs are active**
+
+```bash
+# Verify global BEACONs present in context
+# Should see references to:
+#   - /pb-preamble
+#   - /pb-design-rules
+#   - /pb-standards
+#   - /pb-guide
+#   - Quality Bar (MLP)
+#   - /pb-claude-orchestration
+
+# Verify project BEACONs present in context
+# Should see references to:
+#   - Project Guardrails
+#   - Audit Conventions
+#   - Key Patterns
+```
+
+**Display to user before pausing:**
+
+```
+=== PAUSING: Verifying Active BEACONs ===
+
+Global BEACONs (6) from ~/.claude/CLAUDE.md:
+✓ BEACON: Preamble — Challenge assumptions
+✓ BEACON: Design Rules — Clarity, Simplicity, Resilience
+✓ BEACON: Code Quality — No dead code, atomic changes
+✓ BEACON: Non-Negotiables — Never ship bugs
+✓ BEACON: Quality Bar (MLP) — Would you use daily?
+✓ BEACON: Model Selection — Opus/Sonnet/Haiku
+
+Project BEACONs (3) from .claude/CLAUDE.md:
+✓ BEACON: Project Guardrails — Stability & consistency
+✓ BEACON: Audit Conventions — 274 verifications
+✓ BEACON: Key Patterns — Operational consistency
+
+Critical guidelines preserved: All 9 BEACONs loaded ✓
+```
+
+**Add checkpoint to pause-notes:**
+
+```markdown
+### BEACONs Verified
+- [x] All 9 critical guidelines loaded and active
+- Global: 6 BEACONs (Preamble, Design Rules, Code Quality, Non-Negotiables, Quality Bar, Model Selection)
+- Project: 3 BEACONs (Project Guardrails, Audit Conventions, Key Patterns)
+- Status: Guidelines preserved for resume session
+```
+
+**If BEACON missing or unclear:**
+
+```
+⚠️  BEACON VERIFICATION WARNING
+Missing or unclear: [BEACON name]
+Guidance: Read /pb-[command] to restore context
+Action: Run `/pb-claude-project` to refresh project context
+```
 
 ---
 
