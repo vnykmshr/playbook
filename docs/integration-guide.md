@@ -2,7 +2,7 @@
 
 Complete reference for how all playbook commands work together to form a unified SDLC framework.
 
-**Last Updated**: 2026-01-24 | **Categories**: 9
+**Last Updated**: 2026-02-12 | **Categories**: 9 | **Version**: v2.11.0
 
 ---
 
@@ -10,11 +10,12 @@ Complete reference for how all playbook commands work together to form a unified
 
 1. [Quick Start: Command Selection](#quick-start-command-selection)
 2. [Command Inventory](#command-inventory)
-3. [Workflow Maps](#workflow-maps)
-4. [Command Clusters](#command-clusters-groups-that-work-together)
-5. [Reference Matrix](#reference-matrix-which-commands-work-together)
-6. [Integration Patterns](#integration-patterns)
-7. [Common Workflows](#common-workflows-step-by-step)
+3. [Specialized Review Personas](#specialized-review-personas-v2110)
+4. [Workflow Maps](#workflow-maps)
+5. [Command Clusters](#command-clusters-groups-that-work-together)
+6. [Reference Matrix](#reference-matrix-which-commands-work-together)
+7. [Integration Patterns](#integration-patterns)
+8. [Common Workflows](#common-workflows-step-by-step)
 
 ---
 
@@ -78,6 +79,66 @@ These establish baseline understanding and guiding philosophy. **Every engineer 
 - Use `/pb-documentation` for content quality
 - Use preamble expansions for specific team contexts
 - Use `/pb-think` for expert-quality collaboration (modes: ideate, synthesize, refine)
+
+---
+
+### SPECIALIZED REVIEW PERSONAS (v2.11.0+)
+Five specialized review agents providing complementary perspectives on code, security, reliability, product value, and documentation. **Use for comprehensive reviews.**
+
+| # | Persona | Philosophy | Focus | When to Use | Tier |
+|---|---------|-----------|-------|------------|------|
+| A | **pb-linus-agent** | Pragmatic security & directness | Correctness, assumptions, security, clarity, performance | Security-sensitive code, sensitive data, auth/payment | S/M/L |
+| B | **pb-alex-infra** | Infrastructure resilience | Failure modes, degradation, deployment, observability, capacity | Infrastructure changes, deployment code, scaling | M/L |
+| C | **pb-maya-product** | Product strategy & user value | Problem validation, scope, impact, alignment, maintenance burden | User-facing features, product decisions, scope discipline | M/L |
+| D | **pb-sam-documentation** | Clarity & knowledge transfer | UI clarity, accessibility, error messages, code readability, docs | Frontend changes, APIs, documentation, onboarding | S/M/L |
+| E | **pb-jordan-testing** | Testing quality & reliability | Coverage, error paths, concurrency, data integrity, integration | All features (testing always matters) | S/M/L |
+
+**Multi-Perspective Review Workflows** (combine complementary personas):
+- **pb-review-backend** — Alex (infrastructure) + Jordan (testing): For backend APIs, services, database operations
+- **pb-review-frontend** — Maya (product) + Sam (documentation): For UI/UX, components, user-facing features
+- **pb-review-infrastructure** — Alex (infrastructure) + Linus (security): For infrastructure code, deployment pipelines, security configs
+
+**Persona Composition** (how to use together):
+
+```
+CODE REVIEW WORKFLOW WITH PERSONAS:
+
+Single-perspective (for small changes):
+  /pb-cycle (self-review)
+    └─ Pick ONE persona based on change type:
+         ├─ Security issue? → /pb-linus-agent
+         ├─ Performance issue? → /pb-alex-infra
+         ├─ Feature validation? → /pb-maya-product
+         ├─ UI/docs issue? → /pb-sam-documentation
+         └─ Test gaps? → /pb-jordan-testing
+
+Multi-perspective (for features):
+  /pb-cycle (self-review)
+    └─ Use multi-perspective review:
+         ├─ Backend: /pb-review-backend (Alex + Jordan parallel)
+         ├─ Frontend: /pb-review-frontend (Maya + Sam parallel)
+         └─ Infrastructure: /pb-review-infrastructure (Alex + Linus parallel)
+
+Full review (for major releases):
+  /pb-cycle (self-review)
+    └─ Compose personas in recommended sequence:
+       1. Maya (product): Is this solving a real problem?
+       2. Parallel: Alex, Jordan, Linus (infrastructure, testing, security)
+       3. Sam (documentation): Is this clear to users and maintainers?
+```
+
+**When to use which persona**:
+
+| Change Type | Recommended | Why |
+|-------------|-------------|-----|
+| API endpoint | Linus, Alex, Jordan | Security, infrastructure resilience, test coverage |
+| UI component | Maya, Sam, Jordan | Product fit, clarity, test coverage |
+| Database change | Alex, Jordan | Failure modes, data integrity |
+| Deployment pipeline | Alex, Linus | Infrastructure, security |
+| Authentication | Linus, Alex | Security, resilience |
+| Documentation | Sam | Clarity and accessibility |
+| Feature gate | Maya | Product alignment |
+| Refactoring | Jordan, Sam | Test coverage, code clarity |
 
 ---
 
