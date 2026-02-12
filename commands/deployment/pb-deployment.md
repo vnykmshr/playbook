@@ -381,6 +381,7 @@ PHASE 5: FINALIZE
 
 - `/pb-release` — Orchestrate versioned releases to production
 - `/pb-patterns-deployment` — Deployment strategy reference (blue-green, canary, rolling)
+- `/pb-alex-infra` — Infrastructure resilience review (systems thinking, failure modes)
 - `/pb-incident` — Respond to production incidents caused by deployments
 - `/pb-observability` — Set up monitoring and alerting for deployment verification
 

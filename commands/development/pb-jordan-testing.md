@@ -537,16 +537,20 @@ Why this works:
 
 ---
 
-## Automatic Rejection Criteria
+## Red Flags (Strong Signals for Rejection)
 
-Tests rejected outright:
+Tests that warrant scrutiny before committing to the test suite:
 
-🚫 **Never:**
+**Watch for:**
 - Only happy path tested (error cases ignored)
-- Tests that require manual intervention to run
-- 100% coverage but only exercises code paths (doesn't verify correctness)
-- Tests of implementation details that break on refactor
-- Tests that require external services to run (un-isolatable)
+- Tests that require manual intervention to run (non-deterministic)
+- 100% coverage metrics but tests don't verify correctness (coverage theater)
+- Tests of implementation details that break on harmless refactors (brittle tests)
+- Tests that depend on un-isolatable external services (Slack API, prod database)
+  - Note: Tests using real databases WITH rollback isolation are GOOD
+  - Tests hitting remote APIs WITHOUT fallback mocking are BAD
+
+**Override possible if:** External service is critical path and worth the coupling cost. Document trade-off via `/pb-adr`.
 
 ---
 

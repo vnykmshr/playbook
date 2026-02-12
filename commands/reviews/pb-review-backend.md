@@ -46,136 +46,39 @@ Two expert perspectives review in parallel, then synthesize:
 
 ## Alex's Infrastructure Review
 
-**What Alex Examines:**
+See `/pb-alex-infra` for the comprehensive infrastructure review framework and checklist.
 
-### 1. Failure Modes & Detection
-- [ ] What can go wrong? (network, database, service, process)
-- [ ] How is each failure detected? (health checks, monitoring, alerts)
-- [ ] Are failures caught before users notice?
-- [ ] What's the alert response plan?
+**For backend-specific review, focus on:**
+- **Failure Modes:** What database/service failures could cascade? How quickly detected?
+- **Graceful Degradation:** If DB is slow, does API hang or return cached data?
+- **Deployment Safety:** Is rollout gradual? Can rollback happen in < 5 minutes?
+- **Observability:** Do logs include request context? Are metrics collected?
+- **Capacity Planning:** Are database connection limits set? Load tested?
 
-**Bad:** Service crashes silently. No monitoring. 30-minute detection window.
-**Good:** Health checks every 10 seconds. Alerts within 1 minute. Auto-restart on crash.
-
-### 2. Graceful Degradation & Fallbacks
-- [ ] If dependencies fail, does system degrade or crash?
-- [ ] Are fallbacks documented and tested?
-- [ ] Can system continue operating in degraded mode?
-- [ ] Is degradation visible to users/monitoring?
-
-**Bad:** Database slow → entire API hangs → cascading failure.
-**Good:** Database slow → return cached data → alert operator → escalate to Jordan for test.
-
-### 3. Deployment Safety
-- [ ] Is deployment automated or manual?
-- [ ] Are rollouts gradual (not all-at-once)?
-- [ ] Do health checks run before traffic routing?
-- [ ] Can rollback happen in < 5 minutes?
-
-**Bad:** SSH into prod, run script manually, hope it works.
-**Good:** GitHub Actions → staging test → gradual rollout → automatic rollback on errors.
-
-### 4. Observability & Alerts
-- [ ] Is every important transaction logged?
-- [ ] Do logs include context (request ID, user, amount)?
-- [ ] Are performance metrics collected?
-- [ ] Can you understand failures from logs/metrics alone?
-
-**Bad:** Error message: "Database error". No context. No metrics.
-**Good:** Log: `payment_failed user_id=123 amount=50 error_code=connection_timeout attempt=2/3`
-
-### 5. Capacity Planning & Scaling
-- [ ] Are resource limits set (CPU, memory, connections)?
-- [ ] Is peak capacity modeled?
-- [ ] Does autoscaling work (tested under load)?
-- [ ] What's the breaking point?
-
-**Bad:** No limits. Single database connection. System crashes at 1000 requests.
-**Good:** Resource limits, autoscaling rules, load tested to 10x expected peak.
-
-**Alex's Checklist:**
-- [ ] Failure modes documented
-- [ ] Health checks in place (startup, readiness, liveness)
-- [ ] Graceful degradation strategy clear
-- [ ] Deployment is automated + gradual + safe
-- [ ] Observability sufficient (logging + metrics + alerts)
-- [ ] Capacity modeled and tested
-- [ ] RTO (recovery time) and RPO (recovery point) defined
-
-**Alex's Automatic Rejection Criteria:**
-- 🚫 No health checks (can't detect failures)
-- 🚫 No resource limits (can starve other services)
-- 🚫 Manual recovery process > 1 hour
-- 🚫 No monitoring of critical paths
-- 🚫 Secrets in code or config
-- 🚫 All-in-one deployment (single point of failure)
+**Alex's Red Flags for Backend:**
+- No health checks on database connections
+- Single point of failure in service architecture
+- Manual recovery process (can't auto-rollback)
+- No monitoring of critical database queries
 
 ---
 
 ## Jordan's Testing Review
 
-**What Jordan Examines:**
+See `/pb-jordan-testing` for the comprehensive testing review framework and checklist.
 
-### 1. Test Coverage (Where It Matters)
-- [ ] Is coverage high in critical paths?
-- [ ] Are error cases tested?
-- [ ] Are edge cases identified and tested?
-- [ ] Is integration coverage adequate?
+**For backend-specific review, focus on:**
+- **Error Path Testing:** Are timeouts, connection failures, and database errors tested?
+- **Concurrency & Race Conditions:** Are async handlers tested under load? Shared state mutations safe?
+- **Data Invariants:** Are database constraints enforced? Could data corruption happen?
+- **Integration Testing:** Are real database queries tested (not just mocks)? Connection pooling validated?
+- **Gap Detection:** What edge cases could cause production bugs? What's untested?
 
-**Bad:** 100% coverage but only tests happy path.
-**Good:** 70% coverage but covers happy path + errors + edge cases + integration.
-
-### 2. Error Handling & Failure Scenarios
-- [ ] Are errors tested, not just happy paths?
-- [ ] What happens when dependencies fail?
-- [ ] Are timeouts tested?
-- [ ] Are retry behaviors tested?
-
-**Bad:** Only tests success case. No test for database down.
-**Good:** Tests success, timeout, connection error, and retry logic.
-
-### 3. Concurrency & Race Conditions
-- [ ] Are concurrent accesses tested?
-- [ ] Do we test shared state modifications?
-- [ ] Are locks/transactions tested?
-- [ ] Could race conditions exist?
-
-**Bad:** Single-threaded tests only. Assumes no concurrent access.
-**Good:** Multi-threaded tests. Race condition detector runs. Stress tests pass.
-
-### 4. Data Integrity & Invariants
-- [ ] Are invariants documented?
-- [ ] Do tests verify invariants hold?
-- [ ] Are state transitions tested?
-- [ ] Could data corruption happen?
-
-**Bad:** No invariant testing. Users get -5 age or 999999 amount.
-**Good:** Invariants documented. Tests verify boundaries. State transitions enforced.
-
-### 5. Integration & Dependency Failure
-- [ ] Are real database interactions tested?
-- [ ] Are external service failures tested?
-- [ ] Do we test timeout scenarios?
-- [ ] Are connection pool issues tested?
-
-**Bad:** All database calls mocked. Real queries never tested.
-**Good:** Test database with real schema. Real queries validated. Connection pool stress tested.
-
-**Jordan's Checklist:**
-- [ ] Critical paths are 100% tested
-- [ ] Error cases are tested, not skipped
-- [ ] Edge cases identified and tested
-- [ ] Integration points tested with real systems
-- [ ] Concurrency tested (if applicable)
-- [ ] Data invariants enforced and tested
-- [ ] Coverage is measured; targets are set
-
-**Jordan's Automatic Rejection Criteria:**
-- 🚫 Only happy path tested (error cases ignored)
-- 🚫 Tests that require manual intervention
-- 🚫 100% coverage but only exercises code (doesn't verify correctness)
-- 🚫 Tests that require external services (not isolatable)
-- 🚫 Untestable code (due to poor architecture)
+**Jordan's Red Flags for Backend:**
+- Only happy path tested; error cases ignored
+- All database calls mocked; real queries never executed
+- No concurrency testing for async handlers
+- Data invariants undocumented or untested
 
 ---
 

@@ -48,134 +48,39 @@ Two expert perspectives review in parallel, then synthesize:
 
 ## Maya's Product Review
 
-**What Maya Examines:**
+See `/pb-maya-product` for the comprehensive product strategy framework and checklist.
 
-### 1. Problem Clarity
-- [ ] Is the user problem clearly stated?
-- [ ] Is it a real problem users face?
-- [ ] Is it a common problem or edge case?
-- [ ] Do we have data backing this up?
+**For frontend-specific review, focus on:**
+- **Problem Validation:** Is this a real user problem (data-backed) or assumed?
+- **User Impact:** How many users benefit? How much does it improve their experience?
+- **Scope Discipline:** Is the MVP shippable in 2 weeks? Are nice-to-haves separated?
+- **UX Consequences:** Does this add complexity? Could users misuse it?
+- **Trade-offs:** Is this feature worth the ongoing maintenance burden?
 
-**Bad:** "Users might want dark mode." No evidence. Trendy.
-**Good:** "40% of users use app at night. 63% requested dark mode in survey."
-
-### 2. Solution Fit
-- [ ] Does the proposed solution actually solve the problem?
-- [ ] Are simpler alternatives considered?
-- [ ] Could this be solved without building?
-
-**Bad:** Problem: "Users need better reporting" → Solution: "50 visualization dashboard"
-**Good:** Problem: "Users want to export data" → Solution: "CSV export button (1 day)" → Escalate to dashboard if >20% use
-
-### 3. User Impact
-- [ ] Will users notice this feature?
-- [ ] Does it improve their lives or add complexity?
-- [ ] How many users benefit?
-- [ ] How much time does it save?
-
-**Bad:** "Power users will appreciate this." Adds complexity for 5% of users.
-**Good:** "30% of active users need this. 2 min task becomes 10 seconds."
-
-### 4. Scope Creep Detection
-- [ ] Is scope bounded (what's in/out)?
-- [ ] Can we ship an MVP in 2 weeks or less?
-- [ ] Are nice-to-haves separated from essentials?
-- [ ] Is escalation trigger defined?
-
-**Bad:** Search feature expands 7x over time. Never ships.
-**Good:** MVP: "Basic text search". Launch → Gather data → Decide on filters.
-
-### 5. Prioritization & Trade-offs
-- [ ] Is this more important than next backlog item?
-- [ ] Does this align with product strategy?
-- [ ] What gets deprioritized?
-- [ ] Is this a one-off request or strategic?
-
-**Bad:** Build for every customer request → scattered product.
-**Good:** Prioritize by user count + strategy alignment + effort.
-
-**Maya's Checklist:**
-- [ ] Real user problem identified (not assumed)
-- [ ] Problem severity understood (how many users? how often?)
-- [ ] Current workaround documented
-- [ ] Simpler alternatives considered
-- [ ] User benefit quantified
-- [ ] Scope bounded (MVP-able in 2 weeks)
-- [ ] Strategy alignment clear
-
-**Maya's Automatic Rejection Criteria:**
-- 🚫 Solving unvalidated problem
-- 🚫 Proposing solution before understanding problem
-- 🚫 Expanding scope without validation
-- 🚫 Building one-off requests that distract from strategy
-- 🚫 Treating nice-to-haves as essentials
+**Maya's Red Flags for Frontend:**
+- Building without user research or validation
+- Scope undefined or expanding over time
+- Feature benefits only 5% of users but adds UI complexity
+- Nice-to-have features presented as essentials
 
 ---
 
 ## Sam's Clarity Review
 
-**What Sam Examines:**
+See `/pb-sam-documentation` for the comprehensive clarity framework and checklist.
 
-### 1. Audience Clarity
-- [ ] Is the intended user clear?
-- [ ] Are prerequisites stated?
-- [ ] Does the UI assume prior knowledge?
-- [ ] Can users self-serve (without asking for help)?
+**For frontend-specific review, focus on:**
+- **UI Clarity:** Are labels explicit? Do users understand without needing help?
+- **Accessibility:** Can keyboard users navigate? Is focus visible? WCAG 2.1 AA compliant?
+- **Error Messages:** Do errors explain what happened AND how to fix it?
+- **Code Readability:** Can a new developer understand component purpose from the code?
+- **Documentation:** Are complex interactions explained? Are assumptions stated?
 
-**Bad:** Complex interface. No explanation. Users confused.
-**Good:** Clear onboarding. Tooltips explain why things matter.
-
-### 2. Explicitness & Assumptions
-- [ ] Are labels clear?
-- [ ] Are implicit assumptions stated?
-- [ ] Does the UI explain "why" (not just "what")?
-- [ ] Can users understand without external docs?
-
-**Bad:** Button labeled "Run Reconciliation". What does that do?
-**Good:** Button labeled "Sync with Bank". Tooltip: "Compares our records with your bank statement and flags mismatches."
-
-### 3. Completeness Without Bloat
-- [ ] Are common questions answered (in UI or nearby docs)?
-- [ ] Are examples provided for complex operations?
-- [ ] Is there help for when things fail?
-- [ ] Does it tell users where to go next?
-
-**Bad:** Error message: "Connection failed". Nothing else.
-**Good:** Error message: "Can't reach payment service. Retrying in 10 seconds. [Learn more] [Try now]"
-
-### 4. Maintainability & Code Clarity
-- [ ] Is component purpose clear from name?
-- [ ] Are complex functions documented?
-- [ ] Can new developer understand this code?
-- [ ] Are architecture assumptions stated?
-
-**Bad:** Component named "DataProcessor". Does what?
-**Good:** Component named "PaymentReconciliationReport". Purpose obvious.
-
-### 5. Accessibility & Structure
-- [ ] Can keyboard users navigate?
-- [ ] Are focus states visible?
-- [ ] Do screen readers understand content?
-- [ ] Can this be read at 200% zoom?
-
-**Bad:** Icon-only buttons. No alt text.
-**Good:** Icon + text. ARIA labels. Keyboard shortcuts.
-
-**Sam's Checklist:**
-- [ ] Intended user/audience is clear
-- [ ] Prerequisites stated (or none)
-- [ ] UI labels are explicit (not assuming knowledge)
-- [ ] Common tasks discoverable
-- [ ] Error messages helpful
-- [ ] Code is readable by new developer
-- [ ] Accessibility standards met (WCAG 2.1 AA)
-
-**Sam's Automatic Rejection Criteria:**
-- 🚫 Unclear intended audience
-- 🚫 No examples for complex operations
-- 🚫 Error messages assume prior knowledge
-- 🚫 Code lacks clarity (unreadable without external docs)
-- 🚫 Accessibility barriers (keyboard inaccessible, no alt text, poor contrast)
+**Sam's Red Flags for Frontend:**
+- Icon-only buttons without text or ARIA labels
+- Error messages assume prior knowledge ("Connection failed")
+- Component names unclear (e.g., "DataProcessor" vs. "PaymentReconciliationReport")
+- No focus states or keyboard navigation support
 
 ---
 

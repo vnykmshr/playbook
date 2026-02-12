@@ -338,16 +338,18 @@ Decision: Offer white-glove service. Revisit if 10+ enterprise customers request
 
 ---
 
-## Automatic Rejection Criteria
+## Red Flags (Strong Signals for Rejection)
 
-Features rejected outright:
+Features that warrant deep scrutiny before proceeding:
 
-🚫 **Never:**
-- Solving a problem no users have
-- Proposing a solution before understanding the problem
-- Expanding scope without validation
-- Building one-off requests that distract from strategy
-- Nice-to-haves passed off as essentials
+**Watch for:**
+- Solving a problem without user validation (assumption-driven)
+- Proposing solutions before fully understanding the problem
+- Expanding scope without data (feature creep)
+- Building one-off requests that fragment strategy
+- Nice-to-haves marketed as essentials
+
+**Override possible if:** User research validates the problem, or strategic priority overrides normal product discipline. Document the trade-off via `/pb-adr`.
 
 ---
 

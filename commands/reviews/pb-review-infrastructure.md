@@ -48,139 +48,40 @@ Two expert perspectives review in parallel, then synthesize:
 
 ## Alex's Resilience Review
 
-**What Alex Examines:**
+See `/pb-alex-infra` for the comprehensive infrastructure review framework and checklist.
 
-### 1. Failure Modes & Detection
-- [ ] What components can fail?
-- [ ] How is each failure detected?
-- [ ] Are there cascading failures?
-- [ ] Can we detect failures before users notice?
+**For infrastructure-specific review, focus on:**
+- **Failure Detection:** Can we detect component failures before users notice? Are health checks in place?
+- **Graceful Degradation:** If one service fails, does the system degrade or cascade?
+- **Deployment Safety:** Are rollouts gradual? Can we rollback in < 5 minutes?
+- **Observability:** Do dashboards and alerts give actionable insights?
+- **Capacity Planning:** Are resource limits set? Load-tested to 10x peak?
 
-**Bad:** Single database instance. No health checks. Service hangs on database failure.
-**Good:** Primary + replicas. Health checks every 10s. Circuit breaker stops requests on failure.
-
-### 2. Graceful Degradation & Fallbacks
-- [ ] If critical component fails, does system degrade?
-- [ ] Are fallbacks documented and tested?
-- [ ] What's the performance in degraded mode?
-- [ ] Is degradation visible to users?
-
-**Bad:** Payment service down → entire checkout fails.
-**Good:** Payment service slow → queue payments → process asynchronously → retry with backoff.
-
-### 3. Deployment Safety
-- [ ] Is deployment automated?
-- [ ] Are rollouts gradual (canary, blue-green)?
-- [ ] Health checks run before traffic routing?
-- [ ] Can we rollback in < 5 minutes?
-
-**Bad:** Manual deployment. All servers updated at once. No rollback plan.
-**Good:** Automated. 1 server at a time. Health checks before traffic. Instant rollback via DNS.
-
-### 4. Observability & Monitoring
-- [ ] Can you see system state in real-time?
-- [ ] Are alerts actionable?
-- [ ] Is alert noise manageable?
-- [ ] Can you debug production issues without logs?
-
-**Bad:** No dashboards. Alert: "Error rate high" (how high? what errors?).
-**Good:** Dashboard shows error rate by type. Alerts include context. Log aggregation enables debugging.
-
-### 5. Capacity Planning & Scaling
-- [ ] Are resource limits set?
-- [ ] Is peak capacity modeled?
-- [ ] Does autoscaling work (tested)?
-- [ ] What's the breaking point?
-
-**Bad:** No limits. One service consumes all CPU. Others starve.
-**Good:** Resource requests/limits. Horizontal autoscaling. Load tested to 10x peak.
-
-**Alex's Checklist:**
-- [ ] Failure modes documented
-- [ ] Health checks configured (startup, readiness, liveness)
-- [ ] Graceful degradation planned
-- [ ] Deployment automated + gradual + safe
-- [ ] Observability sufficient (metrics, logs, alerts)
-- [ ] Capacity modeled and tested
-- [ ] RTO and RPO defined
-
-**Alex's Automatic Rejection Criteria:**
-- 🚫 No health checks
-- 🚫 No resource limits (can starve other services)
-- 🚫 All-in-one deployment (single point of failure)
-- 🚫 Manual recovery processes > 1 hour
-- 🚫 No monitoring of critical paths
-- 🚫 Secrets in code/config files
-- 🚫 No documented rollback plan
+**Alex's Red Flags for Infrastructure:**
+- No health checks or monitoring of critical paths
+- Single point of failure (all-in-one deployment)
+- Manual recovery processes or rollback plans
+- No resource limits (services can starve each other)
 
 ---
 
 ## Linus's Security Review
 
-**What Linus Examines:**
+See `/pb-linus-agent` for the comprehensive security review framework and checklist.
 
-### 1. Threat Modeling & Attack Vectors
-- [ ] What are the threat vectors?
-- [ ] Are we protecting data in transit and at rest?
-- [ ] Could someone escalate privileges?
-- [ ] Is there input validation at every boundary?
+**For infrastructure-specific review, focus on:**
+- **Attack Surface:** What threat vectors exist? Are data in transit and at rest encrypted?
+- **Access Control:** Is least privilege enforced? Can we audit who accessed what?
+- **Assumptions:** Are we trusting the internal network? Components? User input? Could assumptions be violated?
+- **Secrets Management:** Are secrets in a vault (not code)? Rotated? Access logged?
+- **Compliance:** Is GDPR/HIPAA/PCI-DSS met? Retention policies enforced?
 
-**Bad:** Database password in config file. Unencrypted database connections. No access controls.
-**Good:** Secrets in vault. TLS for all connections. IAM roles restrict access.
-
-### 2. Implicit Assumptions
-- [ ] Are we assuming components are trustworthy?
-- [ ] Do we assume internal network is safe?
-- [ ] Are we trusting user input without validation?
-- [ ] Could any assumption be violated?
-
-**Bad:** "Internal services don't need authentication" (but what if one is compromised?).
-**Good:** mTLS for internal services. Defense in depth (don't trust anything).
-
-### 3. Access Control & Permissions
-- [ ] Who can access what?
-- [ ] Is principle of least privilege enforced?
-- [ ] Can we audit who accessed what?
-- [ ] Could permissions be over-granted?
-
-**Bad:** All developers have admin access to production.
-**Good:** Role-based access control. Audit logs for all admin actions. JIT (just-in-time) access.
-
-### 4. Data Handling & Privacy
-- [ ] Is sensitive data encrypted at rest and in transit?
-- [ ] Is data retained longer than necessary?
-- [ ] Can sensitive data be logged or exposed?
-- [ ] Is compliance met (GDPR, HIPAA, PCI-DSS)?
-
-**Bad:** Credit card numbers logged to disk. Data kept indefinitely.
-**Good:** PCI-DSS compliance verified. Tokenized payments. Data retention policies enforced.
-
-### 5. Secrets Management & Rotation
-- [ ] How are secrets stored?
-- [ ] Are secrets rotated regularly?
-- [ ] Is access to secrets logged?
-- [ ] Can we revoke secrets without downtime?
-
-**Bad:** Hardcoded API keys. Never rotated. No audit trail.
-**Good:** Secrets in vault. Rotated monthly. Access logged. Instant revocation.
-
-**Linus's Checklist:**
-- [ ] Threat model documented
-- [ ] No hardcoded credentials
-- [ ] TLS for all network communication
-- [ ] Access control follows least privilege principle
-- [ ] Audit logging for sensitive operations
-- [ ] Secrets properly managed and rotated
-- [ ] Compliance requirements identified and met
-
-**Linus's Automatic Rejection Criteria:**
-- 🚫 Hardcoded secrets in code/config
-- 🚫 No TLS for sensitive connections
-- 🚫 Over-broad access permissions
-- 🚫 No audit logging for admin actions
-- 🚫 Sensitive data in logs
-- 🚫 SQL injection or command injection risks
-- 🚫 Assumptions about internal network safety
+**Linus's Red Flags for Infrastructure:**
+- Hardcoded secrets or credentials in code/config
+- No TLS for sensitive connections or internal services
+- Over-broad access permissions (all developers as admin)
+- No audit logging for administrative actions
+- Sensitive data in logs (credit cards, tokens, PII)
 
 ---
 

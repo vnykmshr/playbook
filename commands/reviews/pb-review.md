@@ -55,6 +55,64 @@ See `/pb-preamble` for the team thinking philosophy that enables these perspecti
 
 ---
 
+## Persona Composition: When to Use Together
+
+**Recommended sequence for multi-persona reviews:**
+
+### Phase 1: Scope Lock (Start Here)
+- **Persona:** `/pb-maya-product` — 15-20 minutes
+- **Goal:** Validate you're solving the right problem for the right users
+- **Outcome:** "This feature solves a real user problem, scope is bounded"
+- **Result:** Proceed or pivot before engineering effort
+
+### Phase 2: Quality Review (Run in Parallel)
+- **Persona 1:** `/pb-linus-agent` — 30-45 minutes
+  - **Goal:** Verify code correctness, security assumptions, simplicity
+- **Persona 2:** `/pb-alex-infra` — 20-30 minutes
+  - **Goal:** Verify resilience, failure modes, scalability
+- **Persona 3:** `/pb-jordan-testing` — 20-30 minutes
+  - **Goal:** Verify test coverage, edge cases, invariants
+
+**Running in parallel:** Launch all 3 simultaneously. They work independently; results synthesize naturally.
+
+### Phase 3: Communication & Clarity (Last)
+- **Persona:** `/pb-sam-documentation` — 15-20 minutes
+- **Goal:** Verify code and decisions are clearly documented
+- **Outcome:** Team can understand and modify code 6 months later
+- **Note:** Run after quality reviews; Sam often catches assumptions other personas missed
+
+---
+
+## When Single-Persona Review Suffices
+
+| Change Type | Use This Persona | Rationale |
+|-------------|-----------------|-----------|
+| Security-critical code | `/pb-linus-agent` | Security assumes no other concerns override safety |
+| Infrastructure change | `/pb-alex-infra` | Infrastructure failures cascade; need resilience depth |
+| Test coverage review | `/pb-jordan-testing` | Testing is isolated; doesn't require other perspectives |
+| Documentation only | `/pb-sam-documentation` | Documentation doesn't require code review |
+| Feature planning | `/pb-maya-product` | Product decisions before engineering effort |
+
+---
+
+## Resolving Persona Conflicts
+
+**If personas disagree,** it's not a bug—it's a design decision:
+
+**Example:**
+- **Linus says:** "Add input validation (improves security)"
+- **Alex says:** "Validation adds 20ms latency in hot path"
+
+**Resolution:** Not a contradiction. This is a trade-off:
+1. **Document via `/pb-adr`** — Architecture Decision Record explaining the trade-off
+2. **Measure the impact** — Get actual latency data before deciding
+3. **Make conscious choice** — Choose security+latency, or skip validation+accept risk
+4. **Record the trade-off** — Future reviewers understand why
+
+Persona disagreements expose **real design choices**. That's valuable.
+
+---
+
 ## Review Tiers
 
 Choose based on available time and review depth needed.
