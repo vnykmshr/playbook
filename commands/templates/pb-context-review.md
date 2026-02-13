@@ -41,7 +41,7 @@ AUTO-LOADED (every session — budget matters most here):
                                                           Target: ~400 total
 
 LOADED VIA /pb-resume (small, focused):
-  todos/1-working-context.md       Project snapshot                   ~50 lines
+  todos/*working-context*          Project snapshot                   ~50 lines
   todos/pause-notes.md             Latest pause entry only            ~30 lines
                                                           Target:  ~80 total
 
@@ -69,9 +69,9 @@ wc -l ~/.claude/CLAUDE.md                        # Target: ~140
 wc -l .claude/CLAUDE.md                          # Target: ~160
 wc -l <memory-path>/MEMORY.md                    # Target: ~100
 
-# Session state
+# Session state (working-context filename varies by project)
 echo "=== Session State ==="
-wc -l todos/1-working-context.md                 # Target: ~50
+ls -lh todos/*working-context* | head -1         # Locate working context file
 wc -l todos/pause-notes.md                       # Target: ~30
 
 # On-demand (informational only)
@@ -115,8 +115,8 @@ Look for the same information repeated across layers. Common duplications:
 ```bash
 # Find repeated phrases across context files
 # Look for version numbers, release dates, command counts
-grep -l "v2.12.0" ~/.claude/CLAUDE.md .claude/CLAUDE.md <memory-path>/MEMORY.md todos/1-working-context.md
-grep -l "98 commands" ~/.claude/CLAUDE.md .claude/CLAUDE.md <memory-path>/MEMORY.md todos/1-working-context.md
+grep -l "v2.12.0" ~/.claude/CLAUDE.md .claude/CLAUDE.md <memory-path>/MEMORY.md todos/*working-context*
+grep -l "98 commands" ~/.claude/CLAUDE.md .claude/CLAUDE.md <memory-path>/MEMORY.md todos/*working-context*
 ```
 
 **Rule of thumb:** Each fact should have ONE canonical home. Other files cross-reference, not copy.
@@ -162,14 +162,14 @@ For each auto-loaded file over its soft target, review content:
 **Should contain:** BEACONs (6), operational guardrails, workflow commands, session ritual
 **Should NOT contain:** Version-specific details, session management explanations, release promo
 
-**Regenerate:** `/pb-claude-global`
+**Action:** If over ~140 lines, review and trim or regenerate via `/pb-claude-global`. If at target, no action needed.
 
 ### Project CLAUDE.md (.claude/CLAUDE.md)
 
 **Should contain:** Tech stack, project structure, BEACONs (3), verification commands, relevant playbooks
 **Should NOT contain:** Detailed phase descriptions, session management explanations, capability promo
 
-**Regenerate:** `/pb-claude-project`
+**Action:** If over ~160 lines, review and trim or regenerate via `/pb-claude-project`. If at target, no action needed.
 
 ### Memory Index (memory/MEMORY.md)
 
@@ -195,8 +195,8 @@ grep -c "/pb-" ~/.claude/CLAUDE.md                 # Should be 10+
 # Project structure still documented
 grep -c "commands/" .claude/CLAUDE.md              # Should be 1+
 
-# Working context has current version
-head -5 todos/1-working-context.md
+# Working context has current version (locate file for your project)
+head -5 todos/*working-context* 2>/dev/null
 
 # Memory index has architecture diagram
 grep -c "AUTO-LOADED" <memory-path>/MEMORY.md      # Should be 1+
