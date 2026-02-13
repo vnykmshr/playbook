@@ -181,6 +181,7 @@ Developer machine health and maintenance.
 | `/pb-claude-global` | Generate global ~/.claude/CLAUDE.md from playbooks |
 | `/pb-claude-project` | Generate project .claude/CLAUDE.md by analyzing codebase |
 | `/pb-claude-orchestration` | Model selection, task delegation, and resource efficiency guide |
+| `/pb-context-review` | Audit and maintain all context layers — quarterly or after releases |
 
 ## Example Projects
 
