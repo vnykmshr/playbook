@@ -8,21 +8,17 @@ execution_pattern: "sequential"
 related_commands: ['pb-start', 'pb-pause', 'pb-cycle']
 last_reviewed: "2026-02-13"
 last_evolved: "2026-02-13"
-version: "1.1.0"
-version_notes: "v2.12.0 Phase 2: Integrated context layer loading and BEACON verification (Steps 3.5-3.6)"
+version: "1.2.0"
+version_notes: "v2.13.0: Streamlined context loading — reports actual sizes, flags stale data, concise health check"
 breaking_changes: []
 ---
 # Resume Development Work
 
 Quickly get back into context after a break. Use this to resume work on an existing feature branch.
 
-**v2.12.0 Phase 2 Integration:** This command now includes context layer loading (Step 3.5) and BEACON verification (Step 3.6). When resuming, all 4 context layers (global, project, memory, session) are loaded in sequence, and all 9 critical guidelines (BEACONs) are verified to prevent silent loss of essential principles. This is core functionality that ensures your context is complete and your guidelines are safe.
+**Mindset:** Resuming requires understanding assumptions made and verifying context is complete. Apply `/pb-preamble` thinking: challenge what was decided and why. Apply `/pb-design-rules` thinking: is the code clear, simple, and robust?
 
-**Mindset:** Resuming work requires understanding assumptions and decisions made, and verifying that critical guidelines are still present. Challenge your assumptions about what was decided and why, and verify BEACONs before continuing.
-
-Use `/pb-preamble` thinking: challenge your assumptions about what was decided and why. Use `/pb-design-rules` thinking: understand how the design embodies Clarity (is the code obvious?), Simplicity (are we solving this the simplest way?), and Robustness (are error cases handled?).
-
-**Resource Hint:** sonnet — context recovery, state assessment, and BEACON verification
+**Resource Hint:** sonnet — context recovery, state assessment, health check
 
 ---
 
@@ -80,129 +76,42 @@ git diff --staged
 
 ---
 
-### Step 3.5: Load All Context Layers in Sequence (v2.12.0 Phase 2)
+### Step 3.5: Load Session State + Context Health Check
 
-Before proceeding, load and verify all 4 layers of project context.
+Read the session state files and check context health.
 
-**Four-Layer Context Architecture:**
-
-Layer loading sequence for optimal context recovery:
-
-```
-Layer 1: Global CLAUDE.md (190 lines)
-  → Universal principles, 6 global BEACONs
-  → Location: ~/.claude/CLAUDE.md
-  → Content: How We Work, Design Rules, Code Quality, Non-Negotiables, Quality Bar, Model Selection
-
-Layer 2: Project CLAUDE.md (178 lines)
-  → Project structure and patterns, 3 project BEACONs
-  → Location: .claude/CLAUDE.md (in repository)
-  → Content: Tech Stack, Project Structure, Commands, Guardrails, Audit Conventions, Key Patterns
-
-Layer 3: Memory (336 lines)
-  → Persistent learned patterns, BEACON Quick Reference
-  → Location: memory/MEMORY.md (auto-memory)
-  → Content: Operational patterns, BEACON reference, templates, session context strategy
-
-Layer 4: Session State
-  → Durable (working-context.md) + Ephemeral (pause-notes.md)
-  → Location: todos/1-working-context.md, todos/pause-notes.md
-  → Content: Project state, version info, pause checkpoints, next steps
-```
-
-**Loading display (show to user):**
-
-```
-=== RESUMING: Loading Context Layers ===
-
-Loading context layers in sequence...
-
-Layer 1: Global (~/.claude/CLAUDE.md)
-  Principles loaded: ✓
-  BEACONs loaded: ✓ (6 global)
-  Size: 190 lines
-
-Layer 2: Project (.claude/CLAUDE.md)
-  Structure loaded: ✓
-  BEACONs loaded: ✓ (3 project)
-  Size: 178 lines
-
-Layer 3: Memory (memory/MEMORY.md)
-  Patterns loaded: ✓
-  BEACON Reference loaded: ✓
-  Size: 336 lines
-
-Layer 4: Session State (todos/)
-  Working-context loaded: ✓
-  Pause-notes loaded: ✓
-  Status: Available for review
-
-=== Context Layers: ALL LOADED ===
-```
-
-**Verify context layers loaded:**
+**Load session state:**
 
 ```bash
-# Verify each layer exists and is readable
-[ -f ~/.claude/CLAUDE.md ] && echo "✓ Global context found"
-[ -f ./.claude/CLAUDE.md ] && echo "✓ Project context found"
-[ -f ./memory/MEMORY.md ] && echo "✓ Memory found"
-[ -f ./todos/1-working-context.md ] || [ -f ./todos/working-context.md ] && echo "✓ Working context found"
-[ -f ./todos/pause-notes.md ] && echo "✓ Pause-notes found"
+# Read working context (project snapshot)
+cat todos/1-working-context.md
+
+# Read latest pause notes (where you left off)
+cat todos/pause-notes.md
 ```
 
-**If layer missing:**
-```
-⚠️  CONTEXT LAYER MISSING
-Missing: [Layer name]
-Run: /pb-context (to refresh working context)
-Run: /pb-claude-project (to refresh project CLAUDE.md)
-```
+**Context health check — report actual sizes:**
 
----
+```bash
+# Auto-loaded layers (already in context):
+wc -l ~/.claude/CLAUDE.md            # Global principles (target: ~140)
+wc -l .claude/CLAUDE.md              # Project guardrails (target: ~160)
+# memory/MEMORY.md                   # Auto-loaded by Claude (target: ~100)
 
-### Step 3.6: Confirm All BEACONs Active (v2.12.0 Phase 2)
-
-After loading all 4 context layers, verify all 9 critical guidelines are active.
-
-**What are BEACONs?** Critical guidelines explicitly marked in CLAUDE.md files to prevent oversight when guidance is deferred to playbooks.
-
-**Verify all 9 BEACONs:**
-
-```
-=== BEACON VERIFICATION ===
-
-Global BEACONs (6) from ~/.claude/CLAUDE.md:
-✓ BEACON: Preamble — Challenge assumptions, think like peers
-✓ BEACON: Design Rules — Clarity, Simplicity, Resilience, Extensibility
-✓ BEACON: Code Quality — No dead code, atomic changes, error handling
-✓ BEACON: Non-Negotiables — Never ship bugs, always test, always verify
-✓ BEACON: Quality Bar (MLP) — Would you use daily? Can recommend? Minimal?
-✓ BEACON: Model Selection — Opus/Sonnet/Haiku routing
-
-Project BEACONs (3) from .claude/CLAUDE.md:
-✓ BEACON: Project Guardrails — Command count, categories, metadata, linting
-✓ BEACON: Audit Conventions — 274 automated verifications
-✓ BEACON: Key Patterns — Bidirectional links, dropped references, anchors
-
-All 9 BEACONs verified and active ✓
+# Session state (loaded manually):
+wc -l todos/1-working-context.md     # Project snapshot (target: ~50)
+wc -l todos/pause-notes.md           # Latest pause entry (target: ~30)
 ```
 
-**If BEACON missing:**
+**Flag issues:**
+- Working context version doesn't match `git describe --tags` → run `/pb-context`
+- Pause notes has multiple entries → old entries should have been archived by `/pb-pause`
+- Any layer missing → run the appropriate regeneration command
 
-```
-⚠️  BEACON VERIFICATION FAILED
-Missing: [BEACON name]
-Severity: [Critical / High / Medium]
-Guidance: See `/pb-[command]` for full guidance
-Action required: Read BEACON definition before proceeding
-```
-
-**Recovery if BEACONs incomplete:**
-1. Run `/pb-context` to refresh working context
-2. Run `/pb-claude-project` to refresh project CLAUDE.md
-3. Re-read memory/MEMORY.md to restore operational patterns
-4. Re-verify all 9 BEACONs before continuing
+**Recovery if context is stale:**
+- `/pb-context` — regenerate working context
+- `/pb-claude-project` — regenerate project CLAUDE.md
+- `/pb-claude-global` — regenerate global CLAUDE.md
 
 ---
 

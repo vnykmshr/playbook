@@ -183,60 +183,12 @@ mkdocs serve
 
 ---
 
-## v2.12.0 Capabilities
+## Session Ritual
 
-**The Self-Evolving Playbook System** with three interlocking phases:
-
-### Phase 1: Context Minimization
-- **BEACON markers:** 9 critical guidelines (6 global + 3 project) with dual-presence architecture
-- **Four-layer context:** Global principles → Project structure → Learned patterns → Session state
-- **Efficiency:** Prevent silent guideline loss while minimizing context bloat
-- **Documentation:** `docs/beacon-verification-at-boundaries.md`
-
-### Phase 2: Session Boundary Protection
-- **Enhanced /pb-pause:** Step 6.5 verifies all 9 BEACONs before pausing
-- **Enhanced /pb-resume:** Steps 3.5-3.6 load context layers and verify BEACONs
-- **Safety:** Prevent silent guideline loss during session transitions
-- **Reference implementations:** `commands/templates/pb-pause-enhanced.md`, `pb-resume-enhanced.md`
-
-### Phase 3: Git History Signal Analysis
-- **Command:** `/pb-git-signals` analyzes git history for adoption, churn, pain points
-- **Data-driven planning:** Adoption metrics (what's active), churn analysis (volatility), pain scores (problematic areas)
-- **Integration:** Signals inform `/pb-evolve` quarterly planning decisions
-- **Usage:** Weekly trends, pre-planning analysis, investigation of pain areas
-- **Implementation:** `scripts/git-signals.py` (440 lines), `commands/core/pb-git-signals.md` (220 lines)
-
-### Integration Guide
-- **Comprehensive documentation:** `docs/v2.12.0-integration-guide.md` explains how all three phases work together
-- **Real-world scenarios:** Pause/resume/planning cycle documented with time-based examples
-- **Backwards compatible:** All new capabilities are opt-in; no breaking changes from v2.11.0
-
----
-
-## Session State Management (v2.12.0)
-
-**Context Architecture:** Four-layer system for efficient session resumption
-
-1. **Global CLAUDE.md** — Universal principles, BEACONs (load globally)
-2. **Project CLAUDE.md** — Project structure, patterns, guardrails (load per project)
-3. **Memory** — Learned patterns, accumulated insights (durable)
-4. **Session State** — Working-context (durable) + Pause-notes (ephemeral)
-
-**Working-Context (Durable):**
-- Location: `todos/1-working-context.md`
-- Updated: On releases, version changes, quarterly reviews
-- Purpose: Track project state across sessions
-- Survives: Multiple sessions, weeks, months
-- Regenerate: Run `/pb-context` to refresh when stale
-
-**Pause-Notes (Ephemeral):**
-- Location: `todos/pause-notes.md` (append chronologically)
-- Updated: Each session via `/pb-pause`
-- Purpose: Fast resumption (where work paused, immediate next steps)
-- Survives: Until resumption, then can be archived
-- Maintenance: Keep 3-5 recent entries, archive old to `todos/done/`
-
-See global CLAUDE.md "Session State Management" section for full context architecture.
+- `/pb-pause` before breaks — saves state, archives old entries, reports context health
+- `/pb-resume` to start — loads context, shows sizes, flags stale data
+- `/pb-context` to regenerate working context on release/milestone
+- See `docs/v2.12.0-integration-guide.md` for BEACON system and git-signals details
 
 ---
 
