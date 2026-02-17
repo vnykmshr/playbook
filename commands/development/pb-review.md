@@ -14,44 +14,19 @@ breaking_changes: []
 ---
 # Automated Quality Gate
 
-Run this after you finish coding. System analyzes change, runs Garry's framework, applies your preferences, and commits if all passes.
-
-**Fully automatic. You don't interact. You get a report when done.**
+Run this after you finish coding. System analyzes what you built, applies your established preferences, and commits if everything checks out. Fully automatic. You get a report when done.
 
 **Part of the ritual:** `/pb-start` → code → `/pb-review` (automatic) → done
+
+**Voice:** Prose-driven feedback. Specific reasoning (what matters + why), not diagnostic checklists. See `/docs/voice.md` for how commands communicate.
 
 ---
 
 ## How It Works
 
-### Step 1: System Analyzes Your Change
-- LOC, files, domains, complexity, criticality
-- Determines review depth (lean/standard/deep)
+System analyzes your change (LOC, files, domains, complexity, criticality), determines review depth, runs quality checks through your preferences, and auto-commits if everything passes. Your preferences (from `/pb-preferences`) handle 90% of decisions automatically—architecture issues always fixed, performance debt accepted if < 1 hour, security issues never skipped, etc.
 
-### Step 2: System Runs Garry's Framework
-- Architecture, code quality, tests, performance checks
-- Consults personas (Linus, Alex, Jordan, Maya, Sam)
-- Finds issues and generates recommendations
-
-### Step 3: System Applies Your Preferences
-- You established preferences once (see `/pb-preferences`)
-- System uses them to auto-decide each issue:
-  - "Always fix architecture issues" → Fixes automatically
-  - "Always accept perf debt if < 1 hour" → Defers automatically
-  - "Security issues always fix" → Fixes automatically
-  - Etc.
-
-### Step 4: System Auto-Commits (If All Pass)
-- If all issues resolved by preference rules → Auto-commits
-- Message auto-drafted with reasoning
-- Pushed to remote
-- **You get a notification: "✓ Committed [hash]"**
-
-### Step 5: Human Involvement (Only If Needed)
-- **If issue conflicts with preferences** (ambiguous) → Alerts you
-- **If new issue type** (not in preferences) → Asks you once
-- **If can't auto-fix** (needs creative decision) → Presents options
-- Otherwise: No interaction needed
+Human involvement (your 10%) only happens when an issue doesn't fit your established preferences (genuinely ambiguous), when it finds a new issue type, or when something needs creative judgment. Otherwise: no interaction.
 
 ---
 
@@ -59,32 +34,30 @@ Run this after you finish coding. System analyzes change, runs Garry's framework
 
 ```
 /pb-review
-  ↓ System: Analyzing 250 LOC, 3 files, auth flow...
-  ↓ System: Depth = STANDARD (no persona wait)
-  ↓ System: Running checks...
+✓ Analyzed: 250 LOC, 3 files, auth flow
+✓ Depth: Standard
 
-  Issues found:
-  1. Architecture: Email service inline
-     → Your preference: "Extract to service if possible"
-     → Decision: EXTRACT (auto-fixed in suggestion)
+Issues found:
 
-  2. Code quality: Token expiration not handled
-     → Your preference: "Error handling must be explicit"
-     → Decision: ADD ERROR HANDLER (auto-suggestion)
+1. Email service is inline (architecture)
+   Your preference: "Extract to service if possible"
+   → Auto-fixing: extracting to separate service
 
-  3. Testing: Failure paths untested
-     → Your preference: "Defer testing if coverage > 80%"
-     → Coverage is 85%
-     → Decision: DEFER (auto-decided)
+2. Token expiration path doesn't handle cache failure (error handling)
+   Your preference: "Error handling must be explicit"
+   → Auto-fixing: adding explicit error handler
 
-  4. Performance: Reasonable
-     → No issues
+3. Failure paths untested (testing)
+   Coverage: 85%
+   Your preference: "Defer testing if coverage > 80%"
+   → Auto-deferring: gap noted for later
 
-  ✓ READY TO COMMIT
+✓ Ready to commit
+✓ Committed: abc1234f
+  feat(auth): add email verification with retry logic
 
-  System: Making suggested fixes + auto-commit
-  ✓ Committed: abc1234f
-  Message: "feat(auth): add email verification..."
+  Extract email service for reuse, add explicit error handling
+  on token expiration. Testing gap deferred (coverage 85%).
 ```
 
 **Your involvement: 0%** — System handled everything based on your preferences.
@@ -95,25 +68,24 @@ Run this after you finish coding. System analyzes change, runs Garry's framework
 
 ```
 /pb-review
-  ↓ System: Analyzing...
-  ↓ System: Found issue
+✓ Analyzed: 180 LOC, 2 files, retry logic
+✓ Depth: Standard
 
-  Issue: Complex retry logic (4 nested loops, 3 state machines)
-  Recommendation: SIMPLIFY
-  Your preference: "Simplify if clearly worse"
+⚠ Issue: Complex retry logic with 4 nested loops + 3 state machines
 
-  ⚠ AMBIGUOUS: Could be simplified OR acceptable complexity
-  → Linus recommends: "This is too clever, simplify"
-  → Code works, tests pass, no logic errors
+Your preference doesn't quite cover this. The code works, tests pass,
+no logic errors. But it's clever—potentially hard to maintain.
 
-  NEEDS HUMAN DECISION:
-  - Option A: Simplify (effort: 2 hours, risk: low)
-  - Option B: Accept (effort: 0, risk: maintenance burden)
+Linus recommends: "This is too clever, simplify."
 
-  Waiting for your input...
+Two paths:
+  A: Simplify (~2 hours, low risk, easier maintenance)
+  B: Accept (~0 effort, higher maintenance burden later)
+
+What's your call?
 ```
 
-**Your involvement: 1 minute** — Choose A or B, move on.
+**Your involvement: 1 minute** — You pick A or B based on your priorities, system proceeds.
 
 ---
 
@@ -121,74 +93,36 @@ Run this after you finish coding. System analyzes change, runs Garry's framework
 
 ```
 /pb-review
-  ✓ Small fix: 30 LOC, 1 file, logging statement
-  ✓ Lean review triggered
-  ✓ No issues found
-  ✓ Auto-commit
-
-  Committed: 3c8f9a2d
+✓ Small fix: 30 LOC, 1 file, logging statement
+✓ No issues found
+✓ Committed: 3c8f9a2d
 ```
 
-**Total time: 30 seconds** — You're not even aware `/pb-review` ran.
+**Total time: Instant** — System handles it, you don't even need to know it ran.
 
 ---
 
-## Preferences System
+## Your Preferences Drive Decisions
 
-**First time setup (one-time):**
-```
-/pb-preferences --setup
-  ↓ System asks 10-15 questions about your values:
-    - Architecture issues: always fix? defer if <1h? accept risk?
-    - Code quality: strict or pragmatic?
-    - Testing: require 80%+ coverage? defer gaps? accept risk?
-    - Performance: always optimize? accept technical debt?
-    - Security: zero-tolerance? case-by-case?
-    - Breaking changes: rebase before commit? squash?
-    - Commit frequency: after every change? batch?
-  ↓ Preferences saved
-```
+Setup once (`/pb-preferences --setup`, takes ~15 minutes). Answer questions about your values: architecture (always fix or threshold?), testing (require 80%+ coverage?), security (zero-tolerance?), performance (benchmark-driven?), etc. System saves your answers.
 
-**During `/pb-review`:**
-- System applies your preferences automatically
-- Matches each issue type to your established rule
-- Only asks if issue doesn't fit your rules
+During `/pb-review`, system matches each issue to your established preference and auto-decides. Architecture coupling found? Your preference says "always fix"—fixed automatically. Performance debt but deadline is tight? Your preference says "threshold<1h"—deferred automatically.
 
-**Override if needed:**
-```
-/pb-review --override
-  ↓ Issue that would normally auto-defer
-  ↓ You want to fix it anyway
-  ↓ System fixes it, updates preference learning
-```
+Only asks if the issue doesn't fit your preferences (genuinely ambiguous). You can override if needed (`/pb-review --override`); system learns from it.
 
 ---
 
 ## Your 10% Involvement
 
-**When system asks for input:**
+System asks only when genuinely ambiguous:
 
-1. **Ambiguous decision** (issue doesn't fit your preferences)
-   - Linus says: "Simplify this"
-   - Your preference doesn't cover this complexity type
-   - System: "This is new. Should we always simplify complex logic? [Yes] [No] [Case-by-case]"
-   - You pick one
-   - System remembers for future
+- **Preference doesn't cover it:** Linus says "simplify this," but your preferences don't address this complexity type. System: "Should we always simplify? [Yes] [No] [Case-by-case]" You pick. System remembers.
 
-2. **Conflicting signals**
-   - Garry's test section: "Missing edge cases"
-   - Your preference: "Defer testing if coverage > 80%"
-   - But coverage is exactly 80.0%
-   - System: "On the fence. Fix it or defer? [Fix] [Defer]"
-   - You pick one
+- **On the fence:** Coverage is exactly 80.0%—your preference kicks in at 80%, but it's borderline. System: "Fix or defer? [Fix] [Defer]" You decide.
 
-3. **New issue type**
-   - System finds something it hasn't categorized before
-   - System: "Found 'thread pool exhaustion risk'. Usually fix these? [Yes] [No]"
-   - You answer once
-   - System remembers
+- **New issue type:** System finds something it hasn't seen before (e.g., "thread pool exhaustion risk"). System: "Usually fix these? [Yes] [No]" You answer once. System learns.
 
-**That's your 10%.** Brief, decisive, rare.
+Brief, decisive, rare. That's it.
 
 ---
 

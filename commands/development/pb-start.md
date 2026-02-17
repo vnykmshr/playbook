@@ -22,6 +22,8 @@ Begin work on a feature, bug fix, or enhancement. Establishes scope through adap
 
 **Resource Hint:** sonnet — Scope detection and branch setup
 
+**Voice:** Conversational. System asks clarifying questions naturally, like a peer reviewing your plan. See `/docs/voice.md` for how commands communicate.
+
 ---
 
 ## When to Use
@@ -42,41 +44,31 @@ Begin work on a feature, bug fix, or enhancement. Establishes scope through adap
   ↓ You code
 ```
 
-**Questions the system will ask (adaptive based on your answers):**
+**What the conversation looks like:**
 
-1. **What are you building?** (1-line outcome, not solution)
-   - *Example:* "Users can reset passwords via email link"
-   - *Not:* "Implement password reset endpoint"
+The system asks clarifying questions naturally—like a peer reviewing your approach before you dive in. Adapt to what you describe:
 
-2. **How complex is this?** (Files affected? LOC estimate?)
-   - *Example:* "~200 LOC, 3 files, touches auth + email"
-   - System uses this to detect depth: small/medium/large
+1. **What are you building?** (outcome, not solution)
+   - You: "Users can reset passwords via email"
+   - System uses this to understand scope
 
-3. **Is this on critical path?** (production feature? security? payment?)
-   - *Example:* "Yes, payment processing" or "No, nice-to-have"
-   - System uses this to detect: lean/standard/deep review later
+2. **How complex?** (files and LOC estimate)
+   - You: "~200 LOC, 3 files, touches auth + email"
+   - System detects: small/medium/large
 
-4. **Any blockers right now?** (If any, resolve before starting)
-   - *Example:* "Need staging DB access" or "None"
-   - System: Pause if blockers exist, otherwise proceed
+3. **Critical path?** (production, security, payment, or nice-to-have)
+   - You: "Payment processing, yes"
+   - System prepares review depth accordingly
+
+4. **Any blockers?**
+   - You: "Need staging DB access" or "None"
+   - System pauses if blockers exist, otherwise proceeds
 
 ---
 
-## What Happens After You Answer
+## After You Answer
 
-**System detects:**
-- Complexity level (small/medium/large)
-- Criticality (low/medium/high)
-- Domains affected (auth? payment? infra? testing?)
-
-**System creates:**
-- Feature branch with naming convention
-- Working context snapshot
-- Complexity profile stored for `/pb-review` later
-
-**You then:**
-- Just code. No more decisions. No ceremony.
-- System watches (detects change complexity as you work)
+System detects complexity level, criticality, and affected domains. Creates a feature branch with conventional naming, saves your scope for `/pb-review` later, then gets out of your way. You code. No more decisions, no ceremony. System watches in the background, tracking change complexity as you work.
 
 ---
 
