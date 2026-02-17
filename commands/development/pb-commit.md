@@ -14,6 +14,8 @@ breaking_changes: []
 ---
 # Commit (Usually Automatic)
 
+**Resource Hint:** haiku — Simple utility for when you want manual control over commits.
+
 **Usually:** `/pb-review` auto-commits when all passes. You get a notification.
 
 **Rarely:** You want manual control. Use this command explicitly.

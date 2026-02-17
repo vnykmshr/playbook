@@ -14,11 +14,22 @@ breaking_changes: []
 ---
 # Automated Quality Gate
 
+**Resource Hint:** haiku — Lightweight automation that applies your preferences and auto-commits after code review.
+
 Run this after you finish coding. System analyzes what you built, applies your established preferences, and commits if everything checks out. Fully automatic. You get a report when done.
 
 **Part of the ritual:** `/pb-start` → code → `/pb-review` (automatic) → done
 
 **Voice:** Prose-driven feedback. Specific reasoning (what matters + why), not diagnostic checklists. See `/docs/voice.md` for how commands communicate.
+
+---
+
+## When to Use
+
+- **After coding session:** Run `/pb-review` to analyze, decide, and auto-commit
+- **After fixing feedback:** Run again to re-verify and commit
+- **With manual control:** Use `pb-review --no-auto-commit` if you prefer to review the message first
+- **To override preferences:** Use `pb-review --override` for edge cases
 
 ---
 

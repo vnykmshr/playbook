@@ -14,6 +14,8 @@ breaking_changes: []
 ---
 # Set Your Decision Rules (One-Time Setup)
 
+**Resource Hint:** haiku — One-time setup (15 minutes) that enables 90% automation forever.
+
 Run this once (or annually) to establish how you want `/pb-review` to auto-decide issues. After this, the system handles 90% of decisions automatically.
 
 **You:** 15 minutes of setup
