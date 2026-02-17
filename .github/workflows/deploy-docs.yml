@@ -82,7 +82,7 @@ jobs:
         uses: actions/configure-pages@v5
 
       - name: Check for broken links
-        uses: lycheeverse/lychee-action@v1.10.0
+        uses: lycheeverse/lychee-action@v2.0.2
         with:
           args: --no-progress --format markdown site
           fail: true
