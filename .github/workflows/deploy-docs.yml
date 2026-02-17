@@ -84,8 +84,10 @@ jobs:
       - name: Check for broken links
         uses: lycheeverse/lychee-action@v2.0.2
         with:
-          args: --no-progress --format markdown site
+          args: --no-progress site
+          format: markdown
           fail: true
+          failIfEmpty: false
         continue-on-error: true
 
       - name: Upload artifact
