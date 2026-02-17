@@ -2,311 +2,161 @@
 name: "pb-start"
 title: "Start Development Work"
 category: "development"
-difficulty: "advanced"
+difficulty: "intermediate"
 model_hint: "sonnet"
-execution_pattern: "sequential"
-related_commands: ['pb-resume', 'pb-cycle', 'pb-commit', 'pb-plan', 'pb-standup']
-last_reviewed: "2026-02-09"
-last_evolved: ""
-version: "1.1.0"
-version_notes: "Initial v2.11.0 (Phase 1-4 enhancements)"
-breaking_changes: []
+execution_pattern: "interactive"
+related_commands: ['pb-review', 'pb-commit', 'pb-pause', 'pb-plan']
+last_reviewed: "2026-02-17"
+last_evolved: "2026-02-17"
+version: "2.0.0"
+version_notes: "Simplified ritual: adaptive scope detection replaces ceremony. Part of 3-command workflow."
+breaking_changes: ["Replaced detailed pre-start checklist with 3-4 adaptive scope questions. Old commands pb-cycle/pb-review-code merged into /pb-review. See MIGRATION section."]
 ---
 # Start Development Work
 
-Begin iterative development on a feature, enhancement, or fix. This command establishes the rhythm for quality-focused, incremental work.
+Begin work on a feature, bug fix, or enhancement. Establishes scope through adaptive questions, then you work. No ceremony—just clarity.
 
-**Mindset:** Development assumes both `/pb-preamble` thinking (challenge assumptions, peer collaboration) and `/pb-design-rules` thinking. Each iteration verifies that code embodies Clarity, Simplicity, and Robustness.
+**Part of the ritual:** `/pb-start` → code → `/pb-review` → decide → `/pb-commit`
 
-**Resource Hint:** sonnet — routine development workflow orchestration
+**Mindset:** Apply `/pb-preamble` thinking (challenge assumptions) and `/pb-design-rules` thinking (verify clarity, simplicity, robustness). This command ensures you know *what* success looks like before writing code.
+
+**Resource Hint:** sonnet — Scope detection and branch setup
 
 ---
 
 ## When to Use
 
-- Starting a new feature, enhancement, or bug fix from scratch
-- Establishing branch strategy and iteration rhythm for a work item
-- Onboarding to a codebase and need the full development ceremony
+- Starting any new work (feature, fix, refactor)
+- Need to clarify scope before coding
+- Picking up work after a break (pair with `/pb-resume`)
 
 ---
 
-## Pre-Start Checklist
-
-Before writing code, confirm:
-
-- [ ] Scope is clear (what's in, what's out)
-- [ ] Feature branch created from main
-- [ ] Working context reviewed (see below)
-- [ ] Acceptance criteria understood
-- [ ] Team alignment: assumptions are explicit, disagreements surfaced (see `/pb-preamble`)
-- [ ] **Outcomes clarified** (see section below) — Don't skip this
-- [ ] Success criteria measurable (not vague)
-- [ ] Approval path defined (who needs to approve before merging?)
-
----
-
-## Outcome Clarification (Critical)
-
-**Before writing a single line of code, define what success looks like.**
-
-This prevents drift, scope creep, and surprises at review time.
-
-### Step 1: Define the Outcome (Not the Solution)
-
-**Bad (solution-focused):**
-- "Refactor the payment service to use async/await"
-- "Add dark mode toggle to UI"
-
-**Good (outcome-focused):**
-- "Payment processing latency < 500ms under peak load"
-- "40% of users who use app at night have a way to reduce eye strain"
-
-The difference: Outcomes define what success looks like. Solutions are how you achieve it.
-
-### Step 2: Define Success Criteria (Measurable)
-
-For the outcome above, what proves you succeeded?
-
-**Payment example:**
-- [ ] P95 latency ≤ 500ms (measured in production)
-- [ ] No performance degradation vs current async/await version
-- [ ] All existing tests pass
-- [ ] Load test to 10k requests/min shows consistent latency
-
-**Dark mode example:**
-- [ ] Dark mode toggle present in settings
-- [ ] All UI components render correctly in dark mode
-- [ ] User preference persists across sessions
-- [ ] Accessibility contrast ratios maintained in dark mode
-
-**Anti-pattern:** "Code compiles" or "tests pass" (these are prerequisites, not outcomes)
-
-### Step 3: Define the Approval Path
-
-Who needs to approve this work before it ships?
-
-**Example approval workflow:**
-1. **Self-review (you)** — Does code match the planned approach?
-2. **Peer review (Linus/Alex/Maya/etc)** — Is design sound? Are assumptions valid?
-3. **Product approval (if needed)** — Does this solve the problem we committed to?
-4. **QA verification (if needed)** — Do success criteria pass?
-
-**Document this upfront.** Prevents "surprise denials" at the end.
-
-### Step 4: Identify Blockers
-
-What could prevent you from achieving the outcome?
-
-**Examples:**
-- "Need database access to staging environment"
-- "Waiting on API from third-party service"
-- "Need design approval from team lead"
-
-**If blockers exist, resolve them now.** Don't start coding with unknown blockers.
-
-### Step 5: Define the Definition of Done
-
-What does "finished" look like? Be specific.
-
-**Bad:** "Implement the feature"
-**Good:**
-- Code is written and tested
-- Success criteria are verified
-- Documentation is updated
-- PR is reviewed and approved
-- Deployed to staging and verified
-- Ready to merge to main
-
-### Outcome Documentation Template
-
-Create `todos/work/[task-date]-outcome.md`:
-
-```markdown
-# [Task Name] — Outcome Clarification
-
-## Outcome
-[What success looks like, not how to achieve it]
-
-## Success Criteria
-- [ ] [Measurable criterion 1]
-- [ ] [Measurable criterion 2]
-- [ ] [Measurable criterion 3]
-
-## Approval Path
-1. Self-review (author)
-2. Peer review (Linus agent for security-critical)
-3. [Product approval / QA verification / etc]
-
-## Blockers & Dependencies
-- [Blocker 1 and resolution plan]
-- [Dependency 2 and timeline]
-
-## Definition of Done
-- [ ] Code written and tested
-- [ ] Success criteria verified
-- [ ] Docs updated
-- [ ] PR reviewed and approved
-- [ ] Ready to merge
-
-## Notes
-[Any assumptions, trade-offs, or context]
-```
-
----
-
-## Working Context Check
-
-Before starting work, check if the project has a working context document:
-
-```bash
-# Check for working context (location and naming may vary)
-ls todos/*working-context*.md 2>/dev/null
-```
-
-**Common locations:** `todos/working-context.md`, `todos/1-working-context.md`
-
-If working context exists:
-1. **Review it** — Understand current version, active development, recent commits
-2. **Verify currency** — Compare version with `git describe --tags`
-3. **Update if stale** — Run `/pb-context` to refresh if outdated
-
-If no working context exists:
-- For established projects, consider creating one using `/pb-context`
-- For small tasks, `/pb-standards` provides sufficient context
-
----
-
-## Branch Strategy
-
-```bash
-# For features (new functionality)
-git checkout -b feature/v1.X.0-short-description main
-
-# For fixes (bug repairs)
-git checkout -b fix/short-description main
-
-# For refactors (no behavior change)
-git checkout -b refactor/short-description main
-```
-
-**Naming Convention:**
-- Features: `feature/v1.X.0-topic` (tied to release version)
-- Fixes: `fix/issue-description`
-- Refactors: `refactor/what-changed`
-
----
-
-## Iteration Cycle
-
-See `/pb-cycle` for the full iteration workflow (develop, self-review, test, peer review, commit, update tracker).
-
----
-
-## Commit Discipline
-
-See `/pb-commit` for atomic commit practices, staging discipline, and message format.
-
----
-
-## Quality Gates (Check After Each Iteration)
-
-Before moving to next task:
-
-```bash
-make lint        # Lint check passes
-make typecheck   # Type check passes
-make test        # All tests pass
-```
-
-**If any gate fails, fix before proceeding. Never accumulate debt.**
-
----
-
-## Tests That Matter
-
-Write tests alongside code, not after. Focus on:
-
-**DO Test:**
-- Error handling and edge cases
-- State transitions and side effects
-- Business logic and calculations
-- Integration points (API, storage)
-- Security-sensitive paths
-
-**DON'T Test:**
-- Static data (configs, constants)
-- Implementation details
-- Every input permutation
-- Trivial getters/setters
-
-**Goal:** Tests catch real bugs, not chase coverage numbers.
-
----
-
-## Feature Branch Hygiene
-
-**During development:**
-- Keep branch up to date with main
-- Resolve conflicts early and often
-- Push regularly (enables collaboration, backup)
-
-**Before PR:**
-- Squash WIP commits into logical units
-- Ensure all quality gates pass
-- Self-review one final time
-
----
-
-## When to Ask for Help
-
-Stop and ask when:
-- Requirements are ambiguous
-- Approach has multiple valid options
-- Change impacts architecture
-- Stuck for >30 minutes
-- Scope seems to be growing
-
-**Don't guess. Don't assume. Ask.**
-
----
-
-## Quick Reference
-
-| Action | Command |
-|--------|---------|
-| Start iteration cycle | `/pb-cycle` |
-| Check quality gates | `make lint && make typecheck && make test` |
-| Self-review checklist | See `/pb-cycle` |
-| Create PR | `/pb-pr` |
-| Make release | `/pb-release` |
-
----
-
-## Session Start Template
-
-When resuming work:
+## The Quick Start: 5 Minutes
 
 ```
-Resuming development on [branch-name]
-
-Current status:
-- [x] Task 1 complete
-- [ ] Task 2 in progress - [specific status]
-- [ ] Task 3 pending
-
-Next: [What I'm doing this session]
+/pb-start "feature name"
+  ↓ System asks 3-4 adaptive questions
+  ↓ You answer (1-2 min)
+  ↓ Branch created, scope detected
+  ↓ You code
 ```
+
+**Questions the system will ask (adaptive based on your answers):**
+
+1. **What are you building?** (1-line outcome, not solution)
+   - *Example:* "Users can reset passwords via email link"
+   - *Not:* "Implement password reset endpoint"
+
+2. **How complex is this?** (Files affected? LOC estimate?)
+   - *Example:* "~200 LOC, 3 files, touches auth + email"
+   - System uses this to detect depth: small/medium/large
+
+3. **Is this on critical path?** (production feature? security? payment?)
+   - *Example:* "Yes, payment processing" or "No, nice-to-have"
+   - System uses this to detect: lean/standard/deep review later
+
+4. **Any blockers right now?** (If any, resolve before starting)
+   - *Example:* "Need staging DB access" or "None"
+   - System: Pause if blockers exist, otherwise proceed
+
+---
+
+## What Happens After You Answer
+
+**System detects:**
+- Complexity level (small/medium/large)
+- Criticality (low/medium/high)
+- Domains affected (auth? payment? infra? testing?)
+
+**System creates:**
+- Feature branch with naming convention
+- Working context snapshot
+- Complexity profile stored for `/pb-review` later
+
+**You then:**
+- Just code. No more decisions. No ceremony.
+- System watches (detects change complexity as you work)
+
+---
+
+## The Ritual is Simple
+
+This command is part of a 3-command ritual:
+
+```
+/pb-start [what you're building]
+  ↓ Answer 3-4 questions
+  ↓ Branch created, scope recorded
+
+[You code here—no interruptions]
+
+/pb-review
+  ↓ System detects complexity
+  ↓ Runs Garry's framework at right depth
+  ↓ Consults personas automatically
+  ↓ Presents recommendation
+  ↓ You decide: Ready to commit? Fix issues? Questions?
+
+/pb-commit
+  ↓ Auto-drafts message with reasoning
+  ↓ Captures your decisions from /pb-review
+  ↓ Commits and pushes
+```
+
+**Total cognitive load: 3 commands.** That's a habit.
+
+---
+
+## Pro Tips
+
+**Before you start:**
+- Read the outcome question carefully. "What are you building?" means *outcome*, not solution
+- Be honest about complexity. Small estimate = lean review. Large = deep review.
+- If blockers exist, resolve them now, don't start coding with unknowns
+
+**After branch is created:**
+- Just code. Don't think about the ritual yet.
+- System is watching (tracking your changes)
+- When done, run `/pb-review`
+
+---
+
+## Branch Naming
+
+System auto-creates branch with conventional naming:
+- `feature/short-description` for new features
+- `fix/issue-description` for bug fixes
+- `refactor/what-changed` for refactoring
+
+You don't need to think about this.
+
+---
+
+## Migration from Old Workflow
+
+**If you've used the playbook before, here's what changed:**
+
+| Old | New |
+|-----|-----|
+| `/pb-start` (long ceremony) | `/pb-start` (3-4 questions, 2 min) |
+| `/pb-cycle` (self-review) | `/pb-review` (auto-detects depth) |
+| `/pb-review-code` (peer review) | Built into `/pb-review` |
+| `/pb-security`, `/pb-performance` | Consulted automatically by `/pb-review` |
+| Manual persona selection | Automatic (system decides who to consult) |
+
+**No more commands to remember: just `/pb-start`, `/pb-review`, `/pb-commit`.**
 
 ---
 
 ## Related Commands
 
-- `/pb-resume` — Get back into context after a break
-- `/pb-cycle` — Self-review and peer review during development
-- `/pb-commit` — Craft atomic, well-explained commits
-- `/pb-plan` — Plan new features before starting work
-- `/pb-standup` — Post async status updates to team
+- `/pb-review` — Quality gate (the second part of the ritual)
+- `/pb-commit` — Make the commit (the third part)
+- `/pb-pause` — Pause work, save context
+- `/pb-resume` — Get back into context
+- `/pb-plan` — Plan architecture before starting (optional, for complex work)
 
 ---
 
-*Every iteration deserves the full cycle. Quality over speed.*
+*One ritual. Three commands. Automagic depth detection. Quality by default.*

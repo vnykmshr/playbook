@@ -129,12 +129,22 @@ For detailed standards: `/pb-standards`
 
 ---
 
-## Development Workflow
+## Development Workflow (Simplified Ritual)
 
-1. `/pb-start` or `/pb-resume` — Begin or resume work
-2. `/pb-cycle` — Iterate: code → self-review → refine
-3. `/pb-commit` — Atomic, well-explained commits
-4. `/pb-pr` — Create PR when ready
+**One-time setup (15 min):**
+- `/pb-preferences --setup` — Set your decision rules
+
+**Every feature (3 commands, 10% human involvement):**
+1. `/pb-start [feature]` — Establish scope (30 sec)
+2. `/pb-review` — Auto-quality gate (automatic)
+3. Done. Commit is pushed.
+
+**Detailed breakdown:**
+- `pb-start`: Answer 3-4 scope questions
+- `pb-review`: System analyzes, applies preferences, auto-commits
+- Repeat
+
+**If you want peer review:** `/pb-pr` after commit
 
 **Non-negotiables:** Never ship known bugs. Never skip testing. Never ignore warnings.
 
@@ -167,18 +177,24 @@ For detailed guidance: `/pb-claude-orchestration`
 
 ---
 
-## Quick Reference
+## Quick Reference (Simplified Ritual)
 
 | Situation | Command |
 |-----------|---------|
-| Starting new work | `/pb-start` |
-| During development | `/pb-cycle` |
-| Ready to commit | `/pb-commit` |
-| Creating PR | `/pb-pr` |
-| Code review | `/pb-review-code` |
-| Security check | `/pb-security` |
-| Architecture decision | `/pb-adr` |
-| Unsure what's next | `/pb-what-next` |
+| First time | `/pb-preferences --setup` (set rules once) |
+| Starting feature | `/pb-start [what]` |
+| After coding | `/pb-review` (automatic) |
+| For peer review | `/pb-pr` |
+| Architecture deep-dive | `/pb-plan` |
+| Security review | `/pb-security` |
+| Testing patterns | `/pb-testing` |
+
+**Personas (consulted automatically by `/pb-review`):**
+- `/pb-linus-agent` — Correctness, security
+- `/pb-alex-infra` — Infrastructure, scale
+- `/pb-jordan-testing` — Testing strategy
+- `/pb-maya-product` — Product impact
+- `/pb-sam-documentation` — Clarity
 
 ---
 

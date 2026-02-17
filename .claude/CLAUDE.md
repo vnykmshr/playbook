@@ -1,8 +1,8 @@
 # Engineering Playbook Development Context
 
-> Generated: 2026-02-12
+> Generated: 2026-02-17
 > Tech Stack: Markdown + Python + MkDocs + Self-Evolving System
-> Status: v2.12.0 (released 2026-02-12)
+> Status: v2.12.0 (released 2026-02-12, ritual updated 2026-02-17)
 
 This file provides project-specific context for Claude Code.
 Global guidelines: ~/.claude/CLAUDE.md
@@ -11,24 +11,54 @@ Global guidelines: ~/.claude/CLAUDE.md
 
 ## Project Overview
 
-**v2.12.0:** 97 development workflow commands for Claude Code with self-evolving system that keeps playbooks aligned with Claude capability improvements.
+**v2.12.0:** 97 development workflow commands + new simplified 3-command ritual (v2.12.0 Phase 4).
 
 **Capabilities:**
 - **Phase 1: Context Minimization** — BEACON markers system with four-layer context architecture
 - **Phase 2: Session Boundary Protection** — BEACON verification at pause/resume boundaries
 - **Phase 3: Git History Signal Analysis** — Data-driven insights for quarterly planning
+- **Phase 4: Automated Workflow** — 90% automation, 10% human (new `/pb-review`, `/pb-preferences`)
 
-**Audience:** Playbook maintainers, command contributors, Claude Code users integrating playbooks
+**Recent Changes (2026-02-17):**
+- Redesigned core ritual: `/pb-start` → code → `/pb-review` (automatic)
+- New command: `/pb-preferences` (one-time setup of decision rules)
+- Updated: `/pb-start` (scope detection), `/pb-commit` (auto-triggered)
+- Deprecated: `/pb-cycle` (merged into `/pb-review`)
+- Philosophy: Human handles 10%, system handles 90%
 
-**Success Metrics:**
-- All 97 commands working with zero breaking changes
-- 100% metadata coverage (YAML front-matter on all commands)
-- Quarterly evolution cycles running (Q1 2026 initial cycle complete)
-- BEACON system preventing silent guideline loss
-- Git-signals enabling data-driven planning
+**Audience:** Playbook maintainers, command contributors, Claude Code users
 
-**Repository:** https://github.com/vnykmshr/playbook
-**Release:** v2.12.0 (2026-02-12)
+---
+
+## The Simplified Ritual
+
+**For all development work:**
+
+```
+FIRST TIME:
+/pb-preferences --setup
+  ↓ 15 minutes to establish decision rules
+  ↓ System saves forever
+
+EVERY FEATURE:
+/pb-start "feature description"
+  ↓ 30 seconds (answer 3-4 scope questions)
+  ↓ Branch created, scope recorded
+
+[You code]
+
+/pb-review
+  ↓ Fully automatic
+  ↓ Analyzes change
+  ↓ Applies your preferences
+  ↓ Consults personas (Linus, Alex, Jordan, Maya, Sam)
+  ↓ Auto-commits if passes
+  ↓ Alerts only if ambiguous (~5% of time)
+
+REPEAT
+```
+
+**Your involvement:** ~30 sec per feature + ~1-2 min per 10 features for ambiguous decisions
 
 ---
 
@@ -50,31 +80,26 @@ Global guidelines: ~/.claude/CLAUDE.md
 ```
 playbook/
 ├── commands/        # 97 commands across 9 categories (all with YAML metadata v1.0)
-│   ├── core/        # Foundation commands (pb-start, pb-cycle, pb-pause, pb-resume, etc.)
+│   ├── core/        # Foundation commands (pb-start, pb-review, pb-commit, pb-pause, pb-resume)
+│   ├── development/ # Development workflow (pb-start, pb-review, pb-commit, pb-preferences)
 │   ├── planning/    # Planning & architecture
-│   ├── development/ # Development workflow
 │   ├── deployment/  # Deployment & operations
 │   ├── reviews/     # Code review commands
 │   ├── repo/        # Repository management
 │   ├── people/      # Team operations
-│   ├── templates/   # Context templates + reference implementations
+│   ├── templates/   # Context templates (pb-claude-*, pb-pause, pb-resume)
 │   └── utilities/   # System maintenance
 ├── docs/            # MkDocs documentation + v2.12.0 Integration Guide
-├── scripts/         # Python automation (including git-signals analyzer)
+├── scripts/         # Python automation (git-signals, validate-conventions, etc.)
 ├── tests/           # pytest suite (40+ test cases, 274+ convention checks)
 └── .claude/         # Context files (this file)
 ```
 
-**Key Changes in v2.12.0:**
-- Added: `scripts/git-signals.py` (440 lines, GitSignalsAnalyzer class)
-- Added: `commands/core/pb-git-signals.md` (220 lines, adoption/churn/pain-point analysis)
-- Added: `docs/v2.12.0-integration-guide.md` (460+ lines, comprehensive v2.12.0 overview)
-- Enhanced: `docs/beacon-verification-at-boundaries.md` (BEACON system documentation)
-- Enhanced: `commands/templates/pb-pause-enhanced.md`, `pb-resume-enhanced.md` (reference implementations)
-
-Key locations: `commands/*/pb-*.md`, `docs/*.md`, `scripts/*.py`, `tests/test_*.py`
-
-For full tree: See README.md
+**Key changes in workflow update (2026-02-17):**
+- New: `commands/development/pb-preferences.md` (one-time setup)
+- New: `commands/development/pb-review.md` (replaces pb-cycle, 90% automatic)
+- Updated: `commands/development/pb-start.md` (scope detection, 3-4 questions)
+- Updated: `commands/development/pb-commit.md` (automatic by default)
 
 ---
 
@@ -82,13 +107,49 @@ For full tree: See README.md
 
 These are non-negotiable constraints for the playbook project:
 
-- **Command count:** 97 (v2.12.0 stable): 86 + 11 from v2.11.0 + pb-git-signals (Phase 3)
-- **Categories:** 9 fixed structure (core, planning, development, deployment, reviews, repo, people, templates, utilities)
-- **Related Commands:** ≤5 per command (hub exception: pb-patterns keeps 8)
-- **Metadata:** All 97 commands require YAML front-matter with 14 fields (v1.0 schema)
+- **Command count:** 97 (v2.12.0 stable)
+- **Categories:** 9 fixed structure
+- **Related Commands:** ≤5 per command (pb-patterns hub: ≤8)
+- **Metadata:** All 97 commands require YAML front-matter (14 fields, v1.0 schema)
 - **Linting:** All markdown must pass markdownlint + yamllint
-- **No breaking changes:** Commands versioned independently; v2.12.0 is backwards compatible (opt-in phases)
-- **Evolution:** Quarterly cycles (Feb, May, Aug, Nov) to keep playbooks aligned with Claude capabilities
+- **No breaking changes:** Commands versioned independently; v2.12.0 is backwards compatible
+- **Evolution:** Quarterly cycles (Feb, May, Aug, Nov)
+
+---
+
+## BEACON: Development Ritual (Project Context)
+
+**For the playbook project itself:**
+
+```
+Goal: Contribute a new command or enhance existing ones
+
+/pb-preferences --setup
+  ↓ Establish your values for this project
+
+/pb-start "feat: add new playbook command"
+  ↓ Establish scope: Is it new? Enhancement? Template?
+  ↓ Does it fit 9 categories? What complexity?
+
+[Code the command]
+  ↓ Write markdown command file
+  ↓ Follow metadata schema (14 fields, v1.0)
+  ↓ Include BEACON references
+  ↓ Test with /pb-review
+
+/pb-review
+  ↓ Auto-detects: Metadata completeness, markdown lint, anchor validation
+  ↓ Checks: Related commands ≤5, YAML valid, convention compliance
+  ↓ Consults: Sam (documentation clarity), Linus (principles alignment)
+  ↓ Auto-commits if passes
+
+/pb-commit
+  ↓ Message includes: Command name, metadata version, category
+
+[Push to remote]
+
+[Create PR for peer review]
+```
 
 ---
 
@@ -97,34 +158,19 @@ These are non-negotiable constraints for the playbook project:
 Every command MUST follow these conventions:
 
 **Structure Requirements:**
-- **Resource Hint:** opus/sonnet/haiku with 1-2 sentence rationale (why that model is chosen)
+- **Resource Hint:** opus/sonnet/haiku with 1-2 sentence rationale
 - **When to Use:** 2-4 bullets describing appropriate contexts
-- **Mindset:** References /pb-preamble or /pb-design-rules (thinking principles)
-- **Metadata:** YAML front-matter with 14 required fields (see .playbook-metadata-schema.yaml)
-
-**YAML Metadata Schema (v1.0):**
-Required fields: name, title, category, difficulty, model_hint, execution_pattern, related_commands, last_reviewed, last_evolved, version, version_notes, breaking_changes
-
-**Convention Checks (40+ test cases, 274+ automated verifications):**
-- Command file naming: `pb-<name>.md`
-- YAML front-matter: Complete and valid (all 14 required fields)
-- Resource Hint: Present with meaningful rationale
-- When to Use section: Exists with 2-4 bullets
-- Mindset references: Links to /pb-preamble or /pb-design-rules
-- Related Commands: ≤5 items (except pb-patterns hub: ≤8)
-- Markdown compliance: markdownlint passes all checks
-- YAML compliance: yamllint passes (handled by CI)
-- MkDocs build: Successful with no broken anchors
-- Metadata consistency: Resource hints match body explanations
+- **Mindset:** References `/pb-preamble` or `/pb-design-rules`
+- **Metadata:** YAML front-matter with 14 required fields
 
 **Verification (run before committing):**
 ```bash
-find commands -name "*.md" | wc -l          # Should be 97
+find commands -name "*.md" | wc -l          # Should be 98 (97 + pb-preferences)
 ./scripts/install.sh                         # Verify symlinks work
 mkdocs build 2>&1 | tail -3                  # Build + anchor checks
 npx markdownlint-cli --config .markdownlint.json 'commands/**/*.md'
-python scripts/validate-conventions.py      # Run convention test suite
-git status                                   # CI enforcement: all must pass before merge
+python scripts/validate-conventions.py      # Convention test suite
+git status                                   # CI enforcement
 ```
 
 ---
@@ -133,19 +179,17 @@ git status                                   # CI enforcement: all must pass bef
 
 Critical operational patterns for this project:
 
-**Bidirectional links**: When adding command to family (pb-claude-*), check all siblings for back-links immediately.
+**Bidirectional links:** When adding command to family (pb-claude-*, pb-review-*), check all siblings for back-links immediately.
 
-**Dropped references**: When swapping Related Commands, verify dropped link isn't referenced elsewhere (e.g., Mindset line) before removing.
+**Dropped references:** When swapping Related Commands, verify dropped link isn't referenced elsewhere before removing.
 
-**MkDocs anchors**: `:` in headings → slug includes all words. `&` → stripped. Stale counts → slug changes (update TOC).
+**MkDocs anchors:** `:` in headings → slug includes all words. `&` → stripped. Stale counts → slug changes (update TOC).
 
-**Files to touch together**: New command → `commands/<category>/`, `docs/command-index.md`, `CHANGELOG.md`
-
-**Operational resilience**: Every command should include or reference recovery steps. When evolving commands, consider rollback paths and graceful degradation. See `/pb-deployment` for recovery patterns.
+**Files to touch together:** New command → `commands/<category>/`, `docs/command-index.md`, `CHANGELOG.md`
 
 ---
 
-## Relevant Playbooks
+## Relevant Playbooks for This Project
 
 | Command | Relevance |
 |---------|-----------|
@@ -153,29 +197,51 @@ Critical operational patterns for this project:
 | `/pb-review-docs` | Documentation review standards |
 | `/pb-standards` | Content and code quality standards |
 | `/pb-git-signals` | Git history analysis for evolution planning |
-| `/pb-pause` | Pause work with BEACON verification (v2.12.0 Phase 2) |
-| `/pb-resume` | Resume work with context loading and BEACON verification (v2.12.0 Phase 2) |
-| `/pb-evolve` | Quarterly evolution cycles using git-signals (v2.12.0 Phase 3) |
+| `/pb-commit` | Commit conventions (playbook uses same conventions) |
+| `/pb-pause` | Pause work with BEACON verification |
+| `/pb-resume` | Resume work with context loading |
+| `/pb-evolve` | Quarterly evolution cycles |
 
 ---
 
-## Overrides from Global
+## New Workflow Integration
 
-- **Structure**: Documentation/tooling project, not standard code project
-- **Commits**: `feat:`, `fix:`, `docs:`, `chore:` for command changes
-- **Testing**: Convention tests are primary quality gate
-- **Build**: `mkdocs build` instead of `make build`
+**Old playbook approach (for reference):**
+- Users invoiced `/pb-cycle` → manual review checklist
+- Users manually selected personas (`/pb-linus-agent`, etc.)
+- `/pb-commit` required manual message formatting
+
+**New playbook approach (2026-02-17+):**
+- Automatic quality gate (`/pb-review`) with preference-driven decisions
+- Personas consulted automatically (no user selection needed)
+- Messages auto-drafted with reasoning from review
+
+**For the playbook project:** When contributing commands, use the new ritual. Old commands still work; new commands should follow conventions.
+
+---
+
+## Migration Path
+
+**If working on the playbook itself:**
+1. Read this context (you're here)
+2. Run `/pb-preferences --setup` once (set your values)
+3. Use `/pb-start` → code → `/pb-review` for new commands
+4. Follow command structure in `docs/command-template.md`
+5. Verify with convention checks before commit
+
+**If using playbooks in your project:** Use simplified 3-command ritual (from global CLAUDE.md)
 
 ---
 
 ## Session Commands
 
 ```bash
-# Verify state
+# Verify playbook state
 git status && find commands -name "*.md" | wc -l
 
-# Validate
+# Validate before committing
 mkdocs build 2>&1 | tail -3
+npx markdownlint-cli --config .markdownlint.json 'commands/**/*.md'
 
 # Preview docs
 mkdocs serve
