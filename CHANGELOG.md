@@ -5,7 +5,7 @@ All notable changes to this project are documented here.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [v2.12.0] - 2026-02-12
+## [v2.12.0] - 2026-02-12 (with Phase 4 update 2026-02-17)
 
 ### Added
 
@@ -80,6 +80,40 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - FAQ and troubleshooting
   - File: docs/v2.12.0-integration-guide.md (460+ lines)
 
+**Phase 4: Automated Workflow Ritual (Added 2026-02-17)**
+- **Simplified 3-Command Ritual** — 90% automation, 10% human involvement
+  - New `/pb-preferences` — One-time setup (15 min) to establish decision rules
+  - New `/pb-review` (development) — Automatic quality gate replacing `/pb-cycle`
+  - Updated `/pb-start` — Simplified to 3-4 scope detection questions (~30 sec)
+  - Updated `/pb-commit` — Auto-triggered by `/pb-review` (manual mode available)
+  - Files: commands/development/pb-preferences.md, pb-review.md (648 lines total)
+
+- **Automatic Quality Gate Architecture**
+  - Change complexity auto-detection (lean/standard/deep)
+  - Garry's 4-section framework applied at right depth
+  - Automatic persona consultation (Linus, Alex, Jordan, Maya, Sam)
+  - Preference-based decision-making (auto-decides ~95% of issues)
+  - Auto-commit when all passes
+  - Alerts only for genuinely ambiguous cases
+
+- **Preference System** — User values captured once, applied forever
+  - 15 questions about decision rules (architecture, testing, performance, security, etc.)
+  - Saved preferences guide all future reviews
+  - System learns over time (new issue types trigger one-time feedback)
+  - Annual refresh optional
+  - Measurement: Tracks effectiveness for quarterly improvement
+
+- **Migration & Documentation**
+  - MIGRATION-v2.12.0-ritual.md — Comprehensive adoption guide with three migration paths
+  - Option A: Adopt immediately
+  - Option B: Gradual adoption with testing
+  - Option C: Stay on old workflow (no penalty)
+  - Non-breaking: All 97 old commands still work
+
+- **Generator Updates**
+  - `/pb-claude-global` template reflects new ritual in CLAUDE.md
+  - Both `.claude/CLAUDE.md` files regenerated with Phase 4 guidance
+
 ### Changed
 
 - **Context files updated** with v2.12.0 capabilities
@@ -124,8 +158,9 @@ v2.12.0 implements a complete ecosystem:
 - Phase 1 (context minimization): Automatic, transparent
 - Phase 2 (session verification): Use /pb-pause and /pb-resume when needed
 - Phase 3 (git-signals): Run when planning or investigating
+- Phase 4 (automated ritual): New workflow available; old workflow still works
 
-Existing workflows continue to work unchanged.
+Existing workflows continue to work unchanged. Phase 4 is additive.
 
 ### Migration from v2.11.0
 
@@ -134,7 +169,13 @@ No action required. All features are backwards compatible:
 - Project context still available
 - New capabilities available for opt-in use
 
-Recommended first steps:
+**Recommended first steps for Phase 4 adoption** (2026-02-17+):
+1. Read MIGRATION-v2.12.0-ritual.md (adoption guide with 3 paths)
+2. Run `/pb-preferences --setup` (15 min, establishes your decision rules)
+3. Try new workflow on next feature: `/pb-start` → code → `/pb-review`
+4. Continue with old workflow (`/pb-cycle`) until comfortable switching
+
+**For earlier phases (1-3):**
 1. Read v2.12.0 Integration Guide
 2. Try /pb-git-signals on your repository
 3. Use /pb-pause at end of workday
