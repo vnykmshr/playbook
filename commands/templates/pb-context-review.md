@@ -265,7 +265,6 @@ Daily context hygiene is embedded in `/pb-pause` (Step 6):
 - `/pb-resume` — Context loading with health check at session start
 - `/pb-context` — Regenerate working context on release/milestone
 - `/pb-claude-global` — Regenerate global CLAUDE.md from playbooks
-- `/pb-claude-project` — Regenerate project CLAUDE.md from codebase analysis
 - `/pb-review-context` — Automated audit of CLAUDE.md against conversation history
 
 ---
