@@ -21,9 +21,9 @@ The Engineering Playbook is a **decision framework** that codifies how to approa
 
 **Who it's for:**
 - Teams wanting to shift from hierarchy-based to peer-based thinking
-- Projects using Claude Code for development
 - Organizations building cultures where the best ideas win regardless of source
 - New team members learning your development culture and decision-making patterns
+- Any team using structured development workflows (language, tool, and approach-agnostic)
 
 **Key capabilities (enabled by Preamble + Design Rules):**
 - **Psychological safety by design** — Preamble principle: challenge is professional, not disrespectful
@@ -98,9 +98,9 @@ Preamble + Design Rules are foundational. All other commands assume them.
 
 ### Prerequisites
 
-- **Claude Code CLI** (Anthropic's official tool for working with Claude)
 - **Git** (for version control)
 - **Bash** (for install script)
+- *(Optional)* **Claude Code CLI** (Anthropic's AI development tool — enables skill invocation)
 
 ### Quick Install
 
@@ -109,14 +109,16 @@ Preamble + Design Rules are foundational. All other commands assume them.
 git clone https://github.com/vnykmshr/playbook.git
 cd playbook
 
-# Run installation script (creates symlinks in ~/.claude/commands/)
+# Run installation script
 ./scripts/install.sh
 
-# Verify installation
-ls ~/.claude/commands/ | grep pb-
+# If using Claude Code: symlinks are created in ~/.claude/commands/
+# If using another tool: commands are available as Markdown files in ./commands/
 ```
 
-All playbook commands are now available in Claude Code.
+**With Claude Code:** Commands available as interactive skills (e.g., `/pb-start`)
+
+**Without Claude Code:** Read commands as Markdown files and reference them in your workflow
 
 ### Uninstall
 
@@ -518,7 +520,7 @@ Every command in the playbook assumes both frameworks. Both matter. Both are fou
 - **New teams** — Establish practices from day one
 - **Growing teams** — Repeatable processes as you scale
 - **Distributed teams** — Async-first practices (standups, KT, reviews)
-- **Projects adopting Claude Code** — Workflows designed for AI-assisted development
+- **Teams using agentic AI tools** — Workflows optimized for AI-assisted development
 - **Organizations wanting documented practices** — Knowledge transfer, onboarding, incident response
 
 ### ℹ️ Consider alternatives if:
@@ -531,8 +533,9 @@ Every command in the playbook assumes both frameworks. Both matter. Both are fou
 ## Getting Help
 
 ### Documentation
-- **[Command Index](/docs/command-index.md)** — Reference all commands
+- **[Command Index](/docs/command-index.md)** — Reference all 100 commands
 - **[Integration Guide](/docs/integration-guide.md)** — Understand command relationships
+- **[Using with Other Tools](/docs/using-with-other-tools.md)** — Adapt playbooks for non-Claude Code tools
 - **Individual commands** — Each command file has detailed guidance and examples
 
 ### Issues & Feedback
@@ -564,8 +567,8 @@ MIT License — See [LICENSE](LICENSE) for details.
 
 The playbook is designed for:
 - **Engineering teams** building with high quality standards
-- **Claude Code** users wanting structured SDLC workflows
-- **Organizations** codifying development practices
+- **Teams using structured development workflows** — with any tool, language, or approach
+- **Organizations** codifying development practices and decision-making
 
 ---
 
