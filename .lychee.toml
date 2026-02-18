@@ -1,0 +1,12 @@
+# Lychee link checker configuration
+# https://github.com/lycheeverse/lychee
+
+# Skip checking these specific URLs/domains
+skip = [
+  "https://fonts.gstatic.com",
+  "https://github.com/vnykmshr/playbook/discussions",
+]
+
+# Link checking settings
+timeout = 20
+max_retries = 2
