@@ -136,9 +136,9 @@ git checkout main && git pull origin main     # On latest main
 # Create evolution branch
 git checkout -b evolve/$(date +%Y-%m-%d) main
 
-# Load metadata schema and examples
+# Load metadata schema
 cat .playbook-metadata-schema.yaml            # Review schema
-ls docs/metadata-example-*.md                 # Review examples
+# Examples are archived in git history; current commands are your reference
 ```
 
 ### Step 1.5: Snapshot Before Evolution
