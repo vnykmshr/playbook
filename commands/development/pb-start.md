@@ -5,11 +5,11 @@ category: "development"
 difficulty: "intermediate"
 model_hint: "sonnet"
 execution_pattern: "interactive"
-related_commands: ['pb-review', 'pb-commit', 'pb-pause', 'pb-plan']
-last_reviewed: "2026-02-17"
-last_evolved: "2026-02-17"
-version: "2.0.0"
-version_notes: "Simplified ritual: adaptive scope detection replaces ceremony. Part of 3-command workflow."
+related_commands: ['pb-preamble', 'pb-review', 'pb-commit', 'pb-pause', 'pb-plan']
+last_reviewed: "2026-02-18"
+last_evolved: "2026-02-18"
+version: "2.1.0"
+version_notes: "v2.13.1: Added pb-preamble backward reference (Mindset: challenge assumptions before starting)"
 breaking_changes: ["Replaced detailed pre-start checklist with 3-4 adaptive scope questions. Old commands pb-cycle/pb-review-code merged into /pb-review. See MIGRATION section."]
 ---
 # Start Development Work

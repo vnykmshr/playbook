@@ -1,18 +1,18 @@
 ---
 name: "pb-think"
-title: "Unified Thinking Partner"
+title: "Deep Problem Solving (Structured Thinking)"
 category: "core"
 difficulty: "beginner"
 model_hint: "sonnet"
 execution_pattern: "interactive"
 related_commands: ['pb-preamble', 'pb-design-rules', 'pb-plan', 'pb-adr', 'pb-debug']
-last_reviewed: "2026-02-09"
-last_evolved: ""
-version: "1.0.0"
-version_notes: "v2.10.0 baseline"
+last_reviewed: "2026-02-18"
+last_evolved: "2026-02-18"
+version: "2.0.0"
+version_notes: "v2.13.1: Clarified title to emphasize structured thinking for complex problems"
 breaking_changes: []
 ---
-# Unified Thinking Partner
+# Deep Problem Solving (Structured Thinking)
 
 **Purpose:** Complete thinking toolkit for problem-solving: ideate (divergent) → synthesize (integration) → refine (convergent). Process complex queries through structured thinking cycles.
 

@@ -5,11 +5,11 @@ category: "planning"
 difficulty: "advanced"
 model_hint: "sonnet"
 execution_pattern: "sequential"
-related_commands: ['pb-security', 'pb-review-microservice', 'pb-patterns-core', 'pb-logging']
-last_reviewed: "2026-02-09"
-last_evolved: ""
-version: "1.0.0"
-version_notes: "v2.10.0 baseline"
+related_commands: ['pb-security', 'pb-preamble', 'pb-review-microservice', 'pb-patterns-core', 'pb-logging']
+last_reviewed: "2026-02-18"
+last_evolved: "2026-02-18"
+version: "1.1.0"
+version_notes: "v2.13.1: Added pb-preamble backward reference (Mindset: challenge security complexity trade-offs)"
 breaking_changes: []
 ---
 # Security Patterns & Microservice Security

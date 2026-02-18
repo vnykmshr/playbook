@@ -5,11 +5,11 @@ category: "reviews"
 difficulty: "intermediate"
 model_hint: "sonnet"
 execution_pattern: "checklist"
-related_commands: ['pb-design-rules', 'pb-standards', 'pb-review-product', 'pb-review-frontend']
-last_reviewed: "2026-02-13"
-last_evolved: ""
-version: "1.0.0"
-version_notes: "Initial v2.12.0 integration: Calm Tech principles + Design Rules alignment"
+related_commands: ['pb-design-rules', 'pb-standards', 'pb-security', 'pb-review-product', 'pb-review-frontend']
+last_reviewed: "2026-02-18"
+last_evolved: "2026-02-18"
+version: "1.1.0"
+version_notes: "v2.13.1: Added pb-security backward reference (Calm Design includes secure-by-default principles)"
 breaking_changes: []
 ---
 

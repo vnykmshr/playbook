@@ -6,10 +6,10 @@ difficulty: "advanced"
 model_hint: "sonnet"
 execution_pattern: "reference"
 related_commands: ['pb-patterns-core', 'pb-patterns-resilience', 'pb-patterns-async', 'pb-patterns-db', 'pb-patterns-distributed']
-last_reviewed: "2026-02-09"
-last_evolved: ""
-version: "1.0.0"
-version_notes: "v2.10.0 baseline"
+last_reviewed: "2026-02-18"
+last_evolved: "2026-02-18"
+version: "1.1.0"
+version_notes: "v2.13.1: Added visual pattern selection workflow diagram for design decision navigation"
 breaking_changes: []
 ---
 # Architecture & Design Patterns
@@ -27,6 +27,30 @@ Question whether this pattern fits your constraints. Challenge the costs. Explor
 - Choosing which pattern family applies to your design problem
 - Getting an overview of available architectural patterns before diving deep
 - Navigating to the right specialized pattern command
+
+---
+
+## Pattern Selection Workflow
+
+```
+DESIGN PROBLEM
+│
+├─ Service boundaries?     → /pb-patterns-core (SOA)
+├─ Service communication?  → /pb-patterns-core (Event-Driven)
+├─ Service failing?        → /pb-patterns-resilience (Circuit Breaker)
+├─ Rate limit API?         → /pb-patterns-resilience (Rate Limiting)
+├─ Database operations?    → /pb-patterns-db (Pooling, Optimization)
+├─ Background processing?  → /pb-patterns-async (Job Queues)
+├─ Multi-step across services? → /pb-patterns-distributed (Saga)
+├─ Slow database?          → /pb-patterns-db (Caching)
+├─ Complex UI events?      → /pb-patterns-async (Reactive/RxJS)
+├─ Deployment strategy?    → /pb-patterns-deployment
+├─ Frontend architecture?  → /pb-patterns-frontend
+├─ Cloud infrastructure?   → /pb-patterns-cloud
+└─ Security concerns?      → /pb-patterns-security
+
+THEN: Read pattern family, understand trade-offs, implement with knowledge
+```
 
 ---
 

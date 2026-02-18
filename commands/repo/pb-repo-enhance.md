@@ -6,10 +6,10 @@ difficulty: "advanced"
 model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-repo-init', 'pb-repo-organize', 'pb-repo-readme', 'pb-repo-about', 'pb-repo-docsite']
-last_reviewed: "2026-02-09"
-last_evolved: ""
-version: "1.0.0"
-version_notes: "v2.10.0 baseline"
+last_reviewed: "2026-02-18"
+last_evolved: "2026-02-18"
+version: "1.1.0"
+version_notes: "v2.13.1: Added visual workflow diagram for Audit → Organize → Document → Present phases"
 breaking_changes: []
 ---
 # Repository Enhancement Suite
@@ -36,6 +36,34 @@ Organize for scrutiny. Document clearly. Present honestly. Let others understand
 ## Objective
 
 Transform a working repository into a polished, professional, discoverable project. Combines organization, documentation, and presentation tasks.
+
+---
+
+## Workflow
+
+```
+PHASE 1         PHASE 2         PHASE 3         PHASE 4
+AUDIT           ORGANIZE        DOCUMENT        PRESENT
+│               │               │               │
+├─ List files   ├─ Create dirs   ├─ Write README  ├─ GitHub About
+├─ Count root   ├─ Move files    ├─ Tech blog     ├─ Topic tags
+├─ Tree view    ├─ Update paths  ├─ CHANGELOG     └─ Add badges
+│               ├─ Verify build  └─ CONTRIBUTING
+└─ Establish    │
+   current      └─ pb-repo-organize
+   state
+                TASK 1: Organization
+                ↓
+                TASK 2: GitHub About ← pb-repo-about
+                ↓
+                TASK 3: README ← pb-repo-readme
+                ↓
+                TASK 4: Blog Post ← pb-repo-blog
+                ↓
+                TASK 5: Doc Site (Optional) ← pb-repo-docsite
+                ↓
+             Ready for review/launch
+```
 
 ---
 

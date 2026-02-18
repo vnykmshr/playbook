@@ -1,20 +1,24 @@
 ---
 name: "pb-review-hygiene"
-title: "Codebase Hygiene Review"
+title: "Codebase Hygiene Review (Periodic Health Check)"
 category: "reviews"
 difficulty: "advanced"
 model_hint: "opus"
 execution_pattern: "sequential"
 related_commands: ['pb-review', 'pb-review-code', 'pb-review-tests', 'pb-security', 'pb-repo-organize']
-last_reviewed: "2026-02-09"
-last_evolved: ""
-version: "1.0.0"
-version_notes: "v2.10.0 baseline"
+last_reviewed: "2026-02-18"
+last_evolved: "2026-02-18"
+version: "2.0.0"
+version_notes: "v2.13.1: Clarified purpose as periodic health check (not specific code review). Part of code review family decision tree."
 breaking_changes: []
 ---
-# Codebase Hygiene Review
+# Codebase Hygiene Review (Periodic Health Check)
 
-**Purpose:** Periodic review of code quality and operational readiness. Combines cleanup (code quality) and hygiene (operational health) into a single comprehensive review.
+**Purpose:** Periodic, codebase-wide review of code quality and operational readiness. Combines cleanup (code patterns, duplication, complexity) and hygiene (operational health, dependencies, documentation).
+
+**Use when:** You want a **periodic audit** of your entire codebase (not a specific PR). Monthly or before starting new development.
+
+**When NOT to use:** For reviewing specific code changes (use `/pb-review-code` instead) or focusing on test quality (use `/pb-review-tests` instead).
 
 **Recommended Frequency:** Monthly or before starting new development
 
@@ -22,17 +26,27 @@ breaking_changes: []
 
 Challenge hidden assumptions about what "health" means. Surface risks directly. Focus on reducing complexity and tech debt. Don't soften findings to be diplomatic.
 
-**Resource Hint:** opus — comprehensive hygiene review spans code quality, operations, security, and documentation
+**Resource Hint:** opus — comprehensive hygiene review spans code quality, operations, security, and documentation across entire codebase
+
+---
+
+## Code Review Family Decision Tree
+
+See `/pb-review-code` for the complete decision tree. Key distinction:
+
+- **Use `/pb-review-code`** for reviewing a specific PR or commit
+- **Use `/pb-review-hygiene`** for periodic (monthly) health checks of entire codebase
+- **Use `/pb-review-tests`** for test suite quality and coverage focus
 
 ---
 
 ## When to Use
 
-- Before starting a fresh round of development (cleanup mode)
-- Monthly maintenance check
-- Pre-release operational readiness assessment
-- After major refactoring
-- When codebase feels "heavy" or hard to work with
+- **Monthly maintenance check** ← Primary use case (scheduled, periodic)
+- **Before starting a fresh round of development** (cleanup mode)
+- **Pre-release operational readiness assessment**
+- **After major refactoring** (verify patterns still clean)
+- **When codebase feels "heavy"** or hard to work with (signal that health check is needed)
 
 ---
 
