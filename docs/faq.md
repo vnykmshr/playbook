@@ -342,7 +342,7 @@ Examples: Use `/pb-testing` output in CI, `/pb-security` checks in PRs, `/pb-inc
 **A:** [Open an issue on GitHub](https://github.com/vnykmshr/playbook/issues).
 
 ### Q: How do I contribute to the playbook?
-**A:** See [CONTRIBUTING.md](https://github.com/vnykmshr/playbook/blob/main/CONTRIBUTING.md) for guidelines.
+**A:** See [CONTRIBUTING.md](https://github.com/vnykmshr/playbook/blob/main/.github/CONTRIBUTING.md) for guidelines.
 
 ### Q: I'm still confused about something. Where do I ask?
 **A:** Options:

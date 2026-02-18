@@ -1,0 +1,22 @@
+# Lychee link checker configuration
+# https://github.com/lycheeverse/lychee/blob/master/lychee.toml
+
+# Basic settings
+timeout = 20
+max_retries = 3
+
+# Skip checking external domains that are prone to network issues in CI
+# Or that block CI runners
+skip = [
+  "https://fonts.gstatic.com.*",  # External CDN, rate-limits in CI
+  "https://github.com/.*/discussions.*",  # GitHub discussions (network issues in CI)
+]
+
+# Exclude patterns from checking
+exclude_paths = []
+
+# Check only specific link types
+include_mail = false
+
+# Accept these status codes as success
+accepted_status_codes = [200, 226, 301, 302, 304, 308, 429]

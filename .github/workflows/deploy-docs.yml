@@ -73,7 +73,7 @@ jobs:
       - name: Check for broken links
         uses: lycheeverse/lychee-action@v2.0.2
         with:
-          args: --no-progress site
+          args: --no-progress --config .lychee.toml site
           format: markdown
           fail: true
           failIfEmpty: false

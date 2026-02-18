@@ -319,7 +319,7 @@ The playbook is open source and welcomes contributions.
 
 - **Report bugs or request features** — [GitHub Issues](https://github.com/vnykmshr/playbook/issues)
 - **Suggest improvements** — [GitHub Discussions](https://github.com/vnykmshr/playbook/discussions)
-- **Contribute documentation** — See [CONTRIBUTING.md](https://github.com/vnykmshr/playbook/blob/main/CONTRIBUTING.md)
+- **Contribute documentation** — See [CONTRIBUTING.md](https://github.com/vnykmshr/playbook/blob/main/.github/CONTRIBUTING.md)
 
 ---
 
