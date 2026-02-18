@@ -73,9 +73,23 @@ echo "  Replaced:  $replaced"
 echo "  Failed:    $failed"
 echo ""
 echo "Commands available in: $TARGET_DIR"
+
+# --- DX Scripts: context bar + context hook ---
+SCRIPTS_DIR="$REPO_DIR/scripts"
+CLAUDE_HOME="$HOME/.claude"
+
+for script in context-bar.sh check-context.sh; do
+    src="$SCRIPTS_DIR/$script"
+    dest="$CLAUDE_HOME/$script"
+    if [ -f "$src" ]; then
+        ln -sf "$src" "$dest"
+        echo "  ✓ Linked: ~/.claude/$script"
+    fi
+done
+
 echo ""
 echo "Quick start:"
 echo "  /pb-start    - Begin development work"
-echo "  /pb-cycle    - Self-review + peer review iteration"
+echo "  /pb-review   - Automatic quality gate"
 echo "  /pb-pr       - Create a pull request"
 echo "  /pb-release  - Prepare and deploy release"

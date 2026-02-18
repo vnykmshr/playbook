@@ -5,7 +5,7 @@ category: "templates"
 difficulty: "intermediate"
 model_hint: "sonnet"
 execution_pattern: "sequential"
-related_commands: ['pb-pause', 'pb-resume', 'pb-context', 'pb-claude-global', 'pb-claude-project']
+related_commands: ['pb-pause', 'pb-resume', 'pb-context', 'pb-claude-global', 'pb-review-context']
 last_reviewed: "2026-02-13"
 last_evolved: ""
 version: "1.0.0"
@@ -266,8 +266,9 @@ Daily context hygiene is embedded in `/pb-pause` (Step 6):
 - `/pb-context` — Regenerate working context on release/milestone
 - `/pb-claude-global` — Regenerate global CLAUDE.md from playbooks
 - `/pb-claude-project` — Regenerate project CLAUDE.md from codebase analysis
+- `/pb-review-context` — Automated audit of CLAUDE.md against conversation history
 
 ---
 
-**Last Updated:** 2026-02-13
+**Last Updated:** 2026-02-18
 **Version:** 1.0.0

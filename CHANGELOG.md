@@ -5,6 +5,19 @@ All notable changes to this project are documented here.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Added
+
+**Claude Code DX Adoption**
+- **Lazy MCP tool loading** — `ENABLE_TOOL_SEARCH` env var in settings for on-demand tool loading
+- **Context bar status line** (`scripts/context-bar.sh`) — shows branch, uncommitted files, token usage progress bar
+- **Context warning hook** (`scripts/check-context.sh`) — advisory warnings at 80%/90% context usage suggesting `/pb-pause`
+- **`/pb-review-context`** — audit CLAUDE.md files against conversation history (violated rules, missing patterns, stale content)
+- **`/pb-gha`** — structured GitHub Actions failure analysis (flakiness, breaking commits, root cause)
+- Updated `pb-setup` with Claude Code DX configuration section
+- Updated `install.sh` to symlink DX scripts to `~/.claude/`
+
 ## [v2.12.0] - 2026-02-12
 
 ### Added
@@ -58,7 +71,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - File: commands/core/pb-git-signals.md (220 lines)
 
 - **GitSignalsAnalyzer** — Analysis engine (440 lines, Python)
-  - Four core methods: _parse_commits(), _extract_adoption_metrics(), _extract_churn_metrics(), _extract_pain_points()
+  - Four core methods: `_parse_commits()`, `_extract_adoption_metrics()`, `_extract_churn_metrics()`, `_extract_pain_points()`
   - Robust error handling: Timeouts, malformed input, graceful degradation
   - Four output files: adoption-metrics.json, churn-analysis.json, pain-points-report.json, signals-summary.md
   - CLI interface: --since, --output, --snapshot flags
