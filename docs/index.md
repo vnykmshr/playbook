@@ -19,7 +19,7 @@ The playbook is a **decision framework** that codifies how to approach developme
 
 2. **System quality depends on sound design principles**, not just clever engineering. The **Design Rules** establish 17 classical principles organized in 4 clusters (Clarity, Simplicity, Resilience, Extensibility) that guide every technical decision.
 
-**[Read the full technical narrative →](technical-blog.md)** — Why the playbook exists, how both frameworks solve real problems, and how it all works together as an integrated system.
+**[Read the full narrative →](why-we-build-playbooks.md)** — Why the playbook exists, how both frameworks solve real problems, and how it all works together as an integrated system.
 
 ---
 
