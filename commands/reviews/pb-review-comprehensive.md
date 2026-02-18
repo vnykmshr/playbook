@@ -1,15 +1,15 @@
 ---
-name: "pb-review"
+name: "pb-review-comprehensive"
 title: "Comprehensive Project Review"
 category: "reviews"
 difficulty: "advanced"
 model_hint: "opus"
 execution_pattern: "reference"
-related_commands: ['pb-review-code', 'pb-review-hygiene', 'pb-review-tests', 'pb-security', 'pb-cycle']
-last_reviewed: "2026-02-09"
+related_commands: ['pb-review', 'pb-review-code', 'pb-review-hygiene', 'pb-review-tests', 'pb-security']
+last_reviewed: "2026-02-18"
 last_evolved: ""
-version: "1.0.0"
-version_notes: "v2.10.0 baseline"
+version: "2.0.0"
+version_notes: "v2.13.1: Renamed from pb-review to pb-review-comprehensive to resolve duplication with automated quality gate"
 breaking_changes: []
 ---
 # Comprehensive Project Review
