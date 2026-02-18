@@ -5,33 +5,57 @@ category: "templates"
 difficulty: "intermediate"
 model_hint: "sonnet"
 execution_pattern: "sequential"
-related_commands: ['pb-pause', 'pb-resume', 'pb-context', 'pb-claude-global', 'pb-review-context']
-last_reviewed: "2026-02-13"
+related_commands: ['pb-pause', 'pb-resume', 'pb-context', 'pb-claude-global', 'pb-evolve']
+last_reviewed: "2026-02-18"
 last_evolved: ""
-version: "1.0.0"
-version_notes: "Initial release — context layer audit, deduplication, archival, health reporting"
-breaking_changes: []
+version: "2.0.0"
+version_notes: "Consolidated: merged automated conversation audit into single command with structural and behavioral modes"
+breaking_changes: ["pb-review-context merged into this command; use `--violations` mode instead"]
 ---
 # Context Layer Review & Hygiene
 
-**Purpose:** Audit, trim, and maintain all context layers. Keeps auto-loaded context lean and session state clean. Run after releases, quarterly, or when sessions feel slow to start.
+**Purpose:** Comprehensive audit of all context layers—both structural (sizes, duplication, archival) and behavioral (CLAUDE.md violations, staleness). Run quarterly before `/pb-evolve` to ensure context earns its space and actually works.
 
-**Mindset:** Context is necessary but expensive. Every line loaded into a session competes for attention. Apply `/pb-design-rules` thinking: Simplicity (remove what doesn't earn its place) and Clarity (what remains should be immediately useful). Apply `/pb-preamble` thinking: challenge whether each section is still relevant.
+**Mindset:** Context is necessary but expensive. Every line loaded competes for attention. Every guideline either influences behavior or should be deleted. Apply `/pb-design-rules` thinking: Simplicity (remove what doesn't earn its place) and Clarity (what remains should be immediately useful). Apply `/pb-preamble` thinking: challenge whether each section is still relevant.
 
-**Resource Hint:** sonnet — structured audit and maintenance workflow
+**Resource Hint:** sonnet — structured audit and maintenance workflow (sequential manual, parallel subagents for violations)
 
 ---
 
 ## When to Use
 
-- **After a release** — Trim release-specific details that are now historical
-- **Quarterly** — Aligned with evolution cycles (Feb, May, Aug, Nov)
-- **When sessions start slow** — Context bloat makes resumption expensive
-- **Before starting a new evolution cycle** — Clean baseline for planning
+- **Quarterly, before /pb-evolve** — Data-driven evolution planning (Feb, May, Aug, Nov)
+- **After a release** — Trim release-specific details, verify context still works
+- **When sessions start slow** — Diagnose context bloat (structural or behavioral)
+- **When Claude ignores a guideline** — Check if CLAUDE.md is stale or misguided
 
 ---
 
-## Context Architecture Reference
+## Three Ways to Run
+
+### Mode 1: Full Audit (Default)
+```bash
+/pb-context-review
+```
+Runs both structural and behavioral analysis in sequence. Manual inspection first provides context for automated violations analysis. Output: consolidated report with both findings.
+
+### Mode 2: Structural Only
+```bash
+/pb-context-review --structure
+```
+Fast review of layer sizes, duplication, and archival opportunities. Use when you don't have conversation history or want quick baseline.
+
+### Mode 3: Violations Only
+```bash
+/pb-context-review --violations
+```
+Analyze recent conversations for CLAUDE.md violations, missing patterns, and stale guidance. Requires 10+ accumulated sessions.
+
+---
+
+## Structural Audit Workflow (--structure or part of full)
+
+### Context Architecture Reference
 
 ```
 AUTO-LOADED (every session — budget matters most here):
@@ -236,19 +260,152 @@ Summarize the review. Use this template:
 
 ---
 
-## Integration with /pb-pause
+## Violations Audit Workflow (--violations or part of full)
+
+Analyze recent conversations to find where CLAUDE.md instructions were violated, patterns that should be added, and guidance that's gone stale. Turns context maintenance from gut-feel into data.
+
+### Step 1: Locate Conversation History
+
+Claude Code stores conversation transcripts as `.jsonl` files under `~/.claude/projects/`. The folder name is the project path with slashes replaced by dashes.
+
+```bash
+# Find the project's conversation folder
+PROJECT_PATH=$(pwd | sed 's|/|-|g' | sed 's|^-||')
+CONVO_DIR=~/.claude/projects/-${PROJECT_PATH}
+
+# List recent conversations
+ls -lt "$CONVO_DIR"/*.jsonl 2>/dev/null | head -20
+```
+
+If no conversations found, there's nothing to audit. Run this after you've accumulated 10+ sessions.
+
+### Step 2: Extract Recent Conversations
+
+Pull the 15-20 most recent sessions (excluding the current one) into a temporary working directory. Extract only the human-readable parts — user messages and assistant text responses.
+
+```bash
+SCRATCH=/tmp/context-audit-$(date +%s)
+mkdir -p "$SCRATCH"
+
+for f in $(ls -t "$CONVO_DIR"/*.jsonl | tail -n +2 | head -20); do
+  base=$(basename "$f" .jsonl)
+  jq -r '
+    if .type == "user" then
+      "USER: " + (.message.content // "")
+    elif .type == "assistant" then
+      "ASSISTANT: " + ((.message.content // []) | map(select(.type == "text") | .text) | join("\n"))
+    else
+      empty
+    end
+  ' "$f" 2>/dev/null | grep -v "^ASSISTANT: $" > "$SCRATCH/${base}.txt"
+done
+
+# Show what we're working with
+echo "Extracted $(ls "$SCRATCH"/*.txt | wc -l) conversations"
+ls -lhS "$SCRATCH"/*.txt | head -10
+```
+
+### Step 3: Analyze with Parallel Subagents
+
+Launch 3-5 sonnet subagents in parallel. Each gets:
+- The global CLAUDE.md (`~/.claude/CLAUDE.md`)
+- The project CLAUDE.md (`.claude/CLAUDE.md`)
+- A batch of conversation files
+
+Batch by size to keep each agent's context manageable:
+- Large conversations (>100KB): 1-2 per agent
+- Medium (10-100KB): 3-5 per agent
+- Small (<10KB): 5-10 per agent
+
+Each agent's prompt:
+
+```
+Read the CLAUDE.md files (global and project). Then read each conversation.
+
+For each conversation, find:
+
+1. VIOLATED — Instructions in CLAUDE.md that the assistant didn't follow.
+   Include: which instruction, what happened instead, how often.
+
+2. MISSING (LOCAL) — Patterns you see repeated across conversations that
+   should be in the project CLAUDE.md but aren't. Project-specific only.
+
+3. MISSING (GLOBAL) — Patterns that apply to any project, not just this one.
+
+4. STALE — Anything in either CLAUDE.md that conversations suggest is
+   outdated, irrelevant, or contradicted by actual practice.
+
+Be specific. Quote the instruction and the violation. One bullet per finding.
+```
+
+### Step 4: Aggregate and Report
+
+Combine findings from all agents. Deduplicate. Rank by frequency (violations seen across multiple conversations rank higher than one-offs).
+
+**Report Format:**
+
+```markdown
+## Context Audit: YYYY-MM-DD
+Analyzed: N conversations over M days
+
+### Violated Instructions (need reinforcement)
+| Instruction | Source | Violations | Example |
+|-------------|--------|------------|---------|
+| [rule text] | global/project | N times | [what happened] |
+
+### Missing Patterns — Project
+- [pattern]: seen in N conversations. Suggested wording: "..."
+
+### Missing Patterns — Global
+- [pattern]: seen in N conversations. Suggested wording: "..."
+
+### Potentially Stale
+- [instruction] in [file]: last relevant in conversations from [date].
+  No violations because it's not being tested — likely outdated.
+```
+
+### After the Audit
+
+Based on findings:
+
+1. **Violated instructions** → Reword for clarity or move to a more prominent location. If a BEACON guideline is being violated, that's a signal it needs reinforcement in the BEACON summary, not just the full command.
+
+2. **Missing patterns** → Add to the appropriate CLAUDE.md. Use `/pb-claude-global` or `/pb-claude-project` to regenerate, or edit directly.
+
+3. **Stale content** → Remove or archive. Every stale line costs tokens and dilutes signal.
+
+4. **Feed into /pb-evolve** → If findings suggest structural changes (new BEACONs, reclassified commands, workflow shifts), queue them for the next quarterly evolution.
+
+```bash
+# Cleanup temporary conversation extracts
+rm -rf /tmp/context-audit-*
+```
+
+---
+
+## Integration with /pb-pause and /pb-evolve
 
 Daily context hygiene is embedded in `/pb-pause` (Step 6):
 - Writes concise pause entry
 - Archives old pause entries
 - Reports context layer sizes
 
-`/pb-context-review` is the **deeper audit** — run it quarterly or after releases for thorough cross-layer analysis. `/pb-pause` handles the daily maintenance.
+`/pb-context-review` is the **deeper quarterly audit** — run before `/pb-evolve` to ensure context is both structurally lean AND behaviorally sound. `/pb-pause` handles the daily maintenance.
+
+**Evolution cycle flow:**
+```
+/pb-context-review --structure    → Identify bloat
+/pb-context-review --violations   → Find stale/violated guidance
+/pb-evolve                        → Make decisions based on both
+/pb-claude-global                 → Regenerate if needed
+/pb-claude-project                → Regenerate if needed
+```
 
 ---
 
 ## Anti-Patterns
 
+### Structural Audit
 | Anti-Pattern | Problem | Fix |
 |--------------|---------|-----|
 | Never archiving pause notes | 650+ lines of historical entries | Archive after each resume |
@@ -256,6 +413,14 @@ Daily context hygiene is embedded in `/pb-pause` (Step 6):
 | Detailed task logs in working context | 243 lines when target is 50 | Keep snapshot, move details to done/ |
 | Explaining the context system in context | Meta-context burns budget | System works without self-description |
 | Hard line-count limits | Chasing numbers over signal | Soft targets, prioritize density |
+
+### Violations Audit
+| Don't | Do Instead |
+|-------|------------|
+| Run daily | Run quarterly or when something feels off |
+| Add every finding to CLAUDE.md | Prioritize by frequency — one-offs are noise |
+| Skip the stale check | Removing bad guidance is as valuable as adding good guidance |
+| Audit without acting | The report is useless if nothing changes |
 
 ---
 
@@ -265,9 +430,10 @@ Daily context hygiene is embedded in `/pb-pause` (Step 6):
 - `/pb-resume` — Context loading with health check at session start
 - `/pb-context` — Regenerate working context on release/milestone
 - `/pb-claude-global` — Regenerate global CLAUDE.md from playbooks
-- `/pb-review-context` — Automated audit of CLAUDE.md against conversation history
+- `/pb-evolve` — Quarterly evolution cycle (consumes this audit's output)
 
 ---
 
 **Last Updated:** 2026-02-18
-**Version:** 1.0.0
+**Version:** 2.0.0
+**Note:** pb-review-context merged into this command. Use `--violations` mode for automated audit.
