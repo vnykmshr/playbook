@@ -112,6 +112,7 @@ Quick reference for all playbook commands.
 | `/pb-logging` | Logging strategy & standards audit | During code review, pre-release |
 | `/pb-a11y` | Accessibility deep-dive (semantic HTML, keyboard, ARIA, screen readers) | During frontend development, every PR |
 | `/pb-review-playbook` | Review playbook commands for quality, consistency, and completeness | Every PR, monthly |
+| `/pb-review-context` | Audit CLAUDE.md files against conversation history (violated rules, missing patterns, stale content) | Quarterly, before `/pb-evolve` |
 | `/pb-voice` | Detect and remove AI tells from prose (two-stage: detect → rewrite) | After AI-assisted drafting, before publishing |
 
 ## Thinking Partner
@@ -171,6 +172,7 @@ Developer machine health and maintenance.
 | `/pb-update` | Update all package managers and tools |
 | `/pb-ports` | Find/kill processes on ports |
 | `/pb-setup` | Bootstrap new dev machine |
+| `/pb-gha` | Investigate GitHub Actions failures (flakiness, breaking commits, root cause) |
 | `/pb-git-hygiene` | Periodic git repo audit (tracked files, stale branches, large objects, secrets) |
 
 ## Context & Templates

@@ -305,6 +305,27 @@ git clone git@github.com:YOUR_USERNAME/dotfiles.git ~/.dotfiles
 cd ~/.dotfiles && ./install.sh
 ```
 
+### Claude Code DX
+
+If you use Claude Code, configure these optimizations:
+
+```bash
+# Lazy MCP tool loading — tools load on-demand, saves context tokens
+# Add to ~/.claude/settings.json:
+#   "env": { "ENABLE_TOOL_SEARCH": "true" }
+
+# Status line with context bar — shows model, branch, token usage
+# Install playbook scripts (includes context-bar.sh + check-context.sh)
+cd /path/to/playbook && ./scripts/install.sh
+
+# Verify status line and hooks are configured
+cat ~/.claude/settings.json | jq '.statusLine, .hooks'
+```
+
+The playbook's `install.sh` sets up:
+- **Context bar** — model, branch, uncommitted files, token usage progress bar
+- **Context warning hook** — advisory at 80% usage, suggests `/pb-pause` at 90%
+
 ---
 
 ## Phase 6: Verification
