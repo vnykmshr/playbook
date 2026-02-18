@@ -17,6 +17,7 @@ on:
       - '.github/workflows/deploy-docs.yml'
   pull_request:
     branches: [ main ]
+  workflow_dispatch:  # Manual trigger for deployment when needed
 
 permissions:
   contents: read
@@ -88,7 +89,6 @@ jobs:
           format: markdown
           fail: true
           failIfEmpty: false
-        continue-on-error: true
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v4
