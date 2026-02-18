@@ -4,33 +4,17 @@ Welcome to the Engineering Playbook! This guide will help you get up and running
 
 ## Installation
 
-### Prerequisites
+See [Installation & Setup](/README.md#installation) in the main README for prerequisites and installation steps.
 
-- **Claude Code CLI** (Anthropic's official tool for working with Claude)
-- **Git** (for version control)
-- **Bash** (for install script)
-
-### Quick Install
-
+**Quick summary:**
 ```bash
-# Clone the repository
 git clone https://github.com/vnykmshr/playbook.git
 cd playbook
-
-# Run installation script (creates symlinks in ~/.claude/commands/)
 ./scripts/install.sh
-
-# Verify installation
-ls ~/.claude/commands/ | grep pb-
 ```
 
-All playbook commands are now available in Claude Code.
-
-### Uninstall
-
-```bash
-./scripts/uninstall.sh
-```
+With Claude Code: Commands available as skills (e.g., `/pb-start`)
+Without Claude Code: Read command files as Markdown (see [Using Playbooks with Other Tools](/docs/using-with-other-tools.md))
 
 ---
 

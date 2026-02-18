@@ -384,7 +384,7 @@ The same playbook, right-sized to the change. No overhead for small changes. No 
 - **Growing teams** (5 → 50+ people) that need to scale processes
 - **Distributed teams** working across time zones
 - **High-quality codebases** where mistakes are expensive
-- **Claude Code users** developing with AI assistance
+- **Teams using agentic development tools** (Claude Code or others) optimizing workflows
 - **Organizations** wanting to codify and transfer institutional knowledge
 
 ### Not Ideal For

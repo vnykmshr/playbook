@@ -284,7 +284,7 @@ The Engineering Playbook is built on the insight that **the quality of developme
 - **New teams** establishing practices from day one
 - **Growing teams** scaling with repeatable processes
 - **Distributed teams** needing async-first workflows
-- **Projects adopting Claude Code** for AI-assisted development
+- **Teams using agentic development tools** optimizing for AI-assisted workflows
 - **Organizations** wanting documented, transferable practices
 
 ### ℹ️ Consider Alternatives If
