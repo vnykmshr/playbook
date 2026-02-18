@@ -1,25 +1,28 @@
 ---
 name: "pb-review-code"
-title: "Code Review"
+title: "Code Review (Specific Changes)"
 category: "reviews"
 difficulty: "advanced"
 model_hint: "opus"
 execution_pattern: "sequential"
-related_commands: ['pb-cycle', 'pb-review', 'pb-review-hygiene', 'pb-review-tests', 'pb-security']
-last_reviewed: "2026-02-09"
-last_evolved: ""
-version: "1.0.0"
-version_notes: "v2.10.0 baseline"
+related_commands: ['pb-review', 'pb-review-hygiene', 'pb-review-tests', 'pb-security', 'pb-cycle']
+last_reviewed: "2026-02-18"
+last_evolved: "2026-02-18"
+version: "2.0.0"
+version_notes: "v2.13.1: Clarified purpose and position in code review family. Use this for PR/commit reviews, not periodic health checks."
 breaking_changes: []
 ---
-# Code Review
+# Code Review (Specific Changes)
 
-**Purpose:** Conduct thorough code review for pull requests, peer review during development iterations, or any code changes requiring review.
+**Purpose:** Deep review of specific code changes (PR, commit, or refactor). Reviews logic, architecture, security, and correctness for a bounded change.
 
 **Use when:**
-- Reviewing a pull request before merge
+- Reviewing a pull request before merge ← **PRIMARY USE CASE**
 - Peer reviewing during `/pb-cycle` iteration
-- Reviewing code changes at any stage of development
+- Evaluating code changes after a significant refactor
+- Spot-checking critical paths before a release
+
+**When NOT to use:** For periodic codebase health checks (use `/pb-review-hygiene` instead) or test coverage analysis (use `/pb-review-tests` instead).
 
 **Mindset:** This review assumes `/pb-preamble` thinking (challenge assumptions, surface flaws, question trade-offs) and applies `/pb-design-rules` (check for clarity, simplicity, modularity, robustness).
 
@@ -27,12 +30,51 @@ breaking_changes: []
 
 ---
 
+## Code Review Family Decision Tree
+
+**Q: Which code review command should I use?**
+
+```
+START: "I want to review code"
+  ↓
+Q1: Is this for a specific change (PR/commit)?
+  │
+  ├─ YES → /pb-review-code (YOU ARE HERE)
+  │        ✓ Reviews specific code change
+  │        ✓ Detailed architecture/security/correctness analysis
+  │        ✓ ~30-60 min per PR
+  │
+  └─ NO → What's your priority?
+           │
+           ├─ SPEED (I want quick feedback)
+           │  → /pb-review (Automated Quality Gate)
+           │     ✓ Fast, automatic analysis
+           │     ✓ 5-10 min, no deep analysis
+           │     ✓ Right after coding session
+           │
+           └─ DEPTH (I want thorough periodic audit)
+              │
+              ├─ Code quality/patterns/tech debt?
+              │  → /pb-review-hygiene
+              │     ✓ Monthly health check
+              │     ✓ Codebase-wide perspective
+              │     ✓ 1-2 hours
+              │
+              └─ Test coverage/test quality?
+                 → /pb-review-tests
+                    ✓ Monthly test suite maintenance
+                    ✓ Coverage gaps, flakiness, brittleness
+                    ✓ 30-60 min
+```
+
+---
+
 ## When to Use
 
-- Reviewing a pull request before merge
-- Peer reviewing during `/pb-cycle` iteration
-- Evaluating code changes after a significant refactor
-- Spot-checking critical paths before a release
+- **Reviewing a pull request before merge** (most common)
+- **During `/pb-cycle` peer review** (when author requests specific code review)
+- **After a significant refactor** (evaluate new patterns)
+- **Spot-checking critical paths** (before release)
 
 ---
 

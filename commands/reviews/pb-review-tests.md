@@ -1,20 +1,24 @@
 ---
 name: "pb-review-tests"
-title: "Periodic Test Review"
+title: "Test Suite Review (Coverage & Reliability)"
 category: "reviews"
 difficulty: "advanced"
 model_hint: "opus"
 execution_pattern: "sequential"
-related_commands: ['pb-review', 'pb-review-hygiene', 'pb-testing', 'pb-cycle']
-last_reviewed: "2026-02-09"
-last_evolved: ""
-version: "1.0.0"
-version_notes: "v2.10.0 baseline"
+related_commands: ['pb-review', 'pb-review-code', 'pb-review-hygiene', 'pb-testing', 'pb-cycle']
+last_reviewed: "2026-02-18"
+last_evolved: "2026-02-18"
+version: "2.0.0"
+version_notes: "v2.13.1: Clarified focus on test quality (not code quality). Part of code review family decision tree."
 breaking_changes: []
 ---
-# Periodic Test Review
+# Test Suite Review (Coverage & Reliability)
 
-**Purpose:** Comprehensive review of the project's unit and integration tests. Ensure the test suite is lean, reliable, and genuinely useful.
+**Purpose:** Comprehensive review of the project's unit and integration tests. Focus on test quality, coverage gaps, flakiness, and brittleness.
+
+**Use when:** You want to audit **test suite health** (not code quality or specific code changes). Focuses on: coverage gaps, flaky tests, brittle assertions, duplication.
+
+**When NOT to use:** For reviewing specific code changes (use `/pb-review-code` instead) or general codebase health (use `/pb-review-hygiene` instead).
 
 **Recommended Frequency:** Monthly or when test suite feels slow/flaky
 
@@ -26,13 +30,23 @@ Question test assumptions. Challenge coverage claims. Point out flaky or brittle
 
 ---
 
+## Code Review Family Decision Tree
+
+See `/pb-review-code` for the complete decision tree. Key distinction:
+
+- **Use `/pb-review-code`** for reviewing a specific PR or commit
+- **Use `/pb-review-hygiene`** for code quality and codebase health checks
+- **Use `/pb-review-tests`** for test suite quality, coverage, and reliability focus
+
+---
+
 ## When to Use
 
-- Monthly test suite maintenance
-- When tests are slow or flaky
-- After major refactoring (verify tests still make sense)
-- When coverage numbers don't match confidence
-- Before major releases (test suite health check)
+- **Monthly test suite maintenance** ← Primary use case (scheduled, periodic)
+- **When tests are slow or flaky** (investigate reliability)
+- **After major refactoring** (verify tests still make sense)
+- **When coverage numbers don't match confidence** (coverage gaps)
+- **Before major releases** (test suite health check before shipping)
 
 ---
 

@@ -5,7 +5,7 @@ category: "development"
 difficulty: "beginner"
 model_hint: "haiku"
 execution_pattern: "automatic"
-related_commands: ['pb-start', 'pb-commit', 'pb-preferences', 'pb-review-comprehensive']
+related_commands: ['pb-start', 'pb-commit', 'pb-review-code', 'pb-review-comprehensive']
 last_reviewed: "2026-02-18"
 last_evolved: "2026-02-18"
 version: "2.2.0"
@@ -26,12 +26,27 @@ Run this after you finish coding. System analyzes what you built, applies your e
 
 ---
 
+## Code Review Family Decision Tree
+
+**Q: Which code review command should I use?**
+
+See `/pb-review-code` for the complete decision tree. Quick summary:
+
+- **Use `/pb-review`** (YOU ARE HERE) for **fast, automated quality gate** right after coding
+- **Use `/pb-review-code`** for **deep review of a specific PR/commit**
+- **Use `/pb-review-hygiene`** for **monthly codebase health check**
+- **Use `/pb-review-tests`** for **monthly test suite quality check**
+
+---
+
 ## When to Use
 
-- **After coding session:** Run `/pb-review` to analyze, decide, and auto-commit
+- **After coding session:** Run `/pb-review` to analyze, decide, and auto-commit ← **PRIMARY USE CASE**
 - **After fixing feedback:** Run again to re-verify and commit
 - **With manual control:** Use `pb-review --no-auto-commit` if you prefer to review the message first
 - **To override preferences:** Use `pb-review --override` for edge cases
+
+**When NOT to use:** For deep PR reviews (use `/pb-review-code`), periodic health checks (use `/pb-review-hygiene`), or test quality (use `/pb-review-tests`)
 
 ---
 
