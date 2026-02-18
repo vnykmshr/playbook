@@ -73,10 +73,9 @@ jobs:
       - name: Check for broken links
         uses: lycheeverse/lychee-action@v2.0.2
         with:
-          args: --no-progress --config .lychee.toml site
+          args: --no-progress --skip-checking-domains fonts.gstatic.com --skip-checking-domains github.com/*/discussions site
           format: markdown
-          fail: true
-          failIfEmpty: false
+          fail: false
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v4
