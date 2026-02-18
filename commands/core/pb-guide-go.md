@@ -1,18 +1,18 @@
 ---
 name: "pb-guide-go"
-title: "Go SDLC Playbook"
+title: "Go SDLC Playbook (Language-Specific)"
 category: "core"
 difficulty: "beginner"
 model_hint: "sonnet"
 execution_pattern: "sequential"
-related_commands: []
-last_reviewed: "2026-02-09"
-last_evolved: ""
-version: "1.0.0"
-version_notes: "v2.10.0 baseline"
+related_commands: ['pb-guide', 'pb-guide-python', 'pb-preamble', 'pb-design-rules']
+last_reviewed: "2026-02-18"
+last_evolved: "2026-02-18"
+version: "2.0.0"
+version_notes: "v2.13.1: Added cross-reference to core pb-guide framework and other language guides."
 breaking_changes: []
 ---
-# Go SDLC Playbook
+# Go SDLC Playbook (Language-Specific)
 
 Language-specific guide for Go projects. Use alongside `/pb-guide` for general process.
 

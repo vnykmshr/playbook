@@ -1,18 +1,18 @@
 ---
 name: "pb-guide"
-title: "Engineering SDLC Playbook"
+title: "Core Engineering SDLC Framework (Language-Agnostic)"
 category: "core"
 difficulty: "beginner"
 model_hint: "sonnet"
 execution_pattern: "reference"
-related_commands: ['pb-preamble', 'pb-design-rules', 'pb-standards', 'pb-start', 'pb-cycle']
-last_reviewed: "2026-02-09"
-last_evolved: ""
-version: "1.0.0"
-version_notes: "v2.10.0 baseline"
+related_commands: ['pb-guide-python', 'pb-guide-go', 'pb-preamble', 'pb-design-rules', 'pb-standards']
+last_reviewed: "2026-02-18"
+last_evolved: "2026-02-18"
+version: "2.0.0"
+version_notes: "v2.13.1: Clarified as language-agnostic core framework. Added cross-references to language-specific guides."
 breaking_changes: []
 ---
-# Engineering SDLC Playbook
+# Core Engineering SDLC Framework (Language-Agnostic)
 
 A reusable end-to-end guide for any feature, enhancement, refactor, or bug fix.
 Right-size your process using **Change Tiers**, then follow required sections.

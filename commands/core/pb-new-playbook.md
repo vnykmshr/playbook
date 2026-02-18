@@ -1,18 +1,18 @@
 ---
 name: "pb-new-playbook"
-title: "New Playbook"
+title: "Create New Engineering Playbook"
 category: "core"
 difficulty: "beginner"
 model_hint: "sonnet"
 execution_pattern: "sequential"
-related_commands: []
-last_reviewed: "2026-02-09"
-last_evolved: ""
-version: "1.0.0"
-version_notes: "v2.10.0 baseline"
+related_commands: ['pb-guide', 'pb-standards', 'pb-documentation', 'pb-evolve']
+last_reviewed: "2026-02-18"
+last_evolved: "2026-02-18"
+version: "2.0.0"
+version_notes: "v2.13.1: Clarified title to emphasize playbook creation. Added related_commands."
 breaking_changes: []
 ---
-# New Playbook
+# Create New Engineering Playbook
 
 **Purpose:** Meta-playbook for creating new playbook commands. Ensures every new command meets quality standards, follows conventions, and integrates coherently with the existing ecosystem.
 

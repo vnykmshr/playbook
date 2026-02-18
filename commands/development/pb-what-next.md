@@ -1,18 +1,18 @@
 ---
 name: "pb-what-next"
-title: "What's Next?"
+title: "Recommend Next Playbook Command"
 category: "development"
 difficulty: "advanced"
 model_hint: "haiku"
 execution_pattern: "sequential"
 related_commands: ['pb-start', 'pb-cycle', 'pb-commit', 'pb-pr', 'pb-release']
-last_reviewed: "2026-02-09"
-last_evolved: ""
-version: "1.0.0"
-version_notes: "v2.10.0 baseline"
+last_reviewed: "2026-02-18"
+last_evolved: "2026-02-18"
+version: "2.0.0"
+version_notes: "v2.13.1: Clarified title from 'What's Next?' to emphasize command recommendation based on git state"
 breaking_changes: []
 ---
-# What's Next?
+# Recommend Next Playbook Command
 
 Get context-aware playbook command recommendations based on your current work state.
 
