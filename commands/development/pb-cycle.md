@@ -18,6 +18,8 @@ Run this after completing a unit of work. Guides you through self-review, qualit
 
 **Resource Hint:** sonnet — iterative code review and quality gate checks
 
+**Tool-agnostic:** This command works with any development tool or peer review process. Claude Code users invoke as `/pb-cycle`. Using another tool? Read this file as Markdown and follow the checklist with your tool. See [`/docs/using-with-other-tools.md`](/docs/using-with-other-tools.md) for adaptation examples.
+
 ---
 
 ## When to Use This Command

@@ -24,6 +24,8 @@ Begin work on a feature, bug fix, or enhancement. Establishes scope through adap
 
 **Voice:** Conversational. System asks clarifying questions naturally, like a peer reviewing your plan. See `/docs/voice.md` for how commands communicate.
 
+**Tool-agnostic:** This command works with any development tool or agentic assistant. Claude Code users invoke as `/pb-start`. Using another tool? Read this file as Markdown and work through the phases with your tool. See [`/docs/using-with-other-tools.md`](/docs/using-with-other-tools.md) for adaptation examples.
+
 ---
 
 ## When to Use

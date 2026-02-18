@@ -5,11 +5,19 @@ All notable changes to this project are documented here.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [v2.13.2] - 2026-02-18
+
+### Overview
+
+**Tool-Agnostic Clarity Release:** Clarified that playbooks are universal patterns, not Claude Code-specific. Restructured documentation to emphasize principles (universal) vs. medium (Claude Code). Added comprehensive guide for adapting playbooks to other agentic tools.
+
+Key positioning shift: The playbook works with any agentic development tool. Claude Code is the reference implementation with optional DX enhancements (below). Non-Claude Code users now have explicit adaptation path.
+
+See `/docs/using-with-other-tools.md` for detailed adaptation guides and concrete examples.
 
 ### Added
 
-**Claude Code DX Adoption**
+**Optional Claude Code DX Features** *(for Claude Code users)*
 - **Lazy MCP tool loading** — `ENABLE_TOOL_SEARCH` env var in settings for on-demand tool loading
 - **Context bar status line** (`scripts/context-bar.sh`) — shows branch, uncommitted files, token usage progress bar
 - **Context warning hook** (`scripts/check-context.sh`) — advisory warnings at 80%/90% context usage suggesting `/pb-pause`

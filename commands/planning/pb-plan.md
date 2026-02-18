@@ -18,6 +18,8 @@ A reusable prompt for planning release focus areas across any project. Emphasize
 
 **Resource Hint:** sonnet — Planning follows structured phases; implementation-level scoping and execution.
 
+**Tool-agnostic:** Planning phases (discovery, analysis, scope-locking, documentation) work with any development methodology. Claude Code users invoke as `/pb-plan`. Using another tool? Read this file as Markdown for the planning framework. Adapt the prompts to your tool. See [`/docs/using-with-other-tools.md`](/docs/using-with-other-tools.md) for guidance.
+
 ## When to Use
 
 - Kicking off a new release cycle or focus area

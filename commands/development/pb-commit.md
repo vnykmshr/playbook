@@ -16,6 +16,8 @@ breaking_changes: []
 
 **Resource Hint:** haiku — Simple utility for when you want manual control over commits.
 
+**Tool-agnostic:** This command documents commit discipline (atomic, clear messages) that works with any version control system. Claude Code users invoke as `/pb-commit`. Using another tool? Read this file as Markdown for commit principles and message format. See [`/docs/using-with-other-tools.md`](/docs/using-with-other-tools.md) for how to adapt the ritual.
+
 **Usually:** `/pb-review` auto-commits when all passes. You get a notification.
 
 **Rarely:** You want manual control. Use this command explicitly.

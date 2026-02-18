@@ -24,6 +24,8 @@ Run this after you finish coding. System analyzes what you built, applies your e
 
 **Voice:** Prose-driven feedback. Specific reasoning (what matters + why), not diagnostic checklists. See `/docs/voice.md` for how commands communicate.
 
+**Tool-agnostic:** The quality gate principles (verify outcomes, check code quality, run tests, address feedback) work with any development tool. Claude Code users invoke as `/pb-review`. Using another tool? Read this file as Markdown for the checklist and process. Adapt the execution to your tool. See [`/docs/using-with-other-tools.md`](/docs/using-with-other-tools.md) for examples.
+
 ---
 
 ## Code Review Family Decision Tree

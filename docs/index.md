@@ -231,9 +231,10 @@ Follow [Scenario 2: Adopting Playbook](getting-started.md#scenario-2-adopting-pl
 ## Installation
 
 ### Prerequisites
-- Claude Code CLI (Anthropic's official tool for working with Claude)
-- Git (for version control)
-- Bash (for install script)
+
+- **Git** (for version control)
+- **Bash** (for install script)
+- *(Optional)* **Claude Code CLI** (Anthropic's AI development tool — enables skill invocation)
 
 ### Quick Install
 
@@ -242,14 +243,16 @@ Follow [Scenario 2: Adopting Playbook](getting-started.md#scenario-2-adopting-pl
 git clone https://github.com/vnykmshr/playbook.git
 cd playbook
 
-# Run installation script (creates symlinks in ~/.claude/commands/)
+# Run installation script
 ./scripts/install.sh
 
-# Verify installation
-ls ~/.claude/commands/ | grep pb-
+# If using Claude Code: symlinks are created in ~/.claude/commands/
+# If using another tool: commands are available as Markdown files in ./commands/
 ```
 
-All playbook commands are now available in Claude Code.
+**With Claude Code:** Commands available as interactive skills (e.g., `/pb-start`)
+
+**Without Claude Code:** Read commands as Markdown files and reference them in your workflow (see [Using Playbooks with Other Tools](using-with-other-tools.md))
 
 ---
 
