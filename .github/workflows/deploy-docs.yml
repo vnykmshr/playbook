@@ -3,18 +3,6 @@ name: Documentation Quality & Deployment
 on:
   push:
     branches: [ main ]
-    paths:
-      - 'docs/**'
-      - 'commands/**'
-      - 'scripts/**'
-      - 'CHANGELOG.md'
-      - 'README.md'
-      - '.github/CONTRIBUTING.md'
-      - '.gitattributes'
-      - 'mkdocs.yml'
-      - '.markdownlint.json'
-      - '.yamllint'
-      - '.github/workflows/deploy-docs.yml'
   pull_request:
     branches: [ main ]
   workflow_dispatch:  # Manual trigger for deployment when needed
@@ -25,7 +13,7 @@ permissions:
   id-token: write
 
 concurrency:
-  group: pages
+  group: pages-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
