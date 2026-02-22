@@ -14,9 +14,9 @@ breaking_changes: []
 ---
 # Zero-Stack App Initiation ($0/month Architecture)
 
-A thinking tool for building apps that run themselves. Takes an idea and walks through the decisions that turn it into a zero-stack app — static site, edge API proxy, CI pipeline. Two vendor accounts. Zero servers. Zero monthly cost.
+A thinking tool for building apps that run themselves. Takes an idea and walks through the decisions that turn it into a zero-stack app — static site, edge API proxy, CI pipeline. Two vendor accounts. Zero servers. Zero monthly cost. Only fixed cost: domain registration (~$10-15/year) if you want a custom domain — the `*.pages.dev` default is free.
 
-**Not a code generator.** A structured conversation that produces architecture decisions, budget validation, a project scaffold, and a setup checklist.
+A structured conversation that produces architecture decisions, budget validation, and a tailored project scaffold — not a generic template you fork and gut.
 
 **Mindset:** Apply `/pb-preamble` thinking — challenge whether the idea fits this topology before committing to it. Apply `/pb-design-rules` thinking — the topology is simple by default, modular, and fails noisily.
 
@@ -81,7 +81,8 @@ Fit checklist:
 ```
 
 **All four checked:** proceed to Step 2.
-**Any unchecked:** explain which constraint doesn't fit and redirect to `/pb-repo-init` or `/pb-plan`. Don't try to make the topology work when it doesn't.
+**Three of four?** Describe the exception. Some near-misses work with minor adaptations — a contact form can POST to a Worker that writes to KV, optional auth can use CF Access, static data sources just skip the proxy. If the adaptation is small, proceed. If it reshapes the architecture, redirect.
+**Two or fewer:** redirect to `/pb-repo-init` or `/pb-plan`. Don't force the topology.
 
 ### Step 2: Data Architecture
 
@@ -102,8 +103,8 @@ Walk through these decisions. Each one shapes the scaffold.
 | Freshness Need | Data Path | Implementation |
 |---------------|-----------|----------------|
 | Minutes | Live Worker proxy | Worker fetches on request, caches in KV |
-| Hours | Cron + Worker | GitHub Actions cron writes to KV, Worker reads |
-| Daily | Cron only | GitHub Actions cron writes to KV, Pages reads at build |
+| Hours | Cron + Worker | GitHub Actions cron writes to KV, Worker serves from KV on request |
+| Daily | Cron + rebuild | GitHub Actions cron fetches data and triggers a Pages rebuild with data baked into static HTML |
 
 **Active window:**
 
@@ -127,6 +128,8 @@ Show the result against free tier headroom:
 | GH Actions | 2K min/month | [calculated] | [remaining] |
 
 > **Sharing a CF account across apps?** KV writes (1K/day) are shared across all apps on the account. Divide the limit by your app count.
+
+**What happens when you exceed free tier:** Workers requests beyond 100K/day return 1015 errors (visible). KV reads beyond 100K/day return errors (visible). KV writes beyond 1K/day silently fail — this is the dangerous one, your cron updates stop landing and you won't know unless you check. Pages builds beyond 500/month queue and may time out.
 
 **Production lessons to surface in this step:**
 
@@ -177,7 +180,9 @@ Confirm or adjust, then proceed.
 
 Generate project files with the decisions from Steps 2-4 baked in. The scaffold must work immediately with mock data — no Cloudflare account needed.
 
-**Generated structure:**
+The structure below is representative — the actual scaffold adapts to the conversation. No `normalizer.ts` if the API has a stable schema. No `data-cron.yml` if the data path is live-only. The command shapes the files, not the other way around.
+
+**Representative structure:**
 
 ```
 project-name/
