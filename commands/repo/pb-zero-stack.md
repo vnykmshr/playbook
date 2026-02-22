@@ -59,15 +59,15 @@ Every zero-stack app has the same shape:
                   (Cloudflare + GitHub)
 ```
 
-This is what makes it a pattern, not a collection of choices. The topology is fixed. Choices within it are flexible.
+This is what makes it a pattern, not a collection of choices. The topology is fixed. Choices within it are flexible. A Tidepool is any app that fits this topology.
 
 ### Calm by Default
 
-The topology enforces calm design (see `/pb-calm-design`). No auth means no login wall. No write path means no input validation anxiety. Read-heavy means information display, not task management. Data refreshes on its own schedule — users check when they want to, not when the app demands it.
+The topology enforces calm design (see `/pb-calm-design`). No auth means no login wall. No write path means no input validation. Read-heavy means information display, not task management. Data refreshes on its own schedule — users check when they want to, not when the app demands it.
 
 These defaults are non-negotiable for a Tidepool:
 
-- **Silence during normal operation** — data appears or shows a stale timestamp. No loading spinners, no "refreshing..." banners.
+- **Silence during normal operation** — data appears or shows a stale timestamp. No "refreshing..." banners. Live proxy path may have a brief initial load; use stale-first rendering (show cached data, update in place).
 - **Stale over empty** — if the cache is old, show it with a timestamp. Never show an empty page when you have cached data.
 - **Status in the periphery** — "Last updated 3 hours ago" in the footer, not a toast notification.
 - **Works on first visit** — no onboarding, no configuration, no "sign up to see data."
@@ -93,11 +93,14 @@ Who checks this?     (developers, commuters, parents, traders?)
 What do they learn in 5 seconds?  (AQI is 42, BTC is $68K, next bus in 3 min)
 > ___
 
+Where does the data come from?  (public API, RSS feed, government data portal?)
+> ___
+
 When do they come back?  (daily habit, event-driven, seasonal?)
 > ___
 ```
 
-These three answers — audience, headline value, return pattern — drive every subsequent decision: data freshness, display type, active window, content layout, and calm design choices. Pin them before moving on.
+These four answers — audience, headline value, data source, return pattern — drive every subsequent decision: data freshness, display type, active window, content layout, and calm design choices. Pin them before moving on.
 
 **Fit checklist:**
 
@@ -160,7 +163,7 @@ Show the result against free tier headroom:
 
 > **Sharing a CF account across apps?** KV writes (1K/day) are shared across all apps on the account. Divide the limit by your app count.
 
-**What happens when you exceed free tier:** Workers requests beyond 100K/day return 1015 errors (visible). KV reads beyond 100K/day return errors (visible). KV writes beyond 1K/day silently fail — this is the dangerous one, your cron updates stop landing and you won't know unless you check. Pages builds beyond 500/month queue and may time out.
+**What happens when you exceed free tier:** Workers requests beyond 100K/day return 1015 errors (visible). KV reads beyond 100K/day return errors (visible). KV writes beyond 1K/day return 429 errors — but if your Worker doesn't check the KV put response, stale data keeps being served and you won't know your cron updates stopped landing. Always check KV write responses. Pages builds beyond 500/month queue and may time out.
 
 **Production lessons to surface in this step:**
 
@@ -219,6 +222,7 @@ If using an AI image tool or design tool, provide the project name and descripti
 | Freshness indicator | Cache timestamp | "Updated 2 hours ago" — peripheral, not prominent (calm default) |
 | Empty state | Static copy | What shows before first data load or if API is unreachable |
 | Error state | Static copy + stale data | Show last known data with explanation, not an error wall |
+| Footer | Static + cache timestamp | Data attribution, freshness indicator, API link — calm design lives here |
 
 Empty and error states are product decisions, not afterthoughts. A Tidepool that shows "Error fetching data" on first visit is a broken window. Show a meaningful placeholder or explain what the user will see once data flows.
 
@@ -302,7 +306,7 @@ project-name/
 npm install && npm run dev
 ```
 
-Pages render with mock data. Islands hydrate. Fallback chain works (live → cached → mock). Ready for real API integration.
+Pages render with mock data. Islands hydrate. In dev mode, `api.ts` detects no Worker and loads from `mock/data.json` directly — same component code, different data source. Ready for real API integration.
 
 ---
 
@@ -348,11 +352,11 @@ These are the placeholders the scaffold created. Replace all before first deploy
 
 ### Edge security
 
-Add CSP header in Worker response: `default-src 'self'` baseline, add your API origin from Step 2. The scaffold includes this in `worker/index.ts`.
+The scaffold includes a CSP header in `worker/index.ts` tailored to your stack: `default-src 'self'`, plus `connect-src` for your API origin (from Step 2), and `style-src`/`script-src` directives matching your CSS and island choices. A bare `default-src 'self'` would break Preact islands and external API calls — the scaffold generates the correct policy from your Step 4 stack decisions.
 
 ### Performance
 
-The scaffold includes `<link rel="preconnect">` for your API origin (from Step 2) and `<link rel="dns-prefetch">` as fallback. Verify they point to the right domain.
+The main performance decision is already made: Astro ships zero JS by default. If you added Preact islands, they hydrate individually — verify the bundle is small. The scaffold also includes `<link rel="preconnect">` for your API origin (from Step 2) and `<link rel="dns-prefetch">` as fallback.
 
 ### Framework reference
 
@@ -459,4 +463,4 @@ Why these defaults as a unit:
 
 ---
 
-*Tidepools: small, calm, self-sustaining. Fed by the world's data, visited when you're curious. $0/month is a feature, not a constraint.*
+*Opinionated about topology. Flexible about content. Calm by default. $0/month is a feature, not a constraint.*

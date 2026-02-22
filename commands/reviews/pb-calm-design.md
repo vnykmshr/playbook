@@ -338,7 +338,7 @@ If all 5: Calm. If 3-4: Good start; refine. If <3: Revisit design.
 - `/pb-standards` — Quality bar and MLP criteria
 - `/pb-review-product` — Product-focused review including user experience
 - `/pb-review-frontend` — Frontend review; applies calm principles to UI
-- `/pb-accessibility` — Accessibility review; overlaps with calm design
+- `/pb-a11y` — Accessibility review; overlaps with calm design
 
 ---
 
