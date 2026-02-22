@@ -8,8 +8,8 @@ execution_pattern: "sequential"
 related_commands: ['pb-plan', 'pb-adr', 'pb-review-product', 'pb-preamble', 'pb-design-rules']
 last_reviewed: "2026-02-12"
 last_evolved: ""
-version: "1.1.0"
-version_notes: "Initial v2.11.0 (Phase 1-4 enhancements)"
+version: "1.2.0"
+version_notes: "v2.13.2: Value adoption lens — articulation test, value timeline, perception checks"
 breaking_changes: []
 ---
 
@@ -77,6 +77,17 @@ It's tempting to build what *we* think is cool, but:
 - Users will tell you if you ask
 
 **When in doubt, ask users.**
+
+### The Friend Test: Value Users Can Articulate
+
+A feature passes problem validation but still fails adoption when users can't explain *what they get*. The distinction matters:
+
+- **Feature description:** "It has advanced search with boolean operators"
+- **Value articulation:** "I can find any document in seconds"
+
+If a user couldn't explain to a colleague why they use this feature in one sentence, the value isn't clear enough — even if the problem is real and the solution is correct. Builder-validated clarity ("we know the problem exists") is necessary but insufficient. User-articulated value ("here's what I achieve") is what drives adoption.
+
+This doesn't mean the feature is wrong. It means the framing, onboarding, or presentation needs work before shipping.
 
 ### Ruthless Scope Discipline
 
@@ -190,12 +201,16 @@ Fallback: Partner with BI tool vendor for pre-built integration
 
 **Why this works:** Multiple solutions considered. Simplest default. Escalation trigger defined.
 
-#### 3. User Impact
+#### 3. User Impact & Value Perception
 
 **What I'm checking:**
 - Will users notice this feature?
 - Does it improve their lives?
 - Or does it add complexity?
+- Can users *see* the improvement, or is it invisible?
+- Can users *demonstrate* the value to someone else (colleague, manager, buyer)?
+
+Invisible value that's real still fails adoption. A 40% backend speedup users can't perceive feels like nothing changed. If the value is technical or behind-the-scenes, find a way to make it tangible — a loading indicator that's now gone, a metric they can point to, a workflow step that disappeared.
 
 **Bad:**
 ```
@@ -323,6 +338,8 @@ Decision: Offer white-glove service. Revisit if 10+ enterprise customers request
 - [ ] User impact is realistic (won't just sit unused)
 - [ ] Complexity added to user experience is justified
 - [ ] Edge cases are considered
+- [ ] Value is perceivable — users can see or demonstrate the improvement
+- [ ] Value timeline is understood — immediate (standard MVP) or delayed (needs engagement strategy)
 
 ### Scope
 - [ ] Scope is bounded (what's in/out explicitly defined)
@@ -348,6 +365,9 @@ Features that warrant deep scrutiny before proceeding:
 - Expanding scope without data (feature creep)
 - Building one-off requests that fragment strategy
 - Nice-to-haves marketed as essentials
+- Value that's real but invisible to users (backend improvements with no perceivable change)
+- Delayed-value products with no engagement strategy (users churn before payoff)
+- "Users don't know they want it yet" used to bypass evidence requirements
 
 **Override possible if:** User research validates the problem, or strategic priority overrides normal product discipline. Document the trade-off via `/pb-adr`.
 
@@ -467,22 +487,34 @@ When Maya sees a feature request:
 
 ```
 1. Do we have evidence users want this?
-   NO → Do research first (surveys, usage patterns, interviews)
+   NO, known problem space → Do research first (surveys, usage patterns, interviews)
+   NO, exploratory product → Prototype with 5-10 users. Need behavioral signal,
+                             not just "interesting idea." High bar applies.
    YES → Continue
 
-2. Is the proposed solution the right one?
+2. Can users articulate the value in one sentence?
+   NO → Clarify the value framing before building. Problem may be real
+        but positioning is wrong.
+   YES → Continue
+
+3. Is the proposed solution the right one?
    UNCLEAR → Explore alternatives, compare trade-offs
    YES → Continue
 
-3. What's the cost vs. benefit?
+4. When does value arrive — immediately or over time?
+   IMMEDIATE → Standard MVP approach. Ship fast, measure.
+   DELAYED → Needs engagement strategy. What keeps users coming back
+             before the payoff? Without this, they abandon.
+
+5. What's the cost vs. benefit?
    COST > BENEFIT → Reject or defer
    BENEFIT > COST → Continue
 
-4. Does this distract from higher priorities?
+6. Does this distract from higher priorities?
    YES → Defer to later quarter
    NO → Continue
 
-5. Can we ship an MVP in 2 weeks?
+7. Can we ship an MVP in 2 weeks?
    NO → Break into smaller pieces
    YES → Plan build
 ```
@@ -499,4 +531,4 @@ When Maya sees a feature request:
 
 ---
 
-*Created: 2026-02-12 | Category: planning | v2.11.0*
+*Created: 2026-02-12 | Updated: 2026-02-22 | Category: planning | v1.2.0*
