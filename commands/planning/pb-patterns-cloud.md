@@ -861,11 +861,11 @@ resource "azurerm_function_app" "app" {
 
 ## Related Commands
 
-- See `/pb-deployment` for deployment strategy selection
-- See `/pb-patterns-core` for architectural patterns
-- See `/pb-observability` for cloud monitoring setup
-- See `/pb-patterns-distributed` for multi-region patterns
-- See `/pb-zero-stack` for $0/month app architecture (static + edge proxy + CI)
+- `/pb-deployment` — Deployment strategy selection
+- `/pb-patterns-core` — Architectural patterns
+- `/pb-observability` — Cloud monitoring setup
+- `/pb-patterns-distributed` — Multi-region patterns
+- `/pb-zero-stack` — $0/month app architecture (static + edge proxy + CI)
 
 ---
 
