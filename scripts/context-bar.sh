@@ -21,13 +21,18 @@ max_context=200000
 pct=0
 context_length=0
 
-# Find current session transcript (most recently modified .jsonl in any project)
+# Derive project directory from CWD (matches Claude Code's path encoding)
 claude_dir="$HOME/.claude"
-if [[ -d "$claude_dir/projects" ]]; then
-  transcript=$(ls -t "$claude_dir"/projects/*/*.jsonl 2>/dev/null | head -1) || transcript=""
+project_dir="${claude_dir}/projects/$(echo "$PWD" | tr '/' '-')"
+
+if [[ -d "$project_dir" ]]; then
+  # Find most recent transcript for THIS project only (excludes subagent transcripts)
+  transcript=$(find "$project_dir" -maxdepth 1 -name "*.jsonl" -print0 2>/dev/null \
+    | xargs -0 ls -t 2>/dev/null | head -1) || transcript=""
 
   if [[ -n "$transcript" && -f "$transcript" ]]; then
-    # Last 200 lines covers tool-heavy conversations where assistant messages are sparse
+    # Extract token count from last assistant message with usage data.
+    # tail -200 covers tool-heavy conversations where assistant messages are sparse.
     context_length=$(tail -200 "$transcript" \
       | jq -s '
         map(select(.type == "assistant" and .message.usage)) |
@@ -52,8 +57,8 @@ filled=$((pct * bar_width / 100))
 empty=$((bar_width - filled))
 
 bar=""
-for ((i = 0; i < filled; i++)); do bar+="█"; done
-for ((i = 0; i < empty; i++)); do bar+="░"; done
+[[ "$filled" -gt 0 ]] && bar=$(printf '%0.s█' $(seq 1 "$filled"))
+[[ "$empty" -gt 0 ]] && bar+=$(printf '%0.s░' $(seq 1 "$empty"))
 
 # Token count in K
 tokens_k=$((context_length / 1000))
