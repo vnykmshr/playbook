@@ -5,7 +5,7 @@ category: "planning"
 difficulty: "advanced"
 model_hint: "sonnet"
 execution_pattern: "sequential"
-related_commands: ['pb-deployment', 'pb-patterns-core', 'pb-observability', 'pb-patterns-distributed']
+related_commands: ['pb-deployment', 'pb-patterns-core', 'pb-observability', 'pb-patterns-distributed', 'pb-zero-stack']
 last_reviewed: "2026-02-09"
 last_evolved: ""
 version: "1.0.0"
@@ -865,6 +865,7 @@ resource "azurerm_function_app" "app" {
 - See `/pb-patterns-core` for architectural patterns
 - See `/pb-observability` for cloud monitoring setup
 - See `/pb-patterns-distributed` for multi-region patterns
+- See `/pb-zero-stack` for $0/month app architecture (static + edge proxy + CI)
 
 ---
 
