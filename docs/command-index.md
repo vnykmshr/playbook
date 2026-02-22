@@ -93,6 +93,7 @@ Quick reference for all playbook commands.
 | `/pb-repo-blog` | Create technical blog post |
 | `/pb-repo-docsite` | Transform docs into professional static site |
 | `/pb-repo-enhance` | Full repository polish (combines above) |
+| `/pb-zero-stack` | Scaffold $0/month app (static + edge proxy + CI) |
 
 ## Reviews
 
@@ -226,7 +227,8 @@ Real-world implementations of the playbook in action:
 
 ### New Project Setup
 ```
-/pb-repo-init      → Plan project structure
+/pb-repo-init      → Plan project structure (generic)
+/pb-zero-stack     → Scaffold $0/month app (static + edge + CI)
 /pb-repo-organize  → Clean folder layout
 /pb-repo-readme    → Write documentation
 /pb-repo-about     → GitHub presentation
