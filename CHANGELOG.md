@@ -5,6 +5,23 @@ All notable changes to this project are documented here.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v2.13.3] - 2026-02-22
+
+### Overview
+
+**New Command: `/pb-zero-stack`** — Interactive thinking tool for building $0/month apps on a static site + edge API proxy + CI pipeline topology. Extracted from production N=1 (66 commits, live), designed for N=2 validation.
+
+### Added
+
+- **`/pb-zero-stack`** — Two-phase interactive command: Shape (idea → local dev with mocks in one session) then Deploy (bootstrap checklist when ready). Includes budget math, production lessons placed at decision points, free tier failure mode warnings, and stack-as-unit substitution guidance.
+- Back-link from `/pb-patterns-cloud` to `/pb-zero-stack`
+- Registered in `docs/command-index.md` (table + New Project Setup workflow)
+
+### Review Notes
+
+- Linus peer review: 6 honesty/precision fixes (reframed scaffold claim, "mostly fits" path, domain cost asterisk, daily data path clarified, scaffold adaptability, free tier failure modes)
+- Command count: 100 → 101
+
 ## [v2.13.2] - 2026-02-18
 
 ### Overview
