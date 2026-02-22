@@ -14,7 +14,7 @@ breaking_changes: []
 ---
 # Zero-Stack App Initiation ($0/month Architecture)
 
-A thinking tool for building **Gists** — small, calm apps that give you the essential point. One data source, one display, zero cost. You visit, get the gist, move on.
+A thinking tool for building **Gists** — small, calm apps that give you the essential point. API data, static display, zero cost. You visit, get the gist, move on.
 
 The topology: static site, edge API proxy, CI pipeline. Two vendor accounts. Zero servers. Zero monthly cost. Only fixed cost: domain registration (~$10-15/year) if you want a custom domain — the `*.pages.dev` default is free.
 
@@ -120,7 +120,7 @@ Fit checklist:
 
 ### Step 2: Data Architecture
 
-Walk through these decisions. Each one shapes the scaffold.
+Now dig into the data source from Step 1. Walk through these decisions — each one shapes the scaffold.
 
 **Data source:**
 
@@ -310,7 +310,7 @@ Pages render with mock data. Islands hydrate. In dev mode, `api.ts` detects no W
 
 ---
 
-## Go-Live Readiness
+## Go-Live Readiness (Phase A exit gate)
 
 The scaffold produces correct HTML structure, meta tags, and discovery files from your Step 3 decisions. This gate verifies you've customized the placeholders and confirms the Gist is ready for real visitors.
 
