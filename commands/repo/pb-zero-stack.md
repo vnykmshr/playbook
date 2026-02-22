@@ -9,18 +9,18 @@ related_commands: ['pb-repo-init', 'pb-start', 'pb-patterns-cloud', 'pb-design-l
 last_reviewed: "2026-02-22"
 last_evolved: ""
 version: "2.0.0"
-version_notes: "Tidepool identity, calm-by-default DNA, product brief in Step 1, content decisions, go-live readiness, framework-specific guidance"
+version_notes: "Gist identity, calm-by-default DNA, product brief in Step 1, content decisions, go-live readiness, framework-specific guidance"
 breaking_changes: []
 ---
 # Zero-Stack App Initiation ($0/month Architecture)
 
-A thinking tool for building **Tidepools** — small, self-contained apps fed by external data on a natural cycle. You visit when you're curious. They cost nothing to exist. They're calm by design.
+A thinking tool for building **Gists** — small, calm apps that give you the essential point. One data source, one display, zero cost. You visit, get the gist, move on.
 
 The topology: static site, edge API proxy, CI pipeline. Two vendor accounts. Zero servers. Zero monthly cost. Only fixed cost: domain registration (~$10-15/year) if you want a custom domain — the `*.pages.dev` default is free.
 
 A structured conversation that takes an idea (or PRD) and walks through the product, data, design, and content decisions that produce a tailored project scaffold — not a generic template you fork and gut.
 
-**Mindset:** Apply `/pb-preamble` thinking — challenge whether the idea fits this topology before committing to it. Apply `/pb-design-rules` thinking — the topology is simple by default, modular, and fails noisily. Apply `/pb-calm-design` thinking — Tidepools respect user attention by default.
+**Mindset:** Apply `/pb-preamble` thinking — challenge whether the idea fits this topology before committing to it. Apply `/pb-design-rules` thinking — the topology is simple by default, modular, and fails noisily. Apply `/pb-calm-design` thinking — Gists respect user attention by default.
 
 **Resource Hint:** sonnet — scaffolding follows established patterns; architecture decisions are guided, not open-ended
 
@@ -59,13 +59,13 @@ Every zero-stack app has the same shape:
                   (Cloudflare + GitHub)
 ```
 
-This is what makes it a pattern, not a collection of choices. The topology is fixed. Choices within it are flexible. A Tidepool is any app that fits this topology.
+This is what makes it a pattern, not a collection of choices. The topology is fixed. Choices within it are flexible. A Gist is any app that fits this topology.
 
 ### Calm by Default
 
 The topology enforces calm design (see `/pb-calm-design`). No auth means no login wall. No write path means no input validation. Read-heavy means information display, not task management. Data refreshes on its own schedule — users check when they want to, not when the app demands it.
 
-These defaults are non-negotiable for a Tidepool:
+These defaults are non-negotiable for a Gist:
 
 - **Silence during normal operation** — data appears or shows a stale timestamp. No "refreshing..." banners. Live proxy path may have a brief initial load; use stale-first rendering (show cached data, update in place).
 - **Stale over empty** — if the cache is old, show it with a timestamp. Never show an empty page when you have cached data.
@@ -104,7 +104,7 @@ These four answers — audience, headline value, data source, return pattern —
 
 **Fit checklist:**
 
-Now validate that the idea fits the Tidepool topology:
+Now validate that the idea fits the Gist topology:
 
 ```
 Fit checklist:
@@ -224,7 +224,7 @@ If using an AI image tool or design tool, provide the project name and descripti
 | Error state | Static copy + stale data | Show last known data with explanation, not an error wall |
 | Footer | Static + cache timestamp | Data attribution, freshness indicator, API link — calm design lives here |
 
-Empty and error states are product decisions, not afterthoughts. A Tidepool that shows "Error fetching data" on first visit is a broken window. Show a meaningful placeholder or explain what the user will see once data flows.
+Empty and error states are product decisions, not afterthoughts. A Gist that shows "Error fetching data" on first visit is a broken window. Show a meaningful placeholder or explain what the user will see once data flows.
 
 ### Step 4: Stack Confirmation
 
@@ -312,7 +312,7 @@ Pages render with mock data. Islands hydrate. In dev mode, `api.ts` detects no W
 
 ## Go-Live Readiness
 
-The scaffold produces correct HTML structure, meta tags, and discovery files from your Step 3 decisions. This gate verifies you've customized the placeholders and confirms the Tidepool is ready for real visitors.
+The scaffold produces correct HTML structure, meta tags, and discovery files from your Step 3 decisions. This gate verifies you've customized the placeholders and confirms the Gist is ready for real visitors.
 
 ### Verify the scaffold got it right
 
@@ -455,11 +455,11 @@ Why these defaults as a unit:
 
 ## Related Commands
 
-- `/pb-repo-init` — Generic greenfield initiation (when the Tidepool topology doesn't fit)
+- `/pb-repo-init` — Generic greenfield initiation (when the Gist topology doesn't fit)
 - `/pb-start` — Begin feature work after scaffolding
 - `/pb-patterns-cloud` — Cloud deployment patterns reference
 - `/pb-design-language` — Deeper design system work (optional, after scaffold)
-- `/pb-calm-design` — Calm design principles (Tidepools embody these by default)
+- `/pb-calm-design` — Calm design principles (Gists embody these by default)
 
 ---
 
