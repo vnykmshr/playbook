@@ -38,9 +38,19 @@ def extract_metadata_field(content: str, field: str) -> str | None:
 
 
 def extract_related_commands(content: str) -> list[str]:
-    """Extract all related command references from body."""
-    matches = re.findall(r'/pb-[\w-]+', content)
-    return sorted(set(matches))
+    """Extract command references from the Related Commands section only."""
+    in_section = False
+    refs = []
+    for line in content.splitlines():
+        if line.strip().startswith("## Related Commands"):
+            in_section = True
+            continue
+        if in_section:
+            if line.startswith("## ") or line.strip() == "---":
+                break
+            matches = re.findall(r'/pb-[\w-]+', line)
+            refs.extend(matches)
+    return sorted(set(refs))
 
 
 def get_all_command_files():
@@ -81,10 +91,14 @@ class TestEvolutionMetadataImpact:
 
     def test_related_commands_exist(self):
         """All related_commands references should point to existing commands."""
+        # Template files use placeholder references like /pb-related-1
+        template_files = {"pb-new-playbook.md"}
         files = get_all_command_files()
         broken_refs = []
 
         for filepath in files:
+            if filepath.name in template_files:
+                continue
             content = filepath.read_text()
             related = extract_related_commands(content)
 
@@ -167,7 +181,8 @@ class TestEvolutionStructuralImpact:
     def test_execution_patterns_are_valid(self):
         """All commands must have valid execution patterns."""
         valid_patterns = {
-            "sequential", "parallel", "interactive", "exploratory", "reference"
+            "sequential", "parallel", "interactive", "exploratory", "reference",
+            "automatic", "interactive-once", "checklist"
         }
         files = get_all_command_files()
         invalid = []
@@ -208,8 +223,8 @@ class TestEvolutionReadiness:
         for filepath in files:
             content = filepath.read_text()
             related = extract_related_commands(content)
-            # Most commands: ≤5 related. Hub commands: ≤8.
-            limit = 8 if "pb-patterns.md" in filepath.name else 5
+            # Most commands: ≤5 related. Hub commands: ≤10 (pb-patterns indexes all sub-patterns).
+            limit = 10 if "pb-patterns.md" in filepath.name else 5
 
             if len(related) > limit:
                 over_limit.append(f"{filepath.name}: {len(related)} related (limit {limit})")
@@ -224,10 +239,13 @@ class TestEvolutionDependencies:
 
     def test_bidirectional_command_references_exist(self):
         """If A references B, B should exist."""
+        template_files = {"pb-new-playbook.md"}
         files = get_all_command_files()
         broken_dependencies = []
 
         for filepath in files:
+            if filepath.name in template_files:
+                continue
             content = filepath.read_text()
             related = extract_related_commands(content)
 

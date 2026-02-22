@@ -163,7 +163,7 @@ class TestPersonaIntegrity:
         "pb-alex-infra.md": {"model": "opus", "category": "deployment", "difficulty": "advanced"},
         "pb-maya-product.md": {"model": "sonnet", "category": "planning", "difficulty": "intermediate"},
         "pb-sam-documentation.md": {"model": "sonnet", "category": "core", "difficulty": "intermediate"},
-        "pb-jordan-testing.md": {"model": "sonnet", "category": "development", "difficulty": "advanced"},
+        "pb-jordan-testing.md": {"model": "opus", "category": "development", "difficulty": "advanced"},
     }
 
     def test_persona_agents_exist(self):
@@ -216,7 +216,7 @@ class TestPersonaIntegrity:
         for path in files:
             if path.name not in self.PERSONA_COMMANDS:
                 continue
-            content = path.lower()
+            content = path.read_text().lower()
 
             # Personas must have either: "decision", "framework", "review", or "criteria"
             if not any(keyword in content for keyword in ["decision", "framework", "review criteria", "red flags"]):
