@@ -15,6 +15,7 @@ secrets/
 # Dependencies
 node_modules/
 vendor/
+package-lock.json
 
 # OS files
 .DS_Store
