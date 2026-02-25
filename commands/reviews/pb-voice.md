@@ -14,7 +14,7 @@ breaking_changes: ["Detection categories expanded from 8 to 11", "Output templat
 ---
 # Voice Review
 
-**Purpose:** Detect and remove AI writing patterns from prose. The tool removes tells; the author adds truth. Two roles, clearly separated.
+**Purpose:** Detect and remove AI writing patterns from prose. Two roles, clearly separated: the tool removes tells, the author adds truth.
 
 **Mindset:** Apply `/pb-preamble` thinking (honest, imperfect prose over polished output) and `/pb-design-rules` thinking (Clarity over cleverness. Silence when nothing to say. Fail noisily: if text reads generated, flag it, don't smooth it over).
 
@@ -37,6 +37,7 @@ The best results come from persona + pb-voice together, not either alone:
 
 ```
 1. Generate with persona:  "Write about X as [author]-persona"
+   Or: /pb-voice persona=vmx-persona.md
    Persona drives voice, vocabulary, opinions during generation.
 
 2. Quality gate with pb-voice:  "/pb-voice" on the output
@@ -96,13 +97,13 @@ Words and phrases that almost never appear in natural writing but are statistica
 - "In this article, we will..." / "Without further ado"
 - "Moving forward" / "At the end of the day"
 
-**Note:** In technical contexts (RFCs, architecture docs), "robust" and "leverage" may be legitimate. Reduce severity to MEDIUM when surrounding text is also technical.
+**Note:** Context can reduce severity. In technical writing (RFCs, architecture docs), "robust" and "leverage" may be legitimate (reduce to MEDIUM). Similarly, Category 3's "significance inflation" may be appropriate in historical writing, and Category 9's em-dashes may suit some style guides. When in doubt, check against the author's voice profile or project rules.
 
 **Action:** Flag every occurrence. Replace or delete.
 
 ### Category 2: Structural Tells (HIGH)
 
-Patterns in organization that reveal algorithmic generation.
+Document-level organization patterns that reveal algorithmic generation. (For inline formatting tells, see Category 9.)
 
 - **Uniform paragraph length** — Every paragraph 3-4 sentences. Real writing has 1-sentence paragraphs next to 6-sentence ones.
 - **Topic-support-transition** — Each paragraph opens with topic sentence, supports it, transitions. Textbook structure. Real writing meanders.
@@ -115,7 +116,7 @@ Patterns in organization that reveal algorithmic generation.
 
 ### Category 3: Content-Level Patterns (HIGH)
 
-Structural writing patterns that go beyond vocabulary. These are sentence-construction habits, not individual words.
+Sentence-construction habits and repetition patterns that go beyond individual words.
 
 - **Copula avoidance** — "serves as" / "stands as" / "functions as" instead of "is." AI substitutes elaborate constructions for simple verbs. "Gallery 825 serves as the exhibition space"  "Gallery 825 is the exhibition space."
 - **Significance inflation** — Puffing up importance with legacy/testament/pivotal framing. "Marking a pivotal moment in the evolution of..." The whole sentence construction inflates, not just the word.
@@ -185,7 +186,7 @@ AI defaults to conceptual language. Humans anchor in specifics.
 
 Formatting patterns that are quick to spot and high-signal.
 
-- **Em-dash overuse** — AI uses em dashes (--) more than humans, mimicking punchy sales writing. Use commas, periods, parentheses, or restructure instead. (Project rule: never use em-dashes in any output.)
+- **Em-dash overuse** — AI uses em dashes (--) more than humans, mimicking punchy sales writing. Use commas, periods, parentheses, or restructure instead.
 - **Boldface overuse** — Mechanical emphasis on key terms. "It blends **OKRs**, **KPIs**, and **BSC**." Remove most bold; let sentence structure do the emphasis.
 - **Inline-header vertical lists** — Bullet points starting with bolded headers followed by colons. "- **Speed:** Significantly faster..." Restructure into prose or use plain bullets.
 - **Title case in headings** — AI capitalizes all main words. "## Strategic Negotiations And Global Partnerships"  "## Strategic negotiations and global partnerships." Use sentence case.
@@ -193,6 +194,8 @@ Formatting patterns that are quick to spot and high-signal.
 - **Curly quotation marks** — AI sometimes uses curly quotes instead of straight quotes. Normalize.
 
 **Action:** Fix on sight. These are fast, high-confidence corrections.
+
+**Note:** Some tells (em-dashes, title case) have legitimate uses in specific style guides. When a project style guide explicitly allows them, reduce severity to LOW. When voice-guidelines or project rules ban them outright, treat as HIGH regardless of context.
 
 ### Category 10: Summary Endings (HIGH)
 
@@ -226,6 +229,8 @@ AI-generated articles include predictable section patterns.
 | 5-6 | Reads okay on first pass, but pattern tells accumulate |
 | 7-8 | Individual tells only, most text is natural, voice present |
 | 9-10 | No detectable patterns, distinct voice, could not be flagged by a reader |
+
+**Target:** Score 7+ before publishing. Score 5-6 is acceptable for internal drafts. Below 5 needs another rewrite pass.
 
 ---
 
@@ -266,7 +271,7 @@ If no persona provided, apply general human-voice heuristics without author-spec
 
 ### What the Author Brings
 
-The tool removes tells. The author adds truth. These are things no detection tool can supply:
+These are things no detection tool can supply — only the author has them:
 
 - **Opinions** — React to facts. "I genuinely don't know how to feel about this" signals a real person thinking.
 - **Lived-experience details** — Specific tools, dates, numbers, project names from memory. Not "many organizations" but "the team I was on in 2023."
@@ -318,7 +323,7 @@ practical strategies for maintaining your unique voice while utilizing
 AI assistance effectively.
 ```
 
-**Detection:** Score 2/10. Eight HIGH flags: dead giveaway vocabulary saturates every sentence.
+**Detection:** Score 2/10. Eight Category 1 flags (vocabulary), plus structural tells (colon pattern, hedging, no contractions).
 
 **Output:**
 
@@ -376,6 +381,8 @@ When running `mode=profile`, provide 5-10 samples of writing you're satisfied wi
 The profile becomes a calibration reference that detection and rewrite stages use to target *your* voice, not generic "human."
 
 **Persona files vs voice profiles:** A persona file (e.g., `vmx-persona.md`) is an external document that describes how an author writes, used during *generation*. A voice profile is extracted *by this command* from writing samples, used during *detection and rewrite*. They complement each other: persona drives generation, profile calibrates the quality gate.
+
+**Precedence:** Project style rules (voice-guidelines.md, CLAUDE.md) override voice profile defaults, which override generic heuristics. When conflicts arise, project rules win.
 
 ---
 
