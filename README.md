@@ -2,6 +2,7 @@
 
 A comprehensive, integrated set of commands and guides for structuring iterative development workflows, architectural decisions, code reviews, and team operations.
 
+[![CI](https://github.com/vnykmshr/playbook/actions/workflows/deploy-docs.yml/badge.svg)](https://github.com/vnykmshr/playbook/actions/workflows/deploy-docs.yml)
 [![Latest Release](https://img.shields.io/github/v/release/vnykmshr/playbook)](https://github.com/vnykmshr/playbook/releases/latest)
 [![Commands](https://img.shields.io/badge/status-active-brightgreen)](docs/command-index.md)
 [![Documentation](https://img.shields.io/badge/docs-integration%20guide-blue)](docs/integration-guide.md)
