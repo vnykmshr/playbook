@@ -5,6 +5,23 @@ All notable changes to this project are documented here.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v2.14.0] - 2026-02-25
+
+### Overview
+
+**Two major command evolutions + DX fixes.** pb-zero-stack expanded to full zero-cost topology thinking tool; pb-voice sharpened with content-level and style pattern detection.
+
+### Changed
+
+- **`/pb-zero-stack` v3.2.0** — Full zero-cost topology (static + edge proxy + CI pipeline), Gist identity, three complexity tiers, product brief extraction, dev-phase decision prompts, ship gate
+- **`/pb-voice` v2.0.0** — Detection expanded from 8 to 11 categories (content-level patterns, style/formatting tells, formulaic sections), persona + pb-voice recommended workflow, score thresholds, two-pass audit
+
+### Fixed
+
+- **`scripts/context-bar.sh`** — Scoped transcript lookup to current project instead of most-recent across all projects
+- **`commands/reviews/pb-calm-design.md`** — Broken reference `/pb-accessibility` → `/pb-a11y`
+- **`tests/`** — 6 pre-existing test failures resolved (stale expectations, extraction bug, overly broad scope)
+
 ## [v2.13.3] - 2026-02-22
 
 ### Overview
