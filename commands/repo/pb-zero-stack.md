@@ -3,14 +3,14 @@ name: "pb-zero-stack"
 title: "Zero-Stack App Initiation ($0/month Architecture)"
 category: "repo"
 difficulty: "intermediate"
-model_hint: "sonnet"
+model_hint: "opus"
 execution_pattern: "interactive"
 related_commands: ['pb-repo-init', 'pb-start', 'pb-patterns-cloud', 'pb-design-language', 'pb-calm-design']
-last_reviewed: "2026-02-24"
-last_evolved: "2026-02-24"
-version: "3.0.0"
-version_notes: "Expanded scope beyond read-heavy: user-content paths, complexity tiers, trust boundaries, CSP per-variant, UX states, implementation order with checkpoints, pre-ship checklist, agent guidance, persona awareness. Fixed contradictions (vanilla CSS/JS default). Preserved production lessons and calm design DNA."
-breaking_changes: ["Scope expanded from read-heavy-only to all zero-cost topologies", "Default stack changed: vanilla CSS/JS default, Preact/Tailwind as options", "CSP delivery via meta tag (not Worker header)", "Data freshness mapping corrected", "Fit checklist replaced with broader data source taxonomy"]
+last_reviewed: "2026-02-25"
+last_evolved: "2026-02-25"
+version: "3.2.0"
+version_notes: "Friction reduction pass: cut bloat from Step 4 (creative assets, web identity table, content decisions table), removed substitutions table, moved active window to Budget Math. Added missing dev-phase decisions: data transformation prompt, error copy prompt, loading skeleton nudge, responsive/dark-mode/animation/URL questions, validation rules, testing strategy, retry default."
+breaking_changes: []
 ---
 # Zero-Stack App Initiation ($0/month Architecture)
 
@@ -20,11 +20,13 @@ A Gist is any app that fits the zero-stack topology: static site, optional edge 
 
 **What fits:** API dashboards, personal tools, form-based collectors, note-taking apps, display-only pages, data visualizers — anything that runs on static hosting with optional edge compute. Read-heavy, write-light, or user-content. The topology is the constraint, not the content type.
 
+> Not every Gist fits the "visit, get the point, leave" pattern — a personal notes app fits the topology but is a tool you return to. That's fine. "Gist" describes the deployment shape, not the interaction pattern.
+
 A structured conversation that takes an idea (or PRD) and walks through the product, data, design, and content decisions that produce a tailored project scaffold — not a generic template you fork and gut.
 
 **Mindset:** Apply `/pb-preamble` thinking — challenge whether the idea fits this topology before committing to it. Apply `/pb-design-rules` thinking — the topology is simple by default, modular, and fails noisily. Apply `/pb-calm-design` thinking — Gists respect user attention by default.
 
-**Resource Hint:** sonnet — scaffolding follows established patterns; architecture decisions are guided, not open-ended
+**Resource Hint:** opus — the conversation makes product architecture decisions (fit, tier, data paths, trust, CSP). Scaffold generation is pattern application.
 
 ---
 
@@ -43,7 +45,7 @@ A structured conversation that takes an idea (or PRD) and walks through the prod
 - Real-time collaboration or WebSocket-heavy — use `/pb-repo-init` + `/pb-patterns-async`
 - Complex relational data or SQL queries — use `/pb-repo-init` + `/pb-patterns-db`
 - OAuth flows, user accounts, or session management — use `/pb-repo-init`
-- File uploads or media processing — use `/pb-repo-init`
+- Dynamic file uploads from users or media processing — use `/pb-repo-init`
 - SSR required — this topology serves static files at the edge
 
 If the idea doesn't fit, redirect early. Don't force the topology.
@@ -90,13 +92,14 @@ Not every Gist needs every piece. The data source, update frequency, and scale d
 
 ### Calm by Default
 
-The topology enforces calm design (see `/pb-calm-design`). These defaults are non-negotiable for a Gist:
+The topology enforces calm design (see `/pb-calm-design`). Non-negotiable defaults:
 
-- **Silence during normal operation** — data appears or shows a stale timestamp. No "refreshing..." banners. Live proxy path may have a brief initial load; use stale-first rendering (show cached data, update in place).
+- **Silence during normal operation** — data appears or shows a stale timestamp. No "refreshing..." banners. Live proxy path: stale-first rendering (show cached, update in place).
 - **Stale over empty** — if the cache is old, show it with a timestamp. Never show an empty page when you have cached data.
 - **Status in the periphery** — "Last updated 3 hours ago" in the footer, not a toast notification.
 - **Works on first visit** — no onboarding, no configuration, no "sign up to see data."
 - **Graceful offline** — PWA serves cached data with clear staleness indicator. No error walls.
+- **Transitions are opt-in** — if used: subtle (150-200ms), functional (communicates state change), and disabled under `prefers-reduced-motion`.
 
 ### Trust Boundaries
 
@@ -110,13 +113,15 @@ Every Gist has clear trust boundaries. Name them explicitly in the scaffold:
 | Worker ↔ Pages | Trusted (same origin) | CORS same-origin, no extra auth needed |
 | sessionStorage/localStorage | Semi-trusted | Try-catch all access (private browsing, storage disabled) |
 
-**DOM safety:** Never use `innerHTML` with dynamic content. Use `textContent` or DOM APIs (`createElement`, `setAttribute`). This is a hard rule, not a suggestion.
+**DOM safety:** Never use `innerHTML` with dynamic content. Use `textContent` or DOM APIs (`createElement`, `setAttribute`). Hard rule — referenced in Ship Gate and Anti-Patterns.
 
 ---
 
 ## Phase A: Shape (One Session)
 
 Goal: idea to working local dev with mock data. No accounts needed.
+
+**Persona hint:** If the builder is new to development (using an AI coding assistant), keep product sections jargon-free. Technical detail lives in the scaffold spec where the assistant consumes it. Thread this awareness through each step — the builder needs to understand *what* their app will include; the assistant handles *how*.
 
 ### Step 1: Product Brief & Fit
 
@@ -171,15 +176,6 @@ Does this idea fit the zero-stack topology?
 
 If the adaptation is small, proceed. If it reshapes the architecture, redirect to `/pb-repo-init`.
 
-**Persona awareness:**
-
-Who is building this?
-
-- **Developer** — comfortable with technical decisions, wants precise control
-- **New builder** — may be using an AI coding assistant, needs jargon-free guidance
-
-If new builder: the scaffold and spec should include reassuring hints. Technical sections are for the AI assistant; the builder needs to understand what their app will include without understanding every implementation detail.
-
 ### Step 2: Data Architecture
 
 Now dig into the data source from Step 1. The path depends on which data source type was chosen.
@@ -200,10 +196,9 @@ Now dig into the data source from Step 1. The path depends on which data source 
 | Daily | Cron + rebuild | GitHub Actions cron triggers Pages rebuild with data baked into HTML |
 | Rarely / static | Build-time only | Data fetched at build, baked into static HTML |
 
-**Active window:**
+**Data transformation:** Does the raw API response need shaping before display? Identify: which fields you display, what you rename, what you derive (e.g., AQI category from numeric value). Pin the types now — they go into `types.ts` and prevent the assistant from guessing the data shape.
 
-- Usage pattern: global (24h) or regional (e.g., 14h active window)?
-- This drives budget math — fewer active hours = fewer API hits
+**On API failure:** Default: serve stale data, no automatic client retry. If the Worker proxy is involved, it serves from KV cache on upstream failure. Surface this decision now — different retry strategies produce different user experiences.
 
 #### Path B: User Content
 
@@ -217,21 +212,17 @@ Now dig into the data source from Step 1. The path depends on which data source 
 | User saves data (multi-user) | Database (D1, Supabase, Firebase) | Medium — needs storage backend |
 | Display-only | None — content in HTML | Lowest |
 
-**For user-saves-data apps:** This adds real complexity. The user needs CRUD operations, data validation, empty states, and error handling. Surface this early:
+**For user-saves-data apps:** Surface complexity early — CRUD operations, data validation, empty states, and error recovery are meaningfully more work than read-only apps. Budget extra time for the data round-trip.
 
-> **Complexity note:** Apps where users create and save data require a storage backend, form validation, empty states, and error recovery. This is meaningfully more complex than a display-only or API-read app. Budget extra time for the data round-trip (create → read → update → delete).
+**Validation rules:** Define per field — required, type, limits. Validation fires inline on blur for required fields, on submit for the rest (default). Pin these now; the assistant will implement whatever the spec says, and changing validation UX mid-build is expensive.
 
 #### Path C: Display-Only
 
-- Content is pre-loaded in HTML or fetched at build time
-- No runtime data fetching needed
-- Simplest path — minimal tier
+Content is pre-loaded in HTML or fetched at build time. No runtime data fetching. Simplest path — minimal tier.
 
 #### Path D: Mixed
 
-- Combine paths as needed
-- Each data source follows its own path above
-- The most complex path determines the tier
+Combine paths as needed. Each data source follows its own path above. The most complex path determines the tier.
 
 ### Step 3: UX States
 
@@ -241,21 +232,21 @@ Every Gist has states beyond "data loaded successfully." Define these early — 
 
 | State | What the User Sees | Design Notes |
 |-------|-------------------|--------------|
-| **Loading** | Skeleton or spinner | Brief. If data is cached, show stale data immediately (stale-first rendering). |
+| **Loading** | Skeleton placeholder matching layout shape | Prefer skeletons over spinners — they preview the loaded layout. Describe the shape (e.g., "three cards with pulsing blocks"). Spinners only for brief operations (< 1s). |
 | **Loaded** | The headline value from Step 1 | The normal state. This is what the app exists to show. |
-| **Error (Network)** | Last known data + explanation | Never show a raw error. Show stale data with "Couldn't refresh — showing data from [timestamp]." |
-| **Empty / First Use** | Clear call to action | For API apps: "Data loading..." then timeout message. For user-content: "No [items] yet — create your first one." |
-| **Offline** | Cached data + staleness indicator | PWA shows cached version. "You're offline — showing data from [timestamp]." |
+| **Error (Network)** | Last known data + explanation | Show stale data with "Couldn't refresh — showing data from [timestamp]." |
+| **Empty / First Use** | Clear call to action | API apps: timeout message. User-content: "No [items] yet — create your first one." |
+| **Offline** | Cached data + staleness indicator | PWA shows cached version with timestamp. |
 
 **Additional states by data source:**
 
 | Data Source | Extra States |
 |-------------|-------------|
 | External API | **Error (API)** — upstream is down. Show stale data, not error wall. |
-| User content (simple-form) | **Success** — form submitted confirmation. **Error (Submit)** — submission failed, keep form populated. |
-| User content (user-saves-data) | **Empty / First Use** — no saved data, clear CTA. **Error (Storage)** — save failed, inline error with retry, never lose user input. |
+| User content (simple-form) | **Success** — confirmation. **Error (Submit)** — keep form populated. |
+| User content (user-saves-data) | **Empty / First Use** — clear CTA. **Error (Storage)** — inline error with retry, never lose user input. |
 
-Empty and error states are product decisions, not afterthoughts. A Gist that shows "Error fetching data" on first visit is a broken window.
+**Draft the actual copy now.** Write the 3-5 strings users will see: network error message, API/upstream error, empty state CTA, form success (if applicable), form error (if applicable). Keep it calm — the user doesn't need to know what broke, just what they're seeing and how fresh it is. Deciding copy now saves 2-3 rounds of "make it friendlier" during development.
 
 ### Step 4: Project Shape
 
@@ -264,52 +255,27 @@ Empty and error states are product decisions, not afterthoughts. A Gist that sho
 - Project name (lowercase, hyphenated)
 - Single page or multi-page? (default: single for minimal, file-based routing for standard+)
 - Primary display: dashboard, ticker, list, form, editor, map, or other?
-- PWA with service worker? (default: yes for daily-use apps — offline shows stale data with timestamp)
+- PWA with service worker? (default: yes for daily-use apps)
+- URL state: can users share a link to a specific view or filter? (default: no for single-page, query params for filtered views)
 
-**Design choices** (two decisions, not a design system):
+**Design choices:**
 
 | Choice | Options | Default |
 |--------|---------|---------|
 | Palette direction | warm / cool / mono | mono |
 | Font vibe | system / geometric / humanist | system |
+| Dark mode | system-preference / toggle / light-only | system-preference (auto-derived dark palette) |
+| Responsive priority | mobile-first / desktop-first | mobile-first single-column stack; responsive grid for standard+ |
 
-These produce a `design-tokens.css` in the scaffold. For deeper design work, run `/pb-design-language` after scaffolding.
+These produce a `design-tokens.css` (including dark mode variants) in the scaffold. For deeper design work, run `/pb-design-language` after scaffolding.
 
-**Web identity** (three decisions):
-
-| Choice | Options | Default |
-|--------|---------|---------|
-| Site title | \[from project name\] | Capitalize project name |
-| Description | \[one sentence from Step 1\] | Reuse headline value |
-| Language | en / es / fr / ... | en |
-
-These feed into `<title>`, `<meta name="description">`, `<html lang>`, manifest, and OG tags. Set once, used everywhere.
-
-**Creative assets** (generate or provide):
-
-| Asset | Format | Dimensions | Notes |
-|-------|--------|------------|-------|
-| Logo mark | SVG preferred | — | Simple mark, works at 16px. Used as favicon source |
-| Favicon set | .ico + .svg + apple-touch-icon.png | 16/32/180/512 | Derive from logo SVG |
-| OG image | PNG or JPG | 1200×630 | Social sharing preview. Static file or build-time generated |
-
-Don't block on assets — the scaffold includes placeholders. Replace before go-live.
-
-**Content decisions** (what goes on the page):
-
-| Element | Source | Notes |
-|---------|--------|-------|
-| Headline metric/status | From data source | The 5-second answer from Step 1 |
-| Supporting context | Derived or static | What explains the headline (trend, range, comparison) |
-| Data attribution | Static | "Data from \[source\]" — users deserve to know the source |
-| Freshness indicator | Cache timestamp | "Updated 2 hours ago" — peripheral, not prominent (calm default) |
-| Empty state | Static copy | What shows before first data load or on first use |
-| Error state | Static copy + stale data | Show last known data with explanation, not an error wall |
-| Footer | Static + cache timestamp | Data attribution, freshness indicator, source link — calm design lives here |
+**Web identity:** Site title (from project name), description (reuse headline value from Step 1), language (default: en). These feed into `<title>`, `<meta description>`, `<html lang>`, manifest, and OG tags. Override if needed.
 
 ### Step 5: Stack Confirmation
 
 Show the default stack with rationale. The default adapts to the complexity tier.
+
+**Why these defaults as a unit:** Single vendor (Cloudflare) means one auth flow, one dashboard, one billing page. Astro ships zero JS by default. Vanilla CSS with custom properties provides design tokens without build tooling. GitHub Actions gives native cron on the same platform as the repo.
 
 **Minimal tier:**
 
@@ -321,16 +287,16 @@ Show the default stack with rationale. The default adapts to the complexity tier
 | Host | CF Pages | Free, atomic deploys, edge network |
 | CI | GitHub Actions | Lint + deploy on push |
 
-> **Minimal means minimal.** No frameworks, no build tools, no server-side components. If you're reaching for a framework, you're probably standard tier.
+> **Minimal means minimal.** No frameworks, no build tools. If you're reaching for a framework, you're probably standard tier.
 
 **Standard tier:**
 
 | Layer | Default | Why |
 |-------|---------|-----|
-| SSG | Astro | Islands architecture, zero JS by default, file-based routing |
-| CSS | Vanilla CSS with custom properties | Design tokens in `:root`, responsive, dark mode via `prefers-color-scheme` |
-| JS | Vanilla TypeScript in Astro components + `src/lib/` modules | No framework overhead unless islands are needed |
-| Islands | Preact (optional) | 3KB, React-compatible API. Only add if you need client-side interactivity beyond what vanilla JS provides |
+| SSG | Astro | Islands architecture, zero JS default, file-based routing |
+| CSS | Vanilla CSS with custom properties | Same pattern, same tokens |
+| JS | Vanilla TypeScript in Astro components + `src/lib/` modules | No framework overhead unless islands needed |
+| Islands | Preact (optional, 3KB) | Only add for client-side interactivity beyond vanilla JS |
 | Host | CF Pages | Free, atomic deploys, edge network |
 | Proxy | CF Worker (if needed) | Same vendor as Pages, KV built-in |
 | CI | GitHub Actions | Lint + type check + test + deploy |
@@ -339,47 +305,29 @@ Show the default stack with rationale. The default adapts to the complexity tier
 
 | Layer | Default | Why |
 |-------|---------|-----|
-| SSG | Astro | Islands architecture, zero JS by default |
-| CSS | Vanilla CSS with custom properties | Same as standard |
-| JS | Vanilla TypeScript + Astro components | Same as standard |
-| Islands | Preact (optional) | Same as standard |
+| SSG | Astro | Islands architecture, zero JS default |
 | Host | CF Pages | Same vendor for hosting + proxy + cache |
 | Proxy | CF Worker | API key hiding, response caching, health endpoint |
 | Cache | CF KV | Global, free 100K reads/day |
 | CI | GitHub Actions | Lint + test + deploy + cron for data refresh |
 
-**Substitution notes:**
-
-The default stack is chosen as a unit — single vendor for hosting means one API token, one dashboard, one set of docs.
-
-| Substitution | Cascading Effect |
-|-------------|------------------|
-| Astro → Hugo | No JS islands, different template syntax, built-in sitemap |
-| Astro → Vanilla HTML | No routing, no components, no build step. Fine for minimal tier. |
-| Preact → Svelte | Different island syntax, slightly larger bundle |
-| Preact → None | Vanilla JS for interactivity. Preferred unless you have complex reactive state. |
-| Vanilla CSS → Tailwind v4 | Zero-config Vite plugin. Fine if team prefers. Not the default. |
-| CF Pages → Vercel | Changes proxy (Vercel Edge), cache (Upstash), and deployment story |
-| CF Pages → Netlify | Changes proxy, cache, and forms handling |
-
-> Changing the host from CF Pages also changes the proxy, cache, and deployment story. That's fine if you're already on another platform — just know it's a package deal.
+> Full tier uses the same CSS/JS/Islands defaults as standard. The additions are Worker, KV, and cron.
+> **Substitutions:** The stack is chosen as a unit. Swapping one piece (e.g., CF Pages → Vercel) changes the proxy, cache, and deployment story — it's a package deal. If you need different defaults, say so now; the scaffold adapts.
 
 Confirm or adjust, then proceed.
 
 ### Step 6: Content Security Policy
 
-Generate a CSP tailored to the data source and stack decisions. CSP is delivered via `<meta>` tag in the HTML `<head>` (not via Worker header — avoids coupling static site security to Worker availability).
+Generate a CSP tailored to the data source and stack. Delivered via `<meta>` tag in HTML `<head>` (not Worker header — decouples security from Worker availability).
 
 **CSP per variant:**
 
-| Data Source | `connect-src` | Notes |
-|-------------|---------------|-------|
-| No external data (minimal) | `'self'` | Tightest policy |
-| External API via Worker proxy | `'self'` | Worker is same-origin |
-| External API (keyless, direct) | `'self' https:` | Browser calls API directly |
-| User content (simple-form) | `'self' https:` | May submit to external handler |
-| User content (user-saves-data) | `'self' https:` | May call cloud database (Supabase, Firebase) |
-| Display-only | `'self'` | No runtime fetching |
+| Data Source | `connect-src` |
+|-------------|---------------|
+| No external data (minimal) | `'self'` |
+| External API via Worker proxy | `'self'` (Worker is same-origin) |
+| External API (keyless, direct) | `'self' https:` |
+| User content / display-only | `'self'` or `'self' https:` (depends on external handlers) |
 
 **Base policy (adapt per variant):**
 
@@ -392,40 +340,37 @@ font-src 'self';
 connect-src [per variant above];
 frame-ancestors 'none';
 base-uri 'self';
-form-action 'self' [add external handler domain if simple-form];
+form-action 'self' [add external handler domain if needed];
 ```
 
-> If using an external form handler (Formspree, Netlify Forms), tighten `connect-src` and `form-action` to its specific domain rather than blanket `https:`.
-
-> If using Cloudflare Web Analytics, add `static.cloudflareinsights.com` to `script-src` and `cloudflareinsights.com` to `connect-src`.
+> Tighten `connect-src` and `form-action` to specific domains rather than blanket `https:` when possible. Add analytics domains (e.g., `cloudflareinsights.com`) if using CF Web Analytics.
 
 ### Step 7: Implementation Order
 
-Generate a step-by-step build order. The order matters — each step builds on the previous one. An AI coding assistant should be able to follow this top-to-bottom without jumping between sections.
+Generate a step-by-step build order. Each step builds on the previous. An AI coding assistant should follow this top-to-bottom without jumping between sections.
 
 **Base order (all tiers):**
 
 ```
-1. Scaffold — project structure, config files, design tokens, base layout
-   (Web standards files: robots.txt, sitemap, manifest, favicon — created here)
+1. Scaffold — project structure, config files, design tokens, base layout, web standards files
 2. Mock data — hardcode representative data, build all UI states
    > Checkpoint: Show the user the UI with mock data. Get design approval before
    > connecting real data.
 3. [Data connection step — varies by data source, see below]
    > Checkpoint: Confirm data flows correctly end-to-end before proceeding.
-4. Polish — Lighthouse 90+, accessibility audit, mobile testing, verify all UX
-   states work. Complete the Pre-Ship Checklist before declaring done.
+4. Polish — Lighthouse 90+, accessibility audit, mobile testing, verify all UX states.
+   Complete the Ship Gate before declaring done.
 ```
 
 **Data connection step by source:**
 
 | Data Source | Step 3 |
 |-------------|--------|
-| External API (keyless) | **Connect API** — Wire fetch calls to real API endpoint, handle errors, implement stale-first rendering |
+| External API (keyless) | **Connect API** — Wire fetch calls, handle errors, implement stale-first rendering |
 | External API (keyed) | **Deploy Worker proxy** — API key in Worker secrets, KV cache with TTL, health endpoint |
-| User content (simple-form) | **Form handler** — Connect form to submission endpoint (Formspree, Netlify Forms, or Worker) |
-| User content (user-saves-data) | **Storage backend** — Set up persistence (localStorage for MVP, or D1/Supabase/Firebase for multi-user). Define schema and read/write operations. Then: **Connect storage** — Wire forms to storage, confirm data round-trips (create → read → update → delete) |
-| Display-only | No step 3 needed — content is already in HTML from step 2 |
+| User content (simple-form) | **Form handler** — Connect to submission endpoint |
+| User content (user-saves-data) | **Storage backend** — Set up persistence, define schema, wire CRUD, confirm data round-trips |
+| Display-only | No step 3 — content is already in HTML |
 | Mixed | Combine relevant steps above |
 
 **Full tier additions** (insert between steps 2 and 3):
@@ -435,17 +380,15 @@ Generate a step-by-step build order. The order matters — each step builds on t
 2.6. Cron job — GitHub Actions schedule, data fetch script, KV writes
 ```
 
-**Agent guidance:**
+> **For AI assistants:** Follow the Implementation Order step by step. If any requirement is ambiguous, ask the user — do not assume. Verify design with mock data before connecting real data. Include this guidance in any spec or scaffold produced by this command.
 
-> **For AI assistants:** Follow the Implementation Order step by step. If any requirement is ambiguous, ask the user — do not assume. Verify the design with the user after rendering mock data before connecting real data.
-
-This guidance should be included in any spec or scaffold produced by this command. It prevents AI assistants from making assumptions about data formats, design preferences, or architecture decisions.
+**Testing strategy:** Test the data path (fetch → transform → render), not the component tree. For full tier: test that Worker proxy serves cached data on upstream failure. For user-saves-data: test the CRUD round-trip. For all tiers: verify each UX state from Step 3 renders correctly.
 
 ### Step 8: Scaffold
 
 Generate project files with the decisions from Steps 1-7 baked in. The scaffold must work immediately with mock data — no Cloudflare account needed.
 
-The structure below is representative — the actual scaffold adapts to the conversation. No `normalizer.ts` if the API has a stable schema. No `data-cron.yml` if the data path is live-only. No `worker/` directory if minimal tier. The command shapes the files, not the other way around.
+The structure adapts to the conversation. No `worker/` if minimal tier. No `data-cron.yml` if live-only. The command shapes the files, not the other way around.
 
 **Standard tier structure (representative):**
 
@@ -458,6 +401,7 @@ project-name/
 │   ├── og-image.png          # 1200×630 (social sharing)
 │   ├── robots.txt            # Crawler directives
 │   ├── humans.txt            # Attribution
+│   ├── sitemap.xml           # Generated or static (multi-page)
 │   ├── sw.js                 # Service worker (if PWA)
 │   └── site.webmanifest      # PWA metadata
 ├── src/
@@ -481,7 +425,7 @@ project-name/
 │   └── data.json             # Mock API response for local dev
 ├── package.json
 ├── tsconfig.json
-├── CHANGELOG.md              # Keep a Changelog format from day one
+├── CHANGELOG.md
 └── README.md
 ```
 
@@ -510,14 +454,12 @@ project-name/
 
 **Production lessons baked into the scaffold:**
 
-- `wrangler.toml`: no `[env.dev.vars]` section — it causes interactive prompts in CI. Use `.dev.vars` file locally instead.
-- `deploy.yml`: content-hash comparison to skip no-change deploys. Never deploy locally with dev config — CI is the only deploy path.
-- `deploy.yml`: actions pinned to commit SHAs (supply chain security), not version tags.
-- `worker/src/index.ts`: accepts both GET and HEAD requests. Uptime monitors send HEAD; returning 405 looks like downtime.
-- `ci.yml` and `deploy.yml` are separate workflows. Push doesn't automatically deploy — release-gated deploys mean push != ship.
-- `public/` directory includes go-live files (robots.txt, humans.txt, manifest, favicon placeholders). Replace creative asset placeholders before first deploy.
-- Service worker: network-first for HTML pages (get latest deploy), cache-first for static assets (fonts, CSS, JS). Bump cache version on every release.
-- sessionStorage/localStorage: always wrapped in try-catch (private browsing, storage disabled).
+- `wrangler.toml`: no `[env.dev.vars]` section — causes interactive prompts in CI. Use `.dev.vars` locally.
+- `deploy.yml`: content-hash comparison to skip no-change deploys. Actions pinned to commit SHAs (supply chain security).
+- `worker/src/index.ts`: accept both GET and HEAD requests (uptime monitors send HEAD).
+- `ci.yml` and `deploy.yml` are separate workflows — push ≠ ship.
+- Service worker: network-first for HTML (get latest deploy), cache-first for static assets. Bump cache version on release.
+- sessionStorage/localStorage: always try-catch (private browsing, storage disabled).
 
 **First run:**
 
@@ -526,108 +468,44 @@ npm install && npm run dev    # Standard/full tier
 # or just open index.html     # Minimal tier
 ```
 
-Pages render with mock data. No Cloudflare account needed. Ready for real data integration after design approval.
+Pages render with mock data. No Cloudflare account needed.
 
 ---
 
-## Go-Live Readiness (Phase A exit gate)
+## Ship Gate
 
-The scaffold produces correct HTML structure, meta tags, and discovery files from your decisions. This gate verifies you've customized the placeholders and confirms the Gist is ready for real visitors.
+Single exit gate for Phase A. The scaffold produces correct structure from your decisions — this gate verifies you've customized placeholders and the Gist is ready for visitors.
 
-### Verify the scaffold got it right
+**Verify scaffold output:**
 
-The base layout should already include these from your choices. Confirm, don't re-implement:
+- [ ] `<html lang>`, `<title>`, `<meta description>`, canonical, theme-color match your choices
+- [ ] CSP `<meta>` tag matches your variant from Step 6
+- [ ] Semantic landmarks, one `<h1>` per page, skip-to-content link
+- [ ] OG tags populated (title, description, image, url)
 
-- `<html lang="...">` matches your language choice
-- `<title>` and `<meta name="description">` match your web identity
-- `<meta name="theme-color">` matches your palette
-- `<link rel="canonical">` points to your production URL
-- CSP `<meta>` tag matches your variant from Step 6
-- Semantic landmarks (`<header>`, `<main>`, `<footer>`) structure the page
-- Skip-to-content link present for keyboard users
-- One `<h1>` per page, proper heading hierarchy
+**Replace placeholders:**
 
-### Replace creative asset placeholders
+- [ ] Favicon set (ico + svg + apple-touch-icon) — derived from logo
+- [ ] OG image (1200×630)
+- [ ] App icons for manifest (192×192 + 512×512 PNG)
 
-These are the placeholders the scaffold created. Replace all before first deploy:
+**Quality:**
 
-- Logo mark (SVG) — the favicon and manifest icons derive from this
-- Favicon set (ico + svg + apple-touch-icon) — derived from logo
-- OG image (1200×630) — what people see when your URL is shared
-- App icons for manifest (192×192 + 512×512 PNG)
+- [ ] Lighthouse 90+ (Performance, Accessibility, Best Practices, SEO)
+- [ ] All UX states verified (loading, loaded, error, empty, offline)
+- [ ] Mobile tested (responsive, touch targets 44px+, no horizontal scroll)
+- [ ] Keyboard navigation works, focus indicators visible
+- [ ] `prefers-reduced-motion` and `prefers-color-scheme` respected
+- [ ] WCAG AA contrast ratios met
 
-### Verify social sharing
-
-- `og:title`, `og:description`, `og:image`, `og:url` populated from web identity
-- `twitter:card` set to `summary_large_image`
-- Test with a social sharing debugger before announcing
-
-### Verify discovery files
-
-- **robots.txt** — allows crawling, references sitemap
-- **sitemap.xml** — generated by framework (Astro: `@astrojs/sitemap`, Hugo: built-in) or static file
-- **humans.txt** — project name, tech stack, last updated
-- **site.webmanifest** — name, icons, theme_color, background_color from design choices
-
-### Framework reference
-
-| Concern | Astro | Hugo | Vanilla HTML |
-|---------|-------|------|--------------|
-| Sitemap | `@astrojs/sitemap` | Built-in | Static file |
-| Meta tags | In layout `<head>` | In `baseof.html` | In `<head>` |
-| 404 page | `src/pages/404.astro` | `layouts/404.html` | `404.html` |
-| Manifest | `public/site.webmanifest` | `static/site.webmanifest` | `site.webmanifest` |
-| Favicon | `public/` directory | `static/` directory | Root directory |
-| Routing | File-based (`src/pages/`) | File-based (`content/`) | Manual links |
-
----
-
-## Pre-Ship Checklist
-
-Before declaring done, verify these. This is the exit gate for the Implementation Order's "Polish" step.
-
-### Security (6 items)
+**Security:**
 
 - [ ] No secrets in frontend code (API keys in Worker secrets only)
-- [ ] CSP meta tag present and correct for your variant
-- [ ] No `innerHTML` with dynamic content (use `textContent` or DOM APIs)
-- [ ] Form inputs validated at boundaries
+- [ ] DOM safety enforced (see Trust Boundaries)
 - [ ] External data sanitized before rendering
 - [ ] Dependencies audited (`npm audit`)
 
-### Web Standards (verify scaffold produced these)
-
-- [ ] `<html lang>` set correctly
-- [ ] `<meta charset="utf-8">` present
-- [ ] `<meta name="viewport">` present
-- [ ] `<title>` and `<meta name="description">` set
-- [ ] `<link rel="canonical">` points to production URL
-- [ ] `<meta name="theme-color">` matches palette
-- [ ] OG tags populated (title, description, image, url)
-- [ ] Semantic HTML landmarks (header, main, footer)
-- [ ] One `<h1>` per page, proper heading hierarchy
-- [ ] Skip-to-content link present
-- [ ] robots.txt, sitemap.xml, humans.txt, site.webmanifest present
-- [ ] Favicon set (ico + svg + apple-touch-icon) replaced from placeholders
-- [ ] OG image (1200×630) replaced from placeholder
-- [ ] All images have `alt` text
-- [ ] Touch targets 44px minimum
-- [ ] WCAG AA contrast ratios met
-
-### Accessibility
-
-- [ ] Keyboard navigation works for all interactive elements
-- [ ] Focus indicators visible
-- [ ] `aria-label` or `aria-describedby` on controls without visible text
-- [ ] `prefers-reduced-motion` respected (no animation for users who opt out)
-- [ ] `prefers-color-scheme` dark mode works correctly
-
-### Release Readiness
-
-- [ ] Lighthouse score 90+ (Performance, Accessibility, Best Practices, SEO)
-- [ ] All UX states verified (loading, loaded, error, empty, offline)
-- [ ] Mobile tested (responsive, touch targets, no horizontal scroll)
-- [ ] CHANGELOG.md created ([Keep a Changelog](https://keepachangelog.com/) format)
+**Discovery files present:** robots.txt, sitemap.xml, humans.txt, site.webmanifest
 
 ---
 
@@ -646,28 +524,22 @@ Generate `docs/setup.md` with paste-able commands. Each step is one command with
 - Sign up at dash.cloudflare.com (free plan)
 - Install Wrangler: `npm install -g wrangler`
 - Login: `wrangler login`
-  Expected: browser opens, authorize, "Successfully logged in"
 
 ### 2. KV Namespace (standard/full tier only)
 - Create: `wrangler kv namespace create "CACHE"`
-  Expected: prints namespace ID
 - Create preview: `wrangler kv namespace create "CACHE" --preview`
-  Expected: prints preview namespace ID
 - Update wrangler.toml with both IDs
 
-### 3. API Secrets (if your data source needs an API key)
+### 3. API Secrets (if keyed-api)
 - Set secret: `wrangler secret put API_KEY`
-  Expected: prompts for value, confirms "Success"
-- Add to GitHub: repo Settings → Secrets → `CF_API_TOKEN`
-  (Create token at dash.cloudflare.com/profile/api-tokens)
+- GitHub: repo Settings → Secrets → `CF_API_TOKEN`
 
 ### 4. GitHub Actions
-- Enable Actions in repo Settings → Actions → General
+- Enable Actions in repo Settings
 - Add secrets: `CF_API_TOKEN`, `CF_ACCOUNT_ID`
 
-### 5. DNS (optional — skip for *.pages.dev default)
+### 5. DNS (optional — skip for *.pages.dev)
 - Custom domain: Pages → Custom domains → Add
-- CNAME subdomain (easy) or apex (needs registrar redirect)
 ```
 
 ### Step 10: First Deploy
@@ -680,123 +552,41 @@ CI runs. Pages deploy. Worker deploy (if applicable). Verify:
 
 - Pages serve at `project-name.pages.dev`
 - Worker proxies at `project-name.workers.dev/api/...` (if applicable)
-- Cron runs on schedule (if applicable)
 - `/health` returns 200 on both GET and HEAD (if Worker deployed)
+- Cron runs on schedule (if applicable)
 
-### Post-Deployment
-
-Verify after deploying, then establish ongoing practices:
-
-- [ ] Live URL loads and core functionality works
-- [ ] Analytics active (CF Web Analytics — free, built-in, privacy-first)
-- [ ] Pin to API version if available — external APIs change without notice
-- [ ] GitHub Actions cron runs successfully (if applicable) — failed crons mean stale data
-- [ ] First release tagged with semver (`git tag -a v1.0.0 -m "Initial release"`)
+**Post-deploy:** Enable CF Web Analytics (free, privacy-first). Pin API versions if available. Tag first release (`git tag -a v1.0.0 -m "Initial release"`). For Worker observability, the CF Workers dashboard shows request counts, errors, and latency.
 
 ---
 
 ## Budget Math
 
-Calculate for the user during Step 2. This is the #1 failure mode — exceeding free tier limits.
+Calculate during Step 2. Exceeding free tier limits is the #1 failure mode.
 
-### Formula
+**Formula:**
 
 ```
 API hits/day = (active_hours * 60 / kv_ttl_minutes) + cron_runs
 ```
 
-### Free tier headroom
+**Free tier headroom:**
 
-| Resource | Free Tier | This App | Headroom |
-|----------|-----------|----------|----------|
-| Workers requests | 100K/day | [calculated] | [remaining] |
-| KV reads | 100K/day | [calculated] | [remaining] |
-| KV writes | 1K/day | [calculated] | [remaining] |
-| KV storage | 1 GB | [estimated] | [remaining] |
-| Pages builds | 500/month | [calculated] | [remaining] |
-| GH Actions | 2K min/month | [calculated] | [remaining] |
-| D1 rows (if user-saves-data) | 5M rows free | [estimated] | [remaining] |
-| Supabase (if user-saves-data) | 500MB free | [estimated] | [remaining] |
+| Resource | Free Tier | Notes |
+|----------|-----------|-------|
+| Workers requests | 100K/day | Exceeding returns 1015 errors (visible to users) |
+| KV reads | 100K/day | Exceeding returns errors (visible) |
+| KV writes | 1K/day | **Exceeding fails silently** — always check put() response |
+| KV storage | 1 GB | |
+| Pages builds | 500/month | |
+| GH Actions | 2K min/month | |
+| D1 rows (if user-saves-data) | 5M read, 100K written/day | |
+| Supabase (if user-saves-data) | 500MB storage, 2GB bandwidth/month | |
 
-> **Sharing a CF account across apps?** KV writes (1K/day) are shared across all apps on the account. Divide the limit by your app count.
+> Sharing a CF account across apps? KV writes (1K/day) are shared. Divide by app count.
 
-### Free tier failure modes
+**Active window refinement:** Usage pattern global (24h) or regional (e.g., 14h)? Fewer active hours = fewer API hits. Factor this into the formula.
 
-Know what happens when you exceed limits:
-
-| Resource | What Happens | Visibility |
-|----------|-------------|------------|
-| Workers requests (100K/day) | 1015 errors returned | Visible to users |
-| KV reads (100K/day) | Errors returned | Visible to users |
-| KV writes (1K/day) | 429 errors — **silent if you don't check put() response** | Invisible unless you check |
-| Pages builds (500/month) | Builds queue and may time out | Visible in dashboard |
-| GH Actions (2K min/month) | Workflows stop running | Visible in GitHub |
-
-**Critical:** Always check KV write responses. If your Worker doesn't check the KV put response, stale data keeps being served and you won't know your cron updates stopped landing.
-
-### Production cache lessons
-
-- **Two-tier cache** (edge response cache + KV storage) prevents thundering herd across Cloudflare's 200+ PoPs. Set edge TTL shorter than KV TTL — edge serves stale while one PoP refreshes from KV.
-- **Set `expirationTtl` on every KV put.** Without it, stale entries live forever if your cron stops or your key format changes.
-- **Validate API response shape before caching.** If the upstream API changes its schema, you want to fail at write time, not serve corrupt cached data.
-- **Cloudflare WAF rate limiting is a paid feature.** Don't investigate it — the built-in cache layers are sufficient for read-heavy patterns.
-
-### Budget math for user-saves-data
-
-If the app persists user data to a database, include database limits:
-
-| Provider | Free Tier | Limit Type |
-|----------|-----------|------------|
-| Cloudflare D1 | 5M rows read, 100K rows written/day | Per day |
-| Supabase | 500MB storage, 2GB bandwidth/month | Per month |
-| Firebase (Firestore) | 50K reads, 20K writes/day | Per day |
-
----
-
-## Observability
-
-### Minimal / Standard tier (no Worker)
-
-- Hosting provider analytics cover page views (CF Web Analytics: free, built-in, privacy-first)
-- For funnel tracking (action → conversion), add custom events via `navigator.sendBeacon()` to an external endpoint
-- Errors: `console.error()` with context. For production visibility, consider a free error tracker (Sentry free tier: 5K events/month)
-
-### Full tier (with Worker)
-
-All of the above, plus:
-
-- **Health endpoint:** Add a `/health` route to your Worker returning `ok` (for uptime monitoring). Accept both GET and HEAD requests.
-- **Worker analytics:** CF Workers dashboard shows request counts, errors, latency
-
----
-
-## Stack Rationale (Reference)
-
-Why these defaults as a unit:
-
-**Cloudflare (Pages + Workers + KV):** Single vendor means one authentication flow, one dashboard, one billing page (free), and same-origin advantage between Pages and Workers. KV is globally replicated with no configuration.
-
-**Astro (standard+ tier):** Islands architecture means zero JavaScript ships by default. Interactive components hydrate individually. Perfect for apps where most content is static. File-based routing eliminates manual route configuration.
-
-**Vanilla CSS (all tiers):** Custom properties (`--color-primary`, `--space-md`) provide design tokens without build tooling. `prefers-color-scheme` handles dark mode. Mobile-first with minimal media queries. No Tailwind tax on bundle size or learning curve.
-
-**Vanilla TypeScript (all tiers):** Strict mode, no `any`. Types in a single `types.ts` file. No framework runtime overhead for simple interactions. Astro components handle templating; vanilla TS handles logic.
-
-**GitHub Actions:** Native cron for data refresh. Same platform as the repo. Free tier (2K minutes/month) is generous for CI + scheduled data fetches.
-
-**The unit matters more than any piece.** Swapping one component is fine if you swap its dependencies too. The command warns about cascading changes in Step 5.
-
-### Lightweight Libraries (when needed)
-
-For minimal tier multi-page apps, consider:
-
-- [tinyrouter.js](https://github.com/knadh/tinyrouter.js) (~950 B) — Frontend routing for multi-page navigation
-
-For standard+ tier apps with external data that needs offline caching:
-
-- [indexed-cache.js](https://oat.ink/other-libs/) — IndexedDB caching for offline-friendly data
-
-> From [oat.ink/other-libs](https://oat.ink/other-libs/) — tiny, zero-dependency libraries. Only add if you genuinely need the capability.
+**Cache guidance:** Two-tier cache (edge response + KV) prevents thundering herd. Set edge TTL shorter than KV TTL. Always set `expirationTtl` on KV puts — without it, stale entries live forever if your cron stops. Validate API response shape before caching — fail at write time, not when serving corrupt data.
 
 ---
 
@@ -810,14 +600,11 @@ For standard+ tier apps with external data that needs offline caching:
 | Use `[env.dev.vars]` in wrangler.toml | Use `.dev.vars` file (not committed) |
 | Deploy from local machine | CI is the only deploy path |
 | Set up CF account before writing code | Scaffold works with mocks — deploy when ready |
-| Build a framework or CLI tool | This is a thinking tool that produces a scaffold |
-| Ship with placeholder favicon and OG image | Replace before go-live — they're the first thing people see when sharing |
-| Use `innerHTML` with dynamic content | Use `textContent` or DOM APIs — no exceptions |
-| Skip the Pre-Ship Checklist | It's the exit gate. Complete it before declaring done. |
-| Connect real data before design approval | Mock data first, get visual sign-off, then wire up real data |
+| Ship with placeholder favicon and OG image | Replace before go-live |
+| Connect real data before design approval | Mock data first → visual sign-off → wire up real data |
 | Assume the AI assistant knows your preferences | Be explicit in specs — design vibe, error copy, UX states |
+| Use `innerHTML` with dynamic content | Use `textContent` or DOM APIs (see Trust Boundaries) |
 | Default to Tailwind/Preact for simple apps | Start vanilla. Add tools when vanilla isn't enough. |
-| Deliver CSP via Worker header | Use `<meta>` tag — decouples security from Worker availability |
 
 ---
 
@@ -828,8 +615,7 @@ For standard+ tier apps with external data that needs offline caching:
 - `/pb-patterns-cloud` — Cloud deployment patterns reference
 - `/pb-design-language` — Deeper design system work (optional, after scaffold)
 - `/pb-calm-design` — Calm design principles (Gists embody these by default)
-- `/pb-plan` — Focus area planning (for multi-phase work after scaffold)
 
 ---
 
-*Opinionated about topology. Flexible about content. Calm by default. $0/month is a feature, not a constraint. The spec is the product — make it correct, coherent, and followable top-to-bottom.*
+*Opinionated about topology. Flexible about content. Calm by default. $0/month is a feature, not a constraint.*
