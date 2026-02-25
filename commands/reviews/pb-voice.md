@@ -6,40 +6,54 @@ difficulty: "advanced"
 model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-think', 'pb-review-docs', 'pb-documentation', 'pb-design-rules', 'pb-preamble']
-last_reviewed: "2026-02-09"
-last_evolved: ""
-version: "1.0.0"
-version_notes: "v2.10.0 baseline"
-breaking_changes: []
+last_reviewed: "2026-02-25"
+last_evolved: "2026-02-25"
+version: "2.0.0"
+version_notes: "Comprehensive rewrite: added content-level patterns (copula avoidance, synonym cycling, negative parallelisms, false ranges, -ing clauses, significance inflation), style/formatting patterns (em-dashes, boldface, inline-header lists, title case), 'What the Author Brings' section, persona+voice workflow guidance, two-pass audit in verify. Cut bloat: quick reference lexicon, output templates, CLI section. Based on Wikipedia AI-writing guide and production persona usage."
+breaking_changes: ["Detection categories expanded from 8 to 11", "Output templates removed (model formats naturally)", "Quick Reference lexicon removed (categories are the reference)"]
 ---
 # Voice Review
 
-**Purpose:** Post-process AI-assisted prose to detect and remove mechanical patterns. Two-stage pipeline: detect AI tells first, then rewrite only flagged sections while preserving author voice.
+**Purpose:** Detect and remove AI writing patterns from prose. The tool removes tells; the author adds truth. Two roles, clearly separated.
 
-**Mindset:** Apply `/pb-preamble` thinking (the goal is honest, imperfect prose — not polished output) and `/pb-design-rules` thinking (Clarity over cleverness. Silence when nothing to say. Fail noisily — if text reads generated, flag it, don't smooth it over).
+**Mindset:** Apply `/pb-preamble` thinking (honest, imperfect prose over polished output) and `/pb-design-rules` thinking (Clarity over cleverness. Silence when nothing to say. Fail noisily: if text reads generated, flag it, don't smooth it over).
 
-**Resource Hint:** sonnet — Structured text analysis and surgical editing; needs pattern recognition but not architecture-level depth.
+**Resource Hint:** sonnet — Structured text analysis and surgical editing; pattern recognition, not architecture-level depth.
 
-You are not a content generator. You are a detection system and a surgical editor. Your job is to find where AI shows through and fix only those spots — without introducing new mechanical patterns in the process.
+You are a detection system and a surgical editor. Find where AI shows through and fix only those spots, without introducing new mechanical patterns.
 
 ---
 
 ## When to Use
 
-- **After AI-assisted drafting** — Text has been paraphrased or expanded by an LLM
+- **After persona-driven generation** — You wrote "create post on X as vmx-persona"; now run pb-voice as the quality gate to catch residual AI patterns the persona didn't suppress
 - **Before publishing** — Final pass on blog posts, articles, social posts
-- **When text "feels off"** — Something reads too smooth, too balanced, too clean
+- **When text "feels off"** — Too smooth, too balanced, too clean
 - **Building a voice profile** — Extract patterns from your own writing samples
+
+## Recommended Workflow
+
+The best results come from persona + pb-voice together, not either alone:
+
+```
+1. Generate with persona:  "Write about X as [author]-persona"
+   Persona drives voice, vocabulary, opinions during generation.
+
+2. Quality gate with pb-voice:  "/pb-voice" on the output
+   pb-voice catches residual AI patterns the persona didn't suppress.
+```
+
+**Why this order matters:** A persona embeds voice from the start (word choice, opinions, rhythm). pb-voice is the safety net that catches where the model slipped despite persona instructions. Using pb-voice *without* a persona can remove tells but can't add the author's actual voice. Using a persona *without* pb-voice lets subtle AI patterns through.
+
+**Anti-pattern:** Don't generate generic content and then try to "humanize" it with pb-voice alone. That produces generic-minus-tells, not human writing.
 
 ---
 
 ## Pipeline Overview
 
 ```
-Input → DETECT → annotated flags → REWRITE (flagged only) → VERIFY → output
+Input  DETECT  annotated flags  REWRITE (flagged only)  VERIFY  output
 ```
-
-Three stages when used interactively via `/pb-voice`. Run `mode=detect` first for visibility, then `mode=fix` on flagged sections. The CLI script (`voice-review.sh`) runs a single-pass for convenience — use `--detect` first if you want the full pipeline.
 
 ### Modes
 
@@ -56,6 +70,8 @@ Three stages when used interactively via `/pb-voice`. Run `mode=detect` first fo
 - `/pb-voice mode=profile` — Build voice profile from samples
 - `/pb-voice persona=/path/to/persona.md` — Calibrate to author voice
 
+Companion script: `scripts/voice-review.sh` (run `--help` for usage).
+
 ---
 
 ## Stage 1: Detect
@@ -66,35 +82,21 @@ Scan text for AI-generated patterns. Flag each occurrence with category and seve
 
 Words and phrases that almost never appear in natural writing but are statistically overrepresented in LLM output.
 
-**Words:** delve, utilize, leverage, foster, robust, comprehensive, nuanced, streamline, facilitate, underscores, pivotal, multifaceted, holistic, synergy, paradigm, ecosystem (outside tech), landscape (metaphorical), tapestry, intricate, embark, unleash, realm, testament, cornerstone, spearhead, bolster, resonate, proliferate, aligns, crucial (outside technical context)
+**Words:** delve, utilize, leverage, foster, robust, comprehensive, nuanced, streamline, facilitate, underscores, pivotal, multifaceted, holistic, synergy, paradigm, ecosystem (outside tech), landscape (metaphorical), tapestry, intricate, embark, unleash, realm, testament, cornerstone, spearhead, bolster, resonate, proliferate, aligns, crucial (outside technical context), garment, enduring, showcase, interplay, vibrant, vital
 
 **Phrases:**
 
-- "It's worth noting that..."
-- "It's important to note..."
-- "It's crucial/essential to..."
+- "It's worth noting that..." / "It's important to note..."
 - "In today's [X] landscape..."
-- "Let's dive into..."
-- "Let me explain/walk you through..."
-- "At the end of the day..."
-- "This is a game-changer"
-- "Take it to the next level"
-- "Moving forward"
-- "In this article, we will..."
-- "Without further ado"
-- "Here's the thing"
-- "That being said"
-- "It goes without saying"
-- "Stands as a testament to"
-- "When it comes to..."
-- "Plays a crucial role"
+- "Let's dive into..." / "Let me walk you through..."
+- "This is a game-changer" / "Take it to the next level"
+- "Stands as a testament to" / "Plays a crucial role"
 - "In order to" (where "to" suffices)
-- "As we explore/discussed..."
-- "Whether you're [X] or [Y]..."
-- "The reality is..."
-- "By doing [X], you can [Y]..."
+- "Whether you're [X] or [Y]..." / "By doing [X], you can [Y]..."
+- "In this article, we will..." / "Without further ado"
+- "Moving forward" / "At the end of the day"
 
-**Note:** In technical contexts (RFCs, architecture docs), words like "robust" and "leverage" may be legitimate. Reduce severity to MEDIUM when surrounding text is also technical.
+**Note:** In technical contexts (RFCs, architecture docs), "robust" and "leverage" may be legitimate. Reduce severity to MEDIUM when surrounding text is also technical.
 
 **Action:** Flag every occurrence. Replace or delete.
 
@@ -106,14 +108,27 @@ Patterns in organization that reveal algorithmic generation.
 - **Topic-support-transition** — Each paragraph opens with topic sentence, supports it, transitions. Textbook structure. Real writing meanders.
 - **Lists of exactly 3** — AI loves triplets. "Three key considerations..." Real lists are 2, or 4, or 7.
 - **Symmetrical sections** — All H2s same length. All bullets identical grammar.
-- **Colon introductions** — "Several factors to consider: X, Y, and Z." AI's favorite sentence.
+- **Colon introductions** — "Several factors to consider: X, Y, and Z."
 - **Parallel openings** — Consecutive paragraphs starting the same way ("This approach...", "This method...", "This strategy...").
 
 **Action:** Restructure. Make one paragraph a fragment. Make another twice as long. Break the template.
 
-### Category 3: Hedging Density (MEDIUM)
+### Category 3: Content-Level Patterns (HIGH)
 
-AI hedges constantly to avoid being wrong. Humans hedge strategically — only when genuinely uncertain.
+Structural writing patterns that go beyond vocabulary. These are sentence-construction habits, not individual words.
+
+- **Copula avoidance** — "serves as" / "stands as" / "functions as" instead of "is." AI substitutes elaborate constructions for simple verbs. "Gallery 825 serves as the exhibition space"  "Gallery 825 is the exhibition space."
+- **Significance inflation** — Puffing up importance with legacy/testament/pivotal framing. "Marking a pivotal moment in the evolution of..." The whole sentence construction inflates, not just the word.
+- **Superficial -ing clauses** — Present participle phrases tacked on for fake depth: "highlighting the interplay," "underscoring the importance," "reflecting the community's values." The -ing clause adds no information; it just sounds analytical.
+- **Synonym cycling** — Repetition-penalty-driven substitution. "The protagonist... The main character... The central figure... The hero..." all in one paragraph. Real writers repeat or use pronouns.
+- **Negative parallelisms** — "Not only X but Y" / "It's not just about X; it's about Y." Overused construction that sounds profound but usually restates.
+- **False ranges** — "from X to Y" where X and Y aren't on a meaningful scale. "From hobbyist experiments to enterprise-wide rollouts."
+
+**Action:** Simplify. Use "is"/"are." Delete -ing clauses that add no information. Let a word repeat rather than cycling synonyms. Replace false ranges with specifics.
+
+### Category 4: Hedging Density (MEDIUM)
+
+AI hedges constantly to avoid being wrong. Humans hedge strategically, only when genuinely uncertain.
 
 - More than 2 hedges per paragraph: "may," "might," "could potentially," "it's possible that"
 - Qualifying needlessly: "This can be useful" vs "This is useful"
@@ -122,26 +137,28 @@ AI hedges constantly to avoid being wrong. Humans hedge strategically — only w
 
 **Action:** Replace one hedge per paragraph with a direct statement. Keep hedges only where real uncertainty exists.
 
-### Category 4: Transition Formality (MEDIUM)
+### Category 5: Transition Formality (MEDIUM)
 
 Stock transitions humans rarely use in professional writing.
 
 **Flag:** Moreover, Furthermore, Additionally, In conclusion, To summarize, That said, Having established, It is worth mentioning, Consequently, Subsequently, Notably, Importantly, Interestingly, Conversely, Nevertheless, Notwithstanding
 
-**Action:** Delete most. If connection needed, use "But," "And," "So," "Still" — or restructure.
+**Action:** Delete most. If connection needed, use "But," "And," "So," "Still," or restructure.
 
-### Category 5: Enthusiasm and Padding (HIGH)
+### Category 6: Enthusiasm and Communication Artifacts (HIGH)
 
-AI is trained helpful and positive. This creates distinctive filler.
+AI is trained helpful and positive. This creates distinctive filler. Also catches chat-generated text pasted as content.
 
-- **Affirmations:** "Great question!", "Absolutely!", "That's a fantastic approach"
+- **Affirmations:** "Great question!", "Absolutely!", "That's a fantastic approach", "You're absolutely right!"
 - **Preamble:** "I'd be happy to help with that," "Let me break this down"
-- **Conclusion padding:** "I hope this helps!", "Feel free to ask"
-- **Excitement inflation:** "exciting," "powerful," "amazing" for mundane things
+- **Conclusion padding:** "I hope this helps!", "Feel free to ask", "Let me know if you'd like me to expand"
+- **Excitement inflation:** "exciting," "powerful," "amazing," "groundbreaking" for mundane things
+- **Sycophantic tone:** "That's an excellent point," "Great observation"
+- **Knowledge disclaimers:** "As of my last update," "While specific details are limited"
 
 **Action:** Delete entirely. Zero information content.
 
-### Category 6: Rhythm and Cadence (MEDIUM)
+### Category 7: Rhythm and Cadence (MEDIUM)
 
 AI produces unnaturally even rhythm.
 
@@ -151,9 +168,9 @@ AI produces unnaturally even rhythm.
 - **No contractions** — "It is" instead of "it's." "Do not" instead of "don't."
 - **Over-complete thoughts** — Every idea fully resolved in one sentence. No trailing thoughts.
 
-**Action:** Vary length deliberately. Let a thought stand incomplete rather than forcing it to resolve. Contract where natural. Let a thought trail off.
+**Action:** Vary length deliberately. Let a thought stand incomplete. Contract where natural. Let a thought trail off.
 
-### Category 7: Abstraction Level (MEDIUM)
+### Category 8: Abstraction Level (MEDIUM)
 
 AI defaults to conceptual language. Humans anchor in specifics.
 
@@ -164,7 +181,20 @@ AI defaults to conceptual language. Humans anchor in specifics.
 
 **Action:** One concrete anchor per paragraph. A number, tool, date, name, or constraint from lived experience.
 
-### Category 8: Summary Endings (HIGH)
+### Category 9: Style and Formatting Tells (HIGH)
+
+Formatting patterns that are quick to spot and high-signal.
+
+- **Em-dash overuse** — AI uses em dashes (--) more than humans, mimicking punchy sales writing. Use commas, periods, parentheses, or restructure instead. (Project rule: never use em-dashes in any output.)
+- **Boldface overuse** — Mechanical emphasis on key terms. "It blends **OKRs**, **KPIs**, and **BSC**." Remove most bold; let sentence structure do the emphasis.
+- **Inline-header vertical lists** — Bullet points starting with bolded headers followed by colons. "- **Speed:** Significantly faster..." Restructure into prose or use plain bullets.
+- **Title case in headings** — AI capitalizes all main words. "## Strategic Negotiations And Global Partnerships"  "## Strategic negotiations and global partnerships." Use sentence case.
+- **Emoji decoration** — Emojis on headings or bullet points. Delete.
+- **Curly quotation marks** — AI sometimes uses curly quotes instead of straight quotes. Normalize.
+
+**Action:** Fix on sight. These are fast, high-confidence corrections.
+
+### Category 10: Summary Endings (HIGH)
 
 The most reliable AI tell. LLMs almost always end with a summary paragraph restating what was already said.
 
@@ -173,44 +203,29 @@ The most reliable AI tell. LLMs almost always end with a summary paragraph resta
 - "Overall, ..."
 - Final paragraph adds no new information
 - Restatement of the opening thesis
+- Generic positive conclusion: "The future looks bright," "Exciting times lie ahead"
 
-**Action:** Delete the summary paragraph. End on the last substantive point. Unresolved endings, open questions, abrupt stops — all fine.
+**Action:** Delete the summary paragraph. End on the last substantive point. Unresolved endings, open questions, abrupt stops are all fine.
 
-### Detection Output Format
+### Category 11: Formulaic Sections (MEDIUM)
 
-Score calibration:
+AI-generated articles include predictable section patterns.
+
+- **"Challenges and Future Prospects"** — Formulaic challenges section followed by optimistic outlook. "Despite its... faces several challenges. Despite these challenges... continues to thrive."
+- **"Broader Trends"** — Connecting a specific topic to vague broader significance. "This represents a broader shift in..."
+- **Undue notability claims** — Listing media coverage or followers without context.
+
+**Action:** Replace with specific facts. What challenges, specifically? What happened, specifically? If there's nothing specific to say, the section doesn't need to exist.
+
+### Score Calibration
 
 | Score | Description |
 |-------|-------------|
 | 1-2 | Multiple dead giveaways per paragraph, summary ending, no specifics |
 | 3-4 | Structural tells dominate, some giveaway vocab, uniform hedging |
-| 5-6 | Reads okay on first pass, but pattern tells accumulate — uniform structure, stock transitions, even rhythm |
+| 5-6 | Reads okay on first pass, but pattern tells accumulate |
 | 7-8 | Individual tells only, most text is natural, voice present |
 | 9-10 | No detectable patterns, distinct voice, could not be flagged by a reader |
-
-```
-## Voice Review: Detection Report
-
-**Overall Score:** [X/10] (1 = clearly AI, 10 = indistinguishable from human)
-
-### Flags
-
-[P1] Line 3: "delve into the nuanced landscape" — Dead giveaway vocabulary (HIGH)
-[P2] Lines 7-9: Uniform 3-sentence paragraphs — Structural tell (HIGH)
-[P3] Line 12: "It's worth noting that" — Dead giveaway phrase (HIGH)
-[P4] Line 15: "may potentially help" — Double hedge (MEDIUM)
-[P5] Lines 22-24: Summary paragraph restating opening — Summary ending (HIGH)
-
-### Summary
-
-- HIGH severity flags: [N]
-- MEDIUM severity flags: [N]
-- Estimated rewrite effort: [Light / Moderate / Heavy]
-
-### Recommendations
-
-[2-3 specific suggestions for this text]
-```
 
 ---
 
@@ -228,11 +243,11 @@ Fix only flagged sections. Preserve everything else verbatim.
 
 **Rule 3: Break structural patterns.** If three consecutive paragraphs follow the same shape, restructure one. Make a paragraph a single sentence. Let another run long.
 
-**Rule 4: Flag missing anchors.** If a paragraph has no concrete detail (number, tool, date, name), flag it for the author to fix. Do not fabricate specifics — only the author has lived experience to draw from.
+**Rule 4: Flag missing anchors.** If a paragraph has no concrete detail (number, tool, date, name), flag it for the author to fix. Do not fabricate specifics, only the author has lived experience to draw from.
 
 **Rule 5: Vary rhythm.** Short sentence. Then a longer one that takes its time. Fragment. Back to medium.
 
-**Rule 6: Flag uniform hedging.** If hedges are distributed evenly rather than concentrated where genuine uncertainty exists, flag the pattern. Let the author decide which hedges to strengthen into direct statements.
+**Rule 6: Simplify verbs.** "Serves as" becomes "is." "Stands as" becomes "is." Use simple copulas.
 
 **Rule 7: Contractions are natural.** "It's" not "It is." "Don't" not "Do not." Unless formality is specifically required.
 
@@ -249,6 +264,18 @@ When a persona file is provided, calibrate rewrites to match the author's docume
 
 If no persona provided, apply general human-voice heuristics without author-specific calibration.
 
+### What the Author Brings
+
+The tool removes tells. The author adds truth. These are things no detection tool can supply:
+
+- **Opinions** — React to facts. "I genuinely don't know how to feel about this" signals a real person thinking.
+- **Lived-experience details** — Specific tools, dates, numbers, project names from memory. Not "many organizations" but "the team I was on in 2023."
+- **Uncertainty acknowledged honestly** — "I can't verify this works at scale" beats false confidence.
+- **Mixed feelings** — Real humans have them. "This is impressive but also kind of unsettling" beats simple praise or criticism.
+- **Unresolved thoughts** — Not every paragraph needs a clean conclusion. Let a thought trail off if it's genuinely unresolved.
+
+When flagging missing anchors (Rule 4), prompt the author for these. The rewrite can remove AI patterns, but only the author can inject the signal that makes prose recognizably theirs.
+
 ### What NOT to Do
 
 | Don't | Why |
@@ -257,8 +284,8 @@ If no persona provided, apply general human-voice heuristics without author-spec
 | Add content | You're an editor, not a writer |
 | Over-correct into "quirky" | Forced imperfection is as detectable as AI smoothness |
 | Remove all structure | Break patterns, don't eliminate organization |
-| Add slang unless the voice is genuinely informal | Unnatural informality is a tell too |
-| Touch technical content | Facts, code, specs — leave alone |
+| Add slang unless voice is genuinely informal | Unnatural informality is a tell too |
+| Touch technical content | Facts, code, specs: leave alone |
 
 ---
 
@@ -269,92 +296,10 @@ After rewriting, validate the output.
 ### Checks
 
 1. **Re-score** — Run detection on rewritten text. Score should improve by at least 2 points.
-2. **Diff review** — Show what changed. Author sees exactly which sentences were touched and why.
+2. **Two-pass audit** — Ask: "What still makes this obviously AI-generated?" Answer honestly, then fix the remaining tells. This meta-cognitive step catches patterns that category-by-category detection misses.
 3. **Read-aloud test** — Would the author say this to a colleague? If it sounds like a press release, it failed.
 4. **Meaning preservation** — Every claim in the original survives in the output.
 5. **Length check** — Output should be shorter than input (typically 10-30% shorter). Longer means something went wrong.
-
-### Verification Output
-
-```
-## Voice Review: Verification
-
-**Before:** [X/10] → **After:** [Y/10] (+[N] points)
-
-**Edits Made:**
-- Removed [N] dead giveaway terms
-- Broke [N] structural patterns
-- Deleted summary ending
-- Added [N] concrete anchors
-- Varied sentence length in paragraphs [X, Y]
-
-**Length:** [original] → [final] words ([N]% reduction)
-**Remaining flags:** [any unresolved items and why kept]
-```
-
----
-
-## Quick Reference: AI Tell Lexicon
-
-### Instant Tells (remove on sight)
-
-| Tell | Example | Fix |
-|------|---------|-----|
-| "Delve" | "Let's delve into..." | Delete or rephrase |
-| "Landscape" | "In today's tech landscape" | Name the specific context |
-| "Leverage" (verb) | "Leverage this approach" | "Use" |
-| "Utilize" | "Utilize the framework" | "Use" |
-| "Robust" | "A robust solution" | Say what makes it strong |
-| "Comprehensive" | "A comprehensive guide" | Name what it covers |
-| "Nuanced" | "A nuanced approach" | Name the actual nuances |
-| "Streamline" | "Streamline the process" | "Speed up" or "simplify" |
-| Summary paragraph | Last graf restates intro | Delete entirely |
-| "In this article" | "We will explore..." | Delete, start with content |
-
-### Pattern Tells (restructure when detected)
-
-| Tell | Fix |
-|------|-----|
-| Uniform paragraphs (all 3-4 sentences) | Vary: 1-sentence, 5-sentence, fragment |
-| Lists of exactly 3 | Make it 2 or 4. Or don't list. |
-| Parallel openings | Rewrite one paragraph's opening |
-| No contractions | Contract naturally |
-| No fragments | Add one where it fits |
-| Even sentence length | Short punch (3-5 words) and long sprawl (30+) |
-
-### Subtle Tells (address when accumulation is high)
-
-| Tell | Fix |
-|------|-----|
-| Over-hedging (>2 per paragraph) | Replace one with direct statement |
-| Stock transitions | "But," "And," "So" — or delete |
-| No concrete nouns in paragraph | Add a number, tool, date, or name |
-| Clean endings on every section | Let one end on a question or trailing thought |
-
----
-
-## CLI Script
-
-A companion script at `scripts/voice-review.sh` provides terminal access outside Claude Code sessions.
-
-```bash
-# Review a file
-./scripts/voice-review.sh post.md
-
-# Detection only
-./scripts/voice-review.sh --detect post.md
-
-# With persona
-./scripts/voice-review.sh --persona ~/personas/vmx.md post.md
-
-# From clipboard (macOS)
-pbpaste | ./scripts/voice-review.sh
-
-# From stdin
-cat draft.md | ./scripts/voice-review.sh
-```
-
-See `scripts/voice-review.sh` for implementation details.
 
 ---
 
@@ -373,7 +318,7 @@ practical strategies for maintaining your unique voice while utilizing
 AI assistance effectively.
 ```
 
-**Detection:** Score 2/10. Eight HIGH flags — dead giveaway vocabulary saturates every sentence.
+**Detection:** Score 2/10. Eight HIGH flags: dead giveaway vocabulary saturates every sentence.
 
 **Output:**
 
@@ -383,7 +328,7 @@ fast. They're also making everything sound the same. Grammar gets better,
 sure, but my posts read like a committee wrote them.
 ```
 
-Score: 2/10 → 8/10. Shorter. Specific. Has a voice.
+Score: 2/10  8/10. Shorter. Specific. Has a voice.
 
 ### Example 2: Technical Paragraph
 
@@ -403,12 +348,12 @@ should be comprehensive to facilitate troubleshooting.
 
 ```
 Microservices get messy at the boundaries. Where one service ends and
-another begins — that's where most teams burn months. We got this wrong
+another begins, that's where most teams burn months. We got this wrong
 twice before settling on domain events as the contract. Monitoring matters
 too, but get the boundaries right first.
 ```
 
-Score: 3/10 → 8/10. Concrete experience, opinionated, uneven structure.
+Score: 3/10  8/10. Concrete experience, opinionated, uneven structure.
 
 ---
 
@@ -423,12 +368,14 @@ When running `mode=profile`, provide 5-10 samples of writing you're satisfied wi
 | **Punctuation** | Comma habits, dash usage, parenthetical frequency |
 | **Paragraph shape** | Length range, length variance |
 | **Openings** | How you start paragraphs and pieces |
-| **Closings** | How you end — trailing thoughts, abrupt stops, questions |
+| **Closings** | How you end: trailing thoughts, abrupt stops, questions |
 | **Tone markers** | Formality level, humor, directness |
 | **Contractions** | Frequency and which ones |
 | **Specificity** | How concrete your references are |
 
 The profile becomes a calibration reference that detection and rewrite stages use to target *your* voice, not generic "human."
+
+**Persona files vs voice profiles:** A persona file (e.g., `vmx-persona.md`) is an external document that describes how an author writes, used during *generation*. A voice profile is extracted *by this command* from writing samples, used during *detection and rewrite*. They complement each other: persona drives generation, profile calibrates the quality gate.
 
 ---
 
@@ -436,6 +383,7 @@ The profile becomes a calibration reference that detection and rewrite stages us
 
 | Anti-Pattern | Problem | Do Instead |
 |--------------|---------|------------|
+| Humanizing without a persona | Generic-minus-tells, not human writing | Generate with persona first, then voice-review |
 | Rewriting everything | New mechanical patterns | Fix only flagged sections |
 | Forcing quirky fragments | Detectable as fake-casual | Imperfections only where natural |
 | Removing all structure | Unreadable | Break patterns, keep organization |
@@ -456,5 +404,4 @@ The profile becomes a calibration reference that detection and rewrite stages us
 
 ---
 
-**Last Updated:** 2026-02-09
-**Version:** 1.0.0
+*The tool removes tells. The author adds truth. Persona drives voice. pb-voice is the safety net.*
