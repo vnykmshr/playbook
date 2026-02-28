@@ -129,7 +129,7 @@ During `/pb-review`, system matches each issue to your preference and decides. O
 
 ---
 
-## Usage
+## When to Use
 
 - **After coding:** `/pb-review` — primary use case
 - **After fixing feedback:** `/pb-review` again to re-verify
