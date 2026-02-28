@@ -10,7 +10,7 @@ last_reviewed: "2026-02-28"
 last_evolved: "2026-02-28"
 version: "2.1.0"
 version_notes: "Added Step 0 (Register Calibration) and Category 12 (Register Mismatch) to catch textbook phrasing that's correct but wrong for conversational registers. Added explanatory completeness and precise-sounding vagueness subcategories. Enhanced Verify with register-specific read-aloud test. Added register-aware examples. Updated score calibration with category-count guidance. Based on production session where 3 review rounds were needed to catch register drift that category-based detection missed."
-breaking_changes: ["Detection categories expanded from 11 to 12", "Step 0 (Register Calibration) added before Category 1", "Voice Profile Integration moved from Stage 2 to Stage 1"]
+breaking_changes: ["Detection categories expanded from 11 to 12", "Step 0 (Register Calibration) added before Category 1", "Persona file now loaded in Step 0 (before detection) instead of Stage 2 (rewrite)"]
 ---
 # Voice Review
 
