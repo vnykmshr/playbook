@@ -490,7 +490,7 @@ Small, well-explained commits:
 
 **Why this matters:** Atomic commits make learning possible. When you can see why a decision was made, you can understand if it was good.
 
-### 4. Preamble + Design Rules: Frameworks Enable Autonomy
+### 5. Preamble + Design Rules: Frameworks Enable Autonomy
 The playbook provides frameworks you adapt, not commandments you follow:
 - Frameworks assume you'll challenge them (preamble thinking)
 - Checklists are starting points, not finish lines

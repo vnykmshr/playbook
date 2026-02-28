@@ -87,7 +87,7 @@ This command is part of a 3-command ritual:
 
 /pb-review
   ↓ System detects complexity
-  ↓ Runs Garry's framework at right depth
+  ↓ Detects review depth from your change
   ↓ Consults personas automatically
   ↓ Presents recommendation
   ↓ You decide: Ready to commit? Fix issues? Questions?

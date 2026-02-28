@@ -34,7 +34,7 @@ Options:
 Examples:
   ./scripts/voice-review.sh post.md
   ./scripts/voice-review.sh --detect post.md
-  ./scripts/voice-review.sh --persona ~/personas/vmx.md post.md
+  ./scripts/voice-review.sh --persona ~/personas/my-voice.md post.md
   pbpaste | ./scripts/voice-review.sh
 EOF
     exit 0

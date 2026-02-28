@@ -470,7 +470,7 @@ def login(username, password):
 ```
 
 **Why this is better:**
-- Passwords hashed with PBKDF2 (industry standard)
+- Passwords hashed with bcrypt (industry standard)
 - Timing attacks prevented (constant-time comparison)
 - Rate limiting prevents brute force
 - Audit logging for compliance
