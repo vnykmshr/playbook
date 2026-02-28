@@ -6,11 +6,11 @@ difficulty: "advanced"
 model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-think', 'pb-review-docs', 'pb-documentation', 'pb-design-rules', 'pb-preamble']
-last_reviewed: "2026-02-25"
-last_evolved: "2026-02-25"
-version: "2.0.0"
-version_notes: "Comprehensive rewrite: added content-level patterns (copula avoidance, synonym cycling, negative parallelisms, false ranges, -ing clauses, significance inflation), style/formatting patterns (em-dashes, boldface, inline-header lists, title case), 'What the Author Brings' section, persona+voice workflow guidance, two-pass audit in verify. Cut bloat: quick reference lexicon, output templates, CLI section. Based on Wikipedia AI-writing guide and production persona usage."
-breaking_changes: ["Detection categories expanded from 8 to 11", "Output templates removed (model formats naturally)", "Quick Reference lexicon removed (categories are the reference)"]
+last_reviewed: "2026-02-28"
+last_evolved: "2026-02-28"
+version: "2.1.0"
+version_notes: "Added Step 0 (Register Calibration) and Category 12 (Register Mismatch) to catch textbook phrasing that's correct but wrong for conversational registers. Added explanatory completeness and precise-sounding vagueness subcategories. Enhanced Verify with register-specific read-aloud test. Added register-aware examples. Updated score calibration with category-count guidance. Based on production session where 3 review rounds were needed to catch register drift that category-based detection missed."
+breaking_changes: ["Detection categories expanded from 11 to 12", "Step 0 (Register Calibration) added before Category 1", "Voice Profile Integration moved from Stage 2 to Stage 1"]
 ---
 # Voice Review
 
@@ -26,7 +26,7 @@ You are a detection system and a surgical editor. Find where AI shows through an
 
 ## When to Use
 
-- **After persona-driven generation** — You wrote "create post on X as vmx-persona"; now run pb-voice as the quality gate to catch residual AI patterns the persona didn't suppress
+- **After persona-driven generation** — You wrote "create post on X as [author]-persona"; now run pb-voice as the quality gate to catch residual AI patterns the persona didn't suppress
 - **Before publishing** — Final pass on blog posts, articles, social posts
 - **When text "feels off"** — Too smooth, too balanced, too clean
 - **Building a voice profile** — Extract patterns from your own writing samples
@@ -37,7 +37,7 @@ The best results come from persona + pb-voice together, not either alone:
 
 ```
 1. Generate with persona:  "Write about X as [author]-persona"
-   Or: /pb-voice persona=vmx-persona.md
+   Or: /pb-voice persona=my-persona.md
    Persona drives voice, vocabulary, opinions during generation.
 
 2. Quality gate with pb-voice:  "/pb-voice" on the output
@@ -78,6 +78,32 @@ Companion script: `scripts/voice-review.sh` (run `--help` for usage).
 ## Stage 1: Detect
 
 Scan text for AI-generated patterns. Flag each occurrence with category and severity. Do not fix anything in this stage.
+
+### Step 0: Register Calibration
+
+Before running any detection category, determine what register the text should be in. The same phrase can be correct in one context and a tell in another.
+
+**When persona is provided:** Read the persona file. Extract:
+- **Target register:** conversational, technical, formal, or observational
+- **Formality ceiling:** the most formal phrasing this persona would naturally use
+- **Vocabulary anchors:** actual phrases from the persona's texture samples
+
+**When context is provided (PR, issue, bug report, email, social post):** Infer register from the format:
+
+| Format | Register | Formality ceiling |
+|--------|----------|-------------------|
+| Social post (LinkedIn, X, Bluesky) | conversational | spoken language |
+| PR description / issue comment | dev-to-dev | how you'd explain it at a whiteboard |
+| Bug report / security advisory | technical | precise but not academic |
+| Blog post / article | depends on persona | check persona file |
+| RFC / architecture doc | formal | technical writing norms apply |
+| Email to maintainer | dev-to-dev | how you'd write to a colleague |
+
+**When neither is provided:** Default to MEDIUM formality. Skip Category 12 (Register Mismatch).
+
+**Output:** State the detected register at the top of your detection report: "Register: conversational (from persona)" or "Register: dev-to-dev (PR description)". This makes the calibration visible and challengeable. Each detection category documents its own register sensitivity where applicable.
+
+**Voice Profile:** If a persona file is provided, load it now -- before detection, not after. The persona's vocabulary anchors and formality ceiling inform what counts as a tell across all categories. See "Voice Profile Integration" in Stage 2 for how the persona also calibrates rewrites.
 
 ### Category 1: Dead Giveaway Vocabulary (HIGH)
 
@@ -124,8 +150,10 @@ Sentence-construction habits and repetition patterns that go beyond individual w
 - **Synonym cycling** — Repetition-penalty-driven substitution. "The protagonist... The main character... The central figure... The hero..." all in one paragraph. Real writers repeat or use pronouns.
 - **Negative parallelisms** — "Not only X but Y" / "It's not just about X; it's about Y." Overused construction that sounds profound but usually restates.
 - **False ranges** — "from X to Y" where X and Y aren't on a meaningful scale. "From hobbyist experiments to enterprise-wide rollouts."
+- **Explanatory completeness** — The model can't leave anything unexplained. If it mentions a concept, it defines it. A person writing to peers assumes shared context. "Claude's project files" is enough -- the model adds "which allow you to store persistent context for your projects." If the audience already knows, the explanation is a tell.
+- **Clause-final summation** — Restating the point in abstract terms at the end of a sentence. "...which makes it ideal for teams that need both speed and reliability." "...providing a robust foundation for future development." The clause after "which" or the participial phrase adds no information. People end sentences on the specific, not the abstract.
 
-**Action:** Simplify. Use "is"/"are." Delete -ing clauses that add no information. Let a word repeat rather than cycling synonyms. Replace false ranges with specifics.
+**Action:** Simplify. Use "is"/"are." Delete -ing clauses that add no information. Let a word repeat rather than cycling synonyms. Replace false ranges with specifics. Delete explanations the audience doesn't need. Cut clause-final summations.
 
 ### Category 4: Hedging Density (MEDIUM)
 
@@ -179,8 +207,9 @@ AI defaults to conceptual language. Humans anchor in specifics.
 - **Generic examples** — "For instance, in many organizations..." instead of naming one
 - **Conceptual hand-waving** — "Improves efficiency" without saying how much or for whom
 - **Category language** — "Various factors," "multiple considerations," "several approaches"
+- **Precise-sounding vagueness** — Modifiers that sound specific but say nothing. "Significantly faster," "substantially improved," "considerably more efficient." The concrete nouns might be there, but the quantifiers are empty. How much faster? Compared to what?
 
-**Action:** One concrete anchor per paragraph. A number, tool, date, name, or constraint from lived experience.
+**Action:** One concrete anchor per paragraph. A number, tool, date, name, or constraint from lived experience. Replace vague quantifiers with actual measurements or drop them.
 
 ### Category 9: Style and Formatting Tells (HIGH)
 
@@ -220,17 +249,35 @@ AI-generated articles include predictable section patterns.
 
 **Action:** Replace with specific facts. What challenges, specifically? What happened, specifically? If there's nothing specific to say, the section doesn't need to exist.
 
+### Category 12: Register Mismatch (HIGH when register is set)
+
+Phrases that are technically correct but wrong for the target register. This is the gap between "grammatically fine" and "sounds like a person wrote it." Only active when Step 0 has set a register. Category 1 flags words that are almost always AI tells regardless of register. Category 12 flags words that are fine in some registers but wrong in the target register. If a word is on the Category 1 list, flag it there, not here.
+
+- **Compound nominal phrases** — Stacking nouns into noun phrases that nobody says out loud. "The personal agent ecosystem evaluation" instead of "testing personal agents." "A multi-channel messaging integration layer" instead of "a way to get messages from different apps." The longer the noun stack, the stronger the tell.
+- **Nominalized verbs** — Turning verbs into abstract nouns. "The implementation of caching" instead of "implementing caching" or just "adding a cache." "Facilitation of communication" instead of "helping people talk." If the verb form is shorter and clearer, use it.
+- **Category/framework language** — Imposing taxonomic structure where the author would just describe things. "The authentication subsystem" instead of "the login code." "A persistence layer" instead of "where we store things." "Requirements matrix" instead of "checklist." Technical categories are fine in RFCs and architecture docs. In a social post or PR description, they signal the model is organizing, not talking.
+- **Register-inappropriate passive** — Passive voice that's correct in formal/technical registers but wrong for conversational. "The decision was made to sunset the feature" reads like a press release. "We dropped the feature" is dev-to-dev. "I killed it" is conversational. Passive is fine in RFCs and architecture docs. In a social post or PR, it distances the author from the action.
+- **Textbook phrasing** — Correct terminology that nobody uses in the target register. "Persistent memory across interactions" instead of "remembering things between conversations." "Natively supports" instead of "works out of the box." "Mediocre at both tasks" instead of "okay at both and great at neither." The test: would you say this exact phrase to a colleague at a whiteboard? If not, it's textbook.
+
+**How register affects severity:**
+- Conversational (social posts, casual writing): HIGH. Every instance should be caught and rewritten.
+- Dev-to-dev (PRs, issues, emails to maintainers): MEDIUM. Some technical shorthand is natural. Flag only when it reads more like a paper than a conversation.
+- Technical (bug reports, security advisories): LOW. Precise terminology is expected. Flag only obvious over-formalization.
+- Formal (RFCs, architecture docs): Skip. This category doesn't apply.
+
+**Action:** Replace with the phrase the author would actually say. Read it out loud. If it sounds like a textbook, a slide deck, or a product brief, it's wrong for conversational register.
+
 ### Score Calibration
 
-| Score | Description |
-|-------|-------------|
-| 1-2 | Multiple dead giveaways per paragraph, summary ending, no specifics |
-| 3-4 | Structural tells dominate, some giveaway vocab, uniform hedging |
-| 5-6 | Reads okay on first pass, but pattern tells accumulate |
-| 7-8 | Individual tells only, most text is natural, voice present |
-| 9-10 | No detectable patterns, distinct voice, could not be flagged by a reader |
+| Score | Category Flags | Description |
+|-------|---------------|-------------|
+| 1-2 | 6+ categories flagged, multiple HIGH | Dead giveaways in every paragraph, summary ending, no specifics, uniform structure |
+| 3-4 | 4-5 categories flagged, 2+ HIGH | Structural tells dominate, giveaway vocab present, uniform hedging |
+| 5-6 | 2-3 categories flagged, 0-1 HIGH | Reads okay on first pass, but pattern tells accumulate across paragraphs |
+| 7-8 | 1-2 categories flagged, 0 HIGH | Individual tells only, most text is natural, voice present throughout |
+| 9-10 | 0 categories flagged | No detectable patterns, distinct voice, could not be flagged by a reader |
 
-**Target:** Score 7+ before publishing. Score 5-6 is acceptable for internal drafts. Below 5 needs another rewrite pass.
+**Target:** Score 7+ before publishing. Score 5-6 is acceptable for internal drafts. Below 5 needs another rewrite pass. A single HIGH flag caps the score at 6 regardless of other factors.
 
 ---
 
@@ -302,7 +349,7 @@ After rewriting, validate the output.
 
 1. **Re-score** — Run detection on rewritten text. Score should improve by at least 2 points.
 2. **Two-pass audit** — Ask: "What still makes this obviously AI-generated?" Answer honestly, then fix the remaining tells. This meta-cognitive step catches patterns that category-by-category detection misses.
-3. **Read-aloud test** — Would the author say this to a colleague? If it sounds like a press release, it failed.
+3. **Read-aloud test** — The primary check for conversational registers. Read the text out loud (or simulate it). For each sentence, ask: "Would the author say this exact phrase to a colleague?" Not the idea -- the exact words. "Persistent memory across interactions" fails. "Remembering things between conversations" passes. If the register is conversational and a sentence sounds like a textbook, a slide deck, or a product brief, it's still a tell. For technical or formal registers, the bar is different: precision matters more than conversational flow.
 4. **Meaning preservation** — Every claim in the original survives in the output.
 5. **Length check** — Output should be shorter than input (typically 10-30% shorter). Longer means something went wrong.
 
@@ -360,6 +407,46 @@ too, but get the boundaries right first.
 
 Score: 3/10  8/10. Concrete experience, opinionated, uneven structure.
 
+### Example 3: Register Mismatch (Same Content, Different Registers)
+
+The same AI-generated sentence rewritten for three registers. Category 12 fires differently in each.
+
+**AI output:**
+
+```
+The framework natively supports persistent memory across interactions,
+enabling seamless context retention for multi-session workflows.
+```
+
+**Conversational register (social post, casual writing):**
+
+Category 12 flags: "natively supports" (textbook), "persistent memory across interactions" (compound nominal + textbook), "enabling seamless context retention" (nominalized verb + textbook), "multi-session workflows" (category language).
+
+```
+It remembers things between conversations out of the box, so you don't
+start from scratch every time.
+```
+
+**Dev-to-dev register (PR description, issue comment):**
+
+Category 12 flags: "enabling seamless context retention" (over-formal for a PR), "multi-session workflows" (category language). "Natively supports" and "persistent memory" are acceptable dev shorthand.
+
+```
+The framework supports persistent memory across sessions -- context
+carries over without extra config.
+```
+
+**Technical register (architecture doc, RFC):**
+
+Category 12: no flags. All terms are appropriate for the register.
+
+```
+The framework natively supports persistent memory across interactions,
+enabling context retention for multi-session workflows.
+```
+
+Only "seamless" was cut -- it's Category 8 (precise-sounding vagueness), not register mismatch.
+
 ---
 
 ## Voice Profile: Building One
@@ -380,7 +467,7 @@ When running `mode=profile`, provide 5-10 samples of writing you're satisfied wi
 
 The profile becomes a calibration reference that detection and rewrite stages use to target *your* voice, not generic "human."
 
-**Persona files vs voice profiles:** A persona file (e.g., `vmx-persona.md`) is an external document that describes how an author writes, used during *generation*. A voice profile is extracted *by this command* from writing samples, used during *detection and rewrite*. They complement each other: persona drives generation, profile calibrates the quality gate.
+**Persona files vs voice profiles:** A persona file (e.g., `my-persona.md`) is an external document that describes how an author writes, used during *generation*. A voice profile is extracted *by this command* from writing samples, used during *detection and rewrite*. They complement each other: persona drives generation, profile calibrates the quality gate.
 
 **Precedence:** Project style rules (voice-guidelines.md, CLAUDE.md) override voice profile defaults, which override generic heuristics. When conflicts arise, project rules win.
 
