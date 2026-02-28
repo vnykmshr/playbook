@@ -86,16 +86,14 @@ This command is part of a 3-command ritual:
 [You code here—no interruptions]
 
 /pb-review
-  ↓ System detects complexity
   ↓ Detects review depth from your change
   ↓ Consults personas automatically
-  ↓ Presents recommendation
-  ↓ You decide: Ready to commit? Fix issues? Questions?
+  ↓ Clean? Auto-commits. Issues? Preferences decide.
+  ↓ Ambiguous? Asks you, then commits.
 
 /pb-commit
-  ↓ Auto-drafts message with reasoning
-  ↓ Captures your decisions from /pb-review
-  ↓ Commits and pushes
+  ↓ Usually automatic (triggered by /pb-review)
+  ↓ Use explicitly if you want manual control
 ```
 
 **Total cognitive load: 3 commands.** That's a habit.

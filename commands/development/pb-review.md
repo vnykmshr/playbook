@@ -6,21 +6,21 @@ difficulty: "beginner"
 model_hint: "haiku"
 execution_pattern: "automatic"
 related_commands: ['pb-start', 'pb-commit', 'pb-review-code', 'pb-review-comprehensive']
-last_reviewed: "2026-02-18"
-last_evolved: "2026-02-18"
-version: "2.2.0"
-version_notes: "v2.13.1: Added distinction from pb-review-comprehensive (comprehensive audit). This is the fast automated gate in the standard workflow."
+last_reviewed: "2026-02-28"
+last_evolved: "2026-02-28"
+version: "2.3.0"
+version_notes: "v2.3.0: Tightened prose -- removed 4 redundant ritual descriptions and duplicate sections. Clarified decision model: clean = auto-commit, issues found = preferences decide, ambiguous = ask. Same behavior, less repetition."
 breaking_changes: []
 ---
 # Automated Quality Gate
 
 **Resource Hint:** haiku — Lightweight automation that applies your preferences and auto-commits after code review.
 
-Run this after you finish coding. System analyzes what you built, applies your established preferences, and commits if everything checks out. Fully automatic. You get a report when done.
+Run this after you finish coding. System analyzes what you built, applies your established preferences, and commits if everything checks out. You get a report when done.
 
-> **Note:** This is the fast, automatic quality gate used in `/pb-start` → code → `/pb-review` workflow. For deep, comprehensive project reviews, see `/pb-review-comprehensive`.
+> **Note:** This is the fast quality gate in the `/pb-start` → code → `/pb-review` workflow. For deep, comprehensive project reviews, see `/pb-review-comprehensive`.
 
-**Part of the ritual:** `/pb-start` → code → `/pb-review` (automatic) → done
+**Part of the ritual:** `/pb-start` → code → `/pb-review` → done
 
 **Voice:** Prose-driven feedback. Specific reasoning (what matters + why), not diagnostic checklists. See `/docs/voice.md` for how commands communicate.
 
@@ -28,39 +28,41 @@ Run this after you finish coding. System analyzes what you built, applies your e
 
 ---
 
-## Code Review Family Decision Tree
+## Code Review Family
 
-**Q: Which code review command should I use?**
-
-See `/pb-review-code` for the complete decision tree. Quick summary:
-
-- **Use `/pb-review`** (YOU ARE HERE) for **fast, automated quality gate** right after coding
+- **Use `/pb-review`** (YOU ARE HERE) for **fast quality gate** right after coding
 - **Use `/pb-review-code`** for **deep review of a specific PR/commit**
 - **Use `/pb-review-hygiene`** for **monthly codebase health check**
 - **Use `/pb-review-tests`** for **monthly test suite quality check**
 
 ---
 
-## When to Use
-
-- **After coding session:** Run `/pb-review` to analyze, decide, and auto-commit ← **PRIMARY USE CASE**
-- **After fixing feedback:** Run again to re-verify and commit
-- **With manual control:** Use `pb-review --no-auto-commit` if you prefer to review the message first
-- **To override preferences:** Use `pb-review --override` for edge cases
-
-**When NOT to use:** For deep PR reviews (use `/pb-review-code`), periodic health checks (use `/pb-review-hygiene`), or test quality (use `/pb-review-tests`)
-
----
-
 ## How It Works
 
-System analyzes your change (LOC, files, domains, complexity, criticality), determines review depth, runs quality checks through your preferences, and auto-commits if everything passes. Your preferences (from `/pb-preferences`) handle 90% of decisions automatically—architecture issues always fixed, performance debt accepted if < 1 hour, security issues never skipped, etc.
+System analyzes your change (LOC, files, domains, complexity, criticality), determines review depth, and runs quality checks through your preferences (from `/pb-preferences`).
 
-Human involvement (your 10%) only happens when an issue doesn't fit your established preferences (genuinely ambiguous), when it finds a new issue type, or when something needs creative judgment. Otherwise: no interaction.
+**Three outcomes:**
+
+1. **Clean** — No issues found. Auto-commits and reports.
+2. **Issues covered by preferences** — Preferences decide: auto-fix, auto-defer, or auto-accept. Then auto-commits.
+3. **Ambiguous** — Issue doesn't fit your preferences, or new issue type. Asks you. Remembers your answer for next time.
+
+Most reviews hit outcome 1 or 2. You only get involved for genuinely ambiguous cases.
 
 ---
 
-## Example: Standard Review (90% automatic)
+## Examples
+
+### Clean review (no issues)
+
+```
+/pb-review
+✓ Analyzed: 30 LOC, 1 file, logging statement
+✓ No issues found
+✓ Committed: 3c8f9a2d
+```
+
+### Issues covered by preferences
 
 ```
 /pb-review
@@ -90,11 +92,7 @@ Issues found:
   on token expiration. Testing gap deferred (coverage 85%).
 ```
 
-**Your involvement: 0%** — System handled everything based on your preferences.
-
----
-
-## Example: Ambiguous Issue (5% human involvement)
+### Ambiguous issue (asks you)
 
 ```
 /pb-review
@@ -115,112 +113,27 @@ Two paths:
 What's your call?
 ```
 
-**Your involvement: 1 minute** — You pick A or B based on your priorities, system proceeds.
+You pick A or B. System remembers for next time.
 
 ---
 
-## Example: Auto-Fix (0% human involvement)
+## Preferences
 
-```
-/pb-review
-✓ Small fix: 30 LOC, 1 file, logging statement
-✓ No issues found
-✓ Committed: 3c8f9a2d
-```
+Setup once (`/pb-preferences --setup`, takes ~15 minutes). Answer questions about your values: architecture (always fix or threshold?), testing (require 80%+ coverage?), security (zero-tolerance?), performance (benchmark-driven?), etc.
 
-**Total time: Instant** — System handles it, you don't even need to know it ran.
+During `/pb-review`, system matches each issue to your preference and decides. Only asks when genuinely ambiguous:
 
----
-
-## Your Preferences Drive Decisions
-
-Setup once (`/pb-preferences --setup`, takes ~15 minutes). Answer questions about your values: architecture (always fix or threshold?), testing (require 80%+ coverage?), security (zero-tolerance?), performance (benchmark-driven?), etc. System saves your answers.
-
-During `/pb-review`, system matches each issue to your established preference and auto-decides. Architecture coupling found? Your preference says "always fix"—fixed automatically. Performance debt but deadline is tight? Your preference says "threshold<1h"—deferred automatically.
-
-Only asks if the issue doesn't fit your preferences (genuinely ambiguous). You can override if needed (`/pb-review --override`); system learns from it.
+- **Preference doesn't cover it** — New issue type. You set the precedent, system remembers.
+- **Borderline** — Coverage is exactly at your threshold. You decide.
+- **Override needed** — Use `pb-review --override` for edge cases.
 
 ---
 
-## Your 10% Involvement
+## Usage
 
-System asks only when genuinely ambiguous:
-
-- **Preference doesn't cover it:** Linus says "simplify this," but your preferences don't address this complexity type. System: "Should we always simplify? [Yes] [No] [Case-by-case]" You pick. System remembers.
-
-- **On the fence:** Coverage is exactly 80.0%—your preference kicks in at 80%, but it's borderline. System: "Fix or defer? [Fix] [Defer]" You decide.
-
-- **New issue type:** System finds something it hasn't seen before (e.g., "thread pool exhaustion risk"). System: "Usually fix these? [Yes] [No]" You answer once. System learns.
-
-Brief, decisive, rare. That's it.
-
----
-
-## What Happens After Auto-Commit
-
-```
-✓ Committed: abc1234f5
-  Message: "feat(auth): add email verification with retry logic
-
-  Changes: Endpoint + EmailService + retry with exponential backoff
-  Review: Architecture (extracted), Code (error handling), Tests (defer)
-  Decisions: Followed preferences, no conflicts
-  Pushed to: origin/feature/email-verification"
-
-Next step? /pb-start another feature
-Or: Check email to see if this needs peer review (/pb-pr)
-```
-
-**The ritual:**
-```
-/pb-start → code → /pb-review (automatic) → /pb-commit (automatic) → repeat
-```
-
-**Or even simpler if you set it up:**
-```
-/pb-start → code → /pb-review (automatic with auto-commit) → repeat
-```
-
-(One command in the middle, everything else is background)
-
----
-
-## When to Manually Invoke
-
-- **After coding session:** `pb-review`
-- **After fixing review feedback:** `pb-review` again
-- **If you want to override preferences:** `pb-review --override`
-- **To update preferences:** `pb-preferences --setup` (annual refresh)
-
----
-
-## Integration
-
-**Before:**
-- `/pb-start` — Establish scope, set complexity signal
-
-**This command:**
-- `/pb-review` — Auto-analyze, auto-decide, auto-commit
-
-**No "after"** — You're done. Ready for `/pb-pr` (peer review by humans) or next work.
-
----
-
-## The Ritual (Simplified)
-
-```
-Your workflow:
-/pb-start "what you're building"
-[code]
-/pb-review
-Done. Commit is in remote.
-
-System's workflow:
-Analyze → Apply preferences → Consult personas → Auto-decide → Commit
-```
-
-**You provide:** 30 seconds of setup per feature
-**System provides:** Everything else
+- **After coding:** `/pb-review` — primary use case
+- **After fixing feedback:** `/pb-review` again to re-verify
+- **Manual commit control:** `pb-review --no-auto-commit` to review the message first
 
 ---
 
@@ -228,9 +141,9 @@ Analyze → Apply preferences → Consult personas → Auto-decide → Commit
 
 - `/pb-start` — Begin work (sets scope signal)
 - `/pb-preferences` — Set your decision rules once
-- `/pb-commit` — (Usually automatic, but can be manual if you prefer)
-- `/pb-pr` — Peer review (next step)
+- `/pb-commit` — Usually automatic, but can be manual if you prefer
+- `/pb-pr` — Peer review (next step after commit)
 
 ---
 
-*Fully automatic quality gate | 90% system, 10% human | v2.1.0*
+*Fast quality gate. Preferences decide. You handle the edge cases. | v2.3.0*
