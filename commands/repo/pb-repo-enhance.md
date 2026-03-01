@@ -5,7 +5,7 @@ category: "repo"
 difficulty: "advanced"
 model_hint: "sonnet"
 execution_pattern: "sequential"
-related_commands: ['pb-repo-init', 'pb-repo-organize', 'pb-repo-readme', 'pb-repo-about', 'pb-repo-polish']
+related_commands: ['pb-repo-init', 'pb-repo-organize', 'pb-repo-docsite', 'pb-repo-polish']
 last_reviewed: "2026-02-18"
 last_evolved: "2026-02-18"
 version: "1.1.0"
@@ -224,8 +224,7 @@ After enhancement, verify:
 
 - `/pb-repo-init` — Initialize new project structure
 - `/pb-repo-organize` — Clean up repository structure
-- `/pb-repo-readme` — Generate comprehensive README
-- `/pb-repo-about` — Generate GitHub About section
+- `/pb-repo-docsite` — Set up documentation site
 - `/pb-repo-polish` — Audit AI discoverability (scorecard after enhance)
 
 ---
