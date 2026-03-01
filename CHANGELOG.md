@@ -5,6 +5,18 @@ All notable changes to this project are documented here.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v2.14.1] - 2026-03-01
+
+### Overview
+
+**New Command: `/pb-repo-polish`** -- AI discoverability audit for repositories. Scores 5 dimensions (search term alignment, README machine-readability, registry presence, metadata completeness, examples quality) on 0-3 rubrics, surfaces usage evidence honestly, and optionally drafts llms.txt and README improvements.
+
+### Added
+
+- **`/pb-repo-polish` v1.0.0** -- Review-type command: scorecard (max 15), concrete rubrics, `--draft` mode for content generation, `--status` mode for fleet view
+- Back-link from `/pb-repo-enhance` to `/pb-repo-polish`
+- Registered in `docs/command-index.md` (Repository Management table)
+
 ## [v2.14.0] - 2026-02-25
 
 ### Overview

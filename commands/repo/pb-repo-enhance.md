@@ -227,6 +227,7 @@ After enhancement, verify:
 - `/pb-repo-readme` — Generate comprehensive README
 - `/pb-repo-about` — Generate GitHub About section
 - `/pb-repo-docsite` — Set up documentation site
+- `/pb-repo-polish` -- Audit AI discoverability (scorecard after enhance)
 
 ---
 

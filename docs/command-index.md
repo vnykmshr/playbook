@@ -93,6 +93,7 @@ Quick reference for all playbook commands.
 | `/pb-repo-blog` | Create technical blog post |
 | `/pb-repo-docsite` | Transform docs into professional static site |
 | `/pb-repo-enhance` | Full repository polish (combines above) |
+| `/pb-repo-polish` | Audit AI discoverability (scorecard + action items) |
 | `/pb-zero-stack` | Scaffold $0/month app (static + edge proxy + CI) |
 
 ## Reviews
