@@ -16,7 +16,7 @@ from pathlib import Path
 import pytest
 
 COMMANDS_DIR = Path(__file__).parent.parent / "commands"
-EXPECTED_COUNT = 101  # Updated for v2.13.3: 100 baseline + pb-zero-stack
+EXPECTED_COUNT = 104  # v2.14.0: 101 baseline + pb-repo-polish + pb-kai-reach + pb-handoff
 
 # Hub commands allowed to exceed the 5-link limit
 HUB_COMMANDS = {"pb-patterns.md"}

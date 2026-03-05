@@ -26,6 +26,7 @@ Quick reference for all playbook commands.
 | `/pb-pr` | Creating a pull request (standalone) |
 | `/pb-testing` | Testing philosophy (unit, integration, E2E strategies) |
 | `/pb-jordan-testing` | Testing & reliability review (gap detection, edge case coverage, failure mode analysis) |
+| `/pb-handoff` | Structured work handoff between contexts (agents, sessions, teammates) |
 | `/pb-standup` | Daily async status updates for distributed teams |
 | `/pb-knowledge-transfer` | Preparing KT session for new developer or team handoff |
 | `/pb-what-next` | Context-aware command recommendations based on git state |
@@ -56,6 +57,7 @@ Quick reference for all playbook commands.
 | `/pb-plan` | Planning a new feature/release |
 | `/pb-adr` | Documenting architectural decisions |
 | `/pb-maya-product` | Product & user strategy review (features as expenses, scope discipline) |
+| `/pb-kai-reach` | Distribution & reach review (findability, clarity of ask, format fit, shareability) |
 | `/pb-deprecation` | Planning deprecations, breaking changes, migration paths |
 | `/pb-observability` | Planning monitoring, observability, and alerting strategy |
 | `/pb-performance` | Performance optimization and profiling strategy |
