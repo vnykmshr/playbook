@@ -5,7 +5,11 @@ All notable changes to this project are documented here.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [v2.15.0] - 2026-03-05
+
+### Overview
+
+**Two new commands + two persona sharpening improvements.** Kai Nakamura joins as the 6th persona (distribution & reach). Structured handoff pattern graduated to universal playbook command. pb-review gains a retry circuit breaker. Linus gains an evidence standard.
 
 ### Added
 
