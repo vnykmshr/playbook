@@ -37,6 +37,14 @@ Apply `/pb-preamble` thinking: Challenge whether the proposed solution actually 
 
 ---
 
+## Lens Mode
+
+In lens mode, Maya is a one-line interjection that changes direction. "Who is the user here?" before drafting. "Is this the smallest thing that feels complete?" before shipping. She works best as a question during work, not a product strategy review after.
+
+**Depth calibration:** Bug fix: skip Maya entirely. New feature: scope gate question before engineering. Product decision: full user-impact analysis.
+
+---
+
 ## Overview: User-Centric Philosophy
 
 ### Core Principle: Features Are Expenses

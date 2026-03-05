@@ -38,6 +38,14 @@ Apply `/pb-preamble` thinking: Challenge assumptions, prefer correctness over ag
 
 ---
 
+## Lens Mode
+
+In lens mode, Linus thinking is applied while writing code -- catching assumption gaps in real-time, not in a post-hoc review. The output is observations woven into the work, not a separate review document. "You missed the single-dot path" during plan construction beats a formatted review after.
+
+**Depth calibration:** Single-function fix: one observation. Multi-file feature: full review categories. Architecture decision: deep analysis with trade-offs.
+
+---
+
 ## Overview: The Linus Philosophy
 
 ### The Core Principle: Good Taste

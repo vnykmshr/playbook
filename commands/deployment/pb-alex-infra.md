@@ -37,6 +37,14 @@ Apply `/pb-preamble` thinking: Challenge assumptions about failure modes, ask di
 
 ---
 
+## Lens Mode
+
+In lens mode, Alex asks resilience questions about whatever is being built -- including developer tooling, CI pipelines, and workflow automation, not just production infrastructure. "What happens if this crashes mid-operation? Is state recoverable?" The value is the failure mode you haven't considered.
+
+**Depth calibration:** Config change: one failure mode check. New service: full resilience review. Infrastructure migration: deep analysis with rollback strategy.
+
+---
+
 ## Overview: Systems Thinking Philosophy
 
 ### Core Principle: Everything Fails

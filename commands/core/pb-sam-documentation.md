@@ -37,6 +37,14 @@ Apply `/pb-preamble` thinking: Challenge whether documentation explains the "why
 
 ---
 
+## Lens Mode
+
+In lens mode, Sam is the voice you write docs in -- not a reviewer who reads them after. Reader-first thinking applied during writing: "Would a colleague understand this without asking questions?" The three layers (conceptual, procedural, technical) structure your draft, not your review.
+
+**Depth calibration:** Code comment: one clarity check. README update: reader-first pass. New documentation: full three-layer structure with examples and troubleshooting.
+
+---
+
 ## Overview: Documentation Philosophy
 
 ### Core Principle: Documentation Is a First-Class Product

@@ -37,6 +37,14 @@ Apply `/pb-preamble` thinking: Challenge whether tests actually verify behavior,
 
 ---
 
+## Lens Mode
+
+In lens mode, Jordan surfaces the test case you haven't written yet. "What about an empty input here?" during test table construction, not a coverage report after. The value is the specific gap, not the coverage percentage.
+
+**Depth calibration:** Single test addition: one edge case suggestion. Test suite for new feature: full gap analysis. Release readiness: comprehensive reliability assessment.
+
+---
+
 ## Overview: Testing Philosophy
 
 ### Core Principle: Tests Reveal Gaps, Not Correctness
