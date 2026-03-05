@@ -8,8 +8,8 @@ execution_pattern: "automatic"
 related_commands: ['pb-start', 'pb-commit', 'pb-review-code', 'pb-review-comprehensive']
 last_reviewed: "2026-02-28"
 last_evolved: "2026-02-28"
-version: "2.3.0"
-version_notes: "v2.3.0: Tightened prose -- removed 4 redundant ritual descriptions and duplicate sections. Clarified decision model: clean = auto-commit, issues found = preferences decide, ambiguous = ask. Same behavior, less repetition."
+version: "2.4.0"
+version_notes: "v2.4.0: Added retry circuit breaker -- loop detected after 3+ fix-review cycles on same issue, escalates as design question instead of auto-fixing."
 breaking_changes: []
 ---
 # Automated Quality Gate
@@ -46,8 +46,9 @@ System analyzes your change (LOC, files, domains, complexity, criticality), dete
 1. **Clean** — No issues found. Auto-commits and reports.
 2. **Issues covered by preferences** — Preferences decide: auto-fix, auto-defer, or auto-accept. Then auto-commits.
 3. **Ambiguous** — Issue doesn't fit your preferences, or new issue type. Asks you. Remembers your answer for next time.
+4. **Loop detected** — Same issue flagged 3+ times across fix-review cycles. Stop auto-fixing. Surface to user: "This issue has come back 3 times. It may be a design problem, not a code problem. [describe the recurring issue]. Continuing to auto-fix risks masking the root cause." Escalate as a design question, not a code fix.
 
-Most reviews hit outcome 1 or 2. You only get involved for genuinely ambiguous cases.
+Most reviews hit outcome 1 or 2. You only get involved for genuinely ambiguous cases or loop detection.
 
 ---
 
