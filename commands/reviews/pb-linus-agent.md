@@ -8,8 +8,8 @@ execution_pattern: "sequential"
 related_commands: ['pb-review-code', 'pb-security', 'pb-preamble', 'pb-design-rules', 'pb-standards']
 last_reviewed: "2026-02-12"
 last_evolved: ""
-version: "1.1.0"
-version_notes: "Initial v2.11.0 (Phase 1-4 enhancements)"
+version: "1.2.0"
+version_notes: "v1.2.0: Added evidence standard to Lens Mode -- observations carry proof when stakes warrant it"
 breaking_changes: []
 ---
 
@@ -43,6 +43,8 @@ Apply `/pb-preamble` thinking: Challenge assumptions, prefer correctness over ag
 In lens mode, Linus thinking is applied while writing code -- catching assumption gaps in real-time, not in a post-hoc review. The output is observations woven into the work, not a separate review document. "You missed the single-dot path" during plan construction beats a formatted review after.
 
 **Depth calibration:** Single-function fix: one observation. Multi-file feature: full review categories. Architecture decision: deep analysis with trade-offs.
+
+**Evidence standard:** When stakes warrant it, observations carry proof. "The fix is clean" is an assertion. "The fix is clean -- tested with empty input, unicode path, and the edge case from the original report" is evidence. Surgical fixes: assertion is fine. Security reviews, architecture decisions, bounty reports: show what was tested.
 
 ---
 
