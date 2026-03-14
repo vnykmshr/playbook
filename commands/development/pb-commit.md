@@ -3,18 +3,18 @@ name: "pb-commit"
 title: "Commit (Usually Automatic)"
 category: "development"
 difficulty: "beginner"
-model_hint: "haiku"
+model_hint: "sonnet"
 execution_pattern: "automatic"
 related_commands: ['pb-review', 'pb-start', 'pb-pr']
 last_reviewed: "2026-02-17"
 last_evolved: "2026-02-17"
-version: "2.1.0"
-version_notes: "Usually automatic (triggered by /pb-review). Manual use only if you prefer explicit control."
+version: "2.2.0"
+version_notes: "v2.2.0: Added bisectable commit splitting guidance for large changes."
 breaking_changes: []
 ---
 # Commit (Usually Automatic)
 
-**Resource Hint:** haiku — Simple utility for when you want manual control over commits.
+**Resource Hint:** sonnet — Commit message drafting with context-aware summaries and bisectable splitting guidance.
 
 **Tool-agnostic:** This command documents commit discipline (atomic, clear messages) that works with any version control system. Claude Code users invoke as `/pb-commit`. Using another tool? Read this file as Markdown for commit principles and message format. See [`/docs/using-with-other-tools.md`](/docs/using-with-other-tools.md) for how to adapt the ritual.
 
@@ -65,6 +65,28 @@ You: Keep working or run /pb-start on next feature
 ```
 
 **When to use:** Prefer explicit control? Want to review message first? Use this mode.
+
+---
+
+## Bisectable Commit Splitting
+
+For changes touching >3 files across >1 concern, consider splitting into bisectable commits. This makes `git bisect` useful and rollbacks surgical.
+
+**Dependency order:**
+1. **Infrastructure/config** — Schema migrations, configuration changes, dependencies
+2. **Data/models + tests** — Data layer changes with their tests together
+3. **Logic/controllers/UI** — Application logic, API endpoints, frontend
+4. **Versioning** — VERSION, CHANGELOG, release metadata last
+
+**When to split:**
+- Multiple concerns in one change (infra + logic + tests)
+- Changes that could independently cause failures
+- Large changes where isolating the breaking commit matters
+
+**When NOT to split:**
+- Single-concern changes (even across many files — e.g., a rename)
+- Small changes (<50 LOC) where splitting adds noise
+- Tightly coupled changes where splitting would leave broken intermediate states
 
 ---
 

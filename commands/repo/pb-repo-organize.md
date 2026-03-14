@@ -3,7 +3,7 @@ name: "pb-repo-organize"
 title: "Organize Repository Structure"
 category: "repo"
 difficulty: "advanced"
-model_hint: "haiku"
+model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-repo-init', 'pb-repo-enhance', 'pb-review-hygiene']
 last_reviewed: "2026-02-09"
@@ -20,7 +20,7 @@ Clean up and reorganize the project root for clarity and maintainability.
 
 Clear, obvious organization beats clever categorization. The structure should make it easy for others to find code and understand it.
 
-**Resource Hint:** haiku — file organization is mechanical: audit, move, verify
+**Resource Hint:** sonnet — Repository restructuring with architectural judgment.
 
 ---
 

@@ -8,8 +8,8 @@ execution_pattern: "sequential"
 related_commands: ['pb-testing', 'pb-preamble', 'pb-design-rules', 'pb-review-tests', 'pb-standards']
 last_reviewed: "2026-02-12"
 last_evolved: ""
-version: "1.1.0"
-version_notes: "Initial v2.11.0 (Phase 1-4 enhancements)"
+version: "1.2.0"
+version_notes: "v1.2.0: Added shadow path tracing, diff-aware test mapping, browser testing guidance."
 breaking_changes: []
 ---
 
@@ -175,6 +175,26 @@ For each test suite:
 2. **Do we have tests for these?** (Either specific tests or integration tests)
 3. **What about edge cases?** (Empty input? Huge input? Concurrent access?)
 4. **If production breaks, would tests have predicted it?** (Did we test the failing path?)
+
+**Diff-aware test mapping:**
+Before reviewing tests, map the code diff to affected flows. Read `git diff main`, identify which codepaths, user flows, routes, or APIs the change touches, then verify test coverage exists for each affected path. Don't review tests in isolation — review them against what the diff actually changes.
+
+**Shadow path tracing:**
+For every data flow, explicitly enumerate three shadow paths alongside the happy path:
+- **Nil path:** What happens when the value is null/nil/undefined?
+- **Empty path:** What happens when the value is present but empty (empty string, empty list, zero)?
+- **Error path:** What happens when the operation fails (timeout, exception, invalid state)?
+
+This isn't "test edge cases" — it's systematic enumeration. If you can't name the shadow paths, you haven't understood the data flow.
+
+Example — payment checkout flow:
+```
+Happy path:  user → cart → payment → confirmation
+Nil path:    user has no payment method → what happens?
+Empty path:  cart exists but has zero items → what happens?
+Error path:  payment gateway times out → what happens?
+```
+Each shadow path either has a test or a documented reason why it doesn't need one.
 
 ### Review Categories
 
@@ -763,6 +783,12 @@ When Jordan sees a test suite:
 5. Would these tests catch the bug if it existed?
    NO → Add a test case for the bug
    YES → Tests are sufficient
+
+6. For web applications: does the change affect UI?
+   YES → Consider browser-based verification (Playwright, Cypress)
+         Map UI changes to visual/functional tests
+         Headless browser testing closes the feedback loop between code and user experience
+   NO → Unit/integration tests are sufficient
 ```
 
 ---

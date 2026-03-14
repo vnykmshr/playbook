@@ -3,7 +3,7 @@ name: "pb-preferences"
 title: "Set Your Decision Rules (One-Time Setup)"
 category: "development"
 difficulty: "beginner"
-model_hint: "haiku"
+model_hint: "sonnet"
 execution_pattern: "interactive-once"
 related_commands: ['pb-review', 'pb-start', 'pb-linus-agent']
 last_reviewed: "2026-02-17"
@@ -14,7 +14,7 @@ breaking_changes: []
 ---
 # Set Your Decision Rules (One-Time Setup)
 
-**Resource Hint:** haiku — One-time setup (15 minutes) that enables 90% automation forever.
+**Resource Hint:** sonnet — One-time setup (15 minutes) that enables 90% automation forever.
 
 Run this once (or annually) to establish how you want `/pb-review` to auto-decide issues. After this, the system handles 90% of decisions automatically.
 

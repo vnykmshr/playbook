@@ -3,7 +3,7 @@ name: "pb-ports"
 title: "Port Management"
 category: "utilities"
 difficulty: "advanced"
-model_hint: "haiku"
+model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-doctor', 'pb-debug', 'pb-storage']
 last_reviewed: "2026-02-09"
@@ -21,7 +21,7 @@ Find processes using ports, kill stale listeners, and resolve port conflicts. A 
 
 **Mindset:** Design Rules say "silence when nothing to say" — only report conflicts that need action.
 
-**Resource Hint:** haiku — port scanning and process lookup are mechanical tasks.
+**Resource Hint:** sonnet — Port scanning and process identification.
 
 ## When to Use
 

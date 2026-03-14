@@ -8,8 +8,8 @@ execution_pattern: "sequential"
 related_commands: ['pb-documentation', 'pb-preamble', 'pb-design-rules', 'pb-standards', 'pb-review-docs']
 last_reviewed: "2026-02-12"
 last_evolved: ""
-version: "1.1.0"
-version_notes: "Initial v2.11.0 (Phase 1-4 enhancements)"
+version: "1.2.0"
+version_notes: "v1.2.0: Added intentional omissions check to completeness review."
 breaking_changes: []
 ---
 
@@ -454,6 +454,7 @@ Why this works:
 - [ ] Examples provided for complex concepts
 - [ ] "Why this matters" is explained, not assumed
 - [ ] Troubleshooting section addresses likely questions
+- [ ] **Intentional omissions documented:** If something is deliberately excluded (unsupported feature, rejected approach, out-of-scope topic), say so and say why — prevents readers from assuming it was forgotten
 
 ### Structure
 - [ ] Headings are hierarchical and scannable

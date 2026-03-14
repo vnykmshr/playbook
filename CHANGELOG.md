@@ -5,6 +5,28 @@ All notable changes to this project are documented here.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v2.16.0] - 2026-03-15
+
+### Overview
+
+**Model tier upgrade + 10 review pipeline enhancements.** All haiku model hints upgraded to sonnet. LLM output trust boundary added across review pipeline. Shadow path tracing, scope mode selection, bisectable commits, and recovery-oriented error guidance strengthen planning, testing, and shipping workflows.
+
+### Changed
+
+- **Model tiers:** All 12 haiku model_hint commands upgraded to sonnet (pb-review, pb-commit, pb-preferences, pb-what-next, pb-git-signals, pb-repo-organize, pb-repo-about, pb-setup, pb-doctor, pb-storage, pb-update, pb-ports). Haiku remains valid for subagent delegation.
+- **`/pb-review` v2.5.0** -- LLM trust boundary check, diff-aware flow mapping pre-check, critical-severity single-issue surfacing
+- **`/pb-review-code` v2.1.0** -- LLM output trust boundary in security checklist, critical-severity individual surfacing
+- **`/pb-security` v1.1.0** -- LLM Output Trust sections in Quick Checklist and Deep Dive tiers
+- **`/pb-jordan-testing` v1.2.0** -- Shadow path tracing (nil/empty/error), diff-aware test mapping, browser testing guidance
+- **`/pb-linus-agent` v1.3.0** -- Single-issue surfacing for automatic rejection criteria
+- **`/pb-design-rules` v1.3.0** -- Recovery-oriented errors for human and AI consumers (Rule 10 extension)
+- **`/pb-start` v2.2.0** -- Scope mode question (expanding/holding/reducing) clarifies intent before coding
+- **`/pb-adr` v1.1.0** -- "What's Intentionally Not Here" section in ADR template
+- **`/pb-sam-documentation` v1.2.0** -- Intentional omissions check in completeness review
+- **`/pb-commit` v2.2.0** -- Bisectable commit splitting guidance for large changes
+- **`/pb-ship` v1.1.0** -- Bisectable commit splitting step before merge (Step 5.0)
+- **`/pb-release` v1.2.0** -- Version bump heuristic table (LOC signal + override rules)
+
 ## [v2.15.0] - 2026-03-05
 
 ### Overview

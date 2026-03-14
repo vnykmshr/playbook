@@ -8,8 +8,8 @@ execution_pattern: "sequential"
 related_commands: ['pb-review', 'pb-review-hygiene', 'pb-review-tests', 'pb-security', 'pb-cycle']
 last_reviewed: "2026-02-18"
 last_evolved: "2026-02-18"
-version: "2.0.0"
-version_notes: "v2.13.1: Clarified purpose and position in code review family. Use this for PR/commit reviews, not periodic health checks."
+version: "2.1.0"
+version_notes: "v2.1.0: Added LLM output trust boundary to security review, critical-severity single-issue surfacing."
 breaking_changes: []
 ---
 # Code Review (Specific Changes)
@@ -138,6 +138,7 @@ Q1: Is this for a specific change (PR/commit)?
 - [ ] No information leakage in error responses or API payloads (see `/pb-security` Authorization & Access Control)
 - [ ] No hardcoded secrets or credentials
 - [ ] Input validation at trust boundaries
+- [ ] **LLM output trust boundary:** LLM-generated SQL, auth logic, security decisions, and data mutations treated as untrusted input — validated before use, never trusted at security boundaries (see `/pb-security` LLM Output Trust)
 
 ### Test Review
 
@@ -165,6 +166,7 @@ Q1: Is this for a specific change (PR/commit)?
 - **Be specific** — Point to exact lines/patterns, not vague concerns
 - **Be constructive** — Suggest alternatives when criticizing
 - **Be curious** — Ask questions when you don't understand a choice
+- **Surface criticals individually** — For MUST-level findings, raise one issue at a time. Don't batch critical findings into a list — each one requires explicit acknowledgment before moving to the next
 
 ### Feedback Categories
 

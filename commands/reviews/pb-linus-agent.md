@@ -8,8 +8,8 @@ execution_pattern: "sequential"
 related_commands: ['pb-review-code', 'pb-security', 'pb-preamble', 'pb-design-rules', 'pb-standards']
 last_reviewed: "2026-02-12"
 last_evolved: ""
-version: "1.2.0"
-version_notes: "v1.2.0: Added evidence standard to Lens Mode -- observations carry proof when stakes warrant it"
+version: "1.3.0"
+version_notes: "v1.3.0: Added single-issue surfacing for automatic rejection criteria."
 breaking_changes: []
 ---
 
@@ -403,6 +403,8 @@ Code is rejected outright if it contains:
 - Race conditions (shared state without synchronization)
 
 These aren't "consider fixing." These break the code.
+
+**Surfacing:** Automatic rejection items are raised one at a time. Each requires explicit acknowledgment before moving to the next. Don't batch critical findings — they get lost in lists. One issue, one response, one fix.
 
 ---
 

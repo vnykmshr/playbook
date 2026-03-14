@@ -3,7 +3,7 @@ name: "pb-setup"
 title: "Bootstrap Dev Machine"
 category: "utilities"
 difficulty: "advanced"
-model_hint: "haiku"
+model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-doctor', 'pb-update', 'pb-storage', 'pb-start']
 last_reviewed: "2026-02-09"
@@ -21,7 +21,7 @@ Set up a new Mac for development from scratch. Opinionated defaults with escape 
 
 **Mindset:** Design Rules emphasize "simple by default" — install only what's needed, configure minimally.
 
-**Resource Hint:** haiku — installation commands and configuration are mechanical and well-defined.
+**Resource Hint:** sonnet — Dev machine bootstrap with accurate tool detection and configuration.
 
 ## When to Use
 

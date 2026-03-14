@@ -3,18 +3,18 @@ name: "pb-review"
 title: "Automated Quality Gate"
 category: "development"
 difficulty: "beginner"
-model_hint: "haiku"
+model_hint: "sonnet"
 execution_pattern: "automatic"
 related_commands: ['pb-start', 'pb-commit', 'pb-review-code', 'pb-review-comprehensive']
 last_reviewed: "2026-02-28"
 last_evolved: "2026-02-28"
-version: "2.4.0"
-version_notes: "v2.4.0: Added retry circuit breaker -- loop detected after 3+ fix-review cycles on same issue, escalates as design question instead of auto-fixing."
+version: "2.5.0"
+version_notes: "v2.5.0: Added LLM trust boundary check, diff-aware QA pre-check, critical-severity single-issue surfacing."
 breaking_changes: []
 ---
 # Automated Quality Gate
 
-**Resource Hint:** haiku — Lightweight automation that applies your preferences and auto-commits after code review.
+**Resource Hint:** sonnet — Quality gate that applies your preferences, checks LLM trust boundaries, and auto-commits after code review.
 
 Run this after you finish coding. System analyzes what you built, applies your established preferences, and commits if everything checks out. You get a report when done.
 
@@ -49,6 +49,12 @@ System analyzes your change (LOC, files, domains, complexity, criticality), dete
 4. **Loop detected** — Same issue flagged 3+ times across fix-review cycles. Stop auto-fixing. Surface to user: "This issue has come back 3 times. It may be a design problem, not a code problem. [describe the recurring issue]. Continuing to auto-fix risks masking the root cause." Escalate as a design question, not a code fix.
 
 Most reviews hit outcome 1 or 2. You only get involved for genuinely ambiguous cases or loop detection.
+
+**Pre-check: Diff-aware flow mapping.** Before reviewing, system maps changed files to affected user flows. "This diff touches `auth/` and `email/` — affected flows: login, password reset, signup verification." This focuses review on what the change actually impacts, not the entire codebase.
+
+**LLM trust boundary.** If changes include LLM-generated code (SQL, auth logic, security boundaries, data mutations), system flags for elevated scrutiny. LLM output is untrusted input — validate it at trust boundaries the same way you'd validate user input. Escalates to `/pb-review-code` or `/pb-security` if LLM-generated code touches security-critical paths.
+
+**Critical-severity surfacing.** When a critical-severity finding is detected, system surfaces it individually — one issue at a time, not batched. Critical findings require explicit acknowledgment before proceeding. This prevents critical issues from getting lost in a list of suggestions.
 
 ---
 
