@@ -3,7 +3,7 @@ name: "pb-doctor"
 title: "System Health Check"
 category: "utilities"
 difficulty: "advanced"
-model_hint: "haiku"
+model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-storage', 'pb-ports', 'pb-update', 'pb-debug', 'pb-git-hygiene']
 last_reviewed: "2026-02-09"
@@ -21,7 +21,7 @@ Diagnose system health issues: disk space, memory pressure, CPU usage, and commo
 
 **Mindset:** Design Rules say "fail noisily and early" — surface system problems before they cascade.
 
-**Resource Hint:** haiku — mechanical system checks and status reporting.
+**Resource Hint:** sonnet — System health diagnostics with accurate assessment.
 
 ## When to Use
 

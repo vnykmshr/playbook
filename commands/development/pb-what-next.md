@@ -3,7 +3,7 @@ name: "pb-what-next"
 title: "Recommend Next Playbook Command"
 category: "development"
 difficulty: "advanced"
-model_hint: "haiku"
+model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-start', 'pb-cycle', 'pb-commit', 'pb-pr', 'pb-release']
 last_reviewed: "2026-02-18"
@@ -20,7 +20,7 @@ Get context-aware playbook command recommendations based on your current work st
 
 The recommendations are starting points, not rules. Question them. Challenge the suggestion if you think a different path makes more sense. Use this as a thinking tool, not an oracle.
 
-**Resource Hint:** haiku — git state analysis and command recommendation
+**Resource Hint:** sonnet — Git state analysis and context-aware command recommendation.
 
 ---
 

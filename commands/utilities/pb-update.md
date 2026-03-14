@@ -3,7 +3,7 @@ name: "pb-update"
 title: "Update All Tools"
 category: "utilities"
 difficulty: "advanced"
-model_hint: "haiku"
+model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-doctor', 'pb-storage', 'pb-setup', 'pb-security']
 last_reviewed: "2026-02-09"
@@ -21,7 +21,7 @@ Update all package managers, development tools, and system software with appropr
 
 **Mindset:** Design Rules say "distrust one true way" — update selectively, verify after each tool.
 
-**Resource Hint:** haiku — detecting outdated packages and running update commands.
+**Resource Hint:** sonnet — Detecting outdated packages and running update commands with correct version handling.
 
 ## When to Use
 

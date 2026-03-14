@@ -3,7 +3,7 @@ name: "pb-git-signals"
 title: "Extract Git History Signals"
 category: "core"
 difficulty: "beginner"
-model_hint: "haiku"
+model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-evolve', 'pb-context', 'pb-learn', 'pb-cycle']
 last_reviewed: "2026-02-14"
@@ -21,7 +21,7 @@ breaking_changes: []
 
 Apply `/pb-preamble` thinking: challenge what the signals reveal about project health. Apply `/pb-design-rules` thinking: are we building the right things? Are we fixing the same areas repeatedly?
 
-**Resource Hint:** haiku — Git history analysis; structured data extraction from commit patterns
+**Resource Hint:** sonnet — Git history analysis; pattern recognition from commit signals.
 
 ---
 

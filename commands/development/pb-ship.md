@@ -8,8 +8,8 @@ execution_pattern: "sequential"
 related_commands: ['pb-cycle', 'pb-pr', 'pb-release', 'pb-review-hygiene', 'pb-deployment']
 last_reviewed: "2026-02-09"
 last_evolved: ""
-version: "1.0.0"
-version_notes: "v2.10.0 baseline"
+version: "1.1.0"
+version_notes: "v1.1.0: Added bisectable commit splitting guidance for large changes."
 breaking_changes: []
 ---
 # Ship Focus Area to Production
@@ -437,6 +437,18 @@ LGTM - Ship it!
 ---
 
 ## Phase 5: Merge & Release
+
+### Step 5.0: Bisectable Commit Splitting (Large Changes)
+
+For changes touching >3 files across >1 concern, split into bisectable commits before push. This makes `git bisect` useful and rollbacks surgical. See `/pb-commit` for the full splitting guide.
+
+**Quick reference — dependency order:**
+1. Infrastructure/config (migrations, dependencies)
+2. Data/models + tests (data layer with tests together)
+3. Logic/controllers/UI (application code)
+4. Versioning (VERSION, CHANGELOG last)
+
+Skip this step for single-concern changes or small (<50 LOC) changes.
 
 ### Step 5.1: Final CI Check & Merge PR
 

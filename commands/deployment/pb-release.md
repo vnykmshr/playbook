@@ -8,7 +8,7 @@ execution_pattern: "sequential"
 related_commands: ['pb-preamble', 'pb-deployment', 'pb-ship', 'pb-pr', 'pb-cycle']
 last_reviewed: "2026-02-18"
 last_evolved: "2026-02-18"
-version: "1.1.0"
+version: "1.2.0"
 version_notes: "v2.13.1: Added pb-preamble backward reference (Mindset alignment)"
 breaking_changes: []
 ---
@@ -175,6 +175,16 @@ grep -E "## \[v?X\.Y\.Z\]" CHANGELOG.md
 - [ ] Format follows Keep a Changelog
 
 ### Step 2.2: Bump Version (If Not Already)
+
+**Version bump heuristic:** LOC is a starting signal, not a decision rule.
+
+| Signal | Suggests | Override when... |
+|--------|----------|------------------|
+| < 50 LOC, no new behavior | Patch (X.Y.**Z**) | Security fix changes API behavior → minor or major |
+| >= 50 LOC or new behavior | Minor (X.**Y**.0) | Only internal refactor → patch |
+| Breaking API/behavior change | Major (**X**.0.0) | Always major, regardless of LOC |
+
+Security fixes, API contract changes, and behavioral changes override the LOC heuristic. When in doubt, ask: "Would an existing consumer need to change anything?" If yes, it's at least minor.
 
 ```bash
 # Update version in package files

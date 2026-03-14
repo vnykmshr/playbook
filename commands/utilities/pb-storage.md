@@ -3,7 +3,7 @@ name: "pb-storage"
 title: "macOS Storage Cleanup"
 category: "utilities"
 difficulty: "advanced"
-model_hint: "haiku"
+model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-debug', 'pb-start']
 last_reviewed: "2026-02-09"
@@ -21,7 +21,7 @@ Tiered storage cleanup for developer machines. Reclaim disk space safely with us
 
 **Mindset:** Design Rules say "measure before optimizing" — check what's using space before cleaning.
 
-**Resource Hint:** haiku — scanning directories and executing cleanup commands.
+**Resource Hint:** sonnet — Storage analysis and safe cleanup with careful file operations.
 
 ## When to Use
 

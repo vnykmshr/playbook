@@ -8,8 +8,8 @@ execution_pattern: "interactive"
 related_commands: ['pb-preamble', 'pb-review', 'pb-commit', 'pb-pause', 'pb-plan']
 last_reviewed: "2026-02-18"
 last_evolved: "2026-02-18"
-version: "2.1.0"
-version_notes: "v2.13.1: Added pb-preamble backward reference (Mindset: challenge assumptions before starting)"
+version: "2.2.0"
+version_notes: "v2.2.0: Added scope mode question (expand/hold/reduce) to clarify intent before coding."
 breaking_changes: ["Replaced detailed pre-start checklist with 3-4 adaptive scope questions. Old commands pb-cycle/pb-review-code merged into /pb-review. See MIGRATION section."]
 ---
 # Start Development Work
@@ -58,11 +58,17 @@ The system asks clarifying questions naturally—like a peer reviewing your appr
    - You: "~200 LOC, 3 files, touches auth + email"
    - System detects: small/medium/large
 
-3. **Critical path?** (production, security, payment, or nice-to-have)
+3. **Scope mode?** (expanding, holding, or reducing)
+   - **Expanding:** New capability — building something that doesn't exist yet
+   - **Holding:** Hardening — bulletproofing, fixing, improving what exists
+   - **Reducing:** Surgical minimalism — removing, simplifying, cutting scope
+   - System adjusts review expectations: expanding gets architecture review, holding gets correctness review, reducing gets regression review
+
+4. **Critical path?** (production, security, payment, or nice-to-have)
    - You: "Payment processing, yes"
    - System prepares review depth accordingly
 
-4. **Any blockers?**
+5. **Any blockers?**
    - You: "Need staging DB access" or "None"
    - System pauses if blockers exist, otherwise proceeds
 

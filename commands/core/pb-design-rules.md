@@ -8,8 +8,8 @@ execution_pattern: "sequential"
 related_commands: ['pb-preamble', 'pb-calm-design', 'pb-standards', 'pb-adr', 'pb-patterns']
 last_reviewed: "2026-02-09"
 last_evolved: ""
-version: "1.2.0"
-version_notes: "v2.12.0 Phase 3: Added Rule 18 (Attention as Resource) for Calm Tech integration"
+version: "1.3.0"
+version_notes: "v1.3.0: Extended Rule 10 (Repair) with recovery-oriented errors for human and AI consumers."
 breaking_changes: []
 ---
 # Design Rules: Core Technical Principles
@@ -295,6 +295,13 @@ Loud failures cost you hours of debugging. Silent failures cost you days of data
 - **No recovery guessing** — If you can't recover safely, don't pretend to
 
 The measure: "Time from failure to diagnosis." Loud systems are fast; silent systems bury the information you need.
+
+**Recovery-oriented errors:** Error messages should tell the consumer what to do next, not just what went wrong. This applies to human developers AND AI agents consuming your APIs, CLIs, or tools.
+
+- **Diagnostic only:** "Element not found" — consumer is stuck
+- **Recovery-oriented:** "Element not found. Available elements: [list]. Run `snapshot` to refresh." — consumer knows next step
+
+As AI-assisted development grows, your error messages are read by both humans and AI agents. Recovery-oriented errors reduce time-to-resolution for both. Design errors that guide the next action, not just report the failure.
 
 ---
 

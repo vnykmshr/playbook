@@ -8,8 +8,8 @@ execution_pattern: "sequential"
 related_commands: ['pb-plan', 'pb-think', 'pb-design-rules', 'pb-patterns-core']
 last_reviewed: "2026-02-09"
 last_evolved: ""
-version: "1.0.0"
-version_notes: "v2.10.0 baseline"
+version: "1.1.0"
+version_notes: "v1.1.0: Added 'What's Intentionally Not Here' section to ADR template."
 breaking_changes: []
 ---
 # Architecture Decision Record (ADR)
@@ -117,6 +117,15 @@ What trade-offs are we accepting?]
 
 **Neutral:**
 - [Side effect that's neither good nor bad]
+
+## What's Intentionally Not Here
+
+[Document what you deliberately chose NOT to build, support, or include — and why.
+This prevents future engineers from re-proposing rejected ideas without context.
+Each exclusion should have a reason.]
+
+- [Excluded approach/feature]: [Why it was rejected]
+- [Excluded approach/feature]: [Why it was rejected]
 
 ## Implementation Notes
 

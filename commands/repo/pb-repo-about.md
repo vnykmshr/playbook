@@ -3,7 +3,7 @@ name: "pb-repo-about"
 title: "Generate GitHub About & Tags"
 category: "repo"
 difficulty: "advanced"
-model_hint: "haiku"
+model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-repo-readme', 'pb-repo-enhance']
 last_reviewed: "2026-02-09"
@@ -20,7 +20,7 @@ Create a concise, search-optimized GitHub "About" description and relevant topic
 
 Describe what the project actually does, not what you wish it did. Honest descriptions help the right people find you.
 
-**Resource Hint:** haiku — crafting a short description and selecting tags is a focused formatting task
+**Resource Hint:** sonnet — Crafting accurate project descriptions and selecting relevant tags.
 
 ---
 
