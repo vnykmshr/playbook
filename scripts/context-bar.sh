@@ -1,6 +1,6 @@
 #!/bin/bash
 # Context bar for Claude Code status line.
-# Shows: branch | uncommitted | token usage bar
+# Shows: branch | uncommitted | model | turns | token usage bar
 # Install: symlink to ~/.claude/context-bar.sh via ./scripts/install.sh
 
 # --- Git info ---
@@ -17,9 +17,10 @@ else
 fi
 
 # --- Token usage from transcript ---
-max_context=200000
 pct=0
 context_length=0
+model_tier=""
+turn_count=0
 
 # Derive project directory from CWD (matches Claude Code's path encoding)
 claude_dir="$HOME/.claude"
@@ -31,23 +32,42 @@ if [[ -d "$project_dir" ]]; then
     | xargs -0 ls -t 2>/dev/null | head -1) || transcript=""
 
   if [[ -n "$transcript" && -f "$transcript" ]]; then
-    # Extract token count from last assistant message with usage data.
+    # Extract token count and model from last assistant message with usage data.
     # tail -200 covers tool-heavy conversations where assistant messages are sparse.
-    context_length=$(tail -200 "$transcript" \
-      | jq -s '
+    read -r context_length model_name < <(tail -200 "$transcript" \
+      | jq -rs '
         map(select(.type == "assistant" and .message.usage)) |
         last // {} |
         if .message.usage then
-          (.message.usage.input_tokens // 0) +
-          (.message.usage.cache_read_input_tokens // 0) +
-          (.message.usage.cache_creation_input_tokens // 0)
-        else 0 end
-      ' 2>/dev/null) || context_length=0
+          [((.message.usage.input_tokens // 0) +
+            (.message.usage.cache_read_input_tokens // 0) +
+            (.message.usage.cache_creation_input_tokens // 0)),
+           (.message.model // "")]
+        else [0, ""] end |
+        "\(.[0]) \(.[1])"
+      ' 2>/dev/null) || { context_length=0; model_name=""; }
+
+    # Model tier: single char (O/S/H) from model name
+    case "$model_name" in
+      *opus*)   model_tier="O" ;;
+      *sonnet*) model_tier="S" ;;
+      *haiku*)  model_tier="H" ;;
+      *)        model_tier="" ;;
+    esac
+
+    # Max context: 1M for Opus 4.6/Sonnet 4.6, 200K for older models
+    case "$model_name" in
+      *opus-4-6*|*opus-4.6*|*sonnet-4-6*|*sonnet-4.6*) max_context=1000000 ;;
+      *) max_context=200000 ;;
+    esac
 
     # Validate numeric before arithmetic
     if [[ "$context_length" =~ ^[0-9]+$ && "$context_length" -gt 0 ]]; then
       pct=$((context_length * 100 / max_context))
     fi
+
+    # Turn count: user messages (excluding meta/command messages)
+    turn_count=$(grep -c '"type":"user"' "$transcript" 2>/dev/null) || turn_count=0
   fi
 fi
 
@@ -66,6 +86,8 @@ tokens_k=$((context_length / 1000))
 # --- Assemble ---
 parts=()
 [[ -n "$git_info" ]] && parts+=("$git_info")
+[[ -n "$model_tier" ]] && parts+=("$model_tier")
+[[ "$turn_count" -gt 0 ]] && parts+=("t${turn_count}")
 parts+=("${bar} ${pct}% ${tokens_k}k")
 
 echo "${parts[*]}"
