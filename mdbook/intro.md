@@ -13,6 +13,8 @@ Every command in the playbook assumes both. Every workflow integrates both.
 
 ## Start Here
 
+**Want the thinking, not the commands?** Read [The Playbook](https://playbook.1mb.dev) - five chapters on how teams think together, what they build toward, and how to adopt it. About thirty minutes cover to cover.
+
 **New to the playbook?** Read [Why We Build Playbooks](docs/why-we-build-playbooks.md) for the full philosophy, or jump to [Getting Started](docs/getting-started.md) for a scenario-based introduction.
 
 **Looking for a specific command?** Browse the sidebar by category, or use search (press `S`).
