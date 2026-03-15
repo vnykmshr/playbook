@@ -449,5 +449,3 @@ For project-specific workflows, create recipes in `todos/recipes/` or `docs/team
 
 ---
 
-**Last Updated:** 2026-01-19
-**Version:** 1.0

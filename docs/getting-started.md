@@ -4,7 +4,7 @@ Welcome to the Engineering Playbook! This guide will help you get up and running
 
 ## Installation
 
-See [Installation & Setup](/README.md#installation) in the main README for prerequisites and installation steps.
+See [Installation & Setup](../README.md#installation) in the main README for prerequisites and installation steps.
 
 **Quick summary:**
 ```bash
@@ -14,7 +14,7 @@ cd playbook
 ```
 
 With Claude Code: Commands available as skills (e.g., `/pb-start`)
-Without Claude Code: Read command files as Markdown (see [Using Playbooks with Other Tools](/docs/using-with-other-tools.md))
+Without Claude Code: Read command files as Markdown (see [Using Playbooks with Other Tools](using-with-other-tools.md))
 
 ---
 

@@ -112,21 +112,7 @@ Real-world walkthroughs showing development teams using playbook commands end-to
 
 ## Commands
 
-Organized by category:
-
-| Category | Count | Purpose |
-|----------|-------|---------|
-| **Core Foundation** | 12 | SDLC framework, standards, preamble, design rules |
-| **Planning & Architecture** | 16 | Design patterns, ADRs, observability |
-| **Development** | 12 | Feature development, iteration, testing |
-| **Code Review & Quality** | 11 | Multiple perspectives, quality gates |
-| **Release & Deployment** | 8 | Deployment, incidents, DR, SRE practices |
-| **Repository Management** | 7 | Structure, README, documentation |
-| **Team & People** | 3 | Onboarding, knowledge transfer, team building |
-| **Templates** | 3 | Project context, CLAUDE.md generation |
-| **Total** | **72** | **Unified ecosystem** |
-
-[See full command reference →](command-index.md)
+Commands are organized into categories: core foundation, planning and architecture, development, reviews and quality, deployment and operations, repository management, templates, utilities, and people. Browse the sidebar or see the [full command reference](command-index.md).
 
 ---
 

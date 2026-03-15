@@ -2,7 +2,7 @@
 
 Complete reference for how all playbook commands work together to form a unified SDLC framework.
 
-**Last Updated**: 2026-02-12 | **Categories**: 9 | **Version**: v2.11.0
+Complete reference for how commands compose into workflows.
 
 ---
 
@@ -973,4 +973,3 @@ POWERFUL:
 
 **This guide is the map. Use it to navigate the playbook as an integrated system.**
 
-*Last Updated: 2026-01-24 | Playbook Version: v2.2.0 | Integration Health: Excellent*

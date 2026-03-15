@@ -88,11 +88,9 @@ This document tracks version history for individual playbook commands. Commands 
 
 ---
 
-## v1.0.0 (2025-12-XX) — Initial Baseline
+## v1.0.0 — Initial Baseline
 
-All other 82 commands at version 1.0.0 represent the v2.10.0 playbook baseline.
-
-**Total commands:** 82 baseline (v1.0.0) + 12 enhanced/new (v1.1.0) = 94 commands
+All other commands at version 1.0.0 represent the initial playbook baseline.
 
 ---
 

@@ -1,8 +1,8 @@
 # Evolution System Operational Guide
 
-**For:** Playbook maintainers running quarterly (or on-demand) evolution cycles
-**Date:** 2026-02-09
-**Version:** 1.0
+> **For playbook maintainers only.** If you're adopting the playbook, start with [Getting Started](getting-started.md) instead.
+
+This guide covers how the playbook itself evolves through quarterly cycles.
 
 This guide walks through the complete evolution process with all safety mechanisms in place.
 
@@ -281,7 +281,7 @@ python3 scripts/evolve.py --validate
 
 # Should output:
 # All metadata valid
-# 86 commands parsed successfully
+# N commands parsed successfully
 ```
 
 ### 3.4: Run Convention Checks

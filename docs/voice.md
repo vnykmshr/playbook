@@ -122,4 +122,3 @@ One idea per sentence. Specific examples. Concrete thresholds. Active voice. Dir
 
 ---
 
-*v1.0 | Updated 2026-02-17*

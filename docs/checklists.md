@@ -360,4 +360,3 @@ For new frontend features.
 
 ---
 
-*Created: 2026-01-11 | Last Updated: 2026-01-11 | Single source of truth for all playbook checklists*

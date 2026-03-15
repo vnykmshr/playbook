@@ -19,7 +19,7 @@ Common questions about the Engineering Playbook.
 **A:** Yes. The playbook works with any tech stack, version control system, and CI/CD platform. It's tool-agnostic by design.
 
 ### Q: Does the playbook require Claude Code?
-**A:** No. The playbook is designed for Claude Code but works with any agentic development tool. See [Using Playbooks with Other Tools](/docs/using-with-other-tools.md) for adaptation guides and concrete examples for your tool.
+**A:** No. The playbook is designed for Claude Code but works with any agentic development tool. See [Using Playbooks with Other Tools](using-with-other-tools.md) for adaptation guides and concrete examples for your tool.
 
 ---
 
