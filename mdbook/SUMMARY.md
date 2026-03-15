@@ -1,6 +1,6 @@
 # Summary
 
-[Introduction](docs/index.md)
+[Introduction](intro.md)
 
 ---
 

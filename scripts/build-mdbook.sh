@@ -21,6 +21,7 @@ cp -r "$ROOT/commands" "$SRC/commands"
 # Copy mdbook config files
 cp "$ROOT/mdbook/book.toml" "$SRC/book.toml"
 cp "$ROOT/mdbook/SUMMARY.md" "$SRC/SUMMARY.md"
+cp "$ROOT/mdbook/intro.md" "$SRC/intro.md"
 cp -r "$ROOT/mdbook/theme" "$SRC/theme" 2>/dev/null || true
 cp "$ROOT/mdbook/mermaid.min.js" "$SRC/" 2>/dev/null || true
 cp "$ROOT/mdbook/mermaid-init.js" "$SRC/" 2>/dev/null || true
