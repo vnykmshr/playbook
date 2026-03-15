@@ -2,9 +2,7 @@ name: Deploy Book Site
 
 on:
   push:
-    branches: [ main ]
-    paths:
-      - 'book/**'
+    tags: [ 'v*' ]
   workflow_dispatch:
 
 jobs:
