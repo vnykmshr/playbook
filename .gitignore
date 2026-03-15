@@ -42,8 +42,10 @@ __pycache__/
 dist/
 build/
 
-# Generated docs (built by mkdocs, deployed by GitHub Actions)
+# Generated docs
 site/
+mdbook-src/
+mdbook-out/
 
 # Generated playbook metadata and discovery tools (auto-generated from commands)
 .playbook-metadata.json
