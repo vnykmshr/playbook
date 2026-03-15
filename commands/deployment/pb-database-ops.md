@@ -20,17 +20,17 @@ Operate databases reliably: migrations, backups, performance tuning, and failove
 
 Data is the most valuable asset. Treat database operations with appropriate care.
 
-**Resource Hint:** sonnet — database operations, migration design, and performance tuning
+**Resource Hint:** sonnet - database operations, migration design, and performance tuning
 
 ---
 
 ## When to Use This Command
 
-- **Planning database migration** — Schema changes, data migrations
-- **Setting up backups** — Establishing backup and recovery strategy
-- **Performance issues** — Database slow, queries timing out
-- **Disaster recovery** — Failover planning and testing
-- **Pre-deployment** — Reviewing database changes for safety
+- **Planning database migration** - Schema changes, data migrations
+- **Setting up backups** - Establishing backup and recovery strategy
+- **Performance issues** - Database slow, queries timing out
+- **Disaster recovery** - Failover planning and testing
+- **Pre-deployment** - Reviewing database changes for safety
 
 ---
 
@@ -818,18 +818,18 @@ If lag > 5 minutes and not recovering, escalate.
 ## Integration with Playbook
 
 **Part of operational excellence:**
-- `/pb-deployment` — Migration deployment patterns
-- `/pb-dr` — Database disaster recovery
-- `/pb-observability` — Database metrics and alerting
-- `/pb-database-ops` — Full database operations (this command)
+- `/pb-deployment` - Migration deployment patterns
+- `/pb-dr` - Database disaster recovery
+- `/pb-observability` - Database metrics and alerting
+- `/pb-database-ops` - Full database operations (this command)
 
 ---
 
 ## Related Commands
 
-- `/pb-patterns-db` — Database architecture and design patterns
-- `/pb-dr` — Disaster recovery planning and backup verification
-- `/pb-deployment` — Deploy database migrations safely
+- `/pb-patterns-db` - Database architecture and design patterns
+- `/pb-dr` - Disaster recovery planning and backup verification
+- `/pb-deployment` - Deploy database migrations safely
 
 **Workflow:**
 ```

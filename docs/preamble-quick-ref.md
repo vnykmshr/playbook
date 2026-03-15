@@ -24,12 +24,12 @@
 ## Quick Decision: When to Challenge vs. Trust
 
 ### CHALLENGE WHEN:
-- ✓ Assumptions are unstated ("We need X" — why?)
-- ✓ Trade-offs are hidden ("Simple solution" — at what cost?)
-- ✓ Risk is glossed over ("Production-ready" — tested failure modes?)
-- ✓ Scope is unclear ("Add this feature" — what's done?)
+- ✓ Assumptions are unstated ("We need X" - why?)
+- ✓ Trade-offs are hidden ("Simple solution" - at what cost?)
+- ✓ Risk is glossed over ("Production-ready" - tested failure modes?)
+- ✓ Scope is unclear ("Add this feature" - what's done?)
 - ✓ Process is unfamiliar (first time, don't understand why)
-- ✓ Context has changed ("We always do X" — still true?)
+- ✓ Context has changed ("We always do X" - still true?)
 - ✓ Your expertise applies (you have info they don't)
 
 ### TRUST WHEN:
@@ -100,8 +100,8 @@
 
 **Announce before discussion:**
 ```
-Timeline: Now to [DATE EOD] — discuss
-Decision: [DATE MORNING] — I decide
+Timeline: Now to [DATE EOD] - discuss
+Decision: [DATE MORNING] - I decide
 Options: [List with trade-offs]
 Input needed: [What matters]
 Revisit: In [TIMEFRAME] if [CONDITIONS]
@@ -134,12 +134,12 @@ Revisit: In [TIMEFRAME] if [CONDITIONS]
 
 | Symptom | What's Wrong | Fix |
 |---------|-------------|-----|
-| Everyone agrees with senior person | **Pseudo-safety** — challenge is punished subtly | Leaders must visibly change mind when challenged |
-| Meetings never end, decisions keep reopening | **Perpetual debate** — no decision clock | Set specific decision dates and stick to them |
-| Person who challenged is now quiet | **Punishment recognized** — challenge got consequences | Check in 1-on-1. Show next challenge is safe. |
-| Half the team stops speaking | **Argumentative culture** — everything challenged | Distinguish: strategic decisions debate more, tactical decide faster |
-| Senior person asserts without reasoning | **Authority over correctness** — hierarchy winning | Require: "Here's why" before decisions. Invite challenge. |
-| People complain in hallways not meetings | **Lost faith in process** — challenges feel pointless | Make one example where challenge changed outcome |
+| Everyone agrees with senior person | **Pseudo-safety** - challenge is punished subtly | Leaders must visibly change mind when challenged |
+| Meetings never end, decisions keep reopening | **Perpetual debate** - no decision clock | Set specific decision dates and stick to them |
+| Person who challenged is now quiet | **Punishment recognized** - challenge got consequences | Check in 1-on-1. Show next challenge is safe. |
+| Half the team stops speaking | **Argumentative culture** - everything challenged | Distinguish: strategic decisions debate more, tactical decide faster |
+| Senior person asserts without reasoning | **Authority over correctness** - hierarchy winning | Require: "Here's why" before decisions. Invite challenge. |
+| People complain in hallways not meetings | **Lost faith in process** - challenges feel pointless | Make one example where challenge changed outcome |
 
 ---
 
@@ -186,15 +186,15 @@ Revisit: In [TIMEFRAME] if [CONDITIONS]
 
 | Question | Read |
 |----------|------|
-| Core mindset | `/pb-preamble` — sections I-V |
-| When to challenge | `/pb-preamble` — section II.5 |
-| Failure modes | `/pb-preamble` — section VIII |
+| Core mindset | `/pb-preamble` - sections I-V |
+| When to challenge | `/pb-preamble` - section II.5 |
+| Failure modes | `/pb-preamble` - section VIII |
 | Async communication | `/pb-preamble-async` |
-| Challenging my boss | `/pb-preamble-power` — section VI |
-| Building team safety | `/pb-preamble-power` — section VII |
-| Decision clocks | `/pb-preamble-decisions` — section II |
-| After I lose an argument | `/pb-preamble-decisions` — section III |
-| Learning from failures | `/pb-preamble-decisions` — section VI |
+| Challenging my boss | `/pb-preamble-power` - section VI |
+| Building team safety | `/pb-preamble-power` - section VII |
+| Decision clocks | `/pb-preamble-decisions` - section II |
+| After I lose an argument | `/pb-preamble-decisions` - section III |
+| Learning from failures | `/pb-preamble-decisions` - section VI |
 
 ---
 

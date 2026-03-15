@@ -20,7 +20,7 @@ breaking_changes: []
 
 **Mindset:** This review embodies `/pb-preamble` thinking (challenge assumptions, surface risks) and `/pb-design-rules` thinking (verify Clarity, Simplicity, Robustness across the codebase).
 
-**Resource Hint:** opus — orchestrates multiple review perspectives requiring deep cross-cutting analysis
+**Resource Hint:** opus - orchestrates multiple review perspectives requiring deep cross-cutting analysis
 
 ---
 
@@ -45,11 +45,11 @@ For deeper, more contextualized reviews by complementary personas:
 | `/pb-review-infrastructure` | Security & resilience | Infrastructure, deployments, hardening |
 
 **Persona Deep Dives:**
-- `/pb-linus-agent` — Security pragmatism and threat modeling
-- `/pb-alex-infra` — Systems thinking and resilience design
-- `/pb-maya-product` — User impact and scope discipline
-- `/pb-sam-documentation` — Clarity and knowledge transfer
-- `/pb-jordan-testing` — Test coverage and reliability
+- `/pb-linus-agent` - Security pragmatism and threat modeling
+- `/pb-alex-infra` - Systems thinking and resilience design
+- `/pb-maya-product` - User impact and scope discipline
+- `/pb-sam-documentation` - Clarity and knowledge transfer
+- `/pb-jordan-testing` - Test coverage and reliability
 
 See `/pb-preamble` for the team thinking philosophy that enables these perspectives to complement rather than conflict.
 
@@ -60,23 +60,23 @@ See `/pb-preamble` for the team thinking philosophy that enables these perspecti
 **Recommended sequence for multi-persona reviews:**
 
 ### Phase 1: Scope Lock (Start Here)
-- **Persona:** `/pb-maya-product` — 15-20 minutes
+- **Persona:** `/pb-maya-product` - 15-20 minutes
 - **Goal:** Validate you're solving the right problem for the right users
 - **Outcome:** "This feature solves a real user problem, scope is bounded"
 - **Result:** Proceed or pivot before engineering effort
 
 ### Phase 2: Quality Review (Run in Parallel)
-- **Persona 1:** `/pb-linus-agent` — 30-45 minutes
+- **Persona 1:** `/pb-linus-agent` - 30-45 minutes
   - **Goal:** Verify code correctness, security assumptions, simplicity
-- **Persona 2:** `/pb-alex-infra` — 20-30 minutes
+- **Persona 2:** `/pb-alex-infra` - 20-30 minutes
   - **Goal:** Verify resilience, failure modes, scalability
-- **Persona 3:** `/pb-jordan-testing` — 20-30 minutes
+- **Persona 3:** `/pb-jordan-testing` - 20-30 minutes
   - **Goal:** Verify test coverage, edge cases, invariants
 
 **Running in parallel:** Launch all 3 simultaneously. They work independently; results synthesize naturally.
 
 ### Phase 3: Communication & Clarity (Last)
-- **Persona:** `/pb-sam-documentation` — 15-20 minutes
+- **Persona:** `/pb-sam-documentation` - 15-20 minutes
 - **Goal:** Verify code and decisions are clearly documented
 - **Outcome:** Team can understand and modify code 6 months later
 - **Note:** Run after quality reviews; Sam often catches assumptions other personas missed
@@ -97,17 +97,17 @@ See `/pb-preamble` for the team thinking philosophy that enables these perspecti
 
 ## Resolving Persona Conflicts
 
-**If personas disagree,** it's not a bug—it's a design decision:
+**If personas disagree,** it's not a bug-it's a design decision:
 
 **Example:**
 - **Linus says:** "Add input validation (improves security)"
 - **Alex says:** "Validation adds 20ms latency in hot path"
 
 **Resolution:** Not a contradiction. This is a trade-off:
-1. **Document via `/pb-adr`** — Architecture Decision Record explaining the trade-off
-2. **Measure the impact** — Get actual latency data before deciding
-3. **Make conscious choice** — Choose security+latency, or skip validation+accept risk
-4. **Record the trade-off** — Future reviewers understand why
+1. **Document via `/pb-adr`** - Architecture Decision Record explaining the trade-off
+2. **Measure the impact** - Get actual latency data before deciding
+3. **Make conscious choice** - Choose security+latency, or skip validation+accept risk
+4. **Record the trade-off** - Future reviewers understand why
 
 Persona disagreements expose **real design choices**. That's valuable.
 
@@ -240,10 +240,10 @@ After all reviews complete, synthesize into unified report:
 
 Prioritize findings into:
 
-1. **CRITICAL** — Must fix before production/release
-2. **HIGH** — Should fix soon (this sprint)
-3. **MEDIUM** — Address when convenient
-4. **LOW** — Nice to have
+1. **CRITICAL** - Must fix before production/release
+2. **HIGH** - Should fix soon (this sprint)
+3. **MEDIUM** - Address when convenient
+4. **LOW** - Nice to have
 
 ### Step 5: Track Progress
 
@@ -314,22 +314,22 @@ Create review document at todos/project-review-2026-01-21.md
 
 ## Tips for Effective Reviews
 
-1. **Parallelize** — Run independent reviews concurrently
-2. **Focus scope** — Use `git diff` to limit to changed files
-3. **Time-box** — Set review duration upfront
-4. **Prioritize ruthlessly** — Not every finding needs immediate action
-5. **Track progress** — Use the review document across sessions
-6. **Follow up** — Schedule remediation session after review
+1. **Parallelize** - Run independent reviews concurrently
+2. **Focus scope** - Use `git diff` to limit to changed files
+3. **Time-box** - Set review duration upfront
+4. **Prioritize ruthlessly** - Not every finding needs immediate action
+5. **Track progress** - Use the review document across sessions
+6. **Follow up** - Schedule remediation session after review
 
 ---
 
 ## Related Commands
 
-- `/pb-review-code` — Code change review
-- `/pb-review-hygiene` — Code quality and operational readiness
-- `/pb-review-tests` — Test suite health
-- `/pb-security` — Security audit
-- `/pb-cycle` — Self-review + peer review iteration
+- `/pb-review-code` - Code change review
+- `/pb-review-hygiene` - Code quality and operational readiness
+- `/pb-review-tests` - Test suite health
+- `/pb-security` - Security audit
+- `/pb-cycle` - Self-review + peer review iteration
 
 ---
 

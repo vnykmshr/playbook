@@ -9,7 +9,7 @@ related_commands: ['pb-resume', 'pb-start', 'pb-standup']
 last_reviewed: "2026-02-13"
 last_evolved: "2026-02-13"
 version: "1.2.0"
-version_notes: "v2.13.0: Context hygiene integrated — archives old pause entries, reports context health, trims session state"
+version_notes: "v2.13.0: Context hygiene integrated - archives old pause entries, reports context health, trims session state"
 breaking_changes: []
 ---
 # Pause Development Work
@@ -18,18 +18,18 @@ Gracefully pause or conclude work on a project. Use this when stepping away for 
 
 **Mindset:** Future you will resume this. Leave breadcrumbs that make recovery effortless. Apply `/pb-preamble` thinking: be honest about blockers. Apply `/pb-design-rules` thinking: document decisions and trade-offs.
 
-**Resource Hint:** sonnet — state preservation, context hygiene, handoff documentation
+**Resource Hint:** sonnet - state preservation, context hygiene, handoff documentation
 
 ---
 
 ## When to Use This Command
 
-- **End of day** — Wrapping up work for the day
-- **End of week** — Before weekend/time off
-- **End of phase** — Completing a milestone or release phase
-- **Context switch** — Moving to a different project
-- **Extended break** — Vacation, leave, or long pause
-- **Handoff** — Passing work to another developer
+- **End of day** - Wrapping up work for the day
+- **End of week** - Before weekend/time off
+- **End of phase** - Completing a milestone or release phase
+- **Context switch** - Moving to a different project
+- **Extended break** - Vacation, leave, or long pause
+- **Handoff** - Passing work to another developer
 
 ---
 
@@ -86,17 +86,17 @@ ls todos/releases/*/
 ## Status Update: [Date]
 
 **Completed:**
-- [x] Task A — finished [brief note]
-- [x] Task B — finished [brief note]
+- [x] Task A - finished [brief note]
+- [x] Task B - finished [brief note]
 
 **In Progress:**
-- [ ] Task C — 70% complete, [what remains]
+- [ ] Task C - 70% complete, [what remains]
 
 **Blocked:**
-- [ ] Task D — blocked on [specific blocker]
+- [ ] Task D - blocked on [specific blocker]
 
 **Discovered:**
-- [ ] New task E — [discovered during work]
+- [ ] New task E - [discovered during work]
 
 **Next Session:**
 - Resume Task C
@@ -191,7 +191,7 @@ Latest session pause context. Old entries archived to `todos/done/`.
 2. [Following action]
 
 ### Open Questions
-- [Question] — [context]
+- [Question] - [context]
 ```
 
 Target: ~20-30 lines. Be specific about what's next. Skip sections that don't apply.
@@ -320,14 +320,14 @@ For vacations, handoffs, or long breaks:
 - `/pb-ship` → Full review → PR → release workflow
 
 **Commands to run during pause:**
-- `/pb-context` — Update working context
-- `/pb-claude-project` — Update CLAUDE.md (if needed)
+- `/pb-context` - Update working context
+- `/pb-claude-project` - Update CLAUDE.md (if needed)
 
 ## Related Commands
 
-- `/pb-resume` — Get back into context after a break
-- `/pb-start` — Begin work on a new feature or fix
-- `/pb-standup` — Post async status update to team
+- `/pb-resume` - Get back into context after a break
+- `/pb-start` - Begin work on a new feature or fix
+- `/pb-standup` - Post async status update to team
 
 ---
 
@@ -342,7 +342,7 @@ For vacations, handoffs, or long breaks:
 
 ### Don't
 - Leave uncommitted work on local only
-- Say "I'll remember" — you won't
+- Say "I'll remember" - you won't
 - Skip tracker updates
 - Leave WIP commits without explanation
 - Assume context will be obvious later

@@ -10,10 +10,10 @@ Commands are peers, not procedures. We communicate dev-to-dev: direct, authentic
 
 **This means:**
 
-- **Prose over templates** — Explanation embedded in narrative, not bullet-pointed
-- **Specific reasoning** — "This N+1 will scale poorly (20ms now → 2s at 100K records)" vs "consider performance"
-- **Context-aware** — Small changes get conversational prose; architecture changes get structured reasoning
-- **No artificial formality** — We skip the bot-speak ("it is recommended that...") and talk like peers
+- **Prose over templates** - Explanation embedded in narrative, not bullet-pointed
+- **Specific reasoning** - "This N+1 will scale poorly (20ms now → 2s at 100K records)" vs "consider performance"
+- **Context-aware** - Small changes get conversational prose; architecture changes get structured reasoning
+- **No artificial formality** - We skip the bot-speak ("it is recommended that...") and talk like peers
 
 ---
 
@@ -32,7 +32,7 @@ Commands are peers, not procedures. We communicate dev-to-dev: direct, authentic
 
 **You get:**
 ```
-Your query loop hits the database on every iteration. With 100K records, this goes from 20ms to 2 seconds. Add an index or batch the queries—either takes about 15 minutes.
+Your query loop hits the database on every iteration. With 100K records, this goes from 20ms to 2 seconds. Add an index or batch the queries-either takes about 15 minutes.
 ```
 
 Why? Because you need to know *what matters* (scale impact) and *how hard* (effort), not just a structured diagnosis.
@@ -47,7 +47,7 @@ Q3: Timeline? (flexible/fixed)
 ```
 
 **You get:**
-A conversation: "Tell me what you're building—is this greenfield or adding to existing services? What's the riskiest part?" Questions emerge from what you describe.
+A conversation: "Tell me what you're building-is this greenfield or adding to existing services? What's the riskiest part?" Questions emerge from what you describe.
 
 ### Commit Messages
 
@@ -122,4 +122,3 @@ One idea per sentence. Specific examples. Concrete thresholds. Active voice. Dir
 
 ---
 
-*v1.0 | Updated 2026-02-17*

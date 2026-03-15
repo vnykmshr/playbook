@@ -20,7 +20,7 @@ Get context-aware playbook command recommendations based on your current work st
 
 The recommendations are starting points, not rules. Question them. Challenge the suggestion if you think a different path makes more sense. Use this as a thinking tool, not an oracle.
 
-**Resource Hint:** sonnet — Git state analysis and context-aware command recommendation.
+**Resource Hint:** sonnet - Git state analysis and context-aware command recommendation.
 
 ---
 
@@ -75,7 +75,7 @@ This command analyzes:
 Recommended Next Steps
 ━━━━━━━━━━━━━━━━━━━
 
-1. `/pb-start` — Start Development Work
+1. `/pb-start` - Start Development Work
    - Begin iterative development
    - Time: 5 min
 ```
@@ -94,11 +94,11 @@ Recommended Next Steps
 Recommended Next Steps
 ━━━━━━━━━━━━━━━━━━━
 
-1. `/pb-cycle` — Development Cycle
+1. `/pb-cycle` - Development Cycle
    - Self-review + peer review
    - Confidence: 90% | Time: 45 min
 
-2. `/pb-testing` — Advanced Testing
+2. `/pb-testing` - Advanced Testing
    - Verify test coverage
    - Confidence: 85% | Time: 5 min
 
@@ -124,11 +124,11 @@ Why These Commands?
 Recommended Next Steps
 ━━━━━━━━━━━━━━━━━━━
 
-1. `/pb-commit` — Atomic Commits
+1. `/pb-commit` - Atomic Commits
    - Organize into logical commits
    - Confidence: 90% | Time: 10 min
 
-2. `/pb-pr` — Quick PR Creation
+2. `/pb-pr` - Quick PR Creation
    - Create pull request
    - Confidence: 90% | Time: varies
 
@@ -154,11 +154,11 @@ Why These Commands?
 Recommended Next Steps
 ━━━━━━━━━━━━━━━━━━━
 
-1. `/pb-release` — Release Preparation
+1. `/pb-release` - Release Preparation
    - Prepare for production
    - Time: 45 min
 
-2. `/pb-deployment` — Deployment Strategies
+2. `/pb-deployment` - Deployment Strategies
    - Plan deployment
    - Time: 5 min
 
@@ -341,11 +341,11 @@ Status:    Mid-feature, tests need updating
 
 ## Related Commands
 
-- `/pb-start` — Begin feature work (creates branch)
-- `/pb-cycle` — Self-review + peer review loop
-- `/pb-commit` — Craft atomic commits
-- `/pb-pr` — Create pull request
-- `/pb-release` — Release preparation
+- `/pb-start` - Begin feature work (creates branch)
+- `/pb-cycle` - Self-review + peer review loop
+- `/pb-commit` - Craft atomic commits
+- `/pb-pr` - Create pull request
+- `/pb-release` - Release preparation
 
 ---
 

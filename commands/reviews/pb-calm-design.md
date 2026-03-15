@@ -17,7 +17,7 @@ breaking_changes: []
 
 **Technology should recede into the background until genuinely needed.** Calm design applies attention-efficiency principles to every feature, system, and interface you build.
 
-**Resource Hint:** sonnet — Design and code review with attention as a resource lens.
+**Resource Hint:** sonnet - Design and code review with attention as a resource lens.
 
 ## When to Use
 
@@ -54,7 +54,7 @@ Use this to evaluate features, systems, or interfaces for attention-efficiency.
 - Or does it demand attention at every step?
 - Example: Auto-save works silently ✅ vs. Manual save button everywhere ❌
 
-**2. What happens during normal operation—silence or chatter?**
+**2. What happens during normal operation-silence or chatter?**
 
 - Does the system only communicate when something's wrong?
 - Or does it provide constant status updates?
@@ -74,7 +74,7 @@ Use this to evaluate features, systems, or interfaces for attention-efficiency.
 
 ### Section B: Graceful Degradation (System Failures)
 
-**5. What happens when this system fails—alarm or adaptation?**
+**5. What happens when this system fails-alarm or adaptation?**
 
 - Does failure break everything, or does the system gracefully degrade?
 - Can users continue with partial functionality?
@@ -128,7 +128,7 @@ Use this to evaluate features, systems, or interfaces for attention-efficiency.
 
 - Run through questions 5-6 (failure modes)
 - Ask: "Does this fail quietly or loudly?"
-- Calm doesn't mean no errors—it means kind errors
+- Calm doesn't mean no errors-it means kind errors
 
 ### Before Shipping
 
@@ -144,7 +144,7 @@ Use this to evaluate features, systems, or interfaces for attention-efficiency.
 |-------------------|-------------|------|
 | **Minimal Attention** | Does it work in the background? | Questions 1-2 |
 | **Use the Periphery** | Can secondary info move to edges? | Question 3 |
-| **Alternative Communication** | Not just alerts—use status, light, subtle indicators | Question 4 |
+| **Alternative Communication** | Not just alerts-use status, light, subtle indicators | Question 4 |
 | **Graceful Failure** | Does it fail gently or catastrophically? | Questions 5-6 |
 | **Minimum Viable Design** | Have we cut to the core? | Question 7 |
 | **Least Surprise** | Would a first-time user understand? | Question 8 |
@@ -262,15 +262,15 @@ Read `/pb-design-rules` for technical principles (clarity, simplicity, modularit
 Calm design doesn't mean hiding problems. Some systems NEED to be noisy:
 
 **Be loud when:**
-- **Safety is at risk** — Security breach, data loss, financial error: alert loudly
-- **User explicitly asks** — User enabled notifications: notify them
-- **Time is critical** — Deadline in 1 hour, meeting starting now: alert
-- **User attention is already focused** — During an active operation (form submission, upload)
+- **Safety is at risk** - Security breach, data loss, financial error: alert loudly
+- **User explicitly asks** - User enabled notifications: notify them
+- **Time is critical** - Deadline in 1 hour, meeting starting now: alert
+- **User attention is already focused** - During an active operation (form submission, upload)
 
 **Remain calm when:**
-- **It's background work** — Sync, backup, index rebuild: silent
-- **The user will notice anyway** — Feature works, they'll see it
-- **It's optional or secondary** — Nice-to-know info: make it available, don't push it
+- **It's background work** - Sync, backup, index rebuild: silent
+- **The user will notice anyway** - Feature works, they'll see it
+- **It's optional or secondary** - Nice-to-know info: make it available, don't push it
 
 ---
 
@@ -334,11 +334,11 @@ If all 5: Calm. If 3-4: Good start; refine. If <3: Revisit design.
 
 ## Related Commands
 
-- `/pb-design-rules` — Technical principles (clarity, simplicity, modularity)
-- `/pb-standards` — Quality bar and MLP criteria
-- `/pb-review-product` — Product-focused review including user experience
-- `/pb-review-frontend` — Frontend review; applies calm principles to UI
-- `/pb-a11y` — Accessibility review; overlaps with calm design
+- `/pb-design-rules` - Technical principles (clarity, simplicity, modularity)
+- `/pb-standards` - Quality bar and MLP criteria
+- `/pb-review-product` - Product-focused review including user experience
+- `/pb-review-frontend` - Frontend review; applies calm principles to UI
+- `/pb-a11y` - Accessibility review; overlaps with calm design
 
 ---
 

@@ -19,9 +19,9 @@ Update all package managers, development tools, and system software with appropr
 **Platform:** macOS (primary), Linux (alternatives noted)
 **Risk Model:** Safe updates first, major version bumps require confirmation
 
-**Mindset:** Design Rules say "distrust one true way" — update selectively, verify after each tool.
+**Mindset:** Design Rules say "distrust one true way" - update selectively, verify after each tool.
 
-**Resource Hint:** sonnet — Detecting outdated packages and running update commands with correct version handling.
+**Resource Hint:** sonnet - Detecting outdated packages and running update commands with correct version handling.
 
 ## When to Use
 
@@ -291,11 +291,11 @@ rbenv global X.Y.Z
 
 When executing this playbook:
 
-1. **Detect** — Show all installed package managers
-2. **Scan** — List outdated packages per manager
-3. **Present tiers** — Let user choose update scope
-4. **Execute** — Run updates with progress
-5. **Verify** — Run quick health checks
+1. **Detect** - Show all installed package managers
+2. **Scan** - List outdated packages per manager
+3. **Present tiers** - Let user choose update scope
+4. **Execute** - Run updates with progress
+5. **Verify** - Run quick health checks
 
 ### AskUserQuestion Structure
 
@@ -401,10 +401,10 @@ echo -e "\n=== Done ==="
 
 ## Related Commands
 
-- `/pb-doctor` — Check system health before/after updates
-- `/pb-storage` — Clean up after updates (old versions)
-- `/pb-setup` — Full environment setup
-- `/pb-security` — Check for security updates
+- `/pb-doctor` - Check system health before/after updates
+- `/pb-storage` - Clean up after updates (old versions)
+- `/pb-setup` - Full environment setup
+- `/pb-security` - Check for security updates
 
 ---
 

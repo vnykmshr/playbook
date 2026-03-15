@@ -22,11 +22,11 @@ This embodies `/pb-preamble` thinking (clear structure invites challenge) and ap
 
 **Key Design Rules for Templates:**
 - **Clarity**: Consistent templates make expectations obvious and reduce confusion
-- **Representation**: Templates encode knowledge into structure—what should be documented where
+- **Representation**: Templates encode knowledge into structure-what should be documented where
 - **Simplicity**: Templates prevent over-engineering; use only what you need
 - **Modularity**: Reusable templates mean teams solve once, use everywhere
 
-**Resource Hint:** sonnet — Template reference; mechanical application of established formats.
+**Resource Hint:** sonnet - Template reference; mechanical application of established formats.
 
 ## When to Use
 
@@ -373,9 +373,9 @@ Run periodically to reduce technical debt.
 
 ## Related Commands
 
-- `/pb-context` — Working context templates and session management
-- `/pb-documentation` — Writing great engineering documentation
-- `/pb-standards` — Project guidelines and code quality standards
+- `/pb-context` - Working context templates and session management
+- `/pb-documentation` - Writing great engineering documentation
+- `/pb-standards` - Project guidelines and code quality standards
 
 ---
 

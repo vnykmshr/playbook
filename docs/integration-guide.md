@@ -2,7 +2,7 @@
 
 Complete reference for how all playbook commands work together to form a unified SDLC framework.
 
-**Last Updated**: 2026-02-12 | **Categories**: 9 | **Version**: v2.11.0
+Complete reference for how commands compose into workflows.
 
 ---
 
@@ -83,7 +83,7 @@ These establish baseline understanding and guiding philosophy. **Every engineer 
 ---
 
 ### SPECIALIZED REVIEW PERSONAS (v2.11.0+)
-Five specialized review agents providing complementary perspectives on code, security, reliability, product value, and documentation. **Use for comprehensive reviews.**
+Five specialized review agents providing complementary perspectives on code, security, reliability, product value, and documentation. **Use for deep multi-perspective reviews.**
 
 | # | Persona | Philosophy | Focus | When to Use | Tier |
 |---|---------|-----------|-------|------------|------|
@@ -94,9 +94,9 @@ Five specialized review agents providing complementary perspectives on code, sec
 | E | **pb-jordan-testing** | Testing quality & reliability | Coverage, error paths, concurrency, data integrity, integration | All features (testing always matters) | S/M/L |
 
 **Multi-Perspective Review Workflows** (combine complementary personas):
-- **pb-review-backend** — Alex (infrastructure) + Jordan (testing): For backend APIs, services, database operations
-- **pb-review-frontend** — Maya (product) + Sam (documentation): For UI/UX, components, user-facing features
-- **pb-review-infrastructure** — Alex (infrastructure) + Linus (security): For infrastructure code, deployment pipelines, security configs
+- **pb-review-backend** - Alex (infrastructure) + Jordan (testing): For backend APIs, services, database operations
+- **pb-review-frontend** - Maya (product) + Sam (documentation): For UI/UX, components, user-facing features
+- **pb-review-infrastructure** - Alex (infrastructure) + Linus (security): For infrastructure code, deployment pipelines, security configs
 
 **Persona Composition** (how to use together):
 
@@ -353,7 +353,7 @@ Professional repository structure and presentation.
 | 36 | **pb-repo-organize** | Organize repository structure | Cleanup/improvement | Root layout, folder org, GitHub special files | S/M |
 | 37 | **pb-repo-readme** | Write high-quality README | Repository documentation | Clear, searchable, language-specific | S |
 | 38 | **pb-repo-about** | Set GitHub About section + tags | GitHub presentation | Profile optimization, tag selection | S |
-| 39 | **pb-repo-blog** | Write technical blog post | Showcase project | Medium post, dev.to, etc. | M |
+| 39 | **pb-repo-blog** | Write technical blog post | Share project learnings | Medium post, dev.to, etc. | M |
 | 40 | **pb-repo-enhance** | Complete repository enhancement suite | All of above at once | Combines all repo commands | M |
 
 **Repository setup flow**:
@@ -367,7 +367,7 @@ NEW PROJECT:
     ↓
   /pb-repo-about (set GitHub About)
     ↓
-  /pb-repo-blog (write showcase post)
+  /pb-repo-blog (write project post)
 
 ENHANCE EXISTING:
   /pb-repo-enhance (one command does all above)
@@ -921,7 +921,7 @@ ISOLATED:
 [NO] /pb-testing alone
 [NO] /pb-observability alone
 
-POWERFUL:
+EFFECTIVE:
 [YES] /pb-cycle WITH /pb-testing, /pb-standards, /pb-security
 [YES] /pb-plan WITH /pb-adr, /pb-patterns, /pb-observability
 [YES] /pb-incident WITH /pb-observability, /pb-deployment, /pb-adr
@@ -973,4 +973,3 @@ POWERFUL:
 
 **This guide is the map. Use it to navigate the playbook as an integrated system.**
 
-*Last Updated: 2026-01-24 | Playbook Version: v2.2.0 | Integration Health: Excellent*

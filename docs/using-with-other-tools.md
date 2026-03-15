@@ -2,7 +2,7 @@
 
 These playbooks were designed for Claude Code. They're portable.
 
-The underlying patterns work with **any agentic development tool** — different framework, same thinking.
+The underlying patterns work with **any agentic development tool** - different framework, same thinking.
 
 ---
 
@@ -28,7 +28,7 @@ The underlying patterns work with **any agentic development tool** — different
 
 - **Command content:** Universal. Patterns, questions, checklists don't care about your tool.
 - **Invocation:** Tool-specific. Claude Code users type `/pb-start`. You adapt to your tool.
-- **Metadata:** Structured (Resource Hint, When to Use, Related Commands, etc.) — same everywhere.
+- **Metadata:** Structured (Resource Hint, When to Use, Related Commands, etc.) - same everywhere.
 
 **Portability:** Copy the Markdown files. Reference them however your tool surfaces prompts.
 
@@ -82,8 +82,8 @@ You (with another tool):
 ### 1. Adopt Principles (Zero Work)
 
 Read and internalize:
-- [ ] `/pb-preamble` — How your team thinks together
-- [ ] `/pb-design-rules` — What you build
+- [ ] `/pb-preamble` - How your team thinks together
+- [ ] `/pb-design-rules` - What you build
 - [ ] Apply them to: planning, code review, decision-making, incident response
 
 ### 2. Adopt Commands (Low Work)
@@ -95,11 +95,11 @@ For each command category you care about:
 - [ ] Document how your team invokes it (alias, script, manual, etc.)
 
 **Start with these core commands:**
-- `/pb-start` — Begin work (scoping ritual)
-- `/pb-cycle` — Self-review and iteration
-- `/pb-commit` — Atomic, well-explained commits
-- `/pb-review-hygiene` — Code quality checklist
-- `/pb-plan` — Focus area planning
+- `/pb-start` - Begin work (scoping ritual)
+- `/pb-cycle` - Self-review and iteration
+- `/pb-commit` - Atomic, well-explained commits
+- `/pb-review-hygiene` - Code quality checklist
+- `/pb-plan` - Focus area planning
 
 ### 3. Adapt Integration (Medium Work)
 

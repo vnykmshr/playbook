@@ -19,9 +19,9 @@ Set up a new Mac for development from scratch. Opinionated defaults with escape 
 **Platform:** macOS
 **Use Case:** New machine, nuke-and-pave, or standardizing team setups
 
-**Mindset:** Design Rules emphasize "simple by default" — install only what's needed, configure minimally.
+**Mindset:** Design Rules emphasize "simple by default" - install only what's needed, configure minimally.
 
-**Resource Hint:** sonnet — Dev machine bootstrap with accurate tool detection and configuration.
+**Resource Hint:** sonnet - Dev machine bootstrap with accurate tool detection and configuration.
 
 ## When to Use
 
@@ -310,11 +310,11 @@ cd ~/.dotfiles && ./install.sh
 If you use Claude Code, configure these optimizations:
 
 ```bash
-# Lazy MCP tool loading — tools load on-demand, saves context tokens
+# Lazy MCP tool loading - tools load on-demand, saves context tokens
 # Add to ~/.claude/settings.json:
 #   "env": { "ENABLE_TOOL_SEARCH": "true" }
 
-# Status line with context bar — shows model, branch, token usage
+# Status line with context bar - shows model, branch, token usage
 # Install playbook scripts (includes context-bar.sh + check-context.sh)
 cd /path/to/playbook && ./scripts/install.sh
 
@@ -323,8 +323,8 @@ cat ~/.claude/settings.json | jq '.statusLine, .hooks'
 ```
 
 The playbook's `install.sh` sets up:
-- **Context bar** — model, branch, uncommitted files, token usage progress bar
-- **Context warning hook** — advisory at 80% usage, suggests `/pb-pause` at 90%
+- **Context bar** - model, branch, uncommitted files, token usage progress bar
+- **Context warning hook** - advisory at 80% usage, suggests `/pb-pause` at 90%
 
 ---
 
@@ -394,11 +394,11 @@ brew bundle --file=~/Brewfile
 
 When executing this playbook:
 
-1. **Preflight** — Check macOS version, Xcode status
-2. **Select stack** — Ask what languages/tools needed
-3. **Execute phases** — Run with progress updates
-4. **Configure** — Walk through git config, SSH setup
-5. **Verify** — Run health check
+1. **Preflight** - Check macOS version, Xcode status
+2. **Select stack** - Ask what languages/tools needed
+3. **Execute phases** - Run with progress updates
+4. **Configure** - Walk through git config, SSH setup
+5. **Verify** - Run health check
 
 ### AskUserQuestion Structure
 
@@ -469,10 +469,10 @@ source ~/.zshrc && nvm install --lts
 
 ## Related Commands
 
-- `/pb-doctor` — Verify system health after setup
-- `/pb-update` — Keep tools current
-- `/pb-storage` — Clean up if disk gets full
-- `/pb-start` — Begin development work
+- `/pb-doctor` - Verify system health after setup
+- `/pb-update` - Keep tools current
+- `/pb-storage` - Clean up if disk gets full
+- `/pb-start` - Begin development work
 
 ---
 

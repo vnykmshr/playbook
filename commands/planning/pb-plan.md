@@ -16,7 +16,7 @@ breaking_changes: []
 
 A reusable prompt for planning release focus areas across any project. Emphasizes **alignment before implementation**, **surgical execution**, and **meaningful outcomes over busywork**.
 
-**Resource Hint:** sonnet — Planning follows structured phases; implementation-level scoping and execution.
+**Resource Hint:** sonnet - Planning follows structured phases; implementation-level scoping and execution.
 
 **Tool-agnostic:** Planning phases (discovery, analysis, scope-locking, documentation) work with any development methodology. Claude Code users invoke as `/pb-plan`. Using another tool? Read this file as Markdown for the planning framework. Adapt the prompts to your tool. See [`/docs/using-with-other-tools.md`](/docs/using-with-other-tools.md) for guidance.
 
@@ -32,7 +32,7 @@ A reusable prompt for planning release focus areas across any project. Emphasize
 
 **Foundation:** This planning assumes `/pb-preamble` thinking (transparent reasoning, peer challenge) and `/pb-design-rules` thinking (clarity, simplicity, modularity).
 
-Clarify means asking hard questions and challenging assumptions. Align means surfacing disagreement early—especially about design. Do not skip this phase to appear productive. Time spent here saves weeks later.
+Clarify means asking hard questions and challenging assumptions. Align means surfacing disagreement early-especially about design. Do not skip this phase to appear productive. Time spent here saves weeks later.
 
 ### Core Principles
 
@@ -192,10 +192,10 @@ Create structured documentation for tracking and execution.
 Plans are loaded into conversation context. Structure them for **resumability without full reload**:
 
 **Principles:**
-1. **Current state at top** — What phase, what's done, what's next
-2. **Completed work collapsed** — Move done phases to bottom or separate file
-3. **Active phase expanded** — Only current phase needs full detail
-4. **Scope lock is permanent** — Don't repeat in every session
+1. **Current state at top** - What phase, what's done, what's next
+2. **Completed work collapsed** - Move done phases to bottom or separate file
+3. **Active phase expanded** - Only current phase needs full detail
+4. **Scope lock is permanent** - Don't repeat in every session
 
 **Anti-pattern:** Full plan in every session consumes context for work already done.
 
@@ -572,8 +572,8 @@ This workflow:
 
 ## Related Commands
 
-- `/pb-adr` — Document architectural decisions made during planning
-- `/pb-todo-implement` — Implement individual todos from the planning phases
-- `/pb-think` — Deep thinking for complex planning decisions
-- `/pb-repo-init` — Initialize new greenfield project from plan
-- `/pb-start` — Begin development work from plan
+- `/pb-adr` - Document architectural decisions made during planning
+- `/pb-todo-implement` - Implement individual todos from the planning phases
+- `/pb-think` - Deep thinking for complex planning decisions
+- `/pb-repo-init` - Initialize new greenfield project from plan
+- `/pb-start` - Begin development work from plan

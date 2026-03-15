@@ -19,7 +19,7 @@ Multi-perspective infrastructure code review combining **Alex Chen** (Infrastruc
 
 **When to use:** Infrastructure changes, Terraform/Kubernetes configs, deployment pipelines, security configurations, system architecture changes.
 
-**Resource Hint:** opus — Systems thinking + security hardening. Parallel execution of both agents recommended.
+**Resource Hint:** opus - Systems thinking + security hardening. Parallel execution of both agents recommended.
 
 ---
 
@@ -27,19 +27,19 @@ Multi-perspective infrastructure code review combining **Alex Chen** (Infrastruc
 
 Two expert perspectives review in parallel, then synthesize:
 
-1. **Alex's Review** — Resilience lens
+1. **Alex's Review** - Resilience lens
    - What can fail? How do we recover?
    - Is the system designed for failure?
    - Can we deploy safely? Monitor effectively?
    - Is capacity understood and modeled?
 
-2. **Linus's Review** — Security lens
+2. **Linus's Review** - Security lens
    - What are the threat vectors?
    - Are implicit security assumptions correct?
    - Is there data exposure risk?
    - Are we making assumptions we'll regret?
 
-3. **Synthesize** — Combined perspective
+3. **Synthesize** - Combined perspective
    - Identify security-resilience trade-offs
    - Surface hidden assumptions
    - Ensure robustness without over-engineering
@@ -212,11 +212,11 @@ Common disagreement: "Should we add encryption everywhere?"
 
 ## Related Commands
 
-- **Alex's Deep Dive:** `/pb-alex-infra` — Systems thinking, failure modes, resilience design
-- **Linus's Deep Dive:** `/pb-linus-agent` — Security assumptions, threat modeling, code correctness
-- **Hardening:** `/pb-hardening` — Security hardening checklist (reference standard)
-- **Deployment:** `/pb-deployment` — Deployment execution and verification
-- **Standards:** `/pb-standards` — Coding principles both agents apply
+- **Alex's Deep Dive:** `/pb-alex-infra` - Systems thinking, failure modes, resilience design
+- **Linus's Deep Dive:** `/pb-linus-agent` - Security assumptions, threat modeling, code correctness
+- **Hardening:** `/pb-hardening` - Security hardening checklist (reference standard)
+- **Deployment:** `/pb-deployment` - Deployment execution and verification
+- **Standards:** `/pb-standards` - Coding principles both agents apply
 
 ---
 

@@ -19,9 +19,9 @@ Diagnose system health issues: disk space, memory pressure, CPU usage, and commo
 **Platform:** macOS (with Linux alternatives noted)
 **Use Case:** "Something's slow" / "Builds are failing" / "Machine feels sluggish"
 
-**Mindset:** Design Rules say "fail noisily and early" — surface system problems before they cascade.
+**Mindset:** Design Rules say "fail noisily and early" - surface system problems before they cascade.
 
-**Resource Hint:** sonnet — System health diagnostics with accurate assessment.
+**Resource Hint:** sonnet - System health diagnostics with accurate assessment.
 
 ## When to Use
 
@@ -303,10 +303,10 @@ RECOMMENDATIONS:
 
 When executing this playbook:
 
-1. **Run full diagnostic** — All checks above
-2. **Present findings** — Show health status per category
-3. **Prioritize issues** — Critical first, then warnings
-4. **Offer remediation** — Link to relevant playbooks
+1. **Run full diagnostic** - All checks above
+2. **Present findings** - Show health status per category
+3. **Prioritize issues** - Critical first, then warnings
+4. **Offer remediation** - Link to relevant playbooks
 
 ### AskUserQuestion Structure
 
@@ -367,11 +367,11 @@ brew outdated 2>/dev/null | head -5 || echo "N/A"
 
 ## Related Commands
 
-- `/pb-storage` — Free disk space
-- `/pb-ports` — Check port usage and conflicts
-- `/pb-update` — Update outdated tools
-- `/pb-debug` — Deep debugging methodology
-- `/pb-git-hygiene` — Git repository health audit (branches, large objects, secrets)
+- `/pb-storage` - Free disk space
+- `/pb-ports` - Check port usage and conflicts
+- `/pb-update` - Update outdated tools
+- `/pb-debug` - Deep debugging methodology
+- `/pb-git-hygiene` - Git repository health audit (branches, large objects, secrets)
 
 ---
 

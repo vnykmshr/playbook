@@ -20,12 +20,12 @@ Document significant architectural decisions to capture the context, alternative
 
 When you write an ADR:
 - **Preamble:** You must consider alternatives, document trade-offs explicitly, and explain reasoning so decisions can be challenged
-- **Design Rules:** Your architecture is guided by Clarity, Simplicity, Modularity, Extensibility—not arbitrary choices
+- **Design Rules:** Your architecture is guided by Clarity, Simplicity, Modularity, Extensibility-not arbitrary choices
 - **Together:** Better decisions that survive challenge and stand the test of time
 
 Good ADRs show both: sound reasoning (preamble) and sound design (design rules).
 
-**Resource Hint:** opus — Architectural decisions require deep trade-off analysis and long-term reasoning.
+**Resource Hint:** opus - Architectural decisions require deep trade-off analysis and long-term reasoning.
 
 ---
 
@@ -120,7 +120,7 @@ What trade-offs are we accepting?]
 
 ## What's Intentionally Not Here
 
-[Document what you deliberately chose NOT to build, support, or include — and why.
+[Document what you deliberately chose NOT to build, support, or include - and why.
 This prevents future engineers from re-proposing rejected ideas without context.
 Each exclusion should have a reason.]
 
@@ -681,10 +681,10 @@ docs/
 
 ## Related Commands
 
-- `/pb-plan` — Planning workflow that may generate ADRs
-- `/pb-think` — Deep analysis for complex architectural decisions
-- `/pb-design-rules` — Design principles that inform ADR decisions
-- `/pb-patterns-core` — Reference patterns when documenting alternatives
+- `/pb-plan` - Planning workflow that may generate ADRs
+- `/pb-think` - Deep analysis for complex architectural decisions
+- `/pb-design-rules` - Design principles that inform ADR decisions
+- `/pb-patterns-core` - Reference patterns when documenting alternatives
 
 ---
 

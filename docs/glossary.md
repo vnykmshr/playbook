@@ -13,10 +13,10 @@ A single commit that addresses one logical change and is always deployable. See 
 The process of developing code, reviewing it (self and peer), and getting approval before committing. See `/pb-cycle`.
 
 ### Decision Framework
-The Engineering Playbook itself—a set of structured processes for making engineering decisions.
+The Engineering Playbook itself-a set of structured processes for making engineering decisions.
 
 ### Integration Guide
-Comprehensive documentation showing how all commands work together. See `/docs/integration-guide.md`.
+Documentation showing how all commands work together. See `/docs/integration-guide.md`.
 
 ### Quality Gate
 A checkpoint that must pass before code moves forward. Examples: linting, testing, security review.
@@ -257,7 +257,7 @@ Shorthand for commands used throughout documentation:
 
 ## See Also
 
-- **[Decision Guide](decision-guide.md)** — Which command to use?
-- **[Command Reference](command-index.md)** — All commands
-- **[Getting Started](getting-started.md)** — Quick start
-- **[FAQ](faq.md)** — Common questions
+- **[Decision Guide](decision-guide.md)** - Which command to use?
+- **[Command Reference](command-index.md)** - All commands
+- **[Getting Started](getting-started.md)** - Quick start
+- **[FAQ](faq.md)** - Common questions

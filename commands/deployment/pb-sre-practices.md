@@ -14,23 +14,23 @@ breaking_changes: []
 ---
 # SRE Practices
 
-Build sustainable, reliable operations through toil reduction, error budgets, and healthy on-call practices. This command focuses on prevention and culture—complementing `/pb-incident` (response) and `/pb-observability` (monitoring).
+Build sustainable, reliable operations through toil reduction, error budgets, and healthy on-call practices. This command focuses on prevention and culture-complementing `/pb-incident` (response) and `/pb-observability` (monitoring).
 
 **Mindset:** SRE practices embody `/pb-preamble` thinking: blameless culture, honest assessment of reliability, and challenging "we've always done it this way." Apply `/pb-design-rules` thinking: Robustness (systems should handle failure gracefully) and Transparency (make operational health visible).
 
 Reliability is a feature. Invest in it deliberately, not reactively.
 
-**Resource Hint:** opus — SRE strategy requires architectural thinking and reliability trade-off analysis
+**Resource Hint:** opus - SRE strategy requires architectural thinking and reliability trade-off analysis
 
 ---
 
 ## When to Use This Command
 
-- **Reducing toil** — Automating repetitive operational tasks
-- **Setting SLOs** — Defining reliability targets and error budgets
-- **On-call review** — Improving rotation health and reducing burnout
-- **Capacity planning** — Preventing resource exhaustion
-- **Building SRE culture** — Establishing sustainable operations practices
+- **Reducing toil** - Automating repetitive operational tasks
+- **Setting SLOs** - Defining reliability targets and error budgets
+- **On-call review** - Improving rotation health and reducing burnout
+- **Capacity planning** - Preventing resource exhaustion
+- **Building SRE culture** - Establishing sustainable operations practices
 
 ---
 
@@ -51,11 +51,11 @@ Reliability is a feature. Invest in it deliberately, not reactively.
 ### What Is Toil?
 
 Toil is work that is:
-- **Manual** — Requires human intervention
-- **Repetitive** — Done over and over
-- **Automatable** — Could be scripted or eliminated
-- **Reactive** — Triggered by events, not planned
-- **No enduring value** — Doesn't improve the system
+- **Manual** - Requires human intervention
+- **Repetitive** - Done over and over
+- **Automatable** - Could be scripted or eliminated
+- **Reactive** - Triggered by events, not planned
+- **No enduring value** - Doesn't improve the system
 
 **Examples of toil:**
 - Manually restarting crashed services
@@ -188,7 +188,7 @@ SRE: "Our error budget is at 15%. If we deploy and cause an outage,
       Which tradeoff works for the business?"
 ```
 
-**Document the decision.** If product chooses to spend budget, that's a valid business decision—but make it explicit.
+**Document the decision.** If product chooses to spend budget, that's a valid business decision-but make it explicit.
 
 ---
 
@@ -318,11 +318,11 @@ Every service needs:
 
 When ownership changes (reorg, team changes):
 
-1. **Documentation audit** — Is everything documented?
-2. **Runbook review** — Walk through with new owner
-3. **Shadow on-call** — New owner shadows for 2 weeks
-4. **Gradual handoff** — New owner primary, old owner backup
-5. **Clean handoff** — New owner fully responsible
+1. **Documentation audit** - Is everything documented?
+2. **Runbook review** - Walk through with new owner
+3. **Shadow on-call** - New owner shadows for 2 weeks
+4. **Gradual handoff** - New owner primary, old owner backup
+5. **Clean handoff** - New owner fully responsible
 
 **Never abandon a service without explicit handoff.**
 
@@ -618,10 +618,10 @@ Before deploying services, verify hardening (Linux servers):
 ## Integration with Playbook
 
 **Complements existing commands:**
-- `/pb-incident` — Incident response and postmortems
-- `/pb-observability` — SLO definitions, metrics, alerting
-- `/pb-deployment` — Deployment strategies
-- `/pb-dr` — Disaster recovery planning
+- `/pb-incident` - Incident response and postmortems
+- `/pb-observability` - SLO definitions, metrics, alerting
+- `/pb-deployment` - Deployment strategies
+- `/pb-dr` - Disaster recovery planning
 
 **Workflow:**
 ```
@@ -652,10 +652,10 @@ Improve (back to operate)
 
 ## Related Commands
 
-- `/pb-incident` — Respond to production incidents
-- `/pb-observability` — Set up monitoring, SLOs, and alerting
-- `/pb-dr` — Disaster recovery planning and testing
-- `/pb-team` — Build high-performance engineering teams
+- `/pb-incident` - Respond to production incidents
+- `/pb-observability` - Set up monitoring, SLOs, and alerting
+- `/pb-dr` - Disaster recovery planning and testing
+- `/pb-team` - Build high-performance engineering teams
 
 ---
 

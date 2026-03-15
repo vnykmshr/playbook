@@ -29,9 +29,9 @@ Performance matters:
 
 **Mindset:** Performance optimization requires `/pb-preamble` thinking (measure, challenge assumptions) and `/pb-design-rules` thinking (especially Optimization: prototype before polishing, measure before optimizing).
 
-Question assumptions about slowness. Challenge whether optimization is worth the complexity cost. Measure before and after—don't assume. Surface trade-offs explicitly (speed vs. maintainability, simplicity vs. performance).
+Question assumptions about slowness. Challenge whether optimization is worth the complexity cost. Measure before and after-don't assume. Surface trade-offs explicitly (speed vs. maintainability, simplicity vs. performance).
 
-**Resource Hint:** sonnet — Performance optimization follows structured measurement and analysis workflows.
+**Resource Hint:** sonnet - Performance optimization follows structured measurement and analysis workflows.
 
 ---
 
@@ -575,15 +575,15 @@ Lesson: Cache read-heavy data, not mutable data
 ## Integration with Playbook
 
 **Part of design and deployment:**
-- `/pb-guide` — Section 4.4 covers performance requirements
-- `/pb-observability` — Set up monitoring to catch performance regressions
-- `/pb-adr` — Architecture decisions affect performance
-- `/pb-release` — Load test before releasing at scale
+- `/pb-guide` - Section 4.4 covers performance requirements
+- `/pb-observability` - Set up monitoring to catch performance regressions
+- `/pb-adr` - Architecture decisions affect performance
+- `/pb-release` - Load test before releasing at scale
 
 **Related Commands:**
-- `/pb-observability` — Monitor P99 latency and throughput
-- `/pb-guide` — Performance requirements during design phase
-- `/pb-incident` — Performance degradation is incident (if sudden)
+- `/pb-observability` - Monitor P99 latency and throughput
+- `/pb-guide` - Performance requirements during design phase
+- `/pb-incident` - Performance degradation is incident (if sudden)
 
 ---
 
@@ -617,9 +617,9 @@ Lesson: Cache read-heavy data, not mutable data
 
 ## Related Commands
 
-- `/pb-observability` — Set up monitoring to track performance metrics
-- `/pb-review-hygiene` — Code review for performance regressions
-- `/pb-patterns-core` — Architectural patterns that affect performance
+- `/pb-observability` - Set up monitoring to track performance metrics
+- `/pb-review-hygiene` - Code review for performance regressions
+- `/pb-patterns-core` - Architectural patterns that affect performance
 
 ---
 

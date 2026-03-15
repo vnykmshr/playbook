@@ -9,7 +9,7 @@ related_commands: ['pb-start', 'pb-pause', 'pb-plan', 'pb-preamble', 'pb-voice']
 last_reviewed: "2026-03-05"
 last_evolved: ""
 version: "1.0.0"
-version_notes: "Initial: universal handoff pattern graduated from vmx orchestrator, acceptance criteria and constraints from agency-agents"
+version_notes: "Initial: universal handoff pattern with acceptance criteria and constraints"
 breaking_changes: []
 ---
 

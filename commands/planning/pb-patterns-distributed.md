@@ -16,11 +16,11 @@ breaking_changes: []
 
 Patterns for coordinating operations across multiple services/databases.
 
-**Caveat:** Distributed patterns add significant complexity. Use `/pb-preamble` thinking (challenge assumptions) and `/pb-design-rules` thinking (especially Simplicity and Resilience—can you achieve your goals with simpler approaches?).
+**Caveat:** Distributed patterns add significant complexity. Use `/pb-preamble` thinking (challenge assumptions) and `/pb-design-rules` thinking (especially Simplicity and Resilience-can you achieve your goals with simpler approaches?).
 
 Question whether you truly need distributed systems. Challenge the assumption that you can't keep things simple. Understand the real constraints before choosing.
 
-**Resource Hint:** sonnet — Distributed pattern reference; implementation-level coordination decisions.
+**Resource Hint:** sonnet - Distributed pattern reference; implementation-level coordination decisions.
 
 ---
 
@@ -1106,17 +1106,17 @@ func (s *OrderSaga) compensate(ctx context.Context, completed []string, order *O
 }
 ```
 
-Other patterns (Event-Driven, Outbox, CQRS, Eventual Consistency) follow similar Go idioms—use channels for events, context for cancellation, and interfaces for testability.
+Other patterns (Event-Driven, Outbox, CQRS, Eventual Consistency) follow similar Go idioms-use channels for events, context for cancellation, and interfaces for testability.
 
 ---
 
 ## Integration with Playbook
-- `/pb-patterns-core` — SOA and Event-Driven (foundation)
-- `/pb-patterns-async` — Async operations (needed for Saga)
-- `/pb-guide` — Distributed systems design
-- `/pb-incident` — Handling distributed failures
-- `/pb-observability` — Tracing sagas across services
-- `/pb-deployment` — Coordinating deployments across services
+- `/pb-patterns-core` - SOA and Event-Driven (foundation)
+- `/pb-patterns-async` - Async operations (needed for Saga)
+- `/pb-guide` - Distributed systems design
+- `/pb-incident` - Handling distributed failures
+- `/pb-observability` - Tracing sagas across services
+- `/pb-deployment` - Coordinating deployments across services
 
 **Decision points:**
 - When to use Saga vs 2PC
@@ -1129,9 +1129,9 @@ Other patterns (Event-Driven, Outbox, CQRS, Eventual Consistency) follow similar
 
 ## Related Commands
 
-- `/pb-patterns-core` — Foundation patterns (SOA, Event-Driven)
-- `/pb-patterns-async` — Async patterns needed for distributed operations
-- `/pb-observability` — Tracing and monitoring distributed systems
+- `/pb-patterns-core` - Foundation patterns (SOA, Event-Driven)
+- `/pb-patterns-async` - Async patterns needed for distributed operations
+- `/pb-observability` - Tracing and monitoring distributed systems
 
 ---
 

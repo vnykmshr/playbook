@@ -16,13 +16,13 @@ breaking_changes: []
 
 ## Overview
 
-Cloud platforms (AWS, GCP, Azure) offer multiple ways to deploy the same architecture. Choosing patterns based on your constraints—cost, latency, skill, scale—is crucial. This guide covers proven deployment patterns across the three major cloud platforms, with real-world trade-offs.
+Cloud platforms (AWS, GCP, Azure) offer multiple ways to deploy the same architecture. Choosing patterns based on your constraints-cost, latency, skill, scale-is crucial. This guide covers proven deployment patterns across the three major cloud platforms, with real-world trade-offs.
 
-**Caveat:** Each platform has competing patterns. Use `/pb-preamble` thinking (challenge assumptions, surface trade-offs) and `/pb-design-rules` thinking (especially Simplicity and Parsimony—choose what you actually need, not what's available).
+**Caveat:** Each platform has competing patterns. Use `/pb-preamble` thinking (challenge assumptions, surface trade-offs) and `/pb-design-rules` thinking (especially Simplicity and Parsimony-choose what you actually need, not what's available).
 
 Question your actual constraints before choosing. Challenge vendor recommendations. The cheapest or most featured pattern isn't always the right one. Choose based on your requirements, not vendor features.
 
-**Resource Hint:** sonnet — Cloud deployment pattern reference; platform-specific implementation guidance.
+**Resource Hint:** sonnet - Cloud deployment pattern reference; platform-specific implementation guidance.
 
 ---
 
@@ -840,12 +840,12 @@ resource "azurerm_function_app" "app" {
 
 ## Anti-Patterns
 
-❌ **Lift-and-shift without optimization** — Refactor for cloud, not just migrate
-❌ **Multi-cloud without strategy** — Complexity without clear benefit
-❌ **Ignoring data residency** — Some data must stay in specific regions
-❌ **Not monitoring costs** — Cloud spending grows silently
-❌ **Manual infrastructure** — Use Infrastructure as Code (Terraform, CloudFormation)
-❌ **No disaster recovery** — Plan for region failures
+❌ **Lift-and-shift without optimization** - Refactor for cloud, not just migrate
+❌ **Multi-cloud without strategy** - Complexity without clear benefit
+❌ **Ignoring data residency** - Some data must stay in specific regions
+❌ **Not monitoring costs** - Cloud spending grows silently
+❌ **Manual infrastructure** - Use Infrastructure as Code (Terraform, CloudFormation)
+❌ **No disaster recovery** - Plan for region failures
 
 ---
 
@@ -861,11 +861,11 @@ resource "azurerm_function_app" "app" {
 
 ## Related Commands
 
-- `/pb-deployment` — Deployment strategy selection
-- `/pb-patterns-core` — Architectural patterns
-- `/pb-observability` — Cloud monitoring setup
-- `/pb-patterns-distributed` — Multi-region patterns
-- `/pb-zero-stack` — $0/month app architecture (static + edge proxy + CI)
+- `/pb-deployment` - Deployment strategy selection
+- `/pb-patterns-core` - Architectural patterns
+- `/pb-observability` - Cloud monitoring setup
+- `/pb-patterns-distributed` - Multi-region patterns
+- `/pb-zero-stack` - $0/month app architecture (static + edge proxy + CI)
 
 ---
 

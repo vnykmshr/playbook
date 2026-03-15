@@ -443,11 +443,9 @@ For project-specific workflows, create recipes in `todos/recipes/` or `docs/team
 
 ## Related Commands
 
-- `/pb-what-next` — Intelligent command recommendations
-- `/pb-guide` — Full SDLC framework
-- `/pb-ship` — Complete shipping workflow
+- `/pb-what-next` - Intelligent command recommendations
+- `/pb-guide` - Full SDLC framework
+- `/pb-ship` - Complete shipping workflow
 
 ---
 
-**Last Updated:** 2026-01-19
-**Version:** 1.0

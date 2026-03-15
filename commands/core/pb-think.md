@@ -20,7 +20,7 @@ breaking_changes: []
 
 **Mindset:** Apply `/pb-preamble` thinking (challenge assumptions) throughout. Look for non-obvious angles, hidden patterns, and actionable insights.
 
-**Resource Hint:** sonnet — Structured thinking facilitation; routine problem-solving workflow.
+**Resource Hint:** sonnet - Structured thinking facilitation; routine problem-solving workflow.
 
 ---
 
@@ -34,10 +34,10 @@ breaking_changes: []
 | **refine** | Convergent | Polish output to publication-grade |
 
 **Usage:**
-- `/pb-think` — Full cycle (ideate → synthesize → refine)
-- `/pb-think mode=ideate` — Divergent exploration only
-- `/pb-think mode=synthesize` — Integration only
-- `/pb-think mode=refine` — Convergent refinement only
+- `/pb-think` - Full cycle (ideate → synthesize → refine)
+- `/pb-think mode=ideate` - Divergent exploration only
+- `/pb-think mode=synthesize` - Integration only
+- `/pb-think mode=refine` - Convergent refinement only
 
 ---
 
@@ -85,12 +85,12 @@ Explore possibilities through structured divergent thinking. Generate options be
 
 For ideation requests:
 
-1. **Diverge first** — Generate 10+ options before evaluating any
-2. **Explore adjacent space** — What's near the obvious answers?
-3. **Invert the question** — What's the opposite approach?
-4. **Cross-pollinate** — What would another domain do here?
-5. **Defer judgment** — No "but that won't work" during generation
-6. **Surface non-obvious** — Force at least 3 unexpected angles
+1. **Diverge first** - Generate 10+ options before evaluating any
+2. **Explore adjacent space** - What's near the obvious answers?
+3. **Invert the question** - What's the opposite approach?
+4. **Cross-pollinate** - What would another domain do here?
+5. **Defer judgment** - No "but that won't work" during generation
+6. **Surface non-obvious** - Force at least 3 unexpected angles
 
 Do not converge prematurely. Do not evaluate while generating. Push past the first ideas to find the interesting ones.
 
@@ -195,9 +195,9 @@ Identify 2-3 non-obvious options worth deeper exploration:
 ```
 **Worth exploring:**
 
-1. [Option X] — Why: [unexpected angle, challenges assumption, or high leverage]
-2. [Option Y] — Why: [combines strengths, addresses root cause, or novel approach]
-3. [Option Z] — Why: [low effort high learning, or opens new possibilities]
+1. [Option X] - Why: [unexpected angle, challenges assumption, or high leverage]
+2. [Option Y] - Why: [combines strengths, addresses root cause, or novel approach]
+3. [Option Z] - Why: [low effort high learning, or opens new possibilities]
 ```
 
 Do not pick the safest options. Pick the most interesting ones.
@@ -227,7 +227,7 @@ Recommend concrete next action:
 9. Connection pooling tuning
 10. Compress response payloads
 11. Split into microservices (isolate slow parts)
-12. Do nothing—is the latency actually hurting users?
+12. Do nothing-is the latency actually hurting users?
 13. Charge for faster tier (make it a feature)
 14. Batch requests client-side
 15. Predictive prefetching
@@ -241,9 +241,9 @@ Recommend concrete next action:
 - **Reframe Problem:** 12, 13
 
 **Phase 3: Spotlight**
-1. **Option 12 (do nothing)** — Worth validating if latency actually impacts users. Cheapest path if problem is perceived not real.
-2. **Option 8 (precompute)** — If responses are derivable from known inputs, shift work to write-time. High leverage for read-heavy APIs.
-3. **Option 7 (edge computing)** — If users are geographically distributed, physics beats optimization. Different solution class.
+1. **Option 12 (do nothing)** - Worth validating if latency actually impacts users. Cheapest path if problem is perceived not real.
+2. **Option 8 (precompute)** - If responses are derivable from known inputs, shift work to write-time. High leverage for read-heavy APIs.
+3. **Option 7 (edge computing)** - If users are geographically distributed, physics beats optimization. Different solution class.
 
 **Phase 4: Next Step**
 Measure current latency by endpoint and correlate with user complaints. If P95 latency is fine but P99 is bad, focus on outliers (likely Option 2). If latency is uniform, consider Option 8 or 7.
@@ -258,14 +258,14 @@ Combine multiple inputs, perspectives, or sources into coherent insight. Transfo
 
 For synthesis requests:
 
-1. **Map the inputs** — What sources, perspectives, or data points exist?
-2. **Find patterns** — What themes recur? What correlates?
-3. **Surface tensions** — Where do inputs contradict? What's the real conflict?
-4. **Extract signal** — What's actually important vs noise?
-5. **Form coherent view** — Integrate into unified understanding
-6. **Make it actionable** — What does this synthesis mean for decisions?
+1. **Map the inputs** - What sources, perspectives, or data points exist?
+2. **Find patterns** - What themes recur? What correlates?
+3. **Surface tensions** - Where do inputs contradict? What's the real conflict?
+4. **Extract signal** - What's actually important vs noise?
+5. **Form coherent view** - Integrate into unified understanding
+6. **Make it actionable** - What does this synthesis mean for decisions?
 
-Do not summarize—synthesize. Summaries compress; synthesis integrates. The output should reveal something the inputs alone don't show.
+Do not summarize-synthesize. Summaries compress; synthesis integrates. The output should reveal something the inputs alone don't show.
 
 ### Synthesis Modes
 
@@ -286,10 +286,10 @@ Combining research, documents, or data from multiple sources.
 [List with 1-line summary of each source's position]
 
 ## Convergence
-[What multiple sources agree on — high confidence]
+[What multiple sources agree on - high confidence]
 
 ## Divergence
-[Where sources conflict — with analysis of why]
+[Where sources conflict - with analysis of why]
 
 ## Synthesis
 [Integrated view that accounts for both]
@@ -327,7 +327,7 @@ Combining viewpoints from different stakeholders or disciplines.
 [Solutions that address multiple perspectives]
 
 ## Remaining Trade-offs
-[What can't be resolved — requires decision]
+[What can't be resolved - requires decision]
 ```
 
 #### Mode 3: Learning Integration
@@ -366,7 +366,7 @@ Combining findings from investigation or discovery phase.
 **Process:**
 1. Catalog findings by category
 2. Separate facts from interpretations
-3. Identify the "so what" — why findings matter
+3. Identify the "so what" - why findings matter
 4. Connect to original questions
 5. Surface new questions raised
 
@@ -379,7 +379,7 @@ Combining findings from investigation or discovery phase.
 [What's verified vs inferred]
 
 ## Key Insights
-[The "so what" — why this matters]
+[The "so what" - why this matters]
 
 ## Questions Answered
 [Original questions and their answers]
@@ -458,7 +458,7 @@ Can prioritize by user value, but can't sequence by effort or cost
 - Reveals insight not visible in individual inputs
 - Explicitly addresses contradictions
 - Distinguishes high-confidence from uncertain conclusions
-- Actionable—clear implications for decisions
+- Actionable-clear implications for decisions
 - Acknowledges gaps and limitations
 
 **Bad Synthesis:**
@@ -478,15 +478,15 @@ Can prioritize by user value, but can't sequence by effort or cost
 - Competitors: All have simpler onboarding, 2 of 3 have keyboard shortcuts
 
 **Convergence (High Confidence):**
-- Onboarding is a problem — both users and data confirm
-- Speed matters to engaged users — interviews and competitor patterns align
+- Onboarding is a problem - both users and data confirm
+- Speed matters to engaged users - interviews and competitor patterns align
 
 **Divergence:**
 - Users say they want "more features" but analytics show feature discovery is low
 - Contradiction suggests: users want capability, not complexity
 
 **Synthesis:**
-The core issue isn't missing features—it's that existing features are hard to access. Users who succeed become power users; most don't get there because onboarding fails. Competitors solved this with simpler initial experience and progressive disclosure.
+The core issue isn't missing features-it's that existing features are hard to access. Users who succeed become power users; most don't get there because onboarding fails. Competitors solved this with simpler initial experience and progressive disclosure.
 
 **Confidence & Gaps:**
 - High confidence: Onboarding needs simplification
@@ -511,10 +511,10 @@ Process through internal draft-critique-refine cycles before responding. Deliver
 
 For each query requiring refinement:
 
-1. **Draft internally** — Generate initial response
-2. **Critique internally** — Red-team your own draft ruthlessly
-3. **Refine internally** — Rewrite to expert standard
-4. **Deliver final only** — User sees polished output, not iterations
+1. **Draft internally** - Generate initial response
+2. **Critique internally** - Red-team your own draft ruthlessly
+3. **Refine internally** - Rewrite to expert standard
+4. **Deliver final only** - User sees polished output, not iterations
 
 Do not ask for permission to iterate. Do not show intermediate passes. Think deeply, refine thoroughly, respond once.
 
@@ -523,7 +523,7 @@ Do not ask for permission to iterate. Do not show intermediate passes. Think dee
 Generate a working response:
 - Answer the question directly
 - Include relevant context
-- Don't overthink — this is raw material
+- Don't overthink - this is raw material
 
 ### Internal Pass 2: Critique
 
@@ -537,8 +537,8 @@ Red-team your draft. Check each dimension:
 #### Weaknesses
 Identify the 5 weakest points. Be specific:
 ```
-WEAK: "consider various factors" — vague, no specifics
-WEAK: "this can help" — passive, no mechanism explained
+WEAK: "consider various factors" - vague, no specifics
+WEAK: "this can help" - passive, no mechanism explained
 ```
 
 #### Gaps
@@ -549,9 +549,9 @@ WEAK: "this can help" — passive, no mechanism explained
 
 #### Assumptions
 Label each:
-- **Confirmed** — stated or verifiable
-- **Reasonable** — fair inference
-- **Unverified** — assumed without basis (flag these)
+- **Confirmed** - stated or verifiable
+- **Reasonable** - fair inference
+- **Unverified** - assumed without basis (flag these)
 
 #### Risks
 Where could this be:
@@ -580,26 +580,26 @@ Detect and plan to fix:
 
 Rewrite to publication-grade:
 
-1. **Direct answer first** — 1-2 sentences, no preamble
+1. **Direct answer first** - 1-2 sentences, no preamble
 
-2. **Actionable content** — Steps executable today, not theoretical
+2. **Actionable content** - Steps executable today, not theoretical
 
-3. **Concrete examples** — At least 2, tailored to their context
+3. **Concrete examples** - At least 2, tailored to their context
 
 4. **Specifics over vague claims**
    - NOT: "improves performance"
    - YES: "reduces query time from 2s to 200ms"
 
-5. **Honest uncertainty** — "I cannot confirm X" beats false confidence
+5. **Honest uncertainty** - "I cannot confirm X" beats false confidence
 
 6. **Natural voice**
    - No filler
    - Varied sentence length
    - No generic tips
 
-7. **Pitfalls section** — 3-6 bullets an expert would nod at
+7. **Pitfalls section** - 3-6 bullets an expert would nod at
 
-8. **Clear close** — Key point + immediate next action
+8. **Clear close** - Key point + immediate next action
 
 ### Quality Bar
 
@@ -612,14 +612,14 @@ Rewrite to publication-grade:
 **Internal Pass 1:** Draft covering error wrapping, sentinel errors, panic/recover...
 
 **Internal Pass 2:** Critique finds:
-- Weakness: "consider using errors.Is" is vague — needs code example
+- Weakness: "consider using errors.Is" is vague - needs code example
 - Gap: Didn't cover structured logging of errors
-- AI tell: "Let's explore..." opener — delete
+- AI tell: "Let's explore..." opener - delete
 - Rewrite plan: Lead with the pattern, add code, include pitfalls
 
 **Internal Pass 3:** Refine to tight, example-driven response
 
-**Delivered response:** (final only — polished, specific, actionable)
+**Delivered response:** (final only - polished, specific, actionable)
 
 ---
 
@@ -659,25 +659,25 @@ Use judgment. Default to appropriate mode for substantive queries.
 
 ## Thinking Partner Principles
 
-1. **Self-sufficient** — Don't ask "should I elaborate?" Just do it right the first time.
+1. **Self-sufficient** - Don't ask "should I elaborate?" Just do it right the first time.
 
-2. **Anticipate needs** — Include what they'll need next, not just what they asked.
+2. **Anticipate needs** - Include what they'll need next, not just what they asked.
 
-3. **Challenge-ready** — If something seems off about the query, address it proactively.
+3. **Challenge-ready** - If something seems off about the query, address it proactively.
 
-4. **No padding** — Shorter and useful beats longer and generic.
+4. **No padding** - Shorter and useful beats longer and generic.
 
-5. **Consultative stance** — You're a peer with expertise, not an assistant seeking approval.
+5. **Consultative stance** - You're a peer with expertise, not an assistant seeking approval.
 
-6. **Diverge before converge** — Generate options before evaluating them.
+6. **Diverge before converge** - Generate options before evaluating them.
 
-7. **Synthesize, don't summarize** — Integration adds value; compression doesn't.
+7. **Synthesize, don't summarize** - Integration adds value; compression doesn't.
 
-8. **Surface tensions** — Contradictions are information, not problems to hide.
+8. **Surface tensions** - Contradictions are information, not problems to hide.
 
-9. **Defer judgment in ideation** — Separate generation from evaluation.
+9. **Defer judgment in ideation** - Separate generation from evaluation.
 
-10. **State confidence levels** — Be explicit about certainty vs uncertainty.
+10. **State confidence levels** - Be explicit about certainty vs uncertainty.
 
 ---
 
@@ -723,12 +723,12 @@ Use judgment. Default to appropriate mode for substantive queries.
 
 | Phase | Mode | Purpose |
 |-------|------|---------|
-| Explore options | `mode=ideate` | Divergent — generate possibilities |
-| Combine insights | `mode=synthesize` | Integration — find patterns |
-| Challenge assumptions | `/pb-preamble` | Adversarial — stress-test |
-| Plan approach | `/pb-plan` | Convergent — structure execution |
-| Make decision | `/pb-adr` | Convergent — document rationale |
-| Refine output | `mode=refine` | Refinement — polish to expert-grade |
+| Explore options | `mode=ideate` | Divergent - generate possibilities |
+| Combine insights | `mode=synthesize` | Integration - find patterns |
+| Challenge assumptions | `/pb-preamble` | Adversarial - stress-test |
+| Plan approach | `/pb-plan` | Convergent - structure execution |
+| Make decision | `/pb-adr` | Convergent - document rationale |
+| Refine output | `mode=refine` | Refinement - polish to expert-grade |
 
 Use the right mode for the task:
 - **Need options?** → `mode=ideate`
@@ -743,11 +743,11 @@ Use the right mode for the task:
 
 ## Related Commands
 
-- `/pb-preamble` — Challenge assumptions mindset (adversarial mode)
-- `/pb-design-rules` — Technical principles for clarity, simplicity, modularity
-- `/pb-plan` — Structure implementation approach
-- `/pb-adr` — Document architecture decisions
-- `/pb-debug` — Systematic debugging methodology
+- `/pb-preamble` - Challenge assumptions mindset (adversarial mode)
+- `/pb-design-rules` - Technical principles for clarity, simplicity, modularity
+- `/pb-plan` - Structure implementation approach
+- `/pb-adr` - Document architecture decisions
+- `/pb-debug` - Systematic debugging methodology
 
 ---
 

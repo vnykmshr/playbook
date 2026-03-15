@@ -4,7 +4,7 @@ Welcome to the Engineering Playbook! This guide will help you get up and running
 
 ## Installation
 
-See [Installation & Setup](/README.md#installation) in the main README for prerequisites and installation steps.
+See [Installation & Setup](../README.md#installation) in the main README for prerequisites and installation steps.
 
 **Quick summary:**
 ```bash
@@ -14,7 +14,7 @@ cd playbook
 ```
 
 With Claude Code: Commands available as skills (e.g., `/pb-start`)
-Without Claude Code: Read command files as Markdown (see [Using Playbooks with Other Tools](/docs/using-with-other-tools.md))
+Without Claude Code: Read command files as Markdown (see [Using Playbooks with Other Tools](using-with-other-tools.md))
 
 ---
 
@@ -207,7 +207,7 @@ A: Check the [FAQ](faq.md) or [open an issue on GitHub](https://github.com/vnykm
 
 ## What to Read Next
 
-1. **[Command Reference](command-index.md)** — Browse commands by category
-2. **[Integration Guide](integration-guide.md)** — Understand how commands work together
-3. **[Decision Guide](decision-guide.md)** — Find the right command for any situation
-4. **[FAQ](faq.md)** — Common questions and troubleshooting
+1. **[Command Reference](command-index.md)** - Browse commands by category
+2. **[Integration Guide](integration-guide.md)** - Understand how commands work together
+3. **[Decision Guide](decision-guide.md)** - Find the right command for any situation
+4. **[FAQ](faq.md)** - Common questions and troubleshooting

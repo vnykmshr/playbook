@@ -20,17 +20,17 @@ Harden servers and containers before deploying to production. Defense-in-depth a
 
 The goal is defense-in-depth: multiple layers of protection so that if one fails, others still protect. Never rely on a single security control.
 
-**Resource Hint:** opus — security hardening requires deep infrastructure and threat analysis
+**Resource Hint:** opus - security hardening requires deep infrastructure and threat analysis
 
 ---
 
 ## When to Use This Command
 
-- **New production deployment** — Hardening servers before go-live
-- **Security audit** — Reviewing and improving security posture
-- **Container security** — Locking down container runtime
-- **Compliance requirements** — Meeting security standards (SOC2, etc.)
-- **After security incident** — Strengthening defenses
+- **New production deployment** - Hardening servers before go-live
+- **Security audit** - Reviewing and improving security posture
+- **Container security** - Locking down container runtime
+- **Compliance requirements** - Meeting security standards (SOC2, etc.)
+- **After security incident** - Strengthening defenses
 
 ---
 
@@ -656,11 +656,11 @@ docker network inspect internal
 ## Integration with Playbook
 
 **Part of production readiness:**
-- `/pb-hardening` — Harden infrastructure (this command)
-- `/pb-secrets` — Manage secrets securely
-- `/pb-security` — Application security review
-- `/pb-deployment` — Deployment strategies
-- `/pb-dr` — Disaster recovery planning
+- `/pb-hardening` - Harden infrastructure (this command)
+- `/pb-secrets` - Manage secrets securely
+- `/pb-security` - Application security review
+- `/pb-deployment` - Deployment strategies
+- `/pb-dr` - Disaster recovery planning
 
 **Workflow:**
 ```
@@ -688,11 +688,11 @@ Development → Security Review (/pb-security)
 
 ## Related Commands
 
-- `/pb-secrets` — Manage secrets securely across environments
-- `/pb-security` — Application-level security review
-- `/pb-deployment` — Deploy hardened infrastructure
-- `/pb-server-hygiene` — Periodic server health and hygiene review
-- `/pb-patterns-resilience` — Resilience patterns (Circuit Breaker, Rate Limiting, Bulkhead)
+- `/pb-secrets` - Manage secrets securely across environments
+- `/pb-security` - Application-level security review
+- `/pb-deployment` - Deploy hardened infrastructure
+- `/pb-server-hygiene` - Periodic server health and hygiene review
+- `/pb-patterns-resilience` - Resilience patterns (Circuit Breaker, Rate Limiting, Bulkhead)
 
 ---
 

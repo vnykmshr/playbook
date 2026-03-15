@@ -14,7 +14,7 @@ breaking_changes: []
 ---
 # Set Your Decision Rules (One-Time Setup)
 
-**Resource Hint:** sonnet — One-time setup (15 minutes) that enables 90% automation forever.
+**Resource Hint:** sonnet - One-time setup (15 minutes) that enables 90% automation forever.
 
 Run this once (or annually) to establish how you want `/pb-review` to auto-decide issues. After this, the system handles 90% of decisions automatically.
 
@@ -63,10 +63,10 @@ Example questions:
 ### Your Answer Format
 
 For each question, choose:
-- **Always** — Auto-fix every time
-- **Never** — Auto-defer every time
-- **Threshold** — Auto-fix if [condition], otherwise decide case-by-case
-- **Case-by-case** — Ask me each time
+- **Always** - Auto-fix every time
+- **Never** - Auto-defer every time
+- **Threshold** - Auto-fix if [condition], otherwise decide case-by-case
+- **Case-by-case** - Ask me each time
 
 **Example answer:**
 ```
@@ -368,9 +368,9 @@ This file is checked into your `.claude/` directory (not repo) so it persists.
 
 ## Related Commands
 
-- `/pb-review` — Uses these preferences to auto-decide
-- `/pb-start` — Establishes scope (feeds into depth detection)
-- `/pb-linus-agent` — For deep dives if preferences don't cover something
+- `/pb-review` - Uses these preferences to auto-decide
+- `/pb-start` - Establishes scope (feeds into depth detection)
+- `/pb-linus-agent` - For deep dives if preferences don't cover something
 
 ---
 

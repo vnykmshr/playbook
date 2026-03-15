@@ -76,11 +76,11 @@ After completing this command:
 
 ## Quick Principles
 
-1. **Structure First** — Use consistent markdown structure
-2. **Be Explicit** — State context, decisions, and workflows clearly
-3. **Reference Commands** — Link related `/pb-*` commands throughout
-4. **Use Sections** — Organize with `##` headings
-5. **List Workflows** — Show step-by-step processes in numbered order
+1. **Structure First** - Use consistent markdown structure
+2. **Be Explicit** - State context, decisions, and workflows clearly
+3. **Reference Commands** - Link related `/pb-*` commands throughout
+4. **Use Sections** - Organize with `##` headings
+5. **List Workflows** - Show step-by-step processes in numbered order
 
 ---
 

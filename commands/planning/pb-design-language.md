@@ -16,21 +16,21 @@ breaking_changes: []
 
 Create and evolve a project-specific design specification. A living document that captures the "why" of design decisions and grows with your project.
 
-**This is NOT a generic style guide.** It's YOUR project's design language — the vocabulary, constraints, and decisions that make your interface coherent.
+**This is NOT a generic style guide.** It's YOUR project's design language - the vocabulary, constraints, and decisions that make your interface coherent.
 
-**Mindset:** Use `/pb-preamble` thinking to challenge aesthetic assumptions. Use `/pb-design-rules` thinking — especially Clarity (is the intent obvious?), Simplicity (are we over-designing?), and Representation (fold design knowledge into data/tokens).
+**Mindset:** Use `/pb-preamble` thinking to challenge aesthetic assumptions. Use `/pb-design-rules` thinking - especially Clarity (is the intent obvious?), Simplicity (are we over-designing?), and Representation (fold design knowledge into data/tokens).
 
-**Resource Hint:** sonnet — Design language creation follows structured process; implementation-level guidance.
+**Resource Hint:** sonnet - Design language creation follows structured process; implementation-level guidance.
 
 ---
 
 ## What is a Design Language?
 
 A design language is:
-- **Vocabulary** — Names for components, patterns, and states
-- **Constraints** — What we DON'T do (as important as what we do)
-- **Tokens** — Design decisions encoded as variables
-- **Rationale** — WHY we made these choices
+- **Vocabulary** - Names for components, patterns, and states
+- **Constraints** - What we DON'T do (as important as what we do)
+- **Tokens** - Design decisions encoded as variables
+- **Rationale** - WHY we made these choices
 
 A design language is NOT:
 - A component library (that implements the language)
@@ -118,9 +118,9 @@ Start here. Copy to `docs/design-language.md` or similar.
 
 Our design follows these priorities (in order):
 
-1. **[Principle 1]** — [Why it matters]
-2. **[Principle 2]** — [Why it matters]
-3. **[Principle 3]** — [Why it matters]
+1. **[Principle 1]** - [Why it matters]
+2. **[Principle 2]** - [Why it matters]
+3. **[Principle 3]** - [Why it matters]
 
 Example principles:
 - Clarity over cleverness
@@ -326,10 +326,10 @@ During development, use:
 
 When to update this document:
 
-1. **Adding a new component** — Define its vocabulary first
-2. **Changing a token** — Document why in decision log
-3. **Adding a constraint** — Explain what problem it prevents
-4. **Major version** — Review all sections for accuracy
+1. **Adding a new component** - Define its vocabulary first
+2. **Changing a token** - Document why in decision log
+3. **Adding a constraint** - Explain what problem it prevents
+4. **Major version** - Review all sections for accuracy
 ```
 
 ---
@@ -351,11 +351,11 @@ When to update this document:
 
 ### How to Update
 
-1. **Propose change** — Describe what and why
-2. **Check constraints** — Does this violate existing rules?
-3. **Update tokens** — If values change, update CSS variables
-4. **Update decision log** — Document the rationale
-5. **Increment version** — Patch for additions, minor for changes
+1. **Propose change** - Describe what and why
+2. **Check constraints** - Does this violate existing rules?
+3. **Update tokens** - If values change, update CSS variables
+4. **Update decision log** - Document the rationale
+5. **Increment version** - Patch for additions, minor for changes
 
 ### Versioning
 
@@ -484,11 +484,11 @@ Then evolve as the project matures.
 
 ## Related Commands
 
-- `/pb-patterns-frontend` — Implementation patterns using design tokens
-- `/pb-a11y` — Accessibility requirements that constrain design
-- `/pb-adr` — For significant design decisions
-- `/pb-repo-init` — Bootstrap includes design language
-- `/pb-documentation` — Documentation standards
+- `/pb-patterns-frontend` - Implementation patterns using design tokens
+- `/pb-a11y` - Accessibility requirements that constrain design
+- `/pb-adr` - For significant design decisions
+- `/pb-repo-init` - Bootstrap includes design language
+- `/pb-documentation` - Documentation standards
 
 ---
 

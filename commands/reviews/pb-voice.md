@@ -18,7 +18,7 @@ breaking_changes: ["Detection categories expanded from 11 to 12", "Step 0 (Regis
 
 **Mindset:** Apply `/pb-preamble` thinking (honest, imperfect prose over polished output) and `/pb-design-rules` thinking (Clarity over cleverness. Silence when nothing to say. Fail noisily: if text reads generated, flag it, don't smooth it over).
 
-**Resource Hint:** sonnet — Structured text analysis and surgical editing; pattern recognition, not architecture-level depth.
+**Resource Hint:** sonnet - Structured text analysis and surgical editing; pattern recognition, not architecture-level depth.
 
 You are a detection system and a surgical editor. Find where AI shows through and fix only those spots, without introducing new mechanical patterns.
 
@@ -26,10 +26,10 @@ You are a detection system and a surgical editor. Find where AI shows through an
 
 ## When to Use
 
-- **After persona-driven generation** — You wrote "create post on X as [author]-persona"; now run pb-voice as the quality gate to catch residual AI patterns the persona didn't suppress
-- **Before publishing** — Final pass on blog posts, articles, social posts
-- **When text "feels off"** — Too smooth, too balanced, too clean
-- **Building a voice profile** — Extract patterns from your own writing samples
+- **After persona-driven generation** - You wrote "create post on X as [author]-persona"; now run pb-voice as the quality gate to catch residual AI patterns the persona didn't suppress
+- **Before publishing** - Final pass on blog posts, articles, social posts
+- **When text "feels off"** - Too smooth, too balanced, too clean
+- **Building a voice profile** - Extract patterns from your own writing samples
 
 ## Recommended Workflow
 
@@ -66,10 +66,10 @@ Input  DETECT  annotated flags  REWRITE (flagged only)  VERIFY  output
 
 **Usage:**
 
-- `/pb-voice` — Full detect + fix on provided text or file
-- `/pb-voice mode=detect` — Detection and scoring only
-- `/pb-voice mode=profile` — Build voice profile from samples
-- `/pb-voice persona=/path/to/persona.md` — Calibrate to author voice
+- `/pb-voice` - Full detect + fix on provided text or file
+- `/pb-voice mode=detect` - Detection and scoring only
+- `/pb-voice mode=profile` - Build voice profile from samples
+- `/pb-voice persona=/path/to/persona.md` - Calibrate to author voice
 
 Companion script: `scripts/voice-review.sh` (run `--help` for usage).
 
@@ -131,12 +131,12 @@ Words and phrases that almost never appear in natural writing but are statistica
 
 Document-level organization patterns that reveal algorithmic generation. (For inline formatting tells, see Category 9.)
 
-- **Uniform paragraph length** — Every paragraph 3-4 sentences. Real writing has 1-sentence paragraphs next to 6-sentence ones.
-- **Topic-support-transition** — Each paragraph opens with topic sentence, supports it, transitions. Textbook structure. Real writing meanders.
-- **Lists of exactly 3** — AI loves triplets. "Three key considerations..." Real lists are 2, or 4, or 7.
-- **Symmetrical sections** — All H2s same length. All bullets identical grammar.
-- **Colon introductions** — "Several factors to consider: X, Y, and Z."
-- **Parallel openings** — Consecutive paragraphs starting the same way ("This approach...", "This method...", "This strategy...").
+- **Uniform paragraph length** - Every paragraph 3-4 sentences. Real writing has 1-sentence paragraphs next to 6-sentence ones.
+- **Topic-support-transition** - Each paragraph opens with topic sentence, supports it, transitions. Textbook structure. Real writing meanders.
+- **Lists of exactly 3** - AI loves triplets. "Three key considerations..." Real lists are 2, or 4, or 7.
+- **Symmetrical sections** - All H2s same length. All bullets identical grammar.
+- **Colon introductions** - "Several factors to consider: X, Y, and Z."
+- **Parallel openings** - Consecutive paragraphs starting the same way ("This approach...", "This method...", "This strategy...").
 
 **Action:** Restructure. Make one paragraph a fragment. Make another twice as long. Break the template.
 
@@ -144,14 +144,14 @@ Document-level organization patterns that reveal algorithmic generation. (For in
 
 Sentence-construction habits and repetition patterns that go beyond individual words.
 
-- **Copula avoidance** — "serves as" / "stands as" / "functions as" instead of "is." AI substitutes elaborate constructions for simple verbs. "Gallery 825 serves as the exhibition space"  "Gallery 825 is the exhibition space."
-- **Significance inflation** — Puffing up importance with legacy/testament/pivotal framing. "Marking a pivotal moment in the evolution of..." The whole sentence construction inflates, not just the word.
-- **Superficial -ing clauses** — Present participle phrases tacked on for fake depth: "highlighting the interplay," "underscoring the importance," "reflecting the community's values." The -ing clause adds no information; it just sounds analytical.
-- **Synonym cycling** — Repetition-penalty-driven substitution. "The protagonist... The main character... The central figure... The hero..." all in one paragraph. Real writers repeat or use pronouns.
-- **Negative parallelisms** — "Not only X but Y" / "It's not just about X; it's about Y." Overused construction that sounds profound but usually restates.
-- **False ranges** — "from X to Y" where X and Y aren't on a meaningful scale. "From hobbyist experiments to enterprise-wide rollouts."
-- **Explanatory completeness** — The model can't leave anything unexplained. If it mentions a concept, it defines it. A person writing to peers assumes shared context. "Claude's project files" is enough -- the model adds "which allow you to store persistent context for your projects." If the audience already knows, the explanation is a tell.
-- **Clause-final summation** — Restating the point in abstract terms at the end of a sentence. "...which makes it ideal for teams that need both speed and reliability." "...providing a robust foundation for future development." The clause after "which" or the participial phrase adds no information. People end sentences on the specific, not the abstract.
+- **Copula avoidance** - "serves as" / "stands as" / "functions as" instead of "is." AI substitutes elaborate constructions for simple verbs. "Gallery 825 serves as the exhibition space"  "Gallery 825 is the exhibition space."
+- **Significance inflation** - Puffing up importance with legacy/testament/pivotal framing. "Marking a pivotal moment in the evolution of..." The whole sentence construction inflates, not just the word.
+- **Superficial -ing clauses** - Present participle phrases tacked on for fake depth: "highlighting the interplay," "underscoring the importance," "reflecting the community's values." The -ing clause adds no information; it just sounds analytical.
+- **Synonym cycling** - Repetition-penalty-driven substitution. "The protagonist... The main character... The central figure... The hero..." all in one paragraph. Real writers repeat or use pronouns.
+- **Negative parallelisms** - "Not only X but Y" / "It's not just about X; it's about Y." Overused construction that sounds profound but usually restates.
+- **False ranges** - "from X to Y" where X and Y aren't on a meaningful scale. "From hobbyist experiments to enterprise-wide rollouts."
+- **Explanatory completeness** - The model can't leave anything unexplained. If it mentions a concept, it defines it. A person writing to peers assumes shared context. "Claude's project files" is enough -- the model adds "which allow you to store persistent context for your projects." If the audience already knows, the explanation is a tell.
+- **Clause-final summation** - Restating the point in abstract terms at the end of a sentence. "...which makes it ideal for teams that need both speed and reliability." "...providing a robust foundation for future development." The clause after "which" or the participial phrase adds no information. People end sentences on the specific, not the abstract.
 
 **Action:** Simplify. Use "is"/"are." Delete -ing clauses that add no information. Let a word repeat rather than cycling synonyms. Replace false ranges with specifics. Delete explanations the audience doesn't need. Cut clause-final summations.
 
@@ -191,11 +191,11 @@ AI is trained helpful and positive. This creates distinctive filler. Also catche
 
 AI produces unnaturally even rhythm.
 
-- **Consistent sentence length** — Every sentence 15-25 words. No short punches. No long sprawls.
-- **Clean clause structure** — Subject-verb-object, consistently. No interruptions or asides.
-- **No fragments** — AI almost never writes incomplete sentences. Humans do it constantly.
-- **No contractions** — "It is" instead of "it's." "Do not" instead of "don't."
-- **Over-complete thoughts** — Every idea fully resolved in one sentence. No trailing thoughts.
+- **Consistent sentence length** - Every sentence 15-25 words. No short punches. No long sprawls.
+- **Clean clause structure** - Subject-verb-object, consistently. No interruptions or asides.
+- **No fragments** - AI almost never writes incomplete sentences. Humans do it constantly.
+- **No contractions** - "It is" instead of "it's." "Do not" instead of "don't."
+- **Over-complete thoughts** - Every idea fully resolved in one sentence. No trailing thoughts.
 
 **Action:** Vary length deliberately. Let a thought stand incomplete. Contract where natural. Let a thought trail off.
 
@@ -203,11 +203,11 @@ AI produces unnaturally even rhythm.
 
 AI defaults to conceptual language. Humans anchor in specifics.
 
-- **No concrete nouns** — Paragraph has no numbers, names, tools, dates, or places
-- **Generic examples** — "For instance, in many organizations..." instead of naming one
-- **Conceptual hand-waving** — "Improves efficiency" without saying how much or for whom
-- **Category language** — "Various factors," "multiple considerations," "several approaches"
-- **Precise-sounding vagueness** — Modifiers that sound specific but say nothing. "Significantly faster," "substantially improved," "considerably more efficient." The concrete nouns might be there, but the quantifiers are empty. How much faster? Compared to what?
+- **No concrete nouns** - Paragraph has no numbers, names, tools, dates, or places
+- **Generic examples** - "For instance, in many organizations..." instead of naming one
+- **Conceptual hand-waving** - "Improves efficiency" without saying how much or for whom
+- **Category language** - "Various factors," "multiple considerations," "several approaches"
+- **Precise-sounding vagueness** - Modifiers that sound specific but say nothing. "Significantly faster," "substantially improved," "considerably more efficient." The concrete nouns might be there, but the quantifiers are empty. How much faster? Compared to what?
 
 **Action:** One concrete anchor per paragraph. A number, tool, date, name, or constraint from lived experience. Replace vague quantifiers with actual measurements or drop them.
 
@@ -215,12 +215,12 @@ AI defaults to conceptual language. Humans anchor in specifics.
 
 Formatting patterns that are quick to spot and high-signal.
 
-- **Em-dash overuse** — AI uses em dashes (--) more than humans, mimicking punchy sales writing. Use commas, periods, parentheses, or restructure instead.
-- **Boldface overuse** — Mechanical emphasis on key terms. "It blends **OKRs**, **KPIs**, and **BSC**." Remove most bold; let sentence structure do the emphasis.
-- **Inline-header vertical lists** — Bullet points starting with bolded headers followed by colons. "- **Speed:** Significantly faster..." Restructure into prose or use plain bullets.
-- **Title case in headings** — AI capitalizes all main words. "## Strategic Negotiations And Global Partnerships"  "## Strategic negotiations and global partnerships." Use sentence case.
-- **Emoji decoration** — Emojis on headings or bullet points. Delete.
-- **Curly quotation marks** — AI sometimes uses curly quotes instead of straight quotes. Normalize.
+- **Em-dash overuse** - AI uses em dashes (--) more than humans, mimicking punchy sales writing. Use commas, periods, parentheses, or restructure instead.
+- **Boldface overuse** - Mechanical emphasis on key terms. "It blends **OKRs**, **KPIs**, and **BSC**." Remove most bold; let sentence structure do the emphasis.
+- **Inline-header vertical lists** - Bullet points starting with bolded headers followed by colons. "- **Speed:** Significantly faster..." Restructure into prose or use plain bullets.
+- **Title case in headings** - AI capitalizes all main words. "## Strategic Negotiations And Global Partnerships"  "## Strategic negotiations and global partnerships." Use sentence case.
+- **Emoji decoration** - Emojis on headings or bullet points. Delete.
+- **Curly quotation marks** - AI sometimes uses curly quotes instead of straight quotes. Normalize.
 
 **Action:** Fix on sight. These are fast, high-confidence corrections.
 
@@ -243,9 +243,9 @@ The most reliable AI tell. LLMs almost always end with a summary paragraph resta
 
 AI-generated articles include predictable section patterns.
 
-- **"Challenges and Future Prospects"** — Formulaic challenges section followed by optimistic outlook. "Despite its... faces several challenges. Despite these challenges... continues to thrive."
-- **"Broader Trends"** — Connecting a specific topic to vague broader significance. "This represents a broader shift in..."
-- **Undue notability claims** — Listing media coverage or followers without context.
+- **"Challenges and Future Prospects"** - Formulaic challenges section followed by optimistic outlook. "Despite its... faces several challenges. Despite these challenges... continues to thrive."
+- **"Broader Trends"** - Connecting a specific topic to vague broader significance. "This represents a broader shift in..."
+- **Undue notability claims** - Listing media coverage or followers without context.
 
 **Action:** Replace with specific facts. What challenges, specifically? What happened, specifically? If there's nothing specific to say, the section doesn't need to exist.
 
@@ -253,11 +253,11 @@ AI-generated articles include predictable section patterns.
 
 Phrases that are technically correct but wrong for the target register. This is the gap between "grammatically fine" and "sounds like a person wrote it." Only active when Step 0 has set a register. Category 1 flags words that are almost always AI tells regardless of register. Category 12 flags words that are fine in some registers but wrong in the target register. If a word is on the Category 1 list, flag it there, not here.
 
-- **Compound nominal phrases** — Stacking nouns into noun phrases that nobody says out loud. "The personal agent ecosystem evaluation" instead of "testing personal agents." "A multi-channel messaging integration layer" instead of "a way to get messages from different apps." The longer the noun stack, the stronger the tell.
-- **Nominalized verbs** — Turning verbs into abstract nouns. "The implementation of caching" instead of "implementing caching" or just "adding a cache." "Facilitation of communication" instead of "helping people talk." If the verb form is shorter and clearer, use it.
-- **Category/framework language** — Imposing taxonomic structure where the author would just describe things. "The authentication subsystem" instead of "the login code." "A persistence layer" instead of "where we store things." "Requirements matrix" instead of "checklist." Technical categories are fine in RFCs and architecture docs. In a social post or PR description, they signal the model is organizing, not talking.
-- **Register-inappropriate passive** — Passive voice that's correct in formal/technical registers but wrong for conversational. "The decision was made to sunset the feature" reads like a press release. "We dropped the feature" is dev-to-dev. "I killed it" is conversational. Passive is fine in RFCs and architecture docs. In a social post or PR, it distances the author from the action.
-- **Textbook phrasing** — Correct terminology that nobody uses in the target register. "Persistent memory across interactions" instead of "remembering things between conversations." "Natively supports" instead of "works out of the box." "Mediocre at both tasks" instead of "okay at both and great at neither." The test: would you say this exact phrase to a colleague at a whiteboard? If not, it's textbook.
+- **Compound nominal phrases** - Stacking nouns into noun phrases that nobody says out loud. "The personal agent ecosystem evaluation" instead of "testing personal agents." "A multi-channel messaging integration layer" instead of "a way to get messages from different apps." The longer the noun stack, the stronger the tell.
+- **Nominalized verbs** - Turning verbs into abstract nouns. "The implementation of caching" instead of "implementing caching" or just "adding a cache." "Facilitation of communication" instead of "helping people talk." If the verb form is shorter and clearer, use it.
+- **Category/framework language** - Imposing taxonomic structure where the author would just describe things. "The authentication subsystem" instead of "the login code." "A persistence layer" instead of "where we store things." "Requirements matrix" instead of "checklist." Technical categories are fine in RFCs and architecture docs. In a social post or PR description, they signal the model is organizing, not talking.
+- **Register-inappropriate passive** - Passive voice that's correct in formal/technical registers but wrong for conversational. "The decision was made to sunset the feature" reads like a press release. "We dropped the feature" is dev-to-dev. "I killed it" is conversational. Passive is fine in RFCs and architecture docs. In a social post or PR, it distances the author from the action.
+- **Textbook phrasing** - Correct terminology that nobody uses in the target register. "Persistent memory across interactions" instead of "remembering things between conversations." "Natively supports" instead of "works out of the box." "Mediocre at both tasks" instead of "okay at both and great at neither." The test: would you say this exact phrase to a colleague at a whiteboard? If not, it's textbook.
 
 **How register affects severity:**
 - Conversational (social posts, casual writing): HIGH. Every instance should be caught and rewritten.
@@ -309,22 +309,22 @@ Fix only flagged sections. Preserve everything else verbatim.
 
 When a persona file is provided, calibrate rewrites to match the author's documented voice.
 
-1. **Read the persona** — Extract sentence patterns, vocabulary, punctuation habits, tone markers
-2. **Identify signatures** — What makes this author recognizable? Comma-connected thoughts? Programming metaphors? Trailing endings?
-3. **Apply during rewrite** — Match the author's patterns, not generic "human" patterns
-4. **Preserve looseness** — If the voice is informal and unpolished, don't tighten. The looseness is the voice.
+1. **Read the persona** - Extract sentence patterns, vocabulary, punctuation habits, tone markers
+2. **Identify signatures** - What makes this author recognizable? Comma-connected thoughts? Programming metaphors? Trailing endings?
+3. **Apply during rewrite** - Match the author's patterns, not generic "human" patterns
+4. **Preserve looseness** - If the voice is informal and unpolished, don't tighten. The looseness is the voice.
 
 If no persona provided, apply general human-voice heuristics without author-specific calibration.
 
 ### What the Author Brings
 
-These are things no detection tool can supply — only the author has them:
+These are things no detection tool can supply - only the author has them:
 
-- **Opinions** — React to facts. "I genuinely don't know how to feel about this" signals a real person thinking.
-- **Lived-experience details** — Specific tools, dates, numbers, project names from memory. Not "many organizations" but "the team I was on in 2023."
-- **Uncertainty acknowledged honestly** — "I can't verify this works at scale" beats false confidence.
-- **Mixed feelings** — Real humans have them. "This is impressive but also kind of unsettling" beats simple praise or criticism.
-- **Unresolved thoughts** — Not every paragraph needs a clean conclusion. Let a thought trail off if it's genuinely unresolved.
+- **Opinions** - React to facts. "I genuinely don't know how to feel about this" signals a real person thinking.
+- **Lived-experience details** - Specific tools, dates, numbers, project names from memory. Not "many organizations" but "the team I was on in 2023."
+- **Uncertainty acknowledged honestly** - "I can't verify this works at scale" beats false confidence.
+- **Mixed feelings** - Real humans have them. "This is impressive but also kind of unsettling" beats simple praise or criticism.
+- **Unresolved thoughts** - Not every paragraph needs a clean conclusion. Let a thought trail off if it's genuinely unresolved.
 
 When flagging missing anchors (Rule 4), prompt the author for these. The rewrite can remove AI patterns, but only the author can inject the signal that makes prose recognizably theirs.
 
@@ -347,11 +347,11 @@ After rewriting, validate the output.
 
 ### Checks
 
-1. **Re-score** — Run detection on rewritten text. Score should improve by at least 2 points.
-2. **Two-pass audit** — Ask: "What still makes this obviously AI-generated?" Answer honestly, then fix the remaining tells. This meta-cognitive step catches patterns that category-by-category detection misses.
-3. **Read-aloud test** — The primary check for conversational registers. Read the text out loud (or simulate it). For each sentence, ask: "Would the author say this exact phrase to a colleague?" Not the idea -- the exact words. "Persistent memory across interactions" fails. "Remembering things between conversations" passes. If the register is conversational and a sentence sounds like a textbook, a slide deck, or a product brief, it's still a tell. For technical or formal registers, the bar is different: precision matters more than conversational flow.
-4. **Meaning preservation** — Every claim in the original survives in the output.
-5. **Length check** — Output should be shorter than input (typically 10-30% shorter). Longer means something went wrong.
+1. **Re-score** - Run detection on rewritten text. Score should improve by at least 2 points.
+2. **Two-pass audit** - Ask: "What still makes this obviously AI-generated?" Answer honestly, then fix the remaining tells. This meta-cognitive step catches patterns that category-by-category detection misses.
+3. **Read-aloud test** - The primary check for conversational registers. Read the text out loud (or simulate it). For each sentence, ask: "Would the author say this exact phrase to a colleague?" Not the idea -- the exact words. "Persistent memory across interactions" fails. "Remembering things between conversations" passes. If the register is conversational and a sentence sounds like a textbook, a slide deck, or a product brief, it's still a tell. For technical or formal registers, the bar is different: precision matters more than conversational flow.
+4. **Meaning preservation** - Every claim in the original survives in the output.
+5. **Length check** - Output should be shorter than input (typically 10-30% shorter). Longer means something went wrong.
 
 ---
 
@@ -490,11 +490,11 @@ The profile becomes a calibration reference that detection and rewrite stages us
 
 ## Related Commands
 
-- `/pb-think` — General thinking toolkit; use `mode=refine` for output refinement
-- `/pb-review-docs` — Documentation quality review (structural, not voice)
-- `/pb-documentation` — Writing engineering documentation
-- `/pb-design-rules` — Clarity over cleverness applies to prose
-- `/pb-preamble` — Honest, direct communication philosophy
+- `/pb-think` - General thinking toolkit; use `mode=refine` for output refinement
+- `/pb-review-docs` - Documentation quality review (structural, not voice)
+- `/pb-documentation` - Writing engineering documentation
+- `/pb-design-rules` - Clarity over cleverness applies to prose
+- `/pb-preamble` - Honest, direct communication philosophy
 
 ---
 

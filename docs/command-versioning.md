@@ -21,10 +21,10 @@ Examples:
 ### MAJOR Version (breaking changes)
 
 Bump MAJOR when:
-- **Removed sections** — Command has fewer sections than before (requires user adaptation)
-- **Changed scope/purpose** — Command does something fundamentally different
-- **Breaking API** — Command's structure or inputs/outputs change significantly
-- **Replaced** — Command is replaced by another (migration path required)
+- **Removed sections** - Command has fewer sections than before (requires user adaptation)
+- **Changed scope/purpose** - Command does something fundamentally different
+- **Breaking API** - Command's structure or inputs/outputs change significantly
+- **Replaced** - Command is replaced by another (migration path required)
 
 Examples triggering major bump:
 - Remove "Outcome Clarification" from pb-start → 2.0.0
@@ -34,11 +34,11 @@ Examples triggering major bump:
 ### MINOR Version (new features, non-breaking)
 
 Bump MINOR when:
-- **Added sections** — New section added to command
-- **Enhanced guidance** — Existing section rewritten with more depth
-- **New examples** — Added concrete examples or code snippets
-- **Related commands updated** — New cross-references added
-- **Reorganization** — Content reorganized for clarity (same content, different structure)
+- **Added sections** - New section added to command
+- **Enhanced guidance** - Existing section rewritten with more depth
+- **New examples** - Added concrete examples or code snippets
+- **Related commands updated** - New cross-references added
+- **Reorganization** - Content reorganized for clarity (same content, different structure)
 
 Examples triggering minor bump:
 - Add "Philosophy" section to design rules → 1.1.0
@@ -48,10 +48,10 @@ Examples triggering minor bump:
 ### PATCH Version (cosmetic fixes, non-breaking)
 
 Bump PATCH when:
-- **Typo fix** — Grammar, spelling, or formatting corrections
-- **Clarification** — Rewrote unclear sentence (same meaning, clearer expression)
-- **Date update** — Updated reference date or timestamp
-- **Link fix** — Fixed broken or outdated link
+- **Typo fix** - Grammar, spelling, or formatting corrections
+- **Clarification** - Rewrote unclear sentence (same meaning, clearer expression)
+- **Date update** - Updated reference date or timestamp
+- **Link fix** - Fixed broken or outdated link
 
 Examples triggering patch bump:
 - Fix typo in command description
@@ -236,8 +236,8 @@ Command deleted entirely (only after long deprecation period).
 
 ## Related Documentation
 
-- **Command Changelog:** [command-changelog.md](command-changelog.md) — Version history of all commands
-- **Command Index:** [command-index.md](command-index.md) — Full list of commands
+- **Command Changelog:** [command-changelog.md](command-changelog.md) - Version history of all commands
+- **Command Index:** [command-index.md](command-index.md) - Full list of commands
 - **Individual Commands:** Each command has version metadata in its YAML front-matter
 
 ---

@@ -25,9 +25,9 @@ Language-specific guide for Python projects. Use alongside `/pb-guide` for gener
 - **Modularity**: Layered architecture (handlers → services → repositories) keeps concerns separate
 - **Optimization**: Profile Python with cProfile before optimizing; measure what actually matters
 
-Adapt this guide to your project—it's a starting point, not dogma.
+Adapt this guide to your project-it's a starting point, not dogma.
 
-**Resource Hint:** sonnet — Language-specific implementation guidance; routine code standards.
+**Resource Hint:** sonnet - Language-specific implementation guidance; routine code standards.
 
 ## When to Use
 
@@ -883,12 +883,12 @@ async def health_check():
 ## **Integration with Playbook**
 
 **Related Commands:**
-- `/pb-guide` — General SDLC process
-- `/pb-patterns-core` — Architectural patterns
-- `/pb-patterns-async` — Async/concurrency patterns
-- `/pb-performance` — Performance optimization
-- `/pb-testing` — Advanced testing strategies
-- `/pb-deployment` — Deployment and DevOps
+- `/pb-guide` - General SDLC process
+- `/pb-patterns-core` - Architectural patterns
+- `/pb-patterns-async` - Async/concurrency patterns
+- `/pb-performance` - Performance optimization
+- `/pb-testing` - Advanced testing strategies
+- `/pb-deployment` - Deployment and DevOps
 
 ---
 

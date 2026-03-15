@@ -14,19 +14,19 @@ breaking_changes: []
 ---
 # Zero-Stack App Initiation ($0/month Architecture)
 
-A thinking tool for building **Gists** — small, calm apps that give you the essential point. You visit, get the gist, move on. Zero cost. Zero servers. Zero monthly bills.
+A thinking tool for building **Gists** - small, calm apps that give you the essential point. You visit, get the gist, move on. Zero cost. Zero servers. Zero monthly bills.
 
-A Gist is any app that fits the zero-stack topology: static site, optional edge proxy, CI pipeline. Two vendor accounts. The only fixed cost: domain registration (~$10-15/year) if you want a custom domain — the `*.pages.dev` default is free.
+A Gist is any app that fits the zero-stack topology: static site, optional edge proxy, CI pipeline. Two vendor accounts. The only fixed cost: domain registration (~$10-15/year) if you want a custom domain - the `*.pages.dev` default is free.
 
-**What fits:** API dashboards, personal tools, form-based collectors, note-taking apps, display-only pages, data visualizers — anything that runs on static hosting with optional edge compute. Read-heavy, write-light, or user-content. The topology is the constraint, not the content type.
+**What fits:** API dashboards, personal tools, form-based collectors, note-taking apps, display-only pages, data visualizers - anything that runs on static hosting with optional edge compute. Read-heavy, write-light, or user-content. The topology is the constraint, not the content type.
 
-> Not every Gist fits the "visit, get the point, leave" pattern — a personal notes app fits the topology but is a tool you return to. That's fine. "Gist" describes the deployment shape, not the interaction pattern.
+> Not every Gist fits the "visit, get the point, leave" pattern - a personal notes app fits the topology but is a tool you return to. That's fine. "Gist" describes the deployment shape, not the interaction pattern.
 
-A structured conversation that takes an idea (or PRD) and walks through the product, data, design, and content decisions that produce a tailored project scaffold — not a generic template you fork and gut.
+A structured conversation that takes an idea (or PRD) and walks through the product, data, design, and content decisions that produce a tailored project scaffold - not a generic template you fork and gut.
 
-**Mindset:** Apply `/pb-preamble` thinking — challenge whether the idea fits this topology before committing to it. Apply `/pb-design-rules` thinking — the topology is simple by default, modular, and fails noisily. Apply `/pb-calm-design` thinking — Gists respect user attention by default.
+**Mindset:** Apply `/pb-preamble` thinking - challenge whether the idea fits this topology before committing to it. Apply `/pb-design-rules` thinking - the topology is simple by default, modular, and fails noisily. Apply `/pb-calm-design` thinking - Gists respect user attention by default.
 
-**Resource Hint:** opus — the conversation makes product architecture decisions (fit, tier, data paths, trust, CSP). Scaffold generation is pattern application.
+**Resource Hint:** opus - the conversation makes product architecture decisions (fit, tier, data paths, trust, CSP). Scaffold generation is pattern application.
 
 ---
 
@@ -34,7 +34,7 @@ A structured conversation that takes an idea (or PRD) and walks through the prod
 
 - Building a small app that should cost $0/month to run
 - API-backed dashboard or data display (public data, no auth)
-- Personal tool — notes, trackers, calculators, generators
+- Personal tool - notes, trackers, calculators, generators
 - Simple form submission (contact form, feedback widget, survey)
 - Display-only content (portfolio, landing page, static info)
 - Side project where production architecture shouldn't mean production ops burden
@@ -42,11 +42,11 @@ A structured conversation that takes an idea (or PRD) and walks through the prod
 
 ## When NOT to Use
 
-- Real-time collaboration or WebSocket-heavy — use `/pb-repo-init` + `/pb-patterns-async`
-- Complex relational data or SQL queries — use `/pb-repo-init` + `/pb-patterns-db`
-- OAuth flows, user accounts, or session management — use `/pb-repo-init`
-- Dynamic file uploads from users or media processing — use `/pb-repo-init`
-- SSR required — this topology serves static files at the edge
+- Real-time collaboration or WebSocket-heavy - use `/pb-repo-init` + `/pb-patterns-async`
+- Complex relational data or SQL queries - use `/pb-repo-init` + `/pb-patterns-db`
+- OAuth flows, user accounts, or session management - use `/pb-repo-init`
+- Dynamic file uploads from users or media processing - use `/pb-repo-init`
+- SSR required - this topology serves static files at the edge
 
 If the idea doesn't fit, redirect early. Don't force the topology.
 
@@ -77,11 +77,11 @@ Not every Gist needs every piece. The data source, update frequency, and scale d
 
 | Tier | When | What's Active | Framework |
 |------|------|---------------|-----------|
-| **Minimal** | No external data, personal use, display-only | Static site + CI only | Plain HTML/CSS/JS — no framework, no build tools |
+| **Minimal** | No external data, personal use, display-only | Static site + CI only | Plain HTML/CSS/JS - no framework, no build tools |
 | **Standard** | External API (keyless) or user-content with persistence | Static site + optional Worker | Astro (file-based routing, zero JS default) |
 | **Full** | API with key, hourly+ freshness, or public scale | Static site + Worker + KV + cron | Astro + Workers + KV + GitHub Actions cron |
 
-**The tier emerges from the conversation.** Don't ask "what tier do you want?" — determine it from the product decisions. Personal tool with no API? Minimal. Weather dashboard with public API? Standard. News aggregator with hourly updates? Full.
+**The tier emerges from the conversation.** Don't ask "what tier do you want?" - determine it from the product decisions. Personal tool with no API? Minimal. Weather dashboard with public API? Standard. News aggregator with hourly updates? Full.
 
 **Tier escalation signals:**
 - API key required → needs Worker proxy (standard → full)
@@ -94,12 +94,12 @@ Not every Gist needs every piece. The data source, update frequency, and scale d
 
 The topology enforces calm design (see `/pb-calm-design`). Non-negotiable defaults:
 
-- **Silence during normal operation** — data appears or shows a stale timestamp. No "refreshing..." banners. Live proxy path: stale-first rendering (show cached, update in place).
-- **Stale over empty** — if the cache is old, show it with a timestamp. Never show an empty page when you have cached data.
-- **Status in the periphery** — "Last updated 3 hours ago" in the footer, not a toast notification.
-- **Works on first visit** — no onboarding, no configuration, no "sign up to see data."
-- **Graceful offline** — PWA serves cached data with clear staleness indicator. No error walls.
-- **Transitions are opt-in** — if used: subtle (150-200ms), functional (communicates state change), and disabled under `prefers-reduced-motion`.
+- **Silence during normal operation** - data appears or shows a stale timestamp. No "refreshing..." banners. Live proxy path: stale-first rendering (show cached, update in place).
+- **Stale over empty** - if the cache is old, show it with a timestamp. Never show an empty page when you have cached data.
+- **Status in the periphery** - "Last updated 3 hours ago" in the footer, not a toast notification.
+- **Works on first visit** - no onboarding, no configuration, no "sign up to see data."
+- **Graceful offline** - PWA serves cached data with clear staleness indicator. No error walls.
+- **Transitions are opt-in** - if used: subtle (150-200ms), functional (communicates state change), and disabled under `prefers-reduced-motion`.
 
 ### Trust Boundaries
 
@@ -113,7 +113,7 @@ Every Gist has clear trust boundaries. Name them explicitly in the scaffold:
 | Worker ↔ Pages | Trusted (same origin) | CORS same-origin, no extra auth needed |
 | sessionStorage/localStorage | Semi-trusted | Try-catch all access (private browsing, storage disabled) |
 
-**DOM safety:** Never use `innerHTML` with dynamic content. Use `textContent` or DOM APIs (`createElement`, `setAttribute`). Hard rule — referenced in Ship Gate and Anti-Patterns.
+**DOM safety:** Never use `innerHTML` with dynamic content. Use `textContent` or DOM APIs (`createElement`, `setAttribute`). Hard rule - referenced in Ship Gate and Anti-Patterns.
 
 ---
 
@@ -121,7 +121,7 @@ Every Gist has clear trust boundaries. Name them explicitly in the scaffold:
 
 Goal: idea to working local dev with mock data. No accounts needed.
 
-**Persona hint:** If the builder is new to development (using an AI coding assistant), keep product sections jargon-free. Technical detail lives in the scaffold spec where the assistant consumes it. Thread this awareness through each step — the builder needs to understand *what* their app will include; the assistant handles *how*.
+**Persona hint:** If the builder is new to development (using an AI coding assistant), keep product sections jargon-free. Technical detail lives in the scaffold spec where the assistant consumes it. Thread this awareness through each step - the builder needs to understand *what* their app will include; the assistant handles *how*.
 
 ### Step 1: Product Brief & Fit
 
@@ -152,7 +152,7 @@ When do they come back?  (daily habit, event-driven, seasonal, one-time)
 > ___
 ```
 
-These answers — audience, headline value, data source, freshness, return pattern — drive every subsequent decision. Pin them before moving on.
+These answers - audience, headline value, data source, freshness, return pattern - drive every subsequent decision. Pin them before moving on.
 
 **Data source taxonomy:**
 
@@ -196,9 +196,9 @@ Now dig into the data source from Step 1. The path depends on which data source 
 | Daily | Cron + rebuild | GitHub Actions cron triggers Pages rebuild with data baked into HTML |
 | Rarely / static | Build-time only | Data fetched at build, baked into static HTML |
 
-**Data transformation:** Does the raw API response need shaping before display? Identify: which fields you display, what you rename, what you derive (e.g., AQI category from numeric value). Pin the types now — they go into `types.ts` and prevent the assistant from guessing the data shape.
+**Data transformation:** Does the raw API response need shaping before display? Identify: which fields you display, what you rename, what you derive (e.g., AQI category from numeric value). Pin the types now - they go into `types.ts` and prevent the assistant from guessing the data shape.
 
-**On API failure:** Default: serve stale data, no automatic client retry. If the Worker proxy is involved, it serves from KV cache on upstream failure. Surface this decision now — different retry strategies produce different user experiences.
+**On API failure:** Default: serve stale data, no automatic client retry. If the Worker proxy is involved, it serves from KV cache on upstream failure. Surface this decision now - different retry strategies produce different user experiences.
 
 #### Path B: User Content
 
@@ -207,18 +207,18 @@ Now dig into the data source from Step 1. The path depends on which data source 
 
 | User Content Type | Persistence | Complexity |
 |-------------------|-------------|------------|
-| Simple form (contact, feedback) | External handler (Formspree, Netlify Forms) or Worker endpoint | Low — fire and forget |
-| User saves data (personal) | localStorage (MVP) | Low — single user, client-side only |
-| User saves data (multi-user) | Database (D1, Supabase, Firebase) | Medium — needs storage backend |
-| Display-only | None — content in HTML | Lowest |
+| Simple form (contact, feedback) | External handler (Formspree, Netlify Forms) or Worker endpoint | Low - fire and forget |
+| User saves data (personal) | localStorage (MVP) | Low - single user, client-side only |
+| User saves data (multi-user) | Database (D1, Supabase, Firebase) | Medium - needs storage backend |
+| Display-only | None - content in HTML | Lowest |
 
-**For user-saves-data apps:** Surface complexity early — CRUD operations, data validation, empty states, and error recovery are meaningfully more work than read-only apps. Budget extra time for the data round-trip.
+**For user-saves-data apps:** Surface complexity early - CRUD operations, data validation, empty states, and error recovery are meaningfully more work than read-only apps. Budget extra time for the data round-trip.
 
-**Validation rules:** Define per field — required, type, limits. Validation fires inline on blur for required fields, on submit for the rest (default). Pin these now; the assistant will implement whatever the spec says, and changing validation UX mid-build is expensive.
+**Validation rules:** Define per field - required, type, limits. Validation fires inline on blur for required fields, on submit for the rest (default). Pin these now; the assistant will implement whatever the spec says, and changing validation UX mid-build is expensive.
 
 #### Path C: Display-Only
 
-Content is pre-loaded in HTML or fetched at build time. No runtime data fetching. Simplest path — minimal tier.
+Content is pre-loaded in HTML or fetched at build time. No runtime data fetching. Simplest path - minimal tier.
 
 #### Path D: Mixed
 
@@ -226,27 +226,27 @@ Combine paths as needed. Each data source follows its own path above. The most c
 
 ### Step 3: UX States
 
-Every Gist has states beyond "data loaded successfully." Define these early — they're product decisions, not afterthoughts.
+Every Gist has states beyond "data loaded successfully." Define these early - they're product decisions, not afterthoughts.
 
 **Core states (all Gists):**
 
 | State | What the User Sees | Design Notes |
 |-------|-------------------|--------------|
-| **Loading** | Skeleton placeholder matching layout shape | Prefer skeletons over spinners — they preview the loaded layout. Describe the shape (e.g., "three cards with pulsing blocks"). Spinners only for brief operations (< 1s). |
+| **Loading** | Skeleton placeholder matching layout shape | Prefer skeletons over spinners - they preview the loaded layout. Describe the shape (e.g., "three cards with pulsing blocks"). Spinners only for brief operations (< 1s). |
 | **Loaded** | The headline value from Step 1 | The normal state. This is what the app exists to show. |
-| **Error (Network)** | Last known data + explanation | Show stale data with "Couldn't refresh — showing data from [timestamp]." |
-| **Empty / First Use** | Clear call to action | API apps: timeout message. User-content: "No [items] yet — create your first one." |
+| **Error (Network)** | Last known data + explanation | Show stale data with "Couldn't refresh - showing data from [timestamp]." |
+| **Empty / First Use** | Clear call to action | API apps: timeout message. User-content: "No [items] yet - create your first one." |
 | **Offline** | Cached data + staleness indicator | PWA shows cached version with timestamp. |
 
 **Additional states by data source:**
 
 | Data Source | Extra States |
 |-------------|-------------|
-| External API | **Error (API)** — upstream is down. Show stale data, not error wall. |
-| User content (simple-form) | **Success** — confirmation. **Error (Submit)** — keep form populated. |
-| User content (user-saves-data) | **Empty / First Use** — clear CTA. **Error (Storage)** — inline error with retry, never lose user input. |
+| External API | **Error (API)** - upstream is down. Show stale data, not error wall. |
+| User content (simple-form) | **Success** - confirmation. **Error (Submit)** - keep form populated. |
+| User content (user-saves-data) | **Empty / First Use** - clear CTA. **Error (Storage)** - inline error with retry, never lose user input. |
 
-**Draft the actual copy now.** Write the 3-5 strings users will see: network error message, API/upstream error, empty state CTA, form success (if applicable), form error (if applicable). Keep it calm — the user doesn't need to know what broke, just what they're seeing and how fresh it is. Deciding copy now saves 2-3 rounds of "make it friendlier" during development.
+**Draft the actual copy now.** Write the 3-5 strings users will see: network error message, API/upstream error, empty state CTA, form success (if applicable), form error (if applicable). Keep it calm - the user doesn't need to know what broke, just what they're seeing and how fresh it is. Deciding copy now saves 2-3 rounds of "make it friendlier" during development.
 
 ### Step 4: Project Shape
 
@@ -312,13 +312,13 @@ Show the default stack with rationale. The default adapts to the complexity tier
 | CI | GitHub Actions | Lint + test + deploy + cron for data refresh |
 
 > Full tier uses the same CSS/JS/Islands defaults as standard. The additions are Worker, KV, and cron.
-> **Substitutions:** The stack is chosen as a unit. Swapping one piece (e.g., CF Pages → Vercel) changes the proxy, cache, and deployment story — it's a package deal. If you need different defaults, say so now; the scaffold adapts.
+> **Substitutions:** The stack is chosen as a unit. Swapping one piece (e.g., CF Pages → Vercel) changes the proxy, cache, and deployment story - it's a package deal. If you need different defaults, say so now; the scaffold adapts.
 
 Confirm or adjust, then proceed.
 
 ### Step 6: Content Security Policy
 
-Generate a CSP tailored to the data source and stack. Delivered via `<meta>` tag in HTML `<head>` (not Worker header — decouples security from Worker availability).
+Generate a CSP tailored to the data source and stack. Delivered via `<meta>` tag in HTML `<head>` (not Worker header - decouples security from Worker availability).
 
 **CSP per variant:**
 
@@ -352,13 +352,13 @@ Generate a step-by-step build order. Each step builds on the previous. An AI cod
 **Base order (all tiers):**
 
 ```
-1. Scaffold — project structure, config files, design tokens, base layout, web standards files
-2. Mock data — hardcode representative data, build all UI states
+1. Scaffold - project structure, config files, design tokens, base layout, web standards files
+2. Mock data - hardcode representative data, build all UI states
    > Checkpoint: Show the user the UI with mock data. Get design approval before
    > connecting real data.
-3. [Data connection step — varies by data source, see below]
+3. [Data connection step - varies by data source, see below]
    > Checkpoint: Confirm data flows correctly end-to-end before proceeding.
-4. Polish — Lighthouse 90+, accessibility audit, mobile testing, verify all UX states.
+4. Polish - Lighthouse 90+, accessibility audit, mobile testing, verify all UX states.
    Complete the Ship Gate before declaring done.
 ```
 
@@ -366,27 +366,27 @@ Generate a step-by-step build order. Each step builds on the previous. An AI cod
 
 | Data Source | Step 3 |
 |-------------|--------|
-| External API (keyless) | **Connect API** — Wire fetch calls, handle errors, implement stale-first rendering |
-| External API (keyed) | **Deploy Worker proxy** — API key in Worker secrets, KV cache with TTL, health endpoint |
-| User content (simple-form) | **Form handler** — Connect to submission endpoint |
-| User content (user-saves-data) | **Storage backend** — Set up persistence, define schema, wire CRUD, confirm data round-trips |
-| Display-only | No step 3 — content is already in HTML |
+| External API (keyless) | **Connect API** - Wire fetch calls, handle errors, implement stale-first rendering |
+| External API (keyed) | **Deploy Worker proxy** - API key in Worker secrets, KV cache with TTL, health endpoint |
+| User content (simple-form) | **Form handler** - Connect to submission endpoint |
+| User content (user-saves-data) | **Storage backend** - Set up persistence, define schema, wire CRUD, confirm data round-trips |
+| Display-only | No step 3 - content is already in HTML |
 | Mixed | Combine relevant steps above |
 
 **Full tier additions** (insert between steps 2 and 3):
 
 ```
-2.5. Worker proxy — deploy Worker with KV bindings, health endpoint
-2.6. Cron job — GitHub Actions schedule, data fetch script, KV writes
+2.5. Worker proxy - deploy Worker with KV bindings, health endpoint
+2.6. Cron job - GitHub Actions schedule, data fetch script, KV writes
 ```
 
-> **For AI assistants:** Follow the Implementation Order step by step. If any requirement is ambiguous, ask the user — do not assume. Verify design with mock data before connecting real data. Include this guidance in any spec or scaffold produced by this command.
+> **For AI assistants:** Follow the Implementation Order step by step. If any requirement is ambiguous, ask the user - do not assume. Verify design with mock data before connecting real data. Include this guidance in any spec or scaffold produced by this command.
 
 **Testing strategy:** Test the data path (fetch → transform → render), not the component tree. For full tier: test that Worker proxy serves cached data on upstream failure. For user-saves-data: test the CRUD round-trip. For all tiers: verify each UX state from Step 3 renders correctly.
 
 ### Step 8: Scaffold
 
-Generate project files with the decisions from Steps 1-7 baked in. The scaffold must work immediately with mock data — no Cloudflare account needed.
+Generate project files with the decisions from Steps 1-7 baked in. The scaffold must work immediately with mock data - no Cloudflare account needed.
 
 The structure adapts to the conversation. No `worker/` if minimal tier. No `data-cron.yml` if live-only. The command shapes the files, not the other way around.
 
@@ -454,10 +454,10 @@ project-name/
 
 **Production lessons baked into the scaffold:**
 
-- `wrangler.toml`: no `[env.dev.vars]` section — causes interactive prompts in CI. Use `.dev.vars` locally.
+- `wrangler.toml`: no `[env.dev.vars]` section - causes interactive prompts in CI. Use `.dev.vars` locally.
 - `deploy.yml`: content-hash comparison to skip no-change deploys. Actions pinned to commit SHAs (supply chain security).
 - `worker/src/index.ts`: accept both GET and HEAD requests (uptime monitors send HEAD).
-- `ci.yml` and `deploy.yml` are separate workflows — push ≠ ship.
+- `ci.yml` and `deploy.yml` are separate workflows - push ≠ ship.
 - Service worker: network-first for HTML (get latest deploy), cache-first for static assets. Bump cache version on release.
 - sessionStorage/localStorage: always try-catch (private browsing, storage disabled).
 
@@ -474,7 +474,7 @@ Pages render with mock data. No Cloudflare account needed.
 
 ## Ship Gate
 
-Single exit gate for Phase A. The scaffold produces correct structure from your decisions — this gate verifies you've customized placeholders and the Gist is ready for visitors.
+Single exit gate for Phase A. The scaffold produces correct structure from your decisions - this gate verifies you've customized placeholders and the Gist is ready for visitors.
 
 **Verify scaffold output:**
 
@@ -485,7 +485,7 @@ Single exit gate for Phase A. The scaffold produces correct structure from your 
 
 **Replace placeholders:**
 
-- [ ] Favicon set (ico + svg + apple-touch-icon) — derived from logo
+- [ ] Favicon set (ico + svg + apple-touch-icon) - derived from logo
 - [ ] OG image (1200×630)
 - [ ] App icons for manifest (192×192 + 512×512 PNG)
 
@@ -538,7 +538,7 @@ Generate `docs/setup.md` with paste-able commands. Each step is one command with
 - Enable Actions in repo Settings
 - Add secrets: `CF_API_TOKEN`, `CF_ACCOUNT_ID`
 
-### 5. DNS (optional — skip for *.pages.dev)
+### 5. DNS (optional - skip for *.pages.dev)
 - Custom domain: Pages → Custom domains → Add
 ```
 
@@ -575,7 +575,7 @@ API hits/day = (active_hours * 60 / kv_ttl_minutes) + cron_runs
 |----------|-----------|-------|
 | Workers requests | 100K/day | Exceeding returns 1015 errors (visible to users) |
 | KV reads | 100K/day | Exceeding returns errors (visible) |
-| KV writes | 1K/day | **Exceeding fails silently** — always check put() response |
+| KV writes | 1K/day | **Exceeding fails silently** - always check put() response |
 | KV storage | 1 GB | |
 | Pages builds | 500/month | |
 | GH Actions | 2K min/month | |
@@ -586,7 +586,7 @@ API hits/day = (active_hours * 60 / kv_ttl_minutes) + cron_runs
 
 **Active window refinement:** Usage pattern global (24h) or regional (e.g., 14h)? Fewer active hours = fewer API hits. Factor this into the formula.
 
-**Cache guidance:** Two-tier cache (edge response + KV) prevents thundering herd. Set edge TTL shorter than KV TTL. Always set `expirationTtl` on KV puts — without it, stale entries live forever if your cron stops. Validate API response shape before caching — fail at write time, not when serving corrupt data.
+**Cache guidance:** Two-tier cache (edge response + KV) prevents thundering herd. Set edge TTL shorter than KV TTL. Always set `expirationTtl` on KV puts - without it, stale entries live forever if your cron stops. Validate API response shape before caching - fail at write time, not when serving corrupt data.
 
 ---
 
@@ -595,14 +595,14 @@ API hits/day = (active_hours * 60 / kv_ttl_minutes) + cron_runs
 | Don't | Do Instead |
 |-------|------------|
 | Force-fit an idea that needs auth/accounts | Redirect to `/pb-repo-init` in Step 1 |
-| Skip budget math | Calculate it — free tier surprise is the #1 failure mode |
+| Skip budget math | Calculate it - free tier surprise is the #1 failure mode |
 | Deploy before local dev works | Phase A must complete before Phase B |
 | Use `[env.dev.vars]` in wrangler.toml | Use `.dev.vars` file (not committed) |
 | Deploy from local machine | CI is the only deploy path |
-| Set up CF account before writing code | Scaffold works with mocks — deploy when ready |
+| Set up CF account before writing code | Scaffold works with mocks - deploy when ready |
 | Ship with placeholder favicon and OG image | Replace before go-live |
 | Connect real data before design approval | Mock data first → visual sign-off → wire up real data |
-| Assume the AI assistant knows your preferences | Be explicit in specs — design vibe, error copy, UX states |
+| Assume the AI assistant knows your preferences | Be explicit in specs - design vibe, error copy, UX states |
 | Use `innerHTML` with dynamic content | Use `textContent` or DOM APIs (see Trust Boundaries) |
 | Default to Tailwind/Preact for simple apps | Start vanilla. Add tools when vanilla isn't enough. |
 
@@ -610,11 +610,11 @@ API hits/day = (active_hours * 60 / kv_ttl_minutes) + cron_runs
 
 ## Related Commands
 
-- `/pb-repo-init` — Generic greenfield initiation (when the Gist topology doesn't fit)
-- `/pb-start` — Begin feature work after scaffolding
-- `/pb-patterns-cloud` — Cloud deployment patterns reference
-- `/pb-design-language` — Deeper design system work (optional, after scaffold)
-- `/pb-calm-design` — Calm design principles (Gists embody these by default)
+- `/pb-repo-init` - Generic greenfield initiation (when the Gist topology doesn't fit)
+- `/pb-start` - Begin feature work after scaffolding
+- `/pb-patterns-cloud` - Cloud deployment patterns reference
+- `/pb-design-language` - Deeper design system work (optional, after scaffold)
+- `/pb-calm-design` - Calm design principles (Gists embody these by default)
 
 ---
 

@@ -16,11 +16,11 @@ breaking_changes: []
 
 Build visibility into your system's behavior: metrics, logs, and traces that help you understand what's happening in production.
 
-**Mindset:** Observability is multi-perspective understanding. You need metrics, logs, and traces—different views of the same system. This embodies `/pb-preamble` thinking (no single perspective is complete) and `/pb-design-rules` thinking (especially Transparency: design for visibility to make debugging easier).
+**Mindset:** Observability is multi-perspective understanding. You need metrics, logs, and traces-different views of the same system. This embodies `/pb-preamble` thinking (no single perspective is complete) and `/pb-design-rules` thinking (especially Transparency: design for visibility to make debugging easier).
 
 Question your assumptions about what's happening in production. Systems should be observable; you shouldn't need to guess.
 
-**Resource Hint:** sonnet — Observability design follows structured instrumentation patterns.
+**Resource Hint:** sonnet - Observability design follows structured instrumentation patterns.
 
 ## When to Use
 
@@ -428,22 +428,22 @@ INFO (log for reference)
 
 ### Definitions
 
-**SLI (Service Level Indicator)** — A metric that measures performance:
+**SLI (Service Level Indicator)** - A metric that measures performance:
 - Example: "API P99 latency is 120ms" or "System uptime is 99.95%"
 - Measurable using monitoring data (from metrics/logs)
 - You measure the actual SLI value
 
-**SLO (Service Level Objective)** — A target for your SLI:
+**SLO (Service Level Objective)** - A target for your SLI:
 - Example: "API P99 latency should be < 200ms" or "System uptime target: 99.95%"
 - What you promise to users (in SLA) or commit internally
 - SLO is the target; SLI is the measurement against it
 
-**SLA (Service Level Agreement)** — A contract with customers:
+**SLA (Service Level Agreement)** - A contract with customers:
 - What happens if you miss SLO (refunds, credits, penalties)
 - External promise (affects revenue/reputation)
 - Optional: Many internal services don't have SLAs
 
-**Error Budget** — How much you can fail and still meet SLO:
+**Error Budget** - How much you can fail and still meet SLO:
 - If SLO is 99.9% uptime, error budget is 0.1%
 - Over 30 days: 0.1% of 30 days × 24h × 3600s = 25,920 seconds ≈ 7.2 hours of allowed downtime
 - Use error budget to decide: Ship risky feature? Take infrastructure down? Run load tests?
@@ -782,16 +782,16 @@ histogram_quantile(0.99, rate(http_request_duration_seconds_bucket[5m])) > 1
 ## Integration with Playbook
 
 **Part of design and planning:**
-- `/pb-plan` — Include observability in feature planning
-- `/pb-guide` — Section 4.4 covers monitoring design
-- `/pb-review-hygiene` — Code review checks for logging
-- `/pb-release` — Release checklist includes dashboard setup
+- `/pb-plan` - Include observability in feature planning
+- `/pb-guide` - Section 4.4 covers monitoring design
+- `/pb-review-hygiene` - Code review checks for logging
+- `/pb-release` - Release checklist includes dashboard setup
 
 **Related Commands:**
-- `/pb-plan` — Feature planning (include observability)
-- `/pb-guide` — SDLC workflow
-- `/pb-adr` — Architecture decision (monitoring tools)
-- `/pb-sre-practices` — SRE operational practices, error budgets
+- `/pb-plan` - Feature planning (include observability)
+- `/pb-guide` - SDLC workflow
+- `/pb-adr` - Architecture decision (monitoring tools)
+- `/pb-sre-practices` - SRE operational practices, error budgets
 
 ---
 
@@ -831,11 +831,11 @@ Deployment Phase:
 
 ## Related Commands
 
-- `/pb-logging` — Logging strategy and standards for structured logging
-- `/pb-incident` — Incident response when observability alerts fire
-- `/pb-sre-practices` — SRE operational practices and error budgets
-- `/pb-performance` — Performance optimization using observability data
-- `/pb-maintenance` — Preventive maintenance (monitoring detects; maintenance prevents)
+- `/pb-logging` - Logging strategy and standards for structured logging
+- `/pb-incident` - Incident response when observability alerts fire
+- `/pb-sre-practices` - SRE operational practices and error budgets
+- `/pb-performance` - Performance optimization using observability data
+- `/pb-maintenance` - Preventive maintenance (monitoring detects; maintenance prevents)
 
 ---
 

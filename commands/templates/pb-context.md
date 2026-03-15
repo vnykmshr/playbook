@@ -23,7 +23,7 @@ breaking_changes: []
 >
 > **Related Docs:** `pb-guide` (SDLC tiers, gates, checklists) | `pb-standards` (coding standards, conventions) | `pb-design-rules` (technical design principles)
 
-**Resource Hint:** sonnet — project analysis and context generation require balanced judgment.
+**Resource Hint:** sonnet - project analysis and context generation require balanced judgment.
 
 ---
 
@@ -48,9 +48,9 @@ git log --oneline -5                   # Compare to recent commits section
 If the working context is stale (version mismatch, outdated commits), update it before proceeding.
 
 **Integration with other playbooks:**
-- `/pb-claude-project` — Checks for working context during CLAUDE.md generation
-- `/pb-start` — Should review working context before starting work
-- `/pb-resume` — Should check and update working context when resuming
+- `/pb-claude-project` - Checks for working context during CLAUDE.md generation
+- `/pb-start` - Should review working context before starting work
+- `/pb-resume` - Should check and update working context when resuming
 
 ---
 
@@ -59,8 +59,8 @@ If the working context is stale (version mismatch, outdated commits), update it 
 [One-line description of what the project does]
 
 **Key User Journeys:**
-1. **[Journey 1]** — [Brief description]
-2. **[Journey 2]** — [Brief description]
+1. **[Journey 1]** - [Brief description]
+2. **[Journey 2]** - [Brief description]
 
 **Philosophy:** [Core principles, e.g., "Mobile-first, Offline-capable, Privacy-focused"]
 
@@ -140,7 +140,7 @@ make rollback             # Restore previous images
 
 ## Development Workflow (SDLC)
 
-**Philosophy:** Stay committed to full SDLC flow — no shortcuts. Strive for bug-free, quality releases.
+**Philosophy:** Stay committed to full SDLC flow - no shortcuts. Strive for bug-free, quality releases.
 
 > **Work Tiers:** S (small, <2h) | M (medium, phased) | L (large, multi-week). See `pb-guide` for tier definitions, gates, and checklists.
 
@@ -155,7 +155,7 @@ make rollback             # Restore previous images
 - For fixes: `fix/short-description` (e.g., `fix/login-redirect`)
 - Proceed incrementally with logical, atomic commits
 - Follow conventional commits: `feat:`, `fix:`, `perf:`, `chore:`, `docs:`, `test:`
-- Keep PRs focused — one concern per PR
+- Keep PRs focused - one concern per PR
 
 ### 3. Quality Checks (before every commit)
 ```bash
@@ -178,7 +178,7 @@ make test                 # Run all tests
 
 ### 6. Peer Review
 - Senior engineer reviews for: correctness, edge cases, security, performance
-- Address feedback — fix gaps/issues identified
+- Address feedback - fix gaps/issues identified
 - Iterate until approved
 - Merge strategy: **squash merge** to keep main history clean
 
@@ -204,9 +204,9 @@ make deploy               # Deploy to production
 - For performance releases: verify metrics improved
 
 ### Periodic Maintenance
-- **Hygiene releases** — Periodic code cleanup, test organization, dependency updates
-- **Periodic reviews** — Use `/pb-review-*` commands for structured codebase reviews
-- **Performance audits** — Regular performance scans to catch regressions
+- **Hygiene releases** - Periodic code cleanup, test organization, dependency updates
+- **Periodic reviews** - Use `/pb-review-*` commands for structured codebase reviews
+- **Performance audits** - Regular performance scans to catch regressions
 
 > **No shortcuts.** Every release follows this flow. Quality over speed.
 
@@ -329,10 +329,10 @@ git log --oneline -10                  # Recent commits
 
 ## Related Commands
 
-- `/pb-claude-project` — Generate project CLAUDE.md
-- `/pb-start` — Begin development work
-- `/pb-resume` — Resume after break
-- `/pb-onboarding` — New team member integration
+- `/pb-claude-project` - Generate project CLAUDE.md
+- `/pb-start` - Begin development work
+- `/pb-resume` - Resume after break
+- `/pb-onboarding` - New team member integration
 
 ---
 

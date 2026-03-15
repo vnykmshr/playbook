@@ -18,18 +18,18 @@ Create a meticulous, incremental execution plan for a new project from scratch.
 
 **Mindset:** Starting a project is an opportunity to question assumptions. Use `/pb-preamble` thinking (challenge conventions) and `/pb-design-rules` thinking (choose patterns that serve Simplicity, Clarity, Modularity).
 
-Don't copy patterns blindly—understand why you're choosing them. Question conventions if they don't fit your needs.
+Don't copy patterns blindly-understand why you're choosing them. Question conventions if they don't fit your needs.
 
-**Resource Hint:** sonnet — project scaffolding follows established patterns and language conventions
+**Resource Hint:** sonnet - project scaffolding follows established patterns and language conventions
 
 ---
 
 ## When to Use This Command
 
-- **Starting a new project** — Greenfield development from scratch
-- **New microservice** — Adding a service to existing architecture
-- **Project restructure** — Major reorganization of existing codebase
-- **Technology migration** — Rebuilding with new stack/framework
+- **Starting a new project** - Greenfield development from scratch
+- **New microservice** - Adding a service to existing architecture
+- **Project restructure** - Major reorganization of existing codebase
+- **Technology migration** - Rebuilding with new stack/framework
 
 ---
 
@@ -165,11 +165,11 @@ project/
 
 ## Related Commands
 
-- `/pb-repo-organize` — Clean up existing repository structure
-- `/pb-repo-readme` — Generate comprehensive README
-- `/pb-repo-enhance` — Full repository enhancement suite
-- `/pb-plan` — Feature/release scope planning
-- `/pb-adr` — Architecture decision records
+- `/pb-repo-organize` - Clean up existing repository structure
+- `/pb-repo-readme` - Generate comprehensive README
+- `/pb-repo-enhance` - Full repository enhancement suite
+- `/pb-plan` - Feature/release scope planning
+- `/pb-adr` - Architecture decision records
 
 ---
 

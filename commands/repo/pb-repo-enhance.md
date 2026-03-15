@@ -20,7 +20,7 @@ Comprehensive repository polish: organize, document, and present.
 
 Organize for scrutiny. Document clearly. Present honestly. Let others understand and challenge your work.
 
-**Resource Hint:** sonnet — repository enhancement orchestrates structured tasks across organization, docs, and presentation
+**Resource Hint:** sonnet - repository enhancement orchestrates structured tasks across organization, docs, and presentation
 
 ---
 
@@ -222,10 +222,10 @@ After enhancement, verify:
 
 ## Related Commands
 
-- `/pb-repo-init` — Initialize new project structure
-- `/pb-repo-organize` — Clean up repository structure
-- `/pb-repo-docsite` — Set up documentation site
-- `/pb-repo-polish` — Audit AI discoverability (scorecard after enhance)
+- `/pb-repo-init` - Initialize new project structure
+- `/pb-repo-organize` - Clean up repository structure
+- `/pb-repo-docsite` - Set up documentation site
+- `/pb-repo-polish` - Audit AI discoverability (scorecard after enhance)
 
 ---
 

@@ -20,7 +20,7 @@ Respond to production incidents quickly and professionally. Clear process, clear
 
 During response: be direct about status (preamble), challenge assumptions about root cause, surface unknowns. Design systems to fail loudly (Repair, Transparency) so incidents are visible immediately. After: conduct honest post-mortems without blame, and improve system robustness.
 
-**Resource Hint:** opus — critical incident triage requires deep analysis and careful judgment
+**Resource Hint:** opus - critical incident triage requires deep analysis and careful judgment
 
 ---
 
@@ -37,11 +37,11 @@ Incidents are inevitable. What matters:
 
 ## When to Use This Command
 
-- **Production incident occurring** — Service degradation or outage
-- **Alert fired** — Monitoring detected anomaly
-- **Customer-reported issue** — Users experiencing problems
-- **Post-incident** — Running retrospective and writing post-mortem
-- **Incident prep** — Reviewing process before on-call rotation
+- **Production incident occurring** - Service degradation or outage
+- **Alert fired** - Monitoring detected anomaly
+- **Customer-reported issue** - Users experiencing problems
+- **Post-incident** - Running retrospective and writing post-mortem
+- **Incident prep** - Reviewing process before on-call rotation
 
 ---
 
@@ -165,7 +165,7 @@ This includes:
 - Mock incident training
 - Preventing on-call burnout
 
-This command focuses on **incident response** — what to do when an incident occurs. On-call operations (how to set up and maintain healthy rotations) are ongoing SRE practices.
+This command focuses on **incident response** - what to do when an incident occurs. On-call operations (how to set up and maintain healthy rotations) are ongoing SRE practices.
 
 ---
 
@@ -643,18 +643,18 @@ du -sh /*  # Show which directory consuming space
 ## Integration with Playbook
 
 **Part of deployment and reliability:**
-- `/pb-guide` — Section 7 references incident readiness
-- `/pb-observability` — Monitoring enables incident detection
-- `/pb-release` — Release runbook includes incident contacts
-- `/pb-adr` — Architecture decisions affect failure modes
+- `/pb-guide` - Section 7 references incident readiness
+- `/pb-observability` - Monitoring enables incident detection
+- `/pb-release` - Release runbook includes incident contacts
+- `/pb-adr` - Architecture decisions affect failure modes
 
 ## Related Commands
 
-- `/pb-observability` — Set up monitoring and alerting to detect incidents early
-- `/pb-sre-practices` — On-call health, blameless culture, toil reduction
-- `/pb-dr` — Disaster recovery planning for major incidents
-- `/pb-logging` — Logging strategy for incident investigation
-- `/pb-maintenance` — Systematic maintenance prevents incident categories (expired certs, full disks)
+- `/pb-observability` - Set up monitoring and alerting to detect incidents early
+- `/pb-sre-practices` - On-call health, blameless culture, toil reduction
+- `/pb-dr` - Disaster recovery planning for major incidents
+- `/pb-logging` - Logging strategy for incident investigation
+- `/pb-maintenance` - Systematic maintenance prevents incident categories (expired certs, full disks)
 
 ---
 

@@ -20,7 +20,7 @@ Orchestrate a production release: readiness gate, version management, deployment
 
 Don't hide issues to seem "ready." Surface risks directly. A delayed release beats a broken release.
 
-**Resource Hint:** sonnet — release orchestration, versioning, and tagging
+**Resource Hint:** sonnet - release orchestration, versioning, and tagging
 
 ---
 
@@ -143,7 +143,7 @@ Review with senior engineer perspective:
 - [ ] Rollback plan ready
 
 ### Known Issues (if any)
-- [Issue description] — [Severity] — [Mitigation]
+- [Issue description] - [Severity] - [Mitigation]
 
 ### Decision: GO / NO-GO
 
@@ -425,10 +425,10 @@ PHASE 3: DEPLOY & VERIFY
 
 ## Related Commands
 
-- `/pb-deployment` — Execute deployment to target environments
-- `/pb-ship` — Full review workflow before release
-- `/pb-pr` — Create pull requests for release branches
-- `/pb-review-hygiene` — Comprehensive project health review
+- `/pb-deployment` - Execute deployment to target environments
+- `/pb-ship` - Full review workflow before release
+- `/pb-pr` - Create pull requests for release branches
+- `/pb-review-hygiene` - Comprehensive project health review
 
 ---
 

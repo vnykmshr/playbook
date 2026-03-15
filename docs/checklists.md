@@ -174,7 +174,7 @@ For updating documentation alongside code changes.
 
 ## Security Checklist (Quick Review)
 
-Quick security check for S tier changes. Reference `/pb-security` for comprehensive list.
+Quick security check for S tier changes. Reference `/pb-security` for the full list.
 
 - [ ] No secrets in code
 - [ ] Input validation present
@@ -360,4 +360,3 @@ For new frontend features.
 
 ---
 
-*Created: 2026-01-11 | Last Updated: 2026-01-11 | Single source of truth for all playbook checklists*

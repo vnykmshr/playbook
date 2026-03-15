@@ -20,7 +20,7 @@ Create a concise, search-optimized GitHub "About" description and relevant topic
 
 Describe what the project actually does, not what you wish it did. Honest descriptions help the right people find you.
 
-**Resource Hint:** sonnet — Crafting accurate project descriptions and selecting relevant tags.
+**Resource Hint:** sonnet - Crafting accurate project descriptions and selecting relevant tags.
 
 ---
 
@@ -153,8 +153,8 @@ Tags: tag1, tag2, tag3, tag4, tag5, tag6
 
 ## Related Commands
 
-- `/pb-repo-readme` — Generate comprehensive README
-- `/pb-repo-enhance` — Full repository enhancement suite
+- `/pb-repo-readme` - Generate comprehensive README
+- `/pb-repo-enhance` - Full repository enhancement suite
 
 ---
 

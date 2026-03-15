@@ -26,7 +26,7 @@ breaking_changes: []
 
 Challenge hidden assumptions about what "health" means. Surface risks directly. Focus on reducing complexity and tech debt. Don't soften findings to be diplomatic.
 
-**Resource Hint:** opus — comprehensive hygiene review spans code quality, operations, security, and documentation across entire codebase
+**Resource Hint:** opus - comprehensive hygiene review spans code quality, operations, security, and documentation across entire codebase
 
 ---
 
@@ -54,10 +54,10 @@ See `/pb-review-code` for the complete decision tree. Key distinction:
 
 Act as these roles simultaneously:
 
-1. **Senior Engineer** — Technical soundness, codebase cleanliness, dependency health
-2. **Technical Architect** — System design, infrastructure readiness, scalability
-3. **DevOps/Operations** — Automation, deployment, observability coverage
-4. **Security Reviewer** — Security posture, compliance gaps
+1. **Senior Engineer** - Technical soundness, codebase cleanliness, dependency health
+2. **Technical Architect** - System design, infrastructure readiness, scalability
+3. **DevOps/Operations** - Automation, deployment, observability coverage
+4. **Security Reviewer** - Security posture, compliance gaps
 
 ---
 
@@ -178,9 +178,9 @@ Examples:
 ### 1. Executive Summary
 
 3-5 bullet overview of overall health:
-- **Good** — Minor issues, ready for development
-- **Needs Attention** — Notable issues, address before heavy development
-- **At Risk** — Critical issues, stop and fix first
+- **Good** - Minor issues, ready for development
+- **Needs Attention** - Notable issues, address before heavy development
+- **At Risk** - Critical issues, stop and fix first
 
 ### 2. Key Findings
 
@@ -245,11 +245,11 @@ Areas that need deeper follow-up next cycle.
 
 ## Related Commands
 
-- `/pb-review` — Orchestrate comprehensive multi-perspective review
-- `/pb-review-code` — Code change review for PRs
-- `/pb-review-tests` — Test suite health review
-- `/pb-security` — Security audit
-- `/pb-repo-organize` — Clean up repository structure
+- `/pb-review` - Orchestrate comprehensive multi-perspective review
+- `/pb-review-code` - Code change review for PRs
+- `/pb-review-tests` - Test suite health review
+- `/pb-security` - Security audit
+- `/pb-repo-organize` - Clean up repository structure
 
 ---
 

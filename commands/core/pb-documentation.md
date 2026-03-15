@@ -22,20 +22,20 @@ This embodies `/pb-preamble` thinking (clear writing enables critical thinking, 
 
 **Key Design Rules for Documentation:**
 - **Clarity**: Documentation must be crystal clear so readers immediately understand the system
-- **Representation**: Information architecture matters—organize docs so knowledge is findable, not buried
+- **Representation**: Information architecture matters-organize docs so knowledge is findable, not buried
 - **Least Surprise**: Documentation should behave like readers expect; no hidden gotchas or contradictions
 
-**Resource Hint:** sonnet — Documentation writing is implementation-level work; routine quality standards.
+**Resource Hint:** sonnet - Documentation writing is implementation-level work; routine quality standards.
 
 ---
 
 ## When to Use This Command
 
-- **Writing new docs** — Creating READMEs, guides, API docs
-- **Improving existing docs** — Docs review found issues to fix
-- **Onboarding prep** — Ensuring docs support new team members
-- **Knowledge transfer** — Capturing tribal knowledge before someone leaves
-- **Architecture documentation** — Documenting system design decisions
+- **Writing new docs** - Creating READMEs, guides, API docs
+- **Improving existing docs** - Docs review found issues to fix
+- **Onboarding prep** - Ensuring docs support new team members
+- **Knowledge transfer** - Capturing tribal knowledge before someone leaves
+- **Architecture documentation** - Documenting system design decisions
 
 ---
 
@@ -196,9 +196,9 @@ Error (400):
 100 requests per minute per API key
 
 ## Webhooks
-- `order.created` — Order created
-- `payment.succeeded` — Payment processed
-- `payment.failed` — Payment failed
+- `order.created` - Order created
+- `payment.succeeded` - Payment processed
+- `payment.failed` - Payment failed
 
 See webhook specification in #webhooks section
 ```
@@ -756,20 +756,20 @@ Engineer: "Yes, added new endpoint and examples"
 ## Integration with Playbook
 
 **Part of SDLC:**
-- `/pb-guide` — Document requirements by project size
-- `/pb-onboarding` — Good docs enable self-guided learning
-- `/pb-adr` — Documenting decisions
-- `/pb-security` — Documenting security practices
+- `/pb-guide` - Document requirements by project size
+- `/pb-onboarding` - Good docs enable self-guided learning
+- `/pb-adr` - Documenting decisions
+- `/pb-security` - Documenting security practices
 
 ---
 
 ## Related Commands
 
-- `/pb-adr` — How to document decisions
-- `/pb-review-docs` — Documentation quality review
-- `/pb-sam-documentation` — Clarity-first documentation review (see "When to Use" for integration)
-- `/pb-repo-readme` — Generate project README
-- `/pb-onboarding` — Using docs for training
+- `/pb-adr` - How to document decisions
+- `/pb-review-docs` - Documentation quality review
+- `/pb-sam-documentation` - Clarity-first documentation review (see "When to Use" for integration)
+- `/pb-repo-readme` - Generate project README
+- `/pb-onboarding` - Using docs for training
 
 ---
 

@@ -26,7 +26,7 @@ breaking_changes: []
 
 Question test assumptions. Challenge coverage claims. Point out flaky or brittle tests. Surface duplication. Your role is to find problems, not validate the test suite.
 
-**Resource Hint:** opus — evaluating test quality requires deep reasoning about coverage gaps, brittleness, and test design
+**Resource Hint:** opus - evaluating test quality requires deep reasoning about coverage gaps, brittleness, and test design
 
 ---
 
@@ -152,10 +152,10 @@ Overview of:
 ### 2. Concrete Recommendations
 
 What to:
-- **Delete** — Tests that add no value
-- **Merge** — Duplicate tests
-- **Rewrite** — Brittle or unclear tests
-- **Add** — Missing coverage for critical paths
+- **Delete** - Tests that add no value
+- **Merge** - Duplicate tests
+- **Rewrite** - Brittle or unclear tests
+- **Add** - Missing coverage for critical paths
 
 ### 3. Next Steps Plan
 
@@ -190,12 +190,12 @@ Specific actions:
 ## Concrete Recommendations
 
 ### Delete
-- `test_user_exists.py` — Duplicates `test_user_creation.py`
-- `test_config_defaults.py` — Tests framework, not our code
+- `test_user_exists.py` - Duplicates `test_user_creation.py`
+- `test_config_defaults.py` - Tests framework, not our code
 
 ### Rewrite
-- `test_api_auth.py` — Brittle, breaks on header changes
-- `test_payment_flow.py` — No error path coverage
+- `test_api_auth.py` - Brittle, breaks on header changes
+- `test_payment_flow.py` - No error path coverage
 
 ### Add
 - Error handling tests for payment service
@@ -222,10 +222,10 @@ Specific actions:
 
 ## Related Commands
 
-- `/pb-review` — Orchestrate comprehensive multi-perspective review
-- `/pb-review-hygiene` — Code quality and operational readiness
-- `/pb-testing` — Testing guidance and patterns
-- `/pb-cycle` — Self-review + peer review iteration
+- `/pb-review` - Orchestrate comprehensive multi-perspective review
+- `/pb-review-hygiene` - Code quality and operational readiness
+- `/pb-testing` - Testing guidance and patterns
+- `/pb-cycle` - Self-review + peer review iteration
 
 ---
 

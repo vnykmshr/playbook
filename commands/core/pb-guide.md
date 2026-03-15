@@ -19,9 +19,9 @@ Right-size your process using **Change Tiers**, then follow required sections.
 
 **Mindset:** This framework assumes you're operating from both `/pb-preamble` (how teams think) and `/pb-design-rules` (what systems should be).
 
-Challenge the tiers, rearrange gates, adapt to your team—this is a starting point, not dogma. Every gate should verify design rules are being honored, not just that work is complete.
+Challenge the tiers, rearrange gates, adapt to your team-this is a starting point, not dogma. Every gate should verify design rules are being honored, not just that work is complete.
 
-**Resource Hint:** sonnet — Structured process reference; implementation-level guidance.
+**Resource Hint:** sonnet - Structured process reference; implementation-level guidance.
 
 ## When to Use
 
@@ -207,8 +207,8 @@ Include:
 
 **For async and distributed system patterns, see dedicated guides:**
 
-- **`/pb-patterns-async`** — Callbacks, Promises, async/await, job queues, worker pools
-- **`/pb-patterns-distributed`** — Saga, event sourcing, CQRS, eventual consistency
+- **`/pb-patterns-async`** - Callbacks, Promises, async/await, job queues, worker pools
+- **`/pb-patterns-distributed`** - Saga, event sourcing, CQRS, eventual consistency
 
 **Key decision:** Choose async patterns based on coupling requirements:
 - **Tight coupling needed:** Synchronous calls, 2PC
@@ -644,8 +644,8 @@ This covers:
 
 ## Related Commands
 
-- `/pb-preamble` — How teams think together (collaboration philosophy)
-- `/pb-design-rules` — What systems should be (technical principles)
-- `/pb-standards` — Working principles and code standards
-- `/pb-start` — Begin development work
-- `/pb-cycle` — Self-review and peer review iteration
+- `/pb-preamble` - How teams think together (collaboration philosophy)
+- `/pb-design-rules` - What systems should be (technical principles)
+- `/pb-standards` - Working principles and code standards
+- `/pb-start` - Begin development work
+- `/pb-cycle` - Self-review and peer review iteration

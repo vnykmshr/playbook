@@ -18,18 +18,18 @@ Complete a focus area through comprehensive review, PR creation, peer review, me
 
 **Mindset:** This command embodies `/pb-preamble` thinking (challenge readiness assumptions, surface risks directly) and `/pb-design-rules` thinking (verify Clarity, Robustness, Simplicity before shipping).
 
-Ship when ready, not when tired. Every review step is an opportunity to find issues—embrace them.
+Ship when ready, not when tired. Every review step is an opportunity to find issues-embrace them.
 
-**Resource Hint:** sonnet — review orchestration and release coordination
+**Resource Hint:** sonnet - review orchestration and release coordination
 
 ---
 
 ## When to Use This Command
 
-- **Focus area complete** — Feature/fix is code-complete, ready for final review
-- **Release candidate** — Preparing a version for production
-- **End of sprint** — Shipping accumulated work
-- **Milestone delivery** — Completing a planned deliverable
+- **Focus area complete** - Feature/fix is code-complete, ready for final review
+- **Release candidate** - Preparing a version for production
+- **End of sprint** - Shipping accumulated work
+- **Milestone delivery** - Completing a planned deliverable
 
 ---
 
@@ -383,9 +383,9 @@ Add review findings as PR comments:
 
 For each feedback item:
 
-1. **Address** — Fix the issue
-2. **Respond** — Comment explaining the fix or decision
-3. **Re-request** — Ask for re-review
+1. **Address** - Fix the issue
+2. **Respond** - Comment explaining the fix or decision
+3. **Re-request** - Ask for re-review
 
 ```bash
 # After addressing feedback
@@ -442,7 +442,7 @@ LGTM - Ship it!
 
 For changes touching >3 files across >1 concern, split into bisectable commits before push. This makes `git bisect` useful and rollbacks surgical. See `/pb-commit` for the full splitting guide.
 
-**Quick reference — dependency order:**
+**Quick reference - dependency order:**
 1. Infrastructure/config (migrations, dependencies)
 2. Data/models + tests (data layer with tests together)
 3. Logic/controllers/UI (application code)
@@ -580,7 +580,7 @@ make deploy
 
 Any release that will be tagged (vX.Y.Z) requires:
 1. Phase 1 **including Release Artifacts Check**
-2. `/pb-review-docs` from Phase 2 (CHANGELOG verification) — **MANDATORY**
+2. `/pb-review-docs` from Phase 2 (CHANGELOG verification) - **MANDATORY**
 3. Phase 3 Go/No-Go checklist
 4. Full Phase 4-5
 
@@ -687,11 +687,11 @@ gh release edit vX.Y.Z --notes "..."
 
 ## Related Commands
 
-- `/pb-cycle` — Self-review and peer review before shipping
-- `/pb-pr` — Create pull request for review
-- `/pb-release` — Detailed release tagging and notes
-- `/pb-review-hygiene` — Code and project health review
-- `/pb-deployment` — Deployment strategies and verification
+- `/pb-cycle` - Self-review and peer review before shipping
+- `/pb-pr` - Create pull request for review
+- `/pb-release` - Detailed release tagging and notes
+- `/pb-review-hygiene` - Code and project health review
+- `/pb-deployment` - Deployment strategies and verification
 
 ---
 
@@ -705,15 +705,15 @@ PHASE 1: FOUNDATION
 [ ] Release artifacts verified (CHANGELOG, version)
 
 PHASE 2: SPECIALIZED REVIEWS
-[ ] /pb-review-docs — REQUIRED for versioned releases ← CLARIFIED
-[ ] /pb-review-hygiene — code quality (recommended)
-[ ] /pb-review-hygiene — project health (recommended)
-[ ] /pb-review-tests — test coverage (recommended)
-[ ] /pb-security — vulnerabilities (recommended)
-[ ] /pb-logging — logging standards (optional)
+[ ] /pb-review-docs - REQUIRED for versioned releases ← CLARIFIED
+[ ] /pb-review-hygiene - code quality (recommended)
+[ ] /pb-review-hygiene - project health (recommended)
+[ ] /pb-review-tests - test coverage (recommended)
+[ ] /pb-security - vulnerabilities (recommended)
+[ ] /pb-logging - logging standards (optional)
 
 PHASE 3: FINAL GATE
-[ ] /pb-release Phase 1 — readiness gate (senior sign-off)
+[ ] /pb-release Phase 1 - readiness gate (senior sign-off)
 [ ] CHANGELOG.md verified
 [ ] Ship decision: GO
 
@@ -727,8 +727,8 @@ PHASE 4: PR & PEER REVIEW
 PHASE 5: MERGE & RELEASE
 [ ] Final CI verification (all checks green)
 [ ] PR merged
-[ ] /pb-release Phase 2-3 — version, tag, GitHub release
-[ ] /pb-deployment — execute deployment, verify
+[ ] /pb-release Phase 2-3 - version, tag, GitHub release
+[ ] /pb-deployment - execute deployment, verify
 [ ] Summary documented
 ```
 

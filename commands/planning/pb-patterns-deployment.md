@@ -22,7 +22,7 @@ Reference guide for deployment strategies, patterns, and best practices. Use thi
 
 Use `/pb-preamble` thinking: question your actual risk tolerance before choosing. Use `/pb-design-rules` thinking: balance Simplicity (don't use complex strategies you don't need) with Robustness (design for failure and rollback). Challenge whether you need the complexity of advanced strategies or if simpler approaches work.
 
-**Resource Hint:** sonnet — Deployment pattern reference; implementation-level release strategy decisions.
+**Resource Hint:** sonnet - Deployment pattern reference; implementation-level release strategy decisions.
 
 ## When to Use
 
@@ -738,8 +738,8 @@ The example uses default thresholds. You must adjust for your actual system:
 
 ```
 Default thresholds:
-  p(99) < 500ms  — Assumes fast database (your DB might be 1000ms-2000ms)
-  rate < 0.1     — Allows 10% error rate (too high for production)
+  p(99) < 500ms  - Assumes fast database (your DB might be 1000ms-2000ms)
+  rate < 0.1     - Allows 10% error rate (too high for production)
 
 Your system thresholds:
   1. Measure baseline: Run smoke test without threshold enforcement
@@ -1010,21 +1010,21 @@ export default function() {
 ## Integration with Playbook
 
 **This is a reference document.** For actionable workflows:
-- `/pb-deployment` — Execute deployment (discovery, pre-flight, execute, verify)
-- `/pb-release` — Release orchestrator (readiness gate, version, deploy trigger)
+- `/pb-deployment` - Execute deployment (discovery, pre-flight, execute, verify)
+- `/pb-release` - Release orchestrator (readiness gate, version, deploy trigger)
 
 **Related pattern references:**
-- `/pb-patterns-core` — Core architectural patterns
-- `/pb-patterns-cloud` — Cloud deployment patterns (AWS, GCP, Azure)
-- `/pb-patterns-db` — Database patterns (migrations, pooling)
+- `/pb-patterns-core` - Core architectural patterns
+- `/pb-patterns-cloud` - Cloud deployment patterns (AWS, GCP, Azure)
+- `/pb-patterns-db` - Database patterns (migrations, pooling)
 
 **Related operational commands:**
-- `/pb-observability` — Set up monitoring/alerts
-- `/pb-incident` — Recovery if deployment breaks
-- `/pb-hardening` — Infrastructure security before deployment
-- `/pb-secrets` — Secrets management during deployment
-- `/pb-database-ops` — Database migration patterns
-- `/pb-dr` — Disaster recovery planning
+- `/pb-observability` - Set up monitoring/alerts
+- `/pb-incident` - Recovery if deployment breaks
+- `/pb-hardening` - Infrastructure security before deployment
+- `/pb-secrets` - Secrets management during deployment
+- `/pb-database-ops` - Database migration patterns
+- `/pb-dr` - Disaster recovery planning
 
 ---
 
@@ -1066,9 +1066,9 @@ export default function() {
 
 ## Related Commands
 
-- `/pb-deployment` — Execute deployment workflows
-- `/pb-release` — Release orchestration and version management
-- `/pb-dr` — Disaster recovery planning for deployment failures
+- `/pb-deployment` - Execute deployment workflows
+- `/pb-release` - Release orchestration and version management
+- `/pb-dr` - Disaster recovery planning for deployment failures
 
 ---
 

@@ -26,12 +26,12 @@ This is not firefighting. This is the periodic physical exam that prevents the e
 
 ## When to Use This Command
 
-- **Monthly hygiene pass** — Routine review of a running server
-- **Quarterly full audit** — Deep drift analysis and capacity planning
-- **After a period of neglect** — Server hasn't been reviewed in months
-- **Before scaling or migration** — Understand current state before changes
-- **Post-incident verification** — Confirm the server is clean after recovery
-- **Onboarding to an inherited server** — Build a mental model of what's running
+- **Monthly hygiene pass** - Routine review of a running server
+- **Quarterly full audit** - Deep drift analysis and capacity planning
+- **After a period of neglect** - Server hasn't been reviewed in months
+- **Before scaling or migration** - Understand current state before changes
+- **Post-incident verification** - Confirm the server is clean after recovery
+- **Onboarding to an inherited server** - Build a mental model of what's running
 
 ---
 
@@ -92,7 +92,7 @@ nproc && free -h && df -h
 | Deployed apps | Versions, last deploy date |
 | Active vs abandoned | Is everything running actually needed? |
 | Deployment method | systemd, Docker, PM2, bare process |
-| Runtime versions | node, go, python, java — are they current? |
+| Runtime versions | node, go, python, java - are they current? |
 
 ### Configuration Sources
 
@@ -100,10 +100,10 @@ nproc && free -h && df -h
 |------|---------------|
 | Environment variables | Where are they defined? (systemd, .env, shell profile) |
 | Secrets location | Env files, vaults, or plaintext? |
-| Reverse proxy | nginx, caddy, traefik — which sites are configured? |
+| Reverse proxy | nginx, caddy, traefik - which sites are configured? |
 | TLS certificates | Source (Let's Encrypt, manual), renewal status, expiry date |
 
-**Deliverable:** A short server manifest. Write it down — even a few bullet points in a markdown file beats nothing.
+**Deliverable:** A short server manifest. Write it down - even a few bullet points in a markdown file beats nothing.
 
 ---
 
@@ -113,7 +113,7 @@ Goal: detect slow degradation before users feel it.
 
 ### Resource Trends
 
-Look at trends, not just current values. A server at 60% disk today that was at 40% last month is a problem. Compare with your previous server manifest — if you don't have one, record today's numbers. That's where trends start.
+Look at trends, not just current values. A server at 60% disk today that was at 40% last month is a problem. Compare with your previous server manifest - if you don't have one, record today's numbers. That's where trends start.
 
 ```bash
 # Disk usage by mount
@@ -240,7 +240,7 @@ find / -name "core" -type f 2>/dev/null | head -5
 # Users with shell access
 grep -v "nologin\|false" /etc/passwd
 
-# SSH keys — do you recognize all of them?
+# SSH keys - do you recognize all of them?
 for user_home in /home/*/; do
   [ -f "$user_home.ssh/authorized_keys" ] && echo "=== $(basename $user_home) ===" && cat "$user_home.ssh/authorized_keys"
 done
@@ -286,14 +286,14 @@ docker system prune --dry-run
 docker system prune
 ```
 
-**Requires judgment** — these can destroy data if containers are temporarily stopped:
+**Requires judgment** - these can destroy data if containers are temporarily stopped:
 
 ```bash
 # Review temp files before deleting
 find /tmp -type f -mtime +30 | head -20
 # Only delete after reviewing: find /tmp -type f -mtime +30 -delete
 
-# List unused volumes — verify none belong to stopped services you intend to restart
+# List unused volumes - verify none belong to stopped services you intend to restart
 docker volume ls -f "dangling=true"
 # Only prune after reviewing: docker volume prune
 ```
@@ -341,11 +341,11 @@ For comprehensive backup and recovery planning, see `/pb-dr`.
 
 ### Monitoring Coverage
 
-- [ ] Resource metrics (CPU, RAM, disk) — collected and retained
-- [ ] Application error rates — visible and trended
-- [ ] Uptime checks — external, not self-reported
-- [ ] Log visibility — searchable, not just stored
-- [ ] Alerts — fire when needed, reach someone who can act
+- [ ] Resource metrics (CPU, RAM, disk) - collected and retained
+- [ ] Application error rates - visible and trended
+- [ ] Uptime checks - external, not self-reported
+- [ ] Log visibility - searchable, not just stored
+- [ ] Alerts - fire when needed, reach someone who can act
 
 For monitoring design guidance, see `/pb-observability`.
 
@@ -382,8 +382,8 @@ Maintain a living document per server. Even a few lines beats nothing.
 **Last review:** [date]
 
 ## Services Running
-- [service 1] — [purpose] — [deployment method]
-- [service 2] — [purpose] — [deployment method]
+- [service 1] - [purpose] - [deployment method]
+- [service 2] - [purpose] - [deployment method]
 
 ## Access
 - SSH: [who has keys]
@@ -429,11 +429,11 @@ Signs the server needs a hygiene pass now:
 
 ## Related Commands
 
-- `/pb-maintenance` — Strategic maintenance patterns and thinking triggers
-- `/pb-hardening` — Initial server security setup (run before first deploy)
-- `/pb-dr` — Disaster recovery planning and testing
-- `/pb-sre-practices` — Toil reduction, error budgets, operational culture
-- `/pb-observability` — Monitoring and alerting design
+- `/pb-maintenance` - Strategic maintenance patterns and thinking triggers
+- `/pb-hardening` - Initial server security setup (run before first deploy)
+- `/pb-dr` - Disaster recovery planning and testing
+- `/pb-sre-practices` - Toil reduction, error budgets, operational culture
+- `/pb-observability` - Monitoring and alerting design
 
 ---
 

@@ -16,11 +16,11 @@ breaking_changes: []
 
 Patterns for efficient, scalable database operations.
 
-**Caveat:** Database patterns solve specific problems. Use `/pb-preamble` thinking (question assumptions) and `/pb-design-rules` thinking (especially Simplicity and Transparency—can you keep it simple and observable?).
+**Caveat:** Database patterns solve specific problems. Use `/pb-preamble` thinking (question assumptions) and `/pb-design-rules` thinking (especially Simplicity and Transparency-can you keep it simple and observable?).
 
 Challenge the assumption that the database is the bottleneck. Question whether you need this complexity. Measure before optimizing.
 
-**Resource Hint:** sonnet — Database pattern reference; implementation-level data layer decisions.
+**Resource Hint:** sonnet - Database pattern reference; implementation-level data layer decisions.
 
 ---
 
@@ -1039,8 +1039,8 @@ Other patterns (Query Optimization, Replication, Sharding, Transactions, Batch O
 
 ## Related Commands
 
-- `/pb-patterns-core` — Core architectural and design patterns
-- `/pb-patterns-distributed` — Distributed patterns (saga, CQRS, eventual consistency)
-- `/pb-database-ops` — Database operations (migrations, backups, connection pooling)
-- `/pb-performance` — Performance optimization and profiling strategies
-- `/pb-patterns` — Pattern overview and quick reference
+- `/pb-patterns-core` - Core architectural and design patterns
+- `/pb-patterns-distributed` - Distributed patterns (saga, CQRS, eventual consistency)
+- `/pb-database-ops` - Database operations (migrations, backups, connection pooling)
+- `/pb-performance` - Performance optimization and profiling strategies
+- `/pb-patterns` - Pattern overview and quick reference

@@ -16,7 +16,7 @@ breaking_changes: []
 
 Create an environment where engineers thrive, collaborate effectively, and produce excellent work.
 
-**Resource Hint:** sonnet — structured guidance and team assessment, not deep architectural reasoning.
+**Resource Hint:** sonnet - structured guidance and team assessment, not deep architectural reasoning.
 
 ## When to Use
 
@@ -107,11 +107,11 @@ Team: [shares concerns, asks questions, feels heard]
 
 **Specific tactics:**
 
-- **Ask "what could go wrong?"** — Regularly ask for concerns, then listen without defensiveness
-- **Thank people for bad news** — Positively reinforce when someone reports a problem
-- **Discuss failures** — Post-incident reviews focus on systems, not blame
-- **Invite dissent** — "Does anyone disagree? I want to hear it."
-- **Make it safe to say "I don't know"** — Reward learning over appearing expert
+- **Ask "what could go wrong?"** - Regularly ask for concerns, then listen without defensiveness
+- **Thank people for bad news** - Positively reinforce when someone reports a problem
+- **Discuss failures** - Post-incident reviews focus on systems, not blame
+- **Invite dissent** - "Does anyone disagree? I want to hear it."
+- **Make it safe to say "I don't know"** - Reward learning over appearing expert
 
 ### Red Flags (Low Psychological Safety)
 
@@ -353,7 +353,7 @@ See `/pb-onboarding` for detailed remote onboarding checklists (first day, first
 
 ## Burnout Prevention & Recovery
 
-Burnout is a silent killer. People don't announce it—they just quit.
+Burnout is a silent killer. People don't announce it-they just quit.
 
 **Burnout warning signs:**
 
@@ -444,7 +444,7 @@ Engineer: (Feels invisible)
 Good:
 ```
 Manager: "Your API design is clean and efficient. I noticed you thought about
-backward compatibility early—that's what prevents problems later. Great work."
+backward compatibility early-that's what prevents problems later. Great work."
 Engineer: (Feels seen and valued)
 ```
 
@@ -603,17 +603,17 @@ Use results to identify problems and improve.
 ## Integration with Playbook
 
 **Part of SDLC cycle:**
-- `/pb-cycle` — How teams review code
-- `/pb-guide` — Team practices section
-- `/pb-standup` — Daily team communication
-- `/pb-incident` — How teams respond together
-- `/pb-onboarding` — How teams integrate new people
+- `/pb-cycle` - How teams review code
+- `/pb-guide` - Team practices section
+- `/pb-standup` - Daily team communication
+- `/pb-incident` - How teams respond together
+- `/pb-onboarding` - How teams integrate new people
 
 **Related Commands:**
-- `/pb-onboarding` — New team member experience
-- `/pb-documentation` — Communication via docs
-- `/pb-commit` — How team agrees on commits
-- `/pb-standards` — Team working principles
+- `/pb-onboarding` - New team member experience
+- `/pb-documentation` - Communication via docs
+- `/pb-commit` - How team agrees on commits
+- `/pb-standards` - Team working principles
 
 ---
 
@@ -658,10 +658,10 @@ Use results to identify problems and improve.
 
 ## Related Commands
 
-- `/pb-preamble` — Collaboration philosophy and psychological safety
-- `/pb-onboarding` — Developer onboarding and knowledge transfer
-- `/pb-knowledge-transfer` — KT session preparation and execution
-- `/pb-sre-practices` — Site reliability engineering practices for teams
+- `/pb-preamble` - Collaboration philosophy and psychological safety
+- `/pb-onboarding` - Developer onboarding and knowledge transfer
+- `/pb-knowledge-transfer` - KT session preparation and execution
+- `/pb-sre-practices` - Site reliability engineering practices for teams
 
 ---
 

@@ -18,13 +18,13 @@ Generate a project-specific `.claude/CLAUDE.md` by analyzing the current project
 
 **Purpose:** Create project-specific context that complements global CLAUDE.md with details relevant to THIS project.
 
-**Philosophy:** Project CLAUDE.md should capture what's unique about this project—tech stack, structure, commands, patterns—so Claude Code understands the project context across sessions.
+**Philosophy:** Project CLAUDE.md should capture what's unique about this project-tech stack, structure, commands, patterns-so Claude Code understands the project context across sessions.
 
 **Context efficiency:** This file is loaded every conversation turn. Keep it **under 2K tokens** (~150 lines). Move detailed documentation to `docs/` and reference it.
 
-**Mindset:** Design Rules emphasize "clarity over cleverness" — generated context should be immediately useful, not comprehensive.
+**Mindset:** Design Rules emphasize "clarity over cleverness" - generated context should be immediately useful, not comprehensive.
 
-**Resource Hint:** sonnet — project analysis and template generation from existing structure.
+**Resource Hint:** sonnet - project analysis and template generation from existing structure.
 
 ---
 
@@ -80,15 +80,15 @@ ls -la
 ```
 
 Common patterns to recognize:
-- `src/` or `lib/` — Source code
-- `tests/` or `test/` or `__tests__/` — Tests
-- `docs/` — Documentation
-- `scripts/` — Automation scripts
-- `config/` or `conf/` — Configuration
-- `api/` or `routes/` — API endpoints
-- `models/` — Data models
-- `services/` — Business logic
-- `utils/` or `helpers/` — Utilities
+- `src/` or `lib/` - Source code
+- `tests/` or `test/` or `__tests__/` - Tests
+- `docs/` - Documentation
+- `scripts/` - Automation scripts
+- `config/` or `conf/` - Configuration
+- `api/` or `routes/` - API endpoints
+- `models/` - Data models
+- `services/` - Business logic
+- `utils/` or `helpers/` - Utilities
 
 ### Step 4: Analyze Testing Patterns
 
@@ -119,10 +119,10 @@ Check these sources for commands:
 ### Step 6: Check for Existing Context
 
 Look for existing documentation:
-- `README.md` — Project overview
-- `CONTRIBUTING.md` — Contribution guidelines
-- `docs/` — Additional documentation
-- `.env.example` — Environment variables needed
+- `README.md` - Project overview
+- `CONTRIBUTING.md` - Contribution guidelines
+- `docs/` - Additional documentation
+- `.env.example` - Environment variables needed
 
 **Working Context Discovery:**
 Check for working context documents that provide rich project state:
@@ -134,18 +134,18 @@ ls todos/*working-context*.md 2>/dev/null
 Common locations: `todos/working-context.md`, `todos/1-working-context.md`
 
 If a working context exists:
-1. **Read it first** — It contains current version, active development context, and session checklists
-2. **Check currency** — Compare version/date with git tags and recent commits
-3. **Update if stale** — If working context is outdated, update it as part of generation
-4. **Extract key info** — Use it to populate Tech Stack, Commands, and Active Development sections
+1. **Read it first** - It contains current version, active development context, and session checklists
+2. **Check currency** - Compare version/date with git tags and recent commits
+3. **Update if stale** - If working context is outdated, update it as part of generation
+4. **Extract key info** - Use it to populate Tech Stack, Commands, and Active Development sections
 
 ### Step 7: Detect CI/CD
 
 Check for CI configuration:
-- `.github/workflows/` — GitHub Actions
-- `.gitlab-ci.yml` — GitLab CI
-- `Jenkinsfile` — Jenkins
-- `.circleci/` — CircleCI
+- `.github/workflows/` - GitHub Actions
+- `.gitlab-ci.yml` - GitLab CI
+- `Jenkinsfile` - Jenkins
+- `.circleci/` - CircleCI
 
 ---
 
@@ -268,12 +268,12 @@ Based on this project's tech stack:
 
 ## Guardrails
 
-[Project-specific safety constraints — customize as needed]
+[Project-specific safety constraints - customize as needed]
 
-- **Infrastructure** — [Lock level: strict/moderate/flexible]
-- **Dependencies** — [Approval required: yes/no]
-- **Ports** — [List fixed ports if any]
-- **Data** — [Database modification rules]
+- **Infrastructure** - [Lock level: strict/moderate/flexible]
+- **Dependencies** - [Approval required: yes/no]
+- **Ports** - [List fixed ports if any]
+- **Data** - [Database modification rules]
 
 ---
 
@@ -284,11 +284,11 @@ Project-specific safety constraints (supplement global guardrails):
 ```markdown
 ## Guardrails
 
-- **Infrastructure lock** — No Docker/DB/environment changes without approval
-- **Dependency lock** — No new dependencies without approval
-- **Port lock** — Backend: [port], Frontend: [port] — do not change
-- **Design system** — Follow existing UI patterns in [path]
-- **Data safety** — No database deletions without explicit approval
+- **Infrastructure lock** - No Docker/DB/environment changes without approval
+- **Dependency lock** - No new dependencies without approval
+- **Port lock** - Backend: [port], Frontend: [port] - do not change
+- **Design system** - Follow existing UI patterns in [path]
+- **Data safety** - No database deletions without explicit approval
 ```
 
 Customize based on project needs. Remove irrelevant constraints.
@@ -465,11 +465,11 @@ Project CLAUDE.md complements global:
 
 ## Related Commands
 
-- `/pb-claude-global` — Generate/update global CLAUDE.md
-- `/pb-claude-orchestration` — Model selection and resource efficiency guide
-- `/pb-context` — Project working context template
-- `/pb-onboarding` — New developer onboarding
-- `/pb-repo-init` — Initialize new project structure
+- `/pb-claude-global` - Generate/update global CLAUDE.md
+- `/pb-claude-orchestration` - Model selection and resource efficiency guide
+- `/pb-context` - Project working context template
+- `/pb-onboarding` - New developer onboarding
+- `/pb-repo-init` - Initialize new project structure
 
 ---
 

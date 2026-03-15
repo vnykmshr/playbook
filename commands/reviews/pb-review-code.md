@@ -26,7 +26,7 @@ breaking_changes: []
 
 **Mindset:** This review assumes `/pb-preamble` thinking (challenge assumptions, surface flaws, question trade-offs) and applies `/pb-design-rules` (check for clarity, simplicity, modularity, robustness).
 
-**Resource Hint:** opus — code review demands deep reasoning across architecture, correctness, security, and maintainability
+**Resource Hint:** opus - code review demands deep reasoning across architecture, correctness, security, and maintainability
 
 ---
 
@@ -138,7 +138,7 @@ Q1: Is this for a specific change (PR/commit)?
 - [ ] No information leakage in error responses or API payloads (see `/pb-security` Authorization & Access Control)
 - [ ] No hardcoded secrets or credentials
 - [ ] Input validation at trust boundaries
-- [ ] **LLM output trust boundary:** LLM-generated SQL, auth logic, security decisions, and data mutations treated as untrusted input — validated before use, never trusted at security boundaries (see `/pb-security` LLM Output Trust)
+- [ ] **LLM output trust boundary:** LLM-generated SQL, auth logic, security decisions, and data mutations treated as untrusted input - validated before use, never trusted at security boundaries (see `/pb-security` LLM Output Trust)
 
 ### Test Review
 
@@ -162,11 +162,11 @@ Q1: Is this for a specific change (PR/commit)?
 
 ### Tone and Approach
 
-- **Be direct** — Surface flaws clearly, don't hedge
-- **Be specific** — Point to exact lines/patterns, not vague concerns
-- **Be constructive** — Suggest alternatives when criticizing
-- **Be curious** — Ask questions when you don't understand a choice
-- **Surface criticals individually** — For MUST-level findings, raise one issue at a time. Don't batch critical findings into a list — each one requires explicit acknowledgment before moving to the next
+- **Be direct** - Surface flaws clearly, don't hedge
+- **Be specific** - Point to exact lines/patterns, not vague concerns
+- **Be constructive** - Suggest alternatives when criticizing
+- **Be curious** - Ask questions when you don't understand a choice
+- **Surface criticals individually** - For MUST-level findings, raise one issue at a time. Don't batch critical findings into a list - each one requires explicit acknowledgment before moving to the next
 
 ### Feedback Categories
 
@@ -174,11 +174,11 @@ Use these prefixes to clarify intent:
 
 | Prefix | Meaning |
 |--------|---------|
-| **MUST** | Blocking — must be fixed before merge |
-| **SHOULD** | Strong recommendation — fix unless there's good reason |
-| **CONSIDER** | Suggestion — take it or leave it |
-| **NIT** | Minor style/preference — non-blocking |
-| **QUESTION** | Seeking clarification — not necessarily a change request |
+| **MUST** | Blocking - must be fixed before merge |
+| **SHOULD** | Strong recommendation - fix unless there's good reason |
+| **CONSIDER** | Suggestion - take it or leave it |
+| **NIT** | Minor style/preference - non-blocking |
+| **QUESTION** | Seeking clarification - not necessarily a change request |
 
 ### Example Feedback
 
@@ -205,7 +205,7 @@ Map findings to merge decisions:
 
 | Finding Level | Maps To | Can Merge? |
 |---------------|---------|------------|
-| **Critical** | MUST | No — must fix first |
+| **Critical** | MUST | No - must fix first |
 | **Warning** | SHOULD | With documented justification |
 | **Suggestion** | CONSIDER, NIT | Yes |
 
@@ -240,19 +240,19 @@ or resolves inline before merge.
 
 ### For the Author
 
-- **Welcome criticism** — Reviewers are helping you catch problems early
-- **Don't argue** — If feedback is valid, just fix it
-- **Ask for clarity** — If feedback is unclear, ask for specific suggestions
-- **Respond to everything** — Every comment deserves acknowledgment
-- **Learn from patterns** — If same feedback keeps coming, internalize it
+- **Welcome criticism** - Reviewers are helping you catch problems early
+- **Don't argue** - If feedback is valid, just fix it
+- **Ask for clarity** - If feedback is unclear, ask for specific suggestions
+- **Respond to everything** - Every comment deserves acknowledgment
+- **Learn from patterns** - If same feedback keeps coming, internalize it
 
 ### Resolving Disagreements
 
-1. **Understand the concern** — Restate it to confirm understanding
-2. **Explain your reasoning** — Share context the reviewer may lack
-3. **Find common ground** — Often there's a third option
-4. **Escalate if needed** — Get a third opinion for significant disagreements
-5. **Document decisions** — Note why a particular choice was made
+1. **Understand the concern** - Restate it to confirm understanding
+2. **Explain your reasoning** - Share context the reviewer may lack
+3. **Find common ground** - Often there's a third option
+4. **Escalate if needed** - Get a third opinion for significant disagreements
+5. **Document decisions** - Note why a particular choice was made
 
 ---
 
@@ -290,7 +290,7 @@ Stop and discuss if you see:
 - **Security vulnerabilities** (injection, auth bypass, data exposure)
 - **Data loss potential** (destructive operations without backup/undo)
 - **Performance regression** (N+1 queries, unbounded loops, missing pagination, oversized API payloads)
-- **Scope creep** — Changes unrelated to stated purpose
+- **Scope creep** - Changes unrelated to stated purpose
 - **Missing tests** for critical paths
 - **Hardcoded secrets** or credentials
 
@@ -300,11 +300,11 @@ Stop and discuss if you see:
 
 For smaller changes or when time is limited:
 
-1. **Skim the diff** — Get overall sense of change
-2. **Check the critical paths** — Focus on error handling, security, data flow
-3. **Verify tests exist** — At minimum, happy path covered
-4. **Run quality gates** — lint, typecheck, test
-5. **Spot-check naming** — If names are clear, code is likely clear
+1. **Skim the diff** - Get overall sense of change
+2. **Check the critical paths** - Focus on error handling, security, data flow
+3. **Verify tests exist** - At minimum, happy path covered
+4. **Run quality gates** - lint, typecheck, test
+5. **Spot-check naming** - If names are clear, code is likely clear
 
 ---
 
@@ -326,11 +326,11 @@ For smaller changes or when time is limited:
 
 ## Related Commands
 
-- `/pb-cycle` — Author's development iteration (includes self-review)
-- `/pb-review` — Comprehensive periodic project review orchestrator
-- `/pb-review-hygiene` — Code quality and operational readiness
-- `/pb-review-tests` — Test coverage review
-- `/pb-security` — Security audit
+- `/pb-cycle` - Author's development iteration (includes self-review)
+- `/pb-review` - Comprehensive periodic project review orchestrator
+- `/pb-review-hygiene` - Code quality and operational readiness
+- `/pb-review-tests` - Test coverage review
+- `/pb-security` - Security audit
 
 ---
 

@@ -16,7 +16,7 @@ breaking_changes: []
 
 This anchors how we think and work together. Not a process, but a mindset that every other playbook command assumes you bring.
 
-**Resource Hint:** opus — Foundational philosophy; requires deep reasoning about collaboration dynamics.
+**Resource Hint:** opus - Foundational philosophy; requires deep reasoning about collaboration dynamics.
 
 ## When to Use
 
@@ -147,7 +147,7 @@ Thinking like peers means respecting each other's attention.
 
 **In practice**: "This feature is powerful, but it demands constant tweaking. Can we make it self-tuning so operators don't have to think about it?"
 
-See `/pb-calm-design` for the complete calm design framework—how to build systems that respect user attention.
+See `/pb-calm-design` for the complete calm design framework-how to build systems that respect user attention.
 
 ---
 
@@ -156,21 +156,21 @@ See `/pb-calm-design` for the complete calm design framework—how to build syst
 Preamble doesn't mean challenge everything. **Discernment matters.**
 
 ### Challenge When:
-- **Assumptions are unstated** — "We need microservices" (why? under what constraints?)
-- **Trade-offs are hidden** — "Simple solution" (simple for whom? what's the cost?)
-- **Risk is glossed over** — "This is production-ready" (have we tested failure modes?)
-- **Scope is unclear** — "Add this feature" (what does done look like?)
-- **Process is unfamiliar** — First time doing something, you don't understand the reasoning
-- **Context has changed** — "We always do X" (still true? constraints changed?)
-- **Your expertise applies** — You have information others don't
+- **Assumptions are unstated** - "We need microservices" (why? under what constraints?)
+- **Trade-offs are hidden** - "Simple solution" (simple for whom? what's the cost?)
+- **Risk is glossed over** - "This is production-ready" (have we tested failure modes?)
+- **Scope is unclear** - "Add this feature" (what does done look like?)
+- **Process is unfamiliar** - First time doing something, you don't understand the reasoning
+- **Context has changed** - "We always do X" (still true? constraints changed?)
+- **Your expertise applies** - You have information others don't
 
 ### Trust When:
-- **Expert has explained reasoning** — They've shown their thinking, trade-offs are clear
-- **You lack context** — Decision is outside your domain, they have information you don't
-- **Time cost exceeds benefit** — Challenging a button color wastes more time than it's worth
-- **Decision is made, execution is on** — Time to align and execute, not re-litigate
-- **Pattern is proven** — "We've done this 20 times this way, it works" is data
-- **You're learning from them** — Better to understand their reasoning than challenge it
+- **Expert has explained reasoning** - They've shown their thinking, trade-offs are clear
+- **You lack context** - Decision is outside your domain, they have information you don't
+- **Time cost exceeds benefit** - Challenging a button color wastes more time than it's worth
+- **Decision is made, execution is on** - Time to align and execute, not re-litigate
+- **Pattern is proven** - "We've done this 20 times this way, it works" is data
+- **You're learning from them** - Better to understand their reasoning than challenge it
 
 ### The Balance
 **Best teams oscillate between:**
@@ -191,19 +191,19 @@ The goal is: **Challenge early, decide clearly, execute aligned.**
 
 **Every playbook command assumes you're reading with this preamble in mind:**
 
-- `/pb-guide` — The framework is a starting point, not dogma. Challenge the tiers, rearrange gates, adapt to your team
-- `/pb-standards` — Principles, not rules. Understand *why* before following *how*
-- `/pb-cycle` — Peer review is designed to surface disagreement, not confirm approval
-- `/pb-adr` — Decisions are documented with required alternatives and trade-offs explicitly. Others can challenge the reasoning
-- `/pb-plan` — Scope lock is a negotiation. Challenge estimates, uncover hidden assumptions
-- `/pb-commit` — Clear messages force you to explain *why*, inviting scrutiny
-- `/pb-pr` — Code review assumes critical thinking from both author and reviewer
-- `/pb-review-*` — All review commands are designed to surface different perspectives and disagreement
-- `/pb-patterns-*` — Trade-offs are always discussed. No pattern is universally right
-- `/pb-security` — Security review explicitly looks for what was missed
-- `/pb-testing` — Tests are designed to catch flawed thinking, not validate it
-- `/pb-deprecation` — Thoughtful decisions require questioning the status quo
-- `/pb-observability` — Multi-perspective thinking: ops, security, product, engineering
+- `/pb-guide` - The framework is a starting point, not dogma. Challenge the tiers, rearrange gates, adapt to your team
+- `/pb-standards` - Principles, not rules. Understand *why* before following *how*
+- `/pb-cycle` - Peer review is designed to surface disagreement, not confirm approval
+- `/pb-adr` - Decisions are documented with required alternatives and trade-offs explicitly. Others can challenge the reasoning
+- `/pb-plan` - Scope lock is a negotiation. Challenge estimates, uncover hidden assumptions
+- `/pb-commit` - Clear messages force you to explain *why*, inviting scrutiny
+- `/pb-pr` - Code review assumes critical thinking from both author and reviewer
+- `/pb-review-*` - All review commands are designed to surface different perspectives and disagreement
+- `/pb-patterns-*` - Trade-offs are always discussed. No pattern is universally right
+- `/pb-security` - Security review explicitly looks for what was missed
+- `/pb-testing` - Tests are designed to catch flawed thinking, not validate it
+- `/pb-deprecation` - Thoughtful decisions require questioning the status quo
+- `/pb-observability` - Multi-perspective thinking: ops, security, product, engineering
 
 **The integration**: This preamble is the *why* behind every command. Each command is more powerful when read with this lens.
 
@@ -314,7 +314,7 @@ Better plan emerges: 12-month deprecation, migration guide, support window. Fewe
 
 ### Q: "Doesn't this feel disrespectful?"
 
-**A**: Only if you conflate *challenge* with *rudeness*. Challenging assumptions respectfully is professional. Disagreement shows you care about getting it right. Silence is disrespect to the team—you're withholding your best thinking.
+**A**: Only if you conflate *challenge* with *rudeness*. Challenging assumptions respectfully is professional. Disagreement shows you care about getting it right. Silence is disrespect to the team-you're withholding your best thinking.
 
 ### Q: "What if I'm wrong in my challenge?"
 
@@ -326,7 +326,7 @@ Better plan emerges: 12-month deprecation, migration guide, support window. Fewe
 
 ### Q: "How is this different from just 'speaking up'?"
 
-**A**: It's systemic. Without this preamble, speaking up feels risky. Your instinct is to agree. With it, silence feels risky—to quality. It flips the default from "agree unless proven wrong" to "challenge unless it's clearly rock-solid."
+**A**: It's systemic. Without this preamble, speaking up feels risky. Your instinct is to agree. With it, silence feels risky-to quality. It flips the default from "agree unless proven wrong" to "challenge unless it's clearly rock-solid."
 
 ### Q: "What if the team uses this to nitpick everything?"
 
@@ -363,45 +363,45 @@ Remember: they're operating from this preamble. They're not being rude; they're 
 **This preamble is referenced by:**
 
 **Core Commands:**
-- `/pb-guide` — Scope lock is a collaborative decision, not a decree
-- `/pb-standards` — Collaboration principles section explicitly links to this
-- `/pb-documentation` — Clear writing invites healthy challenge
+- `/pb-guide` - Scope lock is a collaborative decision, not a decree
+- `/pb-standards` - Collaboration principles section explicitly links to this
+- `/pb-documentation` - Clear writing invites healthy challenge
 
 **Development Workflow:**
-- `/pb-cycle` — Step 3: Peer Review assumes preamble thinking. Reviewer challenges, author welcomes critical feedback.
-- `/pb-commit` — Clear messages force you to explain *why*, inviting scrutiny and challenge
-- `/pb-pr` — Code review process assumes critical thinking from both author and reviewer
-- `/pb-start` — Team alignment gate explicitly includes "assumptions are explicit, disagreements surfaced"
-- `/pb-testing` — Tests are designed to catch flawed assumptions, not validate them
+- `/pb-cycle` - Step 3: Peer Review assumes preamble thinking. Reviewer challenges, author welcomes critical feedback.
+- `/pb-commit` - Clear messages force you to explain *why*, inviting scrutiny and challenge
+- `/pb-pr` - Code review process assumes critical thinking from both author and reviewer
+- `/pb-start` - Team alignment gate explicitly includes "assumptions are explicit, disagreements surfaced"
+- `/pb-testing` - Tests are designed to catch flawed assumptions, not validate them
 
 **Planning & Architecture:**
-- `/pb-plan` — Clarify phase assumes peer-level challenge: "Clarify means ask hard questions and challenge assumptions"
-- `/pb-adr` — Alternatives and Rationale sections require explicit reasoning that can be challenged
-- `/pb-patterns-*` — Every pattern guide emphasizes: question if it fits, challenge the costs, explore alternatives
-- `/pb-performance` — "Question assumptions about slowness. Challenge whether optimization is worth the complexity cost."
-- `/pb-observability` — "Multi-perspective thinking: no single perspective is complete"
-- `/pb-deprecation` — "Challenge whether change is really necessary. Surface impact on users."
+- `/pb-plan` - Clarify phase assumes peer-level challenge: "Clarify means ask hard questions and challenge assumptions"
+- `/pb-adr` - Alternatives and Rationale sections require explicit reasoning that can be challenged
+- `/pb-patterns-*` - Every pattern guide emphasizes: question if it fits, challenge the costs, explore alternatives
+- `/pb-performance` - "Question assumptions about slowness. Challenge whether optimization is worth the complexity cost."
+- `/pb-observability` - "Multi-perspective thinking: no single perspective is complete"
+- `/pb-deprecation` - "Challenge whether change is really necessary. Surface impact on users."
 
 **Reviews & Quality:**
-- `/pb-review` — Comprehensive review assumes critical perspective from multiple experts
-- `/pb-review-hygiene` — "Challenge architectural choices. Point out duplication and complexity. Surface flaws directly."
-- `/pb-review-tests` — "Question test assumptions. Challenge coverage claims. Point out flaky or brittle tests."
-- `/pb-review-docs` — "Find unclear sections, challenge stated assumptions, and surface gaps"
-- `/pb-security` — "Your job is to find what was missed, challenge assumptions about safety, and surface risks"
-- `/pb-review-product` — "Each perspective should challenge the others. Surface disagreements—they surface real problems."
-- `/pb-review-microservice` — "Question service boundaries. Challenge coupling. Surface design flaws early."
-- `/pb-logging` — "Logs must reveal assumptions and make failures obvious, not hide them"
-- `/pb-release` — "Challenge readiness assumptions. Surface risks directly. Don't hide issues at last gate."
+- `/pb-review` - Comprehensive review assumes critical perspective from multiple experts
+- `/pb-review-hygiene` - "Challenge architectural choices. Point out duplication and complexity. Surface flaws directly."
+- `/pb-review-tests` - "Question test assumptions. Challenge coverage claims. Point out flaky or brittle tests."
+- `/pb-review-docs` - "Find unclear sections, challenge stated assumptions, and surface gaps"
+- `/pb-security` - "Your job is to find what was missed, challenge assumptions about safety, and surface risks"
+- `/pb-review-product` - "Each perspective should challenge the others. Surface disagreements-they surface real problems."
+- `/pb-review-microservice` - "Question service boundaries. Challenge coupling. Surface design flaws early."
+- `/pb-logging` - "Logs must reveal assumptions and make failures obvious, not hide them"
+- `/pb-release` - "Challenge readiness assumptions. Surface risks directly. Don't hide issues at last gate."
 
 **Team & Operations:**
-- `/pb-team` — "Psychological safety is directly enabled by preamble thinking. When teams operate from that preamble, challenging assumptions becomes the default."
-- `/pb-incident` — "During response: be direct about status, challenge assumptions about cause, surface unknowns"
-- `/pb-standup` — "Surface blockers and risks directly. Use preamble thinking: be direct about problems, don't hide issues to seem productive."
-- `/pb-onboarding` — "New team members learn this preamble first: challenge assumptions, prefer correctness, think like peers."
+- `/pb-team` - "Psychological safety is directly enabled by preamble thinking. When teams operate from that preamble, challenging assumptions becomes the default."
+- `/pb-incident` - "During response: be direct about status, challenge assumptions about cause, surface unknowns"
+- `/pb-standup` - "Surface blockers and risks directly. Use preamble thinking: be direct about problems, don't hide issues to seem productive."
+- `/pb-onboarding` - "New team members learn this preamble first: challenge assumptions, prefer correctness, think like peers."
 
 **Meta Commands:**
-- `/pb-what-next` — Context analysis requires critical perspective
-- `/pb-knowledge-transfer` — Transferring knowledge requires honest discussion
+- `/pb-what-next` - Context analysis requires critical perspective
+- `/pb-knowledge-transfer` - Transferring knowledge requires honest discussion
 
 **Every command that involves collaboration, decision-making, or review assumes this preamble.**
 
@@ -410,18 +410,18 @@ Remember: they're operating from this preamble. They're not being rude; they're 
 ## Why This Matters
 
 Teams without this anchor fall into patterns:
-- **Performative agreement** — "Looks good!" without actual critical thought
-- **Risk-averse consensus** — Lowest common denominator wins, not best idea
-- **Hierarchy over quality** — Senior person decides, junior person stays quiet
-- **Hidden problems** — Issues surface in production, not in planning
-- **Regret and burnout** — Team members knew the risk but didn't speak up
+- **Performative agreement** - "Looks good!" without actual critical thought
+- **Risk-averse consensus** - Lowest common denominator wins, not best idea
+- **Hierarchy over quality** - Senior person decides, junior person stays quiet
+- **Hidden problems** - Issues surface in production, not in planning
+- **Regret and burnout** - Team members knew the risk but didn't speak up
 
 Teams with this preamble:
-- **Better decisions** — Assumptions get surfaced and tested
-- **Psychological safety** — You can disagree without fear
-- **Faster learning** — Mistakes are caught early
-- **Ownership mindset** — You're responsible for quality, not just execution
-- **Sustainable pace** — Problems don't surprise you in production
+- **Better decisions** - Assumptions get surfaced and tested
+- **Psychological safety** - You can disagree without fear
+- **Faster learning** - Mistakes are caught early
+- **Ownership mindset** - You're responsible for quality, not just execution
+- **Sustainable pace** - Problems don't surprise you in production
 
 This preamble isn't nice-to-have. It's foundational. Everything else in the playbook depends on it.
 
@@ -521,10 +521,10 @@ This preamble isn't nice-to-have. It's foundational. Everything else in the play
 
 ## What to Do If You Notice a Failure Mode
 
-1. **Name it** — "I think we're in perpetual debate mode. Should we set a decision deadline?"
-2. **Reference the preamble** — "Preamble says to challenge early and decide clearly"
-3. **Propose the fix** — "I suggest we debate this until Friday, then decide Monday"
-4. **Don't go silent** — If pattern persists, escalate (to leadership, 1-on-1, team retro)
+1. **Name it** - "I think we're in perpetual debate mode. Should we set a decision deadline?"
+2. **Reference the preamble** - "Preamble says to challenge early and decide clearly"
+3. **Propose the fix** - "I suggest we debate this until Friday, then decide Monday"
+4. **Don't go silent** - If pattern persists, escalate (to leadership, 1-on-1, team retro)
 
 **The test:** Does your team show the benefits listed in "Why This Matters"? If not, something's gone wrong and needs addressing.
 
@@ -558,11 +558,11 @@ These expansions deepen the philosophy with context-specific guidance while keep
 
 ## Related Commands
 
-- `/pb-preamble-async` — Async and distributed team collaboration
-- `/pb-preamble-power` — Power dynamics and psychological safety
-- `/pb-preamble-decisions` — Decision making and dissent
-- `/pb-design-rules` — Technical principles (complement to preamble)
-- `/pb-think` — Structured thinking with preamble mindset
+- `/pb-preamble-async` - Async and distributed team collaboration
+- `/pb-preamble-power` - Power dynamics and psychological safety
+- `/pb-preamble-decisions` - Decision making and dissent
+- `/pb-design-rules` - Technical principles (complement to preamble)
+- `/pb-think` - Structured thinking with preamble mindset
 
 ---
 

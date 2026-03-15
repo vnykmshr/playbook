@@ -14,7 +14,7 @@ breaking_changes: []
 ---
 # Automated Quality Gate
 
-**Resource Hint:** sonnet — Quality gate that applies your preferences, checks LLM trust boundaries, and auto-commits after code review.
+**Resource Hint:** sonnet - Quality gate that applies your preferences, checks LLM trust boundaries, and auto-commits after code review.
 
 Run this after you finish coding. System analyzes what you built, applies your established preferences, and commits if everything checks out. You get a report when done.
 
@@ -43,18 +43,18 @@ System analyzes your change (LOC, files, domains, complexity, criticality), dete
 
 **Three outcomes:**
 
-1. **Clean** — No issues found. Auto-commits and reports.
-2. **Issues covered by preferences** — Preferences decide: auto-fix, auto-defer, or auto-accept. Then auto-commits.
-3. **Ambiguous** — Issue doesn't fit your preferences, or new issue type. Asks you. Remembers your answer for next time.
-4. **Loop detected** — Same issue flagged 3+ times across fix-review cycles. Stop auto-fixing. Surface to user: "This issue has come back 3 times. It may be a design problem, not a code problem. [describe the recurring issue]. Continuing to auto-fix risks masking the root cause." Escalate as a design question, not a code fix.
+1. **Clean** - No issues found. Auto-commits and reports.
+2. **Issues covered by preferences** - Preferences decide: auto-fix, auto-defer, or auto-accept. Then auto-commits.
+3. **Ambiguous** - Issue doesn't fit your preferences, or new issue type. Asks you. Remembers your answer for next time.
+4. **Loop detected** - Same issue flagged 3+ times across fix-review cycles. Stop auto-fixing. Surface to user: "This issue has come back 3 times. It may be a design problem, not a code problem. [describe the recurring issue]. Continuing to auto-fix risks masking the root cause." Escalate as a design question, not a code fix.
 
 Most reviews hit outcome 1 or 2. You only get involved for genuinely ambiguous cases or loop detection.
 
-**Pre-check: Diff-aware flow mapping.** Before reviewing, system maps changed files to affected user flows. "This diff touches `auth/` and `email/` — affected flows: login, password reset, signup verification." This focuses review on what the change actually impacts, not the entire codebase.
+**Pre-check: Diff-aware flow mapping.** Before reviewing, system maps changed files to affected user flows. "This diff touches `auth/` and `email/` - affected flows: login, password reset, signup verification." This focuses review on what the change actually impacts, not the entire codebase.
 
-**LLM trust boundary.** If changes include LLM-generated code (SQL, auth logic, security boundaries, data mutations), system flags for elevated scrutiny. LLM output is untrusted input — validate it at trust boundaries the same way you'd validate user input. Escalates to `/pb-review-code` or `/pb-security` if LLM-generated code touches security-critical paths.
+**LLM trust boundary.** If changes include LLM-generated code (SQL, auth logic, security boundaries, data mutations), system flags for elevated scrutiny. LLM output is untrusted input - validate it at trust boundaries the same way you'd validate user input. Escalates to `/pb-review-code` or `/pb-security` if LLM-generated code touches security-critical paths.
 
-**Critical-severity surfacing.** When a critical-severity finding is detected, system surfaces it individually — one issue at a time, not batched. Critical findings require explicit acknowledgment before proceeding. This prevents critical issues from getting lost in a list of suggestions.
+**Critical-severity surfacing.** When a critical-severity finding is detected, system surfaces it individually - one issue at a time, not batched. Critical findings require explicit acknowledgment before proceeding. This prevents critical issues from getting lost in a list of suggestions.
 
 ---
 
@@ -109,7 +109,7 @@ Issues found:
 ⚠ Issue: Complex retry logic with 4 nested loops + 3 state machines
 
 Your preference doesn't quite cover this. The code works, tests pass,
-no logic errors. But it's clever—potentially hard to maintain.
+no logic errors. But it's clever-potentially hard to maintain.
 
 Linus recommends: "This is too clever, simplify."
 
@@ -130,15 +130,15 @@ Setup once (`/pb-preferences --setup`, takes ~15 minutes). Answer questions abou
 
 During `/pb-review`, system matches each issue to your preference and decides. Only asks when genuinely ambiguous:
 
-- **Preference doesn't cover it** — New issue type. You set the precedent, system remembers.
-- **Borderline** — Coverage is exactly at your threshold. You decide.
-- **Override needed** — Use `pb-review --override` for edge cases.
+- **Preference doesn't cover it** - New issue type. You set the precedent, system remembers.
+- **Borderline** - Coverage is exactly at your threshold. You decide.
+- **Override needed** - Use `pb-review --override` for edge cases.
 
 ---
 
 ## When to Use
 
-- **After coding:** `/pb-review` — primary use case
+- **After coding:** `/pb-review` - primary use case
 - **After fixing feedback:** `/pb-review` again to re-verify
 - **Manual commit control:** `pb-review --no-auto-commit` to review the message first
 
@@ -146,10 +146,10 @@ During `/pb-review`, system matches each issue to your preference and decides. O
 
 ## Related Commands
 
-- `/pb-start` — Begin work (sets scope signal)
-- `/pb-preferences` — Set your decision rules once
-- `/pb-commit` — Usually automatic, but can be manual if you prefer
-- `/pb-pr` — Peer review (next step after commit)
+- `/pb-start` - Begin work (sets scope signal)
+- `/pb-preferences` - Set your decision rules once
+- `/pb-commit` - Usually automatic, but can be manual if you prefer
+- `/pb-pr` - Peer review (next step after commit)
 
 ---
 

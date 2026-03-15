@@ -16,7 +16,7 @@ breaking_changes: []
 
 Extending core preamble thinking to asynchronous communication, distributed teams, and remote-first cultures.
 
-**Resource Hint:** opus — Deep collaboration philosophy applied to async contexts; nuanced reasoning required.
+**Resource Hint:** opus - Deep collaboration philosophy applied to async contexts; nuanced reasoning required.
 
 ## When to Use
 
@@ -42,7 +42,7 @@ Core preamble works in real-time: face-to-face conversation, synchronous meeting
 
 **The opportunity:** Written communication forces clarity. Challenge must be explicit. Reasoning is documented. Disagreement becomes visible.
 
-The preamble still applies—but it requires new discipline in async contexts.
+The preamble still applies-but it requires new discipline in async contexts.
 
 ---
 
@@ -65,23 +65,23 @@ Your approach is flawed. We should use X instead.
 ```
 I'm concerned about this approach because [specific risk].
 Have you considered X? Here's why I think it fits better: [reasoning].
-Happy to discuss—maybe you've already thought through these concerns.
+Happy to discuss-maybe you've already thought through these concerns.
 ```
 
 **Better (even clearer):**
 ```
 Strong point about [their idea]. One concern I have: [specific issue].
 Why? [reasoning with context].
-I'm not certain this is the best path. Could be wrong—what am I missing?
+I'm not certain this is the best path. Could be wrong-what am I missing?
 ```
 
 ### The Discipline
 
 Writing forces you to:
-- **Name the assumption** — "I'm assuming..." makes your thinking transparent
-- **Show your reasoning** — Not just "this is better," but why
-- **Invite counter-argument** — "Maybe I'm wrong about this" is not weakness, it's clarity
-- **Separate observation from prescription** — "Here's what I see" vs. "Here's what you should do"
+- **Name the assumption** - "I'm assuming..." makes your thinking transparent
+- **Show your reasoning** - Not just "this is better," but why
+- **Invite counter-argument** - "Maybe I'm wrong about this" is not weakness, it's clarity
+- **Separate observation from prescription** - "Here's what I see" vs. "Here's what you should do"
 
 **Why this matters:** Async readers can't hear your tone. They can only read your words. If they feel dismissed, they won't engage. If they see genuine thinking, they will.
 
@@ -111,10 +111,10 @@ This means [impact]. I think we should revisit our decision because [reasoning].
 
 ### The Discipline
 
-- **Quote relevant context** — If referencing a decision, quote it or link to it
-- **Explain your frame** — "From the security perspective, this matters because..."
-- **State assumptions you're making** — "Assuming we still want [goal]..." makes it easy to correct you
-- **Summarize the ask** — What decision or input do you need?
+- **Quote relevant context** - If referencing a decision, quote it or link to it
+- **Explain your frame** - "From the security perspective, this matters because..."
+- **State assumptions you're making** - "Assuming we still want [goal]..." makes it easy to correct you
+- **Summarize the ask** - What decision or input do you need?
 
 **Why this matters:** Async readers can't ask "what do you mean?" in real-time. If your message is unclear, they'll either misunderstand or go silent. Explicitness prevents that.
 
@@ -153,10 +153,10 @@ If you have strong concerns, flag them with reasoning by Friday.
 
 ### The Discipline
 
-- **Set decision clocks explicitly** — Not vague ("soon"), but specific
-- **Announce who decides** — "I'll make the final call" is clearer than "we'll see what the team thinks"
-- **Accept you might be wrong** — Decision clock doesn't mean you're certain, means you're committing to move
-- **Document the reasoning** — Future you and the team will appreciate knowing why you decided
+- **Set decision clocks explicitly** - Not vague ("soon"), but specific
+- **Announce who decides** - "I'll make the final call" is clearer than "we'll see what the team thinks"
+- **Accept you might be wrong** - Decision clock doesn't mean you're certain, means you're committing to move
+- **Document the reasoning** - Future you and the team will appreciate knowing why you decided
 
 **Why this matters:** Async teams get stuck in perpetual debate because there's no natural conversation endpoint. Decision clocks force closure while still inviting input.
 
@@ -192,10 +192,10 @@ I'm not certain we have the right answer. Your thoughts?
 
 ### The Discipline
 
-- **Name the concern directly** — "I'm worried about X" not "one might wonder about possibly X"
-- **Show you've thought it through** — "Here's why this specific issue matters..." not vague hand-waving
-- **Leave room for being wrong** — "Tell me if I'm missing something" shows confidence, not insecurity
-- **Respect their expertise** — "You know this better than me. But from my perspective..." honors different perspectives
+- **Name the concern directly** - "I'm worried about X" not "one might wonder about possibly X"
+- **Show you've thought it through** - "Here's why this specific issue matters..." not vague hand-waving
+- **Leave room for being wrong** - "Tell me if I'm missing something" shows confidence, not insecurity
+- **Respect their expertise** - "You know this better than me. But from my perspective..." honors different perspectives
 
 **Why this matters:** In async, soft challenge reads as passive-aggressive ("are they actually concerned or just being polite?"). Direct challenge reads as engagement. People respect directness more than they appreciate artificial softness.
 
@@ -255,10 +255,10 @@ Result: Team stops trying. Async becomes performative.
 
 ### The Discipline
 
-- **Respond quickly to challenges** — Even if your response is "good point, let me think about it"
-- **Be visibly responsive** — If someone raises a concern, they should see you considered it
-- **Change your mind in public** — When you do, explain why the challenge convinced you
-- **Address not dismiss** — "We're going forward with X because [reason]" not "We're doing X, final decision"
+- **Respond quickly to challenges** - Even if your response is "good point, let me think about it"
+- **Be visibly responsive** - If someone raises a concern, they should see you considered it
+- **Change your mind in public** - When you do, explain why the challenge convinced you
+- **Address not dismiss** - "We're going forward with X because [reason]" not "We're doing X, final decision"
 
 **Why this matters:** Async safety is fragile because silence is the default. You must actively build it through consistent patterns.
 
@@ -299,7 +299,7 @@ Result: Team stops trying. Async becomes performative.
 **Prevention:**
 - Make disagreement visible: "I think this is a risk, but I understand the decision"
 - Document your concern: "I wanted this recorded because it might matter later"
-- If you can't live with the decision, escalate—don't hide and sabotage
+- If you can't live with the decision, escalate-don't hide and sabotage
 
 ### Anti-Pattern 4: Performative Inclusivity
 **What it looks like:**
@@ -342,10 +342,10 @@ Result: Team stops trying. Async becomes performative.
 
 ### How Teams Improve
 
-1. **Model it** — Leaders write clearly, decide with reasoning, change minds visibly
-2. **Normalize it** — "That PR comment could be clearer, try [example]"
-3. **Debrief it** — In retros: "That async discussion worked/didn't work because..."
-4. **Iterate** — Async communication improves with practice and feedback
+1. **Model it** - Leaders write clearly, decide with reasoning, change minds visibly
+2. **Normalize it** - "That PR comment could be clearer, try [example]"
+3. **Debrief it** - In retros: "That async discussion worked/didn't work because..."
+4. **Iterate** - Async communication improves with practice and feedback
 
 ---
 
@@ -375,16 +375,16 @@ Not everything should be async. Some decisions need sync communication:
 ## Summary: Async Doesn't Change Preamble, It Extends It
 
 Core preamble principles remain:
-- **Correctness Over Agreement** — Write to invite scrutiny
-- **Critical, Not Servile** — Be direct in writing
-- **Truth Over Tone** — Provide context, not softness
-- **Think Holistically** — Build safety through patterns
+- **Correctness Over Agreement** - Write to invite scrutiny
+- **Critical, Not Servile** - Be direct in writing
+- **Truth Over Tone** - Provide context, not softness
+- **Think Holistically** - Build safety through patterns
 
 Async adds discipline:
-- **Explicitness** — Say what you mean clearly in writing
-- **Timing** — Decision clocks replace natural conversation endpoints
-- **Visibility** — Your challenges and responses are all recorded
-- **Courage** — Speaking up in writing feels riskier and requires more intent
+- **Explicitness** - Say what you mean clearly in writing
+- **Timing** - Decision clocks replace natural conversation endpoints
+- **Visibility** - Your challenges and responses are all recorded
+- **Courage** - Speaking up in writing feels riskier and requires more intent
 
 Teams that master async apply preamble thinking harder, not differently.
 
@@ -392,12 +392,12 @@ Teams that master async apply preamble thinking harder, not differently.
 
 ## Related Commands
 
-- `/pb-preamble` — Core principles (Part 1)
-- `/pb-standup` — Async communication for status
-- `/pb-pr` — Code review as async challenge
-- `/pb-cycle` — How peer review can be async
-- `/pb-team` — Building psychological safety in remote teams
+- `/pb-preamble` - Core principles (Part 1)
+- `/pb-standup` - Async communication for status
+- `/pb-pr` - Code review as async challenge
+- `/pb-cycle` - How peer review can be async
+- `/pb-team` - Building psychological safety in remote teams
 
 ---
 
-*Async & Distributed Teams — Natural progression from core preamble thinking.*
+*Async & Distributed Teams - Natural progression from core preamble thinking.*

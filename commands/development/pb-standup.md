@@ -20,7 +20,7 @@ Keep team aligned on progress without synchronous meetings. Use this template fo
 
 Use `/pb-preamble` thinking: be direct about problems, don't hide issues to seem productive. Use `/pb-design-rules` thinking in standups: highlight when code embodies good design (Clarity, Simplicity, Robustness) and flag design risks early.
 
-**Resource Hint:** sonnet — status reporting and team communication
+**Resource Hint:** sonnet - status reporting and team communication
 
 ---
 
@@ -98,7 +98,7 @@ Use when you need to provide more context or detailed progress update.
 ### Section 1: Yesterday (What Got Done)
 
 List completed work from the previous working day:
-- **Task description** — Brief outcome
+- **Task description** - Brief outcome
   - Where to find it: PR link, commit, test results, screenshot
 
 **Guidelines:**
@@ -119,9 +119,9 @@ List completed work from the previous working day:
 ### Section 2: Today (Current Focus & Plans)
 
 What you're working on right now and what's planned:
-- in progress **Current task** — What you're actively coding on
-- task **Planned task** — What comes next
-- ⏸️ **Waiting on** — Things you're waiting for (feedback, approval, dependency)
+- in progress **Current task** - What you're actively coding on
+- task **Planned task** - What comes next
+- ⏸️ **Waiting on** - Things you're waiting for (feedback, approval, dependency)
 
 **Guidelines:**
 - Realistic scope (what you'll actually complete today)
@@ -140,7 +140,7 @@ What you're working on right now and what's planned:
 ### Section 3: Blockers (What's Stuck)
 
 What's preventing progress and needs intervention:
-- 🚧 **Blocker description** — What's stuck and why
+- 🚧 **Blocker description** - What's stuck and why
   - Impact: How much does this affect you?
   - Needed: What's required to unblock?
 
@@ -155,7 +155,7 @@ What's preventing progress and needs intervention:
 ### Section 4: Help Needed (Explicit Requests)
 
 What you explicitly need from others:
-- ❓ **Specific ask** — Exactly what you need
+- ❓ **Specific ask** - Exactly what you need
   - Who: Who should help (name or team)
   - By when: Urgency (ASAP, this week, next week)
 
@@ -239,9 +239,9 @@ Expand to include:
 - Write for someone who doesn't know the project
 
 [NO] **DON'T:**
-- Over-explain ("Spent 2 hours debugging" — just say "Fixed bug X")
+- Over-explain ("Spent 2 hours debugging" - just say "Fixed bug X")
 - Use jargon without context
-- Make excuses ("Lots of meetings" — just note if it affected progress)
+- Make excuses ("Lots of meetings" - just note if it affected progress)
 - Go too long (standup should take 5 min to write, 2 min to read)
 
 ### Frequency & Timing
@@ -281,9 +281,9 @@ Standups create a paper trail of:
 
 ## Related Commands
 
-- `/pb-start` — Begin work on a new feature or fix
-- `/pb-resume` — Get back into context after a break
-- `/pb-cycle` — Self-review and peer review during development
+- `/pb-start` - Begin work on a new feature or fix
+- `/pb-resume` - Get back into context after a break
+- `/pb-cycle` - Self-review and peer review during development
 
 ---
 
@@ -314,7 +314,7 @@ Standups create a paper trail of:
 
 ## Building Team Culture Around Standups
 
-Standups are more than status updates—they're about building trust and psychological safety.
+Standups are more than status updates-they're about building trust and psychological safety.
 
 ### Create Psychological Safety for Blockers
 

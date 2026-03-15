@@ -18,18 +18,18 @@ Systematic approach to finding and fixing bugs. Hypothesis-driven, reproducible,
 
 **Debugging is not random poking.** It's a structured process: observe, hypothesize, test, repeat.
 
-**Mindset:** Use `/pb-preamble` thinking to challenge your assumptions about what's broken. Use `/pb-design-rules` thinking — especially Transparency (make the invisible visible), Repair (fail noisily to aid debugging), and Clarity (simple code is easier to debug).
+**Mindset:** Use `/pb-preamble` thinking to challenge your assumptions about what's broken. Use `/pb-design-rules` thinking - especially Transparency (make the invisible visible), Repair (fail noisily to aid debugging), and Clarity (simple code is easier to debug).
 
-**Resource Hint:** sonnet — systematic bug investigation and resolution
+**Resource Hint:** sonnet - systematic bug investigation and resolution
 
 ---
 
 ## When to Use This Command
 
-- **Stuck on a bug** — Need a systematic approach instead of random poking
-- **Bug is elusive** — Can't reproduce or isolate the issue
-- **Complex debugging** — Multiple systems, unclear root cause
-- **Teaching debugging** — Share methodology with team members
+- **Stuck on a bug** - Need a systematic approach instead of random poking
+- **Bug is elusive** - Can't reproduce or isolate the issue
+- **Complex debugging** - Multiple systems, unclear root cause
+- **Teaching debugging** - Share methodology with team members
 
 ---
 
@@ -471,10 +471,10 @@ const localDate = new Date(utcDate).toLocaleString();
 - Running random queries against prod database
 
 **Instead:**
-1. **Check existing logs** — What do we already capture?
-2. **Check metrics** — Latency spikes? Error rates?
-3. **Reproduce in staging** — With production-like data
-4. **Add targeted logging** — Feature-flagged, for specific users/requests
+1. **Check existing logs** - What do we already capture?
+2. **Check metrics** - Latency spikes? Error rates?
+3. **Reproduce in staging** - With production-like data
+4. **Add targeted logging** - Feature-flagged, for specific users/requests
 
 ### Log Analysis
 
@@ -513,9 +513,9 @@ See `/pb-observability` for detailed tracing guidance.
 
 When production is down, see `/pb-incident` for the full process. Quick reminder:
 
-1. **Mitigate first** — Rollback, disable feature, scale up
-2. **Investigate second** — After bleeding is stopped
-3. **Document everything** — For post-incident review
+1. **Mitigate first** - Rollback, disable feature, scale up
+2. **Investigate second** - After bleeding is stopped
+3. **Document everything** - For post-incident review
 
 ---
 
@@ -561,11 +561,11 @@ When production is down, see `/pb-incident` for the full process. Quick reminder
 
 ## Related Commands
 
-- `/pb-logging` — Effective logging for debugging
-- `/pb-observability` — Metrics and tracing
-- `/pb-incident` — Production incident response
-- `/pb-testing` — Tests that catch bugs early
-- `/pb-learn` — Capture debugging patterns for future reuse
+- `/pb-logging` - Effective logging for debugging
+- `/pb-observability` - Metrics and tracing
+- `/pb-incident` - Production incident response
+- `/pb-testing` - Tests that catch bugs early
+- `/pb-learn` - Capture debugging patterns for future reuse
 
 ---
 

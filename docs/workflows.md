@@ -31,15 +31,15 @@ PLANNING PHASE        DEVELOPMENT PHASE       CODE REVIEW PHASE     RELEASE PHAS
 ### Step-by-Step Execution
 
 1. **Plan Phase** (before coding)
-   - `/pb-plan` — Lock scope, define success criteria, identify risks
-   - `/pb-adr` — Document architectural decisions
-   - `/pb-patterns-*` — Reference relevant patterns (core, async, database, distributed)
-   - `/pb-observability` — Plan monitoring and observability requirements
-   - `/pb-performance` — Identify performance targets and constraints
+   - `/pb-plan` - Lock scope, define success criteria, identify risks
+   - `/pb-adr` - Document architectural decisions
+   - `/pb-patterns-*` - Reference relevant patterns (core, async, database, distributed)
+   - `/pb-observability` - Plan monitoring and observability requirements
+   - `/pb-performance` - Identify performance targets and constraints
 
 2. **Development Phase** (iterative)
-   - `/pb-start` — Create feature branch, establish iteration rhythm
-   - `/pb-cycle` — Develop feature:
+   - `/pb-start` - Create feature branch, establish iteration rhythm
+   - `/pb-cycle` - Develop feature:
      - Write code following `/pb-standards`
      - Include tests as you code (`/pb-testing`)
      - Review logging strategy (`/pb-logging`)
@@ -49,23 +49,23 @@ PLANNING PHASE        DEVELOPMENT PHASE       CODE REVIEW PHASE     RELEASE PHAS
    - Repeat until feature is complete
 
 3. **Code Review Phase** (before merging)
-   - `/pb-cycle` — Iterate on feedback if needed
-   - `/pb-testing` — Verify test coverage and quality
-   - `/pb-security` — Security checklist during review
-   - `/pb-logging` — Logging standards validation
-   - `/pb-review-*` — Additional specialized reviews as needed:
-     - `/pb-review-hygiene` — Code quality and patterns
-     - `/pb-review-product` — Product alignment (if user-facing)
-     - `/pb-review-tests` — Test suite depth and coverage
-     - `/pb-release` — Final senior engineer review
+   - `/pb-cycle` - Iterate on feedback if needed
+   - `/pb-testing` - Verify test coverage and quality
+   - `/pb-security` - Security checklist during review
+   - `/pb-logging` - Logging standards validation
+   - `/pb-review-*` - Additional specialized reviews as needed:
+     - `/pb-review-hygiene` - Code quality and patterns
+     - `/pb-review-product` - Product alignment (if user-facing)
+     - `/pb-review-tests` - Test suite depth and coverage
+     - `/pb-release` - Final senior engineer review
 
 4. **Commit & PR Phase**
-   - `/pb-commit` — Create atomic, well-formatted commit(s)
-   - `/pb-pr` — Create pull request with context and rationale
+   - `/pb-commit` - Create atomic, well-formatted commit(s)
+   - `/pb-pr` - Create pull request with context and rationale
 
 5. **Release Phase** (after merge)
-   - `/pb-release` — Pre-release checklist (security, performance, docs)
-   - `/pb-deployment` — Choose deployment strategy (blue-green, canary, rolling)
+   - `/pb-release` - Pre-release checklist (security, performance, docs)
+   - `/pb-deployment` - Choose deployment strategy (blue-green, canary, rolling)
    - Verify in production (monitor, observe)
 
 ---
@@ -94,30 +94,30 @@ INCIDENT DECLARED     ASSESSMENT               MITIGATION            RECOVERY   
    - Gather initial information (what's broken, who's affected, customer impact)
 
 2. **Assessment Phase** (0-5 minutes)
-   - `/pb-incident` — Run triage checklist:
+   - `/pb-incident` - Run triage checklist:
      - What's the severity? (P0 = all users, P1 = major subset, P2 = feature, P3 = minor)
      - Quick root cause hypothesis?
      - What's the fastest mitigation? (rollback, hotfix, disable feature)
    - Decide: Rollback, Hotfix, or Feature Disable?
 
 3. **Mitigation Phase** (5-30 minutes, depending on strategy)
-   - **Rollback** (fastest, 5-10 min) — Revert last deployment
-   - **Hotfix** (targeted, 15-30 min) — Emergency fix, test, deploy
-   - **Feature Disable** (safest, 5-15 min) — Kill feature flag, keep code
+   - **Rollback** (fastest, 5-10 min) - Revert last deployment
+   - **Hotfix** (targeted, 15-30 min) - Emergency fix, test, deploy
+   - **Feature Disable** (safest, 5-15 min) - Kill feature flag, keep code
 
 4. **Recovery & Monitoring** (30+ minutes)
-   - `/pb-observability` — Monitor key metrics during recovery:
+   - `/pb-observability` - Monitor key metrics during recovery:
      - Error rates returning to baseline?
      - Latency normalized?
      - User-visible impact resolved?
    - Maintain open communication with stakeholders
 
 5. **Post-Incident** (within 24 hours)
-   - `/pb-incident` — Comprehensive incident review:
+   - `/pb-incident` - Comprehensive incident review:
      - What was the root cause?
      - How did we miss it pre-deployment?
      - What's the permanent fix?
-   - `/pb-adr` — Document decision to prevent recurrence
+   - `/pb-adr` - Document decision to prevent recurrence
    - Schedule permanent fix into sprint
 
 ---
@@ -143,39 +143,39 @@ PREPARATION           FIRST DAY               FIRST WEEK             RAMP-UP    
 ### Step-by-Step Execution
 
 1. **Preparation Phase** (before hire starts)
-   - `/pb-onboarding` — Prepare:
+   - `/pb-onboarding` - Prepare:
      - Set up development environment
      - Create accounts and access
      - Assign mentor/buddy
      - Gather documentation
 
 2. **First Day**
-   - `/pb-start` — Orientation:
+   - `/pb-start` - Orientation:
      - Welcome, team introductions
      - Development environment walkthrough
      - Assign initial tasks
    - Set up calendar invites for regular syncs
 
 3. **First Week**
-   - `/pb-knowledge-transfer` — Transfer knowledge:
+   - `/pb-knowledge-transfer` - Transfer knowledge:
      - System architecture overview
      - Key decision history
      - Code organization tour
-   - `/pb-guide` — Learn SDLC framework:
+   - `/pb-guide` - Learn SDLC framework:
      - 11 phases of development
      - Quality gates
      - Review process
-   - `/pb-standards` — Learn working principles:
+   - `/pb-standards` - Learn working principles:
      - Coding standards
      - Communication norms
      - Collaboration expectations
-   - `/pb-context` — Understand project:
+   - `/pb-context` - Understand project:
      - Current roadmap
      - Major decisions
      - Team priorities
 
 4. **Ramp-Up Phase** (weeks 2-4)
-   - `/pb-cycle` — Contribute first feature:
+   - `/pb-cycle` - Contribute first feature:
      - Pick small feature or bug fix
      - Follow full cycle (plan → develop → review → commit → PR)
      - Get peer feedback
@@ -183,7 +183,7 @@ PREPARATION           FIRST DAY               FIRST WEEK             RAMP-UP    
    - Build confidence in workflow
 
 5. **Growth Phase** (ongoing)
-   - `/pb-team` — Team feedback:
+   - `/pb-team` - Team feedback:
      - Retrospectives
      - 1-on-1s
      - Career development
@@ -308,7 +308,7 @@ MORNING               MIDDAY                AFTERNOON               END OF DAY
   (Peer review if ready)
 ```
 
-**Session boundaries:** `/pb-pause` and `/pb-resume` work as bookends—pause preserves context at end of session, resume recovers it at start of next.
+**Session boundaries:** `/pb-pause` and `/pb-resume` work as bookends-pause preserves context at end of session, resume recovers it at start of next.
 
 **Shipping:** When focus area is code-complete, use `/pb-ship` for the full journey: specialized reviews → PR → peer review → merge → release → verify.
 
@@ -316,6 +316,6 @@ MORNING               MIDDAY                AFTERNOON               END OF DAY
 
 ## Next Steps
 
-- **[Decision Guide](decision-guide.md)** — Find the right command for any situation
-- **[Command Reference](command-index.md)** — Browse all commands
-- **[Integration Guide](integration-guide.md)** — Deep dive on command relationships
+- **[Decision Guide](decision-guide.md)** - Find the right command for any situation
+- **[Command Reference](command-index.md)** - Browse all commands
+- **[Integration Guide](integration-guide.md)** - Deep dive on command relationships

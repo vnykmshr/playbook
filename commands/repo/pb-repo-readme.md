@@ -20,7 +20,7 @@ Write or rewrite a clear, professional, developer-friendly README.
 
 Examples and assumptions must be clear enough that errors are obvious. Unclear READMEs hide problems.
 
-**Resource Hint:** sonnet — README writing follows structured templates with clear technical examples
+**Resource Hint:** sonnet - README writing follows structured templates with clear technical examples
 
 ---
 
@@ -245,10 +245,10 @@ MIT
 
 ## Related Commands
 
-- `/pb-repo-about` — Generate GitHub About section
-- `/pb-repo-blog` — Write technical blog post
-- `/pb-repo-enhance` — Full repository enhancement suite
-- `/pb-documentation` — Technical documentation guidance
+- `/pb-repo-about` - Generate GitHub About section
+- `/pb-repo-blog` - Write technical blog post
+- `/pb-repo-enhance` - Full repository enhancement suite
+- `/pb-documentation` - Technical documentation guidance
 
 ---
 
