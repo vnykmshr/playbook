@@ -52,3 +52,4 @@ mdbook-out/
 .playbook-extraction-report.json
 .playbook-quick-ref.md
 extraction_report.txt
+.wrangler/
