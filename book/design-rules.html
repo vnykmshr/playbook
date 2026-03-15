@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'none'; frame-ancestors 'none'; base-uri 'self'">
+  <title>Design Rules &middot; The Playbook</title>
+  <meta name="description" content="What we build toward. Eighteen software design principles across four clusters: clarity, simplicity, resilience, and extensibility. Classical rules with practical guidance.">
+  <meta name="author" content="vnykmshr">
+  <meta name="theme-color" content="#fffff8" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#1a1a1a" media="(prefers-color-scheme: dark)">
+  <link rel="canonical" href="https://playbook.1mb.dev/design-rules.html">
+
+  <meta property="og:title" content="Design Rules &middot; The Playbook">
+  <meta property="og:description" content="Eighteen software design principles across four clusters: clarity, simplicity, resilience, extensibility.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://playbook.1mb.dev/design-rules.html">
+  <meta property="og:site_name" content="The Playbook">
+  <meta name="twitter:card" content="summary">
+
+  <link rel="icon" href="public/favicon.ico" sizes="any">
+  <link rel="icon" href="public/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="public/favicon.png" type="image/png" sizes="32x32">
+  <link rel="apple-touch-icon" href="public/apple-touch-icon.png">
+  <link rel="manifest" href="public/site.webmanifest">
+  <link rel="preload" href="public/fonts/SourceSerif4-Regular.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="public/fonts/SourceSerif4-Italic.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="public/fonts/SourceSerif4-Semibold.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="styles/tufte.css">
+</head>
+<body>
+  <a href="#main-content" class="skip-to-content">Skip to content</a>
+  <header class="site-header">
+    <nav aria-label="Book navigation">
+      <a href="index.html" class="nav-home"><span class="pb-mark">Pb</span> The Playbook</a>
+      <ul class="nav-chapters" role="list">
+        <li><a href="preamble.html">1. Preamble</a></li>
+        <li><a href="design-rules.html" aria-current="page">2. Design Rules</a></li>
+        <li><a href="ritual.html">3. Ritual</a></li>
+        <li><a href="review.html">4. Review</a></li>
+        <li><a href="adoption.html">5. Adoption</a></li>
+      </ul>
+      <button class="theme-toggle" type="button" aria-label="Toggle theme">Auto</button>
+    </nav>
+  </header>
+
+  <main id="main-content">
+    <article>
+      <header class="page-header">
+        <p class="page-label">Chapter Two &middot; 10 min read</p>
+        <h1>Design Rules</h1>
+        <p role="doc-subtitle">What we build toward</p>
+      </header>
+
+      <section>
+        <p>The Preamble tells you how to think together. Design rules tell you what to build. They're eighteen principles, none of them new, most of them decades old, organized into four clusters: Clarity, Simplicity, Resilience, and Extensibility.</p>
+
+        <p>They're not laws. They conflict with each other sometimes, and when they do, the conflict itself is useful. Simplicity says keep it minimal. Extensibility says design for the future. The tension between those two is where good architecture decisions happen. The point isn't to follow every rule mechanically. It's to have shared language for the trade-offs.</p>
+
+        <label for="sn-1" class="sidenote-toggle" aria-label="Toggle note on design vocabulary">&#8853;</label>
+        <input type="checkbox" id="sn-1" class="sidenote-toggle" aria-hidden="true">
+        <span class="sidenote">When a code review says "this violates Clarity" or "we're trading Simplicity for Extensibility here," everyone knows what that means. The rules give disagreements a technical vocabulary instead of devolving into taste arguments.</span>
+
+        <p>What follows is the essential idea behind each rule. Not the full reference (that's in the <a href="https://vnykmshr.github.io/playbook/">Command Reference</a>), but enough to internalize and carry with you.</p>
+      </section>
+
+      <section>
+        <h2>Clarity</h2>
+        <p class="cluster-subtitle">Design for understandability</p>
+
+        <h3>1. Clarity over cleverness</h3>
+
+        <p>When you have a choice between a clever solution and a clear one, choose clear. Clever solutions impress the author. Clear solutions serve everyone who reads the code afterward, which is a much larger group over a much longer time.</p>
+
+        <p>Code is read far more often than it's written. Explicit variable names beat cryptic abbreviations. Simple control flow beats nested ternaries. The math works out: one author, ten readers over three years. Clarity pays compound interest.</p>
+
+        <h3>2. Least surprise</h3>
+
+        <p>In interface design, always choose the behavior users would expect. Surprise is context-switching. When an API behaves unexpectedly, developers stop working and start debugging. Expected behavior is automatic. Unexpected behavior is cognitive load.</p>
+
+        <p>Don't write a <code>map()</code> function that deletes elements. Don't return 200 with an error body. Use conventions. Do what's expected.</p>
+
+        <h3>3. Silence</h3>
+
+        <p>When there's nothing to say, say nothing. Programs should be quiet unless they have something important to communicate. A deployment that succeeds produces zero output. A deployment that fails produces a clear error. Not the reverse.</p>
+
+        <p>When everything outputs constantly, important signals disappear. Real problems get drowned in chatter.</p>
+
+        <h3>4. Representation</h3>
+
+        <p>Fold knowledge into data, not code. Make the data structure so clear that the logic becomes obvious. Don't represent user roles as strings you check with <code>if role == "admin"</code>. Represent them as an enum. Now the compiler catches your mistakes instead of production.</p>
+
+        <label for="sn-2" class="sidenote-toggle" aria-label="Toggle note on data vs logic">&#8853;</label>
+        <input type="checkbox" id="sn-2" class="sidenote-toggle" aria-hidden="true">
+        <span class="sidenote">Logic is hard to reason about. Data structures are easy to reason about. When you push knowledge into data, the program becomes obviously correct instead of mysteriously working.</span>
+      </section>
+
+      <section>
+        <h2>Simplicity</h2>
+        <p class="cluster-subtitle">Design for discipline</p>
+
+        <h3>5. Simplicity</h3>
+
+        <p>Design for simplicity. Add complexity only where you must. Every line of code is a liability: someone has to read it, debug it, test it, maintain it. A simple system with a known limitation is more reliable than a complex system that <em>tries</em> to handle everything.</p>
+
+        <p>This requires discipline. "Let me add support for X even though we don't need it yet" is the most expensive sentence in software engineering. That feature might never be needed. The maintenance cost is paid every day it exists.</p>
+
+        <h3>6. Parsimony</h3>
+
+        <p>Write big programs only when clearly nothing else will do. Before building a monolith, prove that three focused small programs won't work instead. Before writing a framework, prove a library won't do. The burden of proof is on complexity, not simplicity.</p>
+
+        <h3>7. Separation</h3>
+
+        <p>Separate policy from mechanism. Separate interfaces from engines. Keep "what should happen" apart from "how it happens." When you mix abstraction levels, changes ripple everywhere. When you expose implementation details, clients depend on them. You lose the ability to change anything without breaking everything.</p>
+
+        <h3>8. Composition</h3>
+
+        <p>Design programs to be connected to other programs. Build components, not monoliths. Make your output useful as someone else's input. A linting tool that writes JSON can be used with any downstream tool. A tool that writes HTML can't be piped to anything.</p>
+
+        <label for="sn-3" class="sidenote-toggle" aria-label="Toggle note on Unix philosophy">&#8853;</label>
+        <input type="checkbox" id="sn-3" class="sidenote-toggle" aria-hidden="true">
+        <span class="sidenote">The Unix philosophy in four words: do one thing well. Design for composition and you get reusability, modularity, and flexibility without trying.</span>
+      </section>
+
+      <section>
+        <h2>Resilience</h2>
+        <p class="cluster-subtitle">Design for reliability and evolution</p>
+
+        <h3>9. Robustness</h3>
+
+        <p>Robustness is the child of transparency and simplicity. You don't build robust systems by adding error handling everywhere. You build them by making systems so transparent and simple that errors are obvious and handling is straightforward.</p>
+
+        <p>The paradox: systems that fail loud and fast feel fragile. Systems that hide errors feel stable. Until they corrupt your data.</p>
+
+        <h3>10. Repair</h3>
+
+        <p>When you must fail, fail noisily and as soon as possible. Don't silently return null. Throw an exception. The exception tells you where the real problem is. Null hides the problem until it causes cascading failures three layers down.</p>
+
+        <p>Silent failures compound. By the time you discover the problem, you've processed corrupted data for hours. Loud failures let you fix things at the source, while the blast radius is still small.</p>
+
+        <label for="sn-4" class="sidenote-toggle" aria-label="Toggle note on recovery-oriented errors">&#8853;</label>
+        <input type="checkbox" id="sn-4" class="sidenote-toggle" aria-hidden="true">
+        <span class="sidenote">Error messages should tell the consumer what to do next, not just what went wrong. "Element not found" leaves you stuck. "Element not found. Available elements: [list]. Run <code>snapshot</code> to refresh." That tells you the next step.</span>
+
+        <h3>11. Diversity</h3>
+
+        <p>Distrust all claims for "one true way." Microservices aren't always better than monoliths. Sometimes a monolith is the right choice. Any claim that there's one best way to do something is probably wrong. Most meaningful choices have trade-offs. Understand them instead of following dogma.</p>
+
+        <h3>12. Optimization</h3>
+
+        <p>Prototype before polishing. Get it working before you optimize it. Most programs spend 80% of time in 20% of the code. Optimizing randomly costs you everywhere and helps nowhere. Measure first. Profile to find the real bottleneck. Optimize only the bottleneck. Document why.</p>
+      </section>
+
+      <section>
+        <h2>Extensibility</h2>
+        <p class="cluster-subtitle">Design for long-term growth</p>
+
+        <h3>13. Modularity</h3>
+
+        <p>Write simple parts connected by clean interfaces. A payment module doesn't know about logging. Logging doesn't know about payments. They communicate through agreed-on interfaces. Modular systems are easier to understand, test, change, and reuse. One module at a time, one concern at a time.</p>
+
+        <h3>14. Economy</h3>
+
+        <p>Programmer time is expensive. Conserve it over machine time. A slow program that you can understand and modify is more valuable than a fast program that's impossible to understand. Use high-level languages. Use libraries. Let the computer do grunt work.</p>
+
+        <h3>15. Generation</h3>
+
+        <p>Avoid hand-hacking. When you're doing the same thing repeatedly, write a program to do it. Hand-hacked code is full of subtle variations, copy-paste mistakes, inconsistencies. Generated code is consistent. One mistake in the generator is one fix. One mistake in hand-written code is one mistake per instance.</p>
+
+        <h3>16. Extensibility</h3>
+
+        <p>Design for the future, because it will be here sooner than you think. Systems outlive your assumptions about them. Clean interfaces enable new uses. Modular design enables new components. Documentation of assumptions enables future understanding.</p>
+
+        <h3>17. Transparency</h3>
+
+        <p>Design for visibility to make inspection and debugging easier. You can't fix what you can't see. Systems should be observable without special tools, without a debugger, without asking the person who wrote it. Logs, metrics, traces. Make the state obvious.</p>
+      </section>
+
+      <section>
+        <h2>The Eighteenth Rule</h2>
+
+        <h3>18. Attention is a finite resource</h3>
+
+        <p>This rule came later than the others, but it ties them together. Every interface, every notification, every configuration option consumes someone's attention. Design systems that respect this. Silence over noise. Defaults over choices. Calm over urgency.</p>
+
+        <label for="sn-5" class="sidenote-toggle" aria-label="Toggle note on attention as connecting principle">&#8853;</label>
+        <input type="checkbox" id="sn-5" class="sidenote-toggle" aria-hidden="true">
+        <span class="sidenote">Rules 3 (Silence), 1 (Clarity), and 5 (Simplicity) all serve attention respect. Rule 18 makes the connection explicit: human attention is the scarcest resource in any system.</span>
+
+        <p>A system that requires its operator to watch a dashboard constantly is a system that disrespects attention. A CI pipeline that sends forty notifications per deploy is a system that has given up on signal. Build things that stay quiet when everything is fine and speak up clearly when something isn't.</p>
+      </section>
+
+      <section>
+        <h2>When Rules Conflict</h2>
+
+        <p>They will. Simplicity says keep it minimal. Extensibility says plan for growth. Clarity says write more code if it's easier to read. Economy says use a library even if it's less clear. These tensions aren't bugs in the framework. They're the framework working.</p>
+
+        <p>When you hit a conflict, name it. "We're trading Simplicity for Extensibility here because we know this component will need to support three more data sources by Q3." That sentence is more valuable than any design document. It captures the decision, the trade-off, and the reasoning in one breath.</p>
+
+        <p>The Preamble from Chapter 1 makes this possible. Peer thinking lets you surface the conflict without it becoming personal. The design rules give you concrete language for the trade-off.</p>
+
+        <p>Philosophy and principles are only as useful as the daily practices that carry them. The next chapter covers what that looks like: a three-step ritual that puts these rules into motion every time you write code.</p>
+      </section>
+
+      <nav class="chapter-nav" aria-label="Chapter navigation">
+        <a href="preamble.html" class="prev">The Preamble</a>
+        <a href="ritual.html" class="next">The Ritual</a>
+      </nav>
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    Engineering Playbook &middot; <a href="https://github.com/vnykmshr/playbook">Source</a> &middot; MIT License
+  </footer>
+  <script src="scripts/theme.js"></script>
+</body>
+</html>
