@@ -57,6 +57,9 @@ jobs:
       - name: Build mdbook
         run: ./scripts/build-mdbook.sh
 
+      - name: Check internal links
+        run: python3 scripts/check-links.py
+
       - name: Configure Pages
         uses: actions/configure-pages@v5
 
