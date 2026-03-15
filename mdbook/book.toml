@@ -10,6 +10,7 @@ default-theme = "light"
 preferred-dark-theme = "navy"
 smart-punctuation = true
 additional-css = ["theme/custom.css"]
+additional-js = ["mermaid.min.js", "mermaid-init.js"]
 git-repository-url = "https://github.com/vnykmshr/playbook"
 site-url = "/playbook/"
 no-section-label = true

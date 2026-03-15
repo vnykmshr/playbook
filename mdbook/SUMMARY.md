@@ -154,6 +154,7 @@
 
 # Reference
 
+- [Command Index](docs/command-index.md)
 - [Best Practices](docs/best-practices.md)
 - [Checklists](docs/checklists.md)
 - [FAQ](docs/faq.md)

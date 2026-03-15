@@ -1,15 +1,9 @@
-/* Engineering Playbook — mdbook custom styles */
+/* Engineering Playbook — mdbook custom styles
+   Minimal overrides. Let mdbook defaults handle most typography. */
 
-/* Typography improvements */
+/* Content area width */
 .content main {
-  font-size: 1.0625rem;
-  line-height: 1.65;
   max-width: 820px;
-}
-
-/* Tighter sidebar text */
-.sidebar .chapter li a {
-  font-size: 0.85rem;
 }
 
 /* Part headers in sidebar */
@@ -23,21 +17,9 @@
   opacity: 0.6;
 }
 
-/* Better heading rhythm */
+/* Heading rhythm */
 .content main h1 {
-  font-size: 2rem;
-  margin-top: 0;
   border-bottom: none;
-}
-
-.content main h2 {
-  font-size: 1.4rem;
-  margin-top: 2.5rem;
-}
-
-.content main h3 {
-  font-size: 1.1rem;
-  margin-top: 1.8rem;
 }
 
 /* Code block refinement */
@@ -46,10 +28,6 @@
 }
 
 /* Table refinement */
-.content main table {
-  font-size: 0.9rem;
-}
-
 .content main table th {
   font-weight: 600;
 }

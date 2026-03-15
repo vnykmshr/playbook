@@ -22,6 +22,8 @@ cp -r "$ROOT/commands" "$SRC/commands"
 cp "$ROOT/mdbook/book.toml" "$SRC/book.toml"
 cp "$ROOT/mdbook/SUMMARY.md" "$SRC/SUMMARY.md"
 cp -r "$ROOT/mdbook/theme" "$SRC/theme" 2>/dev/null || true
+cp "$ROOT/mdbook/mermaid.min.js" "$SRC/" 2>/dev/null || true
+cp "$ROOT/mdbook/mermaid-init.js" "$SRC/" 2>/dev/null || true
 
 # Strip YAML frontmatter from all .md files in commands/
 echo "Stripping YAML frontmatter..."
