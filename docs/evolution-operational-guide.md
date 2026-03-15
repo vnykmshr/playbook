@@ -102,10 +102,10 @@ python3 scripts/evolution-log.py \
 ```
 
 **Trigger types:**
-- `quarterly` — Scheduled quarterly evolution (Feb/May/Aug/Nov)
-- `version_upgrade` — New Claude model release
-- `user_feedback` — User-reported issue or pattern
-- `manual` — Ad-hoc evolution (e.g., testing)
+- `quarterly` - Scheduled quarterly evolution (Feb/May/Aug/Nov)
+- `version_upgrade` - New Claude model release
+- `user_feedback` - User-reported issue or pattern
+- `manual` - Ad-hoc evolution (e.g., testing)
 
 ---
 
@@ -316,7 +316,7 @@ python3 scripts/evolution-diff.py \
 
 # Create PR
 gh pr create \
-  --title "evolution(quarterly): Q1 2026 — Sonnet 4.6 analysis" \
+  --title "evolution(quarterly): Q1 2026 - Sonnet 4.6 analysis" \
   --body "$(cat <<'EOF'
 ## Summary
 
@@ -352,13 +352,13 @@ EOF
 
 **Reviewer, use this checklist:**
 
-- [ ] **Capability alignment** — Do proposed changes match new Claude capabilities?
-- [ ] **No regressions** — Will evolved playbooks still work as intended?
-- [ ] **Metadata consistency** — Do all field changes make sense together?
-- [ ] **Impact scope** — Are side effects acceptable?
-- [ ] **Test coverage** — Do execution tests pass?
-- [ ] **Documentation** — Is rationale clear?
-- [ ] **Risk assessment** — Are there gotchas?
+- [ ] **Capability alignment** - Do proposed changes match new Claude capabilities?
+- [ ] **No regressions** - Will evolved playbooks still work as intended?
+- [ ] **Metadata consistency** - Do all field changes make sense together?
+- [ ] **Impact scope** - Are side effects acceptable?
+- [ ] **Test coverage** - Do execution tests pass?
+- [ ] **Documentation** - Is rationale clear?
+- [ ] **Risk assessment** - Are there gotchas?
 
 **If review finds issues:**
 - Return PR for fixes
@@ -476,12 +476,12 @@ python3 scripts/evolution-log.py --analyze
 ```markdown
 # CHANGELOG.md
 
-## v2.11.0 (2026-05-15) — Q1 2026 Evolution
+## v2.11.0 (2026-05-15) - Q1 2026 Evolution
 
 ### Improvements
-- **Parallel Review Patterns** — Code reviews now run 3-way parallel (style, logic, security)
-- **Model Routing Optimization** — Sonnet 4.6 now handles architecture decisions previously requiring Opus
-- **Context Efficiency** — Improved compression techniques; context use -8%
+- **Parallel Review Patterns** - Code reviews now run 3-way parallel (style, logic, security)
+- **Model Routing Optimization** - Sonnet 4.6 now handles architecture decisions previously requiring Opus
+- **Context Efficiency** - Improved compression techniques; context use -8%
 
 ### Metrics
 - Review time: -40% (25 min → 15 min)
@@ -663,21 +663,21 @@ pytest tests/test_evolution_execution.py -v
 
 ## Best Practices
 
-1. **Always snapshot first** — This is non-negotiable. You can't rollback without it.
+1. **Always snapshot first** - This is non-negotiable. You can't rollback without it.
 
-2. **Test before approving** — Run the test suite and generation scripts locally before creating PR.
+2. **Test before approving** - Run the test suite and generation scripts locally before creating PR.
 
-3. **Diff before applying** — Generate and review the diff to see exactly what will change.
+3. **Diff before applying** - Generate and review the diff to see exactly what will change.
 
-4. **Peer review is mandatory** — Don't merge evolution changes without review.
+4. **Peer review is mandatory** - Don't merge evolution changes without review.
 
-5. **Document your reasoning** — Future you will thank present you.
+5. **Document your reasoning** - Future you will thank present you.
 
-6. **Measure impact** — Track before/after metrics for cost, speed, user satisfaction.
+6. **Measure impact** - Track before/after metrics for cost, speed, user satisfaction.
 
-7. **Keep cycle log** — The structured log enables pattern detection and automation.
+7. **Keep cycle log** - The structured log enables pattern detection and automation.
 
-8. **Plan rollback early** — If something breaks, you want to know your exit route.
+8. **Plan rollback early** - If something breaks, you want to know your exit route.
 
 ---
 
@@ -705,7 +705,7 @@ A: Someone familiar with playbooks and Claude capabilities. Usually the playbook
 
 ## Related Docs
 
-- `commands/core/pb-evolve.md` — High-level evolution process
-- `.playbook-metadata-schema.yaml` — Metadata field definitions
-- `CHANGELOG.md` — Release history
+- `commands/core/pb-evolve.md` - High-level evolution process
+- `.playbook-metadata-schema.yaml` - Metadata field definitions
+- `CHANGELOG.md` - Release history
 

@@ -9,71 +9,71 @@ This document tracks version history for individual playbook commands. Commands 
 
 ---
 
-## v1.1.0 (2026-02-09) — Phase 1-4 Enhancements
+## v1.1.0 (2026-02-09) - Phase 1-4 Enhancements
 
 ### New Commands (Phase 1: Persona Agents)
 
 #### 5 Specialized Review Agents
 
-- **pb-linus-agent** v1.1.0 — Direct technical feedback with pragmatic security lens
+- **pb-linus-agent** v1.1.0 - Direct technical feedback with pragmatic security lens
   - 584 lines, 18KB
   - Philosophy: Challenge assumptions, surface flaws, question trade-offs
   - Automatic rejection criteria: hardcoded secrets, SQL injection, XSS, command injection, buffer overflow, silent failures, race conditions
 
-- **pb-alex-infra** v1.1.0 — Infrastructure resilience and failure mode analysis
+- **pb-alex-infra** v1.1.0 - Infrastructure resilience and failure mode analysis
   - 438 lines, 18KB
-  - Philosophy: "Everything fails—excellence = recovery speed"
+  - Philosophy: "Everything fails - excellence = recovery speed"
   - Categories: Failure modes, degradation, deployment, observability, capacity planning
 
-- **pb-maya-product** v1.1.0 — Product strategy and user value focus
+- **pb-maya-product** v1.1.0 - Product strategy and user value focus
   - 1000+ lines, 15KB
   - Philosophy: "Features are expenses; value determined by users"
   - 6-step decision framework for feature evaluation
 
-- **pb-sam-documentation** v1.1.0 — Documentation clarity and knowledge transfer
+- **pb-sam-documentation** v1.1.0 - Documentation clarity and knowledge transfer
   - 1000+ lines, 21KB
   - Philosophy: "Documentation is first-class infrastructure"
   - Three-layer documentation approach (Conceptual, Procedural, Technical)
 
-- **pb-jordan-testing** v1.1.0 — Testing coverage quality and reliability review
+- **pb-jordan-testing** v1.1.0 - Testing coverage quality and reliability review
   - 1200+ lines, 22KB
   - Philosophy: "Tests reveal gaps, not correctness"
   - Categories: Test coverage, error handling, concurrency, data integrity, integration
 
 ### New Commands (Phase 2: Multi-Persona Review Workflows)
 
-- **pb-review-backend** v1.1.0 — Backend review combining infrastructure + testing perspectives
+- **pb-review-backend** v1.1.0 - Backend review combining infrastructure + testing perspectives
   - 16KB, multi-perspective decision tree
   - Combines: Alex (Infrastructure) + Jordan (Testing)
 
-- **pb-review-frontend** v1.1.0 — Frontend review combining product + documentation perspectives
+- **pb-review-frontend** v1.1.0 - Frontend review combining product + documentation perspectives
   - 17KB, multi-perspective decision tree
   - Combines: Maya (Product) + Sam (Documentation)
 
-- **pb-review-infrastructure** v1.1.0 — Infrastructure review combining resilience + security perspectives
+- **pb-review-infrastructure** v1.1.0 - Infrastructure review combining resilience + security perspectives
   - 18KB, multi-perspective decision tree
   - Combines: Alex (Infrastructure) + Linus (Security)
 
 ### Enhanced Commands (Phase 3: Outcome-First Workflows)
 
-- **pb-start** v1.1.0 — Added Outcome Clarification section
+- **pb-start** v1.1.0 - Added Outcome Clarification section
   - New: 5-step outcome definition process (define outcome, success criteria, approval path, blockers, Definition of Done)
   - New: Outcome documentation template (`todos/work/[task-date]-outcome.md`)
   - Impact: Prevents scope creep and "finished but doesn't solve the problem" problems
 
-- **pb-cycle** v1.1.0 — Added Step 0: Outcome Verification before self-review
+- **pb-cycle** v1.1.0 - Added Step 0: Outcome Verification before self-review
   - New: Step 0 verifies success criteria met before proceeding to self-review
   - Enhanced: Step 3 peer review now includes outcome verification
   - Impact: Validates problem is solved before reviewing code quality
 
-- **pb-evolve** v1.1.0 — Added evolution success criteria validation
+- **pb-evolve** v1.1.0 - Added evolution success criteria validation
   - New: Three evolution types with specific success criteria
   - New: Pre-release checklist requiring success criteria verification
   - Impact: Makes evolution cycles accountable to measurable outcomes
 
 ### Enhanced Commands (Phase 4: Philosophy Expansion)
 
-- **pb-design-rules** v1.1.0 — Added philosophy sections to 5 core design rules
+- **pb-design-rules** v1.1.0 - Added philosophy sections to 5 core design rules
   - Enhanced Rule 1 (Clarity): "Clarity is an act of respect for future readers"
     - Links to `/pb-sam-documentation`
   - Enhanced Rule 5 (Simplicity): "Scope discipline and feature-as-expense"
@@ -88,7 +88,7 @@ This document tracks version history for individual playbook commands. Commands 
 
 ---
 
-## v1.0.0 — Initial Baseline
+## v1.0.0 - Initial Baseline
 
 All other commands at version 1.0.0 represent the initial playbook baseline.
 

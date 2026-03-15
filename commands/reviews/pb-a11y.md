@@ -18,9 +18,9 @@ Comprehensive accessibility guidance for web applications. Semantic HTML first, 
 
 **Accessibility is not optional.** It's not a feature. It's not "nice to have." It's a requirement for professional software.
 
-**Mindset:** Use `/pb-preamble` thinking to challenge "works for me" assumptions. Use `/pb-design-rules` thinking — especially Clarity (is the interface obvious to ALL users?), Robustness (does it work with assistive technology?), and Repair (fail accessibly when things break).
+**Mindset:** Use `/pb-preamble` thinking to challenge "works for me" assumptions. Use `/pb-design-rules` thinking - especially Clarity (is the interface obvious to ALL users?), Robustness (does it work with assistive technology?), and Repair (fail accessibly when things break).
 
-**Resource Hint:** sonnet — accessibility audit follows structured WCAG checklists and component patterns
+**Resource Hint:** sonnet - accessibility audit follows structured WCAG checklists and component patterns
 
 ---
 
@@ -156,7 +156,7 @@ Use lists for groups of related items:
 </ol>
 ```
 
-Screen readers announce "list of 3 items" — helpful context.
+Screen readers announce "list of 3 items" - helpful context.
 
 ### Tables
 
@@ -362,8 +362,8 @@ Focus order should follow visual order (usually left-to-right, top-to-bottom in 
 ```
 
 **Only use tabindex:**
-- `tabindex="0"` — Add to focus order (for custom focusable elements)
-- `tabindex="-1"` — Remove from focus order (but focusable via JavaScript)
+- `tabindex="0"` - Add to focus order (for custom focusable elements)
+- `tabindex="-1"` - Remove from focus order (but focusable via JavaScript)
 
 **Never use** `tabindex > 0`.
 
@@ -783,9 +783,9 @@ npx lhci autorun
 **Tier 4: Manual Review**
 
 Browser extensions for code review:
-- axe DevTools — Comprehensive issue detection
-- WAVE — Visual overlay of issues
-- Accessibility Insights — Step-by-step assessment
+- axe DevTools - Comprehensive issue detection
+- WAVE - Visual overlay of issues
+- Accessibility Insights - Step-by-step assessment
 
 **Tier 5: Periodic Audit (pa11y-ci)**
 
@@ -900,11 +900,11 @@ Test with real screen readers:
 
 ## Related Commands
 
-- `/pb-patterns-frontend` — Accessible component patterns
-- `/pb-design-language` — Accessibility constraints in design tokens
-- `/pb-review-hygiene` — Include accessibility in code review
-- `/pb-testing` — Accessibility testing integration
-- `/pb-security` — CSP and CORS (overlap with a11y testing tools)
+- `/pb-patterns-frontend` - Accessible component patterns
+- `/pb-design-language` - Accessibility constraints in design tokens
+- `/pb-review-hygiene` - Include accessibility in code review
+- `/pb-testing` - Accessibility testing integration
+- `/pb-security` - CSP and CORS (overlap with a11y testing tools)
 
 ---
 

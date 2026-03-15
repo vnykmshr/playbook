@@ -14,11 +14,11 @@ breaking_changes: []
 ---
 # Pattern Learning
 
-**Purpose:** Extract reusable patterns from the current session — error resolutions, debugging techniques, workarounds, and project conventions.
+**Purpose:** Extract reusable patterns from the current session - error resolutions, debugging techniques, workarounds, and project conventions.
 
-**Mindset:** Design Rules say "measure before optimizing" — learn from what you measure, not what you assume. Capture knowledge that would help future you (or teammates) solve similar problems faster. Focus on patterns that are **reusable**, not one-time fixes.
+**Mindset:** Design Rules say "measure before optimizing" - learn from what you measure, not what you assume. Capture knowledge that would help future you (or teammates) solve similar problems faster. Focus on patterns that are **reusable**, not one-time fixes.
 
-**Resource Hint:** sonnet — pattern extraction and documentation
+**Resource Hint:** sonnet - pattern extraction and documentation
 
 ---
 
@@ -51,11 +51,11 @@ breaking_changes: []
 
 ## Problem
 
-[What situation triggers this pattern — be specific about symptoms]
+[What situation triggers this pattern - be specific about symptoms]
 
 ## Solution
 
-[What to do — concrete steps or code]
+[What to do - concrete steps or code]
 
 ## Example
 
@@ -99,7 +99,7 @@ breaking_changes: []
 └── pattern-api-retry-logic.md
 ```
 
-These follow you across all projects — personal knowledge base.
+These follow you across all projects - personal knowledge base.
 
 ---
 
@@ -120,10 +120,10 @@ If yes to any, proceed.
 
 Review what happened:
 
-1. **What was the symptom?** — Error message, unexpected behavior
-2. **What was the root cause?** — Why it happened
-3. **What was the solution?** — What fixed it
-4. **What made this non-obvious?** — Why it took time to figure out
+1. **What was the symptom?** - Error message, unexpected behavior
+2. **What was the root cause?** - Why it happened
+3. **What was the solution?** - What fixed it
+4. **What made this non-obvious?** - Why it took time to figure out
 
 ### Step 3: Document
 
@@ -133,15 +133,15 @@ Use the template above. Be specific:
 |-----|------|
 | "Check the logs" | "When axios throws ECONNRESET, check if server timeout < client timeout" |
 | "Fix the types" | "TypeScript 5.x with ESM requires .js extensions in imports even for .ts files" |
-| "Handle the error" | "Prisma P2025 means record not found — check if ID exists before update" |
+| "Handle the error" | "Prisma P2025 means record not found - check if ID exists before update" |
 
 ### Step 4: Store
 
 ```bash
-# Project-local (default) — creates .claude/patterns/[name].md
+# Project-local (default) - creates .claude/patterns/[name].md
 mkdir -p .claude/patterns
 
-# Global — creates ~/.claude/learned/[name].md
+# Global - creates ~/.claude/learned/[name].md
 mkdir -p ~/.claude/learned
 ```
 
@@ -233,7 +233,7 @@ useEffect(() => {
 ## Context
 
 React 18+ development mode only. Production runs effects once.
-Don't disable Strict Mode — fix the underlying issue instead.
+Don't disable Strict Mode - fix the underlying issue instead.
 
 ## Discovered
 
@@ -279,11 +279,11 @@ Alternative: migrate project to native ESM or use vitest.
 
 Skip pattern extraction for:
 
-- **Trivial fixes** — Typos, missing imports, syntax errors
-- **Temporary workarounds** — Hacks you'll remove soon
-- **Highly version-specific** — Library will fix in next release
-- **Well-documented elsewhere** — Official docs cover it well
-- **One-time decisions** — Choices that won't recur
+- **Trivial fixes** - Typos, missing imports, syntax errors
+- **Temporary workarounds** - Hacks you'll remove soon
+- **Highly version-specific** - Library will fix in next release
+- **Well-documented elsewhere** - Official docs cover it well
+- **One-time decisions** - Choices that won't recur
 
 ---
 
@@ -291,11 +291,11 @@ Skip pattern extraction for:
 
 Before saving, verify:
 
-- [ ] **Problem is specific** — Someone can recognize when they have this issue
-- [ ] **Solution is actionable** — Steps are concrete, not vague
-- [ ] **Example is included** — Shows actual code or commands
-- [ ] **Context explains scope** — When it applies, when it doesn't
-- [ ] **Not already documented** — Check project docs, official docs first
+- [ ] **Problem is specific** - Someone can recognize when they have this issue
+- [ ] **Solution is actionable** - Steps are concrete, not vague
+- [ ] **Example is included** - Shows actual code or commands
+- [ ] **Context explains scope** - When it applies, when it doesn't
+- [ ] **Not already documented** - Check project docs, official docs first
 
 ---
 
@@ -328,18 +328,18 @@ pattern-api-retry-exponential.md
 
 After resolving non-trivial issues in these workflows, consider capturing patterns:
 
-- `/pb-debug` — After fixing a tricky bug, capture the resolution
-- `/pb-cycle` — After discovering a better approach during iteration
+- `/pb-debug` - After fixing a tricky bug, capture the resolution
+- `/pb-cycle` - After discovering a better approach during iteration
 
 ---
 
 ## Related Commands
 
-- `/pb-debug` — Debugging methodology (source of error/debug patterns)
-- `/pb-cycle` — Development iteration (source of pattern discoveries)
-- `/pb-resume` — Uses stored patterns for session continuity
-- `/pb-documentation` — Writing clear documentation
-- `/pb-standards` — Project conventions to document
+- `/pb-debug` - Debugging methodology (source of error/debug patterns)
+- `/pb-cycle` - Development iteration (source of pattern discoveries)
+- `/pb-resume` - Uses stored patterns for session continuity
+- `/pb-documentation` - Writing clear documentation
+- `/pb-standards` - Project conventions to document
 
 ---
 

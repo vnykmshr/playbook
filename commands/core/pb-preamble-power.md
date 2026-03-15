@@ -16,7 +16,7 @@ breaking_changes: []
 
 Extending core preamble thinking to hierarchies, authority, and the psychological reality of power differences.
 
-**Resource Hint:** opus — Nuanced reasoning about power dynamics and psychological safety.
+**Resource Hint:** opus - Nuanced reasoning about power dynamics and psychological safety.
 
 ## When to Use
 
@@ -230,11 +230,11 @@ What concerns do you have? I might change my mind."
 **Good:**
 ```
 "We're using PostgreSQL because: [specific reasoning about our use case].
-It's not perfect—tradeoffs are [list]. But for us, this is the right call.
+It's not perfect-tradeoffs are [list]. But for us, this is the right call.
 Questions?"
 ```
 
-**Why this matters:** When people understand your reasoning, they can challenge it meaningfully. When you just assert, they either agree or resist—no real thinking happens.
+**Why this matters:** When people understand your reasoning, they can challenge it meaningfully. When you just assert, they either agree or resist-no real thinking happens.
 
 ### Responsibility 3: Demonstrate You Can Change Your Mind
 
@@ -302,11 +302,11 @@ What am I missing about this?"
 **This is a serious signal.** If challenging has negative consequences (tone shift, unfair treatment, exclusion), you have a problem that's bigger than preamble.
 
 **What to do:**
-1. **Document it** — Keep records of what you challenged and how they responded
-2. **Test it again** — Is it consistent? Is it really punishment or projection?
-3. **Talk to them 1-on-1** — "I noticed you seemed frustrated when I raised [concern]. Did I handle that poorly?"
-4. **Escalate if it continues** — Talk to HR, their manager, or someone you trust
-5. **Consider leaving** — If authority is actually being weaponized, the organization has a bigger problem
+1. **Document it** - Keep records of what you challenged and how they responded
+2. **Test it again** - Is it consistent? Is it really punishment or projection?
+3. **Talk to them 1-on-1** - "I noticed you seemed frustrated when I raised [concern]. Did I handle that poorly?"
+4. **Escalate if it continues** - Talk to HR, their manager, or someone you trust
+5. **Consider leaving** - If authority is actually being weaponized, the organization has a bigger problem
 
 **The hard truth:** Some organizations aren't ready for preamble thinking. You can't change that alone. Protect yourself.
 
@@ -540,12 +540,12 @@ If it's the latter, you have hierarchy working despite preamble thinking.
 
 ## Related Commands
 
-- `/pb-preamble` — Core principles (Part 1)
-- `/pb-preamble-async` — How these apply in async (Part 2)
-- `/pb-team` — Building team culture and psychological safety
-- `/pb-incident` — Honest assessment under stress
-- `/pb-onboarding` — Bringing people into preamble culture
+- `/pb-preamble` - Core principles (Part 1)
+- `/pb-preamble-async` - How these apply in async (Part 2)
+- `/pb-team` - Building team culture and psychological safety
+- `/pb-incident` - Honest assessment under stress
+- `/pb-onboarding` - Bringing people into preamble culture
 
 ---
 
-*Power Dynamics & Psychology — Real-world application of preamble thinking.*
+*Power Dynamics & Psychology - Real-world application of preamble thinking.*

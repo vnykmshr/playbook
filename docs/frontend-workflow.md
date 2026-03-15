@@ -38,7 +38,7 @@ Complete guide to frontend development using the Engineering Playbook. Covers th
 
 ---
 
-## Phase 1: Foundation — Design Language
+## Phase 1: Foundation - Design Language
 
 Before writing component code, establish the design language.
 
@@ -54,7 +54,7 @@ This command guides you through creating:
 - **Constraints** (what you don't do)
 - **Asset requirements** (logos, icons, images)
 
-**Output:** `docs/design-language.md` — living document that evolves with the project.
+**Output:** `docs/design-language.md` - living document that evolves with the project.
 
 ### Existing Projects
 
@@ -74,7 +74,7 @@ If joining an existing project:
 
 ---
 
-## Phase 2: Architecture — Component Patterns
+## Phase 2: Architecture - Component Patterns
 
 Plan component structure before implementation.
 
@@ -113,7 +113,7 @@ State type?
 
 ---
 
-## Phase 3: Accessibility — Built In, Not Bolted On
+## Phase 3: Accessibility - Built In, Not Bolted On
 
 Accessibility is part of development, not a separate phase.
 
@@ -125,11 +125,11 @@ Accessibility is part of development, not a separate phase.
 
 For EVERY component, verify:
 
-- [ ] **Semantic HTML** — Using correct elements (`<button>`, `<nav>`, `<main>`)
-- [ ] **Keyboard accessible** — Tab, Enter, Escape work
-- [ ] **Focus visible** — Focus ring shows in all themes
-- [ ] **Labels present** — All inputs have labels (visible or `aria-label`)
-- [ ] **Alt text** — All informative images have alt text
+- [ ] **Semantic HTML** - Using correct elements (`<button>`, `<nav>`, `<main>`)
+- [ ] **Keyboard accessible** - Tab, Enter, Escape work
+- [ ] **Focus visible** - Focus ring shows in all themes
+- [ ] **Labels present** - All inputs have labels (visible or `aria-label`)
+- [ ] **Alt text** - All informative images have alt text
 
 ### Quick Semantic HTML Reference
 
@@ -144,10 +144,10 @@ For EVERY component, verify:
 ### Testing Accessibility
 
 **Manual (every feature):**
-1. Tab through — logical order?
-2. Enter/Space — activates buttons?
-3. Escape — closes modals?
-4. Screen reader — announces correctly?
+1. Tab through - logical order?
+2. Enter/Space - activates buttons?
+3. Escape - closes modals?
+4. Screen reader - announces correctly?
 
 **Automated (in CI):**
 ```bash
@@ -262,7 +262,7 @@ a11y(Form): add aria-describedby for error messages
 
 ---
 
-## Phase 6: Quality — Ship Workflow
+## Phase 6: Quality - Ship Workflow
 
 When feature is code-complete.
 
@@ -378,12 +378,12 @@ npx lighthouse http://localhost:3000 --view
 
 ## Related Commands
 
-- `/pb-design-language` — Design token and vocabulary system
-- `/pb-patterns-frontend` — Component and state patterns
-- `/pb-a11y` — Accessibility deep-dive
-- `/pb-patterns-api` — API integration patterns
-- `/pb-debug` — Frontend debugging techniques
-- `/pb-testing` — Component testing patterns
+- `/pb-design-language` - Design token and vocabulary system
+- `/pb-patterns-frontend` - Component and state patterns
+- `/pb-a11y` - Accessibility deep-dive
+- `/pb-patterns-api` - API integration patterns
+- `/pb-debug` - Frontend debugging techniques
+- `/pb-testing` - Component testing patterns
 
 ---
 

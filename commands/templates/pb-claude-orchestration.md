@@ -16,9 +16,9 @@ breaking_changes: []
 
 **Purpose:** Guide model selection, task delegation, context management, and continuous self-improvement for efficient Claude Code usage.
 
-**Mindset:** Apply `/pb-design-rules` thinking (Simplicity — cheapest model that produces correct results; Clarity — make delegation explicit) and `/pb-preamble` thinking (challenge assumptions about model choice — is opus actually needed here, or is it habit?).
+**Mindset:** Apply `/pb-design-rules` thinking (Simplicity - cheapest model that produces correct results; Clarity - make delegation explicit) and `/pb-preamble` thinking (challenge assumptions about model choice - is opus actually needed here, or is it habit?).
 
-**Resource Hint:** sonnet — reference guide for model selection and delegation patterns.
+**Resource Hint:** sonnet - reference guide for model selection and delegation patterns.
 
 ---
 
@@ -127,7 +127,7 @@ Every unnecessary line in CLAUDE.md or MEMORY.md costs tokens on every single tu
 - Subagents for exploration (separate context window, doesn't pollute main)
 - Surgical file reads (offset + limit, not full files when you know the area)
 - Plans in files, not in chat (reference by path, not by pasting)
-- Compact at natural breakpoints (after commit, after phase — not mid-task)
+- Compact at natural breakpoints (after commit, after phase - not mid-task)
 - Commit frequently (each commit is a context checkpoint)
 - Reference by commit hash (not by re-reading entire files)
 
@@ -159,7 +159,7 @@ After each significant workflow, reflect:
 | Did a subagent return insufficient results? | Note the prompt pattern that failed, try broader/narrower next time |
 | Did context fill up mid-task? | Record breakpoint strategy, compact earlier next session |
 | Was a playbook missing or insufficient? | Note the gap, suggest improvement to user |
-| Did the workflow take more turns than expected? | Analyze why — wrong model? Missing information? Poor delegation? |
+| Did the workflow take more turns than expected? | Analyze why - wrong model? Missing information? Poor delegation? |
 
 ### Auto-Memory as Learning Journal
 
@@ -174,9 +174,9 @@ Use the auto-memory directory (`~/.claude/projects/<project>/memory/`) to persis
 
 **Topic files** (referenced from MEMORY.md, loaded on demand):
 
-- `orchestration-lessons.md` — Model choice outcomes, delegation pattern results
-- `playbook-gaps.md` — Missing guidance discovered during workflows
-- `project-patterns.md` — Project-specific efficiency patterns
+- `orchestration-lessons.md` - Model choice outcomes, delegation pattern results
+- `playbook-gaps.md` - Missing guidance discovered during workflows
+- `project-patterns.md` - Project-specific efficiency patterns
 
 ### Feedback Loop
 
@@ -212,10 +212,10 @@ Continue    Record learning in auto-memory
 
 When the orchestrator discovers gaps during operation:
 
-1. **Note the gap** — What was missing, what workaround was used
-2. **Assess frequency** — One-off vs recurring need
-3. **Propose to user** — "Encountered [gap] during [workflow]. Suggest updating [playbook] with [specific addition]."
-4. **Don't self-modify playbooks silently** — Propose, don't assume
+1. **Note the gap** - What was missing, what workaround was used
+2. **Assess frequency** - One-off vs recurring need
+3. **Propose to user** - "Encountered [gap] during [workflow]. Suggest updating [playbook] with [specific addition]."
+4. **Don't self-modify playbooks silently** - Propose, don't assume
 
 This creates a virtuous cycle: use playbooks → discover gaps → propose improvements → playbooks get better → usage gets better.
 
@@ -241,12 +241,12 @@ This creates a virtuous cycle: use playbooks → discover gaps → propose impro
 
 ### Example 1: Feature Implementation Workflow
 
-1. `/pb-plan` — opus (main context): architecture decisions, trade-offs
-2. Explore codebase — haiku (Task tool, 2-3 parallel agents): find relevant files
-3. Implementation — sonnet (main context): write code
-4. Write tests — sonnet (Task tool): parallel test generation
-5. Self-review — opus (main context): critical evaluation
-6. `/pb-commit` — sonnet: procedural commit workflow
+1. `/pb-plan` - opus (main context): architecture decisions, trade-offs
+2. Explore codebase - haiku (Task tool, 2-3 parallel agents): find relevant files
+3. Implementation - sonnet (main context): write code
+4. Write tests - sonnet (Task tool): parallel test generation
+5. Self-review - opus (main context): critical evaluation
+6. `/pb-commit` - sonnet: procedural commit workflow
 
 **Post-session reflection:**
 
@@ -255,19 +255,19 @@ This creates a virtuous cycle: use playbooks → discover gaps → propose impro
 
 ### Example 2: Playbook Review with Model Delegation
 
-- Phase 1 automated checks — haiku (Task tool): count commands, validate cross-refs
-- Phase 2 category review — opus (main context): nuanced evaluation of intent, quality
-- Phase 3 cross-category — opus (main context): holistic pattern recognition
+- Phase 1 automated checks - haiku (Task tool): count commands, validate cross-refs
+- Phase 2 category review - opus (main context): nuanced evaluation of intent, quality
+- Phase 3 cross-category - opus (main context): holistic pattern recognition
 
 ---
 
 ## Related Commands
 
-- `/pb-claude-global` — Generate global CLAUDE.md (concise orchestration rules)
-- `/pb-claude-project` — Generate project CLAUDE.md
-- `/pb-learn` — Pattern learning from debugging (complements operational learning here)
-- `/pb-review-playbook` — Playbook review (model delegation by phase)
-- `/pb-new-playbook` — Meta-playbook (resource hint in scaffold)
+- `/pb-claude-global` - Generate global CLAUDE.md (concise orchestration rules)
+- `/pb-claude-project` - Generate project CLAUDE.md
+- `/pb-learn` - Pattern learning from debugging (complements operational learning here)
+- `/pb-review-playbook` - Playbook review (model delegation by phase)
+- `/pb-new-playbook` - Meta-playbook (resource hint in scaffold)
 
 ---
 

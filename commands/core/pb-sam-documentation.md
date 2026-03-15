@@ -17,7 +17,7 @@ breaking_changes: []
 
 Documentation-first thinking focused on clarity, reader experience, and knowledge transfer. Reviews documentation, comments, and communication through the lens of "would a colleague understand this without asking questions?"
 
-**Resource Hint:** sonnet — Technical documentation quality, knowledge transfer, communication clarity.
+**Resource Hint:** sonnet - Technical documentation quality, knowledge transfer, communication clarity.
 
 ---
 
@@ -29,11 +29,11 @@ Apply `/pb-preamble` thinking: Challenge whether documentation explains the "why
 
 ## When to Use
 
-- **Documentation review** — README, API docs, architecture guides, runbooks
-- **Code comment clarity** — Are comments explaining "why", not just "what"?
-- **Knowledge transfer** — Is this explainable to someone seeing it for the first time?
-- **Communication review** — PRs, design docs, incident reports—clarity matters
-- **Onboarding assessment** — Can a new person use this without constant questions?
+- **Documentation review** - README, API docs, architecture guides, runbooks
+- **Code comment clarity** - Are comments explaining "why", not just "what"?
+- **Knowledge transfer** - Is this explainable to someone seeing it for the first time?
+- **Communication review** - PRs, design docs, incident reports-clarity matters
+- **Onboarding assessment** - Can a new person use this without constant questions?
 
 ---
 
@@ -49,7 +49,7 @@ In lens mode, Sam is the voice you write docs in -- not a reviewer who reads the
 
 ### Core Principle: Documentation Is a First-Class Product
 
-Most teams treat documentation as an afterthought—write code first, document if time remains. This inverts priorities:
+Most teams treat documentation as an afterthought-write code first, document if time remains. This inverts priorities:
 
 - Code lives in repositories; documentation lives in minds
 - Code can be read by machines; documentation must be read by humans
@@ -114,7 +114,7 @@ Documentation is not the place for wit or poetry. It's infrastructure. Clarity w
 ```
 BAD (clever): "Transmogrifies event streams into deterministic state"
 GOOD (clear): "Converts a sequence of events into the current state. Useful for
-              recovering after crashes—we replay events to reconstruct state instead
+              recovering after crashes-we replay events to reconstruct state instead
               of storing state directly."
 ```
 
@@ -161,7 +161,7 @@ Instead of checking boxes ("is there a README?"), ask: "Could I use this after r
 For each piece of documentation:
 1. **Who is the reader?** (New team member? Existing engineer? External user?)
 2. **What is their goal?** (Get it working? Understand deeply? Troubleshoot?)
-3. **Can they achieve their goal using this documentation?** (Not the code—just the docs)
+3. **Can they achieve their goal using this documentation?** (Not the code-just the docs)
 4. **What obstacles would they hit?** (Unclear terminology? Missing examples? Assumed knowledge?)
 
 ### Review Categories
@@ -243,7 +243,7 @@ Why this fails: Why 20000? What happens if it's too low? Too high? Why is this i
 SQS polling duration (env: POLLING_TIMEOUT_MS, default: 20000 ms)
 
 This is how long we wait for messages before checking our local queue.
-- Too low (< 5000): We thrash—constant connections to AWS, wasted requests, higher costs
+- Too low (< 5000): We thrash-constant connections to AWS, wasted requests, higher costs
 - Too high (> 60000): We're slow to respond to new messages, queues fill up
 - Just right: ~20000 gives us fast response + reasonable AWS request volume
 
@@ -454,7 +454,7 @@ Why this works:
 - [ ] Examples provided for complex concepts
 - [ ] "Why this matters" is explained, not assumed
 - [ ] Troubleshooting section addresses likely questions
-- [ ] **Intentional omissions documented:** If something is deliberately excluded (unsupported feature, rejected approach, out-of-scope topic), say so and say why — prevents readers from assuming it was forgotten
+- [ ] **Intentional omissions documented:** If something is deliberately excluded (unsupported feature, rejected approach, out-of-scope topic), say so and say why - prevents readers from assuming it was forgotten
 
 ### Structure
 - [ ] Headings are hierarchical and scannable
@@ -603,12 +603,12 @@ infrastructure costs less.
 
 ## How to Cache a New Value
 
-1. **Decide on TTL** — How long is this value useful?
+1. **Decide on TTL** - How long is this value useful?
    - If "never changes": 1 day
    - If "changes weekly": 1 hour
    - If "changes live": 5 minutes or don't cache
 
-2. **Check for staleness** — Is old data acceptable?
+2. **Check for staleness** - Is old data acceptable?
    - If "users must see immediate changes": don't cache
    - If "eventual consistency OK": cache aggressively
 
@@ -690,11 +690,11 @@ When Sam sees documentation:
 
 ## Related Commands
 
-- `/pb-documentation` — Writing Great Engineering Documentation
-- `/pb-preamble` — Collaboration thinking (clear communication)
-- `/pb-design-rules` — Design principles applied to documentation
-- `/pb-standards` — Writing standards and patterns
-- `/pb-review-docs` — Documentation review methodology
+- `/pb-documentation` - Writing Great Engineering Documentation
+- `/pb-preamble` - Collaboration thinking (clear communication)
+- `/pb-design-rules` - Design principles applied to documentation
+- `/pb-standards` - Writing standards and patterns
+- `/pb-review-docs` - Documentation review methodology
 
 ---
 

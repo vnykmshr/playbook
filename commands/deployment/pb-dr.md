@@ -20,17 +20,17 @@ Plan, test, and execute recovery from major system failures. When everything goe
 
 The best time to plan for disaster is before it happens. The second best time is now.
 
-**Resource Hint:** opus — disaster recovery planning demands careful architecture and risk analysis
+**Resource Hint:** opus - disaster recovery planning demands careful architecture and risk analysis
 
 ---
 
 ## When to Use This Command
 
-- **Creating DR plan** — Establishing recovery strategy for your system
-- **Defining RTO/RPO** — Setting recovery objectives with stakeholders
-- **DR testing** — Running game days and failover exercises
-- **After an incident** — Reviewing and improving DR procedures
-- **Compliance requirements** — Documenting DR capabilities
+- **Creating DR plan** - Establishing recovery strategy for your system
+- **Defining RTO/RPO** - Setting recovery objectives with stakeholders
+- **DR testing** - Running game days and failover exercises
+- **After an incident** - Reviewing and improving DR procedures
+- **Compliance requirements** - Documenting DR capabilities
 
 ---
 
@@ -38,8 +38,8 @@ The best time to plan for disaster is before it happens. The second best time is
 
 | Term | Definition |
 |------|------------|
-| **RTO** | Recovery Time Objective — max acceptable downtime |
-| **RPO** | Recovery Point Objective — max acceptable data loss |
+| **RTO** | Recovery Time Objective - max acceptable downtime |
+| **RPO** | Recovery Point Objective - max acceptable data loss |
 | **Failover** | Switching to backup system |
 | **Failback** | Returning to primary system |
 
@@ -688,11 +688,11 @@ Every critical service needs a DR plan.
 ## Integration with Playbook
 
 **Part of operational excellence:**
-- `/pb-hardening` — Prevent disasters through security
-- `/pb-secrets` — Protect credentials
-- `/pb-sre-practices` — Sustainable operations
-- `/pb-dr` — Recover when prevention fails (this command)
-- `/pb-incident` — Respond during disasters
+- `/pb-hardening` - Prevent disasters through security
+- `/pb-secrets` - Protect credentials
+- `/pb-sre-practices` - Sustainable operations
+- `/pb-dr` - Recover when prevention fails (this command)
+- `/pb-incident` - Respond during disasters
 
 **DR testing cadence:**
 ```
@@ -718,11 +718,11 @@ After changes: Verify DR still works
 
 ## Related Commands
 
-- `/pb-incident` — Respond to incidents during disaster scenarios
-- `/pb-sre-practices` — Sustainable operations and toil reduction
-- `/pb-database-ops` — Database backup and failover procedures
-- `/pb-deployment` — Deploy recovery infrastructure
-- `/pb-maintenance` — Backup verification and ongoing maintenance scheduling
+- `/pb-incident` - Respond to incidents during disaster scenarios
+- `/pb-sre-practices` - Sustainable operations and toil reduction
+- `/pb-database-ops` - Database backup and failover procedures
+- `/pb-deployment` - Deploy recovery infrastructure
+- `/pb-maintenance` - Backup verification and ongoing maintenance scheduling
 
 ---
 

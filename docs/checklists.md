@@ -174,7 +174,7 @@ For updating documentation alongside code changes.
 
 ## Security Checklist (Quick Review)
 
-Quick security check for S tier changes. Reference `/pb-security` for comprehensive list.
+Quick security check for S tier changes. Reference `/pb-security` for the full list.
 
 - [ ] No secrets in code
 - [ ] Input validation present

@@ -20,16 +20,16 @@ Clean up and reorganize the project root for clarity and maintainability.
 
 Clear, obvious organization beats clever categorization. The structure should make it easy for others to find code and understand it.
 
-**Resource Hint:** sonnet — Repository restructuring with architectural judgment.
+**Resource Hint:** sonnet - Repository restructuring with architectural judgment.
 
 ---
 
 ## When to Use This Command
 
-- **Project root cluttered** — Too many files at top level
-- **Structure unclear** — Hard to find things in the codebase
-- **After major changes** — Reorganizing after feature additions
-- **Code review feedback** — Addressing structure concerns
+- **Project root cluttered** - Too many files at top level
+- **Structure unclear** - Hard to find things in the codebase
+- **After major changes** - Reorganizing after feature additions
+- **Code review feedback** - Addressing structure concerns
 
 ---
 
@@ -84,8 +84,8 @@ Cargo.toml          # Rust
 ### Protected Folders
 
 **Do not remove or modify:**
-- `/todos` — Development tracker (gitignored)
-- `/.git` — Version control
+- `/todos` - Development tracker (gitignored)
+- `/.git` - Version control
 
 ---
 
@@ -200,9 +200,9 @@ project/
 
 ## Related Commands
 
-- `/pb-repo-init` — Initialize new project structure
-- `/pb-repo-enhance` — Full repository enhancement suite
-- `/pb-review-hygiene` — Codebase quality review
+- `/pb-repo-init` - Initialize new project structure
+- `/pb-repo-enhance` - Full repository enhancement suite
+- `/pb-review-hygiene` - Codebase quality review
 
 ---
 

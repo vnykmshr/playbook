@@ -9,7 +9,7 @@ related_commands: ['pb-doctor', 'pb-debug', 'pb-review-hygiene', 'pb-release']
 last_reviewed: "2026-02-18"
 last_evolved: ""
 version: "1.0.0"
-version_notes: "Initial release — structured CI failure investigation"
+version_notes: "Initial release - structured CI failure investigation"
 breaking_changes: []
 ---
 # GitHub Actions Failure Analysis
@@ -18,9 +18,9 @@ Structured investigation of GitHub Actions failures. Follows a 6-step methodolog
 
 Works with any GitHub Actions workflow. Requires `gh` CLI authenticated.
 
-**Mindset:** Apply `/pb-debug` thinking — reproduce before theorizing. Apply `/pb-preamble` thinking — challenge the obvious explanation. A "flaky test" might be a real race condition. A "random failure" might be a dependency change.
+**Mindset:** Apply `/pb-debug` thinking - reproduce before theorizing. Apply `/pb-preamble` thinking - challenge the obvious explanation. A "flaky test" might be a real race condition. A "random failure" might be a dependency change.
 
-**Resource Hint:** sonnet — log analysis, pattern matching, and structured investigation
+**Resource Hint:** sonnet - log analysis, pattern matching, and structured investigation
 
 ---
 
@@ -48,7 +48,7 @@ Works with any GitHub Actions workflow. Requires `gh` CLI authenticated.
 
 ## Step 1: Identify the Failure
 
-Figure out exactly what failed. Not the workflow — the specific job and step.
+Figure out exactly what failed. Not the workflow - the specific job and step.
 
 ```bash
 # Get the latest failed run (or use provided URL)
@@ -62,7 +62,7 @@ gh run view <run-id> --log-failed
 ```
 
 **What to look for:**
-- The exit code 1 trigger — not warnings, the actual failure
+- The exit code 1 trigger - not warnings, the actual failure
 - Error messages vs. noise (deprecation warnings aren't failures)
 - Which step in the job failed (build, test, lint, deploy)
 - The commit that triggered this run
@@ -110,7 +110,7 @@ gh run view <first-failing-run-id> --json headSha
 git log --oneline <last-good-sha>..<first-bad-sha>
 ```
 
-**Verification:** The job should pass consistently before the breaking commit and fail consistently after it. If it's intermittent on both sides, it's not a clean break — look for a flakiness trigger instead.
+**Verification:** The job should pass consistently before the breaking commit and fail consistently after it. If it's intermittent on both sides, it's not a clean break - look for a flakiness trigger instead.
 
 ---
 
@@ -167,13 +167,13 @@ Synthesize findings into a clear report.
 **Run:** [URL]
 
 ### Failure
-[What specifically failed — the actual error, not the job name]
+[What specifically failed - the actual error, not the job name]
 
 ### Flakiness
 [One-off / Intermittent (N/20 failures) / Consistent since [date]]
 
 ### Breaking Commit
-[SHA and summary, or "N/A — flaky" if intermittent]
+[SHA and summary, or "N/A - flaky" if intermittent]
 
 ### Root Cause
 [What's actually wrong and why]
@@ -182,7 +182,7 @@ Synthesize findings into a clear report.
 [PR link if found, or "None found"]
 
 ### Recommendation
-[What to do — fix, retry, pin version, skip, etc.]
+[What to do - fix, retry, pin version, skip, etc.]
 ```
 
 ---
@@ -227,10 +227,10 @@ Then follow up with the full methodology if the cause isn't obvious.
 
 ## Related Commands
 
-- `/pb-debug` — Systematic debugging methodology
-- `/pb-doctor` — Local system health check
-- `/pb-review-hygiene` — Codebase operational health
-- `/pb-release` — Release orchestration (needs green CI)
+- `/pb-debug` - Systematic debugging methodology
+- `/pb-doctor` - Local system health check
+- `/pb-review-hygiene` - Codebase operational health
+- `/pb-release` - Release orchestration (needs green CI)
 
 ---
 

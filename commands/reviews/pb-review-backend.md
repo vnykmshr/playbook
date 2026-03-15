@@ -19,7 +19,7 @@ Multi-perspective code review combining **Alex Chen** (Infrastructure & Resilien
 
 **When to use:** Backend features, API endpoints, services, database operations, infrastructure changes.
 
-**Resource Hint:** opus — Systems thinking + gap detection. Parallel execution of both agents recommended.
+**Resource Hint:** opus - Systems thinking + gap detection. Parallel execution of both agents recommended.
 
 ---
 
@@ -27,17 +27,17 @@ Multi-perspective code review combining **Alex Chen** (Infrastructure & Resilien
 
 Two expert perspectives review in parallel, then synthesize:
 
-1. **Alex's Review** — Infrastructure lens
+1. **Alex's Review** - Infrastructure lens
    - What could fail? How do we recover?
    - Graceful degradation. Systems thinking. Observability.
    - Does this scale? Can we deploy it safely?
 
-2. **Jordan's Review** — Reliability lens
+2. **Jordan's Review** - Reliability lens
    - What gaps exist in testing? What could go wrong?
    - Error cases. Edge cases. Concurrency. Data integrity.
    - Would tests catch production bugs?
 
-3. **Synthesize** — Combined perspective
+3. **Synthesize** - Combined perspective
    - Identify trade-offs (resilience vs complexity?)
    - Surface disagreements (if any)
    - Recommend approval or revisions
@@ -194,11 +194,11 @@ Common disagreement: "Should this be async or sync?"
 
 ## Related Commands
 
-- **Alex's Deep Dive:** `/pb-alex-infra` — Systems thinking, failure modes, resilience
-- **Jordan's Deep Dive:** `/pb-jordan-testing` — Gap detection, test coverage, reliability
-- **Code Review:** `/pb-review-code` — General code review (both agents apply)
-- **Security Review:** `/pb-linus-agent` — Add Linus perspective for security-critical code
-- **Standards:** `/pb-standards` — Coding principles both agents apply
+- **Alex's Deep Dive:** `/pb-alex-infra` - Systems thinking, failure modes, resilience
+- **Jordan's Deep Dive:** `/pb-jordan-testing` - Gap detection, test coverage, reliability
+- **Code Review:** `/pb-review-code` - General code review (both agents apply)
+- **Security Review:** `/pb-linus-agent` - Add Linus perspective for security-critical code
+- **Standards:** `/pb-standards` - Coding principles both agents apply
 
 ---
 

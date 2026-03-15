@@ -7,7 +7,7 @@ Common questions about the Engineering Playbook.
 ## Getting Started
 
 ### Q: What is the Engineering Playbook?
-**A:** The Engineering Playbook is a decision framework—a set of commands and guides that codify how to approach development work. It covers planning, development, code review, release, and team operations. It's not a tool, but a structured process that reduces friction and maintains quality at every step.
+**A:** The Engineering Playbook is a decision framework-a set of commands and guides that codify how to approach development work. It covers planning, development, code review, release, and team operations. It's not a tool, but a structured process that reduces friction and maintains quality at every step.
 
 ### Q: Do I have to use all commands?
 **A:** No. Start with the commands that address your current challenges. Most teams begin with `/pb-plan`, `/pb-cycle`, and `/pb-release`. You can adopt others gradually as you need them.
@@ -122,7 +122,7 @@ If reviews are taking longer, consider smaller, more frequent PRs.
 - Unit tests: Core business logic (aim for 80%+)
 - Integration tests: Critical workflows
 - E2E tests: User-facing features
-- Don't aim for 100%—aim for meaningful coverage
+- Don't aim for 100%-aim for meaningful coverage
 
 Use `/pb-testing` for detailed guidance.
 
@@ -130,7 +130,7 @@ Use `/pb-testing` for detailed guidance.
 **A:** Either approach works:
 - **TDD (Test-First)**: Write tests, then code to pass them
 - **Test-Alongside**: Write code and tests together
-- **Test-After**: Code first, then comprehensive tests
+- **Test-After**: Code first, then thorough tests
 
 The playbook requires tests before `/pb-cycle` peer review. Choose the approach that works for your team.
 
@@ -235,7 +235,7 @@ Severity determines mitigation speed and strategy.
 - **P2**: Post-mortem recommended (if recurring)
 - **P3**: Post-mortem optional
 
-Use `/pb-incident` for comprehensive analysis.
+Use `/pb-incident` for full analysis.
 
 ### Q: How do I prevent the same incident twice?
 **A:** Three steps:
@@ -406,9 +406,9 @@ The playbook is a tool to help, not a mandate.
 
 ## Still Have Questions?
 
-- **[Decision Guide](decision-guide.md)** — Find commands by situation
-- **[Command Reference](command-index.md)** — Browse all commands
-- **[Getting Started](getting-started.md)** — Quick start guide
-- **[Integration Guide](integration-guide.md)** — How commands work together
-- **[GitHub Issues](https://github.com/vnykmshr/playbook/issues)** — Report problems
-- **[GitHub Discussions](https://github.com/vnykmshr/playbook/discussions)** — Ask questions
+- **[Decision Guide](decision-guide.md)** - Find commands by situation
+- **[Command Reference](command-index.md)** - Browse all commands
+- **[Getting Started](getting-started.md)** - Quick start guide
+- **[Integration Guide](integration-guide.md)** - How commands work together
+- **[GitHub Issues](https://github.com/vnykmshr/playbook/issues)** - Report problems
+- **[GitHub Discussions](https://github.com/vnykmshr/playbook/discussions)** - Ask questions

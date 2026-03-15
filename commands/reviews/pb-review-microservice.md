@@ -20,7 +20,7 @@ Framework for reviewing microservice design, implementation, and operations.
 
 Question whether the service boundary is correct. Challenge the coupling assumptions. Surface design flaws before they become operational problems.
 
-**Resource Hint:** opus — microservice review requires deep analysis of boundaries, coupling, data ownership, and operational concerns
+**Resource Hint:** opus - microservice review requires deep analysis of boundaries, coupling, data ownership, and operational concerns
 
 ---
 
@@ -829,11 +829,11 @@ Status: APPROVED / APPROVED WITH CONDITIONS / REJECTED
 
 ## Related Commands
 
-- `/pb-patterns-core` — SOA and Event-Driven architecture
-- `/pb-patterns-resilience` — Resilience patterns (Circuit Breaker, Retry, Rate Limiting)
-- `/pb-patterns-distributed` — Saga, CQRS patterns
-- `/pb-observability` — Health checks, monitoring
-- `/pb-incident` — Handling microservice failures
+- `/pb-patterns-core` - SOA and Event-Driven architecture
+- `/pb-patterns-resilience` - Resilience patterns (Circuit Breaker, Retry, Rate Limiting)
+- `/pb-patterns-distributed` - Saga, CQRS patterns
+- `/pb-observability` - Health checks, monitoring
+- `/pb-incident` - Handling microservice failures
 
 ---
 

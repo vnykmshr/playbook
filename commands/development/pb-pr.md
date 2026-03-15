@@ -18,17 +18,17 @@ Streamlined workflow for creating a pull request with proper context and descrip
 
 **Mindset:** PR review is built on `/pb-preamble` thinking (challenge assumptions, surface issues) and applies `/pb-design-rules` thinking (reviewers check that code is Clear, Simple, Modular, Robust).
 
-Reviewers will challenge your decisions. That's the point. Welcome that feedback—it makes code better. Your job as author is to explain your reasoning clearly so reviewers can engage meaningfully.
+Reviewers will challenge your decisions. That's the point. Welcome that feedback-it makes code better. Your job as author is to explain your reasoning clearly so reviewers can engage meaningfully.
 
-**Resource Hint:** sonnet — PR creation and description formatting
+**Resource Hint:** sonnet - PR creation and description formatting
 
 ---
 
 ## When to Use This Command
 
-- **Ready to create PR** — Code complete, reviewed, and tested
-- **Need PR guidance** — Unsure about PR structure or description
-- **PR description help** — Want template for clear PR descriptions
+- **Ready to create PR** - Code complete, reviewed, and tested
+- **Need PR guidance** - Unsure about PR structure or description
+- **PR description help** - Want template for clear PR descriptions
 
 ---
 
@@ -195,10 +195,10 @@ Before merging:
 
 ## Related Commands
 
-- `/pb-commit` — Craft atomic commits before creating PR
-- `/pb-cycle` — Self-review and peer review workflow
-- `/pb-review-code` — Code review checklist for reviewers
-- `/pb-ship` — Full review, merge, and release workflow
+- `/pb-commit` - Craft atomic commits before creating PR
+- `/pb-cycle` - Self-review and peer review workflow
+- `/pb-review-code` - Code review checklist for reviewers
+- `/pb-ship` - Full review, merge, and release workflow
 
 ---
 

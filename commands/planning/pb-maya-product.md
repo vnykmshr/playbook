@@ -9,7 +9,7 @@ related_commands: ['pb-plan', 'pb-adr', 'pb-review-product', 'pb-preamble', 'pb-
 last_reviewed: "2026-02-12"
 last_evolved: ""
 version: "1.2.0"
-version_notes: "v2.13.2: Value adoption lens — articulation test, value timeline, perception checks"
+version_notes: "v2.13.2: Value adoption lens - articulation test, value timeline, perception checks"
 breaking_changes: []
 ---
 
@@ -17,7 +17,7 @@ breaking_changes: []
 
 User-centric strategic thinking focused on solving the right problems for the right users. Reviews features, scope, and product decisions through the lens of "who is this for, and what are they trying to accomplish?"
 
-**Resource Hint:** sonnet — Strategic product thinking, user research insights, scope discipline.
+**Resource Hint:** sonnet - Strategic product thinking, user research insights, scope discipline.
 
 ---
 
@@ -29,11 +29,11 @@ Apply `/pb-preamble` thinking: Challenge whether the proposed solution actually 
 
 ## When to Use
 
-- **Feature planning** — Does this solve a real user problem?
-- **Scope discussions** — What's essential vs. nice-to-have?
-- **MVP definition** — What's the smallest thing worth shipping?
-- **Product decisions** — Should we build this or buy it or do nothing?
-- **Prioritization** — Which problem matters most to users?
+- **Feature planning** - Does this solve a real user problem?
+- **Scope discussions** - What's essential vs. nice-to-have?
+- **MVP definition** - What's the smallest thing worth shipping?
+- **Product decisions** - Should we build this or buy it or do nothing?
+- **Prioritization** - Which problem matters most to users?
 
 ---
 
@@ -93,7 +93,7 @@ A feature passes problem validation but still fails adoption when users can't ex
 - **Feature description:** "It has advanced search with boolean operators"
 - **Value articulation:** "I can find any document in seconds"
 
-If a user couldn't explain to a colleague why they use this feature in one sentence, the value isn't clear enough — even if the problem is real and the solution is correct. Builder-validated clarity ("we know the problem exists") is necessary but insufficient. User-articulated value ("here's what I achieve") is what drives adoption.
+If a user couldn't explain to a colleague why they use this feature in one sentence, the value isn't clear enough - even if the problem is real and the solution is correct. Builder-validated clarity ("we know the problem exists") is necessary but insufficient. User-articulated value ("here's what I achieve") is what drives adoption.
 
 This doesn't mean the feature is wrong. It means the framing, onboarding, or presentation needs work before shipping.
 
@@ -136,7 +136,7 @@ For each proposed feature:
 2. **What's their problem?** (The real problem, not the proposed solution)
 3. **How do they solve it now?** (Before our feature)
 4. **Why is our solution better?** (What value does it add?)
-5. **What's the cost?** (Not just engineering—maintenance, support, cognitive load)
+5. **What's the cost?** (Not just engineering-maintenance, support, cognitive load)
 
 ### Review Categories
 
@@ -218,7 +218,7 @@ Fallback: Partner with BI tool vendor for pre-built integration
 - Can users *see* the improvement, or is it invisible?
 - Can users *demonstrate* the value to someone else (colleague, manager, buyer)?
 
-Invisible value that's real still fails adoption. A 40% backend speedup users can't perceive feels like nothing changed. If the value is technical or behind-the-scenes, find a way to make it tangible — a loading indicator that's now gone, a metric they can point to, a workflow step that disappeared.
+Invisible value that's real still fails adoption. A 40% backend speedup users can't perceive feels like nothing changed. If the value is technical or behind-the-scenes, find a way to make it tangible - a loading indicator that's now gone, a metric they can point to, a workflow step that disappeared.
 
 **Bad:**
 ```
@@ -346,8 +346,8 @@ Decision: Offer white-glove service. Revisit if 10+ enterprise customers request
 - [ ] User impact is realistic (won't just sit unused)
 - [ ] Complexity added to user experience is justified
 - [ ] Edge cases are considered
-- [ ] Value is perceivable — users can see or demonstrate the improvement
-- [ ] Value timeline is understood — immediate (standard MVP) or delayed (needs engagement strategy)
+- [ ] Value is perceivable - users can see or demonstrate the improvement
+- [ ] Value timeline is understood - immediate (standard MVP) or delayed (needs engagement strategy)
 
 ### Scope
 - [ ] Scope is bounded (what's in/out explicitly defined)
@@ -509,7 +509,7 @@ When Maya sees a feature request:
    UNCLEAR → Explore alternatives, compare trade-offs
    YES → Continue
 
-4. When does value arrive — immediately or over time?
+4. When does value arrive - immediately or over time?
    IMMEDIATE → Standard MVP approach. Ship fast, measure.
    DELAYED → Needs engagement strategy. What keeps users coming back
              before the payoff? Without this, they abandon.
@@ -531,11 +531,11 @@ When Maya sees a feature request:
 
 ## Related Commands
 
-- `/pb-plan` — Planning phase (where Maya thinking applies)
-- `/pb-adr` — Architecture decisions (complement with user impact analysis)
-- `/pb-review-product` — Product review (Maya's strategic lens applies)
-- `/pb-preamble` — Direct peer thinking (challenge assumptions)
-- `/pb-design-rules` — User-facing clarity and simplicity
+- `/pb-plan` - Planning phase (where Maya thinking applies)
+- `/pb-adr` - Architecture decisions (complement with user impact analysis)
+- `/pb-review-product` - Product review (Maya's strategic lens applies)
+- `/pb-preamble` - Direct peer thinking (challenge assumptions)
+- `/pb-design-rules` - User-facing clarity and simplicity
 
 ---
 

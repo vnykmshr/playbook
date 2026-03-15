@@ -16,7 +16,7 @@ breaking_changes: []
 
 Run this after completing a unit of work. Guides you through self-review, quality gates, and peer review before committing.
 
-**Resource Hint:** sonnet — iterative code review and quality gate checks
+**Resource Hint:** sonnet - iterative code review and quality gate checks
 
 **Tool-agnostic:** This command works with any development tool or peer review process. Claude Code users invoke as `/pb-cycle`. Using another tool? Read this file as Markdown and follow the checklist with your tool. See [`/docs/using-with-other-tools.md`](/docs/using-with-other-tools.md) for adaptation examples.
 
@@ -24,10 +24,10 @@ Run this after completing a unit of work. Guides you through self-review, qualit
 
 ## When to Use This Command
 
-- **After completing a feature/fix** — Before committing changes
-- **During development iterations** — Each cycle of code → review → refine
-- **Before creating a PR** — Final self-review pass
-- **When unsure if code is ready** — Checklist helps verify completeness
+- **After completing a feature/fix** - Before committing changes
+- **During development iterations** - Each cycle of code → review → refine
+- **Before creating a PR** - Final self-review pass
+- **When unsure if code is ready** - Checklist helps verify completeness
 
 ---
 
@@ -111,7 +111,7 @@ Reviewer should:
 - Surface flaws directly
 - **Verify outcomes and success criteria met** (not just code quality)
 
-Author should welcome and respond to critical feedback. This is how we catch problems early—in code review, not production.
+Author should welcome and respond to critical feedback. This is how we catch problems early-in code review, not production.
 
 ### Architecture Review
 
@@ -236,10 +236,10 @@ ls todos/releases/*/
 ## [Date] Iteration Update
 
 **Completed:**
-- [x] Task description — commit: abc1234
+- [x] Task description - commit: abc1234
 
 **In Progress:**
-- [ ] Next task — starting next iteration
+- [ ] Next task - starting next iteration
 
 **Remaining:**
 - [ ] Task 3
@@ -254,7 +254,7 @@ ls todos/releases/*/
 
 After committing, assess context health. See `/pb-claude-orchestration` for detailed context management strategies (compaction timing, thresholds, preservation techniques).
 
-**Quick check:** If 3+ iterations completed or 5+ files read this session, consider checkpointing — update tracker, start fresh session.
+**Quick check:** If 3+ iterations completed or 5+ files read this session, consider checkpointing - update tracker, start fresh session.
 
 ---
 
@@ -338,8 +338,8 @@ After committing, assess context health. See `/pb-claude-orchestration` for deta
 - **Documentation**: `/pb-documentation` for updating docs alongside code
 
 **After /pb-cycle approval:**
-- `/pb-commit` — Craft atomic, well-formatted commit
-- `/pb-pr` — Create pull request with context
+- `/pb-commit` - Craft atomic, well-formatted commit
+- `/pb-pr` - Create pull request with context
 
 **See also**: `/docs/integration-guide.md` for how all commands work together
 
@@ -347,11 +347,11 @@ After committing, assess context health. See `/pb-claude-orchestration` for deta
 
 ## Related Commands
 
-- `/pb-start` — Begin new development work
-- `/pb-commit` — Create atomic commits after cycle
-- `/pb-pr` — Create pull request when ready
-- `/pb-review-code` — Code review checklist for peer reviewers
-- `/pb-testing` — Test patterns and strategies
+- `/pb-start` - Begin new development work
+- `/pb-commit` - Create atomic commits after cycle
+- `/pb-pr` - Create pull request when ready
+- `/pb-review-code` - Code review checklist for peer reviewers
+- `/pb-testing` - Test patterns and strategies
 
 ---
 

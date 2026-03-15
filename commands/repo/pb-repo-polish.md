@@ -177,8 +177,8 @@ Ordered by impact. Each item is concrete and actionable:
 ```
 ## Action Items (ordered by impact)
 
-1. **[Dim X]** {Specific action} — {why this moves the score}
-2. **[Dim X]** {Specific action} — {why this moves the score}
+1. **[Dim X]** {Specific action} - {why this moves the score}
+2. **[Dim X]** {Specific action} - {why this moves the score}
 ...
 ```
 

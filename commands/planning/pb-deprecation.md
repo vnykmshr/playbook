@@ -32,7 +32,7 @@ Deprecation allows you to:
 
 Use `/pb-preamble` thinking: challenge whether this change is really necessary; surface the impact on users; be honest about the cost vs. benefit. Use `/pb-design-rules` thinking: ensure the new approach is genuinely simpler (Simplicity), clearer (Clarity), and more robust than what it replaces. This is where critical thinking matters most.
 
-**Resource Hint:** sonnet — Deprecation planning follows structured process; implementation-level guidance.
+**Resource Hint:** sonnet - Deprecation planning follows structured process; implementation-level guidance.
 
 ---
 
@@ -442,15 +442,15 @@ def v1_users(id):
 ## Integration with Playbook
 
 **Part of architecture and planning:**
-- `/pb-plan` — Plan deprecations during scope phase
-- `/pb-adr` — Document deprecation decisions (ADR-style)
-- `/pb-guide` — Section 4.6 covers backwards compatibility
-- `/pb-commit` — Mark deprecated code clearly in commits
+- `/pb-plan` - Plan deprecations during scope phase
+- `/pb-adr` - Document deprecation decisions (ADR-style)
+- `/pb-guide` - Section 4.6 covers backwards compatibility
+- `/pb-commit` - Mark deprecated code clearly in commits
 
 **Related Commands:**
-- `/pb-plan` — Feature planning (includes deprecation planning)
-- `/pb-guide` — SDLC workflow
-- `/pb-release` — Communication of deprecations in release notes
+- `/pb-plan` - Feature planning (includes deprecation planning)
+- `/pb-guide` - SDLC workflow
+- `/pb-release` - Communication of deprecations in release notes
 
 ---
 
@@ -487,9 +487,9 @@ At removal time:
 
 ## Related Commands
 
-- `/pb-adr` — Document deprecation decisions with rationale
-- `/pb-release` — Communicate deprecations in release notes
-- `/pb-documentation` — Write migration guides and deprecation notices
+- `/pb-adr` - Document deprecation decisions with rationale
+- `/pb-release` - Communicate deprecations in release notes
+- `/pb-documentation` - Write migration guides and deprecation notices
 
 ---
 

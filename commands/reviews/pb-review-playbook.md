@@ -20,7 +20,7 @@ breaking_changes: []
 
 **Mindset:** Apply `/pb-preamble` thinking (challenge assumptions, surface flaws) and `/pb-design-rules` principles to the playbook itself. The playbook should exemplify what it preaches.
 
-**Resource Hint:** opus — meta-review of playbook commands requires nuanced evaluation of intent, design alignment, and ecosystem coherence
+**Resource Hint:** opus - meta-review of playbook commands requires nuanced evaluation of intent, design alignment, and ecosystem coherence
 
 ---
 
@@ -57,11 +57,11 @@ Is this an executable prompt or just reference material?
 - [ ] Distinguishes between "do this" vs "read this for context"
 
 **Classification:**
-- **Executor** — Runs a workflow (pb-deployment, pb-commit)
-- **Orchestrator** — Coordinates other commands (pb-release, pb-ship)
-- **Guide** — Provides framework/philosophy (pb-guide, pb-preamble)
-- **Reference** — Pattern library, checklists (pb-patterns-*, pb-templates)
-- **Review** — Evaluates against criteria (pb-review-*, pb-security)
+- **Executor** - Runs a workflow (pb-deployment, pb-commit)
+- **Orchestrator** - Coordinates other commands (pb-release, pb-ship)
+- **Guide** - Provides framework/philosophy (pb-guide, pb-preamble)
+- **Reference** - Pattern library, checklists (pb-patterns-*, pb-templates)
+- **Review** - Evaluates against criteria (pb-review-*, pb-security)
 
 **Red flag:** Command claims to "do" something but only provides reading material.
 
@@ -168,10 +168,10 @@ git diff $(git describe --tags --abbrev=0)..HEAD --name-only -- commands/
 
 Apply these four perspectives to each changed command:
 
-1. **Intent Clarity** — Name matches action? Purpose obvious in 10 seconds?
-2. **Structure Consistency** — Follows heading/section patterns?
-3. **Cross-reference Accuracy** — All `/pb-*` refs valid? Bidirectional links?
-4. **Completeness** — Core use case covered? No TODOs?
+1. **Intent Clarity** - Name matches action? Purpose obvious in 10 seconds?
+2. **Structure Consistency** - Follows heading/section patterns?
+3. **Cross-reference Accuracy** - All `/pb-*` refs valid? Bidirectional links?
+4. **Completeness** - Core use case covered? No TODOs?
 
 ### Escalation to Full Review
 
@@ -188,7 +188,7 @@ Escalate to the full review process if:
 
 ### Phase 1: Automated Checks
 
-**Resource:** Delegate to haiku via Task tool — mechanical checks.
+**Resource:** Delegate to haiku via Task tool - mechanical checks.
 
 ```bash
 # Count commands
@@ -207,7 +207,7 @@ diff <(find commands -name "pb-*.md" -exec basename {} .md \; | sort) \
 
 ### Phase 2: Category-by-Category Review
 
-**Resource:** Use opus — nuanced evaluation of intent, quality, design alignment.
+**Resource:** Use opus - nuanced evaluation of intent, quality, design alignment.
 
 Review commands by category, applying all 10 perspectives:
 
@@ -220,19 +220,19 @@ for dir in commands/*/; do
 done
 ```
 
-1. **Core** — Foundation, philosophy, meta-playbook commands
-2. **Planning** — Architecture, patterns, decisions
-3. **Development** — Daily workflow commands
-4. **Deployment** — Release, operations, infrastructure
-5. **Reviews** — Quality gates, audits
-6. **Repo** — Repository management
-7. **People** — Team operations
-8. **Templates** — Context generators, Claude Code configuration
-9. **Utilities** — System maintenance
+1. **Core** - Foundation, philosophy, meta-playbook commands
+2. **Planning** - Architecture, patterns, decisions
+3. **Development** - Daily workflow commands
+4. **Deployment** - Release, operations, infrastructure
+5. **Reviews** - Quality gates, audits
+6. **Repo** - Repository management
+7. **People** - Team operations
+8. **Templates** - Context generators, Claude Code configuration
+9. **Utilities** - System maintenance
 
 ### Phase 3: Cross-Category Analysis
 
-**Resource:** Use opus in main context — cross-cutting pattern recognition.
+**Resource:** Use opus in main context - cross-cutting pattern recognition.
 
 After individual review:
 
@@ -330,8 +330,8 @@ Create review document at `todos/playbook-review-YYYY-MM-DD.md`:
 
 ## Related Commands
 
-- `/pb-new-playbook` — Create new playbooks (classification, scaffold, validation)
-- `/pb-claude-orchestration` — Model delegation guidance for review phases
-- `/pb-review-docs` — Documentation quality review
-- `/pb-standards` — Quality standards the playbook should meet
-- `/pb-design-rules` — Principles commands should embody
+- `/pb-new-playbook` - Create new playbooks (classification, scaffold, validation)
+- `/pb-claude-orchestration` - Model delegation guidance for review phases
+- `/pb-review-docs` - Documentation quality review
+- `/pb-standards` - Quality standards the playbook should meet
+- `/pb-design-rules` - Principles commands should embody

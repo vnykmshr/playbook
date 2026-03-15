@@ -20,16 +20,16 @@ Structured guide for documenting and transferring project knowledge to new team 
 
 Teach `/pb-preamble` first: new team members need to know how to challenge assumptions, prefer correctness, and think like peers. Then teach `/pb-design-rules`: help them understand the design principles (Clarity, Modularity, Robustness, Extensibility) that govern how systems are built in this team.
 
-**Resource Hint:** sonnet — structured documentation and template application, not architectural judgment.
+**Resource Hint:** sonnet - structured documentation and template application, not architectural judgment.
 
 ---
 
 ## When to Use This Command
 
-- **Planning a KT session** — Structuring effective knowledge transfer
-- **Team member leaving** — Capturing their knowledge before departure
-- **New hire starting** — Preparing materials for their ramp-up
-- **Service handoff** — Transferring ownership between teams
+- **Planning a KT session** - Structuring effective knowledge transfer
+- **Team member leaving** - Capturing their knowledge before departure
+- **New hire starting** - Preparing materials for their ramp-up
+- **Service handoff** - Transferring ownership between teams
 
 ---
 
@@ -741,11 +741,11 @@ A: See [feature development guide](#feature-development). Stripe has good docs f
 
 ## Related Commands
 
-- `/pb-onboarding` — Full team onboarding (includes KT)
-- `/pb-guide` — SDLC guide (referenced in KT)
-- `/pb-security` — Security considerations during KT
-- `/pb-adr` — Architecture decisions (why choices were made)
-- `/pb-incident` — Incident runbooks (part of KT package)
+- `/pb-onboarding` - Full team onboarding (includes KT)
+- `/pb-guide` - SDLC guide (referenced in KT)
+- `/pb-security` - Security considerations during KT
+- `/pb-adr` - Architecture decisions (why choices were made)
+- `/pb-incident` - Incident runbooks (part of KT package)
 
 ---
 

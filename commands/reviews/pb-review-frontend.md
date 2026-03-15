@@ -19,7 +19,7 @@ Multi-perspective code review combining **Maya Sharma** (Product & User Strategy
 
 **When to use:** Frontend features, UI components, user-facing changes, design systems, API consumers.
 
-**Resource Hint:** opus — User-centric thinking + clarity. Parallel execution of both agents recommended.
+**Resource Hint:** opus - User-centric thinking + clarity. Parallel execution of both agents recommended.
 
 ---
 
@@ -27,19 +27,19 @@ Multi-perspective code review combining **Maya Sharma** (Product & User Strategy
 
 Two expert perspectives review in parallel, then synthesize:
 
-1. **Maya's Review** — Product lens
+1. **Maya's Review** - Product lens
    - Does this solve a real user problem?
    - Is scope bounded? Can we ship an MVP?
    - Is the solution clear to users?
    - Does this distract from higher priorities?
 
-2. **Sam's Review** — Clarity lens
+2. **Sam's Review** - Clarity lens
    - Can users understand this?
    - Is the interface self-evident?
    - Does documentation explain the "why"?
    - Will new team members understand this code?
 
-3. **Synthesize** — Combined perspective
+3. **Synthesize** - Combined perspective
    - User-facing clarity + developer clarity
    - Are UI/UX changes aligned with product goals?
    - Is the implementation clear enough for maintenance?
@@ -201,11 +201,11 @@ Common disagreement: "Should we add this advanced feature?"
 
 ## Related Commands
 
-- **Maya's Deep Dive:** `/pb-maya-product` — Problem validation, scope discipline, user impact
-- **Sam's Deep Dive:** `/pb-sam-documentation` — Reader-centric thinking, clarity, accessibility
-- **Code Review:** `/pb-review-code` — General code review (both agents apply)
-- **Accessibility:** `/pb-a11y` — Detailed accessibility review (reference standard)
-- **Standards:** `/pb-standards` — Coding principles both agents apply
+- **Maya's Deep Dive:** `/pb-maya-product` - Problem validation, scope discipline, user impact
+- **Sam's Deep Dive:** `/pb-sam-documentation` - Reader-centric thinking, clarity, accessibility
+- **Code Review:** `/pb-review-code` - General code review (both agents apply)
+- **Accessibility:** `/pb-a11y` - Detailed accessibility review (reference standard)
+- **Standards:** `/pb-standards` - Coding principles both agents apply
 
 ---
 

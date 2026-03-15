@@ -25,9 +25,9 @@ Language-specific guide for Go projects. Use alongside `/pb-guide` for general p
 - **Modularity**: Interfaces and dependency injection enable testability and clear boundaries
 - **Optimization**: Profile before optimizing; measure Go programs with `go test -bench` and pprof
 
-Adapt this guide to your project—it's a starting point, not dogma.
+Adapt this guide to your project-it's a starting point, not dogma.
 
-**Resource Hint:** sonnet — Language-specific implementation guidance; routine code standards.
+**Resource Hint:** sonnet - Language-specific implementation guidance; routine code standards.
 
 ## When to Use
 
@@ -734,12 +734,12 @@ go tool pprof http://localhost:6060/debug/pprof/heap
 ## **Integration with Playbook**
 
 **Related Commands:**
-- `/pb-guide` — General SDLC process
-- `/pb-patterns-core` — Architectural patterns
-- `/pb-patterns-async` — Concurrency patterns
-- `/pb-performance` — Performance optimization
-- `/pb-testing` — Advanced testing strategies
-- `/pb-deployment` — Deployment and DevOps
+- `/pb-guide` - General SDLC process
+- `/pb-patterns-core` - Architectural patterns
+- `/pb-patterns-async` - Concurrency patterns
+- `/pb-performance` - Performance optimization
+- `/pb-testing` - Advanced testing strategies
+- `/pb-deployment` - Deployment and DevOps
 
 ---
 

@@ -22,18 +22,18 @@ breaking_changes: []
 
 A healthy git repo is fast to clone, safe from leaked secrets, and free of accumulated cruft. This audit surfaces issues; you decide what to fix.
 
-**Resource Hint:** sonnet — multi-step audit with remediation judgment, beyond mechanical checking.
+**Resource Hint:** sonnet - multi-step audit with remediation judgment, beyond mechanical checking.
 
 ---
 
 ## When to Use
 
-- **Monthly maintenance** — Routine hygiene check
-- **Before major release** — Clean up feature branches, verify no secrets
-- **After onboarding developers** — Catch accidental commits of secrets or large files
-- **When clone feels slow** — Diagnose repo bloat
-- **Before open-sourcing** — Audit history for sensitive data
-- **After security incident** — Scan for leaked credentials in history
+- **Monthly maintenance** - Routine hygiene check
+- **Before major release** - Clean up feature branches, verify no secrets
+- **After onboarding developers** - Catch accidental commits of secrets or large files
+- **When clone feels slow** - Diagnose repo bloat
+- **Before open-sourcing** - Audit history for sensitive data
+- **After security incident** - Scan for leaked credentials in history
 
 ---
 
@@ -55,7 +55,7 @@ git ls-files | grep -E 'node_modules/|vendor/|dist/|build/|__pycache__|\.pyc$|\.
 # IDE and OS files
 git ls-files | grep -E '\.idea/|\.vscode/|\.DS_Store|Thumbs\.db|\.swp$'
 
-# Lock files — NOTE: Most projects SHOULD commit these for reproducible builds
+# Lock files - NOTE: Most projects SHOULD commit these for reproducible builds
 # Only flag if your project intentionally excludes them
 # git ls-files | grep -E 'package-lock\.json|yarn\.lock|Gemfile\.lock|poetry\.lock'
 ```
@@ -478,11 +478,11 @@ After completing hygiene audit:
 
 ## Related Commands
 
-- `/pb-review-hygiene` — Code quality and operational readiness review
-- `/pb-security` — Security audit (broader than git-specific)
-- `/pb-repo-organize` — Repository structure cleanup
-- `/pb-repo-enhance` — Repository polish suite
-- `/pb-doctor` — System health check
+- `/pb-review-hygiene` - Code quality and operational readiness review
+- `/pb-security` - Security audit (broader than git-specific)
+- `/pb-repo-organize` - Repository structure cleanup
+- `/pb-repo-enhance` - Repository polish suite
+- `/pb-doctor` - System health check
 
 ---
 

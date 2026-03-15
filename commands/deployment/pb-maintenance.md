@@ -18,17 +18,17 @@ Establish systematic maintenance patterns to prevent production incidents. This 
 
 **Mindset:** Maintenance embodies `/pb-design-rules` thinking: Robustness (systems fail gracefully when maintenance lapses) and Transparency (make system health visible). Apply `/pb-preamble` thinking to challenge assumptions about what's "good enough" maintenance.
 
-**Resource Hint:** sonnet — maintenance planning and automation patterns
+**Resource Hint:** sonnet - maintenance planning and automation patterns
 
 ---
 
 ## When to Use This Command
 
-- **New production deployment** — Establish maintenance patterns from day one
-- **After incidents** — Add maintenance tasks that would have prevented the incident
-- **Quarterly reviews** — Audit and update maintenance schedules
-- **Capacity planning** — Maintenance is part of resource planning
-- **Onboarding** — Help new team members understand operational patterns
+- **New production deployment** - Establish maintenance patterns from day one
+- **After incidents** - Add maintenance tasks that would have prevented the incident
+- **Quarterly reviews** - Audit and update maintenance schedules
+- **Capacity planning** - Maintenance is part of resource planning
+- **Onboarding** - Help new team members understand operational patterns
 
 ---
 
@@ -51,7 +51,7 @@ Production systems accumulate entropy:
 - Dependencies develop vulnerabilities
 - Backups rot without verification
 
-**This playbook provides thinking triggers, not prescriptions.** Every project has different needs — use these patterns to ask the right questions about your system.
+**This playbook provides thinking triggers, not prescriptions.** Every project has different needs - use these patterns to ask the right questions about your system.
 
 ---
 
@@ -197,11 +197,11 @@ See `/pb-dr` for comprehensive backup strategy (3-2-1 rule, retention policies, 
 
 **Critical pattern:** After any migration, verify that:
 
-1. **Database records match reality** — Rows exist, counts are correct
-2. **Generated artifacts exist** — Files tracked in DB actually exist on disk
-3. **Volumes are mounted correctly** — Containers can access expected paths
-4. **External dependencies are reachable** — APIs, services, storage
-5. **Background jobs can run** — Workers have access to everything they need
+1. **Database records match reality** - Rows exist, counts are correct
+2. **Generated artifacts exist** - Files tracked in DB actually exist on disk
+3. **Volumes are mounted correctly** - Containers can access expected paths
+4. **External dependencies are reachable** - APIs, services, storage
+5. **Background jobs can run** - Workers have access to everything they need
 
 **Common trap:** Database migrated, but files/volumes weren't. System looks healthy until something tries to access the missing files.
 
@@ -342,7 +342,7 @@ Signs your maintenance needs attention:
 
 ## Summary
 
-**Maintenance is prevention.** The goal isn't to have impressive automation — it's to avoid 3 AM incidents.
+**Maintenance is prevention.** The goal isn't to have impressive automation - it's to avoid 3 AM incidents.
 
 Ask yourself:
 1. What can fail silently in my system?
@@ -355,11 +355,11 @@ Then automate the answers.
 
 ## Related Commands
 
-- `/pb-observability` — Monitoring detects; maintenance prevents
-- `/pb-sre-practices` — Toil reduction and operational health
-- `/pb-incident` — Good maintenance reduces incident frequency
-- `/pb-dr` — Disaster recovery (backups are foundation)
-- `/pb-server-hygiene` — Periodic server health and hygiene review
+- `/pb-observability` - Monitoring detects; maintenance prevents
+- `/pb-sre-practices` - Toil reduction and operational health
+- `/pb-incident` - Good maintenance reduces incident frequency
+- `/pb-dr` - Disaster recovery (backups are foundation)
+- `/pb-server-hygiene` - Periodic server health and hygiene review
 
 ---
 

@@ -539,7 +539,7 @@ Test rollback procedure before release
 
 ## Next Steps
 
-- **[Getting Started](getting-started.md)** — Pick a workflow
-- **[Decision Guide](decision-guide.md)** — Find a command
-- **[FAQ](faq.md)** — Get answers
-- **[Integration Guide](integration-guide.md)** — Deep dive on workflows
+- **[Getting Started](getting-started.md)** - Pick a workflow
+- **[Decision Guide](decision-guide.md)** - Find a command
+- **[FAQ](faq.md)** - Get answers
+- **[Integration Guide](integration-guide.md)** - Deep dive on workflows

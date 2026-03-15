@@ -20,7 +20,7 @@ Move beyond unit tests. Test behavior, catch mutations, verify contracts, stress
 
 Your tests should challenge assumptions about code behavior. Find edge cases you didn't think of. Question whether tests are actually testing behavior, not just hitting lines of code. Write tests that surface flawed thinking and verify design rules are honored.
 
-**Resource Hint:** sonnet — test strategy design and implementation patterns
+**Resource Hint:** sonnet - test strategy design and implementation patterns
 
 ---
 
@@ -676,17 +676,17 @@ orders = OrderFactory.create_batch(10)  # Create 10 orders
 ## Integration with Playbook
 
 **Part of quality and testing:**
-- `/pb-guide` — Section 6 covers testing strategy
-- `/pb-cycle` — Includes testing in peer review
-- `/pb-review-tests` — Periodic test review
-- `/pb-observability` — Monitoring catches regression
+- `/pb-guide` - Section 6 covers testing strategy
+- `/pb-cycle` - Includes testing in peer review
+- `/pb-review-tests` - Periodic test review
+- `/pb-observability` - Monitoring catches regression
 
 ## Related Commands
 
-- `/pb-cycle` — Testing as part of development iteration
-- `/pb-review-tests` — Periodic test coverage review
-- `/pb-standards` — Code quality and testing principles
-- `/pb-debug` — Debugging methodology when tests fail
+- `/pb-cycle` - Testing as part of development iteration
+- `/pb-review-tests` - Periodic test coverage review
+- `/pb-standards` - Code quality and testing principles
+- `/pb-debug` - Debugging methodology when tests fail
 
 ---
 

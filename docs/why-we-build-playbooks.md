@@ -2,12 +2,12 @@
 
 ## Introduction
 
-Every engineering team faces the same challenges: preventing regressions, maintaining code quality across a growing codebase, onboarding new team members, responding to incidents, and shipping features without burning out. These are solved problems. Yet most teams reinvent the solutions over and over—in slightly different ways, each time losing efficiency.
+Every engineering team faces the same challenges: preventing regressions, maintaining code quality across a growing codebase, onboarding new team members, responding to incidents, and shipping features without burning out. These are solved problems. Yet most teams reinvent the solutions over and over-in slightly different ways, each time losing efficiency.
 
 The Engineering Playbook is a **complete decision framework** grounded in two complementary philosophies:
 
-1. **The Preamble** — How teams think together (peer collaboration, psychological safety, correctness over agreement)
-2. **Design Rules** — What teams build (clarity, simplicity, robustness, extensibility)
+1. **The Preamble** - How teams think together (peer collaboration, psychological safety, correctness over agreement)
+2. **Design Rules** - What teams build (clarity, simplicity, robustness, extensibility)
 
 It's not a tool; it's a set of repeatable processes that work together to make quality the default, not something that requires heroic effort. The playbook codifies both **how to think** as a team and **how to build** systems well.
 
@@ -17,17 +17,17 @@ It's not a tool; it's a set of repeatable processes that work together to make q
 
 Development teams typically struggle with:
 
-**Quality Variability** — Code review rigor depends on who's reviewing. Some PRs get deep scrutiny; others barely get looked at. Testing practices differ by project. Standards aren't documented, so they're inconsistently applied.
+**Quality Variability** - Code review rigor depends on who's reviewing. Some PRs get deep scrutiny; others barely get looked at. Testing practices differ by project. Standards aren't documented, so they're inconsistently applied.
 
-**Context Loss** — Architectural decisions get made in Slack and forgotten. Six months later, someone asks "why did we design it this way?" and nobody remembers. New team members don't understand the reasoning behind major decisions.
+**Context Loss** - Architectural decisions get made in Slack and forgotten. Six months later, someone asks "why did we design it this way?" and nobody remembers. New team members don't understand the reasoning behind major decisions.
 
-**Incident Chaos** — When production breaks, the response depends on who's on call. There's no standard assessment process, no documented playbooks for different severity levels, no postmortem template. Teams repeat the same mistakes.
+**Incident Chaos** - When production breaks, the response depends on who's on call. There's no standard assessment process, no documented playbooks for different severity levels, no postmortem template. Teams repeat the same mistakes.
 
-**Onboarding Friction** — New team members spend weeks or months learning unwritten cultural norms. "Here's how we do code review." "Here's how we do releases." "Here's the definition of done." All spoken, never documented.
+**Onboarding Friction** - New team members spend weeks or months learning unwritten cultural norms. "Here's how we do code review." "Here's how we do releases." "Here's the definition of done." All spoken, never documented.
 
-**Distributed Team Challenges** — Async teams struggle with alignment. Standups don't work. Knowledge stays siloed. Reviews get blocked waiting for timezone-appropriate feedback.
+**Distributed Team Challenges** - Async teams struggle with alignment. Standups don't work. Knowledge stays siloed. Reviews get blocked waiting for timezone-appropriate feedback.
 
-**Knowledge Silos** — When key people leave, they take institutional knowledge with them. There's no systematic knowledge transfer process.
+**Knowledge Silos** - When key people leave, they take institutional knowledge with them. There's no systematic knowledge transfer process.
 
 These problems aren't unique to your team. They're solved problems. The playbook gives you the solution, ready to adapt to your context.
 
@@ -37,13 +37,13 @@ These problems aren't unique to your team. They're solved problems. The playbook
 
 Many teams try to solve these with:
 
-**Heavy processes** — Mandatory meetings, extensive checklists, extensive documentation that nobody maintains. These reduce agility instead of improving quality.
+**Heavy processes** - Mandatory meetings, extensive checklists, extensive documentation that nobody maintains. These reduce agility instead of improving quality.
 
-**Light processes** — "Just use your judgment" and "communicate well." This works for 5-person teams but breaks down at scale. Without documentation, standards drift. New team members get inconsistent guidance.
+**Light processes** - "Just use your judgment" and "communicate well." This works for 5-person teams but breaks down at scale. Without documentation, standards drift. New team members get inconsistent guidance.
 
-**Off-the-shelf frameworks** — Scrum, Kanban, SAFe. These address *how* to organize work, not *how* to execute it well. They don't cover code quality, architectural decisions, incident response, or knowledge transfer.
+**Off-the-shelf frameworks** - Scrum, Kanban, SAFe. These address *how* to organize work, not *how* to execute it well. They don't cover code quality, architectural decisions, incident response, or knowledge transfer.
 
-**Tool-based solutions** — PR checklist bots, automated testing, linters. These catch some issues but can't replace judgment. They also create false confidence: "tests passed, so we're good," when actually test coverage is incomplete.
+**Tool-based solutions** - PR checklist bots, automated testing, linters. These catch some issues but can't replace judgment. They also create false confidence: "tests passed, so we're good," when actually test coverage is incomplete.
 
 The playbook bridges this gap. It's a **structured framework** that enforces quality gates but remains **flexible** enough to adapt to your team's needs. It's **documented** so knowledge isn't lost. It's **integrated** so all the pieces work together as a system, not isolated commands.
 
@@ -65,10 +65,10 @@ The playbook is built on a unique insight: **Quality comes from HOW teams think 
 
 The Preamble establishes four core principles about collaboration:
 
-1. **Correctness Over Agreement** — Find the right answer, don't defer to authority
-2. **Critical, Not Servile** — Challenge ideas professionally, surface problems early
-3. **Truth Over Tone** — Direct feedback beats careful politeness
-4. **Think Holistically** — Optimize for team outcomes, not individual concerns
+1. **Correctness Over Agreement** - Find the right answer, don't defer to authority
+2. **Critical, Not Servile** - Challenge ideas professionally, surface problems early
+3. **Truth Over Tone** - Direct feedback beats careful politeness
+4. **Think Holistically** - Optimize for team outcomes, not individual concerns
 
 **In practice:** Code reviewers surface flaws, not just approve. Architecture decisions are documented so they can be intelligently challenged. Disagreement is professional. Silence is viewed as complicity. Failures become learning.
 
@@ -76,25 +76,25 @@ The Preamble establishes four core principles about collaboration:
 
 Design Rules are 17 classical principles organized into 4 clusters:
 
-1. **CLARITY** — Systems are obviously correct; interfaces are unsurprising
+1. **CLARITY** - Systems are obviously correct; interfaces are unsurprising
    - Clarity, Least Surprise, Silence, Representation
 
-2. **SIMPLICITY** — Elegant design with complexity only where justified
+2. **SIMPLICITY** - Elegant design with complexity only where justified
    - Simplicity, Parsimony, Separation, Composition
 
-3. **RESILIENCE** — Reliable systems that fail loudly and recover well
+3. **RESILIENCE** - Reliable systems that fail loudly and recover well
    - Robustness, Repair, Diversity, Optimization
 
-4. **EXTENSIBILITY** — Systems designed to adapt and evolve
+4. **EXTENSIBILITY** - Systems designed to adapt and evolve
    - Modularity, Economy, Generation, Extensibility
 
 **In practice:** Code review checks "Does this embody Clarity?" not just "Is this correct?" Architecture decisions are evaluated against design rules. When design rules conflict (Simplicity vs. Robustness), the decision framework makes trade-offs explicit.
 
 ### How They Enable Each Other
 
-- **Preamble enables Design Rules** — Psychological safety makes it safe to discuss design principles and trade-offs without defensiveness
-- **Design Rules anchor Preamble** — When teams have design principles to reference, disagreement becomes technical, not personal
-- **Together** — Teams build systems that are both technically sound AND arrived at through trustworthy processes
+- **Preamble enables Design Rules** - Psychological safety makes it safe to discuss design principles and trade-offs without defensiveness
+- **Design Rules anchor Preamble** - When teams have design principles to reference, disagreement becomes technical, not personal
+- **Together** - Teams build systems that are both technically sound AND arrived at through trustworthy processes
 
 ---
 
@@ -102,13 +102,13 @@ Design Rules are 17 classical principles organized into 4 clusters:
 
 ### 1. Quality Shouldn't Require Heroic Effort
 
-Good processes make quality the default. The playbook instills review, testing, and security checks into every workflow—not as optional extras, but as built-in steps. This removes the question "should we review this?" (Answer: always.) It removes the question "should this be tested?" (Answer: always.)
+Good processes make quality the default. The playbook instills review, testing, and security checks into every workflow-not as optional extras, but as built-in steps. This removes the question "should we review this?" (Answer: always.) It removes the question "should this be tested?" (Answer: always.)
 
 When quality is the default, nobody has to argue for it.
 
 ### 2. Teams Learn Faster with Documented Patterns
 
-Architectural decisions have reasons. Design patterns solve problems. These don't need to be reinvented. The playbook provides a pattern library for async systems, database optimization, distributed systems, and core architecture—with real-world examples and trade-offs documented.
+Architectural decisions have reasons. Design patterns solve problems. These don't need to be reinvented. The playbook provides a pattern library for async systems, database optimization, distributed systems, and core architecture-with real-world examples and trade-offs documented.
 
 Don't reinvent. Iterate on proven approaches.
 
@@ -119,11 +119,11 @@ The playbook is designed for distributed teams. Instead of "let's sync up," it u
 ### 4. Multi-Perspective Review Catches More Issues
 
 A single code reviewer can miss things. The playbook uses **five perspectives on every major piece of code**:
-- **Code quality** — Clarity, Modularity (design rules in practice)
-- **Security** — Robustness, Transparency (design rules in practice)
-- **Product alignment** — Simplicity, Clarity (design rules in practice)
-- **Testing** — Robustness, Repair (design rules in practice)
-- **Performance** — Optimization discipline (design rules in practice)
+- **Code quality** - Clarity, Modularity (design rules in practice)
+- **Security** - Robustness, Transparency (design rules in practice)
+- **Product alignment** - Simplicity, Clarity (design rules in practice)
+- **Testing** - Robustness, Repair (design rules in practice)
+- **Performance** - Optimization discipline (design rules in practice)
 
 These perspectives catch different issues using design rules as shared language. A performance engineer might miss a security vulnerability. A security engineer might miss a test coverage gap. Together, they create a high bar for quality.
 
@@ -144,68 +144,68 @@ The playbook isn't 52 independent commands. It's an **integrated system** ground
 ### Foundational Frameworks
 Two documents establish the complete philosophy:
 
-- `/pb-preamble` — How teams think together (peer collaboration, psychological safety, correctness)
-- `/pb-design-rules` — What teams build (17 classical design principles in 4 clusters)
+- `/pb-preamble` - How teams think together (peer collaboration, psychological safety, correctness)
+- `/pb-design-rules` - What teams build (17 classical design principles in 4 clusters)
 
 Every command in the playbook assumes both frameworks. Every workflow integrates both.
 
 ### Core Foundation Commands
 Three commands translate the frameworks into SDLC structure:
 
-- `/pb-guide` — The SDLC framework with 11 phases and quality gates (assumes preamble + design rules)
-- `/pb-standards` — Working principles and collaboration norms (grounded in both frameworks)
-- `/pb-templates` — Reusable commit, PR, and testing templates (guides both preamble and design rule thinking)
+- `/pb-guide` - The SDLC framework with 11 phases and quality gates (assumes preamble + design rules)
+- `/pb-standards` - Working principles and collaboration norms (grounded in both frameworks)
+- `/pb-templates` - Reusable commit, PR, and testing templates (guides both preamble and design rule thinking)
 
 ### Planning Before Building
 Before writing code:
 
-- `/pb-plan` — Define scope, acceptance criteria, success metrics, risks
-- `/pb-adr` — Document architectural decisions with rationale and trade-offs
-- `/pb-patterns` — Reference architectural patterns for your specific problem
-- `/pb-observability` — Plan monitoring before implementation
-- `/pb-performance` — Identify performance requirements upfront
+- `/pb-plan` - Define scope, acceptance criteria, success metrics, risks
+- `/pb-adr` - Document architectural decisions with rationale and trade-offs
+- `/pb-patterns` - Reference architectural patterns for your specific problem
+- `/pb-observability` - Plan monitoring before implementation
+- `/pb-performance` - Identify performance requirements upfront
 
 ### Iterative Development with Built-In Quality Gates
 Code flows through the same review loop repeatedly:
 
-- `/pb-start` — Create a feature branch with clear scope
-- `/pb-cycle` — Self-review, then peer review, iterate
-- `/pb-testing` — Unit, integration, end-to-end tests
-- `/pb-security` — Security checklist
-- `/pb-standards` — Code style and patterns
-- `/pb-commit` — Atomic commits with meaningful messages
-- `/pb-pr` — Pull request with context for reviewers
+- `/pb-start` - Create a feature branch with clear scope
+- `/pb-cycle` - Self-review, then peer review, iterate
+- `/pb-testing` - Unit, integration, end-to-end tests
+- `/pb-security` - Security checklist
+- `/pb-standards` - Code style and patterns
+- `/pb-commit` - Atomic commits with meaningful messages
+- `/pb-pr` - Pull request with context for reviewers
 
 ### Multi-Perspective Review
 Different reviewers bring different lenses:
 
-- `/pb-review-hygiene` — Code quality and maintainability
-- `/pb-security` — Security review
-- `/pb-review-tests` — Test coverage
-- `/pb-logging` — Logging standards
-- `/pb-review-product` — Product alignment
+- `/pb-review-hygiene` - Code quality and maintainability
+- `/pb-security` - Security review
+- `/pb-review-tests` - Test coverage
+- `/pb-logging` - Logging standards
+- `/pb-review-product` - Product alignment
 
 ### Safe Release
 Before production:
 
-- `/pb-release` — Pre-release checklist
-- `/pb-release` — Final gate by senior engineer
-- `/pb-deployment` — Strategy choice (blue-green, canary, rolling)
+- `/pb-release` - Pre-release checklist
+- `/pb-release` - Final gate by senior engineer
+- `/pb-deployment` - Strategy choice (blue-green, canary, rolling)
 
 ### Incident Response
 When things break:
 
-- `/pb-incident` — Assessment, severity, mitigation, recovery
-- `/pb-observability` — Monitoring and alerting strategy
+- `/pb-incident` - Assessment, severity, mitigation, recovery
+- `/pb-observability` - Monitoring and alerting strategy
 - Post-incident review with `/pb-adr` to document lessons learned
 
 ### Team Operations
 Scaling beyond one person:
 
-- `/pb-standup` — Async daily standups for distributed teams
-- `/pb-knowledge-transfer` — Structured knowledge transfer
-- `/pb-onboarding` — Structured team member onboarding
-- `/pb-team` — Retrospectives, feedback, growth
+- `/pb-standup` - Async daily standups for distributed teams
+- `/pb-knowledge-transfer` - Structured knowledge transfer
+- `/pb-onboarding` - Structured team member onboarding
+- `/pb-team` - Retrospectives, feedback, growth
 
 ```
 PREAMBLE: How teams think → DESIGN RULES: What they build
@@ -313,8 +313,8 @@ The same playbook, right-sized to the change. No overhead for small changes. No 
 - It also makes the process transparent: "This change is M-tier, so we need tech lead approval"
 
 **Alternative we rejected**:
-- Single fixed process for all changes — too heavy for small changes, creates burnout
-- No process — fast initially, but quality degrades at scale
+- Single fixed process for all changes - too heavy for small changes, creates burnout
+- No process - fast initially, but quality degrades at scale
 
 ### Decision 2: Why Multi-Perspective Review?
 
@@ -328,8 +328,8 @@ The same playbook, right-sized to the change. No overhead for small changes. No 
 - For large changes, multiple reviewers provide redundancy: if one misses something, another catches it
 
 **Alternative we rejected**:
-- Single reviewer — faster but lower quality
-- All reviewers always — slower, creates meetings bloat
+- Single reviewer - faster but lower quality
+- All reviewers always - slower, creates meetings bloat
 
 ### Decision 3: Why Documented Architectural Decisions?
 
@@ -342,9 +342,9 @@ The same playbook, right-sized to the change. No overhead for small changes. No 
 - Design reviews become faster when context is already documented
 
 **Alternative we rejected**:
-- Decisions in Slack — Lost when channel scrolls, no context for future developers
-- Comments in code — Doesn't scale, gets out of sync
-- Wiki — Often abandoned, outdated, nobody knows where to look
+- Decisions in Slack - Lost when channel scrolls, no context for future developers
+- Comments in code - Doesn't scale, gets out of sync
+- Wiki - Often abandoned, outdated, nobody knows where to look
 
 ### Decision 4: Why Async-First for Distributed Teams?
 
@@ -358,8 +358,8 @@ The same playbook, right-sized to the change. No overhead for small changes. No 
 - Time zones become irrelevant
 
 **Alternative we rejected**:
-- Sync meetings for everything — 8am one timezone is 6pm another
-- Async communication with no structure — Decisions get lost, context disappears
+- Sync meetings for everything - 8am one timezone is 6pm another
+- Async communication with no structure - Decisions get lost, context disappears
 
 ### Decision 5: Why Checkpoints Instead of Continuous Deployment?
 
@@ -372,8 +372,8 @@ The same playbook, right-sized to the change. No overhead for small changes. No 
 - They're checkpoints, not blocks: a good design review takes 1 hour and prevents 2 weeks of rework
 
 **Alternative we rejected**:
-- No gates (continuous deployment) — Fast but mistakes reach production
-- Heavy gates (multiple sign-offs) — Slower, creates bottlenecks
+- No gates (continuous deployment) - Fast but mistakes reach production
+- Heavy gates (multiple sign-offs) - Slower, creates bottlenecks
 
 ---
 
@@ -388,10 +388,10 @@ The same playbook, right-sized to the change. No overhead for small changes. No 
 - **Organizations** wanting to codify and transfer institutional knowledge
 
 ### Not Ideal For
-- **Tiny teams** (< 3 people) — Overhead outweighs benefits
-- **Prototypes** that will be thrown away — Too much documentation
-- **Teams with deeply established workflows** that work well — Migration cost too high
-- **Language-specific frameworks** you're deeply committed to (domain-specific commands exist but not comprehensive)
+- **Tiny teams** (< 3 people) - Overhead outweighs benefits
+- **Prototypes** that will be thrown away - Too much documentation
+- **Teams with deeply established workflows** that work well - Migration cost too high
+- **Language-specific frameworks** you're deeply committed to (domain-specific commands exist but not complete)
 
 ### Starting Points
 - **Greenfield project**: Follow Scenario 1 (plan → architecture → develop → release)
@@ -437,15 +437,15 @@ The playbook's value shows up in:
 The playbook isn't a "fork and use" system. It's a "fork, read, adapt, and use" system.
 
 Each command includes:
-- **How it works** — Concrete steps and examples
-- **Why we do it** — Rationale and philosophy
-- **Where to customize** — Instructions on adapting to your team
+- **How it works** - Concrete steps and examples
+- **Why we do it** - Rationale and philosophy
+- **Where to customize** - Instructions on adapting to your team
 
 Your team's context matters:
-- **Size** — XS team vs. 100-person org
-- **Domain** — Security-critical vs. user-facing frontend
-- **Maturity** — Greenfield vs. 10-year-old codebase
-- **Culture** — Startup vs. enterprise vs. open source
+- **Size** - XS team vs. 100-person org
+- **Domain** - Security-critical vs. user-facing frontend
+- **Maturity** - Greenfield vs. 10-year-old codebase
+- **Culture** - Startup vs. enterprise vs. open source
 
 The playbook provides the framework. You adjust the rigor based on context.
 
@@ -455,53 +455,53 @@ The playbook provides the framework. You adjust the rigor based on context.
 
 ### Complete Framework + Command Library
 
-**Foundational Frameworks** — `/pb-preamble`, `/pb-design-rules` (with expansions on specific contexts)
+**Foundational Frameworks** - `/pb-preamble`, `/pb-design-rules` (with expansions on specific contexts)
 - Complete philosophy for peer collaboration and technical design
 - Preamble expansion guides for async teams, power dynamics, decision discipline
 - Design Rules organized into 4 clusters with decision framework
 
-**Core Foundation** — `/pb-guide`, `/pb-standards`, `/pb-documentation`, `/pb-templates`
+**Core Foundation** - `/pb-guide`, `/pb-standards`, `/pb-documentation`, `/pb-templates`
 - SDLC framework with right-sized rigor
 - Collaboration norms and quality standards
 - Reusable templates for commits, PRs, decisions
 
-**Planning** — `/pb-plan`, `/pb-adr`, `/pb-patterns*` (multiple families: async, core, database, distributed, security, cloud), `/pb-performance`, `/pb-observability`, `/pb-deprecation`
+**Planning** - `/pb-plan`, `/pb-adr`, `/pb-patterns*` (multiple families: async, core, database, distributed, security, cloud), `/pb-performance`, `/pb-observability`, `/pb-deprecation`
 - Scope planning and architectural decisions
-- Comprehensive pattern library with trade-offs
+- Pattern library with trade-offs
 - Design considerations before implementation
 
-**Development** — `/pb-start`, `/pb-cycle`, `/pb-resume`, `/pb-commit`, `/pb-pr`, `/pb-testing`, `/pb-standup`, `/pb-todo-implement`, `/pb-knowledge-transfer`, `/pb-what-next`
+**Development** - `/pb-start`, `/pb-cycle`, `/pb-resume`, `/pb-commit`, `/pb-pr`, `/pb-testing`, `/pb-standup`, `/pb-todo-implement`, `/pb-knowledge-transfer`, `/pb-what-next`
 - Feature branch establishment with clear scope
 - Iteration cycles with self and peer review
 - Atomic commits and pull requests
 - Testing, async communication, knowledge transfer
 - Contextual command recommendations
 
-**Deployment** — `/pb-deployment`, `/pb-incident`
+**Deployment** - `/pb-deployment`, `/pb-incident`
 - Deployment strategies (blue-green, canary, rolling)
 - Incident assessment, response, and recovery
 
-**Release** — `/pb-release`
+**Release** - `/pb-release`
 - Pre-release checklists and production sign-off
 
-**Review** — `/pb-review*` (comprehensive, code, product, tests, docs, hygiene, microservice, prerelease), `/pb-security`, `/pb-logging`
+**Review** - `/pb-review*` (comprehensive, code, product, tests, docs, hygiene, microservice, prerelease), `/pb-security`, `/pb-logging`
 - Multi-perspective code review with design rules as shared language
 - Specialized audits (security, logging, architecture)
 
-**Repository** — `/pb-repo*` (init, organize, readme, about, blog, enhance)
+**Repository** - `/pb-repo*` (init, organize, readme, about, blog, enhance)
 - Greenfield project initialization
 - Repository structure and documentation
 
-**People** — `/pb-onboarding`, `/pb-team`
+**People** - `/pb-onboarding`, `/pb-team`
 - Structured team member onboarding
 - Retrospectives and team dynamics
 - Knowledge transfer processes
 
-**Reference** — `/pb-context`
+**Reference** - `/pb-context`
 - Project working context and decision log template
 
 ### Documentation
-- **Frameworks** — Preamble and Design Rules with practical integration guides
+- **Frameworks** - Preamble and Design Rules with practical integration guides
 - Command reference with real-world examples
 - Integration guide showing framework and command relationships
 - Decision guide for choosing the right command
@@ -525,17 +525,17 @@ Engineering teams face the same challenges repeatedly. The Playbook solves them 
 
 ### How It Works
 
-1. **The Preamble** (HOW teams think) — Establishes peer collaboration, psychological safety, correctness over agreement
-2. **Design Rules** (WHAT teams build) — Classical principles ensuring clarity, simplicity, robustness, extensibility
-3. **Together** — Enable teams to build systems that are both technically excellent AND arrived at through trustworthy processes
+1. **The Preamble** (HOW teams think) - Establishes peer collaboration, psychological safety, correctness over agreement
+2. **Design Rules** (WHAT teams build) - Classical principles ensuring clarity, simplicity, robustness, extensibility
+3. **Together** - Enable teams to build systems that are both technically excellent AND arrived at through trustworthy processes
 
 ### What This Enables
 
-1. **Codifying proven practices** — Don't invent, iterate (grounded in design rules)
-2. **Documenting the "why"** — Future decisions are informed by past decisions (enabled by preamble thinking)
-3. **Integrating systems** — Commands work together as a coherent whole, not in isolation
-4. **Right-sizing rigor** — Lightweight process for small changes, thorough for large ones
-5. **Scaling across time zones** — Distributed teams stay aligned through structured async communication
+1. **Codifying proven practices** - Don't invent, iterate (grounded in design rules)
+2. **Documenting the "why"** - Future decisions are informed by past decisions (enabled by preamble thinking)
+3. **Integrating systems** - Commands work together as a coherent whole, not in isolation
+4. **Right-sizing rigor** - Lightweight process for small changes, thorough for large ones
+5. **Scaling across time zones** - Distributed teams stay aligned through structured async communication
 
 ### The Result
 
@@ -587,10 +587,10 @@ Browse the [full command reference](command-index.md), [decision guide](decision
 
 By integrating **Preamble** (peer thinking) with **Design Rules** (technical excellence), the playbook enables teams to:
 
-- **Think together without hierarchy** — Challenge assumptions professionally, surface problems early
-- **Build systems that endure** — Systems are clear, simple, and robust by design
-- **Ship confidently** — Quality gates catch mistakes before they reach production
-- **Scale without meetings** — Distributed teams stay aligned through structured async communication
-- **Sustain momentum** — Good processes prevent burnout, not increase it
+- **Think together without hierarchy** - Challenge assumptions professionally, surface problems early
+- **Build systems that endure** - Systems are clear, simple, and reliable by design
+- **Ship confidently** - Quality gates catch mistakes before they reach production
+- **Scale without meetings** - Distributed teams stay aligned through structured async communication
+- **Sustain momentum** - Good processes prevent burnout, not increase it
 
-The culmination of this work is a complete engineering philosophy—not separated into "soft skills" and "technical skills," but integrated as a unified whole. Teams that adopt both the Preamble and Design Rules don't just write better code. They build better teams.
+The culmination of this work is a complete engineering philosophy-not separated into "soft skills" and "technical skills," but integrated as a unified whole. Teams that adopt both the Preamble and Design Rules don't just write better code. They build better teams.

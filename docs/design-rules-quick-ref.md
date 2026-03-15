@@ -284,4 +284,4 @@ A team using preamble thinking with design rules awareness makes better decision
 
 ---
 
-*Design Rules Quick Reference — For complete guidance, read `/pb-design-rules`.*
+*Design Rules Quick Reference - For complete guidance, read `/pb-design-rules`.*

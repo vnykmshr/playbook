@@ -9,7 +9,7 @@ related_commands: ['pb-start', 'pb-pause', 'pb-cycle']
 last_reviewed: "2026-02-13"
 last_evolved: "2026-02-13"
 version: "1.2.0"
-version_notes: "v2.13.0: Streamlined context loading — reports actual sizes, flags stale data, concise health check"
+version_notes: "v2.13.0: Streamlined context loading - reports actual sizes, flags stale data, concise health check"
 breaking_changes: []
 ---
 # Resume Development Work
@@ -18,7 +18,7 @@ Quickly get back into context after a break. Use this to resume work on an exist
 
 **Mindset:** Resuming requires understanding assumptions made and verifying context is complete. Apply `/pb-preamble` thinking: challenge what was decided and why. Apply `/pb-design-rules` thinking: is the code clear, simple, and robust?
 
-**Resource Hint:** sonnet — context recovery, state assessment, health check
+**Resource Hint:** sonnet - context recovery, state assessment, health check
 
 ---
 
@@ -90,7 +90,7 @@ cat todos/1-working-context.md
 cat todos/pause-notes.md
 ```
 
-**Context health check — report actual sizes:**
+**Context health check - report actual sizes:**
 
 ```bash
 # Auto-loaded layers (already in context):
@@ -109,9 +109,9 @@ wc -l todos/pause-notes.md           # Latest pause entry (target: ~30)
 - Any layer missing → run the appropriate regeneration command
 
 **Recovery if context is stale:**
-- `/pb-context` — regenerate working context
-- `/pb-claude-project` — regenerate project CLAUDE.md
-- `/pb-claude-global` — regenerate global CLAUDE.md
+- `/pb-context` - regenerate working context
+- `/pb-claude-project` - regenerate project CLAUDE.md
+- `/pb-claude-global` - regenerate global CLAUDE.md
 
 ---
 
@@ -334,10 +334,10 @@ See `/pb-claude-orchestration` for comprehensive context management strategies i
 
 Run `/pb-pause` before stepping away. It guides you through:
 
-1. **Preserve work state** — Commit or stash, push to remote
-2. **Update trackers** — Mark progress, document blockers
-3. **Update context** — Run `/pb-context`, `/pb-claude-project` if needed
-4. **Write pause notes** — Document where you left off in `todos/pause-notes.md`
+1. **Preserve work state** - Commit or stash, push to remote
+2. **Update trackers** - Mark progress, document blockers
+3. **Update context** - Run `/pb-context`, `/pb-claude-project` if needed
+4. **Write pause notes** - Document where you left off in `todos/pause-notes.md`
 
 **Quick pause (short breaks):**
 ```bash
@@ -356,10 +356,10 @@ git add -A && git commit -m "wip: [state]" && git push
 
 If previous session was long or context-heavy:
 
-1. **Start fresh** — Don't try to continue exhausted context
-2. **Load minimal context** — Tracker + active file only
-3. **Reference by commit** — Use git log, not re-reading entire files
-4. **Use subagents** — Exploration tasks in separate context
+1. **Start fresh** - Don't try to continue exhausted context
+2. **Load minimal context** - Tracker + active file only
+3. **Reference by commit** - Use git log, not re-reading entire files
+4. **Use subagents** - Exploration tasks in separate context
 
 See `/pb-cycle` Step 7 for context checkpoint guidance.
 See `/pb-claude-global` Context Management section for efficiency patterns.
@@ -368,9 +368,9 @@ See `/pb-claude-global` Context Management section for efficiency patterns.
 
 ## Related Commands
 
-- `/pb-start` — Begin work on a new feature or fix
-- `/pb-pause` — Gracefully pause work and preserve context
-- `/pb-cycle` — Self-review and peer review during development
+- `/pb-start` - Begin work on a new feature or fix
+- `/pb-pause` - Gracefully pause work and preserve context
+- `/pb-cycle` - Self-review and peer review during development
 
 ---
 

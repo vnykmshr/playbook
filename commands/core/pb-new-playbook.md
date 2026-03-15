@@ -16,9 +16,9 @@ breaking_changes: []
 
 **Purpose:** Meta-playbook for creating new playbook commands. Ensures every new command meets quality standards, follows conventions, and integrates coherently with the existing ecosystem.
 
-**Mindset:** Playbooks should exemplify what they preach. Apply `/pb-preamble` thinking (clear reasoning invites challenge—your playbook should be easy to critique and improve) and `/pb-design-rules` thinking (Clarity, Modularity, Representation: structure should make intent obvious).
+**Mindset:** Playbooks should exemplify what they preach. Apply `/pb-preamble` thinking (clear reasoning invites challenge-your playbook should be easy to critique and improve) and `/pb-design-rules` thinking (Clarity, Modularity, Representation: structure should make intent obvious).
 
-**Resource Hint:** sonnet — Structured command creation; follows established conventions.
+**Resource Hint:** sonnet - Structured command creation; follows established conventions.
 
 Before writing a playbook, understand what type it is. Classification drives structure.
 
@@ -26,10 +26,10 @@ Before writing a playbook, understand what type it is. Classification drives str
 
 ## When to Use
 
-- **Creating a new pb-* command** — Before writing any new playbook
-- **Restructuring existing playbook** — When refactoring a command
-- **Reviewing playbook quality** — As a reference for standards
-- **Onboarding contributors** — Teaching playbook conventions
+- **Creating a new pb-* command** - Before writing any new playbook
+- **Restructuring existing playbook** - When refactoring a command
+- **Reviewing playbook quality** - As a reference for standards
+- **Onboarding contributors** - Teaching playbook conventions
 
 ---
 
@@ -120,8 +120,8 @@ Every playbook must have:
 
 ## Related Commands
 
-- /pb-related-1 — [Brief description]
-- /pb-related-2 — [Brief description]
+- /pb-related-1 - [Brief description]
+- /pb-related-2 - [Brief description]
 
 ---
 
@@ -310,7 +310,7 @@ Copy this template and fill in:
 
 **Mindset:** Apply /pb-preamble thinking ([aspect]) and /pb-design-rules thinking ([rules]).
 
-**Resource Hint:** [Model tier — see /pb-claude-orchestration]
+**Resource Hint:** [Model tier - see /pb-claude-orchestration]
 
 [Orienting statement]
 
@@ -344,7 +344,7 @@ Copy this template and fill in:
 
 ## Related Commands
 
-- /pb-related — [Description]
+- /pb-related - [Description]
 
 ---
 
@@ -514,7 +514,7 @@ PATCH: Typos, clarifications, minor fixes
 - [ ] Pre-commit hook installed
 
 ## Related Commands
-- /pb-repo-init — Project initialization
+- /pb-repo-init - Project initialization
 ```
 
 ### Step 5: Validate
@@ -541,11 +541,11 @@ Match depth to purpose. Simple commands don't need 500 lines.
 
 ## Related Commands
 
-- `/pb-review-playbook` — Review existing playbooks for quality
-- `/pb-claude-orchestration` — Model tier guidance for new commands
-- `/pb-templates` — Reusable templates and patterns
-- `/pb-standards` — Code quality standards
-- `/pb-documentation` — Writing great documentation
+- `/pb-review-playbook` - Review existing playbooks for quality
+- `/pb-claude-orchestration` - Model tier guidance for new commands
+- `/pb-templates` - Reusable templates and patterns
+- `/pb-standards` - Code quality standards
+- `/pb-documentation` - Writing great documentation
 
 ---
 

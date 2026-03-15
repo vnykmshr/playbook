@@ -14,13 +14,13 @@ breaking_changes: ["Replaced detailed pre-start checklist with 3-4 adaptive scop
 ---
 # Start Development Work
 
-Begin work on a feature, bug fix, or enhancement. Establishes scope through adaptive questions, then you work. No ceremony—just clarity.
+Begin work on a feature, bug fix, or enhancement. Establishes scope through adaptive questions, then you work. No ceremony-just clarity.
 
 **Part of the ritual:** `/pb-start` → code → `/pb-review` → decide → `/pb-commit`
 
 **Mindset:** Apply `/pb-preamble` thinking (challenge assumptions) and `/pb-design-rules` thinking (verify clarity, simplicity, robustness). This command ensures you know *what* success looks like before writing code.
 
-**Resource Hint:** sonnet — Scope detection and branch setup
+**Resource Hint:** sonnet - Scope detection and branch setup
 
 **Voice:** Conversational. System asks clarifying questions naturally, like a peer reviewing your plan. See `/docs/voice.md` for how commands communicate.
 
@@ -48,7 +48,7 @@ Begin work on a feature, bug fix, or enhancement. Establishes scope through adap
 
 **What the conversation looks like:**
 
-The system asks clarifying questions naturally—like a peer reviewing your approach before you dive in. Adapt to what you describe:
+The system asks clarifying questions naturally-like a peer reviewing your approach before you dive in. Adapt to what you describe:
 
 1. **What are you building?** (outcome, not solution)
    - You: "Users can reset passwords via email"
@@ -59,9 +59,9 @@ The system asks clarifying questions naturally—like a peer reviewing your appr
    - System detects: small/medium/large
 
 3. **Scope mode?** (expanding, holding, or reducing)
-   - **Expanding:** New capability — building something that doesn't exist yet
-   - **Holding:** Hardening — bulletproofing, fixing, improving what exists
-   - **Reducing:** Surgical minimalism — removing, simplifying, cutting scope
+   - **Expanding:** New capability - building something that doesn't exist yet
+   - **Holding:** Hardening - bulletproofing, fixing, improving what exists
+   - **Reducing:** Surgical minimalism - removing, simplifying, cutting scope
    - System adjusts review expectations: expanding gets architecture review, holding gets correctness review, reducing gets regression review
 
 4. **Critical path?** (production, security, payment, or nice-to-have)
@@ -89,7 +89,7 @@ This command is part of a 3-command ritual:
   ↓ Answer 3-4 questions
   ↓ Branch created, scope recorded
 
-[You code here—no interruptions]
+[You code here-no interruptions]
 
 /pb-review
   ↓ Detects review depth from your change
@@ -149,11 +149,11 @@ You don't need to think about this.
 
 ## Related Commands
 
-- `/pb-review` — Quality gate (the second part of the ritual)
-- `/pb-commit` — Make the commit (the third part)
-- `/pb-pause` — Pause work, save context
-- `/pb-resume` — Get back into context
-- `/pb-plan` — Plan architecture before starting (optional, for complex work)
+- `/pb-review` - Quality gate (the second part of the ritual)
+- `/pb-commit` - Make the commit (the third part)
+- `/pb-pause` - Pause work, save context
+- `/pb-resume` - Get back into context
+- `/pb-plan` - Plan architecture before starting (optional, for complex work)
 
 ---
 

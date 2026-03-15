@@ -16,16 +16,16 @@ breaking_changes: []
 
 Effective onboarding reduces time to productivity, builds confidence, and prevents knowledge loss.
 
-**Resource Hint:** sonnet — structured planning and documentation, not deep architectural reasoning.
+**Resource Hint:** sonnet - structured planning and documentation, not deep architectural reasoning.
 
 ---
 
 ## When to Use This Command
 
-- **New team member joining** — Setting up their onboarding plan
-- **Creating onboarding docs** — Building onboarding materials
-- **Improving onboarding process** — Reviewing and enhancing experience
-- **Contractor/intern onboarding** — Adapting for shorter engagements
+- **New team member joining** - Setting up their onboarding plan
+- **Creating onboarding docs** - Building onboarding materials
+- **Improving onboarding process** - Reviewing and enhancing experience
+- **Contractor/intern onboarding** - Adapting for shorter engagements
 
 ---
 
@@ -46,7 +46,7 @@ Bad onboarding:
 
 **Culture First:** Onboarding should teach both frameworks on day one.
 
-Teach `/pb-preamble`: new team members need to know—challenge assumptions, disagree when needed, prefer correctness. Teach `/pb-design-rules`: introduce the design principles (Clarity, Simplicity, Modularity, Robustness) that guide how this team builds systems. This is how you set culture from the start.
+Teach `/pb-preamble`: new team members need to know-challenge assumptions, disagree when needed, prefer correctness. Teach `/pb-design-rules`: introduce the design principles (Clarity, Simplicity, Modularity, Robustness) that guide how this team builds systems. This is how you set culture from the start.
 
 ---
 
@@ -80,7 +80,7 @@ Month 1-3: Ramping up to full productivity
 Your buddy is [Name]. Slack them anytime.
 Your first small project will be [project].
 We'll have daily 15-min check-ins first week.
-Questions? Ask—this is what we're here for.
+Questions? Ask-this is what we're here for.
 
 See you Monday!"
 ```
@@ -479,19 +479,19 @@ Before last day:
 ## Integration with Playbook
 
 **Part of SDLC cycle:**
-- `/pb-team` — Team culture onboarding
-- `/pb-guide` — Engineering practices to learn
-- `/pb-commit` — Code review process training
-- `/pb-standards` — Code style to learn
+- `/pb-team` - Team culture onboarding
+- `/pb-guide` - Engineering practices to learn
+- `/pb-commit` - Code review process training
+- `/pb-standards` - Code style to learn
 
 ---
 
 ## Related Commands
 
-- `/pb-team` — Where onboarding fits in team
-- `/pb-documentation` — How to write for onboarding
-- `/pb-cycle` — Code review process they'll follow
-- `/pb-knowledge-transfer` — KT session preparation
+- `/pb-team` - Where onboarding fits in team
+- `/pb-documentation` - How to write for onboarding
+- `/pb-cycle` - Code review process they'll follow
+- `/pb-knowledge-transfer` - KT session preparation
 
 ---
 

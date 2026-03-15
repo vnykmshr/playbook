@@ -22,7 +22,7 @@ breaking_changes: []
 
 Find unclear sections, challenge stated assumptions, and surface gaps. Good documentation invites scrutiny and makes the system's reasoning transparent.
 
-**Resource Hint:** opus — documentation review requires nuanced judgment across accuracy, clarity, completeness, and audience fit
+**Resource Hint:** opus - documentation review requires nuanced judgment across accuracy, clarity, completeness, and audience fit
 
 ---
 
@@ -40,11 +40,11 @@ Find unclear sections, challenge stated assumptions, and surface gaps. Good docu
 
 Act as these roles simultaneously:
 
-1. **Senior Engineer** — Technical accuracy, API correctness
-2. **Product Manager** — User journey, feature coverage
-3. **Technical Writer** — Clarity, structure, readability
-4. **Security Reviewer** — Secrets exposure, compliance gaps
-5. **New Engineer** — Onboarding experience, setup clarity
+1. **Senior Engineer** - Technical accuracy, API correctness
+2. **Product Manager** - User journey, feature coverage
+3. **Technical Writer** - Clarity, structure, readability
+4. **Security Reviewer** - Secrets exposure, compliance gaps
+5. **New Engineer** - Onboarding experience, setup clarity
 
 ---
 
@@ -82,13 +82,13 @@ For each document:
 
 For critical areas, ensure docs include:
 
-- [ ] **Quickstart** — Works for a new contributor
-- [ ] **Architecture overview** — Responsibilities and data flows
-- [ ] **API reference** — Matches current code
-- [ ] **Runbooks** — Common failures and recovery steps
-- [ ] **Security notes** — Secrets, scopes, approvals
-- [ ] **Onboarding checklist** — For new engineers
-- [ ] **Changelog** — Recent major changes
+- [ ] **Quickstart** - Works for a new contributor
+- [ ] **Architecture overview** - Responsibilities and data flows
+- [ ] **API reference** - Matches current code
+- [ ] **Runbooks** - Common failures and recovery steps
+- [ ] **Security notes** - Secrets, scopes, approvals
+- [ ] **Onboarding checklist** - For new engineers
+- [ ] **Changelog** - Recent major changes
 
 ### 6. Ownership and Maintenance
 
@@ -207,11 +207,11 @@ Sections likely AI-generated, with suggested rewrites.
 
 ## Related Commands
 
-- `/pb-review` — Orchestrate comprehensive multi-perspective review
-- `/pb-review-hygiene` — Code quality and operational readiness
-- `/pb-documentation` — Documentation writing guidance
-- `/pb-repo-readme` — Generate comprehensive README
-- `/pb-repo-docsite` — Set up documentation site
+- `/pb-review` - Orchestrate comprehensive multi-perspective review
+- `/pb-review-hygiene` - Code quality and operational readiness
+- `/pb-documentation` - Documentation writing guidance
+- `/pb-repo-readme` - Generate comprehensive README
+- `/pb-repo-docsite` - Set up documentation site
 
 ---
 

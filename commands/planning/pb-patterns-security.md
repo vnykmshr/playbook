@@ -24,7 +24,7 @@ This guide covers proven security patterns for microservices, showing when to us
 
 Question threat models. Challenge assumed attack surfaces. Surface the real risk vs. implementation cost trade-off. Don't add complexity without understanding the actual risk.
 
-**Resource Hint:** sonnet — Security pattern reference; implementation-level authentication and authorization decisions.
+**Resource Hint:** sonnet - Security pattern reference; implementation-level authentication and authorization decisions.
 
 ---
 
@@ -746,14 +746,14 @@ func isStrongPassword(pwd string) bool {
 
 ## Common Security Antipatterns
 
-❌ **Storing passwords in plaintext** — Always hash with bcrypt/scrypt
-❌ **Logging sensitive data** — Never log passwords, tokens, PII
-❌ **Hardcoding secrets** — Use vault or environment variables
-❌ **SQL injection** — Use parameterized queries, never string concatenation
-❌ **XSS vulnerabilities** — Always encode/escape output
-❌ **Trusting client-side validation** — Always validate server-side
-❌ **Weak TLS versions** — Use TLS 1.2+ minimum
-❌ **Ignoring certificate expiration** — Monitor and rotate regularly
+❌ **Storing passwords in plaintext** - Always hash with bcrypt/scrypt
+❌ **Logging sensitive data** - Never log passwords, tokens, PII
+❌ **Hardcoding secrets** - Use vault or environment variables
+❌ **SQL injection** - Use parameterized queries, never string concatenation
+❌ **XSS vulnerabilities** - Always encode/escape output
+❌ **Trusting client-side validation** - Always validate server-side
+❌ **Weak TLS versions** - Use TLS 1.2+ minimum
+❌ **Ignoring certificate expiration** - Monitor and rotate regularly
 
 ---
 

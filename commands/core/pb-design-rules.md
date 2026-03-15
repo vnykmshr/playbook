@@ -16,7 +16,7 @@ breaking_changes: []
 
 > **The preamble tells us HOW teams think together. Design rules tell us WHAT we build. Together, they form the complete framework for engineering excellence.**
 
-**Resource Hint:** sonnet — Reference material for applying established design principles.
+**Resource Hint:** sonnet - Reference material for applying established design principles.
 
 ## When to Use
 
@@ -34,16 +34,16 @@ These are 17 classical software design principles that have proven themselves ac
 **The critical insight:** When a team uses preamble thinking (challenge assumptions, prefer correctness over agreement, think like peers), they need design rules to guide WHAT they're building. Without design rules, good collaboration produces poorly-designed systems. Without preamble thinking, teams debate design rules endlessly without resolution.
 
 **How they apply to everything:**
-- **Planning** — Design decisions embody these rules from the start
-- **Development** — Every architectural choice reflects these principles
-- **Review** — Reviewers challenge based on which rules are violated
-- **Operations** — Systems designed by these rules stay maintainable and adaptable
+- **Planning** - Design decisions embody these rules from the start
+- **Development** - Every architectural choice reflects these principles
+- **Review** - Reviewers challenge based on which rules are violated
+- **Operations** - Systems designed by these rules stay maintainable and adaptable
 
 **The four clusters** below group the first 17 rules into memorable themes: CLARITY, SIMPLICITY, RESILIENCE, and EXTENSIBILITY. A fifth theme, ATTENTION, captures Rule 18 (Attention as a Finite Resource). Together, these 18 rules provide a complete framework for technical decision-making.
 
 ---
 
-## Cluster 1: CLARITY — Design for Understandability
+## Cluster 1: CLARITY - Design for Understandability
 
 ### 1. Rule of Clarity: Clarity is Better Than Cleverness
 
@@ -135,7 +135,7 @@ Now the code is obviously correct: you can't forget a case.
 
 ---
 
-## Cluster 2: SIMPLICITY — Design for Discipline
+## Cluster 2: SIMPLICITY - Design for Discipline
 
 ### 5. Rule of Simplicity: Design for Simplicity; Add Complexity Only Where You Must
 
@@ -158,14 +158,14 @@ Simplicity requires discipline. It's harder in the moment: "Let me add support f
 
 See `/pb-maya-product` for the product lens on simplicity.
 
-Core insight: **Simplicity and scope discipline are inseparable.** Every feature is an expense, paid daily in maintenance cost, complexity tax, and cognitive load. The simplest design isn't about minimalist aesthetics—it's about ruthlessly eliminating what you don't need *now*.
+Core insight: **Simplicity and scope discipline are inseparable.** Every feature is an expense, paid daily in maintenance cost, complexity tax, and cognitive load. The simplest design isn't about minimalist aesthetics-it's about ruthlessly eliminating what you don't need *now*.
 
-- **Shipping simple is faster** — You know when code is done because it does exactly one thing well
-- **Debugging simple is faster** — Fewer moving parts, fewer places where bugs hide
-- **Learning simple is faster** — New developers read and understand in minutes, not hours
-- **Changing simple is faster** — When requirements shift, you change less code
+- **Shipping simple is faster** - You know when code is done because it does exactly one thing well
+- **Debugging simple is faster** - Fewer moving parts, fewer places where bugs hide
+- **Learning simple is faster** - New developers read and understand in minutes, not hours
+- **Changing simple is faster** - When requirements shift, you change less code
 
-Trade-off clarity: You can have simple+slow or complex+fast. Prefer simple+slow every time—you can optimize later. Complex+fast almost always becomes complex+slow when you try to maintain it.
+Trade-off clarity: You can have simple+slow or complex+fast. Prefer simple+slow every time-you can optimize later. Complex+fast almost always becomes complex+slow when you try to maintain it.
 
 ---
 
@@ -229,7 +229,7 @@ A linting tool that writes JSON output can be used with any downstream tool. A t
 
 ---
 
-## Cluster 3: RESILIENCE — Design for Reliability and Evolution
+## Cluster 3: RESILIENCE - Design for Reliability and Evolution
 
 ### 9. Rule of Robustness: Robustness Is the Child of Transparency and Simplicity
 
@@ -255,12 +255,12 @@ See `/pb-alex-infra` for resilience thinking and `/pb-jordan-testing` for failur
 
 Core insight: **Robust systems don't hide problems; they broadcast them.** Every layer of abstraction that conceals state increases the time between failure and discovery. Long detection latency means cascading failures.
 
-- **Fail at the boundary** — Catch invalid input early, before it corrupts state
-- **Assert invariants** — If data should never reach this state, assert it and crash
-- **Transparent state** — Make it obvious what the system is doing (logs, metrics, traces)
-- **Test for failure** — Don't test "it works"; test "it fails correctly"
+- **Fail at the boundary** - Catch invalid input early, before it corrupts state
+- **Assert invariants** - If data should never reach this state, assert it and crash
+- **Transparent state** - Make it obvious what the system is doing (logs, metrics, traces)
+- **Test for failure** - Don't test "it works"; test "it fails correctly"
 
-The paradox: Systems that fail loud and fast feel fragile. Systems that hide errors feel stable—until they corrupt your data.
+The paradox: Systems that fail loud and fast feel fragile. Systems that hide errors feel stable-until they corrupt your data.
 
 ---
 
@@ -289,17 +289,17 @@ Core insight: **Silent failures are worse than crashes.** When code swallows an 
 
 Loud failures cost you hours of debugging. Silent failures cost you days of data recovery and customer trust.
 
-- **Error at the edge** — Validate input; reject early
-- **Crash on invariant violation** — If state is impossible, stop immediately
-- **Clear error context** — Stack traces, logs, and metadata that enable diagnosis
-- **No recovery guessing** — If you can't recover safely, don't pretend to
+- **Error at the edge** - Validate input; reject early
+- **Crash on invariant violation** - If state is impossible, stop immediately
+- **Clear error context** - Stack traces, logs, and metadata that enable diagnosis
+- **No recovery guessing** - If you can't recover safely, don't pretend to
 
 The measure: "Time from failure to diagnosis." Loud systems are fast; silent systems bury the information you need.
 
 **Recovery-oriented errors:** Error messages should tell the consumer what to do next, not just what went wrong. This applies to human developers AND AI agents consuming your APIs, CLIs, or tools.
 
-- **Diagnostic only:** "Element not found" — consumer is stuck
-- **Recovery-oriented:** "Element not found. Available elements: [list]. Run `snapshot` to refresh." — consumer knows next step
+- **Diagnostic only:** "Element not found" - consumer is stuck
+- **Recovery-oriented:** "Element not found. Available elements: [list]. Run `snapshot` to refresh." - consumer knows next step
 
 As AI-assisted development grows, your error messages are read by both humans and AI agents. Recovery-oriented errors reduce time-to-resolution for both. Design errors that guide the next action, not just report the failure.
 
@@ -350,16 +350,16 @@ Core insight: **Premature optimization trades clarity for speed nobody measures.
 2. Understand the code so well you can optimize it safely
 3. Document why the optimization exists (so future maintainers don't remove it thinking it's dead code)
 
-- **Measure first** — Profiling is cheaper than guessing
-- **Optimize after clarity** — Code you understand is code you can safely optimize
-- **Document the optimization** — Why is it this way? What's the payoff vs cost?
-- **Accept performance debt** — If you don't know where the problem is, accept slower code rather than introduce complexity
+- **Measure first** - Profiling is cheaper than guessing
+- **Optimize after clarity** - Code you understand is code you can safely optimize
+- **Document the optimization** - Why is it this way? What's the payoff vs cost?
+- **Accept performance debt** - If you don't know where the problem is, accept slower code rather than introduce complexity
 
 The arithmetic: 1 hour measuring + 1 hour optimizing the right thing = 100x better ROI than 4 hours optimizing the wrong thing.
 
 ---
 
-## Cluster 4: EXTENSIBILITY — Design for Long-Term Growth
+## Cluster 4: EXTENSIBILITY - Design for Long-Term Growth
 
 ### 13. Rule of Modularity: Write Simple Parts Connected by Clean Interfaces
 
@@ -406,7 +406,7 @@ Use an ORM instead of hand-writing SQL, even though raw SQL might be slightly fa
 ### 15. Rule of Generation: Avoid Hand-Hacking; Write Programs to Write Programs When You Can
 
 **The Principle:**
-If you're doing the same thing repeatedly, write a program to do it. Code generation, templating, configuration files—use these instead of manual repetition.
+If you're doing the same thing repeatedly, write a program to do it. Code generation, templating, configuration files-use these instead of manual repetition.
 
 **Why It Matters:**
 Hand-hacked code is full of subtle variations: copy-paste mistakes, inconsistencies, forgotten updates. Generated code is consistent: the pattern is written once and applied everywhere.
@@ -681,12 +681,12 @@ Add more error handling downstream hoping to catch it eventually.
 
 ## Related Commands
 
-- `/pb-preamble` — How teams think together (complement to design rules)
-- `/pb-adr` — Architecture decisions document rules
-- `/pb-patterns` — Patterns show rules in practice
-- `/pb-review-hygiene` — Code review checks rules
-- `/pb-standards` — Working principles and code quality
+- `/pb-preamble` - How teams think together (complement to design rules)
+- `/pb-adr` - Architecture decisions document rules
+- `/pb-patterns` - Patterns show rules in practice
+- `/pb-review-hygiene` - Code review checks rules
+- `/pb-standards` - Working principles and code quality
 
 ---
 
-*Design Rules — Technical principles that complement preamble thinking and guide every engineering decision.*
+*Design Rules - Technical principles that complement preamble thinking and guide every engineering decision.*

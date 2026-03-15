@@ -20,31 +20,31 @@ Comprehensive security guidance for code review, design assessment, and pre-rele
 
 Your job is to surface risks and vulnerabilities. Reviewers should ask hard questions. Authors should welcome this scrutiny.
 
-**Resource Hint:** opus — security review demands thorough analysis of attack surfaces, threat models, and vulnerability patterns
+**Resource Hint:** opus - security review demands thorough analysis of attack surfaces, threat models, and vulnerability patterns
 
 ---
 
 ## When to Use This Command
 
-- **Code review** — Checking PRs for security issues
-- **Pre-release** — Security validation before shipping
-- **Security audit** — Periodic comprehensive review
-- **New authentication/authorization** — Changes to access control
-- **Handling sensitive data** — PII, payments, credentials
+- **Code review** - Checking PRs for security issues
+- **Pre-release** - Security validation before shipping
+- **Security audit** - Periodic comprehensive review
+- **New authentication/authorization** - Changes to access control
+- **Handling sensitive data** - PII, payments, credentials
 
 ---
 
 ## Overview
 
 Security is not an afterthought. Integrate these checks into:
-- **Code review** — Before merging to main
-- **Design phase** — Architecture decisions
-- **Pre-release** — Before shipping to production
+- **Code review** - Before merging to main
+- **Design phase** - Architecture decisions
+- **Pre-release** - Before shipping to production
 
 Choose the checklist that fits your context:
-- **Quick Checklist** — 5-10 minutes, S tier changes
-- **Standard Checklist** — 20 minutes, M tier changes
-- **Deep Dive** — 1+ hour, L tier changes, security-critical features
+- **Quick Checklist** - 5-10 minutes, S tier changes
+- **Standard Checklist** - 20 minutes, M tier changes
+- **Deep Dive** - 1+ hour, L tier changes, security-critical features
 
 ---
 
@@ -97,7 +97,7 @@ Use for feature development, API changes, multi-file changes.
 - [ ] Data type validation (not just format, but values)
 - [ ] Null/empty input handling
 - [ ] SQL injection prevention (parameterized queries, ORMs)
-- [ ] SQL edge cases: ORDER BY and table/column names cannot be parameterized — use allowlist
+- [ ] SQL edge cases: ORDER BY and table/column names cannot be parameterized - use allowlist
 - [ ] NoSQL injection prevention (use proper query builders)
 - [ ] Command injection prevention (no shell execution)
 - [ ] Path traversal prevention (canonicalize path, validate against base directory, reject `..` and absolute paths)
@@ -122,7 +122,7 @@ Use for feature development, API changes, multi-file changes.
 - [ ] Session cookies use `Secure` and `HttpOnly` flags
 - [ ] JSON APIs also protected (Content-Type header alone does not prevent CSRF; validate Origin/Referer AND use tokens)
 - [ ] Pre-auth endpoints covered (login, signup, password reset)
-- [ ] Note: APIs using Authorization header with bearer tokens (not cookies) are inherently CSRF-immune — the browser does not attach the header automatically. CSRF tokens are unnecessary in this case.
+- [ ] Note: APIs using Authorization header with bearer tokens (not cookies) are inherently CSRF-immune - the browser does not attach the header automatically. CSRF tokens are unnecessary in this case.
 
 ### Open Redirect Prevention
 - [ ] Redirect URLs validated against allowlist of trusted domains
@@ -305,16 +305,16 @@ Use for security-critical features, payment processing, authentication systems, 
 
 ### OWASP Top 10 (Application Security)
 
-1. **Broken Access Control** — Verified authorization checks
-2. **Cryptographic Failures** — Verified encryption and key management
-3. **Injection** — Verified input validation and parameterized queries
-4. **Insecure Design** — Threat modeling done, secure defaults
-5. **Security Misconfiguration** — Production config reviewed, defaults changed
-6. **Vulnerable Components** — Dependencies checked for vulnerabilities
-7. **Authentication Failures** — Authentication mechanism secure
-8. **Software & Data Integrity** — Dependencies from trusted sources, no tampering
-9. **Logging & Monitoring Failures** — Logging sufficient and alerting configured
-10. **SSRF** — Internal service discovery protected, not accessible from untrusted sources
+1. **Broken Access Control** - Verified authorization checks
+2. **Cryptographic Failures** - Verified encryption and key management
+3. **Injection** - Verified input validation and parameterized queries
+4. **Insecure Design** - Threat modeling done, secure defaults
+5. **Security Misconfiguration** - Production config reviewed, defaults changed
+6. **Vulnerable Components** - Dependencies checked for vulnerabilities
+7. **Authentication Failures** - Authentication mechanism secure
+8. **Software & Data Integrity** - Dependencies from trusted sources, no tampering
+9. **Logging & Monitoring Failures** - Logging sufficient and alerting configured
+10. **SSRF** - Internal service discovery protected, not accessible from untrusted sources
 
 ---
 
@@ -323,10 +323,10 @@ Use for security-critical features, payment processing, authentication systems, 
 ### JavaScript/Node.js
 
 **Common vulnerabilities:**
-- `eval()`, `Function()` constructor — NEVER use with user input
+- `eval()`, `Function()` constructor - NEVER use with user input
 - `innerHTML` with user input → Use DOMPurify or `textContent`
-- Prototype pollution — Validate object keys
-- Regex DoS — Use safe-regex or library validation
+- Prototype pollution - Validate object keys
+- Regex DoS - Use safe-regex or library validation
 
 **Best practices:**
 ```javascript
@@ -347,18 +347,18 @@ if (!allowedKeys.includes(key)) throw new Error('Invalid key');
 **XXE**: If parsing XML, use libraries that disable DTD by default. With `libxmljs`: `{ noent: false, dtdload: false }`.
 
 **Recommended packages:**
-- `helmet` — Security headers middleware
-- `express-rate-limit` — Rate limiting
-- `bcryptjs` — Password hashing
-- `jsonwebtoken` — JWT handling
-- `dompurify` — HTML sanitization
+- `helmet` - Security headers middleware
+- `express-rate-limit` - Rate limiting
+- `bcryptjs` - Password hashing
+- `jsonwebtoken` - JWT handling
+- `dompurify` - HTML sanitization
 
 ### Python
 
 **Common vulnerabilities:**
 - `pickle.loads(userInput)` → Use JSON instead
-- SQL string formatting — Use parameterized queries (SQLAlchemy)
-- `exec()`, `eval()` with user input — NEVER
+- SQL string formatting - Use parameterized queries (SQLAlchemy)
+- `exec()`, `eval()` with user input - NEVER
 - File path concatenation → Use `pathlib`, not string concat
 
 **Best practices:**
@@ -377,12 +377,12 @@ query = db.session.query(User).filter_by(id=user_id)  # SQLAlchemy ORM
 **XXE**: Use `defusedxml` instead of stdlib `xml.etree`. With `lxml`: `etree.XMLParser(resolve_entities=False, no_network=True)`.
 
 **Recommended packages:**
-- `flask` — Web framework with security features
-- `sqlalchemy` — ORM with parameterized queries
-- `cryptography` — Encryption library
-- `bcrypt` — Password hashing
-- `pydantic` — Input validation and serialization
-- `defusedxml` — Safe XML parsing
+- `flask` - Web framework with security features
+- `sqlalchemy` - ORM with parameterized queries
+- `cryptography` - Encryption library
+- `bcrypt` - Password hashing
+- `pydantic` - Input validation and serialization
+- `defusedxml` - Safe XML parsing
 
 ### Go
 
@@ -409,12 +409,12 @@ validator.Validate(obj)
 **XXE**: Go's `encoding/xml` is safe by default (no external entity resolution). Verify third-party XML parsers disable DTD processing.
 
 **Recommended packages:**
-- `database/sql` — Parameterized queries
-- `net/http` — Standard library routing (Go 1.22+ supports path parameters)
-- `go-chi/chi` — Lightweight router (actively maintained)
-- `golang-jwt/jwt` — JWT handling
-- `golang.org/x/crypto` — Cryptography
-- `github.com/asaskevich/govalidator` — Input validation
+- `database/sql` - Parameterized queries
+- `net/http` - Standard library routing (Go 1.22+ supports path parameters)
+- `go-chi/chi` - Lightweight router (actively maintained)
+- `golang-jwt/jwt` - JWT handling
+- `golang.org/x/crypto` - Cryptography
+- `github.com/asaskevich/govalidator` - Input validation
 
 ---
 
@@ -584,7 +584,7 @@ user_data = json.loads(request.data)  # Safe parsing, no code execution
 **Prevention by language:**
 
 ```python
-# Python — use defusedxml
+# Python - use defusedxml
 from defusedxml import ElementTree
 tree = ElementTree.parse(xml_file)  # Safe: external entities disabled
 
@@ -594,13 +594,13 @@ parser = etree.XMLParser(resolve_entities=False, no_network=True)
 ```
 
 ```javascript
-// Node.js — disable DTD in your XML library
+// Node.js - disable DTD in your XML library
 // If using libxmljs: { noent: false, dtdload: false }
 // Prefer libraries that disable DTD by default
 ```
 
 ```go
-// Go — xml.Decoder is safe by default (no external entity resolution)
+// Go - xml.Decoder is safe by default (no external entity resolution)
 // If using third-party parsers, verify DTD processing is disabled
 ```
 
@@ -661,31 +661,31 @@ Additional: Privacy by design, user data export/deletion
 
 ## Resources
 
-- **OWASP Top 10** — https://owasp.org/www-project-top-ten/
-- **CWE Top 25** — https://cwe.mitre.org/top25/
-- **NIST Cybersecurity Framework** — https://www.nist.gov/cyberframework/
-- **Snyk Vulnerability Database** — https://snyk.io/vuln/
-- **PortSwigger Web Security Academy** — https://portswigger.net/web-security/
+- **OWASP Top 10** - https://owasp.org/www-project-top-ten/
+- **CWE Top 25** - https://cwe.mitre.org/top25/
+- **NIST Cybersecurity Framework** - https://www.nist.gov/cyberframework/
+- **Snyk Vulnerability Database** - https://snyk.io/vuln/
+- **PortSwigger Web Security Academy** - https://portswigger.net/web-security/
 
 ---
 
 ## Integration with Playbook
 
 **Part of review workflow:**
-- `/pb-cycle` Step 1 — Self-review security checklist
-- `/pb-review-hygiene` — Security section in code review
-- `/pb-guide` §4.5 — Security design during planning
-- `/pb-release` — Pre-release security checklist
+- `/pb-cycle` Step 1 - Self-review security checklist
+- `/pb-review-hygiene` - Security section in code review
+- `/pb-guide` §4.5 - Security design during planning
+- `/pb-release` - Pre-release security checklist
 
 ---
 
 ## Related Commands
 
-- `/pb-review` — Comprehensive multi-perspective review orchestrator
-- `/pb-review-hygiene` — Code quality including security
-- `/pb-hardening` — Infrastructure security (servers, containers, networks)
-- `/pb-secrets` — Secrets management lifecycle
-- `/pb-patterns-security` — Security patterns for microservices
+- `/pb-review` - Comprehensive multi-perspective review orchestrator
+- `/pb-review-hygiene` - Code quality including security
+- `/pb-hardening` - Infrastructure security (servers, containers, networks)
+- `/pb-secrets` - Secrets management lifecycle
+- `/pb-patterns-security` - Security patterns for microservices
 
 ---
 

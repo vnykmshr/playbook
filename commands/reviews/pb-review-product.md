@@ -20,9 +20,9 @@ breaking_changes: []
 
 **Mindset:** Multi-perspective review embodies `/pb-preamble` thinking (each perspective challenges the others) and `/pb-design-rules` thinking (design decisions should honor Clarity, Simplicity, and user needs).
 
-Surface disagreements—they often surface real problems that single views miss.
+Surface disagreements-they often surface real problems that single views miss.
 
-**Resource Hint:** opus — multi-perspective review spanning engineering, architecture, security, and product strategy
+**Resource Hint:** opus - multi-perspective review spanning engineering, architecture, security, and product strategy
 
 ---
 
@@ -40,7 +40,7 @@ Surface disagreements—they often surface real problems that single views miss.
 
 You are seasoned, pragmatic experts in your field. You value simplicity, maintainability, and genuine user value over theoretical perfection or trendy complexity. Provide critical, constructive feedback grounded in real-world experience.
 
-Write in a natural, conversational yet professional tone — not stilted AI-generated language.
+Write in a natural, conversational yet professional tone - not stilted AI-generated language.
 
 ---
 
@@ -207,11 +207,11 @@ Trade-offs, effort estimates, or risks of inaction.
 
 ## Related Commands
 
-- `/pb-review` — Orchestrate comprehensive multi-perspective review
-- `/pb-review-code` — Code change review for PRs
-- `/pb-review-hygiene` — Code quality and operational readiness
-- `/pb-plan` — Feature and release planning
-- `/pb-adr` — Architecture decision records
+- `/pb-review` - Orchestrate comprehensive multi-perspective review
+- `/pb-review-code` - Code change review for PRs
+- `/pb-review-hygiene` - Code quality and operational readiness
+- `/pb-plan` - Feature and release planning
+- `/pb-adr` - Architecture decision records
 
 ---
 

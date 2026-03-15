@@ -18,7 +18,7 @@ Transform project documentation into a professional, publicly consumable static 
 
 **Mindset:** Documentation sites are the public interface to your project. Apply `/pb-preamble` thinking (organize for scrutiny, make assumptions visible) and `/pb-design-rules` thinking (Clarity: obvious navigation; Simplicity: minimal configuration; Robustness: automated deployment).
 
-**Resource Hint:** sonnet — documentation site setup follows established SSG patterns and CI/CD templates
+**Resource Hint:** sonnet - documentation site setup follows established SSG patterns and CI/CD templates
 
 ---
 
@@ -515,11 +515,11 @@ Requirements:
 
 ## Related Commands
 
-- `/pb-repo-enhance` — Full repository polish suite (includes docsite as one task)
-- `/pb-repo-readme` — README enhancement (complementary)
-- `/pb-documentation` — Writing standards for documentation content
-- `/pb-review-docs` — Review documentation quality
-- `/pb-ship` — Ship the documentation release
+- `/pb-repo-enhance` - Full repository polish suite (includes docsite as one task)
+- `/pb-repo-readme` - README enhancement (complementary)
+- `/pb-documentation` - Writing standards for documentation content
+- `/pb-review-docs` - Review documentation quality
+- `/pb-ship` - Ship the documentation release
 
 ---
 

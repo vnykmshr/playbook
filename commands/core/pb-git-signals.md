@@ -21,18 +21,18 @@ breaking_changes: []
 
 Apply `/pb-preamble` thinking: challenge what the signals reveal about project health. Apply `/pb-design-rules` thinking: are we building the right things? Are we fixing the same areas repeatedly?
 
-**Resource Hint:** sonnet — Git history analysis; pattern recognition from commit signals.
+**Resource Hint:** sonnet - Git history analysis; pattern recognition from commit signals.
 
 ---
 
 ## When to Use
 
-- **Weekly check** — "What's been hot this week?"
-- **Before quarterly planning** — Input for `/pb-evolve` decision making
-- **After incidents** — Investigate pain patterns
-- **Before refactoring** — Identify high-churn areas
-- **Onboarding** — Show new team members what's active
-- **Ad-hoc investigation** — "Why is this area changing so much?"
+- **Weekly check** - "What's been hot this week?"
+- **Before quarterly planning** - Input for `/pb-evolve` decision making
+- **After incidents** - Investigate pain patterns
+- **Before refactoring** - Identify high-churn areas
+- **Onboarding** - Show new team members what's active
+- **Ad-hoc investigation** - "Why is this area changing so much?"
 
 ---
 
@@ -45,10 +45,10 @@ python scripts/git-signals.py
 ```
 
 Outputs to `todos/git-signals/latest/`:
-- `adoption-metrics.json` — Which commands/files are most touched
-- `churn-analysis.json` — Which areas change frequently
-- `pain-points-report.json` — Reverts, bug fixes, hotfixes
-- `signals-summary.md` — Human-readable overview
+- `adoption-metrics.json` - Which commands/files are most touched
+- `churn-analysis.json` - Which areas change frequently
+- `pain-points-report.json` - Reverts, bug fixes, hotfixes
+- `signals-summary.md` - Human-readable overview
 
 ### With Custom Time Range
 
@@ -80,10 +80,10 @@ python scripts/git-signals.py --help
 **What it shows:** Which commands and files get the most attention
 
 **Key fields:**
-- `commands_by_touch_frequency` — Top 20 commands by git touches (all commits mentioning that file)
-- `files_by_change_frequency` — Top 20 files by modification count
-- `authors_per_command` — How many unique authors touched each command
-- `least_active_commands` — Bottom 10 (candidates for review or removal)
+- `commands_by_touch_frequency` - Top 20 commands by git touches (all commits mentioning that file)
+- `files_by_change_frequency` - Top 20 files by modification count
+- `authors_per_command` - How many unique authors touched each command
+- `least_active_commands` - Bottom 10 (candidates for review or removal)
 
 **How to interpret:**
 - High touch frequency = well-maintained or frequently used
@@ -105,9 +105,9 @@ Least active: pb-legacy-tool (2 touches, 1 author)
 **What it shows:** Which areas change frequently (high volatility)
 
 **Key fields:**
-- `files_by_commit_frequency` — How many commits touch each file
-- `files_by_line_changes` — Total lines added/deleted per file
-- `high_churn_areas` — Files with most activity (lines + commit frequency combined)
+- `files_by_commit_frequency` - How many commits touch each file
+- `files_by_line_changes` - Total lines added/deleted per file
+- `high_churn_areas` - Files with most activity (lines + commit frequency combined)
 
 **How to interpret:**
 - High churn = active development, frequent refactoring, or instability
@@ -127,11 +127,11 @@ Stable: commands/templates/pb-old.md (2 commits, 10 line changes)
 **What it shows:** Problem areas - where bugs and reversions happen
 
 **Key fields:**
-- `reverted_commits` — Commits that were later reverted (explicit undo)
-- `bug_fix_patterns` — Commits with 'fix:', 'bug:', or 'bugfix' in subject
-- `hotfix_patterns` — Urgent fixes ('hotfix', 'critical', 'p0:', 'p1:')
-- `pain_score_by_file` — Composite score based on fixes+reverts
-- `summary` — Counts of each pattern type
+- `reverted_commits` - Commits that were later reverted (explicit undo)
+- `bug_fix_patterns` - Commits with 'fix:', 'bug:', or 'bugfix' in subject
+- `hotfix_patterns` - Urgent fixes ('hotfix', 'critical', 'p0:', 'p1:')
+- `pain_score_by_file` - Composite score based on fixes+reverts
+- `summary` - Counts of each pattern type
 
 **How to interpret:**
 - Reverts = clear mistakes that needed undoing
@@ -166,7 +166,7 @@ Top pain areas:
 
 **Low adoption + High churn** = Experimental or problematic
 - Likely: New feature being refined, OR area with pain points
-- Action: Investigate — is this active work or a problem?
+- Action: Investigate - is this active work or a problem?
 - Risk: May indicate design issues
 
 **Low adoption + Low churn** = Stale or deprecated
@@ -195,7 +195,7 @@ Top pain areas:
 
 **Multiple reverts** = Systemic issues
 - Indicator: Fix often doesn't work first time
-- Action: Root cause analysis — process, design, or testing issue?
+- Action: Root cause analysis - process, design, or testing issue?
 - Risk: Loss of trust in that area
 
 **Clustered bug fixes** = Known problematic area
@@ -882,10 +882,10 @@ python scripts/git-signals.py --since "4 weeks ago"
 
 ## Related Commands
 
-- `/pb-evolve` — Quarterly planning that uses signals as input
-- `/pb-context` — Project context and working state
-- `/pb-learn` — Learning patterns from playbooks
-- `/pb-cycle` — Development workflow (where the git history comes from)
+- `/pb-evolve` - Quarterly planning that uses signals as input
+- `/pb-context` - Project context and working state
+- `/pb-learn` - Learning patterns from playbooks
+- `/pb-cycle` - Development workflow (where the git history comes from)
 
 ---
 

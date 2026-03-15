@@ -21,17 +21,17 @@ breaking_changes: []
 
 **Core Principle:** We don't freeze playbooks at a point-in-time. We evolve them continuously as Claude capabilities improve. This is how we stay efficient.
 
-**Resource Hint:** opus — Strategic evolution; capability assessment and design decisions.
+**Resource Hint:** opus - Strategic evolution; capability assessment and design decisions.
 
 ---
 
 ## When to Use
 
-- **Quarterly schedule** — Feb, May, Aug, Nov (fixed calendar)
-- **Major Claude version release** — When Claude 4.6 → 4.7 drops
-- **Context limit stress** — If hitting session limits regularly
-- **Latency complaints** — If playbooks feel slow
-- **User feedback** — When patterns don't work in practice
+- **Quarterly schedule** - Feb, May, Aug, Nov (fixed calendar)
+- **Major Claude version release** - When Claude 4.6 → 4.7 drops
+- **Context limit stress** - If hitting session limits regularly
+- **Latency complaints** - If playbooks feel slow
+- **User feedback** - When patterns don't work in practice
 
 ---
 
@@ -463,10 +463,10 @@ git push origin main
 
 ### What Doesn't Change?
 
-- **Preamble thinking** (challenge assumptions, peer collaboration) — timeless
-- **Design rules** (clarity, simplicity, robustness) — timeless
-- **Atomic commits, quality gates** — foundational, not outdated by capability
-- **Test-first discipline** — still best practice
+- **Preamble thinking** (challenge assumptions, peer collaboration) - timeless
+- **Design rules** (clarity, simplicity, robustness) - timeless
+- **Atomic commits, quality gates** - foundational, not outdated by capability
+- **Test-first discipline** - still best practice
 
 ---
 
@@ -525,7 +525,7 @@ python3 scripts/evolution-log.py --export
 Human-readable summary for each release:
 
 ```markdown
-## v2.11.0 (2026-05-15) — Q2 Evolution
+## v2.11.0 (2026-05-15) - Q2 Evolution
 
 ### Capability Changes
 - Sonnet 4.6 → 4.7: +15% reasoning depth
@@ -892,7 +892,7 @@ Maintain `todos/evolution-dashboard.md` for quarter-at-a-glance status:
 ```markdown
 # Evolution Dashboard: 2026
 
-## Q1 (Feb 10-15) — COMPLETE
+## Q1 (Feb 10-15) - COMPLETE
 - Evolution Manager: [Name]
 - Status: ✅ Released Feb 16
 - Capability focus: Sonnet 4.6 performance improvements
@@ -900,17 +900,17 @@ Maintain `todos/evolution-dashboard.md` for quarter-at-a-glance status:
 - Impact: No regressions, positive feedback
 - Post-review: Stable, metrics good
 
-## Q2 (May 10-15) — UPCOMING
+## Q2 (May 10-15) - UPCOMING
 - Evolution Manager: [TBD - assign by April 20]
 - Preliminary capability focus: Context window, reasoning improvements
 - Estimated changes: TBD
 - Key questions: [To be researched in May]
 
-## Q3 (Aug 10-15) — PLANNING
+## Q3 (Aug 10-15) - PLANNING
 - Evolution Manager: [Rotate from Q1]
 - Preliminary focus: TBD
 
-## Q4 (Nov 10-15) — PLANNING
+## Q4 (Nov 10-15) - PLANNING
 - Evolution Manager: [Rotate from Q2]
 - Preliminary focus: TBD
 ```
@@ -943,23 +943,23 @@ Maintain `todos/evolution-dashboard.md` for quarter-at-a-glance status:
 
 ## Related Commands
 
-- `/pb-claude-global` — Regenerate global CLAUDE.md
-- `/pb-claude-project` — Regenerate project CLAUDE.md
-- `/pb-standards` — Quality standards (validated by evolution)
-- `/pb-preamble` — Thinking philosophy (doesn't change)
-- `/pb-design-rules` — Design principles (doesn't change)
+- `/pb-claude-global` - Regenerate global CLAUDE.md
+- `/pb-claude-project` - Regenerate project CLAUDE.md
+- `/pb-standards` - Quality standards (validated by evolution)
+- `/pb-preamble` - Thinking philosophy (doesn't change)
+- `/pb-design-rules` - Design principles (doesn't change)
 
 ---
 
 ## Tips for Sustainable Evolution
 
-1. **Make metadata source of truth** — Everything derives from metadata
-2. **Automate what's repetitive** — scripts/evolve.py handles index generation
-3. **Document rationale** — Every change explains why (for future evolution)
-4. **Test before releasing** — Validate on real tasks
-5. **Measure impact** — Track efficiency gains
-6. **Collect feedback** — Users will find patterns that don't work
-7. **Iterate publicly** — Share evolution log so users understand changes
+1. **Make metadata source of truth** - Everything derives from metadata
+2. **Automate what's repetitive** - scripts/evolve.py handles index generation
+3. **Document rationale** - Every change explains why (for future evolution)
+4. **Test before releasing** - Validate on real tasks
+5. **Measure impact** - Track efficiency gains
+6. **Collect feedback** - Users will find patterns that don't work
+7. **Iterate publicly** - Share evolution log so users understand changes
 
 ---
 
@@ -1002,4 +1002,4 @@ This is self-healing DNA in action.
 **Last Updated:** 2026-02-09
 **Version:** 1.0 (Foundation Release)
 
-*Self-improvement is how we stay relevant. When Claude evolves, we evolve. When users teach us better patterns, we implement them. This playbook is never "done"—it's always improving.*
+*Self-improvement is how we stay relevant. When Claude evolves, we evolve. When users teach us better patterns, we implement them. This playbook is never "done"-it's always improving.*

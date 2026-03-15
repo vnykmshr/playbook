@@ -17,7 +17,7 @@ breaking_changes: []
 
 Test-centric quality thinking focused on finding gaps, not coverage numbers. Reviews test strategies through the lens of "what could go wrong that we haven't tested?"
 
-**Resource Hint:** opus — Test strategy quality, reliability assessment, gap identification.
+**Resource Hint:** opus - Test strategy quality, reliability assessment, gap identification.
 
 ---
 
@@ -29,11 +29,11 @@ Apply `/pb-preamble` thinking: Challenge whether tests actually verify behavior,
 
 ## When to Use
 
-- **Test strategy review** — Is the test approach sound?
-- **Coverage discussion** — Is coverage high where it matters?
-- **Release confidence** — Should we ship this?
-- **Reliability assessment** — What failure modes haven't we tested?
-- **Debugging production bugs** — What test should have caught this?
+- **Test strategy review** - Is the test approach sound?
+- **Coverage discussion** - Is coverage high where it matters?
+- **Release confidence** - Should we ship this?
+- **Reliability assessment** - What failure modes haven't we tested?
+- **Debugging production bugs** - What test should have caught this?
 
 ---
 
@@ -137,7 +137,7 @@ GOOD: Testing observable behavior from consumer's perspective
 
 ### Test Maintenance Burden
 
-Every test is maintenance debt. A bad test is worse than no test—it prevents refactoring.
+Every test is maintenance debt. A bad test is worse than no test-it prevents refactoring.
 
 ```
 BAD TEST (high maintenance):
@@ -177,7 +177,7 @@ For each test suite:
 4. **If production breaks, would tests have predicted it?** (Did we test the failing path?)
 
 **Diff-aware test mapping:**
-Before reviewing tests, map the code diff to affected flows. Read `git diff main`, identify which codepaths, user flows, routes, or APIs the change touches, then verify test coverage exists for each affected path. Don't review tests in isolation — review them against what the diff actually changes.
+Before reviewing tests, map the code diff to affected flows. Read `git diff main`, identify which codepaths, user flows, routes, or APIs the change touches, then verify test coverage exists for each affected path. Don't review tests in isolation - review them against what the diff actually changes.
 
 **Shadow path tracing:**
 For every data flow, explicitly enumerate three shadow paths alongside the happy path:
@@ -185,9 +185,9 @@ For every data flow, explicitly enumerate three shadow paths alongside the happy
 - **Empty path:** What happens when the value is present but empty (empty string, empty list, zero)?
 - **Error path:** What happens when the operation fails (timeout, exception, invalid state)?
 
-This isn't "test edge cases" — it's systematic enumeration. If you can't name the shadow paths, you haven't understood the data flow.
+This isn't "test edge cases" - it's systematic enumeration. If you can't name the shadow paths, you haven't understood the data flow.
 
-Example — payment checkout flow:
+Example - payment checkout flow:
 ```
 Happy path:  user → cart → payment → confirmation
 Nil path:    user has no payment method → what happens?
@@ -700,7 +700,7 @@ def create_user(email, password, db, email_service):
     except EmailServiceError as e:
         # User created but email failed
         logger.error(f"Welcome email failed for {email}: {e}")
-        # Don't fail—user can still login
+        # Don't fail-user can still login
 
     return user
 
@@ -726,7 +726,7 @@ def test_create_user_email_service_fails(mock_db, mock_email):
     mock_db.find_user_by_email.return_value = None
     mock_email.send_welcome_email.side_effect = EmailServiceError("service down")
 
-    # Should NOT raise—graceful degradation
+    # Should NOT raise-graceful degradation
     user = create_user("john@example.com", "password123", mock_db, mock_email)
 
     assert user.email == "john@example.com"
@@ -795,11 +795,11 @@ When Jordan sees a test suite:
 
 ## Related Commands
 
-- `/pb-testing` — Testing patterns and strategies
-- `/pb-preamble` — Thinking about reliability through peer challenge
-- `/pb-design-rules` — Resilience principle applied to testing
-- `/pb-review-tests` — Periodic test suite review
-- `/pb-standards` — Testing standards
+- `/pb-testing` - Testing patterns and strategies
+- `/pb-preamble` - Thinking about reliability through peer challenge
+- `/pb-design-rules` - Resilience principle applied to testing
+- `/pb-review-tests` - Periodic test suite review
+- `/pb-standards` - Testing standards
 
 ---
 

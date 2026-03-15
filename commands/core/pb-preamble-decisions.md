@@ -16,7 +16,7 @@ breaking_changes: []
 
 Extending core preamble thinking to decision finality, execution alignment, and organizational learning.
 
-**Resource Hint:** opus — Decision frameworks require careful reasoning about trade-offs and organizational dynamics.
+**Resource Hint:** opus - Decision frameworks require careful reasoning about trade-offs and organizational dynamics.
 
 ## When to Use
 
@@ -336,11 +336,11 @@ Context:
 - Migration from legacy system
 
 Alternatives considered:
-1. MongoDB — flexible schema, easier scale-out
+1. MongoDB - flexible schema, easier scale-out
    Rejected because: No team expertise, real-time queries harder
-2. Stay on legacy Oracle — maintains compatibility
+2. Stay on legacy Oracle - maintains compatibility
    Rejected because: We're migrating away, doesn't help new features
-3. DynamoDB — AWS-native, good scale
+3. DynamoDB - AWS-native, good scale
    Rejected because: costs would be higher at our scale, ACID important
 
 Rationale:
@@ -500,7 +500,7 @@ There's a cost to perpetual challenge. Teams get exhausted. Debates drag on. Dec
 
 ### Preventing Challenge Fatigue
 
-**Use decision clocks** (Section II) — Removes perpetual debate
+**Use decision clocks** (Section II) - Removes perpetual debate
 
 **Distinguish between:**
 - Strategic challenges (worth debating more)
@@ -655,12 +655,12 @@ Core preamble principles remain:
 - Think holistically
 
 Decision discipline adds:
-- **Decision clocks** — Challenge has a window, then closure
-- **Execution alignment** — After decision, you execute well even if you disagree
-- **Revisit criteria** — Clear rules for when to reopen vs. stick
-- **Documentation** — Why we decided, not just what
-- **Learning culture** — Outcomes teach us without blame
-- **Challenge budgets** — Debate time is finite, use it wisely
+- **Decision clocks** - Challenge has a window, then closure
+- **Execution alignment** - After decision, you execute well even if you disagree
+- **Revisit criteria** - Clear rules for when to reopen vs. stick
+- **Documentation** - Why we decided, not just what
+- **Learning culture** - Outcomes teach us without blame
+- **Challenge budgets** - Debate time is finite, use it wisely
 
 **The result:**
 - Genuine challenge happens
@@ -673,12 +673,12 @@ Decision discipline adds:
 
 ## Related Commands
 
-- `/pb-preamble` — Core principles (Part 1)
-- `/pb-preamble-async` — How these apply async (Part 2)
-- `/pb-preamble-power` — Power dynamics (Part 3)
-- `/pb-adr` — Architecture Decision Records (decision documentation)
-- `/pb-incident` — Learning from failures
+- `/pb-preamble` - Core principles (Part 1)
+- `/pb-preamble-async` - How these apply async (Part 2)
+- `/pb-preamble-power` - Power dynamics (Part 3)
+- `/pb-adr` - Architecture Decision Records (decision documentation)
+- `/pb-incident` - Learning from failures
 
 ---
 
-*Decision Making & Dissent — Completing the philosophy foundation.*
+*Decision Making & Dissent - Completing the philosophy foundation.*

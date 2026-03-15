@@ -232,55 +232,55 @@ START
 ## By Frequency
 
 ### Daily
-- `/pb-resume` — Get context
-- `/pb-cycle` — Code and review
-- `/pb-standup` — Team standup
-- `/pb-commit` — Create commits
-- `/pb-context` — Refresh project knowledge
+- `/pb-resume` - Get context
+- `/pb-cycle` - Code and review
+- `/pb-standup` - Team standup
+- `/pb-commit` - Create commits
+- `/pb-context` - Refresh project knowledge
 
 ### Per Feature
-- `/pb-plan` — Lock scope
-- `/pb-start` — Create branch
-- `/pb-testing` — Add tests
-- `/pb-security` — Security gate
-- `/pb-pr` — Create pull request
-- `/pb-commit` — Logical commits
+- `/pb-plan` - Lock scope
+- `/pb-start` - Create branch
+- `/pb-testing` - Add tests
+- `/pb-security` - Security gate
+- `/pb-pr` - Create pull request
+- `/pb-commit` - Logical commits
 
 ### Per Release
-- `/pb-release` — Pre-release checks
-- `/pb-deployment` — Choose strategy
-- `/pb-release` — Final review
+- `/pb-release` - Pre-release checks
+- `/pb-deployment` - Choose strategy
+- `/pb-release` - Final review
 
 ### Monthly
-- `/pb-review-hygiene` — Code quality
-- `/pb-review-tests` — Test coverage
-- `/pb-logging` — Logging standards
+- `/pb-review-hygiene` - Code quality
+- `/pb-review-tests` - Test coverage
+- `/pb-logging` - Logging standards
 
 ### Quarterly
-- `/pb-review-hygiene` — Tech debt
-- `/pb-review-product` — Product fit
+- `/pb-review-hygiene` - Tech debt
+- `/pb-review-product` - Product fit
 - Team retrospective
 
 ### Occasionally
-- `/pb-adr` — Major decisions
-- `/pb-patterns-*` — Design decisions
-- `/pb-performance` — Optimization
-- `/pb-incident` — Production issues
-- `/pb-observability` — Monitoring setup
-- `/pb-onboarding` — New team members
-- `/pb-knowledge-transfer` — Knowledge transfer
-- `/pb-team` — Team dynamics
+- `/pb-adr` - Major decisions
+- `/pb-patterns-*` - Design decisions
+- `/pb-performance` - Optimization
+- `/pb-incident` - Production issues
+- `/pb-observability` - Monitoring setup
+- `/pb-onboarding` - New team members
+- `/pb-knowledge-transfer` - Knowledge transfer
+- `/pb-team` - Team dynamics
 
 ### One-Time
-- `/pb-repo-init` — New project
-- `/pb-repo-organize` — Cleanup
-- `/pb-repo-readme` — Write README
-- `/pb-repo-about` — GitHub about
-- `/pb-repo-blog` — Tech blog post
-- `/pb-guide` — Learn framework
-- `/pb-standards` — Define standards
-- `/pb-templates` — Create templates
-- `/pb-context` — Document project
+- `/pb-repo-init` - New project
+- `/pb-repo-organize` - Cleanup
+- `/pb-repo-readme` - Write README
+- `/pb-repo-about` - GitHub about
+- `/pb-repo-blog` - Tech blog post
+- `/pb-guide` - Learn framework
+- `/pb-standards` - Define standards
+- `/pb-templates` - Create templates
+- `/pb-context` - Document project
 
 ---
 
@@ -320,7 +320,7 @@ START
 
 ## Next Steps
 
-- **[Full Command Reference](command-index.md)** — See all commands
-- **[Getting Started](getting-started.md)** — Pick a scenario
-- **[Integration Guide](integration-guide.md)** — See how commands work together
-- **[FAQ](faq.md)** — Common questions
+- **[Full Command Reference](command-index.md)** - See all commands
+- **[Getting Started](getting-started.md)** - Pick a scenario
+- **[Integration Guide](integration-guide.md)** - See how commands work together
+- **[FAQ](faq.md)** - Common questions

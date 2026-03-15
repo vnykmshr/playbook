@@ -20,7 +20,7 @@ Overview and navigation guide for the pattern family.
 
 Question whether this pattern fits your constraints. Challenge the costs. Explore alternatives. Good patterns are tools you understand and choose, not dogma you follow.
 
-**Resource Hint:** sonnet — Pattern navigation and selection; index-level reference material.
+**Resource Hint:** sonnet - Pattern navigation and selection; index-level reference material.
 
 ## When to Use
 
@@ -338,22 +338,22 @@ All patterns in this family follow these standards:
 ## Integration with Playbook
 
 **Architectural decisions:**
-- `/pb-adr` — Document why specific patterns chosen
-- `/pb-guide` — System design using patterns
-- `/pb-deployment` — How patterns affect deployment
+- `/pb-adr` - Document why specific patterns chosen
+- `/pb-guide` - System design using patterns
+- `/pb-deployment` - How patterns affect deployment
 
 **Implementation:**
-- `/pb-commit` — Atomic commits for pattern implementations
-- `/pb-testing` — Testing pattern implementations
-- `/pb-performance` — Performance optimization using patterns
+- `/pb-commit` - Atomic commits for pattern implementations
+- `/pb-testing` - Testing pattern implementations
+- `/pb-performance` - Performance optimization using patterns
 
 **Operations:**
-- `/pb-observability` — Monitoring patterns in production
-- `/pb-incident` — Handling pattern failures
-- `/pb-security` — Secure pattern implementations
+- `/pb-observability` - Monitoring patterns in production
+- `/pb-incident` - Handling pattern failures
+- `/pb-security` - Secure pattern implementations
 
 **Reviews:**
-- `/pb-review-microservice` — Microservice design review (uses pattern knowledge)
+- `/pb-review-microservice` - Microservice design review (uses pattern knowledge)
 
 ---
 
@@ -377,15 +377,15 @@ All patterns in this family follow these standards:
 
 ## Related Commands
 
-- `/pb-patterns-core` — Core architectural and structural patterns (SOA, Event-Driven, Repository, DTO)
-- `/pb-patterns-resilience` — Resilience patterns (Retry, Circuit Breaker, Rate Limiting, Cache-Aside, Bulkhead)
-- `/pb-patterns-async` — Asynchronous patterns
-- `/pb-patterns-db` — Database patterns
-- `/pb-patterns-distributed` — Distributed systems patterns
-- `/pb-patterns-frontend` — Frontend architecture patterns (components, state, theming)
-- `/pb-patterns-api` — API design patterns (REST, GraphQL, gRPC)
-- `/pb-patterns-deployment` — Deployment strategies and patterns
-- `/pb-patterns-cloud` — Cloud deployment patterns (AWS, GCP, Azure)
+- `/pb-patterns-core` - Core architectural and structural patterns (SOA, Event-Driven, Repository, DTO)
+- `/pb-patterns-resilience` - Resilience patterns (Retry, Circuit Breaker, Rate Limiting, Cache-Aside, Bulkhead)
+- `/pb-patterns-async` - Asynchronous patterns
+- `/pb-patterns-db` - Database patterns
+- `/pb-patterns-distributed` - Distributed systems patterns
+- `/pb-patterns-frontend` - Frontend architecture patterns (components, state, theming)
+- `/pb-patterns-api` - API design patterns (REST, GraphQL, gRPC)
+- `/pb-patterns-deployment` - Deployment strategies and patterns
+- `/pb-patterns-cloud` - Cloud deployment patterns (AWS, GCP, Azure)
 
 ---
 

@@ -19,9 +19,9 @@ Find processes using ports, kill stale listeners, and resolve port conflicts. A 
 **Platform:** macOS/Linux
 **Use Case:** "What's using port 3000?" / "Kill whatever's blocking my server"
 
-**Mindset:** Design Rules say "silence when nothing to say" — only report conflicts that need action.
+**Mindset:** Design Rules say "silence when nothing to say" - only report conflicts that need action.
 
-**Resource Hint:** sonnet — Port scanning and process identification.
+**Resource Hint:** sonnet - Port scanning and process identification.
 
 ## When to Use
 
@@ -234,11 +234,11 @@ docker stop $(docker ps -q --filter "publish=3000")
 
 When executing this playbook:
 
-1. **Scan** — Show all listening ports with process names
-2. **Categorize** — Group into dev servers, databases, system
-3. **Ask** — "Which ports do you want to investigate or free up?"
-4. **Confirm** — Show full process details before any kill
-5. **Execute** — Kill with user's chosen method (graceful vs force)
+1. **Scan** - Show all listening ports with process names
+2. **Categorize** - Group into dev servers, databases, system
+3. **Ask** - "Which ports do you want to investigate or free up?"
+4. **Confirm** - Show full process details before any kill
+5. **Execute** - Kill with user's chosen method (graceful vs force)
 
 ### AskUserQuestion Structure
 
@@ -285,9 +285,9 @@ ports() { lsof -i -P | grep LISTEN; }
 
 ## Related Commands
 
-- `/pb-doctor` — Diagnose system health issues
-- `/pb-debug` — General debugging methodology
-- `/pb-storage` — Free disk space when builds fail
+- `/pb-doctor` - Diagnose system health issues
+- `/pb-debug` - General debugging methodology
+- `/pb-storage` - Free disk space when builds fail
 
 ---
 

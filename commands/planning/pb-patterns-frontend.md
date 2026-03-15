@@ -20,7 +20,7 @@ Patterns for building scalable, maintainable user interfaces. Mobile-first and t
 
 Question whether that library is necessary. Challenge whether that abstraction earns its complexity. Understand the constraints before adding patterns.
 
-**Resource Hint:** sonnet — Frontend pattern reference; implementation-level UI architecture decisions.
+**Resource Hint:** sonnet - Frontend pattern reference; implementation-level UI architecture decisions.
 
 ## When to Use
 
@@ -924,11 +924,11 @@ Frontend patterns MUST be accessible by default. See `/pb-a11y` for comprehensiv
 
 ## Related Commands
 
-- `/pb-design-language` — Project-specific design token systems
-- `/pb-a11y` — Accessibility deep-dive
-- `/pb-patterns-async` — Data fetching patterns
-- `/pb-patterns-api` — API design patterns
-- `/pb-testing` — Component testing patterns
+- `/pb-design-language` - Project-specific design token systems
+- `/pb-a11y` - Accessibility deep-dive
+- `/pb-patterns-async` - Data fetching patterns
+- `/pb-patterns-api` - API design patterns
+- `/pb-testing` - Component testing patterns
 
 ---
 

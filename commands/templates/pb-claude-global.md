@@ -18,9 +18,9 @@ Generate or regenerate the global `~/.claude/CLAUDE.md` file from Engineering Pl
 
 **Purpose:** Create a concise, authoritative context file that informs Claude Code behavior across ALL projects.
 
-**Philosophy:** Playbooks are the source of truth. Global CLAUDE.md is a derived artifact—concise, with references to playbooks for depth.
+**Philosophy:** Playbooks are the source of truth. Global CLAUDE.md is a derived artifact-concise, with references to playbooks for depth.
 
-**Resource Hint:** sonnet — template generation from existing playbook content.
+**Resource Hint:** sonnet - template generation from existing playbook content.
 
 ---
 
@@ -65,11 +65,11 @@ Create `~/.claude/CLAUDE.md` with this structure:
 
 ## How We Work (Preamble)
 
-- **Challenge assumptions** — Correctness matters more than agreement
-- **Think like peers** — Best ideas win regardless of source
-- **Truth over tone** — Direct feedback beats careful politeness
-- **Explain reasoning** — Enable intelligent challenge
-- **Failures teach** — When blame is absent, learning happens
+- **Challenge assumptions** - Correctness matters more than agreement
+- **Think like peers** - Best ideas win regardless of source
+- **Truth over tone** - Direct feedback beats careful politeness
+- **Explain reasoning** - Enable intelligent challenge
+- **Failures teach** - When blame is absent, learning happens
 
 For full philosophy: `/pb-preamble`
 
@@ -90,10 +90,10 @@ For full design rules: `/pb-design-rules`
 
 ## Guardrails
 
-- **Verify before done** — "It should work" is not acceptable; test the change
-- **Preserve functionality** — Never fix a bug by removing a feature
-- **Plan multi-file changes** — Outline approach for cross-file work, confirm before acting
-- **Git safety** — Pull before writing, use Edit over Rewrite, diff after changes
+- **Verify before done** - "It should work" is not acceptable; test the change
+- **Preserve functionality** - Never fix a bug by removing a feature
+- **Plan multi-file changes** - Outline approach for cross-file work, confirm before acting
+- **Git safety** - Pull before writing, use Edit over Rewrite, diff after changes
 
 ---
 
@@ -110,12 +110,12 @@ If no: keep refining. If yes: ship it.
 
 ## Code Quality
 
-- **Atomic changes** — One concern per commit, one concern per PR
-- **No dead code** — Delete unused code, don't comment it out
-- **No debug artifacts** — Remove console.log, print statements before commit
-- **Tests for new functionality** — Coverage for happy path + key edge cases
-- **Error handling** — Fail loudly, no silent swallowing of errors
-- **Security awareness** — No hardcoded secrets, validate inputs at boundaries
+- **Atomic changes** - One concern per commit, one concern per PR
+- **No dead code** - Delete unused code, don't comment it out
+- **No debug artifacts** - Remove console.log, print statements before commit
+- **Tests for new functionality** - Coverage for happy path + key edge cases
+- **Error handling** - Fail loudly, no silent swallowing of errors
+- **Security awareness** - No hardcoded secrets, validate inputs at boundaries
 
 For detailed standards: `/pb-standards`
 
@@ -132,11 +132,11 @@ For detailed standards: `/pb-standards`
 ## Development Workflow (Simplified Ritual)
 
 **One-time setup (15 min):**
-- `/pb-preferences --setup` — Set your decision rules
+- `/pb-preferences --setup` - Set your decision rules
 
 **Every feature (3 commands, 10% human involvement):**
-1. `/pb-start [feature]` — Establish scope (30 sec)
-2. `/pb-review` — Auto-quality gate (automatic)
+1. `/pb-start [feature]` - Establish scope (30 sec)
+2. `/pb-review` - Auto-quality gate (automatic)
 3. Done. Commit is pushed.
 
 **Detailed breakdown:**
@@ -164,14 +164,14 @@ When unsure, start with sonnet. Upgrade if results lack depth. Downgrade if task
 
 ### Context Efficiency
 
-- **Subagents for exploration** — Separate context window, doesn't pollute main
-- **Surgical file reads** — Specify line ranges when you know the area
-- **Plans in files** — Reference by path, don't paste into chat
-- **Commit frequently** — Each commit is a context checkpoint
+- **Subagents for exploration** - Separate context window, doesn't pollute main
+- **Surgical file reads** - Specify line ranges when you know the area
+- **Plans in files** - Reference by path, don't paste into chat
+- **Commit frequently** - Each commit is a context checkpoint
 
 ### Continuous Improvement
 
-Record operational learnings in auto-memory. Surface playbook gaps when discovered. Propose improvements — don't self-modify silently.
+Record operational learnings in auto-memory. Surface playbook gaps when discovered. Propose improvements - don't self-modify silently.
 
 For detailed guidance: `/pb-claude-orchestration`
 
@@ -190,11 +190,11 @@ For detailed guidance: `/pb-claude-orchestration`
 | Testing patterns | `/pb-testing` |
 
 **Personas (consulted automatically by `/pb-review`):**
-- `/pb-linus-agent` — Correctness, security
-- `/pb-alex-infra` — Infrastructure, scale
-- `/pb-jordan-testing` — Testing strategy
-- `/pb-maya-product` — Product impact
-- `/pb-sam-documentation` — Clarity
+- `/pb-linus-agent` - Correctness, security
+- `/pb-alex-infra` - Infrastructure, scale
+- `/pb-jordan-testing` - Testing strategy
+- `/pb-maya-product` - Product impact
+- `/pb-sam-documentation` - Clarity
 
 ---
 
@@ -275,11 +275,11 @@ head -5 ~/.claude/CLAUDE.md
 
 ## Related Commands
 
-- `/pb-claude-project` — Generate project-specific CLAUDE.md
-- `/pb-claude-orchestration` — Model selection and resource efficiency guide
-- `/pb-preamble` — Full collaboration philosophy
-- `/pb-design-rules` — Complete design rules reference
-- `/pb-standards` — Detailed coding standards
+- `/pb-claude-project` - Generate project-specific CLAUDE.md
+- `/pb-claude-orchestration` - Model selection and resource efficiency guide
+- `/pb-preamble` - Full collaboration philosophy
+- `/pb-design-rules` - Complete design rules reference
+- `/pb-standards` - Detailed coding standards
 
 ---
 

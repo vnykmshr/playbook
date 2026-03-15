@@ -20,7 +20,7 @@ Execute deployment to target environment with surgical precision. This command g
 
 **Mindset:** Deployments are controlled risk. Use `/pb-preamble` thinking: challenge readiness assumptions, surface risks before deploying. Use `/pb-design-rules` thinking: prefer Simplicity (don't over-engineer deployment), ensure Robustness (have rollback ready), maintain Clarity (know exactly what's deploying).
 
-**Resource Hint:** sonnet — deployment execution and verification
+**Resource Hint:** sonnet - deployment execution and verification
 
 ---
 
@@ -364,26 +364,26 @@ PHASE 5: FINALIZE
 ## Integration with Playbook
 
 **Part of release workflow:**
-- `/pb-release` — Orchestrates release (triggers this command)
-- `/pb-patterns-deployment` — Strategy reference (blue-green, canary, etc.)
-- `/pb-incident` — If deployment causes issues
+- `/pb-release` - Orchestrates release (triggers this command)
+- `/pb-patterns-deployment` - Strategy reference (blue-green, canary, etc.)
+- `/pb-incident` - If deployment causes issues
 
 **Related commands:**
-- `/pb-observability` — Monitoring setup
-- `/pb-hardening` — Infrastructure security
-- `/pb-secrets` — Secrets management
-- `/pb-database-ops` — Database migrations
-- `/pb-dr` — Disaster recovery
+- `/pb-observability` - Monitoring setup
+- `/pb-hardening` - Infrastructure security
+- `/pb-secrets` - Secrets management
+- `/pb-database-ops` - Database migrations
+- `/pb-dr` - Disaster recovery
 
 ---
 
 ## Related Commands
 
-- `/pb-release` — Orchestrate versioned releases to production
-- `/pb-patterns-deployment` — Deployment strategy reference (blue-green, canary, rolling)
-- `/pb-alex-infra` — Infrastructure resilience review (systems thinking, failure modes)
-- `/pb-incident` — Respond to production incidents caused by deployments
-- `/pb-observability` — Set up monitoring and alerting for deployment verification
+- `/pb-release` - Orchestrate versioned releases to production
+- `/pb-patterns-deployment` - Deployment strategy reference (blue-green, canary, rolling)
+- `/pb-alex-infra` - Infrastructure resilience review (systems thinking, failure modes)
+- `/pb-incident` - Respond to production incidents caused by deployments
+- `/pb-observability` - Set up monitoring and alerting for deployment verification
 
 ---
 

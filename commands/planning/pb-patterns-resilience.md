@@ -26,9 +26,9 @@ Resilience patterns:
 - **Control resource usage**: Rate limiting, connection isolation
 - **Improve perceived reliability**: Caching reduces dependency on slow backends
 
-**Mindset:** Use `/pb-preamble` thinking (challenge assumptions — do you actually need this pattern, or is the root cause fixable?) and `/pb-design-rules` thinking (Fail noisily and early; patterns should add clarity, not hide problems).
+**Mindset:** Use `/pb-preamble` thinking (challenge assumptions - do you actually need this pattern, or is the root cause fixable?) and `/pb-design-rules` thinking (Fail noisily and early; patterns should add clarity, not hide problems).
 
-**Resource Hint:** sonnet — Pattern reference and application; implementation-level design decisions.
+**Resource Hint:** sonnet - Pattern reference and application; implementation-level design decisions.
 
 ---
 
@@ -565,11 +565,11 @@ Lesson:
 
 ## Related Commands
 
-- `/pb-patterns-core` — Core architectural patterns (SOA, Event-Driven, Repository, DTO)
-- `/pb-patterns-distributed` — Distributed patterns (Saga, CQRS, Eventual Consistency)
-- `/pb-patterns-async` — Asynchronous patterns (Job Queues, Reactive Streams)
-- `/pb-hardening` — Production security hardening
-- `/pb-incident` — Incident response and recovery
+- `/pb-patterns-core` - Core architectural patterns (SOA, Event-Driven, Repository, DTO)
+- `/pb-patterns-distributed` - Distributed patterns (Saga, CQRS, Eventual Consistency)
+- `/pb-patterns-async` - Asynchronous patterns (Job Queues, Reactive Streams)
+- `/pb-hardening` - Production security hardening
+- `/pb-incident` - Incident response and recovery
 
 ---
 

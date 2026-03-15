@@ -20,7 +20,7 @@ Patterns for designing APIs that are consistent, intuitive, and maintainable. Co
 
 Design for the consumer, not the implementation.
 
-**Resource Hint:** sonnet — API pattern reference; implementation-level interface design decisions.
+**Resource Hint:** sonnet - API pattern reference; implementation-level interface design decisions.
 
 ---
 
@@ -180,7 +180,7 @@ Pick one style and be consistent.
 
 ### Response Design
 
-API responses are contracts. What you return defines what consumers depend on. Returning your internal model directly is the "SELECT *" of API design — easy now, costly forever.
+API responses are contracts. What you return defines what consumers depend on. Returning your internal model directly is the "SELECT *" of API design - easy now, costly forever.
 
 **The core discipline:** Separate your data layer from your API contract. Return what consumers need, not what the database has.
 
@@ -188,7 +188,7 @@ API responses are contracts. What you return defines what consumers depend on. R
 
 | Concern | Risk of Returning Everything |
 |---------|------------------------------|
-| **Performance** | Large text fields, blobs, nested objects add latency and bandwidth cost — multiplied by every request, every user |
+| **Performance** | Large text fields, blobs, nested objects add latency and bandwidth cost - multiplied by every request, every user |
 | **Security** | Internal attributes leak implementation details: workflow states, generation prompts, internal IDs, admin flags |
 | **Coupling** | Consumers depend on your database schema shape; renaming a column breaks the API |
 | **Clarity** | Consumer can't tell which fields are for them vs. internal bookkeeping |
@@ -271,8 +271,8 @@ type TrackResponse struct {
 Ask these questions for every field in a response:
 
 1. **Does the consumer need this?** If no, don't return it.
-2. **Is this an internal implementation detail?** Workflow states, processing flags, internal IDs, embeddings — keep these server-side.
-3. **Is this large?** Text blobs, HTML content, base64 data — return only in detail endpoints, not in list endpoints.
+2. **Is this an internal implementation detail?** Workflow states, processing flags, internal IDs, embeddings - keep these server-side.
+3. **Is this large?** Text blobs, HTML content, base64 data - return only in detail endpoints, not in list endpoints.
 4. **Is this sensitive?** Even non-secret data can be sensitive in aggregate (usage patterns, internal scores, admin metadata).
 
 #### List vs. Detail Responses
@@ -290,27 +290,27 @@ Don't return `description` and `lyrics` for 50 tracks in a list response when th
 
 For fields that are legitimately large (content bodies, transcripts, generated text):
 
-- **Exclude from list endpoints** — Always
-- **Consider lazy loading** — Separate endpoint or query parameter (`?fields=lyrics`)
-- **Set size expectations** — Document max sizes in API docs
-- **Compress** — Use gzip/brotli for text-heavy responses
+- **Exclude from list endpoints** - Always
+- **Consider lazy loading** - Separate endpoint or query parameter (`?fields=lyrics`)
+- **Set size expectations** - Document max sizes in API docs
+- **Compress** - Use gzip/brotli for text-heavy responses
 
 #### When NOT to Optimize
 
 This is not about premature optimization. It's about informed decisions:
 
-- **Internal tools with 3 users** — Returning the full model is fine; don't build DTO layers for admin dashboards
-- **Prototyping** — Ship fast, shape later. But track the debt.
-- **Single consumer, small payloads** — If the response is 200 bytes, field selection adds complexity without benefit
+- **Internal tools with 3 users** - Returning the full model is fine; don't build DTO layers for admin dashboards
+- **Prototyping** - Ship fast, shape later. But track the debt.
+- **Single consumer, small payloads** - If the response is 200 bytes, field selection adds complexity without benefit
 
-The question isn't "always optimize" — it's "know what you're sending and why."
+The question isn't "always optimize" - it's "know what you're sending and why."
 
 #### Design Rules Applied
 
-- **Rule of Separation** — API contract is separate from data model
-- **Rule of Clarity** — Response shape communicates what consumers should use
-- **Rule of Repair** — Large unintended payloads should be noticed, not silently tolerated
-- **Rule of Simplicity** — Don't build DTO layers where they aren't needed, but don't skip them where they are
+- **Rule of Separation** - API contract is separate from data model
+- **Rule of Clarity** - Response shape communicates what consumers should use
+- **Rule of Repair** - Large unintended payloads should be noticed, not silently tolerated
+- **Rule of Simplicity** - Don't build DTO layers where they aren't needed, but don't skip them where they are
 
 ### Input Binding Discipline
 
@@ -319,7 +319,7 @@ The inbound counterpart to Response Design: don't bind request bodies directly i
 **The problem:**
 
 ```python
-# [NO] Mass assignment — attacker sends {"role": "admin", "name": "Alice"}
+# [NO] Mass assignment - attacker sends {"role": "admin", "name": "Alice"}
 @app.put("/api/users/{id}")
 def update_user(id):
     user = db.query(User).get(id)
@@ -338,9 +338,9 @@ def update_user(id):
 ```
 
 **Discipline:**
-- **Allowlist writable fields per operation** — Create and update may accept different fields
-- **Readonly fields are never writable** — `id`, `createdAt`, `role`, `internalScore` cannot be set via API
-- **Validate types and constraints** — Don't just filter fields; validate values (use Pydantic, Zod, Go struct validation)
+- **Allowlist writable fields per operation** - Create and update may accept different fields
+- **Readonly fields are never writable** - `id`, `createdAt`, `role`, `internalScore` cannot be set via API
+- **Validate types and constraints** - Don't just filter fields; validate values (use Pydantic, Zod, Go struct validation)
 
 This is the mirror of Response Design: be explicit about what goes in, not just what comes out.
 
@@ -366,11 +366,11 @@ This is the mirror of Response Design: be explicit about what goes in, not just 
 ```
 
 **Components:**
-- `code` — Machine-readable error type (for client logic)
-- `message` — Human-readable description (for debugging/display)
-- `details` — Additional context (varies by error type)
-- `requestId` — For support/debugging correlation
-- `documentation` — Link to error documentation (optional)
+- `code` - Machine-readable error type (for client logic)
+- `message` - Human-readable description (for debugging/display)
+- `details` - Additional context (varies by error type)
+- `requestId` - For support/debugging correlation
+- `documentation` - Link to error documentation (optional)
 
 ### Error Codes
 
@@ -527,9 +527,9 @@ GET /users?version=2
 
 ### Versioning Strategy
 
-1. **Avoid breaking changes** — Add fields, don't remove or rename
-2. **Deprecation period** — Warn before removing (6-12 months)
-3. **Version when necessary** — Not every release needs a version bump
+1. **Avoid breaking changes** - Add fields, don't remove or rename
+2. **Deprecation period** - Warn before removing (6-12 months)
+3. **Version when necessary** - Not every release needs a version bump
 
 ```
 # Non-breaking (no version needed)
@@ -737,18 +737,18 @@ type UserError {
 
 Common issues to avoid:
 
-- **N+1 queries** — Use DataLoader for batching
-- **Over-fetching in resolvers** — Fetch only requested fields
-- **Schema complexity** — Start simple, evolve carefully
-- **Missing error handling** — Return errors in payload, not HTTP errors
+- **N+1 queries** - Use DataLoader for batching
+- **Over-fetching in resolvers** - Fetch only requested fields
+- **Schema complexity** - Start simple, evolve carefully
+- **Missing error handling** - Return errors in payload, not HTTP errors
 
 ### GraphQL Security
 
-- **Query depth limiting** — Without limits, nested queries (`{ user { friends { friends { ... } } } }`) exhaust the server. Set max depth (typically 7-10 levels).
-- **Query complexity/cost analysis** — Assign cost to fields and reject queries exceeding a budget. Prevents expensive queries even within depth limits.
-- **Disable introspection in production** — Introspection exposes every type, field, and relation. Enable only in development.
-- **Batching limits** — GraphQL allows multiple operations per request. Without limits, an attacker sends thousands of mutations in one HTTP call, bypassing per-request rate limiting.
-- **Field-level authorization** — In REST you protect endpoints; in GraphQL you must protect individual fields and nested resolvers. Authorization middleware must run per-field, not just per-query.
+- **Query depth limiting** - Without limits, nested queries (`{ user { friends { friends { ... } } } }`) exhaust the server. Set max depth (typically 7-10 levels).
+- **Query complexity/cost analysis** - Assign cost to fields and reject queries exceeding a budget. Prevents expensive queries even within depth limits.
+- **Disable introspection in production** - Introspection exposes every type, field, and relation. Enable only in development.
+- **Batching limits** - GraphQL allows multiple operations per request. Without limits, an attacker sends thousands of mutations in one HTTP call, bypassing per-request rate limiting.
+- **Field-level authorization** - In REST you protect endpoints; in GraphQL you must protect individual fields and nested resolvers. Authorization middleware must run per-field, not just per-query.
 
 **Future consideration:** For comprehensive GraphQL guidance (subscriptions, federation, caching, tooling), see `/pb-patterns-graphql` when available.
 
@@ -845,11 +845,11 @@ components:
 
 ## Related Commands
 
-- `/pb-patterns-frontend` — Frontend data fetching patterns (client-side API consumption)
-- `/pb-security` — API security patterns
-- `/pb-patterns-resilience` — Resilience patterns (Circuit Breaker, Retry, Rate Limiting)
-- `/pb-patterns-async` — Async API patterns
-- `/pb-testing` — API contract testing
+- `/pb-patterns-frontend` - Frontend data fetching patterns (client-side API consumption)
+- `/pb-security` - API security patterns
+- `/pb-patterns-resilience` - Resilience patterns (Circuit Breaker, Retry, Rate Limiting)
+- `/pb-patterns-async` - Async API patterns
+- `/pb-testing` - API contract testing
 
 ---
 

@@ -20,7 +20,7 @@ Manage secrets securely across development, CI/CD, and production environments. 
 
 A leaked secret is a security incident. Treat secrets as radioactive: minimize exposure, contain carefully, dispose properly.
 
-**Resource Hint:** sonnet — secrets workflow implementation and rotation patterns
+**Resource Hint:** sonnet - secrets workflow implementation and rotation patterns
 
 ---
 
@@ -571,10 +571,10 @@ fi
 ## Integration with Playbook
 
 **Part of production readiness:**
-- `/pb-hardening` — Infrastructure security
-- `/pb-secrets` — Secrets management (this command)
-- `/pb-security` — Application security review
-- `/pb-deployment` — Deployment strategies
+- `/pb-hardening` - Infrastructure security
+- `/pb-secrets` - Secrets management (this command)
+- `/pb-security` - Application security review
+- `/pb-deployment` - Deployment strategies
 
 **Workflow:**
 ```
@@ -604,9 +604,9 @@ Production (secrets manager or SOPS)
 
 ## Related Commands
 
-- `/pb-hardening` — Production security hardening for infrastructure
-- `/pb-security` — Application-level security review
-- `/pb-deployment` — Deploy with secure secrets handling
+- `/pb-hardening` - Production security hardening for infrastructure
+- `/pb-security` - Application-level security review
+- `/pb-deployment` - Deploy with secure secrets handling
 
 ---
 

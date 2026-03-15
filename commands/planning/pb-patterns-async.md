@@ -16,11 +16,11 @@ breaking_changes: []
 
 Non-blocking execution patterns for concurrent operations. Essential for scalable systems.
 
-**Trade-offs exist:** Async patterns add complexity. Use `/pb-preamble` thinking (challenge assumptions) and `/pb-design-rules` thinking (especially Simplicity—do you need this complexity?).
+**Trade-offs exist:** Async patterns add complexity. Use `/pb-preamble` thinking (challenge assumptions) and `/pb-design-rules` thinking (especially Simplicity-do you need this complexity?).
 
 Question whether async is necessary. Challenge the complexity cost. Understand the actual constraints before choosing.
 
-**Resource Hint:** sonnet — Async pattern reference; implementation-level concurrency decisions.
+**Resource Hint:** sonnet - Async pattern reference; implementation-level concurrency decisions.
 
 ---
 
@@ -693,11 +693,11 @@ Go uses goroutines and channels for concurrency. Key patterns:
 ## Integration with Playbook
 
 **Related to async patterns:**
-- `/pb-performance` — Async for scalability
-- `/pb-guide` — Testing async code and Go goroutine patterns
-- `/pb-testing` — Async test patterns
-- `/pb-patterns-core` — Core architectural patterns
-- `/pb-patterns-db` — Database async operations
+- `/pb-performance` - Async for scalability
+- `/pb-guide` - Testing async code and Go goroutine patterns
+- `/pb-testing` - Async test patterns
+- `/pb-patterns-core` - Core architectural patterns
+- `/pb-patterns-db` - Database async operations
 
 **Decision points:**
 - When to use callbacks vs promises (JavaScript) vs goroutines (Go)
@@ -710,10 +710,10 @@ Go uses goroutines and channels for concurrency. Key patterns:
 
 ## Related Commands
 
-- `/pb-patterns-core` — Foundation patterns (SOA, Event-Driven, Repository)
-- `/pb-patterns-resilience` — Resilience patterns (Retry, Circuit Breaker, Cache-Aside)
-- `/pb-patterns-distributed` — Distributed patterns that build on async
-- `/pb-observability` — Monitor and trace async operations
+- `/pb-patterns-core` - Foundation patterns (SOA, Event-Driven, Repository)
+- `/pb-patterns-resilience` - Resilience patterns (Retry, Circuit Breaker, Cache-Aside)
+- `/pb-patterns-distributed` - Distributed patterns that build on async
+- `/pb-observability` - Monitor and trace async operations
 
 ---
 

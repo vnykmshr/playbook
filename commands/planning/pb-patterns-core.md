@@ -31,7 +31,7 @@ Patterns:
 
 Challenge whether this pattern is the right fit for your constraints. Surface the actual costs. Understand the alternatives. A pattern is a starting point, not a law.
 
-**Resource Hint:** sonnet — Pattern reference and application; implementation-level design decisions.
+**Resource Hint:** sonnet - Pattern reference and application; implementation-level design decisions.
 
 ---
 
@@ -113,15 +113,15 @@ Each service:
 
 **Gotchas:**
 ```
-1. "Too fine-grained services" — 20 services, each service per endpoint
+1. "Too fine-grained services" - 20 services, each service per endpoint
    Bad: Too much operational overhead
    Good: 3-5 services, each service per business domain
 
-2. "Synchronous everywhere" — Service A calls B calls C
+2. "Synchronous everywhere" - Service A calls B calls C
    Bad: Slow, cascading failures
    Good: Async messaging (service A publishes event, B listens)
 
-3. "Sharing databases" — All services use same DB
+3. "Sharing databases" - All services use same DB
    Bad: Defeats purpose (tightly coupled)
    Good: Each service owns its data
 ```
@@ -621,9 +621,9 @@ Benefits:
 This is the core patterns command. It covers foundational architectural, design, data access, and API patterns.
 
 **Related Pattern Commands (Pattern Family):**
-- `/pb-patterns-async` — Async patterns (callbacks, promises, async/await, reactive, workers, job queues)
-- `/pb-patterns-db` — Database patterns (connection pooling, optimization, replication, sharding)
-- `/pb-patterns-distributed` — Distributed patterns (saga, CQRS, eventual consistency, 2PC)
+- `/pb-patterns-async` - Async patterns (callbacks, promises, async/await, reactive, workers, job queues)
+- `/pb-patterns-db` - Database patterns (connection pooling, optimization, replication, sharding)
+- `/pb-patterns-distributed` - Distributed patterns (saga, CQRS, eventual consistency, 2PC)
 
 **How They Work Together:**
 ```
@@ -637,25 +637,25 @@ pb-patterns-distributed → Multi-service coordination (saga, CQRS)
 ```
 
 **Architecture & Design Decision:**
-- `/pb-adr` — Document why specific patterns chosen
-- `/pb-guide` — System design and pattern selection
-- `/pb-deployment` — How patterns affect deployment strategy
+- `/pb-adr` - Document why specific patterns chosen
+- `/pb-guide` - System design and pattern selection
+- `/pb-deployment` - How patterns affect deployment strategy
 
 **Testing & Operations:**
-- `/pb-security` — Security patterns and secure code
-- `/pb-performance` — Performance optimization using patterns
-- `/pb-testing` — Testing pattern implementations
-- `/pb-incident` — Handling pattern failures
+- `/pb-security` - Security patterns and secure code
+- `/pb-performance` - Performance optimization using patterns
+- `/pb-testing` - Testing pattern implementations
+- `/pb-incident` - Handling pattern failures
 
 ---
 
 ## Related Commands
 
-- `/pb-patterns-resilience` — Resilience patterns (Retry, Circuit Breaker, Rate Limiting, Cache-Aside, Bulkhead)
-- `/pb-patterns-async` — Async patterns for non-blocking operations
-- `/pb-patterns-db` — Database patterns for data access
-- `/pb-patterns-distributed` — Distributed patterns for multi-service coordination
-- `/pb-adr` — Document pattern selection decisions
+- `/pb-patterns-resilience` - Resilience patterns (Retry, Circuit Breaker, Rate Limiting, Cache-Aside, Bulkhead)
+- `/pb-patterns-async` - Async patterns for non-blocking operations
+- `/pb-patterns-db` - Database patterns for data access
+- `/pb-patterns-distributed` - Distributed patterns for multi-service coordination
+- `/pb-adr` - Document pattern selection decisions
 
 ---
 

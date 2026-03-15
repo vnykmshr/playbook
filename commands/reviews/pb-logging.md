@@ -20,7 +20,7 @@ Comprehensive guidance for designing effective logging that aids troubleshooting
 
 Logs must invite scrutiny. They should reveal assumptions and make failures obvious, not hide them with verbosity or silence.
 
-**Resource Hint:** sonnet — logging standards review is structured and pattern-based
+**Resource Hint:** sonnet - logging standards review is structured and pattern-based
 
 ---
 
@@ -486,11 +486,11 @@ Before deploying, verify:
 
 ## Related Commands
 
-- `/pb-security` — Logging sensitive data safely
-- `/pb-observability` — Logging as part of observability
-- `/pb-incident` — Using logs during incident investigation
-- `/pb-guide` — Implementing logging in development
-- `/pb-testing` — Testing logging behavior
+- `/pb-security` - Logging sensitive data safely
+- `/pb-observability` - Logging as part of observability
+- `/pb-incident` - Using logs during incident investigation
+- `/pb-guide` - Implementing logging in development
+- `/pb-testing` - Testing logging behavior
 
 ---
 

@@ -20,7 +20,7 @@ Create a crisp, practical technical blog post explaining this project to a techn
 
 Explain the problems you solved, the trade-offs you made, what you'd do differently. Honest technical writing builds trust.
 
-**Resource Hint:** sonnet — blog post writing follows a structured outline with code examples and diagrams
+**Resource Hint:** sonnet - blog post writing follows a structured outline with code examples and diagrams
 
 ---
 
@@ -34,7 +34,7 @@ Explain the problems you solved, the trade-offs you made, what you'd do differen
 
 ## Role
 
-Write as a seasoned technical architect sharing real-world experience — clear, confident, and grounded.
+Write as a seasoned technical architect sharing real-world experience - clear, confident, and grounded.
 
 ---
 
@@ -239,9 +239,9 @@ stateDiagram-v2
 
 ## Related Commands
 
-- `/pb-repo-readme` — Generate comprehensive README
-- `/pb-documentation` — Technical documentation guidance
-- `/pb-repo-enhance` — Full repository enhancement suite
+- `/pb-repo-readme` - Generate comprehensive README
+- `/pb-documentation` - Technical documentation guidance
+- `/pb-repo-enhance` - Full repository enhancement suite
 
 ---
 

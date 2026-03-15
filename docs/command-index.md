@@ -8,7 +8,7 @@ Quick reference for all playbook commands.
 
 ## 🚀 Read First: The Preamble
 
-**→ `/pb-preamble`** — Foundational mindset for all collaboration. Read this before any other command. It establishes the assumptions all playbook commands build on.
+**→ `/pb-preamble`** - Foundational mindset for all collaboration. Read this before any other command. It establishes the assumptions all playbook commands build on.
 
 ---
 
@@ -70,7 +70,7 @@ Quick reference for all playbook commands.
 | `/pb-deployment` | Execute deployment: discovery, pre-flight, execute, verify, rollback |
 | `/pb-alex-infra` | Infrastructure & resilience review (systems thinking, failure modes, recovery) |
 | `/pb-incident` | P0/P1 production incidents |
-| `/pb-maintenance` | Production maintenance patterns — database, backups, health monitoring |
+| `/pb-maintenance` | Production maintenance patterns - database, backups, health monitoring |
 | `/pb-sre-practices` | Toil reduction, error budgets, on-call health, blameless culture |
 | `/pb-dr` | Disaster recovery planning, RTO/RPO, backup strategies, game days |
 | `/pb-server-hygiene` | Periodic server health and hygiene review (drift, bloat, cleanup) |
@@ -102,7 +102,7 @@ Quick reference for all playbook commands.
 
 | Command | When to Use | Frequency |
 |---------|-------------|-----------|
-| `/pb-review` | Orchestrate comprehensive multi-perspective review | Monthly or pre-release |
+| `/pb-review` | Orchestrate multi-perspective review | Monthly or pre-release |
 | `/pb-review-code` | Dedicated code review for reviewers (peer review checklist) | Every PR review |
 | `/pb-linus-agent` | Direct, unfiltered technical feedback grounded in pragmatism | Security-critical code, architecture decisions |
 | `/pb-review-backend` | Backend review (Alex infrastructure + Jordan testing) | Backend PRs |
@@ -187,7 +187,7 @@ Developer machine health and maintenance.
 | `/pb-claude-global` | Generate global ~/.claude/CLAUDE.md from playbooks |
 | `/pb-claude-project` | Generate project .claude/CLAUDE.md by analyzing codebase |
 | `/pb-claude-orchestration` | Model selection, task delegation, and resource efficiency guide |
-| `/pb-context-review` | Audit and maintain all context layers — quarterly or after releases |
+| `/pb-context-review` | Audit and maintain all context layers - quarterly or after releases |
 
 ## Example Projects
 
@@ -270,4 +270,4 @@ Real-world implementations of the playbook in action:
 
 ## Browse All Commands
 
-For a comprehensive list of all available commands organized by category, see the command files in `/commands/` directory or consult the [integration guide](integration-guide.md) for workflow-based command references.
+For all commands organized by category, see the command files in `/commands/` directory or consult the [integration guide](integration-guide.md) for workflow-based command references.

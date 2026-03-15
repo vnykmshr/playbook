@@ -18,7 +18,7 @@ breaking_changes: []
 - **Preamble**: Challenge assumptions, prefer correctness over agreement, think like peers
 - **Design Rules**: Build systems that are clear, simple, modular, robust, and extensible
 
-**Resource Hint:** sonnet — Practical standards reference; implementation-level guidance.
+**Resource Hint:** sonnet - Practical standards reference; implementation-level guidance.
 
 ## When to Use
 
@@ -184,9 +184,9 @@ Design Rules tell you *how* to build. This tells you *when you're done*.
 
 Before declaring work complete, ask:
 
-- **Would you use this daily without frustration?** — Not just functional, but pleasant
-- **Can you recommend it without apology?** — "It works, but..." means it's not done
-- **Did you build the smallest thing that feels complete?** — Scope discipline, not scope creep
+- **Would you use this daily without frustration?** - Not just functional, but pleasant
+- **Can you recommend it without apology?** - "It works, but..." means it's not done
+- **Did you build the smallest thing that feels complete?** - Scope discipline, not scope creep
 
 If any answer is "no": keep refining. If all are "yes": ship it.
 
@@ -194,18 +194,18 @@ If any answer is "no": keep refining. If all are "yes": ship it.
 
 Extend the MLP criteria with attention-respect:
 
-- **Does this respect user attention?** — Works silently? Alerts only when critical? Optional instead of mandatory?
-- **Are errors clear and recoverable?** — User knows what went wrong and what to do next?
-- **Does this fail gracefully?** — Does it degrade to partial functionality, or does it break completely?
-- **Would you use this daily without thinking about it?** — Does it recede into the background?
+- **Does this respect user attention?** - Works silently? Alerts only when critical? Optional instead of mandatory?
+- **Are errors clear and recoverable?** - User knows what went wrong and what to do next?
+- **Does this fail gracefully?** - Does it degrade to partial functionality, or does it break completely?
+- **Would you use this daily without thinking about it?** - Does it recede into the background?
 
 See `/pb-calm-design` for the complete 10-question calm design checklist and philosophy.
 
 ### What MLP Is Not
 
-- **Feature-rich** — MLP is about care, not quantity
-- **Polished to perfection** — Good enough to love, not flawless
-- **Over-engineered** — Simplicity is part of lovability
+- **Feature-rich** - MLP is about care, not quantity
+- **Polished to perfection** - Good enough to love, not flawless
+- **Over-engineered** - Simplicity is part of lovability
 
 ### The Mindset Shift
 
@@ -227,11 +227,11 @@ We commit to **bug-free, rock-solid results** through disciplined adherence to a
 
 ### Development Workflow
 
-**Start work:** `/pb-start` — Creates feature branch, establishes iteration rhythm
+**Start work:** `/pb-start` - Creates feature branch, establishes iteration rhythm
 
-**Each iteration:** `/pb-cycle` — Guides through develop → self-review → peer review → commit
+**Each iteration:** `/pb-cycle` - Guides through develop → self-review → peer review → commit
 
-**Release:** `/pb-release` — Pre-release checks, deployment
+**Release:** `/pb-release` - Pre-release checks, deployment
 
 ### Iteration Cycle (Mandatory for All Changes)
 
@@ -264,19 +264,19 @@ make test        # All tests pass
 
 ### Commit Discipline
 
-* **One concern per commit** — Each commit addresses a single feature, fix, or refactor
-* **Always deployable** — Every commit leaves the codebase working
-* **Conventional format** — Use `feat:`, `fix:`, `refactor:`, `docs:`, `test:`, `chore:` prefixes
-* **Never use git add .** — Add specific files that belong together
+* **One concern per commit** - Each commit addresses a single feature, fix, or refactor
+* **Always deployable** - Every commit leaves the codebase working
+* **Conventional format** - Use `feat:`, `fix:`, `refactor:`, `docs:`, `test:`, `chore:` prefixes
+* **Never use git add .** - Add specific files that belong together
 
 **Commit timing:** After each meaningful unit of work, not at end of session.
 
 ### The Non-Negotiables
 
-* **Never ship known bugs** — Fix or explicitly defer with ticket
-* **Never skip testing** — Manual QA minimum, automated preferred
-* **Never ignore warnings** — Warnings become bugs
-* **Never "just push it"** — Every change deserves the full cycle
+* **Never ship known bugs** - Fix or explicitly defer with ticket
+* **Never skip testing** - Manual QA minimum, automated preferred
+* **Never ignore warnings** - Warnings become bugs
+* **Never "just push it"** - Every change deserves the full cycle
 
 ### Quick Reference
 
@@ -291,8 +291,8 @@ make test        # All tests pass
 
 ## Related Commands
 
-- `/pb-preamble` — Collaboration philosophy (mindset)
-- `/pb-design-rules` — Technical principles (clarity, simplicity, modularity)
-- `/pb-guide` — Master SDLC framework
-- `/pb-commit` — Atomic commit practices
-- `/pb-testing` — Test patterns and strategies
+- `/pb-preamble` - Collaboration philosophy (mindset)
+- `/pb-design-rules` - Technical principles (clarity, simplicity, modularity)
+- `/pb-guide` - Master SDLC framework
+- `/pb-commit` - Atomic commit practices
+- `/pb-testing` - Test patterns and strategies

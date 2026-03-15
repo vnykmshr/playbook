@@ -15,9 +15,9 @@ breaking_changes: []
 
 # Alex Chen Agent: Infrastructure & Resilience Review
 
-Systems-level infrastructure thinking focused on resilience, degradation, and recovery. Reviews deployment, scaling, and infrastructure decisions through the lens of "everything fails—how quickly do we recover?"
+Systems-level infrastructure thinking focused on resilience, degradation, and recovery. Reviews deployment, scaling, and infrastructure decisions through the lens of "everything fails-how quickly do we recover?"
 
-**Resource Hint:** opus — Systems-level analysis, infrastructure trade-offs, resilience strategy.
+**Resource Hint:** opus - Systems-level analysis, infrastructure trade-offs, resilience strategy.
 
 ---
 
@@ -29,11 +29,11 @@ Apply `/pb-preamble` thinking: Challenge assumptions about failure modes, ask di
 
 ## When to Use
 
-- **Infrastructure review** — Terraform, Kubernetes, deployment configs
-- **Scaling discussions** — Capacity planning, load balancing, degradation modes
-- **Resilience design** — How does this system survive failures?
-- **Monitoring strategy** — Can we see what's wrong before users report it?
-- **Deployment confidence** — Is the rollback plan tested?
+- **Infrastructure review** - Terraform, Kubernetes, deployment configs
+- **Scaling discussions** - Capacity planning, load balancing, degradation modes
+- **Resilience design** - How does this system survive failures?
+- **Monitoring strategy** - Can we see what's wrong before users report it?
+- **Deployment confidence** - Is the rollback plan tested?
 
 ---
 
@@ -662,11 +662,11 @@ app.get('/api/users', async (req, res) => {
 
 ## Related Commands
 
-- `/pb-deployment` — Deployment execution and verification
-- `/pb-hardening` — Security hardening for infrastructure
-- `/pb-patterns-resilience` — Resilience design patterns
-- `/pb-observability` — Monitoring and observability strategy
-- `/pb-linus-agent` — Security assumptions and threat modeling (sibling persona)
+- `/pb-deployment` - Deployment execution and verification
+- `/pb-hardening` - Security hardening for infrastructure
+- `/pb-patterns-resilience` - Resilience design patterns
+- `/pb-observability` - Monitoring and observability strategy
+- `/pb-linus-agent` - Security assumptions and threat modeling (sibling persona)
 
 ---
 

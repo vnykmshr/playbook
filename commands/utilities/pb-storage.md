@@ -19,9 +19,9 @@ Tiered storage cleanup for developer machines. Reclaim disk space safely with us
 **Platform:** macOS only
 **Risk Model:** Safe → Moderate → Aggressive (each tier requires explicit confirmation)
 
-**Mindset:** Design Rules say "measure before optimizing" — check what's using space before cleaning.
+**Mindset:** Design Rules say "measure before optimizing" - check what's using space before cleaning.
 
-**Resource Hint:** sonnet — Storage analysis and safe cleanup with careful file operations.
+**Resource Hint:** sonnet - Storage analysis and safe cleanup with careful file operations.
 
 ## When to Use
 
@@ -174,11 +174,11 @@ rustup toolchain list 2>/dev/null | grep -v default | xargs -I {} rustup toolcha
 
 When executing this playbook:
 
-1. **Run scan** — Show current disk usage and detected toolchains
-2. **Present tiers** — Use multi-select to let user choose which tier(s)
-3. **Within each tier** — Show individual items with sizes
-4. **Confirm before execute** — Require explicit "yes" before each tier runs
-5. **Report results** — Show space reclaimed per tier
+1. **Run scan** - Show current disk usage and detected toolchains
+2. **Present tiers** - Use multi-select to let user choose which tier(s)
+3. **Within each tier** - Show individual items with sizes
+4. **Confirm before execute** - Require explicit "yes" before each tier runs
+5. **Report results** - Show space reclaimed per tier
 
 ### AskUserQuestion Structure
 
@@ -278,8 +278,8 @@ For automatic maintenance, add to crontab:
 
 ## Related Commands
 
-- `/pb-debug` — Troubleshoot issues after aggressive cleanup
-- `/pb-start` — Resume development after cleanup
+- `/pb-debug` - Troubleshoot issues after aggressive cleanup
+- `/pb-start` - Resume development after cleanup
 
 ---
 
