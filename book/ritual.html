@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'none'; frame-ancestors 'none'; base-uri 'self'">
+  <title>The Ritual &middot; The Playbook</title>
+  <meta name="description" content="How we work. A three-step development ritual: scope, code, review. Automatic depth detection, session boundaries, and shipping as ownership. The daily cycle that makes quality automatic.">
+  <meta name="author" content="vnykmshr">
+  <meta name="theme-color" content="#fffff8" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#1a1a1a" media="(prefers-color-scheme: dark)">
+  <link rel="canonical" href="https://playbook.1mb.dev/ritual.html">
+
+  <meta property="og:title" content="The Ritual &middot; The Playbook">
+  <meta property="og:description" content="A three-step development ritual: scope, code, review. The daily cycle that makes quality automatic.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://playbook.1mb.dev/ritual.html">
+  <meta property="og:site_name" content="The Playbook">
+  <meta name="twitter:card" content="summary">
+
+  <link rel="icon" href="public/favicon.ico" sizes="any">
+  <link rel="icon" href="public/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="public/favicon.png" type="image/png" sizes="32x32">
+  <link rel="apple-touch-icon" href="public/apple-touch-icon.png">
+  <link rel="manifest" href="public/site.webmanifest">
+  <link rel="preload" href="public/fonts/SourceSerif4-Regular.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="public/fonts/SourceSerif4-Italic.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="public/fonts/SourceSerif4-Semibold.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="styles/tufte.css">
+</head>
+<body>
+  <a href="#main-content" class="skip-to-content">Skip to content</a>
+  <header class="site-header">
+    <nav aria-label="Book navigation">
+      <a href="index.html" class="nav-home"><span class="pb-mark">Pb</span> The Playbook</a>
+      <ul class="nav-chapters" role="list">
+        <li><a href="preamble.html">1. Preamble</a></li>
+        <li><a href="design-rules.html">2. Design Rules</a></li>
+        <li><a href="ritual.html" aria-current="page">3. Ritual</a></li>
+        <li><a href="review.html">4. Review</a></li>
+        <li><a href="adoption.html">5. Adoption</a></li>
+      </ul>
+      <button class="theme-toggle" type="button" aria-label="Toggle theme">Auto</button>
+    </nav>
+  </header>
+
+  <main id="main-content">
+    <article>
+      <header class="page-header">
+        <p class="page-label">Chapter Three &middot; 7 min read</p>
+        <h1>The Ritual</h1>
+        <p role="doc-subtitle">How we work</p>
+      </header>
+
+      <section>
+        <p>Most development workflows fall apart because they're too complicated to remember. Six commands for a bug fix. A different sequence for a feature. A third process for hotfixes. Eventually nobody follows any of them, and the team drifts back to ad-hoc habits.</p>
+
+        <p>The playbook's daily workflow is three steps. That's a ritual, not a process. Rituals are small enough to become automatic. The steps apply whether you're using the playbook's command-line tools, a different development environment, or no tooling at all. Scope your work. Write code. Review before committing.</p>
+
+        <pre><code>scope → code → review</code></pre>
+
+        <p>Scope captures what you're building and how complex it is. You code without interruptions. Review examines what you changed, checks it against the relevant quality perspectives, and commits when it passes. The third step is usually automatic, triggered by the review when things are clean.</p>
+      </section>
+
+      <section>
+        <h2>Scope: Two Minutes of Clarity</h2>
+
+        <p>Every piece of work begins with a short conversation. Not a planning meeting. Not a requirements document. Just a few questions: What are you building? How complex is it? Is this expanding scope, hardening existing code, or simplifying? Any blockers?</p>
+
+        <label for="sn-1" class="sidenote-toggle" aria-label="Toggle note on scope modes">&#8853;</label>
+        <input type="checkbox" id="sn-1" class="sidenote-toggle" aria-hidden="true">
+        <span class="sidenote">Scope mode matters for review depth. Expanding (new capability) gets architecture review. Holding (hardening existing code) gets correctness review. Reducing (cutting scope, simplifying) gets regression review. The review adjusts automatically based on what you said at the start.</span>
+
+        <p>Your answers determine the review depth later. A two-file bug fix gets a lighter touch than a new API endpoint. Once scope is captured, you code. No more decisions, no ceremony.</p>
+      </section>
+
+      <section>
+        <h2>Code: No Interruptions</h2>
+
+        <p>Between scope and review, you just write code. The ritual protects flow state by front-loading scope questions and back-loading quality checks. Nothing interrupts you in between.</p>
+
+        <p>Two things matter while you code. First: atomic changes. One concern per commit, always deployable, explain the why. Second: tests alongside code, not after. If you write the test while the logic is fresh, you catch edge cases you'd forget an hour later.</p>
+
+        <label for="sn-2" class="sidenote-toggle" aria-label="Toggle note on bisectable commits">&#8853;</label>
+        <input type="checkbox" id="sn-2" class="sidenote-toggle" aria-hidden="true">
+        <span class="sidenote">For changes touching more than three files or spanning multiple concerns, split into bisectable commits: infrastructure first, then data and tests, then logic, then versioning. Each commit should build and pass tests independently.</span>
+      </section>
+
+      <section>
+        <h2>Review: Depth Matches Risk</h2>
+
+        <p>When you're done coding, review examines what you changed and decides how deep to look. It doesn't ask you what kind of review you want. It figures it out from the diff.</p>
+
+        <p>A small bug fix gets a quick pass: does it address the root cause, is there a regression test, are there unrelated changes mixed in. A new feature gets the full treatment: architecture review, security check, test coverage, documentation, product alignment. The depth matches the risk.</p>
+
+        <p>If the review finds issues, you decide what happens next. Fix and commit? Surface the issues and decide manually? If the review passes clean, it commits. One less decision. You're already thinking about the next thing.</p>
+      </section>
+
+      <section>
+        <h2>Session Boundaries</h2>
+
+        <p>The ritual has a rhythm beyond individual features. Pausing and resuming work are part of the practice, not afterthoughts.</p>
+
+        <p>Before stepping away, capture where you are: last commit, in-progress work, next steps, blockers, anything you'd need to remember when you come back. It's a note to your future self. When you return, load that context back, check if the main branch has moved, and flag anything that went stale.</p>
+
+        <p>This matters more than it sounds. Context recovery is one of the most expensive parts of development. Every time you sit down and spend twenty minutes figuring out where you left off, that's time the ritual could have saved with a thirty-second pause the day before.</p>
+
+        <label for="sn-3" class="sidenote-toggle" aria-label="Toggle note on context switching">&#8853;</label>
+        <input type="checkbox" id="sn-3" class="sidenote-toggle" aria-hidden="true">
+        <span class="sidenote">Context switching between tasks follows the same pattern. Before switching: stash or commit, push your branch, note where you left off. When returning: pull, check your notes, verify the state matches. Same ritual, smaller scale.</span>
+      </section>
+
+      <section>
+        <h2>Shipping</h2>
+
+        <p>Shipping isn't a handoff. It's the final act of the ritual, and it belongs to the person who wrote the code.</p>
+
+        <p>The full journey: specialized reviews from different perspectives, PR creation, peer review, merge, release, verification in production. The person who started the work carries it through to "verified and running." That ownership is the difference between "I pushed my code" and "I shipped a feature."</p>
+
+        <p>For larger changes, a dedicated shipping flow orchestrates the full sequence: quality gates first, then specialized reviews, then the final gate, then PR and peer review, then merge and release. Each step builds on the confidence of the previous one.</p>
+      </section>
+
+      <section>
+        <h2>A Day in Practice</h2>
+
+        <p>Morning. You open your editor. Load yesterday's context. You see your last commit, your next task, and a note that main moved ahead overnight. Quick rebase. Back in flow within two minutes.</p>
+
+        <p>Midday. Feature is done. Review examines your changes, consults the relevant perspectives, finds one issue with error handling on a new endpoint. You fix it. Review passes. Commit happens.</p>
+
+        <p>Afternoon. PR is up. Peer review comes back with a question about the caching strategy. You explain the trade-off, make a small adjustment, push. Approved. Merge. Quick smoke test in staging.</p>
+
+        <p>End of day. You note where you are, what's next tomorrow, and one thing that's been bugging you about the database schema. Thirty seconds. Tomorrow's context recovery will take two minutes instead of twenty.</p>
+
+        <p>Three steps. One habit. Quality by default.</p>
+      </section>
+
+      <nav class="chapter-nav" aria-label="Chapter navigation">
+        <a href="design-rules.html" class="prev">Design Rules</a>
+        <a href="review.html" class="next">The Review</a>
+      </nav>
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    Engineering Playbook &middot; <a href="https://github.com/vnykmshr/playbook">Source</a> &middot; MIT License
+  </footer>
+  <script src="scripts/theme.js"></script>
+</body>
+</html>

@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'none'; frame-ancestors 'none'; base-uri 'self'">
+  <title>The Review &middot; The Playbook</title>
+  <meta name="description" content="How we maintain quality. Five review perspectives (directness, resilience, product, clarity, testing), review cadence, self-review, and evidence-based feedback.">
+  <meta name="author" content="vnykmshr">
+  <meta name="theme-color" content="#fffff8" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#1a1a1a" media="(prefers-color-scheme: dark)">
+  <link rel="canonical" href="https://playbook.1mb.dev/review.html">
+
+  <meta property="og:title" content="The Review &middot; The Playbook">
+  <meta property="og:description" content="Five review perspectives, review cadence, and evidence-based feedback. How engineering teams maintain quality without slowing down.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://playbook.1mb.dev/review.html">
+  <meta property="og:site_name" content="The Playbook">
+  <meta name="twitter:card" content="summary">
+
+  <link rel="icon" href="public/favicon.ico" sizes="any">
+  <link rel="icon" href="public/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="public/favicon.png" type="image/png" sizes="32x32">
+  <link rel="apple-touch-icon" href="public/apple-touch-icon.png">
+  <link rel="manifest" href="public/site.webmanifest">
+  <link rel="preload" href="public/fonts/SourceSerif4-Regular.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="public/fonts/SourceSerif4-Italic.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="public/fonts/SourceSerif4-Semibold.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="styles/tufte.css">
+</head>
+<body>
+  <a href="#main-content" class="skip-to-content">Skip to content</a>
+  <header class="site-header">
+    <nav aria-label="Book navigation">
+      <a href="index.html" class="nav-home"><span class="pb-mark">Pb</span> The Playbook</a>
+      <ul class="nav-chapters" role="list">
+        <li><a href="preamble.html">1. Preamble</a></li>
+        <li><a href="design-rules.html">2. Design Rules</a></li>
+        <li><a href="ritual.html">3. Ritual</a></li>
+        <li><a href="review.html" aria-current="page">4. Review</a></li>
+        <li><a href="adoption.html">5. Adoption</a></li>
+      </ul>
+      <button class="theme-toggle" type="button" aria-label="Toggle theme">Auto</button>
+    </nav>
+  </header>
+
+  <main id="main-content">
+    <article>
+      <header class="page-header">
+        <p class="page-label">Chapter Four &middot; 7 min read</p>
+        <h1>The Review</h1>
+        <p role="doc-subtitle">How we maintain quality</p>
+      </header>
+
+      <section>
+        <p>A single code reviewer has blind spots. A security engineer might miss a test coverage gap. A performance engineer might miss a design issue. A product engineer might miss an operational concern. The playbook doesn't solve this by asking one person to be good at everything. It solves it by looking at the same code through different lenses.</p>
+
+        <p>Five perspectives. Each one asks a different question. Together, they catch what any individual would miss.</p>
+      </section>
+
+      <section>
+        <h2>Five Lenses</h2>
+
+        <p>These aren't five people on a review committee. They're five ways of looking at code. One person can wear all five hats. Five people can each wear one. A team of any size can use this approach. The point is that every perspective gets represented before the code ships.</p>
+
+        <h3>Pragmatic directness</h3>
+
+        <p>Is this correct? Are the assumptions stated? Are there security implications nobody mentioned? Is the code clear enough that the next person won't need to ask the author what it does? This lens looks at the code the way a sharp, direct peer would during a whiteboard review. No diplomacy. Evidence over opinion.</p>
+
+        <h3>Infrastructure resilience</h3>
+
+        <p>What happens when this fails? How does the system degrade? Can it be deployed safely? Is there enough observability to debug problems in production? This lens thinks about the code from the perspective of the person who gets paged at 2 AM. If the monitoring is insufficient or the failure modes are unclear, that's this lens's concern.</p>
+
+        <h3>Product and user value</h3>
+
+        <p>Does this solve the right problem? Is the scope appropriate? What's the user impact? Does this align with where the product is headed, or is it a detour? This lens ensures that technically excellent code is also solving something that matters. Code that works perfectly but answers the wrong question is waste.</p>
+
+        <label for="sn-1" class="sidenote-toggle" aria-label="Toggle note on product perspective">&#8853;</label>
+        <input type="checkbox" id="sn-1" class="sidenote-toggle" aria-hidden="true">
+        <span class="sidenote">The product perspective is often the one teams skip. Engineers are good at asking "does this work?" and less practiced at asking "should we build this at all?" Product alignment review catches scope drift before it becomes technical debt.</span>
+
+        <h3>Clarity and knowledge transfer</h3>
+
+        <p>Can someone unfamiliar with this code understand it? Are the error messages helpful? Is the documentation current? Are the variable names clear? This lens looks at code through the eyes of the person who will maintain it in six months, the new hire who encounters it for the first time, the on-call engineer reading it at 3 AM trying to understand a stack trace.</p>
+
+        <h3>Testing and reliability</h3>
+
+        <p>Does the test coverage match the risk? Are error paths tested, not just happy paths? What about concurrency? Data integrity? Integration points? This lens pushes past "it works on my machine" to "it works under every condition that matters, including the ones that are hard to reproduce."</p>
+
+        <label for="sn-2" class="sidenote-toggle" aria-label="Toggle note on shadow paths">&#8853;</label>
+        <input type="checkbox" id="sn-2" class="sidenote-toggle" aria-hidden="true">
+        <span class="sidenote">Shadow paths: the nil inputs, the empty collections, the error responses that code technically handles but nobody tested. These are where production bugs hide, because they're the paths developers don't think about while building the happy path.</span>
+      </section>
+
+      <section>
+        <h2>Composition</h2>
+
+        <p>Not every change needs all five lenses. A backend API change might need the infrastructure and testing perspectives. A frontend feature might need the product and clarity perspectives. A security-sensitive change gets the directness lens plus infrastructure. The review selects the relevant perspectives based on what changed.</p>
+
+        <p>This isn't a committee. It's a selection of the perspectives that matter for this particular change. A two-file bug fix doesn't need product alignment review. A new user-facing feature does.</p>
+      </section>
+
+      <section>
+        <h2>Self-Review First</h2>
+
+        <p>Before asking anyone else to look at your code, look at it yourself. Not a casual glance. A deliberate review where you read your own diff as if someone else wrote it.</p>
+
+        <p>Self-review catches a surprising amount. The variable name that made sense while you were writing but reads as cryptic in the diff. The error handling path you forgot to test. The comment that says "TODO: fix this" that you intended to address before committing. You can't ask others for useful perspective until you've understood your own code well enough to explain every trade-off in it.</p>
+      </section>
+
+      <section>
+        <h2>Cadence</h2>
+
+        <p>Individual code reviews happen with every change. But the playbook also builds in periodic reviews at a broader scope.</p>
+
+        <p>Monthly: codebase hygiene, test suite health, logging standards. These are the reviews that prevent slow drift. Code that was clean three months ago accumulates shortcuts and workarounds. Monthly hygiene reviews catch the drift before it becomes a rewrite.</p>
+
+        <p>Quarterly: deep hygiene audit, product alignment check, team retrospective. These reviews zoom out. Is the architecture still serving us? Are we building toward the right goals? What patterns keep recurring that we should address systemically?</p>
+
+        <label for="sn-3" class="sidenote-toggle" aria-label="Toggle note on cadence discipline">&#8853;</label>
+        <input type="checkbox" id="sn-3" class="sidenote-toggle" aria-hidden="true">
+        <span class="sidenote">Review cadence needs to be calendared. "We'll do it when we have time" means it never happens. Put it on the calendar, rotate who runs it, and document what you find. The ritual protects the practice.</span>
+
+        <p>As-needed: release reviews, security audits, full project reviews. These happen when something specific triggers them. A major release. A security incident. A new regulatory requirement.</p>
+      </section>
+
+      <section>
+        <h2>Evidence Over Opinion</h2>
+
+        <p>The Preamble from Chapter 1 sets the tone for reviews: truth over tone, correctness over agreement. In practice, this means review feedback is grounded in evidence, not preference.</p>
+
+        <p>"I don't like this pattern" is opinion. "This pattern will cause N+1 queries at scale because each iteration hits the database" is evidence. "Consider refactoring" is vague. "This function does three things; splitting it would let us test the validation logic independently" is specific. The difference matters because evidence-based feedback is actionable. Opinion-based feedback starts arguments.</p>
+
+        <p>Good review feedback tells you three things: what the issue is, why it matters, and how hard it is to fix. "Your query loop hits the database on every iteration. With 100K records, this goes from 20ms to 2 seconds. Add an index or batch the queries. Either takes about fifteen minutes." That's a review comment you can act on immediately.</p>
+      </section>
+
+      <nav class="chapter-nav" aria-label="Chapter navigation">
+        <a href="ritual.html" class="prev">The Ritual</a>
+        <a href="adoption.html" class="next">Adoption</a>
+      </nav>
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    Engineering Playbook &middot; <a href="https://github.com/vnykmshr/playbook">Source</a> &middot; MIT License
+  </footer>
+  <script src="scripts/theme.js"></script>
+</body>
+</html>

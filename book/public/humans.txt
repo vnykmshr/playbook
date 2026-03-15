@@ -1,0 +1,10 @@
+/* TEAM */
+Author: vnykmshr
+Site: https://playbook.1mb.dev
+Contact: github.com/vnykmshr
+
+/* SITE */
+Standards: HTML5, CSS3
+Software: Hand-coded HTML + CSS
+Fonts: Source Serif 4 (Adobe, self-hosted)
+Inspiration: Edward Tufte, The Rust Book

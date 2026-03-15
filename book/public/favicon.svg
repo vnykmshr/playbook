@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <style>
+    @media (prefers-color-scheme: dark) {
+      .bg { fill: #1a1a1a; }
+      .mark { fill: #e0ddd5; }
+      .accent { fill: #e8a0a0; }
+    }
+  </style>
+  <rect class="bg" width="64" height="64" rx="8" fill="#fffff8"/>
+  <rect class="accent" width="4" height="64" rx="8 0 0 8" fill="#a00000"/>
+  <text class="mark" x="10" y="46" font-family="Georgia, 'Times New Roman', serif" font-size="34" font-style="italic" fill="#111">Pb</text>
+</svg>

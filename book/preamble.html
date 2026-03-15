@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'none'; frame-ancestors 'none'; base-uri 'self'">
+  <title>The Preamble &middot; The Playbook</title>
+  <meta name="description" content="How we think together. Five principles for engineering collaboration: correctness over agreement, critical thinking, direct communication, systems thinking, and attention respect.">
+  <meta name="author" content="vnykmshr">
+  <meta name="theme-color" content="#fffff8" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#1a1a1a" media="(prefers-color-scheme: dark)">
+  <link rel="canonical" href="https://playbook.1mb.dev/preamble.html">
+
+  <meta property="og:title" content="The Preamble &middot; The Playbook">
+  <meta property="og:description" content="How we think together. Five principles for engineering collaboration where the best ideas win regardless of source.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://playbook.1mb.dev/preamble.html">
+  <meta property="og:site_name" content="The Playbook">
+  <meta name="twitter:card" content="summary">
+
+  <link rel="icon" href="public/favicon.ico" sizes="any">
+  <link rel="icon" href="public/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="public/favicon.png" type="image/png" sizes="32x32">
+  <link rel="apple-touch-icon" href="public/apple-touch-icon.png">
+  <link rel="manifest" href="public/site.webmanifest">
+  <link rel="preload" href="public/fonts/SourceSerif4-Regular.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="public/fonts/SourceSerif4-Italic.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="public/fonts/SourceSerif4-Semibold.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="styles/tufte.css">
+</head>
+<body>
+  <a href="#main-content" class="skip-to-content">Skip to content</a>
+  <header class="site-header">
+    <nav aria-label="Book navigation">
+      <a href="index.html" class="nav-home"><span class="pb-mark">Pb</span> The Playbook</a>
+      <ul class="nav-chapters" role="list">
+        <li><a href="preamble.html" aria-current="page">1. Preamble</a></li>
+        <li><a href="design-rules.html">2. Design Rules</a></li>
+        <li><a href="ritual.html">3. Ritual</a></li>
+        <li><a href="review.html">4. Review</a></li>
+        <li><a href="adoption.html">5. Adoption</a></li>
+      </ul>
+      <button class="theme-toggle" type="button" aria-label="Toggle theme">Auto</button>
+    </nav>
+  </header>
+
+  <main id="main-content">
+    <article>
+      <header class="page-header">
+        <p class="page-label">Chapter One &middot; 8 min read</p>
+        <h1>The Preamble</h1>
+        <p role="doc-subtitle">How we think together</p>
+      </header>
+
+      <section>
+        <p>Every engineering team has a culture, whether they designed it or not. Most cultures emerge by accident. Shaped by whoever was loudest in the early days, reinforced by who got promoted, calcified by "that's how we've always done it." The result is predictable: senior engineers whose ideas go unchallenged, junior engineers who learn that silence is safer than candor, and meetings where everyone agrees with whatever was proposed first.</p>
+
+        <p>The Preamble is a deliberate alternative. It's not a process. It's not a set of rules. It's a mindset. Five principles that establish how a team thinks together before they build anything. Every other part of this playbook assumes you bring this mindset to the work.</p>
+
+        <p>The core anchor is simple: <strong>Challenge assumptions. Prefer correctness over agreement. Think like peers, not hierarchies.</strong></p>
+      </section>
+
+      <section>
+        <h2>Peer Thinking vs. Hierarchy Thinking</h2>
+
+        <p>Most teams operate on hierarchy thinking without realizing it. The senior person speaks, others nod. Disagreement is treated as disrespect. Silence protects relationships. Status determines whose ideas are correct.</p>
+
+        <p>Peer thinking inverts this. All perspectives are examined on their merits. The best idea wins, regardless of who proposed it. Disagreement is professional, expected, welcomed. Silence isn't politeness. It's complicity in bad decisions.</p>
+
+        <p>This doesn't mean ignoring experience. A staff engineer who has seen a particular architecture fail three times has valuable data. But that data is valuable because of <em>what they observed</em>, not because of <em>their title</em>. Authority is earned through reasoning, not conferred by position.</p>
+
+        <label for="sn-1" class="sidenote-toggle" aria-label="Toggle note on hierarchy vs peer thinking">&#8853;</label>
+        <input type="checkbox" id="sn-1" class="sidenote-toggle" aria-hidden="true">
+        <span class="sidenote">"I'm the tech lead, so we're doing it my way" is hierarchy thinking. "I've seen this pattern fail at scale, here's what happened and why I'd choose differently" is peer thinking. Same person, same experience, different framing. The second invites challenge. The first shuts it down.</span>
+      </section>
+
+      <section>
+        <h2>Five Principles</h2>
+
+        <h3>Correctness Over Agreement</h3>
+
+        <p>The goal of any technical discussion is to arrive at the right answer, not to maintain harmony. Point out flaws early and directly. Call weak ideas weak, even when the person proposing them is someone you respect. A tense five-minute conversation now beats a silent problem in production later.</p>
+
+        <p>In practice, this sounds like: <em>"I think this approach is risky because of X. Have you considered Y instead?"</em> It does not sound like: <em>"That's a great idea! Maybe we could also consider&hellip;"</em> The first is honest. The second is performance.</p>
+
+        <h3>Critical, Not Servile</h3>
+
+        <p>Act as a critical peer, not a subordinate seeking approval. Challenge premises before accepting tasks. Question scope, estimates, and assumptions. Your hesitation about a proposed approach isn't anxiety to be suppressed. It's a data point worth surfacing.</p>
+
+        <p>This matters most for junior engineers, who are conditioned by most organizations to defer. If you see something that doesn't make sense, say so. You may be wrong, and that's fine, you'll learn something. But you might be right. And your silence would have cost the team.</p>
+
+        <label for="sn-2" class="sidenote-toggle" aria-label="Toggle note on AI peer review">&#8853;</label>
+        <input type="checkbox" id="sn-2" class="sidenote-toggle" aria-hidden="true">
+        <span class="sidenote">This is especially true when your "peer" is an AI coding assistant. Same principle: challenge its suggestions, question its assumptions, verify its reasoning. Don't defer to confidence. Scrutinize it like you would any other colleague's code.</span>
+
+        <h3>Truth Over Tone</h3>
+
+        <p>Direct, clear language beats careful politeness. This doesn't mean being rude. It means prioritizing clarity over comfort. Explain your reasoning, not just your conclusion. Offer alternatives with explicit trade-offs. Assume the other person values critical thinking over tone management.</p>
+
+        <p><em>"This approach is simpler but slower. That one is faster but more complex. Here's why I'd pick the first one for our use case."</em> Three sentences. No hedging. No apology for having an opinion. The recipient knows exactly where you stand and why.</p>
+
+        <h3>Think Holistically</h3>
+
+        <p>Optimize for outcomes, not just for the code in front of you. One engineer's elegant solution might create three problems elsewhere: in operations, in security, in user experience. Can we monitor it? Is it secure? Will it scale? Can a new team member understand it six months from now?</p>
+
+        <p>The best engineers don't just write good code. They write code that exists well within a system. A system that includes people, processes, and operational realities alongside the technology.</p>
+
+        <h3>Respect Attention</h3>
+
+        <p>Thinking like peers means respecting each other's cognitive resources. Your time is finite. So is everyone else's.</p>
+
+        <p>A CI pipeline that sends 40 Slack notifications per deploy. A config file that requires reading a wiki to understand. An API that returns 200 with an error buried in the response body. These are all failures of attention respect. Someone built them without thinking about the person on the other end.</p>
+
+        <label for="sn-3" class="sidenote-toggle" aria-label="Toggle note on attention and design rules">&#8853;</label>
+        <input type="checkbox" id="sn-3" class="sidenote-toggle" aria-hidden="true">
+        <span class="sidenote">This principle connects directly to the Design Rules in Chapter 2, particularly the rules on Clarity, Silence, and Simplicity. Building calm, clear systems is an act of respect toward everyone who interacts with them.</span>
+
+        <p>Clear, calm systems are an act of respect. When you build something that's easy to understand, easy to operate, and easy to use, you're saying: <em>"I built this thinking about your attention."</em></p>
+      </section>
+
+      <section>
+        <h2>When to Challenge, When to Trust</h2>
+
+        <p>The preamble doesn't mean challenging everything. Discernment is the skill.</p>
+
+        <p>Challenge when assumptions are unstated, when trade-offs are hidden, when risk is glossed over, when scope is unclear, or when your expertise gives you information others don't have. Trust when an expert has shown their reasoning, when you lack context in a domain, when the time cost of debate exceeds the benefit, or when a decision has been made and it's time to execute.</p>
+
+        <p>The best teams oscillate between healthy challenge and trust-based execution. They debate before deciding, align after deciding, and learn from the results. The worst teams get stuck in one mode: perpetual debate where nothing ships, blind trust where problems go unseen, or blame cycles where learning only happens after failure.</p>
+
+        <p>The rhythm is: <strong>Challenge early. Decide clearly. Execute aligned.</strong></p>
+      </section>
+
+      <section>
+        <h2>Why Both Halves Matter</h2>
+
+        <p>The Preamble is one half of the playbook's philosophy. The other half, the Design Rules in the next chapter, addresses <em>what</em> we build. Together they form a complete framework: how teams think together, and what they build toward.</p>
+
+        <p>Without the Preamble, teams apply design rules but debate endlessly without resolution. They know what good design looks like but can't decide together. Without the Design Rules, teams collaborate well but build systems that are fragile, overly complex, or hard to maintain. Good intentions don't prevent architectural mistakes.</p>
+
+        <label for="sn-4" class="sidenote-toggle" aria-label="Toggle note on playbook commands">&#8853;</label>
+        <input type="checkbox" id="sn-4" class="sidenote-toggle" aria-hidden="true">
+        <span class="sidenote">Every command in the playbook assumes both frameworks. "Apply preamble thinking" means bring this mindset of peer challenge and honest assessment. "Apply design-rules thinking" means evaluate against the technical principles in Chapter 2. The <a href="https://vnykmshr.github.io/playbook/">Command Reference</a> has the full catalog.</span>
+
+        <p>With both, preamble thinking makes it safe to discuss design principles without defensiveness. Design rules give teams concrete ground to stand on when challenging ideas. Disagreement becomes technical rather than personal.</p>
+      </section>
+
+      <section>
+        <h2>The Test</h2>
+
+        <p>How do you know if your team is actually practicing preamble thinking? Look for the signals. People disagree in meetings without fear. Leaders sometimes change their minds when presented with better reasoning. Problems surface in discussion, not in production. New people feel safe asking questions in their first week. Someone challenges the most senior person in the room, and that person listens.</p>
+
+        <p>The warning signs are equally clear. Everyone agrees with the senior person. Meetings get longer but decisions don't improve. People complain in hallways instead of in reviews. New hires quickly learn to stay quiet. The same mistakes happen twice because nobody documented why the first one happened.</p>
+
+        <p>If you recognize the warning signs, start small. Make one decision where a challenge changed the outcome, and make that visible. Leaders: change your mind publicly when someone presents better reasoning. That single act does more for team culture than any number of "psychological safety" workshops.</p>
+      </section>
+
+      <nav class="chapter-nav" aria-label="Chapter navigation">
+        <a href="index.html" class="prev">Table of Contents</a>
+        <a href="design-rules.html" class="next">Design Rules</a>
+      </nav>
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    Engineering Playbook &middot; <a href="https://github.com/vnykmshr/playbook">Source</a> &middot; MIT License
+  </footer>
+  <script src="scripts/theme.js"></script>
+</body>
+</html>

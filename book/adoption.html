@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'none'; frame-ancestors 'none'; base-uri 'self'">
+  <title>Adoption &middot; The Playbook</title>
+  <meta name="description" content="How to start adopting the engineering playbook. Practical steps by team size, four adoption phases, common pitfalls, customization guidance, and how to know it's working.">
+  <meta name="author" content="vnykmshr">
+  <meta name="theme-color" content="#fffff8" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#1a1a1a" media="(prefers-color-scheme: dark)">
+  <link rel="canonical" href="https://playbook.1mb.dev/adoption.html">
+
+  <meta property="og:title" content="Adoption &middot; The Playbook">
+  <meta property="og:description" content="Practical steps for adopting engineering playbook principles. By team size, in phases, with common pitfalls addressed.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://playbook.1mb.dev/adoption.html">
+  <meta property="og:site_name" content="The Playbook">
+  <meta name="twitter:card" content="summary">
+
+  <link rel="icon" href="public/favicon.ico" sizes="any">
+  <link rel="icon" href="public/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="public/favicon.png" type="image/png" sizes="32x32">
+  <link rel="apple-touch-icon" href="public/apple-touch-icon.png">
+  <link rel="manifest" href="public/site.webmanifest">
+  <link rel="preload" href="public/fonts/SourceSerif4-Regular.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="public/fonts/SourceSerif4-Italic.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="public/fonts/SourceSerif4-Semibold.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="styles/tufte.css">
+</head>
+<body>
+  <a href="#main-content" class="skip-to-content">Skip to content</a>
+  <header class="site-header">
+    <nav aria-label="Book navigation">
+      <a href="index.html" class="nav-home"><span class="pb-mark">Pb</span> The Playbook</a>
+      <ul class="nav-chapters" role="list">
+        <li><a href="preamble.html">1. Preamble</a></li>
+        <li><a href="design-rules.html">2. Design Rules</a></li>
+        <li><a href="ritual.html">3. Ritual</a></li>
+        <li><a href="review.html">4. Review</a></li>
+        <li><a href="adoption.html" aria-current="page">5. Adoption</a></li>
+      </ul>
+      <button class="theme-toggle" type="button" aria-label="Toggle theme">Auto</button>
+    </nav>
+  </header>
+
+  <main id="main-content">
+    <article>
+      <header class="page-header">
+        <p class="page-label">Chapter Five &middot; 6 min read</p>
+        <h1>Adoption</h1>
+        <p role="doc-subtitle">How to start</p>
+      </header>
+
+      <section>
+        <p>The playbook is not a switch you flip. It's a set of practices you adopt incrementally, each one building on the previous. Start with what solves your most immediate pain, prove it works, then expand.</p>
+
+        <p>The right starting point depends on your team's size, your current pain points, and how much process you already have. A three-person startup adopts differently than a fifty-person engineering org. Both can get value from the first week.</p>
+      </section>
+
+      <section>
+        <h2>By Team Size</h2>
+
+        <h3>Solo or small startup (2-5 people)</h3>
+
+        <p>Start with the ritual: scope, code, review. Read the Preamble and Design Rules. That's it for week one. The ritual gives you a consistent development workflow. The philosophy gives you shared language for design conversations.</p>
+
+        <p>Add self-review before peer review in week two. Even a two-person team benefits. It catches things. The overhead is minimal: maybe two to three hours total to set up and internalize.</p>
+
+        <h3>Small team (5-15 people)</h3>
+
+        <p>Start with the ritual, then add structured planning within the first month. At this size, scope drift becomes real. Architecture decision records prevent the "I thought we agreed on X" conversations that waste everyone's time.</p>
+
+        <label for="sn-1" class="sidenote-toggle" aria-label="Toggle note on ADRs for small teams">&#8853;</label>
+        <input type="checkbox" id="sn-1" class="sidenote-toggle" aria-hidden="true">
+        <span class="sidenote">Architecture Decision Records have disproportionate impact on small teams. When there are only a few people, decisions get made in hallway conversations and disappear. ADRs capture the reasoning so new hires and future-you understand why things are the way they are.</span>
+
+        <p>Add multi-perspective reviews after the first month. You don't need five people reviewing every change. But you do need to occasionally put on the security hat, the product hat, the testing hat. Monthly cadence reviews prevent slow drift.</p>
+
+        <h3>Medium team (15-50 people)</h3>
+
+        <p>Everything above, plus formalized onboarding and knowledge transfer. At this size, you're adding people faster than institutional knowledge spreads organically. Structured onboarding means new engineers read the Preamble and Design Rules in their first week, pair with experienced engineers on the ritual in their second week, and contribute independently by week three.</p>
+
+        <p>Pattern libraries and architecture references start paying off here. When three teams are all making similar database decisions independently, having a shared patterns resource saves duplicated work and prevents inconsistent choices.</p>
+
+        <h3>Large organization (50+ people)</h3>
+
+        <p>At this scale, the playbook's value shifts from individual productivity to organizational consistency. Role-specific adoption guides. Quarterly adoption metrics. Cross-team architecture reviews. The philosophy stays the same; the implementation becomes more structured.</p>
+
+        <p>The biggest risk at scale is that the playbook becomes theater. Teams go through the motions of reviews and rituals without the preamble thinking that makes them valuable. Metrics help here: not "did we do a review?" but "did the review find anything?" Not "did we write an ADR?" but "did someone reference it when making a related decision?"</p>
+      </section>
+
+      <section>
+        <h2>Four Phases</h2>
+
+        <p>Regardless of team size, adoption follows a natural progression. Each phase builds on the previous one, and each has clear signals that tell you when you're ready to move on.</p>
+
+        <h3>Phase 1: Foundation</h3>
+
+        <p>Read the Preamble and Design Rules. Set up the daily ritual. Establish code review norms. This takes a week or two. You know you're ready to move on when the ritual feels automatic and code reviews consistently surface useful feedback.</p>
+
+        <h3>Phase 2: Development workflow</h3>
+
+        <p>Add structured planning, testing practices, and documentation standards. This takes two to four weeks. You know you're ready to move on when scope is captured before coding starts, tests are written alongside code, and commits explain the why.</p>
+
+        <h3>Phase 3: Architecture and patterns</h3>
+
+        <p>Integrate pattern libraries into design discussions. Add architecture decision records. Introduce the full review pipeline with specialized perspectives. This takes one to two months. You know you're ready when design discussions reference shared patterns and trade-offs are documented before implementation.</p>
+
+        <h3>Phase 4: Release and operations</h3>
+
+        <p>Formalize release processes, incident response, and operational practices. Add monitoring cadences. This is ongoing. You know it's working when releases feel routine, incidents are handled systematically, and post-incident reviews produce lasting improvements.</p>
+      </section>
+
+      <section>
+        <h2>Common Pitfalls</h2>
+
+        <p>These aren't failures. They're predictable patterns that every adopting team encounters.</p>
+
+        <p><strong>Adoption fatigue.</strong> Teams try to adopt everything at once. Three weeks in, nobody remembers which practices to use for what. Fix: start with the ritual only. Add one practice per month. Slower adoption that sticks beats fast adoption that collapses.</p>
+
+        <p><strong>Review ceremonies die.</strong> Reviews happen reliably for the first two months, then start getting skipped. Fix: put them on the calendar. Rotate who runs it. Document what you find. If it's not calendared, it's optional, and optional things get dropped under pressure.</p>
+
+        <label for="sn-2" class="sidenote-toggle" aria-label="Toggle note on review decay">&#8853;</label>
+        <input type="checkbox" id="sn-2" class="sidenote-toggle" aria-hidden="true">
+        <span class="sidenote">The most common version: a team establishes code review and test reviews, runs them consistently for six weeks, then hits a deadline. Reviews get skipped "just this once." Three months later, nobody remembers they were supposed to be happening.</span>
+
+        <p><strong>Design rules as dogma.</strong> Teams treat the rules as laws instead of trade-offs. Someone rejects a PR because "it violates Simplicity" without engaging with why the complexity was added. Fix: revisit Chapter 2. The rules conflict with each other by design. The value is in the conversation about the trade-off, not in rigid enforcement.</p>
+
+        <p><strong>No shared context.</strong> Team members use different subsets of the playbook. One person runs reviews, another doesn't. There's no shared understanding of the ritual. Fix: the Preamble and Design Rules are the shared foundation. If everyone has read those two chapters, the rest works itself out through conversation.</p>
+      </section>
+
+      <section>
+        <h2>Customization</h2>
+
+        <p>The playbook provides a framework. Your team provides the context. Keep the philosophy intact. Customize everything else.</p>
+
+        <p>A fintech team will lean harder on security reviews. A consumer product team will emphasize product alignment and accessibility. An infrastructure team will focus on resilience and operational reviews. The five review lenses are the same; the weight given to each one shifts based on what matters most in your domain.</p>
+
+        <p>The principles are tool-agnostic. The ritual (scope, code, review) works with any development environment. The review perspectives work with any review process. How you trigger them is an implementation detail. The playbook includes tooling for AI-assisted development, but the thinking applies whether you use those tools or not.</p>
+      </section>
+
+      <section>
+        <h2>Knowing It's Working</h2>
+
+        <p>You'll feel it before you can measure it. Code reviews surface real issues instead of style nitpicks. New engineers ramp up faster because the context is documented. Incidents feel manageable because there's a process. Scope discussions happen before coding, not during.</p>
+
+        <p>If you want to measure it: track code review feedback quality (are reviews finding real issues?), test coverage on new code (not legacy, just new), onboarding time to first independent contribution, and deployment success rate. These are trailing indicators. They move slowly. But they move in the right direction when the practices are real.</p>
+
+        <p>The simplest test: would you recommend this way of working to a team you care about? If something feels like overhead without payoff, cut it or change it. The playbook is a starting point, not a destination.</p>
+      </section>
+
+      <section>
+        <h2>What's Next</h2>
+
+        <p>You've read the book. Here's how to start.</p>
+
+        <p>Pick one thing. Read the Preamble with your team. Try the ritual for a week. Run one review through multiple perspectives. Whichever feels most relevant to your current pain, start there. Don't try to adopt everything. One practice, used consistently, teaches you more than five practices used sporadically.</p>
+
+        <p>The full <a href="https://vnykmshr.github.io/playbook/">Command Reference</a> has every command, organized by category. The <a href="https://github.com/vnykmshr/playbook">source repository</a> has the install instructions if you want to use the tooling. But the tooling is optional. The thinking is not.</p>
+      </section>
+
+      <nav class="chapter-nav" aria-label="Chapter navigation">
+        <a href="review.html" class="prev">The Review</a>
+        <a href="index.html" class="next">Back to cover</a>
+      </nav>
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    Engineering Playbook &middot; <a href="https://github.com/vnykmshr/playbook">Source</a> &middot; MIT License
+  </footer>
+  <script src="scripts/theme.js"></script>
+</body>
+</html>
