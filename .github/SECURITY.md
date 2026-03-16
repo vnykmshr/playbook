@@ -6,8 +6,7 @@ If you discover a security vulnerability in the Engineering Playbook, please rep
 
 **Do not open a public issue.** Instead:
 
-1. Email: security@vnykmshr.com
-2. Or use GitHub's private vulnerability reporting: [Security Advisories](https://github.com/vnykmshr/playbook/security/advisories)
+1. Use GitHub's private vulnerability reporting: [Security Advisories](https://github.com/vnykmshr/playbook/security/advisories)
 
 Please include:
 - Description of the vulnerability
