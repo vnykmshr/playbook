@@ -24,8 +24,7 @@ We are committed to providing a welcoming and inclusive environment for all cont
 
 If you witness or experience behavior that violates this code, please report it by:
 
-1. Emailing: conduct@vnykmshr.com
-2. Or contacting a project maintainer directly
+1. Contacting a project maintainer directly
 
 All reports will be treated confidentially. We are committed to taking appropriate action.
 
