@@ -19,7 +19,7 @@ from pathlib import Path
 from playbook_utils import setup_logger
 
 COMMANDS_DIR = Path(__file__).parent.parent / "commands"
-EXPECTED_COUNT = 104  # v2.14.0: 102 baseline + pb-kai-reach + pb-handoff
+EXPECTED_COUNT = 106  # v2.17.0: 104 baseline + pb-handcraft + pb-huddle
 
 # Hub commands allowed to exceed the 5-link limit
 HUB_COMMANDS = {"pb-patterns.md"}
