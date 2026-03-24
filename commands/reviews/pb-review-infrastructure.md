@@ -5,7 +5,7 @@ category: "reviews"
 difficulty: "advanced"
 model_hint: "opus"
 execution_pattern: "parallel"
-related_commands: ['pb-alex-infra', 'pb-linus-agent', 'pb-hardening', 'pb-deployment', 'pb-standards']
+related_commands: ['pb-review-code', 'pb-review-backend', 'pb-alex-infra', 'pb-security']
 last_reviewed: "2026-02-12"
 last_evolved: ""
 version: "1.1.0"
@@ -212,11 +212,10 @@ Common disagreement: "Should we add encryption everywhere?"
 
 ## Related Commands
 
-- **Alex's Deep Dive:** `/pb-alex-infra` - Systems thinking, failure modes, resilience design
-- **Linus's Deep Dive:** `/pb-linus-agent` - Security assumptions, threat modeling, code correctness
-- **Hardening:** `/pb-hardening` - Security hardening checklist (reference standard)
-- **Deployment:** `/pb-deployment` - Deployment execution and verification
-- **Standards:** `/pb-standards` - Coding principles both agents apply
+- `/pb-review-code` -- General code review framework both agents apply
+- `/pb-review-backend` -- Backend service review for infrastructure dependencies
+- `/pb-alex-infra` -- Alex's deep dive: systems thinking, failure modes, resilience design
+- `/pb-security` -- Security review checklist for infrastructure and configuration
 
 ---
 

@@ -5,7 +5,7 @@ category: "reviews"
 difficulty: "advanced"
 model_hint: "opus"
 execution_pattern: "parallel"
-related_commands: ['pb-maya-product', 'pb-sam-documentation', 'pb-review-code', 'pb-standards', 'pb-a11y']
+related_commands: ['pb-review-code', 'pb-review-product', 'pb-maya-product', 'pb-a11y']
 last_reviewed: "2026-02-12"
 last_evolved: ""
 version: "1.1.0"
@@ -201,11 +201,10 @@ Common disagreement: "Should we add this advanced feature?"
 
 ## Related Commands
 
-- **Maya's Deep Dive:** `/pb-maya-product` - Problem validation, scope discipline, user impact
-- **Sam's Deep Dive:** `/pb-sam-documentation` - Reader-centric thinking, clarity, accessibility
-- **Code Review:** `/pb-review-code` - General code review (both agents apply)
-- **Accessibility:** `/pb-a11y` - Detailed accessibility review (reference standard)
-- **Standards:** `/pb-standards` - Coding principles both agents apply
+- `/pb-review-code` -- General code review framework both agents apply
+- `/pb-review-product` -- Product-focused review for feature validation
+- `/pb-maya-product` -- Maya's deep dive: problem validation, scope discipline, user impact
+- `/pb-a11y` -- Detailed accessibility review reference standard
 
 ---
 

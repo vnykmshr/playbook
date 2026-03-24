@@ -5,7 +5,7 @@ category: "core"
 difficulty: "beginner"
 model_hint: "sonnet"
 execution_pattern: "sequential"
-related_commands: ['pb-guide', 'pb-guide-python', 'pb-preamble', 'pb-design-rules']
+related_commands: ['pb-guide', 'pb-guide-python', 'pb-testing', 'pb-patterns-core']
 last_reviewed: "2026-02-18"
 last_evolved: "2026-02-18"
 version: "2.0.0"
@@ -733,13 +733,16 @@ go tool pprof http://localhost:6060/debug/pprof/heap
 
 ## **Integration with Playbook**
 
-**Related Commands:**
-- `/pb-guide` - General SDLC process
-- `/pb-patterns-core` - Architectural patterns
-- `/pb-patterns-async` - Concurrency patterns
-- `/pb-performance` - Performance optimization
-- `/pb-testing` - Advanced testing strategies
-- `/pb-deployment` - Deployment and DevOps
+See `/pb-guide` for general SDLC process, `/pb-patterns-core` for architectural patterns, `/pb-patterns-async` for concurrency patterns, `/pb-performance` for performance optimization, and `/pb-deployment` for deployment and DevOps.
+
+---
+
+## Related Commands
+
+- `/pb-guide` -- General SDLC process this guide extends
+- `/pb-guide-python` -- Language-specific guide for Python projects
+- `/pb-testing` -- Advanced testing strategies and patterns
+- `/pb-patterns-core` -- Architectural patterns applicable to Go services
 
 ---
 

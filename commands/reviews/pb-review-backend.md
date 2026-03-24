@@ -5,7 +5,7 @@ category: "reviews"
 difficulty: "advanced"
 model_hint: "opus"
 execution_pattern: "parallel"
-related_commands: ['pb-alex-infra', 'pb-jordan-testing', 'pb-review-code', 'pb-linus-agent', 'pb-standards']
+related_commands: ['pb-review-code', 'pb-review-infrastructure', 'pb-alex-infra', 'pb-jordan-testing']
 last_reviewed: "2026-02-12"
 last_evolved: ""
 version: "1.1.0"
@@ -194,11 +194,10 @@ Common disagreement: "Should this be async or sync?"
 
 ## Related Commands
 
-- **Alex's Deep Dive:** `/pb-alex-infra` - Systems thinking, failure modes, resilience
-- **Jordan's Deep Dive:** `/pb-jordan-testing` - Gap detection, test coverage, reliability
-- **Code Review:** `/pb-review-code` - General code review (both agents apply)
-- **Security Review:** `/pb-linus-agent` - Add Linus perspective for security-critical code
-- **Standards:** `/pb-standards` - Coding principles both agents apply
+- `/pb-review-code` -- General code review framework both agents apply
+- `/pb-review-infrastructure` -- Infrastructure-focused review for backend dependencies
+- `/pb-alex-infra` -- Alex's deep dive: systems thinking, failure modes, resilience
+- `/pb-jordan-testing` -- Jordan's deep dive: gap detection, test coverage, reliability
 
 ---
 

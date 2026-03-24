@@ -5,7 +5,7 @@ category: "core"
 difficulty: "beginner"
 model_hint: "sonnet"
 execution_pattern: "sequential"
-related_commands: ['pb-guide', 'pb-standards', 'pb-documentation', 'pb-evolve']
+related_commands: ['pb-evolve', 'pb-review-playbook', 'pb-standards', 'pb-documentation']
 last_reviewed: "2026-02-18"
 last_evolved: "2026-02-18"
 version: "2.0.0"
@@ -541,11 +541,10 @@ Match depth to purpose. Simple commands don't need 500 lines.
 
 ## Related Commands
 
-- `/pb-review-playbook` - Review existing playbooks for quality
-- `/pb-claude-orchestration` - Model tier guidance for new commands
-- `/pb-templates` - Reusable templates and patterns
-- `/pb-standards` - Code quality standards
-- `/pb-documentation` - Writing great documentation
+- `/pb-evolve` -- Quarterly evolution cycles for updating the playbook ecosystem
+- `/pb-review-playbook` -- Review existing playbooks for quality and conventions
+- `/pb-standards` -- Code and content quality standards applied during validation
+- `/pb-documentation` -- Writing guidelines for clear, maintainable documentation
 
 ---
 

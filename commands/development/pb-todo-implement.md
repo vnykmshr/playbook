@@ -5,7 +5,7 @@ category: "development"
 difficulty: "advanced"
 model_hint: "sonnet"
 execution_pattern: "sequential"
-related_commands: ['pb-plan', 'pb-cycle', 'pb-pr', 'pb-commit', 'pb-review-hygiene']
+related_commands: ['pb-start', 'pb-review', 'pb-cycle', 'pb-commit']
 last_reviewed: "2026-02-09"
 last_evolved: ""
 version: "1.0.0"
@@ -480,12 +480,7 @@ Move completed todo to "Completed" section in `todos/todos.md`:
 /pb-pr or /pb-commit (create PR or direct commit)
 ```
 
-### Related Commands
-
-- **Before this**: `/pb-plan` - Plan the focus area and phases
-- **After implementation**: `/pb-cycle` - Self-review + peer review
-- **Finalizing**: `/pb-pr` - Create pull request, `/pb-commit` - Direct commit
-- **Code quality**: `/pb-review-hygiene` - Code cleanup and review
+See `/pb-plan` to define scope before starting, `/pb-cycle` for self-review after implementation, and `/pb-pr` or `/pb-commit` to finalize.
 
 ### Directory Structure
 
@@ -607,6 +602,15 @@ The workflow will:
 5. Walk through implementation checkpoint-by-checkpoint
 6. Commit when complete with full audit trail
 7. Offer to start next todo
+
+---
+
+## Related Commands
+
+- `/pb-start` -- Scope and kick off new work before creating todos
+- `/pb-review` -- Full review workflow after implementation is complete
+- `/pb-cycle` -- Self-review and peer review once code is ready
+- `/pb-commit` -- Commit implementation with proper message format
 
 ---
 

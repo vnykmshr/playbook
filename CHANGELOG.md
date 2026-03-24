@@ -16,6 +16,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - **`/pb-think`** -- Related commands updated: added `pb-huddle` (natural pair), dropped `pb-debug`.
 
+## [v2.17.0] - 2026-03-15
+
+### Overview
+
+**mdbook migration + book site launch.** Replaced MkDocs with mdbook for the reference site. Added a distraction-free book site at playbook.1mb.dev (Cloudflare Pages). Voice cleanup across all 123 files (2220+ em-dashes removed, AI-tell vocabulary cleaned).
+
+### Added
+
+- Book site at playbook.1mb.dev (CF Pages, Tufte typography, 5 chapters)
+- CF Pages deploy workflow (triggers on v\* tags + workflow_dispatch)
+- Internal link checker in CI pipeline (`scripts/check-links.py`)
+
+### Changed
+
+- **Reference site** migrated from MkDocs to mdbook 0.5.2 + mdbook-mermaid
+- **Voice pass** across 123 files -- removed AI-tell vocabulary and em-dashes
+- **Deploy gating** -- both sites deploy on v\* tags only (not every push)
+- **Cross-linked** reference site intro to book site
+
 ## [v2.16.0] - 2026-03-15
 
 ### Overview

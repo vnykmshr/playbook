@@ -5,7 +5,7 @@ category: "planning"
 difficulty: "advanced"
 model_hint: "sonnet"
 execution_pattern: "sequential"
-related_commands: ['pb-security', 'pb-preamble', 'pb-review-microservice', 'pb-patterns-core', 'pb-logging']
+related_commands: ['pb-security', 'pb-hardening', 'pb-patterns-core', 'pb-patterns-distributed']
 last_reviewed: "2026-02-18"
 last_evolved: "2026-02-18"
 version: "1.1.0"
@@ -775,10 +775,10 @@ func isStrongPassword(pwd string) bool {
 
 ## Related Commands
 
-- See `/pb-security` for security review checklist
-- See `/pb-review-microservice` for microservice security review
-- See `/pb-patterns-core` for OWASP patterns overview
-- See `/pb-logging` for secure logging practices
+- `/pb-security` -- Security review checklist for code and infrastructure
+- `/pb-hardening` -- Security hardening reference for deployment configs
+- `/pb-patterns-core` -- Core architectural patterns including OWASP overview
+- `/pb-patterns-distributed` -- Distributed system patterns and service-to-service concerns
 
 ---
 

@@ -5,7 +5,7 @@ category: "core"
 difficulty: "beginner"
 model_hint: "sonnet"
 execution_pattern: "sequential"
-related_commands: ['pb-guide', 'pb-guide-go', 'pb-preamble', 'pb-design-rules']
+related_commands: ['pb-guide', 'pb-guide-go', 'pb-testing', 'pb-patterns-async']
 last_reviewed: "2026-02-18"
 last_evolved: "2026-02-18"
 version: "2.0.0"
@@ -882,13 +882,16 @@ async def health_check():
 
 ## **Integration with Playbook**
 
-**Related Commands:**
-- `/pb-guide` - General SDLC process
-- `/pb-patterns-core` - Architectural patterns
-- `/pb-patterns-async` - Async/concurrency patterns
-- `/pb-performance` - Performance optimization
-- `/pb-testing` - Advanced testing strategies
-- `/pb-deployment` - Deployment and DevOps
+See `/pb-guide` for general SDLC process, `/pb-patterns-core` for architectural patterns, `/pb-patterns-async` for async/concurrency patterns, `/pb-performance` for performance optimization, and `/pb-deployment` for deployment and DevOps.
+
+---
+
+## Related Commands
+
+- `/pb-guide` -- General SDLC process this guide extends
+- `/pb-guide-go` -- Language-specific guide for Go projects
+- `/pb-testing` -- Advanced testing strategies and patterns
+- `/pb-patterns-async` -- Async and concurrency patterns for Python services
 
 ---
 
