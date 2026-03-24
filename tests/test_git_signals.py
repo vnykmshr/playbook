@@ -9,6 +9,7 @@ Uses mocking to avoid real git calls.
 import json
 import tempfile
 from pathlib import Path
+from subprocess import TimeoutExpired
 from unittest import mock
 
 import pytest
@@ -29,35 +30,35 @@ def temp_output_dir():
 @pytest.fixture
 def mock_commits():
     """Mock git log output with sample commits."""
-    return """abc1234
+    return """aaaa1234aaaa1234aaaa1234aaaa1234aaaa1234
 John Doe
 john@example.com
 2025-01-15
 feat(commands): add new pb-example command
 Initial implementation
 ---END---
-def5678
+bbbb5678bbbb5678bbbb5678bbbb5678bbbb5678
 Jane Smith
 jane@example.com
 2025-01-10
 fix: resolve metadata validation issue
 Fixed edge case in YAML parsing
 ---END---
-ghi9012
+cccc9012cccc9012cccc9012cccc9012cccc9012
 John Doe
 john@example.com
 2025-01-05
 Revert "feat: remove deprecated command"
 This commit reverts a breaking change
 ---END---
-jkl3456
+dddd3456dddd3456dddd3456dddd3456dddd3456
 Jane Smith
 jane@example.com
 2024-12-28
 fix: handle null pointer in context analyzer
 Added safety check for empty metadata
 ---END---
-mno7890
+eeee7890eeee7890eeee7890eeee7890eeee7890
 John Doe
 john@example.com
 2024-12-20
@@ -70,11 +71,11 @@ Critical fix for query timeout
 def mock_files():
     """Mock git show output (files per commit)."""
     return {
-        'abc1234': 'commands/core/pb-example.md\ndocs/example.md\nREADME.md',
-        'def5678': 'scripts/validate-conventions.py\ntests/test_validate.py',
-        'ghi9012': 'commands/planning/pb-old-command.md',
-        'jkl3456': 'scripts/analyze-playbook-context.py\ntests/test_analyze.py',
-        'mno7890': 'commands/core/pb-core-command.md',
+        'aaaa1234aaaa1234aaaa1234aaaa1234aaaa1234': 'commands/core/pb-example.md\ndocs/example.md\nREADME.md',
+        'bbbb5678bbbb5678bbbb5678bbbb5678bbbb5678': 'scripts/validate-conventions.py\ntests/test_validate.py',
+        'cccc9012cccc9012cccc9012cccc9012cccc9012': 'commands/planning/pb-old-command.md',
+        'dddd3456dddd3456dddd3456dddd3456dddd3456': 'scripts/analyze-playbook-context.py\ntests/test_analyze.py',
+        'eeee7890eeee7890eeee7890eeee7890eeee7890': 'commands/core/pb-core-command.md',
     }
 
 
@@ -131,7 +132,7 @@ class TestGitSignalsAnalyzer:
 
             # Verify first commit
             first = analyzer.commits[0]
-            assert first['hash'] == 'abc1234'
+            assert first['hash'] == 'aaaa1234aaaa1234aaaa1234aaaa1234aaaa1234'
             assert first['author'] == 'John Doe'
             assert first['email'] == 'john@example.com'
             assert 'feat(commands):' in first['subject']
@@ -296,7 +297,8 @@ class TestGitSignalsAnalyzer:
             # Second call: adoption metrics files
             # Third call: churn metrics
             mock_run.side_effect = [
-                mock_commits,  # parse_commits
+                mock_commits,  # parse_commits: first call (format check)
+                mock_commits,  # parse_commits: second call (structured parse)
                 'commands/core/pb-test.md\ncommands/planning/pb-plan.md',  # adoption metrics
                 mock_numstat,  # churn metrics
             ]
@@ -323,7 +325,7 @@ class TestCommitParsing:
     def test_parse_commits_with_multiline_body(self, temp_output_dir):
         """Test parsing commits with multi-line bodies."""
         analyzer = GitSignalsAnalyzer(output_dir=temp_output_dir)
-        commits_with_body = """abc1234
+        commits_with_body = """aaaa1234aaaa1234aaaa1234aaaa1234aaaa1234
 John Doe
 john@example.com
 2025-01-15
@@ -341,7 +343,7 @@ of description
     def test_parse_commits_with_special_characters(self, temp_output_dir):
         """Test parsing commits with special characters in subjects."""
         analyzer = GitSignalsAnalyzer(output_dir=temp_output_dir)
-        commits_special = """abc1234
+        commits_special = """aaaa1234aaaa1234aaaa1234aaaa1234aaaa1234
 John Doe
 john@example.com
 2025-01-15

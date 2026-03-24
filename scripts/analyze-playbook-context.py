@@ -170,12 +170,12 @@ class PlaybookContextAnalyzer:
         for file_path in changed_files:
             file_lower = file_path.lower()
 
-            if "test" in file_lower or "spec" in file_lower:
+            if ".github/workflows" in file_lower:
+                result["ci"].append(file_path)
+            elif "test" in file_lower or "spec" in file_lower:
                 result["tests"].append(file_path)
             elif "docs/" in file_lower or ".md" in file_lower:
                 result["docs"].append(file_path)
-            elif ".github/workflows" in file_lower:
-                result["ci"].append(file_path)
             elif any(
                 file_path.endswith(ext)
                 for ext in [".py", ".ts", ".tsx", ".js", ".jsx", ".go", ".rs"]
