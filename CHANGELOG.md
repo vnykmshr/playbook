@@ -5,6 +5,17 @@ All notable changes to this project are documented here.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Added
+
+- **`/pb-handcraft` v1.0.0** -- AI output quality gate. 6-lens pass (convention match, AI tell scan, bloat, clipping, register, read-aloud) for making AI-assisted output indistinguishable from hand-written.
+- **`/pb-huddle` v1.0.0** -- Multi-perspective decision session. Persona selection guide for structured multi-persona debate on strategic decisions.
+
+### Changed
+
+- **`/pb-think`** -- Related commands updated: added `pb-huddle` (natural pair), dropped `pb-debug`.
+
 ## [v2.16.0] - 2026-03-15
 
 ### Overview

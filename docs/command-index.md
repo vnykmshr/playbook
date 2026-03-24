@@ -27,6 +27,7 @@ Quick reference for all playbook commands.
 | `/pb-testing` | Testing philosophy (unit, integration, E2E strategies) |
 | `/pb-jordan-testing` | Testing & reliability review (gap detection, edge case coverage, failure mode analysis) |
 | `/pb-handoff` | Structured work handoff between contexts (agents, sessions, teammates) |
+| `/pb-handcraft` | AI output quality gate -- 6-lens pass for making AI-assisted work indistinguishable from hand-written |
 | `/pb-standup` | Daily async status updates for distributed teams |
 | `/pb-knowledge-transfer` | Preparing KT session for new developer or team handoff |
 | `/pb-what-next` | Context-aware command recommendations based on git state |
@@ -126,6 +127,7 @@ Self-sufficient thinking partner methodology for expert-quality collaboration.
 | Command | When to Use |
 |---------|-------------|
 | `/pb-think` | Complete thinking toolkit with modes: ideate, synthesize, refine |
+| `/pb-huddle` | Multi-perspective decision session -- structured multi-persona debate for strategic trade-offs |
 | `/pb-think mode=ideate` | Divergent exploration - generate options and possibilities |
 | `/pb-think mode=synthesize` | Integration - combine multiple inputs into coherent insight |
 | `/pb-think mode=refine` | Convergent refinement - polish to expert-quality |

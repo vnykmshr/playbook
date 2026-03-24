@@ -9,7 +9,7 @@ related_commands: ['pb-think', 'pb-preamble', 'pb-linus-agent', 'pb-maya-product
 last_reviewed: "2026-03-24"
 last_evolved: ""
 version: "1.0.0"
-version_notes: "Initial: graduated from vmx orchestrator. Multi-persona decision framework."
+version_notes: "Initial: multi-persona decision framework with persona selection guide."
 breaking_changes: []
 ---
 # Multi-Perspective Decision Session

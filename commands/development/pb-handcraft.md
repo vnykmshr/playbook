@@ -9,7 +9,7 @@ related_commands: ['pb-voice', 'pb-review', 'pb-linus-agent', 'pb-commit']
 last_reviewed: "2026-03-24"
 last_evolved: ""
 version: "1.0.0"
-version_notes: "Initial: graduated from vmx orchestrator. 6-lens quality pass for AI-assisted output."
+version_notes: "Initial: 6-lens quality pass for AI-assisted output."
 breaking_changes: []
 ---
 # AI Output Quality Gate
