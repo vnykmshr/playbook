@@ -181,8 +181,8 @@ class TestEvolutionStructuralImpact:
     def test_execution_patterns_are_valid(self):
         """All commands must have valid execution patterns."""
         valid_patterns = {
-            "sequential", "parallel", "interactive", "exploratory", "reference",
-            "automatic", "interactive-once", "checklist"
+            "sequential", "parallel", "parallel-then-sequential", "interactive",
+            "exploratory", "reference", "automatic", "interactive-once", "checklist"
         }
         files = get_all_command_files()
         invalid = []
