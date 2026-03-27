@@ -5,6 +5,18 @@ All notable changes to this project are documented here.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Added
+
+- **`/pb-usability` v1.0.0** -- Post-deploy webapp usability audit. Orchestrates existing playbooks (a11y, calm-design, security, performance) alongside native audit sections (first impressions, navigation, forms, content, system feedback, AI readiness, user rights). Quick audit (12 items) and comprehensive modes.
+
+### Changed
+
+- **`/pb-calm-design` v1.2.0** -- Added Section E (Ethical Calm): dark patterns detection, meaningful consent, engagement well-being. Checklist expanded from 10 to 13 questions.
+- **`/pb-security` v1.2.0** -- Added User-Facing Trust & Privacy section: privacy policy readability, cookie audit, trust indicators, third-party disclosure, data proportionality, AI transparency.
+- **`/pb-performance` v1.1.0** -- Added SEO & LLM Discoverability section: meta tags, structured data, llms.txt, AI crawler policy.
+
 ## [v2.18.0] - 2026-03-24
 
 ### Added

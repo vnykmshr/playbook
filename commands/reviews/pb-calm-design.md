@@ -8,8 +8,8 @@ execution_pattern: "checklist"
 related_commands: ['pb-design-rules', 'pb-standards', 'pb-security', 'pb-review-product', 'pb-review-frontend']
 last_reviewed: "2026-02-18"
 last_evolved: "2026-02-18"
-version: "1.1.0"
-version_notes: "v2.13.1: Added pb-security backward reference (Calm Design includes secure-by-default principles)"
+version: "1.2.0"
+version_notes: "v2.19.0: Added Section E (Ethical Calm) — dark patterns, meaningful consent, engagement well-being"
 breaking_changes: []
 ---
 
@@ -114,6 +114,32 @@ Use this to evaluate features, systems, or interfaces for attention-efficiency.
 - Or does growth require constant tuning and monitoring?
 - Example: Self-tuning retry logic ✅ vs. Manual threshold adjustments ❌
 
+### Section E: Ethical Calm (Respecting Autonomy)
+
+Calm design extends beyond attention efficiency into ethical interaction. Systems that manipulate users are never calm.
+
+**11. Are we free of dark patterns?**
+
+- Scan for manipulative patterns: confirmshaming, hidden costs, forced continuity, misdirection, trick questions, disguised ads, roach motels, privacy zuckering, bait-and-switch, fabricated urgency
+- Does declining an offer use neutral language, not guilt? ("No thanks" not "No, I don't want to save money")
+- Are all costs visible before the final confirmation step?
+- Does the total change between any two steps in a purchase flow?
+
+**12. Is consent meaningful and revocable?**
+
+- For every consent mechanism (cookie banners, newsletter popups, notification requests, data sharing): is declining as easy as accepting?
+- Are there pre-checked boxes or confusing double negatives?
+- Can users change their consent preferences later without hunting?
+- Does the system actually respect the user's choice after they decline?
+
+**13. Does engagement respect well-being?**
+
+- Is infinite scrolling used without a clear endpoint or pause point?
+- Are notifications used for genuine utility, or to pull users back?
+- Can users consume content without algorithmically-driven recommendations?
+- Are there features designed to maximize time-on-site at the expense of user intent?
+- Does the system offer any awareness of usage (session duration, usage summaries)?
+
 ---
 
 ## How to Use This Checklist
@@ -132,9 +158,14 @@ Use this to evaluate features, systems, or interfaces for attention-efficiency.
 
 ### Before Shipping
 
-- Full checklist: all 10 questions
+- Full checklist: all 13 questions
 - Score: How many are you fully confident about?
-- "7-10: Ship. 5-6: Address gaps. <5: Revisit design."
+- "10-13: Ship. 7-9: Address gaps. <7: Revisit design."
+
+### Post-Deploy Usability Audit
+
+- Run Section E specifically: dark patterns, consent, engagement
+- Use `/pb-usability` to orchestrate a full usability audit including this checklist
 
 ---
 
@@ -149,6 +180,7 @@ Use this to evaluate features, systems, or interfaces for attention-efficiency.
 | **Minimum Viable Design** | Have we cut to the core? | Question 7 |
 | **Least Surprise** | Would a first-time user understand? | Question 8 |
 | **Observability** | Can ops see what's happening? | Questions 9-10 |
+| **Ethical Respect** | No manipulation, meaningful consent, well-being | Questions 11-13 |
 
 ---
 
@@ -285,8 +317,10 @@ When reviewing code, ask:
 - [ ] **Silence**: Does normal operation produce unnecessary output?
 - [ ] **Observability**: Can we (ops) see what's happening?
 - [ ] **Degradation**: Does this fail gracefully?
+- [ ] **Honesty**: Is every interaction free of dark patterns?
+- [ ] **Consent**: Can users decline without friction or guilt?
 
-If you check all 7: Ship. If you check 5-6: Address gaps. If <5: Request redesign.
+If you check all 9: Ship. If you check 6-8: Address gaps. If <6: Request redesign.
 
 ---
 
@@ -326,9 +360,11 @@ Before shipping, ask yourself:
 ✅ Failed gracefully; user can work around it
 ✅ I would use this daily without frustration
 ✅ Someone new could use this without training
+✅ No dark patterns, no guilt trips, no hidden costs
+✅ Users can say no as easily as yes
 ```
 
-If all 5: Calm. If 3-4: Good start; refine. If <3: Revisit design.
+If all 7: Calm. If 5-6: Good start; refine. If <5: Revisit design.
 
 ---
 

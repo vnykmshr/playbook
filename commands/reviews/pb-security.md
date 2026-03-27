@@ -8,8 +8,8 @@ execution_pattern: "sequential"
 related_commands: ['pb-review', 'pb-review-hygiene', 'pb-hardening', 'pb-secrets', 'pb-patterns-security']
 last_reviewed: "2026-02-09"
 last_evolved: ""
-version: "1.1.0"
-version_notes: "v1.1.0: Added LLM Output Trust Boundary section."
+version: "1.2.0"
+version_notes: "v1.2.0: Added User-Facing Trust & Privacy section for post-deploy audits"
 breaking_changes: []
 ---
 # Security Review & Checklist
@@ -628,6 +628,50 @@ return redirect(redirect_url)
 ```
 
 **Why**: Open redirects enable phishing (victim trusts your domain in the URL) and can chain with SSRF or OAuth token theft.
+
+---
+
+## User-Facing Trust & Privacy Audit
+
+Code-level security is necessary but insufficient. Users also need to *perceive* trustworthiness. This section audits the deployed product from a user's perspective. Use during post-deploy audits or as part of `/pb-usability`.
+
+### Privacy Policy Readability
+- [ ] Privacy policy is written in plain language (not legalese)
+- [ ] Specifies: what data is collected, why, how long stored, who it's shared with, how to delete it
+- [ ] Third-party data sharing partners are named, not hidden behind "trusted partners"
+- [ ] User rights (access, deletion, portability) are clearly explained with instructions
+- [ ] Addresses AI/ML use of user data if applicable
+
+### Cookie & Tracking Audit
+- [ ] Clear all cookies, visit the site: are cookies set *before* any consent interaction?
+- [ ] Cookie banner has equally prominent accept and reject buttons (not a big "Accept" and tiny "Manage")
+- [ ] After declining, only essential cookies are present (verify in browser dev tools)
+- [ ] Users can change cookie preferences later without re-clearing cookies
+
+### Trust Indicators
+- [ ] Valid SSL certificate (not expired, not self-signed)
+- [ ] Company name, address, and contact information clearly visible
+- [ ] "About" page with real team or company history
+- [ ] Professional, error-free design (no broken images, typos, placeholder text)
+- [ ] Security badges or compliance certifications displayed where relevant
+
+### Third-Party Service Disclosure
+- [ ] Inspect network requests: list every third-party service contacted (analytics, ads, fonts, CDNs, APIs)
+- [ ] Each third-party service is disclosed in the privacy policy
+- [ ] User consent obtained before non-essential third-party requests fire
+
+### Data Collection Proportionality
+- [ ] For every form field requesting personal data: is it genuinely necessary for the stated purpose?
+- [ ] Reason for collecting each piece of data is explained or obvious
+- [ ] No over-collection (e.g., phone number for a newsletter signup)
+- [ ] No hidden data collection (fingerprinting, invisible trackers) without disclosure
+
+### AI Feature Transparency
+- [ ] Every AI-powered feature (chatbots, recommendations, personalization, automated decisions) is identified
+- [ ] Users are informed when they are interacting with AI
+- [ ] Option to reach a human exists where AI makes decisions affecting users
+- [ ] AI-generated content is labeled where it could be mistaken for human-authored
+- [ ] AI decision-making is explained where it affects user outcomes (pricing, eligibility, moderation)
 
 ---
 

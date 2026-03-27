@@ -101,6 +101,7 @@
 - [Logging](commands/reviews/pb-logging.md)
 - [Calm Design](commands/reviews/pb-calm-design.md)
 - [Voice](commands/reviews/pb-voice.md)
+- [Usability](commands/reviews/pb-usability.md)
 
 # Commands: Deployment
 

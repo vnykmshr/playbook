@@ -8,8 +8,8 @@ execution_pattern: "sequential"
 related_commands: ['pb-observability', 'pb-review-hygiene', 'pb-patterns-core']
 last_reviewed: "2026-02-09"
 last_evolved: ""
-version: "1.0.0"
-version_notes: "v2.10.0 baseline"
+version: "1.1.0"
+version_notes: "v1.1.0: Added SEO & LLM Discoverability section"
 breaking_changes: []
 ---
 # Performance Optimization & Scalability
@@ -503,6 +503,30 @@ wrk -t 20 -c 100 -d 60s -s optimize.lua http://localhost:8000/api/search
    After: Sharded database (parallel queries)
    Impact: 10-100x more throughput
 ```
+
+---
+
+## SEO & LLM Discoverability
+
+Performance extends beyond speed. If users and AI agents can't find your site, speed doesn't matter. Audit discoverability alongside performance.
+
+### Search Engine Optimization
+- [ ] Every page has a unique `<title>` tag (under 60 characters, primary keyword included)
+- [ ] Every page has a unique `<meta name="description">` (under 160 characters)
+- [ ] Canonical URL tag present on all pages (`<link rel="canonical">`)
+- [ ] Open Graph and Twitter Card meta tags present for social sharing
+- [ ] Structured data (JSON-LD) appropriate for the content type (Article, Product, FAQ, etc.)
+- [ ] XML sitemap exists and is current (`/sitemap.xml`)
+- [ ] `robots.txt` is correctly configured (not accidentally blocking important pages)
+
+### LLM & AI Agent Discoverability
+- [ ] `llms.txt` exists at site root with a clear, structured summary of the site for AI crawlers
+- [ ] `llms-full.txt` provides comprehensive site context if the site is content-heavy
+- [ ] `robots.txt` policy on AI crawlers is intentional (explicitly allow or block, don't leave ambiguous)
+- [ ] Key content is in semantic HTML, not locked behind JavaScript rendering (AI crawlers may not execute JS)
+- [ ] Site structure is navigable via links and headings, not dependent on interactive widgets
+
+**Why this matters:** AI agents increasingly mediate how users discover and interact with products. A site invisible to AI crawlers loses a growing discovery channel.
 
 ---
 
