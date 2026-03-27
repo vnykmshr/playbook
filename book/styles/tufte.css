@@ -341,6 +341,21 @@ a:hover {
   color: var(--link-hover);
 }
 
+/* --- External link indicator --- */
+
+a[href^="http"]:not([href*="playbook.1mb.dev"])::after {
+  content: " \2197";
+  font-size: 0.7em;
+  vertical-align: super;
+  color: var(--text-muted);
+}
+
+/* Don't show on nav or footer external links */
+.site-footer a[href^="http"]::after,
+.site-header a[href^="http"]::after {
+  content: none;
+}
+
 /* --- Focus indicators --- */
 
 :focus-visible {
@@ -664,10 +679,22 @@ em {
 
   .site-header nav {
     font-size: 0.75rem;
+    flex-wrap: nowrap;
   }
 
   .site-header .nav-chapters {
     gap: 1em;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    mask-image: linear-gradient(to right, #000 85%, transparent);
+    -webkit-mask-image: linear-gradient(to right, #000 85%, transparent);
+    padding-right: 2em;
+  }
+
+  .site-header .nav-chapters::-webkit-scrollbar {
+    display: none;
   }
 
   .chapter-nav {
