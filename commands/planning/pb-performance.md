@@ -526,7 +526,15 @@ Performance extends beyond speed. If users and AI agents can't find your site, s
 - [ ] Key content is in semantic HTML, not locked behind JavaScript rendering (AI crawlers may not execute JS)
 - [ ] Site structure is navigable via links and headings, not dependent on interactive widgets
 
-**Why this matters:** AI agents increasingly mediate how users discover and interact with products. A site invisible to AI crawlers loses a growing discovery channel.
+### Site Root Convention Files
+- [ ] `robots.txt` — crawler policy and sitemap reference (served at `/robots.txt`, not nested)
+- [ ] `sitemap.xml` — page index for search engines
+- [ ] `llms.txt` — structured site summary for AI agents
+- [ ] `humans.txt` — team, tools, and attribution (humanstxt.org convention)
+
+All four should be at the site root, not nested under subdirectories. Verify they return their own content, not a catch-all fallback.
+
+**Why this matters:** AI agents increasingly mediate how users discover and interact with products. A site invisible to AI crawlers loses a growing discovery channel. `humans.txt` signals craftsmanship and provides attribution context that both humans and AI agents use.
 
 ---
 

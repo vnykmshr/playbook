@@ -229,6 +229,7 @@ Run these existing playbooks as part of the comprehensive audit:
 
 **Performance & Discoverability** — Run `/pb-performance` with SEO section:
 - Core Web Vitals (LCP < 2.5s, INP < 200ms, CLS < 0.1), image optimization, JS audit, SEO meta tags, LLM discoverability
+- Site root convention files: `robots.txt`, `sitemap.xml`, `llms.txt`, `humans.txt` — all served at root, not nested
 
 ---
 
