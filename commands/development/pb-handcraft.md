@@ -197,6 +197,9 @@ Before any security submission -- GHSA, bounty platform, email -- verify these i
 - **Realistic scenario.** What does the attacker do, what breaks. State preconditions (RBAC, auth, config).
 - **Not a false positive.** Check for sanitization you missed, config flags that disable the path, unreachable preconditions.
 - **Timing judgment.** Don't submit known-class bugs in pre-release code the maintainer will likely catch. Hold and watch the release. Submit if it ships unfixed.
+- **Impact field isolation.** Platform triagers read Impact separately from Description. Read the Impact field with zero other context. Two tests: (a) does a triager who reads ONLY this field understand the attack? (b) can they dismiss it without reading Description? If yes to (b), rewrite until the answer is no. Name the actor, the action, the blast radius, and the preconditions in the Impact field itself.
+- **PoC code as evidence.** Run Lens 2 (AI Tell Scan) separately on all PoC code. Docstrings, argparse, class hierarchies, try/except with helpful messages, unused imports, and trailing summaries are the most common AI tells in PoC scripts. The PoC is what the triager scrutinizes most -- a clean report with an over-engineered PoC gets flagged.
+- **Comparison case.** Show what the code DOES handle correctly next to what it misses. Vulnerable line vs safe alternative. Blocked path vs bypassed path. This demonstrates manual code reading and is the strongest signal that you understand the codebase.
 
 ---
 
