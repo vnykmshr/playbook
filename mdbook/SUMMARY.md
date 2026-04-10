@@ -55,6 +55,7 @@
 - [Resume](commands/development/pb-resume.md)
 - [Handoff](commands/development/pb-handoff.md)
 - [Handcraft](commands/development/pb-handcraft.md)
+- [Caveman](commands/development/pb-caveman.md)
 - [Standup](commands/development/pb-standup.md)
 - [Learn](commands/development/pb-learn.md)
 - [Preferences](commands/development/pb-preferences.md)

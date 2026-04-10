@@ -5,6 +5,12 @@ All notable changes to this project are documented here.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v2.19.3] - 2026-04-10
+
+### Added
+
+- **`/pb-caveman` v1.0.0** -- Ultra-minimal filter pass for ephemeral dev-loop output. Two modes (lite, full). Deliberate counterweight to `/pb-handcraft`: scoped to throwaway 1-liners, debug chat, scratch notes, terse code comments, and internal tool output. Hard fence against PRs, commits, docs, and anything a cold reader will hit. Homage to Julius Brussee's caveman project.
+
 ## [v2.19.0] - 2026-03-27
 
 ### Added
