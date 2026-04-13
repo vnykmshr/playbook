@@ -108,6 +108,7 @@
 
 - [Release](commands/deployment/pb-release.md)
 - [Deployment](commands/deployment/pb-deployment.md)
+- [Preflight](commands/deployment/pb-preflight.md)
 - [Alex: Infrastructure Agent](commands/deployment/pb-alex-infra.md)
 - [Incident](commands/deployment/pb-incident.md)
 - [Maintenance](commands/deployment/pb-maintenance.md)

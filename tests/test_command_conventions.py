@@ -16,7 +16,7 @@ from pathlib import Path
 import pytest
 
 COMMANDS_DIR = Path(__file__).parent.parent / "commands"
-EXPECTED_COUNT = 108  # 107 baseline + pb-caveman
+EXPECTED_COUNT = 109  # 107 baseline + pb-caveman + pb-preflight
 
 # Hub commands allowed to exceed the 5-link limit
 HUB_COMMANDS = {"pb-patterns.md"}

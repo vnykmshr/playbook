@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - **`/pb-caveman` v1.0.0** -- Ultra-minimal filter pass for ephemeral dev-loop output. Two modes (lite, full). Deliberate counterweight to `/pb-handcraft`: scoped to throwaway 1-liners, debug chat, scratch notes, terse code comments, and internal tool output. Hard fence against PRs, commits, docs, and anything a cold reader will hit. Homage to Julius Brussee's caveman project.
+- **`/pb-preflight` v1.0.0** -- Pre-ship readiness gate. 30-item binary check across six categories (secrets/auth, data, infra, observability, resilience, launch sanity) run in the 5-10 minutes before a production deploy. Distinct from `/pb-security` (depth audit) and `/pb-ship` (workflow orchestrator): this is the terse gate that escalates to those when a category fails. Includes post-deploy smoke test and 15-minute watch with rehearsed rollback.
 
 ## [v2.19.0] - 2026-03-27
 

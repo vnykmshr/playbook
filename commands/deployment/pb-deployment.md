@@ -5,7 +5,7 @@ category: "deployment"
 difficulty: "advanced"
 model_hint: "sonnet"
 execution_pattern: "sequential"
-related_commands: ['pb-release', 'pb-patterns-deployment', 'pb-incident', 'pb-observability']
+related_commands: ['pb-release', 'pb-patterns-deployment', 'pb-incident', 'pb-observability', 'pb-preflight']
 last_reviewed: "2026-02-09"
 last_evolved: ""
 version: "1.0.0"
