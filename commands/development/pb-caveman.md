@@ -6,10 +6,10 @@ difficulty: "beginner"
 model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-handcraft', 'pb-voice', 'pb-review', 'pb-commit']
-last_reviewed: "2026-04-10"
-last_evolved: ""
-version: "1.0.0"
-version_notes: "Initial: ultra-minimal filter pass for ephemeral dev-loop output. Two modes (lite, full). Deliberate counterweight to /pb-handcraft."
+last_reviewed: "2026-04-15"
+last_evolved: "2026-04-15"
+version: "1.1.0"
+version_notes: "1.1.0: Carve-out for short-form public 1-liners (X/Bluesky replies, single-line social posts) -- lite mode is the default for public, but both directions of user override are now explicit: (a) full opt-in -- user can request full mode for public when they want the broken/caveman vibe on purpose, (b) lite lock -- user can forbid upshift to full for the session. User sovereignty beats the rule. 1.0.0: Initial, two modes, counterweight to /pb-handcraft."
 breaking_changes: []
 ---
 # Caveman Filter (Ultra-Minimal Output)
@@ -35,13 +35,14 @@ This command is the deliberate opposite of `/pb-handcraft`. Handcraft aims at *i
 - TODO/FIXME/NOTE annotations
 - Internal tool output, CLI glue, bot notifications nobody will read cold
 - Bullet-form standup lines where prose is overhead
+- Short-form public 1-liners (X/Bluesky replies, standalone single-line social posts) -- lite mode by default, full mode only on explicit user opt-in (see *User overrides*). Either way, only after a natural-voice draft already exists.
 
 ## When NOT to Use
 
 - PR descriptions, commit messages -- use `/pb-handcraft` and `/pb-commit`
 - Docstrings on public APIs, shipped documentation, release notes, ADRs
 - Anything a teammate will read cold in 6 months
-- External reports, security submissions, user-facing copy
+- External reports, security submissions, multi-sentence user-facing prose (1-liners are carved out -- see *When to Use*)
 - Any codebase whose comment style is sentence-case prose (match local style)
 
 If in doubt, `/pb-handcraft` wins.
@@ -60,8 +61,16 @@ BEACON reconciliation: *clarity over cleverness* still holds. Terseness IS clari
 
 ```
 /pb-caveman             -> lite (default): drop filler, keep grammar
+/pb-caveman lite        -> lite (explicit lock): never upshift to full, even if asked
 /pb-caveman full        -> full: fragments, abbreviations, telegraphic
 ```
+
+**User overrides (both directions):**
+
+- **Full opt-in on public 1-liners.** The "never full for public 1-liners" rule is the default, not a hard block. If the user explicitly requests full mode for a public 1-liner ("go full", "I want it broken", "caveman-full it", "be a caveman"), respect it. They are opting into the broken/telegraphic register on purpose -- that is a legitimate voice choice. Do not argue, do not offer lite as a safer alternative unprompted, do not pre-hedge. Execute and ship the full-mode line.
+- **Lite lock.** If the invocation includes `lite`, or the user says "lite only" / "no full" / "don't go full" at any point in the session, lock to lite for the rest of the session. Hard override -- respect even if the content would qualify for full. Do not offer full after a lock.
+
+User sovereignty beats the rule. The defaults exist to protect the user from accidentally shipping flat copy; explicit instructions prove the shipping is deliberate.
 
 ### Lite
 
@@ -91,6 +100,7 @@ Telegraphic. Fragments allowed. Abbreviations allowed. Symbols allowed where una
 - Symbols where crisp: `->`, `L42`, `~`, `!=`
 - Still keep code, identifiers, commands, paths untouched
 - Still no filler, no narration, no summaries
+- **Public 1-liners: lite by default, full only on explicit user opt-in.** Full mode's compression assumes a reader with loaded context. Public readers have none -- rhythm usually dies, the line reads flat. Default to lite when the output crosses a public boundary. If the user explicitly asks for full ("go full", "I want it broken", "be a caveman"), ship full -- they are choosing the broken register on purpose. See *User overrides* above.
 
 **Before:**
 > The test is failing because the mock returns null when we expect an empty array. I need to update the mock setup in the beforeEach block.
@@ -102,7 +112,10 @@ Telegraphic. Fragments allowed. Abbreviations allowed. Symbols allowed where una
 
 ## The Filter Pass
 
-1. **Read the draft.** Identify the reader: is it you-in-30-seconds or someone reading cold? If cold, stop -- wrong command.
+1. **Read the draft.** Identify the reader:
+   - **You-in-30-seconds** (scratch, chat, terse comment) -> proceed, lite or full.
+   - **Public 1-liner** (X/Bluesky reply, single-line social post) -> lite by default, full only on explicit user opt-in. Requires a natural-voice draft first.
+   - **Cold long-form reader** (PR, doc, report, multi-sentence prose) -> stop, wrong command. Use `/pb-handcraft`.
 2. **Cut the opener.** No "Sure," "Here's," "I'll," "Let's."
 3. **Cut the closer.** No "Hope this helps," "Let me know," trailing summary.
 4. **Cut hedges.** "probably," "it seems," "I think" -- delete or replace with confidence level only if load-bearing.
