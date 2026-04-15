@@ -91,7 +91,7 @@ Drop the filler; keep the sentences grammatical. Reads as a terse developer, not
 
 ### Full
 
-Telegraphic. Fragments allowed. Abbreviations allowed. Symbols allowed where unambiguous. Only for output you control the read context of.
+Telegraphic. Fragments allowed. Abbreviations allowed. Symbols allowed where unambiguous. Primarily for output you control the read context of -- see the public 1-liner rule below for the explicit opt-in case.
 
 **Rules:**
 - Fragments over sentences
@@ -168,7 +168,7 @@ Before applying to code comments, sweep the surrounding file and 2-3 nearby file
 
 ## Integration
 
-`/pb-caveman` is ephemeral by design. It does not replace `/pb-handcraft` in any workflow. If the output is about to cross a boundary (PR, commit, doc, external message), switch to `/pb-handcraft` for the final pass.
+`/pb-caveman` is ephemeral by design. It does not replace `/pb-handcraft` in any workflow. If the output is about to cross a boundary (PR, commit, doc, long-form external message), switch to `/pb-handcraft` for the final pass. Short-form public 1-liners are the one exception -- see *When to Use*.
 
 ```
 in-session scratch -> /pb-caveman (optional)
