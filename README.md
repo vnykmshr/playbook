@@ -1,6 +1,6 @@
 # Engineering Playbook
 
-Structured development commands for engineers using agentic AI tools. Tool-agnostic at the core, Claude Code integration included.
+Structured Markdown commands for AI-assisted development. Covers the SDLC from planning to production operations. Tool-adaptable.
 
 [![CI](https://github.com/vnykmshr/playbook/actions/workflows/deploy-docs.yml/badge.svg)](https://github.com/vnykmshr/playbook/actions/workflows/deploy-docs.yml)
 [![Latest Release](https://img.shields.io/github/v/release/vnykmshr/playbook)](https://github.com/vnykmshr/playbook/releases/latest)
@@ -8,18 +8,18 @@ Structured development commands for engineers using agentic AI tools. Tool-agnos
 
 ## What this is
 
-109 commands across 9 categories covering the SDLC from planning through production operations. Written for engineers who want repeatable structure without ceremony:
+Structured commands organized by SDLC phase, for engineers who want repeatable structure without ceremony:
 
 - Two foundations: [`/pb-preamble`](commands/core/pb-preamble.md) (how to collaborate) and [`/pb-design-rules`](commands/core/pb-design-rules.md) (what to build)
 - A three-command daily ritual: `/pb-preferences --setup` → `/pb-start` → code → `/pb-review` → `/pb-pr`
-- Self-evolving: quarterly cycles plus capability-triggered updates when Claude's model tier changes
+- Self-evolving: periodic cycles plus capability-triggered updates when the underlying model tier changes
 
 Content is Markdown. Structure is enforced by lint and tests. Commands are versioned independently; no breaking changes without a major release.
 
 ## Who it's for
 
-- Engineers using Claude Code who want a curated command library
-- Teams adapting playbooks to other AI tools (read as Markdown, adapt prompts)
+- Engineers who want a curated command library for AI-assisted development
+- Teams adapting playbooks to different AI tools (read as Markdown, adapt prompts)
 - Solo maintainers building personal workflows they can evolve
 
 Not a framework to adopt wholesale. Start with the preamble, pick commands that fit, ignore the rest.
@@ -32,7 +32,7 @@ cd playbook
 ./scripts/install.sh
 ```
 
-With Claude Code, `install.sh` symlinks `commands/` and helper scripts into `~/.claude/`. Without Claude Code, read the files directly -- each command is self-contained Markdown.
+`install.sh` symlinks `commands/` and helper scripts to `~/.claude/`. Using a different toolchain? Read the files directly -- each command is self-contained Markdown.
 
 Uninstall: `./scripts/uninstall.sh`.
 
@@ -50,10 +50,10 @@ For deeper work: `/pb-plan` (architecture), `/pb-adr` (decision records), `/pb-s
 
 ## Learn more
 
-- **[Command index](https://vnykmshr.github.io/playbook/command-index/)** -- all 109 commands grouped by category
+- **[Command index](https://vnykmshr.github.io/playbook/command-index/)** -- complete catalog grouped by category
 - **[Book site](https://playbook.1mb.dev)** -- distraction-free reading view
 - **[Integration guide](docs/integration-guide.md)** -- how commands compose
-- **[Using with other tools](docs/using-with-other-tools.md)** -- adapting the playbook outside Claude Code
+- **[Using with other tools](docs/using-with-other-tools.md)** -- adapting the playbook outside the reference toolchain
 
 ## Meta
 
