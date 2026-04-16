@@ -55,9 +55,9 @@ if [[ -d "$project_dir" ]]; then
       *)        model_tier="" ;;
     esac
 
-    # Max context: 1M for Opus 4.6/Sonnet 4.6, 200K for older models
+    # Max context: 1M for Opus 4.6+/Sonnet 4.6+ (including [1m] tier variants), 200K otherwise
     case "$model_name" in
-      *opus-4-6*|*opus-4.6*|*sonnet-4-6*|*sonnet-4.6*) max_context=1000000 ;;
+      *opus-4-7*|*opus-4.7*|*sonnet-4-7*|*sonnet-4.7*|*opus-4-6*|*opus-4.6*|*sonnet-4-6*|*sonnet-4.6*) max_context=1000000 ;;
       *) max_context=200000 ;;
     esac
 
