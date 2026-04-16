@@ -1,33 +1,17 @@
-# Security Policy
+# Security
 
-## Reporting a Vulnerability
+The playbook is markdown content, Python scripts, and a docsite build pipeline. Security scope is:
 
-If you discover a security vulnerability in the Engineering Playbook, please report it responsibly.
+- Build/script vulnerabilities in `scripts/`, CI configs, deploy tooling
+- Docsite vulnerabilities (XSS, injection in generated HTML)
+- Supply-chain issues in pinned dependencies
 
-**Do not open a public issue.** Instead:
+Playbook *content* is advice, not executable. Argue with it, ignore it, adapt it -- that's not security scope.
 
-1. Use GitHub's private vulnerability reporting: [Security Advisories](https://github.com/vnykmshr/playbook/security/advisories)
+## Reporting
 
-Please include:
-- Description of the vulnerability
-- Steps to reproduce
-- Potential impact
-- Your contact information
+Private disclosure via [GitHub Security Advisories](https://github.com/vnykmshr/playbook/security/advisories). Don't open public issues.
 
-We will acknowledge your report within 48 hours and work with you to resolve the issue.
+## Response
 
----
-
-## Supported Versions
-
-Security updates are provided for:
-- Latest stable release (current version)
-- Previous major version (critical issues only)
-
----
-
-## Preferred Disclosure Timeline
-
-- Report received → Acknowledgment within 48 hours
-- Fix development → Within 2 weeks for critical issues
-- Public disclosure → After fix is released and users have time to upgrade
+Solo maintainer, best effort -- no SLA. Typical rhythm: acknowledge within a few days, fix critical issues before the next release, non-critical batched into the next quarterly evolution cycle. Old releases are not patched -- update to current.
