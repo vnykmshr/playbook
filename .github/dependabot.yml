@@ -17,7 +17,6 @@ updates:
       - "github-actions"
       - "ci"
     open-pull-requests-limit: 5
-    versioning-strategy: "auto"
     commit-message:
       prefix: "ci(actions):"
       include: "scope"
