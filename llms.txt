@@ -1,0 +1,59 @@
+# Engineering Playbook
+
+> Structured engineering playbook for AI-assisted development. Covers the SDLC from planning through production operations. Markdown-based, tool-adaptable.
+
+Two foundational commands anchor all others: `/pb-preamble` for how to collaborate, and `/pb-design-rules` for what to build. Daily rhythm is a three-command ritual: `/pb-start` to begin, code, `/pb-review` to self-review and commit, `/pb-pr` when peer review is needed. Specialized commands handle planning, review, deployment, incident response, and ongoing evolution.
+
+## Foundations
+
+- [pb-preamble](https://github.com/vnykmshr/playbook/blob/main/commands/core/pb-preamble.md): collaboration philosophy -- challenge assumptions, prefer correctness over agreement, think like peers
+- [pb-design-rules](https://github.com/vnykmshr/playbook/blob/main/commands/core/pb-design-rules.md): technical design principles clustered as Clarity, Simplicity, Resilience, Extensibility
+- [pb-guide](https://github.com/vnykmshr/playbook/blob/main/commands/core/pb-guide.md): full SDLC framework with quality gates
+- [pb-standards](https://github.com/vnykmshr/playbook/blob/main/commands/core/pb-standards.md): code quality and collaboration norms
+- [pb-think](https://github.com/vnykmshr/playbook/blob/main/commands/core/pb-think.md): structured problem-solving -- ideate, synthesize, refine
+
+## Daily workflow
+
+- [pb-preferences](https://github.com/vnykmshr/playbook/blob/main/commands/development/pb-preferences.md): one-time decision-rules setup
+- [pb-start](https://github.com/vnykmshr/playbook/blob/main/commands/development/pb-start.md): begin a feature; scope locking and branch creation
+- [pb-review](https://github.com/vnykmshr/playbook/blob/main/commands/development/pb-review.md): automatic self-review + persona review + commit
+- [pb-pr](https://github.com/vnykmshr/playbook/blob/main/commands/development/pb-pr.md): pull request creation with context
+- [pb-cycle](https://github.com/vnykmshr/playbook/blob/main/commands/development/pb-cycle.md): self-review + peer review iteration loop
+- [pb-commit](https://github.com/vnykmshr/playbook/blob/main/commands/development/pb-commit.md): atomic, bisectable commits
+- [pb-pause](https://github.com/vnykmshr/playbook/blob/main/commands/development/pb-pause.md) / [pb-resume](https://github.com/vnykmshr/playbook/blob/main/commands/development/pb-resume.md): context hygiene across sessions
+
+## Planning and architecture
+
+- [pb-plan](https://github.com/vnykmshr/playbook/blob/main/commands/planning/pb-plan.md): scope-locking and multi-perspective analysis
+- [pb-adr](https://github.com/vnykmshr/playbook/blob/main/commands/planning/pb-adr.md): architecture decision records
+- [pb-patterns](https://github.com/vnykmshr/playbook/blob/main/commands/planning/pb-patterns.md): pattern family hub -- async, core, database, distributed, resilience, security, cloud, deployment, frontend, API
+- [pb-huddle](https://github.com/vnykmshr/playbook/blob/main/commands/core/pb-huddle.md): multi-perspective decision session
+
+## Review and quality
+
+- [pb-security](https://github.com/vnykmshr/playbook/blob/main/commands/reviews/pb-security.md): security checklist with quick, standard, and deep tiers
+- [pb-review-code](https://github.com/vnykmshr/playbook/blob/main/commands/reviews/pb-review-code.md): code review with LLM-output trust boundaries
+- [pb-review-tests](https://github.com/vnykmshr/playbook/blob/main/commands/reviews/pb-review-tests.md): test coverage and reliability review
+- [pb-performance](https://github.com/vnykmshr/playbook/blob/main/commands/planning/pb-performance.md): performance and scalability
+- [pb-a11y](https://github.com/vnykmshr/playbook/blob/main/commands/reviews/pb-a11y.md): accessibility audit
+- [pb-handcraft](https://github.com/vnykmshr/playbook/blob/main/commands/development/pb-handcraft.md): AI output quality gate -- make AI-assisted output indistinguishable from hand-written
+
+## Release and operations
+
+- [pb-release](https://github.com/vnykmshr/playbook/blob/main/commands/deployment/pb-release.md): release orchestrator with readiness gate, versioning, and deploy trigger
+- [pb-preflight](https://github.com/vnykmshr/playbook/blob/main/commands/deployment/pb-preflight.md): pre-ship binary readiness gate
+- [pb-deployment](https://github.com/vnykmshr/playbook/blob/main/commands/deployment/pb-deployment.md): deployment execution
+- [pb-incident](https://github.com/vnykmshr/playbook/blob/main/commands/deployment/pb-incident.md): incident assessment and response
+- [pb-dr](https://github.com/vnykmshr/playbook/blob/main/commands/deployment/pb-dr.md): disaster recovery
+
+## Meta and evolution
+
+- [pb-evolve](https://github.com/vnykmshr/playbook/blob/main/commands/core/pb-evolve.md): periodic evolution cycle plus capability-triggered updates
+
+## Optional
+
+- [Command index](https://vnykmshr.github.io/playbook/command-index/): complete catalog grouped by category
+- [Book site](https://playbook.1mb.dev): distraction-free reading view
+- [Integration guide](https://github.com/vnykmshr/playbook/blob/main/docs/integration-guide.md): how commands compose into workflows
+- [Using with other tools](https://github.com/vnykmshr/playbook/blob/main/docs/using-with-other-tools.md): adapting the playbook outside the reference toolchain
+- [Changelog](https://github.com/vnykmshr/playbook/blob/main/CHANGELOG.md): release history
