@@ -3,13 +3,13 @@ name: "pb-think"
 title: "Deep Problem Solving (Structured Thinking)"
 category: "core"
 difficulty: "beginner"
-model_hint: "sonnet"
+model_hint: "opus"
 execution_pattern: "interactive"
 related_commands: ['pb-preamble', 'pb-design-rules', 'pb-plan', 'pb-adr', 'pb-huddle']
-last_reviewed: "2026-02-18"
-last_evolved: "2026-02-18"
-version: "2.0.0"
-version_notes: "v2.13.1: Clarified title to emphasize structured thinking for complex problems"
+last_reviewed: "2026-04-17"
+last_evolved: "2026-04-17"
+version: "2.1.0"
+version_notes: "v2.20.0: model_hint sonnet → opus; deep structured thinking is Architect-tier work"
 breaking_changes: []
 ---
 # Deep Problem Solving (Structured Thinking)
@@ -20,7 +20,7 @@ breaking_changes: []
 
 **Mindset:** Apply `/pb-preamble` thinking (challenge assumptions) throughout. Look for non-obvious angles, hidden patterns, and actionable insights.
 
-**Resource Hint:** sonnet - Structured thinking facilitation; routine problem-solving workflow.
+**Resource Hint:** opus - Architect-tier reasoning: divergent ideation, synthesis under ambiguity, convergent refinement. Escalate explicitly if the harness routed to Sonnet.
 
 ---
 

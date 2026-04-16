@@ -3,20 +3,20 @@ name: "pb-plan"
 title: "New Focus Area Planning Prompt (Generic)"
 category: "planning"
 difficulty: "advanced"
-model_hint: "sonnet"
+model_hint: "opus"
 execution_pattern: "interactive"
 related_commands: ['pb-adr', 'pb-todo-implement', 'pb-think', 'pb-repo-init', 'pb-start']
-last_reviewed: "2026-02-09"
-last_evolved: ""
-version: "1.0.0"
-version_notes: "v2.10.0 baseline"
+last_reviewed: "2026-04-17"
+last_evolved: "2026-04-17"
+version: "1.1.0"
+version_notes: "v2.20.0: model_hint sonnet → opus; Architect-tier planning with trade-off analysis"
 breaking_changes: []
 ---
 # New Focus Area Planning Prompt (Generic)
 
 A reusable prompt for planning release focus areas across any project. Emphasizes **alignment before implementation**, **surgical execution**, and **meaningful outcomes over busywork**.
 
-**Resource Hint:** sonnet - Planning follows structured phases; implementation-level scoping and execution.
+**Resource Hint:** opus - Architect-tier work: trade-off analysis, scope-locking, cross-phase reasoning. Escalate explicitly if the harness routed to Sonnet.
 
 **Tool-agnostic:** Planning phases (discovery, analysis, scope-locking, documentation) work with any development methodology. Claude Code users invoke as `/pb-plan`. Using another tool? Read this file as Markdown for the planning framework. Adapt the prompts to your tool. See [`/docs/using-with-other-tools.md`](/docs/using-with-other-tools.md) for guidance.
 
