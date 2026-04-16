@@ -6,10 +6,10 @@ difficulty: "beginner"
 model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-claude-project', 'pb-claude-orchestration', 'pb-preamble', 'pb-design-rules', 'pb-standards']
-last_reviewed: "2026-03-23"
-last_evolved: "2026-03-23"
-version: "2.0.0"
-version_notes: "v2.16.0 -- BEACON headers, non-negotiables, LLM trust, session ritual, external action gate, compact workflow, drop generic sections"
+last_reviewed: "2026-04-17"
+last_evolved: "2026-04-17"
+version: "2.1.0"
+version_notes: "v2.20.0 -- Reframe Model Selection tier as cost guidance; acknowledge Opus 4.7 GA, /fast, and [1m] context variant"
 breaking_changes: ['Template output restructured -- BEACON headers, standalone Non-Negotiables, Session Ritual added', 'Personas list removed from global (project-specific)', 'Context Efficiency section removed (generic)', 'Project-Specific Overrides section removed (obvious)']
 ---
 # Generate Global CLAUDE.md
@@ -135,7 +135,7 @@ If no: keep refining. If yes: ship it.
 
 ---
 
-## BEACON: Model Selection (When Unsure: Start Sonnet)
+## BEACON: Model Selection (Cost Guidance; Harness May Default Higher)
 
 | Tier | Model | Use For |
 |------|-------|---------|
@@ -143,7 +143,7 @@ If no: keep refining. If yes: ship it.
 | Engineer | sonnet | Code implementation, test writing, reviews, utilities |
 | Scout | haiku | Subagent delegation only (Task tool: file search, validation, formatting) |
 
-All playbook commands use opus or sonnet. Haiku is reserved for subagent tasks via Task tool.
+Table is cost-oriented guidance. Claude Code (Opus 4.7 GA) defaults to Opus for coding sessions; `/fast` pins Opus 4.6 for speed without tier downgrade; `[1m]` variant enables 1M context as opt-in. Downgrade to Sonnet explicitly on cost-sensitive paths (routine dev loop, CI). Haiku stays subagent-only (never a command model_hint).
 
 For strategy: `/pb-claude-orchestration`
 

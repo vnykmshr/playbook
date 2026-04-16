@@ -6,10 +6,10 @@ difficulty: "beginner"
 model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-claude-global', 'pb-claude-project', 'pb-learn', 'pb-review-playbook', 'pb-new-playbook']
-last_reviewed: "2026-02-09"
-last_evolved: ""
-version: "1.0.0"
-version_notes: "v2.10.0 baseline"
+last_reviewed: "2026-04-17"
+last_evolved: "2026-04-17"
+version: "1.1.0"
+version_notes: "v2.20.0 -- Acknowledge Opus 4.7 GA, /fast (Opus 4.6), and [1m] 1M-context variant; reframe tier table as cost guidance"
 breaking_changes: []
 ---
 # Claude Code Orchestration
@@ -41,6 +41,15 @@ breaking_changes: []
 | Scout | haiku | Runner, searcher, formatter | File search, validation, mechanical | Lowest cost, fastest |
 
 Opus reasons. Sonnet builds. Haiku runs.
+
+### Harness Reality (Opus 4.7 GA)
+
+The table above is cost-oriented guidance, not harness description. Claude Code defaults to Opus 4.7 for coding sessions, so Engineer-tier work frequently runs on Opus anyway. Two adjustments matter:
+
+- `/fast` pins the session to **Opus 4.6** for speed without tier downgrade to Sonnet.
+- A **1M-context variant** (`[1m]` suffix on the model ID) is available as an opt-in tier; standard stays at 200K.
+
+When cost discipline matters (routine dev loop, CI, automation), switch to Sonnet explicitly rather than relying on the harness default. Haiku remains subagent-only via the Task tool.
 
 ---
 
@@ -121,6 +130,8 @@ model: "sonnet"  → Code writing, analysis, standard reviews
 | Session context | Finite, compaction is lossy | Fills during session |
 
 Every unnecessary line in CLAUDE.md or MEMORY.md costs tokens on every single turn. Be ruthlessly concise in persistent files.
+
+The 1M-context `[1m]` tier (Opus 4.7) does not retire this hygiene. Compaction is still lossy, every turn still pays the tokens, and cost scales with context size. Budget for the 200K default; treat 1M as headroom for specific long-horizon work.
 
 ### Efficiency Principles
 
@@ -271,5 +282,5 @@ This creates a virtuous cycle: use playbooks → discover gaps → propose impro
 
 ---
 
-**Last Updated:** 2026-02-07
-**Version:** 1.0.0
+**Last Updated:** 2026-04-17
+**Version:** 1.1.0
