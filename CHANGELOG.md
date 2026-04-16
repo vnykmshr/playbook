@@ -5,12 +5,30 @@ All notable changes to this project are documented here.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [v2.19.3] - 2026-04-10
+## [v2.20.0] - 2026-04-17 "Pangolin"
+
+First pet-named release. Groups the accumulated v2.19.3-dev work with a capability-trigger evolution for Opus 4.7 GA.
 
 ### Added
 
-- **`/pb-caveman` v1.0.0** -- Ultra-minimal filter pass for ephemeral dev-loop output. Two modes (lite, full). Deliberate counterweight to `/pb-handcraft`: scoped to throwaway 1-liners, debug chat, scratch notes, terse code comments, and internal tool output. Hard fence against PRs, commits, docs, and anything a cold reader will hit. Homage to Julius Brussee's caveman project.
-- **`/pb-preflight` v1.0.0** -- Pre-ship readiness gate. 30-item binary check across six categories (secrets/auth, data, infra, observability, resilience, launch sanity) run in the 5-10 minutes before a production deploy. Distinct from `/pb-security` (depth audit) and `/pb-ship` (workflow orchestrator): this is the terse gate that escalates to those when a category fails. Includes post-deploy smoke test and 15-minute watch with rehearsed rollback.
+- **`/pb-caveman` v1.0.0** -- Ultra-minimal filter for ephemeral dev-loop output. Two modes (lite, full). Counterweight to `/pb-handcraft`: scoped to throwaway 1-liners, debug chat, scratch notes, terse code comments, internal tool output. Hard fence against PRs, commits, docs.
+- **`/pb-preflight` v1.0.0** -- Pre-ship readiness gate. 30-item binary check across six categories (secrets/auth, data, infra, observability, resilience, launch sanity) in the 5-10 minutes before a production deploy. Terse gate that escalates to `/pb-security` or `/pb-hardening` when a category fails. Includes post-deploy smoke test and 15-minute watch with rehearsed rollback.
+
+### Changed
+
+- **`/pb-caveman` v1.1.0** -- Carve-out for short-form public 1-liners (X/Bluesky replies, single-line social). Lite is default for public, with both user override directions explicit: full opt-in when the broken/caveman vibe is on purpose, lite lock to forbid upshift for a session. Dropped internal contradictions the carve-out exposed.
+- **`/pb-plan` v1.1.0** -- `model_hint` sonnet → opus. Architect-tier planning now matches the tier table in generated CLAUDE.md.
+- **`/pb-think` v2.1.0** -- `model_hint` sonnet → opus. Deep structured thinking is Architect-tier.
+- **`/pb-claude-global` v2.1.0** -- Model Selection section reframed as cost guidance, not harness description. Acknowledges Opus 4.7 GA default, `/fast` (Opus 4.6), and `[1m]` 1M-context variant. Haiku stays subagent-only.
+- **`/pb-claude-orchestration` v1.1.0** -- Matching reframe. "Harness Reality" note after the tier table; Context Budget section acknowledges the 1M tier without softening hygiene (compaction is still lossy, every turn still pays tokens).
+- **`/pb-evolve` v1.2.0** -- Running examples refreshed to the Opus 4.7 + 1M scenario: evolution-log template, opportunity format, release-notes template, and Scenario B (context window expansion).
+- **`scripts/context-bar.sh`** -- Status-line scales to 1M for Opus/Sonnet 4.7 variants (previously only recognized 4.6).
+
+### Notes
+
+Capability trigger for this release: Opus 4.7 went GA as the default coding-session model in Claude Code. The release acknowledges the harness reality rather than restructuring around it -- the three-tier cost model still holds, but the prose is honest about what runs where. May quarterly cycle proceeds on schedule with `/pb-git-signals` + full audit.
+
+Release naming convention shifts to pet names starting here. "Pangolin" for its protective scales (preflight's gate metaphor), deliberate pace (caveman's minimalism), and evolutionary resilience (this cycle).
 
 ## [v2.19.0] - 2026-03-27
 
