@@ -6,10 +6,10 @@ difficulty: "beginner"
 model_hint: "opus"
 execution_pattern: "sequential"
 related_commands: ['pb-claude-global', 'pb-claude-project', 'pb-standards', 'pb-preamble', 'pb-design-rules']
-last_reviewed: "2026-02-14"
-last_evolved: "2026-02-14"
-version: "1.1.0"
-version_notes: "v2.12.0 Phase 3: Complete operationalization with quarterly schedule, team roles, rollback procedures, and metrics framework"
+last_reviewed: "2026-04-17"
+last_evolved: "2026-04-17"
+version: "1.2.0"
+version_notes: "v2.20.0 -- Refresh running examples to Opus 4.7 + 1M [1m] scenario; bring evolution-log, opportunity, release-notes, and Scenario B templates into alignment with current capability trigger"
 breaking_changes: []
 ---
 
@@ -188,17 +188,17 @@ Since last evolution, what has changed?
 Document findings in `todos/evolution-log.md`:
 
 ```markdown
-## Evolution Cycle: 2026-Q2
+## Evolution Cycle: 2026-Q2-Apr (Opus 4.7 GA trigger)
 
 ### Capability Changes Since Last Cycle
-- Claude Sonnet 4.5 → 4.6: 30% faster, same cost
-- Context window: 200K → 200K (no change)
-- Reasoning: Better at multi-step planning
+- Opus 4.6 → 4.7: GA as default coding-session model in Claude Code harness
+- Context window: 200K default; 1M available as opt-in `[1m]` tier on Opus 4.7
+- Fast mode (`/fast`) pins to Opus 4.6 for speed without tier downgrade
 
 ### Implications
-- Parallelization now viable (Sonnet fast enough)
-- Model routing: Haiku can take more routine tasks
-- Context efficiency: Still critical (not changed)
+- Engineer-tier commands often run on Opus in the harness; tier table is cost guidance, not description
+- Sonnet stays the right hint for cost-sensitive paths (CI, automation, routine dev loop)
+- 1M is headroom for specific long-horizon tasks; default context hygiene still applies
 ```
 
 ### Step 4: Audit Playbooks Against New Capabilities
@@ -230,30 +230,22 @@ For each major playbook category, ask:
 Document each opportunity:
 
 ```markdown
-### Opportunity 1: Model Routing Update
+### Opportunity 1: Model-Hint Reconciliation
 
-**Current:** pb-start says "use Sonnet"
-**Capability change:** Sonnet 4.6 is 30% faster
-**Proposal:** Update model routing to:
-  - Haiku for file search, status checks (unchanged)
-  - Sonnet for development (unchanged)
-  - Opus for security/architecture (unchanged)
-
-**Rationale:** No change needed; Sonnet still correct model
+**Current:** pb-plan and pb-think carry `model_hint: sonnet`
+**Capability change:** Opus 4.7 is harness default; tier table says Planning / Deep-Reasoning → opus
+**Proposal:** Upgrade pb-plan and pb-think to `model_hint: opus` for tier-table consistency
+**Rationale:** Fixes existing internal inconsistency; Architect-tier work should hint the Architect model
 
 ---
 
-### Opportunity 2: Parallel Research Pattern
+### Opportunity 2: Harness-Reality Acknowledgment
 
-**Current:** Sequential agent execution in /pb-claude-orchestration
-**Capability change:** Sonnet 4.6 fast enough for parallel fan-out
-**Proposal:** Add "Parallel Research Pattern" section:
-  1. Main launches 3 agents simultaneously
-  2. Each agent explores independently
-  3. Results merged in synthesis stage
-
-**Impact:** Session runtime -30% for exploration tasks
-**Confidence:** High (pattern validated in playbook development)
+**Current:** pb-claude-orchestration tier table reads as descriptive ("Sonnet builds")
+**Capability change:** Claude Code harness defaults to Opus 4.7 for coding sessions
+**Proposal:** Reframe tier table as cost guidance; acknowledge `/fast` (Opus 4.6) and `[1m]` 1M-context tier
+**Impact:** Accurate mental model; users understand when to explicitly downgrade to Sonnet
+**Confidence:** High (validated by direct harness behavior)
 ```
 
 ### Step 6: Test Proposed Changes
@@ -525,22 +517,22 @@ python3 scripts/evolution-log.py --export
 Human-readable summary for each release:
 
 ```markdown
-## v2.11.0 (2026-05-15) - Q2 Evolution
+## v2.20.0 (2026-04-17) - Q2-Apr Opus 4.7 Capability Cycle
 
 ### Capability Changes
-- Sonnet 4.6 → 4.7: +15% reasoning depth
-- No speed or cost changes
-- New tool: structured output
+- Opus 4.7 GA: new default coding-session model in Claude Code harness
+- 1M-context variant (`[1m]` suffix) available as opt-in tier
+- Fast mode pins to Opus 4.6 for speed without tier downgrade
 
 ### Improvements
-- Parallel research patterns now standard in exploration tasks
-- Model routing optimized (Haiku handles 10 more utility cases)
-- Context efficiency improved 12% via better compression
+- pb-plan and pb-think hint upgraded to opus (tier-table consistency)
+- Orchestration docs reframe tier table as cost guidance, not harness description
+- Status line context-bar correctly scales for Opus/Sonnet 4.7 variants
 
 ### Metrics
-- Average session time: -8% (from 32 min to 29 min)
-- Cost per session: -3% (minor optimization)
-- User satisfaction: +5% (feedback survey)
+- Files touched: 6 commands + 1 script
+- Regression risk: low (docs/metadata changes, no logic)
+- Validation: full test + build + lint suite green
 ```
 
 ---
@@ -564,18 +556,18 @@ Human-readable summary for each release:
 
 ### Scenario B: Context Window Expansion
 
-**Signal:** "Claude context now 400K tokens (was 200K)"
+**Signal:** "Opus 4.7 offers a 1M-context variant (`[1m]` tier) alongside the 200K default"
 
 **Analysis:**
-- Can now keep more files in main context
-- Compression strategy becomes optional
-- But context efficiency still matters (cost)
+- Default window unchanged (200K); 1M is opt-in, not automatic
+- Compression and subagent delegation still correct for the default
+- Cost scales with context size -- 1M is not free headroom
 
 **Action:**
-- Update context loading strategy
-- Test keeping full codebase in context
-- Measure tokens used; may stay selective
-- Update MEMORY.md with new patterns
+- Reframe context-budget guidance to acknowledge the tier without softening hygiene
+- Document which workflows justify opting into `[1m]` (deep-repo audits, long-horizon synthesis)
+- Status-line tooling must recognize the new model identifiers
+- Leave compression patterns in place; treat 1M as reserved headroom
 
 ### Scenario C: User Feedback (Patterns Don't Work)
 
@@ -999,7 +991,7 @@ This is self-healing DNA in action.
 
 ---
 
-**Last Updated:** 2026-02-09
-**Version:** 1.0 (Foundation Release)
+**Last Updated:** 2026-04-17
+**Version:** 1.2 (Opus 4.7 GA refresh)
 
 *Self-improvement is how we stay relevant. When Claude evolves, we evolve. When users teach us better patterns, we implement them. This playbook is never "done"-it's always improving.*
