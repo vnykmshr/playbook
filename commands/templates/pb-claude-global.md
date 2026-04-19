@@ -8,8 +8,8 @@ execution_pattern: "sequential"
 related_commands: ['pb-claude-project', 'pb-claude-orchestration', 'pb-preamble', 'pb-design-rules', 'pb-standards']
 last_reviewed: "2026-04-19"
 last_evolved: "2026-04-19"
-version: "2.2.2"
-version_notes: "v2.20.0 -- Reframe Model Selection tier as cost guidance; acknowledge Opus 4.7 GA, /fast, and [1m] context variant. v2.2.0 post-release: add missing Non-Negotiables (failing tests, CI-before-tag), fix /pb-context-review reference, and enrich External Action Gate wording (new-message requirement + anti-batching example). v2.2.1: add Skill invocation discipline guardrail -- /pb-* notation in assistant output reserved for actual Skill-tool invocations, no slash-form paraphrasing. v2.2.2: add Commits register line -- minimum-sufficient dev-to-dev, survives handcraft + Linus review, no huddle narration or sign-off footers."
+version: "2.2.3"
+version_notes: "v2.20.0 -- Reframe Model Selection tier as cost guidance; acknowledge Opus 4.7 GA, /fast, and [1m] context variant. v2.2.0 post-release: add missing Non-Negotiables (failing tests, CI-before-tag), fix /pb-context-review reference, and enrich External Action Gate wording (new-message requirement + anti-batching example). v2.2.1: add Skill invocation discipline guardrail -- /pb-* notation in assistant output reserved for actual Skill-tool invocations, no slash-form paraphrasing. v2.2.2: add Commits register line -- minimum-sufficient dev-to-dev, survives handcraft + Linus review, no huddle narration or sign-off footers. v2.2.3: add Authorship line -- no Co-Authored-By, Generated-With, or assistant-attribution footers on commits, issues, or PR descriptions."
 breaking_changes: ['Template output restructured -- BEACON headers, standalone Non-Negotiables, Session Ritual added', 'Personas list removed from global (project-specific)', 'Context Efficiency section removed (generic)', 'Project-Specific Overrides section removed (obvious)']
 ---
 # Generate Global CLAUDE.md
@@ -167,6 +167,7 @@ For strategy: `/pb-claude-orchestration`
 **Format:** `<type>(<scope>): <subject>` -- `feat:`, `fix:`, `refactor:`, `docs:`, `test:`, `chore:`, `perf:`
 **Style:** Atomic, present tense, explain WHY not what. Auto-drafted by `/pb-review`.
 **Register:** Minimum-sufficient dev-to-dev -- survives a `/pb-handcraft` + Linus review. No huddle narration, no persona sign-off footers, no decided-X-over-Y rationale. Subject alone when the diff shows the change; body lines only when the WHY is non-obvious.
+**Authorship:** No `Co-Authored-By`, `Generated-With`, or other assistant-attribution footers on commits, issues, or PR descriptions. Content is yours; it stays that way.
 **Large changes (>3 files, >1 concern):** Split bisectable -- infra -> data+tests -> logic -> versioning.
 
 ---
