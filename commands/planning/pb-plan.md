@@ -26,7 +26,7 @@ breaking_changes:
 ## When to Use
 
 - **Planning a new focus area end-to-end** - context, decisions, and detailed plan in one flow.
-- **Not sure if real forks exist** - the wrapper runs sketch first and tells you.
+- **Not sure if forks exist** - the wrapper runs sketch first and tells you.
 - **Muscle memory says "/pb-plan"** - single entry, sub-skills handled.
 
 Use the sketch sub-skill directly to explore without committing. Use the spec sub-skill directly when decisions are already made.
@@ -57,7 +57,7 @@ Invoke `/pb-sketch` with the focus area. This produces:
 - Decision Forks (2-4 options per fork, recommended tagged)
 - Recommended picks (copy/paste line)
 
-Read the sketch output. If it says "No genuine forks," skip to Step 4.
+Read the sketch output. If it says "No forks," skip to Step 4.
 
 ### Step 3: Present decisions to user
 

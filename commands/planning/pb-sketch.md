@@ -16,7 +16,7 @@ breaking_changes: []
 
 A high-level exploration of a focus area that surfaces hidden complexity, identifies decision forks, and produces a **sketch** artifact with recommended picks for the hard calls. The sketch exists so decisions happen **before** detailed planning, not during implementation.
 
-**Resource Hint:** opus - Architect-tier work: surface unknowns, enumerate approach forks, tag recommendations with reasoning.
+**Resource Hint:** opus - Architect-tier work: surface unknowns, enumerate decision forks, tag recommendations with reasoning.
 
 **Tool-agnostic:** Sketching phases (discovery, analysis, decision forks) work with any development methodology. Claude Code users invoke as `/pb-sketch`. Using another tool? Read this file as Markdown for the framework. See [`/docs/using-with-other-tools.md`](/docs/using-with-other-tools.md).
 
@@ -26,7 +26,7 @@ A high-level exploration of a focus area that surfaces hidden complexity, identi
 
 - **Before `/pb-spec`** -- decide the hard calls first, then write the detailed plan
 - **Via `/pb-plan` wrapper** -- muscle memory; wrapper runs sketch → presents decisions → spec
-- **Standalone research sketch** -- when you want to enumerate approach forks without committing to implementation detail yet
+- **Standalone research sketch** -- when you want to enumerate decision forks without committing to implementation detail yet
 - **Before `/pb-adr`** -- sketch the forks, choose one, then document the decision formally
 
 **Don't use for:**
@@ -45,7 +45,7 @@ A high-level exploration of a focus area that surfaces hidden complexity, identi
 ### Core Principles
 
 1. **Surface unknowns first** - Research unstable facts (pricing, APIs, version constraints) before planning around them.
-2. **Enumerate approach forks** - Where are there 2-4 genuinely viable paths? Name them. Don't collapse early.
+2. **Enumerate decision forks** - Where are there 2-4 genuinely viable paths? Name them. Don't collapse early.
 3. **Recommend, don't decide** - The sketch recommends; the user chooses. Sketch is advisory.
 4. **Bounded research** - Use official docs and authoritative sources. Don't spiral into exhaustive literature review.
 5. **Hand-off is the product** - Sketch output must be consumable by `/pb-spec` (or a human operator) to produce the detailed plan.
@@ -189,14 +189,14 @@ Options:
 - **Reasoning must name the trade-off.** "Option A is simpler" is weak. "Option A is simpler; Option B scales to N=10k but we only need N=100" is the trade-off.
 - **Recommendation is advisory, not mandatory.** The user overrides freely.
 
-### When There Are No Real Forks
+### When There Are No Forks
 
 If analysis produces a single obvious path, say so:
 
 ```markdown
 ## Decision Forks
 
-No genuine forks. Path is: {one-sentence description}. Rationale: {why no forks}.
+No forks. Path is: {one-sentence description}. Rationale: {why no forks}.
 ```
 
 Proceed to sketch output with no forks to resolve.
@@ -253,7 +253,7 @@ Write the sketch to `sketch/{generated-kebab-case-name}.md` (create `sketch/` if
 When run interactively, after writing the sketch:
 1. Print the sketch file path.
 2. Print the Decision Forks block verbatim.
-3. Ask: "Confirm recommended picks `1-a, 2-b, ...`, or override with specific labels."
+3. Ask: "Confirm recommended picks `1-a, 2-b` (use actual fork-option labels), or override with specific labels."
 4. On user response, update sketch status to `decisions resolved` and append the resolved picks.
 5. Hand off to `/pb-spec` (via `/pb-plan` wrapper) or stop if used standalone.
 
@@ -324,7 +324,7 @@ Options:
 
 Sketch is complete when:
 - [ ] Problem, Scope Summary, Approach Summary written
-- [ ] Decision Forks enumerated (or explicitly marked "no genuine forks")
+- [ ] Decision Forks enumerated (or explicitly marked "no forks")
 - [ ] Recommended Picks listed (if forks exist)
 - [ ] Open Questions captured (if any)
 - [ ] File saved at `sketch/{name}.md`
