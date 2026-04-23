@@ -9,16 +9,16 @@ related_commands: ['pb-onboarding', 'pb-guide', 'pb-security', 'pb-adr', 'pb-inc
 last_reviewed: "2026-04-23"
 last_evolved: "2026-04-23"
 version: "1.2.0"
-version_notes: "v2.21.0 (v1.2.0): Added How to Use workflow block, Tiered KT Modes (Standard/Comprehensive), Section 13 Access & Authority Transfer, Shadow Mode session format, Doc Hygiene review cadence. Correctness pass: awk portability caveat, marker graduation clarified, week-1 postmortem fallback, worked-example framing. v1.1.0: Pruned Payment Service stubs (-352 lines). Added Pre-KT risk map, mechanical/tribal split on four Core Sections, WHY/DECISION/TRADEOFF markers, week-1 exit criteria, per-section audience."
+version_notes: "v2.21.0 (v1.2.0): Added How to Use workflow block, Tiered KT Modes (Standard/Comprehensive), Section 13 Access & Authority Transfer, Shadow Mode session format, Doc Hygiene review cadence. Correctness pass: awk portability caveat, marker graduation clarified, week-1 postmortem fallback, worked-example framing. v1.1.0: Pruned Payment Service stubs (-352 lines). Added Pre-KT risk map, mechanical/tribal split on five Core Sections, WHY/DECISION/TRADEOFF markers, week-1 exit criteria, per-section audience."
 breaking_changes: []
 ---
 # Knowledge Transfer (KT) Session Preparation
 
 Structured guide for documenting and transferring project knowledge to new team members and stakeholders.
 
-**Mindset:** The best knowledge transfer includes both frameworks.
+**Mindset:** Teach the preamble first, then the design rules.
 
-Teach `/pb-preamble` first: new team members need to know how to challenge assumptions, prefer correctness, and think like peers. Then teach `/pb-design-rules`: help them understand the design principles (Clarity, Modularity, Robustness, Extensibility) that govern how systems are built in this team.
+`/pb-preamble` gives new team members the stance: challenge assumptions, prefer correctness, think like peers. `/pb-design-rules` gives them the shape: the design principles (Clarity, Modularity, Robustness, Extensibility) that govern how systems are built in this team.
 
 **Resource Hint:** sonnet - structured documentation and template application, not architectural judgment.
 
@@ -29,39 +29,17 @@ Teach `/pb-preamble` first: new team members need to know how to challenge assum
 1. **Identify the scenario** - emergency departure, planned transition, new-hire onboarding, preemptive documentation.
 2. **Pick a tier** - Standard (1-2 days) for most handoffs, Comprehensive (1-2 weeks with shadow) for critical or new-hire. See *Tiered KT Modes* below.
 3. **Run *Pre-KT: Map Knowledge Risk*** - target the session before writing a single section.
-4. **Fill the Core Sections required for your tier** - Section 1 is shown full as the worked example; 2-13 give you the shape and a compact snippet.
+4. **Fill the Core Sections required for your tier** - Section 1 is shown full as the worked example; 2-13 give you the shape and a compact snippet. Sections 1-2 are receiving-engineer homework from the repo; the departing engineer spends time where only they can.
 5. **Produce inline markers in the departing engineer's hot paths** - durable beyond the doc. See *Durable Artifacts: Inline Decision Markers*.
 6. **Run the exit-criteria checklist for your tier** - verify the KT actually landed, not just that setup worked.
 
 ---
 
-## When to Use This Command
+## When to Use
 
-- **Planning a KT session** - Structuring effective knowledge transfer
-- **Team member leaving** - Capturing their knowledge before departure
-- **New hire starting** - Preparing materials for their ramp-up
-- **Service handoff** - Transferring ownership between teams
+Planned departure, new-hire onboarding, team-to-team service handoff, major feature handoff, on-call training, or the month before extended leave. Picking a *tier* (below) matters more than picking a scenario - time budget is the binding constraint.
 
----
-
-## Purpose
-
-Knowledge transfer (KT) ensures:
-- New developers can contribute effectively within days, not weeks
-- Team handoffs are smooth and complete
-- Institutional knowledge doesn't disappear when people leave
-- All stakeholders (dev, QA, product, management) have shared understanding
-- Critical "tribal knowledge" is documented
-
----
-
-## When to Conduct KT Sessions
-
-- **New developer joining team** - Full comprehensive KT
-- **Major feature handoff** - Focused KT on that feature
-- **Team transition** - New team taking over service ownership
-- **On-call rotation training** - Ops perspective KT
-- **Before extended leave** - Critical knowledge before person is unavailable
+A well-run KT keeps new developers productive in days (not weeks), prevents knowledge loss on departure, gives dev/QA/product/management a shared mental model, and turns tribal knowledge into artifacts that outlive the person.
 
 ---
 
@@ -99,7 +77,7 @@ Two tiers. Pick by time budget, not by ideal outcome - an incomplete KT that shi
 
 **Audience:** KT organizer (targets the session before content is written)
 
-Before planning a session, identify what knowledge is actually at risk. Target the session - depth where it matters, skim where it does not. Four primitives, all compute with plain `git` on any repo. Tools like [repowise](https://github.com/repowise-dev/repowise) automate them but are not required to start.
+Before planning a session, identify what knowledge is actually at risk. Target the session - depth where it matters, skim where it does not. Four primitives, all compute with plain `git` on any repo. A ~20-line script or an off-the-shelf co-change tool can automate them, but is not required to start.
 
 ### Bus factor - what only one person knows
 
@@ -140,7 +118,7 @@ git log --since="6 months ago" --name-only --pretty=format:"COMMIT" \
   | sort | uniq -c | sort -rn | head -20
 ```
 
-For a portable alternative, run `repowise` (or any co-change tool) on the repo. If hand-rolling, breaking the pipeline into a small Python or Go script is more robust than chaining awk.
+For a portable alternative, use a small Python or Go script (example below), or any co-change tool that reads git history. Chained awk across `git log` output is fragile; a real script is easier to maintain and extend.
 
 When a section says "these two files always move together," that is co-change intelligence. Record it explicitly - the new owner will not notice it otherwise.
 
@@ -186,7 +164,7 @@ Run this before writing a single Core Section. The map tells you where to spend 
 
 ## Core Sections: KT Package Contents
 
-Sections 1-12 below. Section 1 (Project Overview) is shown full as the worked example; sections 2-12 give you the shape and a compact snippet. Mirror Section 1's fidelity when you fill them in.
+Sections 1-13 below. Section 1 (Project Overview) is shown full as the worked example; sections 2-13 give you the shape and a compact snippet. Mirror Section 1's fidelity when you fill them in.
 
 ### 1. Project Overview
 
@@ -706,4 +684,3 @@ A KT doc has no cadence of its own. Absent a named owner and scheduled reviews, 
 
 ---
 
-*Created: 2026-01-11 | Category: Onboarding | Tier: M*
