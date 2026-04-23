@@ -445,6 +445,49 @@ curl localhost:8080/api/payments/pay_456
 
 ---
 
+## Durable Artifacts: Inline Decision Markers
+
+A KT session produces a doc. Docs go stale. Markers in the source survive.
+
+When the "why" is non-obvious, drop one of three lightweight conventions into the code. They render as normal comments, cost nothing to write, and turn tribal reasoning into durable, greppable artifacts:
+
+```go
+// WHY: JWT over session cookies - k8s horizontal scaling requires stateless auth.
+// DECISION: All external calls wrapped in CircuitBreaker after 2024-Q3 Stripe outage.
+// TRADEOFF: Accepted eventual consistency in preferences store for write throughput.
+```
+
+**When to use which:**
+
+- `WHY:` - this code looks weird, here is the reason.
+- `DECISION:` - this is the chosen approach among alternatives, so the next person does not re-litigate.
+- `TRADEOFF:` - we knowingly accepted this cost for that benefit.
+
+**Relation to `/pb-adr`:**
+
+Markers are lightweight siblings of ADRs, not replacements.
+
+|  | Inline marker | `/pb-adr` |
+|---|---|---|
+| Scope | One file or function | Cross-cutting, multi-file |
+| Lifetime | As long as the code | Independent of file moves |
+| Cost | A comment | A structured document |
+| Discoverability | `grep` | ADR index |
+
+Graduate a marker to an ADR when it governs more than one file, survives a major refactor, or keeps coming up in incident reviews.
+
+**KT integration:**
+
+At session end, sweep the departing engineer's hot paths for ungoverned code:
+
+```bash
+grep -RL "WHY:\|DECISION:\|TRADEOFF:" path/to/their-hot-paths/
+```
+
+Each ungoverned hotspot gets at least one marker capturing the non-obvious bit. The marker stays after they are gone.
+
+---
+
 ## KT Session Format
 
 ### For In-Person Sessions (90 min)
