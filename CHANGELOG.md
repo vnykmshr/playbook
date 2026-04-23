@@ -11,12 +11,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - **`/pb-sketch` v1.0.0** -- Decision-fork discovery skill. Extracted from former `/pb-plan` Phases 1-2. Surfaces unknowns, enumerates decision forks with 2-4 options each, recommends picks, produces a sketch artifact. Pairs with `/pb-spec` via the `/pb-plan` wrapper.
 - **`/pb-spec` v1.0.0** -- Detailed implementation-plan skill. Extracted from former `/pb-plan` Phases 3-4. Size-gates between small-feature (single plan file) and release-cycle (phase-directory) paths. Scope lock, numbered steps, verification, rollback.
-- **`/pb-review-patterns` v1.0.0** -- Reference doc for skill authors designing or extending `/pb-review-*` commands. First pattern: scope-locked passes (anti-omnibus).
+- **`/pb-new-playbook` appendix** -- Scope-locked-passes pattern added as an appendix for review-skill authors.
 
 ### Changed
 
 - **`/pb-plan` v2.0.0** -- Rewritten as orchestrating wrapper. Runs `/pb-sketch`, surfaces decisions for user confirmation, runs `/pb-spec`. Typing `/pb-plan` still produces an end-to-end plan, but the flow now has a mid-step interactive decision prompt. Direct readers of the former Phase 1-4 content: see `/pb-sketch` and `/pb-spec`.
-- **`/pb-claude-global` v2.2.1-v2.2.4** -- Four incremental hardening additions to the generated global CLAUDE.md: skill-invocation discipline (v2.2.1), commit-message register (v2.2.2), authorship footer rule (v2.2.3), Read-Regroup-Decide input-handling BEACON (v2.2.4). Subagent-output discipline added as a follow-up.
+- **`/pb-claude-global` v2.2.1-v2.2.5** -- Skill-invocation discipline (v2.2.1), commit-message register (v2.2.2), authorship footer rule (v2.2.3), Read-Regroup-Decide input-handling BEACON (v2.2.4). v2.2.5 compresses the BEACON (13 -> 5 lines) and merges commits Register + Authorship into one bullet.
+- **`/pb-claude-orchestration` v1.2.0** -- Output Discipline subsection added to Task Delegation Patterns: accept subagent summaries as context, do not pipe raw tool output back into main conversation. Relocated from `/pb-claude-global` where it failed the day-1 test for users who don't delegate.
 
 ## [v2.20.0] - 2026-04-17 "Pangolin"
 
