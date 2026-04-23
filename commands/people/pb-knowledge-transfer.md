@@ -427,7 +427,7 @@ Payment Service → Postgres (Orders) · Redis (Cache) · RabbitMQ (Events)
 - "Try it yourself" exercises
 
 **Snippet:**
-```markdown
+````markdown
 ## Demo
 
 ```bash
@@ -444,7 +444,7 @@ curl localhost:8080/api/payments/pay_456
 ```
 
 **Exercises for new dev**: run tests pass · create test payment (card 4242 4242 4242 4242) · refund it · commit a small change · deploy to staging.
-```
+````
 
 ---
 
