@@ -54,6 +54,91 @@ Knowledge transfer (KT) ensures:
 
 ---
 
+## Pre-KT: Map Knowledge Risk
+
+Before planning a session, identify what knowledge is actually at risk. Target the session - depth where it matters, skim where it does not. Four primitives, all compute with plain `git` on any repo. Tools like [repowise](https://github.com/repowise-dev/repowise) automate them but are not required to start.
+
+### Bus factor - what only one person knows
+
+Files where one engineer owns >80% of the lines are the highest-risk KT targets when that engineer leaves.
+
+```bash
+# Contributors by line count for a single file
+git shortlog -sne -- path/to/file.go
+
+# Per-author line count across a module (blame-based)
+git ls-files path/to/module | xargs -I {} git blame --line-porcelain {} \
+  | grep "^author " | sort | uniq -c | sort -rn
+```
+
+Any file where the top contributor exceeds 80% is a session priority.
+
+### Hotspots - where change concentrates
+
+Files in the top 25% of both churn (commit count) and complexity (line count) are where bugs live and where surprises hide.
+
+```bash
+# Commit count per file, last 6 months
+git log --since="6 months ago" --name-only --pretty=format: \
+  | sort | uniq -c | sort -rn | head -20
+```
+
+High-churn + high-size = hotspot. The departing engineer has implicit models of how these files behave that pure code-reading will not recover.
+
+### Co-change pairs - hidden coupling
+
+Files that change together in the same commit without an import link between them. This is coupling that AST analysis cannot see and engineers rarely document.
+
+```bash
+# For each recent commit, list files changed together
+git log --since="6 months ago" --name-only --pretty=format:"COMMIT" \
+  | awk '/^COMMIT/{if(length(f))print f; f=""; next} NF{f=f" "$0} END{print f}' \
+  | awk '{for(i=1;i<NF;i++)for(j=i+1;j<=NF;j++)print $i"\t"$j}' \
+  | sort | uniq -c | sort -rn | head -20
+```
+
+When a section says "these two files always move together," that is co-change intelligence. Record it explicitly - the new owner will not notice it otherwise.
+
+### Ungoverned hotspots - unwritten intent
+
+Hotspot files with no ADR, no README section, and no inline `WHY:`/`DECISION:`/`TRADEOFF:` markers. These are the "here be dragons" targets.
+
+```bash
+# Hotspots missing any inline decision markers
+grep -RL "WHY:\|DECISION:\|TRADEOFF:" path/to/module
+```
+
+### Worked example
+
+Risk map for a departing engineer owning `payment-service/`:
+
+```
+$ git shortlog -sne -- payment-service/payments/
+  487  alice <alice@company.com>
+   42  bob <bob@company.com>
+    8  ci-bot <ci@company.com>
+  → bus factor: alice owns ~91% of payments/. PRIORITY.
+
+$ git log --since="6 months ago" --name-only --pretty=format: \
+    payment-service/ | sort | uniq -c | sort -rn | head -5
+  48 payments/processor.ts
+  31 webhooks/stripe.ts
+  29 refunds/handler.ts
+   8 types/payment.ts
+  → hotspots: processor.ts, stripe.ts, handler.ts.
+
+$ grep -RL "WHY:\|DECISION:\|TRADEOFF:" payment-service/payments/
+  payments/processor.ts
+  webhooks/stripe.ts
+  → two ungoverned hotspots, both >90% owned by Alice.
+
+Session depth: these two files get 60+ min. Everything else: skim.
+```
+
+Run this before writing a single Core Section. The map tells you where to spend the engineer's time.
+
+---
+
 ## Core Sections: KT Package Contents
 
 Sections 1-12 below. Section 1 (Project Overview) is shown full as the worked example; sections 2-12 give you the shape and a compact snippet. Mirror Section 1's fidelity when you fill them in.
