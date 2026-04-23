@@ -65,6 +65,36 @@ Knowledge transfer (KT) ensures:
 
 ---
 
+## Tiered KT Modes
+
+Two tiers. Pick by time budget, not by ideal outcome - an incomplete KT that ships beats a comprehensive one that stays in someone's head.
+
+### Standard - planned transition (1-2 days)
+
+**When to use:** most handoffs. Planned departure with 2-4 weeks of runway. Team-to-team transfer of an existing service.
+
+**Required full:** Sections 1 (Project Overview), 2 (Architecture), 3 (Data Flows), 4 (Dependencies), 7 (Pain Points), 8 (Monitoring), 13 (Access & Authority).
+
+**Lightly filled or linked to existing docs:** Sections 5 (Dev Setup), 6 (Testing), 9 (Deployment), 10 (Product Context), 11 (Demo), 12 (FAQs). If a section already has a good dedicated doc elsewhere, link to it rather than duplicate.
+
+**Process:** Pre-KT risk map (all four primitives) → section fill → inline marker sweep on hot paths → one 90-min formal session → Week-1 exit criteria.
+
+**Exit:** new dev can find their way, knows the dragons (ungoverned hotspots), can respond to standard alerts, has the access they need.
+
+**Emergency carve-out:** no 1-2 days available? Cut Standard to Sections 1/7/8/13 only and name the cut in the KT doc header so the receiving engineer sees what is and is not covered. This is a survival handoff, not a full transfer - label it honestly.
+
+### Comprehensive - critical handoff or new-hire onboarding (1-2 weeks, with shadow)
+
+**When to use:** critical-service handoff (high business impact, low bus factor). New hire onboarding to a complex area. Departures where the engineer carries vendor relationships, incident history, or tacit decision-making beyond what lives in the code.
+
+**Required full:** all 13 Core Sections.
+
+**Process:** Standard's process + 2-week Shadow Mode (see *KT Session Format*) + Week-1 AND Week-2 exit criteria + month-1 follow-up.
+
+**Exit:** new dev is on-call primary, has resolved at least one incident end-to-end, can answer questions from other teammates without escalating.
+
+---
+
 ## Pre-KT: Map Knowledge Risk
 
 **Audience:** KT organizer (targets the session before content is written)
