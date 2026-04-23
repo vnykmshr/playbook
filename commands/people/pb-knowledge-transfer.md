@@ -8,8 +8,8 @@ execution_pattern: "sequential"
 related_commands: ['pb-onboarding', 'pb-guide', 'pb-security', 'pb-adr', 'pb-incident']
 last_reviewed: "2026-04-23"
 last_evolved: "2026-04-23"
-version: "1.1.0"
-version_notes: "v2.21.0: Pruned verbose Payment Service stubs (net -352 lines). Added Pre-KT risk map (bus factor, hotspots, co-changes, ungoverned hotspots), mechanical/tribal split on four Core Sections, WHY/DECISION/TRADEOFF inline markers, week-1 exit criteria, per-section audience naming."
+version: "1.2.0"
+version_notes: "v2.21.0 (v1.2.0): Added How to Use workflow block, Tiered KT Modes (Standard/Comprehensive), Section 13 Access & Authority Transfer, Shadow Mode session format, Doc Hygiene review cadence. Correctness pass: awk portability caveat, marker graduation clarified, week-1 postmortem fallback, worked-example framing. v1.1.0: Pruned Payment Service stubs (-352 lines). Added Pre-KT risk map, mechanical/tribal split on four Core Sections, WHY/DECISION/TRADEOFF markers, week-1 exit criteria, per-section audience."
 breaking_changes: []
 ---
 # Knowledge Transfer (KT) Session Preparation
