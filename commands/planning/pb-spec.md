@@ -175,122 +175,58 @@ Directory structure:
 
 ```
 todos/releases/vX.Y.Z/
-├── 00-master-tracker.md    # Overview, phases, checkpoints, CURRENT STATUS
-├── phase-1-{slug}.md       # Detailed phase 1 tasks
-├── phase-2-{slug}.md       # Detailed phase 2 tasks
+├── 00-master-tracker.md    # Current status, scope lock, phases
+├── phase-1-{slug}.md       # Active phase detail
+├── phase-2-{slug}.md
 ├── done/                   # Completed phases (archived)
 └── ...
 ```
 
-#### Context-Efficient Plan Structure
-
-Plans get loaded into conversation context. Structure them for **resumability without full reload**:
-
-1. **Current state at top** - What phase, what's done, what's next
-2. **Completed work collapsed** - Move done phases to `done/` or bottom of master-tracker
-3. **Active phase expanded** - Only current phase needs full detail
-4. **Scope lock is permanent** - Don't repeat in every session
-
-**Anti-pattern:** Full plan in every session consumes context for work already done.
-**Pattern:** Master tracker with current status + pointer to active phase file.
+Only the active phase needs full detail; done phases move to `done/`. `/pb-todo-implement` owns session-by-session execution; this scaffold owns the release-level shape.
 
 #### Master Tracker Template
 
 ```markdown
 # vX.Y.Z - [Release Theme]
 
-## Current Status (Update Each Session)
+## Current Status
 
 **Phase:** [N] - [Name]
-**Last commit:** [hash] - [date]
+**Last commit:** [hash]
 **Next:** [Specific next task]
-
-> Entry point. Update each session so resuming is instant.
-
----
-
-## Overview
-
-[One paragraph: what, why, expected outcome]
-
-**Tier:** [S/M/L] - [Brief justification]
-**Focus:** [Primary focus area]
-
----
 
 ## Scope Lock
 
 **Goal:** [One sentence]
 
-**In Scope:**
-- [Item]
-
-**Out of Scope:**
-- [Item]
-
-**Success Criteria:**
-- [Measurable outcome]
-
----
+**In Scope:** [bullets]
+**Out of Scope:** [bullets]
 
 ## Phases
 
-| Phase | Focus | Priority | Status |
-|-------|-------|----------|--------|
-| 1 | [Name] | P1 | pending |
-| 2 | [Name] | P2 | pending |
-
----
-
-## Checkpoints
-
-| Gate | After | Sign-off | Status |
-|------|-------|----------|--------|
-| Scope Lock | Planning | [Who] | pending |
-| Ready for QA | Implementation | [Who] | pending |
-| Ready for Release | QA | [Who] | pending |
-
----
-
-## Changelog
-
-| Date | Phase | Notes |
-|------|-------|-------|
-| YYYY-MM-DD | - | Initial planning |
+| Phase | Focus | Status |
+|-------|-------|--------|
+| 1 | [Name] | pending |
+| 2 | [Name] | pending |
 ```
+
+Update Current Status each session so resume is instant. Scope Lock is permanent once set.
 
 #### Phase Document Template
 
 ```markdown
 # Phase N: [Name]
 
-## Overview
-
-[What this phase achieves]
-**Effort:** [Estimate range]
-**Priority:** [P1/P2/P3]
-
----
-
 ## Tasks
 
 ### Task 1: [Name]
 
-**Problem:** [What's wrong or missing]
-**Solution:** [What we'll do]
-**Files:** [Specific file:line references]
-
-**Acceptance Criteria:**
-- [ ] [Specific, verifiable outcome]
-
----
+- **Files:** [file:line references]
+- **Acceptance:** [specific, verifiable outcome]
 
 ## Verification
 
 - [ ] [How to verify changes work]
-- [ ] [Tests that must pass]
-
----
 
 ## Rollback
 
@@ -377,27 +313,7 @@ Then invoke `/pb-todo-implement` (or execute manually). For very small changes, 
 
 ## SDLC Notes
 
-### Planning Discipline
-
-- **Break work into phases** - Each phase independently shippable
-- **Order by priority** - P1 first, P3 can be cut
-- **Size tasks for single sessions** - If a task takes multiple days, break it down
-
-### Implementation Discipline
-
-- **One concern per commit** - Atomic changes are easier to review and revert
-- **Verify as you go** - Run verification after each step, not at the end
-- **Update docs alongside code** - Stale docs are worse than no docs
-- **Delete aggressively** - Unused code is a liability
-
-### Testing Priorities
-
-1. Critical paths users depend on
-2. Edge cases that have caused bugs
-3. Complex logic that's easy to break
-4. Integration points with external systems
-
-Skip: trivial getters/setters, framework code, tests that duplicate what the code says.
+For planning, implementation, and testing discipline: `/pb-standards` and `/pb-guide`. This skill writes the spec; execution discipline lives in those.
 
 ---
 

@@ -99,44 +99,14 @@ Gather context. Do not proceed to analysis until these are answered:
 
 ## Phase 2: Multi-Perspective Analysis
 
-Examine the focus area from multiple angles to surface hidden complexity and identify the minimal path forward.
+Run the focus area through four lenses; each catches what the others miss.
 
-### Engineering Perspective
+- **Engineering** - What existing code changes, what's new, what can be deleted or reused, what are the unknowns?
+- **Architecture** - Does this cross a system boundary, add a dependency, or break an existing pattern?
+- **Product** - Who benefits, what's the user-facing impact, what needs documenting?
+- **Operations** - Does deployment change, what monitoring is needed, what's the rollback, any performance cliff?
 
-| Question | Why It Matters |
-|----------|----------------|
-| What existing code changes? | Understand blast radius |
-| What new code is needed? | Estimate scope |
-| What can we delete? | Reduce maintenance burden |
-| What can we reuse? | Avoid reinventing |
-| What are the risks/unknowns? | Plan for contingencies |
-
-### Architecture Perspective
-
-| Question | Why It Matters |
-|----------|----------------|
-| Does this change system boundaries? | Affects integration points |
-| Are there scalability implications? | Avoid painting into corners |
-| Does this add new dependencies? | Dependencies are liabilities |
-| Is this consistent with existing patterns? | Consistency aids maintainability |
-
-### Product Perspective
-
-| Question | Why It Matters |
-|----------|----------------|
-| Who benefits and how? | Validates the work |
-| What's the user-facing impact? | Prioritize visible value |
-| What documentation is needed? | Users need to know about changes |
-| Does this align with product direction? | Avoid orphaned work |
-
-### Operations Perspective
-
-| Question | Why It Matters |
-|----------|----------------|
-| Does deployment change? | Affects release process |
-| Are there monitoring needs? | You can't fix what you can't see |
-| What's the rollback plan? | Always have an escape hatch |
-| Performance implications? | Avoid surprise degradation |
+Name the lens where the biggest risk sits. That focuses the rest of the sketch.
 
 ---
 

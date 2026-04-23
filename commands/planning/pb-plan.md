@@ -59,6 +59,8 @@ Invoke `/pb-sketch` with the focus area. This produces:
 
 Read the sketch output. If it says "No forks," skip to Step 4.
 
+> **File side-effect:** `/pb-sketch` writes `sketch/{name}.md` and `/pb-spec` writes either `plan/{name}.md` or `todos/releases/vX.Y.Z/`. Both are git-visible. For throwaway exploration, run against a scratch branch or `.gitignore` the directory.
+
 ### Step 3: Present decisions to user
 
 Print the Decision Forks block. Ask:
