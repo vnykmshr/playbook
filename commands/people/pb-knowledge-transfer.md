@@ -193,6 +193,9 @@ Payment Service → Postgres (Orders) · Redis (Cache) · RabbitMQ (Events)
 **External**: Stripe (payments), Auth0 (authn), Datadog (monitoring).
 ```
 
+**What the tools show** (verify, do not rewrite from scratch): import graph, file dependency structure, entry points by centrality, module clusters from co-change.
+**What they miss** (you write these): why this topology exists (history, constraints, previous attempts), which components are load-bearing vs incidental, which external deps are critical vs legacy.
+
 ---
 
 ### 3. Key Data Flows
@@ -231,6 +234,9 @@ Payment Service → Postgres (Orders) · Redis (Cache) · RabbitMQ (Events)
 **Downstream**: Stripe (5s timeout, 3 retries), Order Service (1s, cached 5m), User Service (500ms, stale-cache fallback)
 **Resilience**: Circuit breaker opens after 5 failures in 30s. Exponential backoff on retries. Stale cache allowed if downstream down.
 ```
+
+**What the tools show**: upstream callers from import graph, downstream HTTP/gRPC calls from client code, package manifests for third-party deps.
+**What they miss**: which deps are genuinely critical vs historical leftover, why timeouts and retries are set to *these* values (usually a past incident), services called so rarely everyone forgets until they break.
 
 ---
 
@@ -308,6 +314,9 @@ Payment Service → Postgres (Orders) · Redis (Cache) · RabbitMQ (Events)
 - No network timeouts → stuck pending payments. Always timeout.
 ```
 
+**What the tools show**: hotspot files (churn × complexity), bug-fix density per file (`fix:` commits), cyclomatic complexity above threshold.
+**What they miss**: the "works by accident" list (behaviors no one wrote on purpose but something depends on), the "nobody dares touch it" list, performance cliffs that only appear under specific traffic patterns.
+
 ---
 
 ### 8. Monitoring & Observability
@@ -335,6 +344,9 @@ Payment Service → Postgres (Orders) · Redis (Cache) · RabbitMQ (Events)
 
 **Production debugging**: read-only queries, check logs + metrics first, follow `/runbook-*.md` for incidents. Never modify prod data manually.
 ```
+
+**What the tools show**: existing metric definitions in code, alert rules in alertmanager/datadog config, log-level distribution from recent samples.
+**What they miss**: which dashboards actually get opened during an incident (vs built and forgotten), alerts that fire too often to be trusted (real noise-to-signal), the implicit severity mapping - "this alert pages, that one goes to Slack, this one we ignore."
 
 ---
 
