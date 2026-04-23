@@ -5,7 +5,7 @@ category: "planning"
 difficulty: "advanced"
 model_hint: "opus"
 execution_pattern: "sequential"
-related_commands: ['pb-plan', 'pb-think', 'pb-design-rules', 'pb-patterns-core']
+related_commands: ['pb-plan', 'pb-sketch', 'pb-think', 'pb-design-rules', 'pb-patterns-core']
 last_reviewed: "2026-02-09"
 last_evolved: ""
 version: "1.1.0"
@@ -682,6 +682,7 @@ docs/
 ## Related Commands
 
 - `/pb-plan` - Planning workflow that may generate ADRs
+- `/pb-sketch` - Decision forks often become ADRs once resolved
 - `/pb-think` - Deep analysis for complex architectural decisions
 - `/pb-design-rules` - Design principles that inform ADR decisions
 - `/pb-patterns-core` - Reference patterns when documenting alternatives

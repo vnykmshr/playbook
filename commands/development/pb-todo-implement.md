@@ -5,7 +5,7 @@ category: "development"
 difficulty: "advanced"
 model_hint: "sonnet"
 execution_pattern: "sequential"
-related_commands: ['pb-start', 'pb-review', 'pb-cycle', 'pb-commit']
+related_commands: ['pb-spec', 'pb-start', 'pb-review', 'pb-cycle', 'pb-commit']
 last_reviewed: "2026-02-09"
 last_evolved: ""
 version: "1.0.0"
@@ -607,6 +607,7 @@ The workflow will:
 
 ## Related Commands
 
+- `/pb-spec` -- Upstream source of numbered plans this workflow executes
 - `/pb-start` -- Scope and kick off new work before creating todos
 - `/pb-review` -- Full review workflow after implementation is complete
 - `/pb-cycle` -- Self-review and peer review once code is ready
