@@ -24,6 +24,17 @@ Teach `/pb-preamble` first: new team members need to know how to challenge assum
 
 ---
 
+## How to Use This Skill
+
+1. **Identify the scenario** - emergency departure, planned transition, new-hire onboarding, preemptive documentation.
+2. **Pick a tier** - Standard (1-2 days) for most handoffs, Comprehensive (1-2 weeks with shadow) for critical or new-hire. See *Tiered KT Modes* below.
+3. **Run *Pre-KT: Map Knowledge Risk*** - target the session before writing a single section.
+4. **Fill the Core Sections required for your tier** - Section 1 is shown full as the worked example; 2-13 give you the shape and a compact snippet.
+5. **Produce inline markers in the departing engineer's hot paths** - durable beyond the doc. See *Durable Artifacts: Inline Decision Markers*.
+6. **Run the exit-criteria checklist for your tier** - verify the KT actually landed, not just that setup worked.
+
+---
+
 ## When to Use This Command
 
 - **Planning a KT session** - Structuring effective knowledge transfer
