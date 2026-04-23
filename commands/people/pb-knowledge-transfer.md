@@ -606,6 +606,24 @@ Each ungoverned hotspot gets at least one marker capturing the non-obvious bit. 
 5. Follow-up: First day pair programming on simple bug fix
 ```
 
+### Shadow Mode (informal pairing, 1-2 weeks)
+
+Used in the Comprehensive tier. Not a replacement for a formal session - a complement that captures what the formal session cannot.
+
+**What shadowing transfers:**
+- How the engineer actually triages alerts (vs what the runbooks say)
+- Which tools they reach for first when something looks wrong
+- Which teammates they Slack for which kinds of problems
+- What "normal" looks like in logs, dashboards, and error rates
+
+**Format:**
+- 30-60 minutes per day for 1-2 weeks
+- Shadower watches while the engineer works; does not interrupt unless asked
+- End-of-day 10-minute debrief: "why did you do X?" turns observation into understanding
+- Shadower keeps running notes (treat like distill notes, not meeting minutes)
+
+**When shadow beats formal session:** when the engineer cannot articulate what they know. Some decisions are tacit - muscle memory, pattern recognition from past incidents, "I don't know why, but this usually works." Shadowing surfaces it; a formal session misses it.
+
 ---
 
 ## Related Commands
