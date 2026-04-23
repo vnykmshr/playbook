@@ -555,6 +555,16 @@ After the KT session:
 - [ ] Assigned first task (small bug fix, not big feature)
 - [ ] Scheduled follow-up (1 week) to check progress
 
+Week 1 after the KT session (did it actually land?):
+- [ ] New dev opened at least one PR (any scope, even docs)
+- [ ] New dev read at least one real incident alert (not necessarily resolved)
+- [ ] New dev can explain each ungoverned hotspot from the risk map in their own words
+- [ ] New dev has opened the main monitoring dashboards during a normal day
+- [ ] New dev can tell which Slack channels carry real signal vs noise
+- [ ] Week-2 follow-up 1:1 scheduled to catch drift
+
+"Setup works" is necessary but not sufficient. Shipping work, reading real alerts, and distinguishing signal from noise is the difference between "we did KT" and "knowledge transferred."
+
 ---
 
 *Created: 2026-01-11 | Category: Onboarding | Tier: M*
