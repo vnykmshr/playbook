@@ -5,6 +5,30 @@ All notable changes to this project are documented here.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v2.21.1] - 2026-04-23 "Otter"
+
+Patch release on the Otter series. Single-command refinement of `/pb-knowledge-transfer` after the v2.21.0 enrichment got a three-persona review. Structural additions, correctness fixes, and a portable recipe replacement; no breaking changes elsewhere in the catalog.
+
+### Changed
+
+- **`/pb-knowledge-transfer` v1.3.0** -- Post-enrichment review pass.
+  - **New:** top-level *For the Departing Engineer: Do These Before Friday* section (irreversibility-ordered priority list: inline markers → Section 7 tribal → Section 13 vendor relationships → dependency gotchas → alert signal/noise → reconstructable-from-repo content). The departing engineer is now a first-class user.
+  - **New:** *Adversarial / disengaged departure* sub-tier under Tiered KT Modes. Names what changes when the departing engineer does not cooperate: extraction from git/Slack replaces authoring, Section 13 revocation outranks transfer, ungoverned hotspots become dragons for the next owner, Week-1 criteria shift to reconstruction.
+  - **Realistic Standard budget:** 1-2 days → 2-3 days with who-writes-what split (Sections 1-2 are receiving-engineer homework; 3/4/7/8/13 are where only the departing engineer can write the tribal half).
+  - **Portable co-change recipe.** GNU-awk pipeline replaced with a ~15-line Python recipe that runs on macOS, Linux, and anywhere Python 3 is available.
+  - **Batched `git blame`** for bus-factor (`-z | xargs -0 -n 50`). Previous per-file form was slow enough on 200-file modules that readers skipped it.
+  - **Mechanical/tribal split** extended to Sections 3 (Data Flows) and 9 (Deployment). Coverage is now 2/3/4/7/8/9/13 -- wherever the tool/tribal gap is load-bearing.
+  - **Overridable-default framing** on 80% bus-factor threshold, 3/6/12-month doc-hygiene cadence, and "90 days = stale." The numbers stay as starting points; the framing stops pretending they are rules.
+  - **Doc-hygiene reviews** land as calendar invites created during the session, not as unowned checklist items.
+  - **New Week-1 exit criterion:** receiver explains a `WHY:`/`DECISION:`/`TRADEOFF:` marker unprompted, without the departing engineer in the room.
+  - **Contradiction fixes:** "Sections 1-12" → "1-13", footer classification drop (mismatched frontmatter), version_notes count (four → five), mindset-line referent clarified.
+  - **Dropped** repowise references; framing is now tool-neutral.
+  - **Merged** "When to Use This Command" and "When to Conduct KT Sessions" -- scenario catalog collapsed to one block, tier decision carried to the Tiered KT Modes section.
+
+### Notes
+
+Command count unchanged at 111. No breaking changes -- `/pb-knowledge-transfer` is additive and reshaping; no skill was renamed, removed, or has a different contract. Users who regenerate their project or global CLAUDE.md see no difference.
+
 ## [v2.21.0] - 2026-04-23 "Otter"
 
 Planning workflow refactor plus template hardening consolidation. Named Otter for the theme of disciplined tool use -- skill invocation, subagent output, and fetched-input handling all got sharper rules this cycle.
