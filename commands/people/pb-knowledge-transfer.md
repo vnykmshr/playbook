@@ -694,6 +694,16 @@ Week 1 after the KT session (did it actually land?):
 
 "Setup works" is necessary but not sufficient. Shipping work, reading real alerts, and distinguishing signal from noise is the difference between "we did KT" and "knowledge transferred."
 
+**Doc hygiene after handoff:**
+
+A KT doc has no cadence of its own. Absent a named owner and scheduled reviews, assume it is stale 90 days after the engineer leaves.
+
+- [ ] KT doc has a named owner (usually the receiving engineer)
+- [ ] Next-review date set in the doc header (3 months from handoff by default)
+- [ ] 3-month review: check links still work, verify local setup instructions still work, flag stale sections
+- [ ] 6-month review: verify ungoverned hotspots now have inline markers, review Access & Authority list for drift
+- [ ] 12-month review: decide keep / rewrite / archive
+
 ---
 
 *Created: 2026-01-11 | Category: Onboarding | Tier: M*
