@@ -22,6 +22,16 @@ Reference for **skill authors** who design or extend review commands. Not for en
 
 ---
 
+## When to Use
+
+- **Designing a new `/pb-review-*` skill** - verify the chosen structure matches documented patterns.
+- **Extending an existing review skill** - check that the extension preserves scope discipline.
+- **Reviewing a PR that adds review-adjacent automation** - consistency check across the review family.
+
+End-users running reviews should use `/pb-review`, `/pb-review-code`, or one of the focused `/pb-review-*` skills instead.
+
+---
+
 ## Why This Doc Exists
 
 Review skills have a failure mode: **the mega-review that does simplify + dedup + correctness + security + performance all at once**. It feels comprehensive. It's usually worse than a pipeline of named passes that each refuse to do the others' jobs.

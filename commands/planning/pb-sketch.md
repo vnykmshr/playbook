@@ -336,8 +336,8 @@ Then invoke `/pb-spec sketch/{name}.md` (or let the `/pb-plan` wrapper do it).
 
 ## Related Commands
 
-- `/pb-plan` - Wrapper: runs `/pb-sketch` → presents decisions → runs `/pb-spec`. Preserves muscle memory.
-- `/pb-spec` - Detailed implementation plan from resolved sketch. Replaces old pb-plan Phase 3-4 content.
-- `/pb-think` - Deep thinking for complex decisions; use when forks themselves are ambiguous.
+- `/pb-plan` - Orchestrating wrapper; runs this skill, surfaces decisions, hands off to spec.
+- `/pb-spec` - Detailed implementation plan from a resolved sketch.
+- `/pb-think` - Deep thinking when a fork itself is ambiguous.
 - `/pb-adr` - Document architecture decisions formally after a fork resolves.
 - `/pb-design-rules` - Technical principles that inform option evaluation.

@@ -5,6 +5,19 @@ All notable changes to this project are documented here.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Added
+
+- **`/pb-sketch` v1.0.0** -- Decision-fork discovery skill. Extracted from former `/pb-plan` Phases 1-2. Surfaces unknowns, enumerates decision forks with 2-4 options each, recommends picks, produces a sketch artifact. Pairs with `/pb-spec` via the `/pb-plan` wrapper.
+- **`/pb-spec` v1.0.0** -- Detailed implementation-plan skill. Extracted from former `/pb-plan` Phases 3-4. Size-gates between small-feature (single plan file) and release-cycle (phase-directory) paths. Scope lock, numbered steps, verification, rollback.
+- **`/pb-review-patterns` v1.0.0** -- Reference doc for skill authors designing or extending `/pb-review-*` commands. First pattern: scope-locked passes (anti-omnibus).
+
+### Changed
+
+- **`/pb-plan` v2.0.0** -- Rewritten as orchestrating wrapper. Runs `/pb-sketch`, surfaces decisions for user confirmation, runs `/pb-spec`. Typing `/pb-plan` still produces an end-to-end plan, but the flow now has a mid-step interactive decision prompt. Direct readers of the former Phase 1-4 content: see `/pb-sketch` and `/pb-spec`.
+- **`/pb-claude-global` v2.2.1-v2.2.4** -- Four incremental hardening additions to the generated global CLAUDE.md: skill-invocation discipline (v2.2.1), commit-message register (v2.2.2), authorship footer rule (v2.2.3), Read-Regroup-Decide input-handling BEACON (v2.2.4). Subagent-output discipline added as a follow-up.
+
 ## [v2.20.0] - 2026-04-17 "Pangolin"
 
 First pet-named release. Groups the accumulated v2.19.3-dev work with a capability-trigger evolution for Opus 4.7 GA.

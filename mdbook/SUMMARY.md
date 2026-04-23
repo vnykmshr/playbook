@@ -64,6 +64,8 @@
 # Commands: Planning
 
 - [Plan](commands/planning/pb-plan.md)
+- [Sketch](commands/planning/pb-sketch.md)
+- [Spec](commands/planning/pb-spec.md)
 - [ADR](commands/planning/pb-adr.md)
 - [Design Language](commands/planning/pb-design-language.md)
 - [Maya: Product Agent](commands/planning/pb-maya-product.md)
@@ -97,6 +99,7 @@
 - [Review: Microservice](commands/reviews/pb-review-microservice.md)
 - [Review: Comprehensive](commands/reviews/pb-review-comprehensive.md)
 - [Review: Playbook](commands/reviews/pb-review-playbook.md)
+- [Review: Patterns](commands/reviews/pb-review-patterns.md)
 - [Security](commands/reviews/pb-security.md)
 - [Accessibility](commands/reviews/pb-a11y.md)
 - [Logging](commands/reviews/pb-logging.md)

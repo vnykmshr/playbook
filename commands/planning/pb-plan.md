@@ -5,7 +5,7 @@ category: "planning"
 difficulty: "advanced"
 model_hint: "opus"
 execution_pattern: "interactive"
-related_commands: ['pb-sketch', 'pb-spec', 'pb-adr', 'pb-todo-implement', 'pb-think', 'pb-start']
+related_commands: ['pb-sketch', 'pb-spec', 'pb-adr', 'pb-start', 'pb-todo-implement']
 last_reviewed: "2026-04-23"
 last_evolved: "2026-04-23"
 version: "2.0.0"
@@ -19,7 +19,17 @@ breaking_changes:
 
 **Resource Hint:** opus - Architect-tier reasoning required by both sub-skills.
 
-**Tool-agnostic:** This wrapper works with any tool. Claude Code users invoke as `/pb-plan`. Using another tool? Read `/pb-sketch` and `/pb-spec` directly and sequence them yourself.
+**Tool-agnostic:** This wrapper works with any tool. Claude Code users invoke as `/pb-plan`. Using another tool? Read the two sub-skills directly and sequence them yourself.
+
+---
+
+## When to Use
+
+- **Planning a new focus area end-to-end** - context, decisions, and detailed plan in one flow.
+- **Not sure if real forks exist** - the wrapper runs sketch first and tells you.
+- **Muscle memory says "/pb-plan"** - single entry, sub-skills handled.
+
+Use the sketch sub-skill directly to explore without committing. Use the spec sub-skill directly when decisions are already made.
 
 ---
 
@@ -138,6 +148,5 @@ Don't re-run sketch on existing resolved work.
 - `/pb-sketch` - Decision forks, bounded research, recommended picks. Step 2 of this wrapper.
 - `/pb-spec` - Detailed implementation plan with size-gate. Step 4 of this wrapper.
 - `/pb-adr` - Document architecture decisions formally for significant forks.
-- `/pb-think` - Deep thinking when forks themselves are ambiguous.
 - `/pb-start` - Alternate entry point; begins work from a plan.
 - `/pb-todo-implement` - Executes a plan phase-by-phase with commits.

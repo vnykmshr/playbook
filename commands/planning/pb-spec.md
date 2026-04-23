@@ -403,8 +403,8 @@ Skip: trivial getters/setters, framework code, tests that duplicate what the cod
 
 ## Related Commands
 
-- `/pb-plan` - Wrapper: runs `/pb-sketch` → presents decisions → runs `/pb-spec`. Muscle memory entry point.
-- `/pb-sketch` - Produces the decision-resolved sketch that feeds this skill.
+- `/pb-plan` - Orchestrating wrapper; runs decide then hands a resolved sketch to this skill.
+- `/pb-sketch` - Produces the resolved sketch this skill consumes.
 - `/pb-adr` - Document architecture decisions for significant forks.
 - `/pb-todo-implement` - Executes the spec phase-by-phase with commits.
 - `/pb-start` - Alternate entry point for beginning work from a spec.
