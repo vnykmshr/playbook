@@ -99,7 +99,6 @@
 - [Review: Microservice](commands/reviews/pb-review-microservice.md)
 - [Review: Comprehensive](commands/reviews/pb-review-comprehensive.md)
 - [Review: Playbook](commands/reviews/pb-review-playbook.md)
-- [Review: Patterns](commands/reviews/pb-review-patterns.md)
 - [Security](commands/reviews/pb-security.md)
 - [Accessibility](commands/reviews/pb-a11y.md)
 - [Logging](commands/reviews/pb-logging.md)

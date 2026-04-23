@@ -19,7 +19,7 @@ from pathlib import Path
 from playbook_utils import setup_logger
 
 COMMANDS_DIR = Path(__file__).parent.parent / "commands"
-EXPECTED_COUNT = 112  # 109 baseline + pb-sketch + pb-spec + pb-review-patterns
+EXPECTED_COUNT = 111  # 109 baseline + pb-sketch + pb-spec (pb-review-patterns demoted to pb-new-playbook appendix)
 
 # Hub commands allowed to exceed the 5-link limit
 HUB_COMMANDS = {"pb-patterns.md"}
