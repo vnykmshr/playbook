@@ -92,12 +92,14 @@ High-churn + high-size = hotspot. The departing engineer has implicit models of 
 Files that change together in the same commit without an import link between them. This is coupling that AST analysis cannot see and engineers rarely document.
 
 ```bash
-# For each recent commit, list files changed together
+# One approach (GNU awk; macOS needs gawk or a portability rewrite)
 git log --since="6 months ago" --name-only --pretty=format:"COMMIT" \
   | awk '/^COMMIT/{if(length(f))print f; f=""; next} NF{f=f" "$0} END{print f}' \
   | awk '{for(i=1;i<NF;i++)for(j=i+1;j<=NF;j++)print $i"\t"$j}' \
   | sort | uniq -c | sort -rn | head -20
 ```
+
+For a portable alternative, run `repowise` (or any co-change tool) on the repo. If hand-rolling, breaking the pipeline into a small Python or Go script is more robust than chaining awk.
 
 When a section says "these two files always move together," that is co-change intelligence. Record it explicitly - the new owner will not notice it otherwise.
 
@@ -112,7 +114,7 @@ grep -RL "WHY:\|DECISION:\|TRADEOFF:" path/to/module
 
 ### Worked example
 
-Risk map for a departing engineer owning `payment-service/`:
+Risk map for a departing engineer owning `payment-service/` (numbers illustrative; real output will be messier):
 
 ```
 $ git shortlog -sne -- payment-service/payments/
@@ -502,7 +504,7 @@ Markers are lightweight siblings of ADRs, not replacements.
 | Cost | A comment | A structured document |
 | Discoverability | `grep` | ADR index |
 
-Graduate a marker to an ADR when it governs more than one file, survives a major refactor, or keeps coming up in incident reviews.
+Graduate a marker to an ADR when the underlying reason keeps being re-encountered across refactors, governs more than one file, or keeps coming up in incident reviews. (The comment itself may be deleted along with its file - it is the reason that graduates, not the text.)
 
 **KT integration:**
 
@@ -585,7 +587,7 @@ After the KT session:
 
 Week 1 after the KT session (did it actually land?):
 - [ ] New dev opened at least one PR (any scope, even docs)
-- [ ] New dev read at least one real incident alert (not necessarily resolved)
+- [ ] New dev read at least one real incident alert (or, if the week stayed quiet, walked a past postmortem with the departing engineer)
 - [ ] New dev can explain each ungoverned hotspot from the risk map in their own words
 - [ ] New dev has opened the main monitoring dashboards during a normal day
 - [ ] New dev can tell which Slack channels carry real signal vs noise
