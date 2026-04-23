@@ -484,6 +484,46 @@ curl localhost:8080/api/payments/pay_456
 
 ---
 
+### 13. Access & Authority Transfer
+
+**Audience:** KT organizer, departing engineer
+
+**Provide:**
+- Secrets and credentials: what exists, where stored, who has rotation authority
+- Production access paths: DB creds, API keys, deploy keys
+- Service accounts: third-party vendor logins, cloud provider service accounts
+- Platform roles: Slack moderation, GitHub org/team access, PagerDuty schedules
+- Escalation paths: new primary on-call, new secondary, manager escalation
+
+**Snippet:**
+```markdown
+## Access & Authority
+
+**Secrets (what, where, who rotates)**
+- Stripe prod key - 1Password/engineering, rotated yearly, @alice → @bob
+- Postgres prod password - K8s secret, rotated quarterly, @alice → @bob
+- Deploy keys - GitHub repo settings, SRE team-owned (no change)
+
+**Service accounts**
+- Stripe dashboard admin - alice@ → transfer to bob@
+- AWS IAM payments-service role - service-owned, no change
+- Datadog org admin - alice → bob
+
+**Platform roles**
+- Slack #payment-team - alice (channel admin) → bob
+- GitHub payment-service - alice (Admin) → bob (Maintain)
+- PagerDuty primary - alice → bob (effective 2026-05-15)
+
+**Escalation**: new primary @bob · secondary @charlie (unchanged) · manager @dana
+```
+
+**What the tools show**: GitHub/GitLab team membership, K8s RBAC, IAM roles, PagerDuty schedules.
+**What they miss**: "Alice is the only one who ever called the vendor's support line" - vendor-side relationships, informal authority that does not live in any RBAC, tribal knowledge of which secret-rotation runbooks are actually current.
+
+**Do not** paste real secrets or key values into this section. Paths and ownership transitions only.
+
+---
+
 ## Durable Artifacts: Inline Decision Markers
 
 **Audience:** departing engineer (writes markers), all future engineers (read them)
