@@ -56,6 +56,8 @@ Knowledge transfer (KT) ensures:
 
 ## Core Sections: KT Package Contents
 
+Sections 1-12 below. Section 1 (Project Overview) is shown full as the worked example; sections 2-12 give you the shape and a compact snippet. Mirror Section 1's fidelity when you fill them in.
+
 ### 1. Project Overview
 
 **Provide:**
@@ -83,7 +85,6 @@ Customers depend on this to process credit card charges with 99.99% uptime.
 - Runbooks: https://runbooks.company.com/payment
 - Slack: #payment-team
 ```
-```
 
 ---
 
@@ -96,45 +97,15 @@ Customers depend on this to process credit card charges with 99.99% uptime.
 - Technology stack (languages, frameworks, databases)
 - Data model overview (key entities, relationships)
 
-**Template:**
+**Snippet:**
 ```markdown
 ## Architecture
 
-```
-┌─────────────────────────────────────────────────┐
-│           API Gateway (Kong)                    │
-└────────────────────┬────────────────────────────┘
-                     │
-        ┌────────────┼────────────┐
-        │            │            │
-    ┌───▼──┐    ┌───▼──┐   ┌───▼──┐
-    │ Web  │    │Mobile│   │ IOS  │
-    └──────┘    └──────┘   └──────┘
-        │            │            │
-        └────────────┼────────────┘
-                     │
-        ┌────────────▼────────────┐
-        │  Payment Service (Go)   │
-        │  ├─ Order API           │
-        │  ├─ Payment API         │
-        │  └─ Refund API          │
-        └────────────┬────────────┘
-        │            │            │
-    ┌───▼──┐   ┌───▼──┐   ┌──────▼──┐
-    │ Postgres       │ Redis        │ RabbitMQ   │
-    │ (Orders)       │ (Cache)      │ (Events)   │
-    └────────────────────────────────────────────┘
-```
+Clients (Web / Mobile / iOS) → API Gateway → Payment Service (Go)
+Payment Service → Postgres (Orders) · Redis (Cache) · RabbitMQ (Events)
 
-**Key Components**:
-- **Payment Service**: Go HTTP API handling charge/refund
-- **Order Service**: Python service managing order lifecycle
-- **Webhook Consumer**: Node.js service processing payment updates from Stripe
-
-**External Dependencies**:
-- Stripe (payment processor)
-- Auth0 (authentication)
-- Datadog (monitoring)
+**Components**: Payment Service (Go HTTP API), Order Service (Python), Webhook Consumer (Node.js).
+**External**: Stripe (payments), Auth0 (authn), Datadog (monitoring).
 ```
 
 ---
@@ -146,56 +117,14 @@ Customers depend on this to process credit card charges with 99.99% uptime.
 - Event flows (async, queues, webhooks)
 - Error handling and fallback paths
 
-**Template - Request Flow:**
+**Snippet:**
 ```markdown
 ## User Payment Flow
 
-1. User submits payment in web UI
-2. Frontend calls `/api/orders/:id/pay`
-3. Payment Service:
-   - Validates order (amount, user, items)
-   - Creates payment record (status: pending)
-   - Calls Stripe API to charge card
-   - Updates payment record (status: completed/failed)
-4. Publishes "payment.completed" event
-5. Order Service listens, marks order as "paid"
-6. Frontend receives success, redirects to order confirmation
-
-Sequence Diagram:
-```
-Client → Payment API: POST /pay (card)
-Payment API → Stripe: Charge card ($99.99)
-Stripe → Payment API: Charge ID + status
-Payment API → Database: INSERT payment record
-Payment API → Message Queue: Publish payment.completed
-Order Service ← Message Queue: Listen for event
-Order Service → Database: UPDATE order status
-Payment API → Client: 200 OK + order link
-```
-
-**Event Flow:**
-```
-payment.completed event contains:
-- payment_id: "pay_123"
-- order_id: "ord_456"
-- amount: 99.99
-- timestamp: 2026-01-11T10:30:00Z
-
-Consumers:
-- Order Service: Update order status to "paid"
-- Notification Service: Send email receipt
-- Analytics Service: Log transaction for metrics
-```
-
-**Error Flow:**
-```
-If card charge fails:
-→ Payment record marked as "failed"
-→ "payment.failed" event published
-→ Order Service rolls back any inventory changes
-→ Client sees error: "Payment declined - try different card"
-→ Alert to fraud team if 3+ failures in 5 minutes
-```
+1. User submits payment → Frontend POST /api/orders/:id/pay
+2. Payment Service: validate → create record (pending) → Stripe charge → update record
+3. Publish `payment.completed` → Order Service marks order as paid
+4. On failure: record marked failed, `payment.failed` event, Order Service rolls back
 ```
 
 ---
@@ -209,31 +138,13 @@ If card charge fails:
 - Retry logic and timeouts
 - Circuit breaker settings
 
-**Template:**
+**Snippet:**
 ```markdown
 ## Service Dependencies
 
-**Upstream** (Services calling us):
-- Web Frontend → POST /api/orders/:id/pay
-- Mobile App → POST /api/orders/:id/pay
-- Admin Dashboard → GET /api/payments?customer_id=X
-
-**Downstream** (Services we call):
-- Stripe: Charge card (timeout: 5s, retries: 3 with exponential backoff)
-- Order Service: Fetch order details (timeout: 1s, cached 5 min)
-- User Service: Get customer profile (timeout: 500ms, fallback to cache)
-
-**3rd Party Integrations**:
-- Stripe API: Charges, refunds, webhooks
-- SendGrid: Email receipts (async, best-effort)
-- Slack: Alert failed transactions (async, non-blocking)
-
-**Resilience Settings**:
-- Circuit breaker (Open after 5 failures in 30s)
-- Timeout: 5s for external calls
-- Retry: Exponential backoff, max 3 attempts
-- Cache: Order data cached 5 min, user data cached 15 min
-- Fallback: Use stale cache if service down
+**Upstream**: Web, Mobile, Admin Dashboard → POST /api/orders/:id/pay
+**Downstream**: Stripe (5s timeout, 3 retries), Order Service (1s, cached 5m), User Service (500ms, stale-cache fallback)
+**Resilience**: Circuit breaker opens after 5 failures in 30s. Exponential backoff on retries. Stale cache allowed if downstream down.
 ```
 
 ---
@@ -242,74 +153,19 @@ If card charge fails:
 
 **Provide:**
 - Step-by-step local environment setup
-- Required dependencies (Go 1.19+, PostgreSQL 14+, Redis 7+)
-- Environment variables (with example .env.example)
+- Required dependencies (languages, databases, services)
+- Environment variables (with `.env.example`)
 - How to run locally
 - How to run tests
 
-**Template:**
+**Snippet:**
 ```markdown
 ## Getting Started Locally
 
-### Prerequisites
-- Go 1.19+ (install from golang.org)
-- PostgreSQL 14+ (brew install postgresql)
-- Redis 7+ (brew install redis)
-- Docker (optional, for containerized setup)
-
-### Setup Steps
-
-1. Clone the repository
-```bash
-git clone github.com/company/payment-service
-cd payment-service
-```
-
-2. Create .env file from template
-```bash
-cp .env.example .env
-# Edit .env with local values
-```
-
-3. Create .env.example (checked into git, template only)
-```
-DATABASE_URL=postgres://user:password@localhost:5432/payment_dev
-REDIS_URL=redis://localhost:6379
-STRIPE_API_KEY=sk_test_...  # TEST key only, get from 1password
-PORT=8080
-LOG_LEVEL=debug
-```
-
-4. Initialize database
-```bash
-make db-setup  # Creates tables, loads seed data
-```
-
-5. Run locally
-```bash
-make run  # Starts server on :8080
-# Test: curl http://localhost:8080/health
-```
-
-6. Run tests
-```bash
-make test        # All tests
-make test-unit   # Unit tests only
-make test-int    # Integration tests (needs DB)
-```
-
-### Common Tasks
-```bash
-make fmt         # Format code
-make lint        # Run linter
-make db-reset    # Clear database (dev only!)
-make seed        # Load test data
-```
-
-### Debugging
-- Server logs: See stdout (colored, JSON structured)
-- Database queries: Set LOG_LEVEL=debug to see queries
-- Stripe calls: Check https://dashboard.stripe.com/test/logs
+**Prereqs**: Go 1.19+, PostgreSQL 14+, Redis 7+, Docker (optional)
+**Setup**: `git clone` → `cp .env.example .env` → edit → `make db-setup` → `make run`
+**Tests**: `make test` (all) · `make test-unit` · `make test-int` (needs DB)
+**Debug**: stdout JSON logs · `LOG_LEVEL=debug` for DB queries · Stripe dashboard for external calls
 ```
 
 ---
@@ -323,50 +179,14 @@ make seed        # Load test data
 - Test data setup (fixtures, seeds)
 - CI/CD pipeline flow
 
-**Template:**
+**Snippet:**
 ```markdown
 ## Testing
 
-### Unit Tests
-```
-tests/
-  ├── payment_test.go      # Payment domain logic
-  ├── stripe_client_test.go # Stripe API mocking
-  └── order_validator_test.go
-```
-
-**Purpose**: Test business logic in isolation
-**Coverage Target**: 80% (critical paths 100%)
-**Run**: `make test-unit` (30 seconds)
-
-### Integration Tests
-```
-tests/integration/
-  ├── payment_end_to_end_test.go  # Full request flow
-  └── stripe_webhook_test.go       # Webhook handling
-```
-
-**Purpose**: Test component interactions (API, DB, external services)
-**Setup**: Uses real PostgreSQL + Redis (containerized)
-**Run**: `make test-int` (2 minutes, requires DB)
-
-### Test Data
-- Fixtures in `tests/fixtures/` (JSON files for database state)
-- Seeds in `db/seeds.sql` (load test data during setup)
-- Stripe test keys in `tests/stripe_mock.go` (mocked responses)
-
-### CI/CD Pipeline
-```
-GitHub Push
-  ├─ Lint & Format Check (2 min)
-  ├─ Unit Tests (1 min)
-  ├─ Build Docker Image (3 min)
-  ├─ Integration Tests (3 min) ← Requires DB
-  ├─ Security Scan (1 min)
-  └─ Deploy to Staging (if main branch)
-
-Total: ~10 minutes
-```
+- **Unit** (`tests/`): business logic in isolation, target 80% coverage (100% critical paths). `make test-unit` (~30s).
+- **Integration** (`tests/integration/`): real Postgres + Redis (containerized). `make test-int` (~2m).
+- **Fixtures** in `tests/fixtures/`, seeds in `db/seeds.sql`, Stripe test keys in `tests/stripe_mock.go`.
+- **CI**: lint → unit → build → integration → security scan → stage (main) → total ~10m.
 ```
 
 ---
@@ -380,37 +200,27 @@ Total: ~10 minutes
 - Areas with technical debt
 - Common mistakes to avoid
 
-**Template:**
+**Snippet:**
 ```markdown
 ## Known Issues & Gotchas
 
-### Performance
-- **N+1 Query Problem**: Fetching orders without batching. Always use JOIN or batch queries.
-  - Bad: `for order_id in order_ids: order = db.fetch(order_id)`
-  - Good: `orders = db.fetch_batch(order_id_list)`
+**Performance**
+- N+1 query risk on order fetches. Always batch: `db.fetch_batch(ids)`, never loop.
+- Redis cache must be cleared on refund or you will double-charge.
 
-- **Redis Cache Invalidation**: Stale cache after refund can cause double-charging if not careful.
-  - Solution: Always clear cache when refund is processed
+**Limitations**
+- Stripe refunds only within 90 days of charge.
+- Webhook retries sometimes arrive out of order - guard with idempotency keys.
 
-### Bugs & Limitations
-- Refunds can only be done within 90 days of charge (Stripe limitation)
-- Large payouts (>$100k) are delayed 7 days in test mode
-- ⚠️ Webhook retries sometimes arrive out-of-order
+**Non-obvious**
+- All POSTs must be idempotent (Idempotency-Key header).
+- Stripe webhooks can deliver twice; check payment state before acting.
+- Store UTC only; convert for display.
 
-### Non-Obvious Behaviors
-- **Idempotency**: All POST requests should be idempotent (check Idempotency-Key header)
-- **Stripe Webhooks**: Can arrive multiple times, always check if payment already processed
-- **Time Zones**: Store all times in UTC, only convert for display
-
-### Technical Debt
-- Legacy card tokenization code (replace with Stripe elements in next release)
-- TODO: Migrate from synchronous to event-based order fulfillment
-- TODO: Add monitoring for refund failures
-
-### Mistakes I Made (so you don't)
-- "I didn't validate amount on both sides, led to overcharging" → Always validate server-side
-- "I cached payment status without TTL, old data caused confusion" → Always set cache TTL
-- "I didn't handle network timeouts, orders got stuck in 'pending'" → Always set timeouts
+**Mistakes made (so you do not)**
+- Client-only amount validation → overcharging. Validate server-side.
+- Cached payment status without TTL → stale reads. Always TTL.
+- No network timeouts → stuck pending payments. Always timeout.
 ```
 
 ---
@@ -424,68 +234,21 @@ Total: ~10 minutes
 - How to debug in production (safely)
 - Incident response runbooks
 
-**Template:**
+**Snippet:**
 ```markdown
 ## Monitoring
 
-### Dashboards
-- **Payment Success Rate**: https://datadog.company.com/payment-success-rate
-  - What to look for: > 99% success. Below 95% = page on-call
-  - How to investigate: Check payment-service error logs, Stripe status
+**Dashboards**
+- Success rate (>99% healthy, <95% pages). Latency p99 (<500ms healthy, >1s pages). Refund processing (all <1h).
 
-- **Payment Latency (p99)**: https://datadog.company.com/payment-latency
-  - What to look for: < 500ms. Above 1s = page on-call
-  - How to investigate: Database slow queries? Stripe slow? Network latency?
+**Alerts**
+- Payment error rate >1% for 5m → page. DB pool exhausted → page (critical). Stripe >10s → Slack warn. Refund failures >10/h → page.
 
-- **Refund Processing**: https://datadog.company.com/refund-processing
-  - What to look for: All refunds processed within 1 hour
-  - How to investigate: Check async job queue, message broker
+**Logs**
+- `kubectl logs deploy/payment-service-prod`. Stripe at dashboard.stripe.com/test/logs.
+- Watch: `card_declined` (customer), `rate_limit_exceeded` (us, back off), `pool_exhausted` (connection leak).
 
-### Alert Rules
-```
-| Alert | Trigger | Action |
-|-------|---------|--------|
-| Payment failures spike | >1% error rate for 5 min | Page on-call |
-| Database connection pool exhausted | All connections in use | Page on-call (critical) |
-| Stripe API timeout | Response time > 10s | Warn in Slack (not critical) |
-| Refund job failures | > 10 failed refunds in 1 hour | Page on-call |
-```
-
-### Log Locations
-- Application logs: `kubectl logs -f deployment/payment-service-prod`
-- Database logs: AWS RDS CloudWatch
-- Stripe logs: https://dashboard.stripe.com/test/logs
-
-### Important Log Messages
-```
-[ERROR] "Stripe charge failed" payment_id=X error_code=card_declined
-  → Customer's card was declined, not our problem
-
-[ERROR] "Stripe charge failed" payment_id=X error_code=rate_limit_exceeded
-  → We're hitting Stripe rate limits, implement backoff
-
-[ERROR] "Database connection timeout" pool_exhausted=true active_connections=100
-  → Connection leak, restart service and investigate
-```
-
-### Production Debugging (Safe)
-```bash
-# 1. Never modify production data manually
-# 2. Safe queries: read-only
-# 3. Check logs first: `kubectl logs -f deployment/...`
-# 4. Check metrics: Dashboard for latency, error rate
-# 5. If truly stuck, follow incident runbook
-
-# Safe debugging commands:
-$ kubectl exec -it pod-name -- bash
-$ psql $DATABASE_URL -c "SELECT * FROM payments WHERE id = 'pay_123';"
-$ redis-cli -h redis-host GET payment:pay_123
-```
-
-### Incident Response
-- If payment success rate drops: See `/runbook-payment-failures.md`
-- If service is down: See `/runbook-service-down.md`
-- If database is slow: See `/runbook-database-slow.md`
+**Production debugging**: read-only queries, check logs + metrics first, follow `/runbook-*.md` for incidents. Never modify prod data manually.
 ```
 
 ---
@@ -499,57 +262,15 @@ $ redis-cli -h redis-host GET payment:pay_123
 - Configuration management
 - Post-deployment verification
 
-**Template:**
+**Snippet:**
 ```markdown
 ## Deployment
 
-### How to Deploy
-```bash
-# 1. Create PR with your changes
-# 2. Get approval from tech lead
-# 3. Merge to main (triggers CI/CD)
-# 4. CI runs tests (10 min)
-# 5. Staging deployment (automatic)
-# 6. Manual promotion to production via:
-
-make deploy-prod  # Runs on your machine
-# OR via UI: go to https://deploy.company.com/payment-service
-
-# Deployment: rolling update (no downtime)
-# - 1 pod at a time
-# - Health checks verify each pod
-# - Can abort if checks fail
-```
-
-### Rollback
-```bash
-# If something breaks:
-make rollback-prod   # Rolls back to previous version
-# Takes ~2 minutes, no downtime
-```
-
-### Database Migrations
-```bash
-# Before deploying code that changes schema:
-1. Create migration: `make migration create_payment_index`
-2. Write SQL in migrations/001_create_payment_index.sql
-3. Test migration: `make migration test`
-4. Deploy migration first: `make deploy-db-migrations`
-5. Then deploy code that uses new schema
-```
-
-### Configuration
-- Environment variables in Kubernetes secrets
-- Feature flags in Unleash (release features gradually)
-- For hotfixes: Can update environment variables without redeploying
-
-### Post-Deployment Verification
-```bash
-# After deployment:
-1. Check dashboard (success rate, latency)
-2. Check alerts (no new errors)
-3. Run smoke tests: make smoke-test-prod
-4. Monitor for 1 hour before declaring success
+**Deploy**: PR → approval → merge main → CI (10m) → auto-stage → manual prod via `make deploy-prod` (rolling, health-checked, zero-downtime).
+**Rollback**: `make rollback-prod` (~2m, no downtime).
+**Migrations**: write SQL in `migrations/`, `make migration test`, deploy migration before code.
+**Config**: Kubernetes secrets for env vars, Unleash for feature flags.
+**Verify**: dashboard (success rate, latency) → alerts clean → `make smoke-test-prod` → watch 1h.
 ```
 
 ---
@@ -563,36 +284,14 @@ make rollback-prod   # Rolls back to previous version
 - Product metrics (what the business cares about)
 - How this service fits into larger product
 
-**Template:**
+**Snippet:**
 ```markdown
 ## Product Context
 
-### User Features
-- Users make purchases and pay with credit card (uses Payment Service)
-- Admins can refund orders (uses Payment Service)
-- Users see order confirmation with receipt (uses Payment Service data)
-
-### Roadmap
-- Q2: Add Apple Pay / Google Pay support
-- Q3: Split payments (pay part now, part later)
-- Q4: Buy now, pay later (BNPL) integration
-
-### Open Questions
-- Should we support cryptocurrency payments? (Customer request, not decided yet)
-- How long to keep payment records? (Currently 7 years, compliance TBD)
-
-### Product Metrics
-- Conversion rate (users who pay / users who start checkout)
-- Average order value (AOV)
-- Payment success rate (our KPI: > 99%)
-- Refund rate (% of orders refunded)
-
-### System Fit
-```
-Payment Service is the core of our monetization:
-User Flow: Browse Catalog → Add to Cart → Checkout → Payment Service → Order Complete
-Revenue Flow: Customer Pays → Payment Service → Company Account (minus Stripe fees)
-```
+**Features using this service**: checkout (purchase), admin refunds, order confirmation receipt.
+**Roadmap**: Q2 Apple/Google Pay · Q3 split payments · Q4 BNPL.
+**Open**: crypto support (not decided) · record retention (currently 7y, compliance TBD).
+**Metrics the business watches**: conversion rate, AOV, payment success rate (KPI >99%), refund rate.
 ```
 
 ---
@@ -606,61 +305,24 @@ Revenue Flow: Customer Pays → Payment Service → Company Account (minus Strip
 - UI flows (if applicable)
 - "Try it yourself" exercises
 
-**Template:**
+**Snippet:**
 ```markdown
-## Demo & Hands-On
+## Demo
 
-### Key API Calls
-
-**1. Charge a customer**
 ```bash
-curl -X POST http://localhost:8080/api/payments/charge \
-  -H "Content-Type: application/json" \
-  -d '{
-    "order_id": "ord_123",
-    "amount": 99.99,
-    "currency": "USD",
-    "card_token": "tok_visa_4242"
-  }'
+# Charge
+curl -X POST localhost:8080/api/payments/charge \
+  -d '{"order_id":"ord_123","amount":99.99,"card_token":"tok_visa_4242"}'
+# → {"payment_id":"pay_456","status":"completed"}
 
-Response: {"payment_id": "pay_456", "status": "completed"}
+# Refund
+curl -X POST localhost:8080/api/payments/pay_456/refund -d '{"reason":"customer_request"}'
+
+# Status
+curl localhost:8080/api/payments/pay_456
 ```
 
-**2. Refund a payment**
-```bash
-curl -X POST http://localhost:8080/api/payments/pay_456/refund \
-  -H "Content-Type: application/json" \
-  -d '{"reason": "customer_request"}'
-
-Response: {"refund_id": "ref_789", "status": "pending"}
-```
-
-**3. Check payment status**
-```bash
-curl http://localhost:8080/api/payments/pay_456
-
-Response: {
-  "payment_id": "pay_456",
-  "order_id": "ord_123",
-  "amount": 99.99,
-  "status": "completed",
-  "created_at": "2026-01-11T10:00:00Z"
-}
-```
-
-### Workflow Demo
-1. Start server: `make run`
-2. Create order: `curl -X POST http://localhost:8080/api/orders`
-3. List orders: `curl http://localhost:8080/api/orders`
-4. Charge payment: Use curl command above with test card
-5. Check dashboard: https://dashboard.stripe.com/test/payments
-
-### Exercises for New Dev
-- [ ] Run local tests (should pass)
-- [ ] Create test payment (use test card: 4242 4242 4242 4242)
-- [ ] Refund a test payment
-- [ ] Modify code, run tests, commit
-- [ ] Deploy to staging, verify works
+**Exercises for new dev**: run tests pass · create test payment (card 4242 4242 4242 4242) · refund it · commit a small change · deploy to staging.
 ```
 
 ---
@@ -672,30 +334,16 @@ Response: {
 - Quick answers with links to details
 - Troubleshooting tips
 
-**Template:**
+**Snippet:**
 ```markdown
 ## FAQs
 
-**Q: How do I test a payment locally?**
-A: Use Stripe test keys and test card 4242 4242 4242 4242. See [Local Setup](#local-setup)
-
-**Q: Why is my test payment declining?**
-A: Check Stripe dashboard for errors. Common: wrong amount format, expired test key.
-
-**Q: How do I debug a stuck payment?**
-A: Check logs: `kubectl logs -f deployment/payment-service-prod | grep payment_id`
-
-**Q: Can I deploy on a Friday?**
-A: Yes, but stay online for 1 hour post-deploy to monitor. Incident runbook ready at `/runbook-payment-failures.md`
-
-**Q: Who do I page if something breaks?**
-A: Check who's on-call: `make check-oncall`. Page them via PagerDuty.
-
-**Q: Where do I find the database password?**
-A: Never hardcoded. Kubernetes secret: `kubectl get secret payment-db-creds`
-
-**Q: How do I add a new payment method (Apple Pay)?**
-A: See [feature development guide](#feature-development). Stripe has good docs for new methods.
+- **Test a payment locally?** Stripe test keys, card `4242 4242 4242 4242`.
+- **Test payment declines?** Check Stripe dashboard for error code; usually wrong amount format or expired key.
+- **Debug a stuck payment?** `kubectl logs ... | grep payment_id=...`.
+- **Deploy Friday?** Yes, stay online 1h post-deploy. Runbook: `/runbook-payment-failures.md`.
+- **Who to page?** `make check-oncall` → PagerDuty.
+- **Database password?** Never hardcoded. `kubectl get secret payment-db-creds`.
 ```
 
 ---
