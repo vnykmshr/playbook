@@ -56,6 +56,8 @@ Knowledge transfer (KT) ensures:
 
 ## Pre-KT: Map Knowledge Risk
 
+**Audience:** KT organizer (targets the session before content is written)
+
 Before planning a session, identify what knowledge is actually at risk. Target the session - depth where it matters, skim where it does not. Four primitives, all compute with plain `git` on any repo. Tools like [repowise](https://github.com/repowise-dev/repowise) automate them but are not required to start.
 
 ### Bus factor - what only one person knows
@@ -145,6 +147,8 @@ Sections 1-12 below. Section 1 (Project Overview) is shown full as the worked ex
 
 ### 1. Project Overview
 
+**Audience:** new engineer (first-week context)
+
 **Provide:**
 - 1-2 paragraph summary of what the service does
 - Business value (why does this exist?)
@@ -175,6 +179,8 @@ Customers depend on this to process credit card charges with 99.99% uptime.
 
 ### 2. Technical Architecture
 
+**Audience:** new engineer (mental model)
+
 **Provide:**
 - High-level system diagram (ASCII or Mermaid)
 - Key components (APIs, databases, workers, caches)
@@ -200,6 +206,8 @@ Payment Service → Postgres (Orders) · Redis (Cache) · RabbitMQ (Events)
 
 ### 3. Key Data Flows
 
+**Audience:** new engineer, on-call responder
+
 **Provide:**
 - Critical request/response flows with sequence diagrams
 - Event flows (async, queues, webhooks)
@@ -218,6 +226,8 @@ Payment Service → Postgres (Orders) · Redis (Cache) · RabbitMQ (Events)
 ---
 
 ### 4. Dependencies & Integration Points
+
+**Audience:** new engineer, on-call responder
 
 **Provide:**
 - All upstream services (who calls us?)
@@ -242,6 +252,8 @@ Payment Service → Postgres (Orders) · Redis (Cache) · RabbitMQ (Events)
 
 ### 5. Development Setup
 
+**Audience:** new engineer (day 1)
+
 **Provide:**
 - Step-by-step local environment setup
 - Required dependencies (languages, databases, services)
@@ -263,6 +275,8 @@ Payment Service → Postgres (Orders) · Redis (Cache) · RabbitMQ (Events)
 
 ### 6. Testing Strategy
 
+**Audience:** new engineer (shipping their first PR)
+
 **Provide:**
 - What unit tests exist & why
 - What integration tests exist & why
@@ -283,6 +297,8 @@ Payment Service → Postgres (Orders) · Redis (Cache) · RabbitMQ (Events)
 ---
 
 ### 7. Pain Points & Gotchas
+
+**Audience:** new engineer (avoid rookie mistakes), on-call responder (debugging)
 
 **Provide:**
 - Known bugs or limitations
@@ -321,6 +337,8 @@ Payment Service → Postgres (Orders) · Redis (Cache) · RabbitMQ (Events)
 
 ### 8. Monitoring & Observability
 
+**Audience:** on-call responder
+
 **Provide:**
 - Key dashboards (links + what to look for)
 - Alert rules (what triggers alerts, what on-call does)
@@ -352,6 +370,8 @@ Payment Service → Postgres (Orders) · Redis (Cache) · RabbitMQ (Events)
 
 ### 9. Deployment & Operations
 
+**Audience:** engineer shipping changes
+
 **Provide:**
 - How code gets deployed
 - Rollback procedures
@@ -374,6 +394,8 @@ Payment Service → Postgres (Orders) · Redis (Cache) · RabbitMQ (Events)
 
 ### 10. Product Context
 
+**Audience:** engineer making feature trade-offs
+
 **Provide:**
 - What user-facing features use this service
 - Product roadmap (what's planned)
@@ -394,6 +416,8 @@ Payment Service → Postgres (Orders) · Redis (Cache) · RabbitMQ (Events)
 ---
 
 ### 11. Demo & Hands-On
+
+**Audience:** new engineer (hands-on learning)
 
 **Provide:**
 - Key API calls to demo (with curl examples)
@@ -426,6 +450,8 @@ curl localhost:8080/api/payments/pay_456
 
 ### 12. FAQs
 
+**Audience:** new engineer (self-service)
+
 **Provide:**
 - Common questions new developers ask
 - Quick answers with links to details
@@ -446,6 +472,8 @@ curl localhost:8080/api/payments/pay_456
 ---
 
 ## Durable Artifacts: Inline Decision Markers
+
+**Audience:** departing engineer (writes markers), all future engineers (read them)
 
 A KT session produces a doc. Docs go stale. Markers in the source survive.
 
