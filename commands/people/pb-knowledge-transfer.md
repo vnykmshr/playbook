@@ -26,12 +26,13 @@ Structured guide for documenting and transferring project knowledge to new team 
 
 ## How to Use This Skill
 
-1. **Identify the scenario** - emergency departure, planned transition, new-hire onboarding, preemptive documentation.
-2. **Pick a tier** - Standard (1-2 days) for most handoffs, Comprehensive (1-2 weeks with shadow) for critical or new-hire. See *Tiered KT Modes* below.
+1. **Identify the scenario** - cooperative planned transition, new-hire onboarding, emergency departure, or adversarial/disengaged exit. The last changes the shape of the whole KT; see *Adversarial / disengaged departure* under Tiered KT Modes.
+2. **Pick a tier** - Standard (2-3 days) for most cooperative handoffs, Comprehensive (1-2 weeks with shadow) for critical or new-hire. See *Tiered KT Modes* below.
 3. **Run *Pre-KT: Map Knowledge Risk*** - target the session before writing a single section.
-4. **Fill the Core Sections required for your tier** - Section 1 is shown full as the worked example; 2-13 give you the shape and a compact snippet. Sections 1-2 are receiving-engineer homework from the repo; the departing engineer spends time where only they can.
-5. **Produce inline markers in the departing engineer's hot paths** - durable beyond the doc. See *Durable Artifacts: Inline Decision Markers*.
-6. **Run the exit-criteria checklist for your tier** - verify the KT actually landed, not just that setup worked.
+4. **If you are the departing engineer, work the priority list first** - see *For the Departing Engineer: Do These Before Friday*. Irreversible artifacts (markers, Section 7 tribal, Section 13 vendor relationships) before reconstructable ones.
+5. **Fill the Core Sections required for your tier** - Section 1 is shown full as the worked example; 2-13 give you the shape and a compact snippet. Sections 1-2 are receiving-engineer homework from the repo; the departing engineer spends time where only they can.
+6. **Produce inline markers in the departing engineer's hot paths** - durable beyond the doc. See *Durable Artifacts: Inline Decision Markers*.
+7. **Run the exit-criteria checklist for your tier** - verify the KT actually landed, not just that setup worked.
 
 ---
 
@@ -47,7 +48,7 @@ A well-run KT keeps new developers productive in days (not weeks), prevents know
 
 Two tiers. Pick by time budget, not by ideal outcome - an incomplete KT that ships beats a comprehensive one that stays in someone's head.
 
-### Standard - planned transition (1-2 days)
+### Standard - planned transition (2-3 days)
 
 **When to use:** most handoffs. Planned departure with 2-4 weeks of runway. Team-to-team transfer of an existing service.
 
@@ -55,11 +56,15 @@ Two tiers. Pick by time budget, not by ideal outcome - an incomplete KT that shi
 
 **Lightly filled or linked to existing docs:** Sections 5 (Dev Setup), 6 (Testing), 9 (Deployment), 10 (Product Context), 11 (Demo), 12 (FAQs). If a section already has a good dedicated doc elsewhere, link to it rather than duplicate.
 
-**Process:** Pre-KT risk map (all four primitives) → section fill → inline marker sweep on hot paths → one 90-min formal session → Week-1 exit criteria.
+**Who writes what:** Sections 1 and 2 are receiving-engineer homework - draft them from the repo and the risk map, then have the departing engineer *verify* rather than author from scratch. Sections 3, 4, 7, 8, 13 are where only the departing engineer can write the tribal half; that is where their time goes.
+
+**Process:** Pre-KT risk map (all four primitives) → receiving engineer drafts Sections 1-2 → departing engineer fills Sections 3, 4, 7, 8, 13 → inline marker sweep on hot paths → one 90-min formal session → Week-1 exit criteria.
+
+**Budget reality:** 2-3 days of the departing engineer's focused time, plus 1-2 days of the receiving engineer's draft work in parallel. Teams that try to compress this into "1-2 days of one person" abandon it on day 2 and fall back to a Google Doc - do not design for failure.
 
 **Exit:** new dev can find their way, knows the dragons (ungoverned hotspots), can respond to standard alerts, has the access they need.
 
-**Emergency carve-out:** no 1-2 days available? Cut Standard to Sections 1/7/8/13 only and name the cut in the KT doc header so the receiving engineer sees what is and is not covered. This is a survival handoff, not a full transfer - label it honestly.
+**Emergency carve-out:** no 2-3 days available? Cut Standard to Sections 1/7/8/13 only and name the cut in the KT doc header so the receiving engineer sees what is and is not covered. This is a survival handoff, not a full transfer - label it honestly.
 
 ### Comprehensive - critical handoff or new-hire onboarding (1-2 weeks, with shadow)
 
@@ -70,6 +75,45 @@ Two tiers. Pick by time budget, not by ideal outcome - an incomplete KT that shi
 **Process:** Standard's process + 2-week Shadow Mode (see *KT Session Format*) + Week-1 AND Week-2 exit criteria + month-1 follow-up.
 
 **Exit:** new dev is on-call primary, has resolved at least one incident end-to-end, can answer questions from other teammates without escalating.
+
+### Adversarial / disengaged departure
+
+Comprehensive and Standard both assume the departing engineer cooperates. Sometimes they do not - notice given, checked out, minimum effort, or actively unhelpful. This is a real failure mode; pretending otherwise ships a doc that breaks on first contact with a bad exit.
+
+**What changes:**
+
+- **Treat the departing engineer as a read-only source.** Do not depend on them authoring anything. Instead, extract from what already exists: git history, Slack archives, PR comments, past incident postmortems, ticket systems. The risk map runs the same; the session format changes.
+- **Prioritize Section 13 (Access & Authority) revocation over transfer.** In a cooperative departure, you want Alice's vendor contacts handed over cleanly. In an adversarial one, you want Alice's prod access revoked on their last day - and you accept that the vendor-side relationships may genuinely be lost. Name the loss; do not pretend you transferred what you did not.
+- **Ungoverned hotspots become unresolvable dragons.** In a cooperative KT the departing engineer writes inline markers on their hot paths. In an adversarial one, the markers will not happen. Label every ungoverned hotspot in the risk map as "unresolved at departure - next owner to investigate and mark during the first three months of ownership."
+- **Week-1 exit criteria are unreachable.** "New dev explains a `WHY:` marker" cannot be tested when no new markers were written. Replace with: new dev has read at least one postmortem in a hot path, has reviewed the commit history of each ungoverned hotspot, and has listed three concrete questions they would want to ask the departing engineer if they still could.
+
+**Label it in the KT doc header:** "Departure was non-cooperative; this doc is extracted, not authored. Sections marked ⚠ are reconstructions from artifacts, not transferred knowledge." The receiving engineer needs to know which sections they can trust and which they cannot.
+
+---
+
+## For the Departing Engineer: Do These Before Friday
+
+**Audience:** the person leaving (if you are cooperating with the KT)
+
+If your time is scarce - last week, last day, last three hours - work this list top to bottom. Ordered by irreversibility: what disappears with you vs what the next person can reconstruct.
+
+**1. Inline markers in your hot paths (irreversible).** Run the ungoverned-hotspots grep on your files. For each one, drop at least one `WHY:`/`DECISION:`/`TRADEOFF:` marker capturing the non-obvious bit. The doc goes stale; the markers survive every refactor until the file is deleted. If you do nothing else from this list, do this.
+
+```bash
+grep -RL "WHY:\|DECISION:\|TRADEOFF:" path/to/your-hot-paths/
+```
+
+**2. Section 7 tribal knowledge (irreversible).** Pain Points and Gotchas. The "works by accident" list. The "nobody dares touch it" list. The performance cliffs that only appear under specific traffic patterns. None of this is reconstructable from code - it is pure memory, and it leaves with you. Write it down in any form; prose beats nothing.
+
+**3. Section 13 vendor relationships (partially reversible).** List every third-party vendor contact you have a relationship with. Names, email addresses, when you last spoke, what they helped with. Schedule one-on-one intros where you can - transferring the *relationship* matters more than transferring the email. Do not paste credentials; just paths and handoffs.
+
+**4. Section 4 dependency gotchas (semi-reversible).** For each upstream and downstream dependency, write one line on why the timeout/retry settings are what they are. Most are "past incident, we tuned down after X happened." The incident is in the commit log; the reasoning usually is not.
+
+**5. Section 8 alert signal/noise (semi-reversible).** For each alert, name which ones fire frequently enough that you have learned to ignore them, and which always matter. The next on-call will learn this by getting paged - but they will learn it faster if you write it down.
+
+**6. Everything else (reversible).** Architecture diagrams, data-flow documentation, deployment mechanics - the receiving engineer can reconstruct these from the repo if they have the time and the risk map. If you run out of days, these are the drop candidates.
+
+Priority is not "what is easy" or "what is comprehensive" - it is "what cannot be recovered without you." Every hour you spend on items 1-3 is worth a day spent on item 6.
 
 ---
 
