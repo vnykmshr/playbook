@@ -5,7 +5,9 @@ All notable changes to this project are documented here.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [v2.21.0] - 2026-04-23 "Otter"
+
+Planning workflow refactor plus template hardening consolidation. Named Otter for the theme of disciplined tool use -- skill invocation, subagent output, and fetched-input handling all got sharper rules this cycle.
 
 ### Added
 
@@ -18,6 +20,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **`/pb-plan` v2.0.0** -- Rewritten as orchestrating wrapper. Runs `/pb-sketch`, surfaces decisions for user confirmation, runs `/pb-spec`. Typing `/pb-plan` still produces an end-to-end plan, but the flow now has a mid-step interactive decision prompt. Direct readers of the former Phase 1-4 content: see `/pb-sketch` and `/pb-spec`.
 - **`/pb-claude-global` v2.2.1-v2.2.5** -- Skill-invocation discipline (v2.2.1), commit-message register (v2.2.2), authorship footer rule (v2.2.3), Read-Regroup-Decide input-handling BEACON (v2.2.4). v2.2.5 compresses the BEACON (13 -> 5 lines) and merges commits Register + Authorship into one bullet.
 - **`/pb-claude-orchestration` v1.2.0** -- Output Discipline subsection added to Task Delegation Patterns: accept subagent summaries as context, do not pipe raw tool output back into main conversation. Relocated from `/pb-claude-global` where it failed the day-1 test for users who don't delegate.
+
+### Risks
+
+- `/pb-plan` muscle-memory change. The new mid-step interactive decision prompt is a real behavior shift; users running /pb-plan for muscle memory will encounter it.
+- Users who regenerate `~/.claude/CLAUDE.md` get a different base context (151 lines; was 158 in v2.20.0).
+- Command count: 111 (+3 new, -1 demoted vs v2.20.0's 109). The demotion is `/pb-review-patterns` folded into `/pb-new-playbook` as an appendix.
+
+### Notes
+
+`/pb-review-patterns` was briefly introduced in v2.21.0-dev as a standalone reference doc, then demoted in this release because one pattern + reserved placeholders didn't earn a file. The scope-locked-passes pattern lives in `/pb-new-playbook` now. Future pattern additions can split back out.
 
 ## [v2.20.0] - 2026-04-17 "Pangolin"
 
