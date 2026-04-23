@@ -9,7 +9,7 @@ related_commands: ['pb-sketch', 'pb-spec', 'pb-adr', 'pb-start', 'pb-todo-implem
 last_reviewed: "2026-04-23"
 last_evolved: "2026-04-23"
 version: "2.0.0"
-version_notes: "v2.21.0: Rewrite as orchestrator. Delegates to /pb-sketch (decision forks) + /pb-spec (detailed plan). Preserves muscle memory: typing /pb-plan still produces end-to-end plan."
+version_notes: "v2.21.0: Rewrite as orchestrator. Delegates to /pb-sketch (decision forks) + /pb-spec (detailed plan). Typing /pb-plan still produces an end-to-end plan, but the flow now includes a mid-step interactive decision prompt -- users confirm or override recommended picks before the spec is written. New behavior, not invisible preservation."
 breaking_changes:
   - "Content moved out of this file. /pb-plan no longer contains Phase 1-4 framework; it orchestrates /pb-sketch and /pb-spec. Direct readers looking for the discovery/analysis framework: see /pb-sketch. Direct readers looking for scope-lock/release-doc templates: see /pb-spec."
 ---
@@ -35,14 +35,7 @@ Use the sketch sub-skill directly to explore without committing. Use the spec su
 
 ## Why a Wrapper
 
-Planning is two jobs, not one:
-
-1. **Sketch job:** What's the problem, what are the forks, which option do we recommend? Exploratory. Research unstable facts. Enumerate decision points.
-2. **Spec job:** Given resolved decisions, what are the numbered steps, verification, and rollback? Committed. Named artifacts.
-
-When planning conflates these, the plan gets written around the first viable approach instead of the best one. Splitting them forces decisions to happen *before* step-writing.
-
-The wrapper preserves muscle memory: `/pb-plan` still produces an end-to-end plan. Advanced users can call `/pb-sketch` or `/pb-spec` directly when they want one half of the work.
+Planning is two jobs: **decide** (problem + forks + recommended picks) and **do** (numbered steps + verification + rollback). Conflating them writes the plan around the first viable approach. Splitting them forces decisions *before* step-writing -- and the wrapper makes that discipline the default path.
 
 ---
 
@@ -98,17 +91,6 @@ Use the sub-skills directly when:
 - **You're exploring without committing** - use `/pb-sketch` standalone. Don't write the spec until you're ready to commit.
 - **You need to re-plan one phase** - invoke `/pb-spec` on the existing sketch with the changed fork decision.
 - **The work is a one-liner** - skip planning entirely; just do it.
-
----
-
-## Core Principles (shared across sub-skills)
-
-1. **Clarify, don't assume** - Assumptions compound into wasted work.
-2. **Align before you build** - Full agreement on scope before implementation.
-3. **Surgical execution** - Smallest change that achieves the goal.
-4. **Do less, better** - A focused release that ships beats an ambitious release that partially ships.
-
-Full framework lives in `/pb-sketch` (discovery + decisions) and `/pb-spec` (scope lock + steps + verification + rollback).
 
 ---
 
