@@ -81,18 +81,19 @@ Before planning a session, identify what knowledge is actually at risk. Target t
 
 ### Bus factor - what only one person knows
 
-Files where one engineer owns >80% of the lines are the highest-risk KT targets when that engineer leaves.
+Files where one engineer owns a dominant share of the lines are the highest-risk KT targets when that engineer leaves. Default threshold: top contributor >80%. Tune for your team - a two-person codebase rides higher concentrations without real risk; a ten-person team treats 60% as a red flag.
 
 ```bash
 # Contributors by line count for a single file
 git shortlog -sne -- path/to/file.go
 
-# Per-author line count across a module (blame-based)
-git ls-files path/to/module | xargs -I {} git blame --line-porcelain {} \
+# Per-author line count across a module (blame-based, faster batching)
+git ls-files -z path/to/module \
+  | xargs -0 -n 50 git blame --line-porcelain -- \
   | grep "^author " | sort | uniq -c | sort -rn
 ```
 
-Any file where the top contributor exceeds 80% is a session priority.
+The batched `-0 -n 50` form avoids re-forking `git blame` per file; on a 200-file module it runs in seconds rather than minutes. Any file where the top contributor exceeds your threshold is a session priority.
 
 ### Hotspots - where change concentrates
 
@@ -110,15 +111,27 @@ High-churn + high-size = hotspot. The departing engineer has implicit models of 
 
 Files that change together in the same commit without an import link between them. This is coupling that AST analysis cannot see and engineers rarely document.
 
-```bash
-# One approach (GNU awk; macOS needs gawk or a portability rewrite)
-git log --since="6 months ago" --name-only --pretty=format:"COMMIT" \
-  | awk '/^COMMIT/{if(length(f))print f; f=""; next} NF{f=f" "$0} END{print f}' \
-  | awk '{for(i=1;i<NF;i++)for(j=i+1;j<=NF;j++)print $i"\t"$j}' \
-  | sort | uniq -c | sort -rn | head -20
+```python
+#!/usr/bin/env python3
+# co_change.py - top file pairs that change together (6-month window)
+import subprocess, itertools, collections
+
+log = subprocess.check_output(
+    ["git", "log", "--since=6 months ago", "--name-only",
+     "--pretty=format:---"], text=True
+)
+pairs = collections.Counter()
+for commit in log.split("---"):
+    files = [f for f in commit.strip().splitlines() if f]
+    if 2 <= len(files) <= 20:  # skip huge refactors
+        for a, b in itertools.combinations(sorted(files), 2):
+            pairs[(a, b)] += 1
+
+for (a, b), n in pairs.most_common(20):
+    print(f"{n:4}  {a}  {b}")
 ```
 
-For a portable alternative, use a small Python or Go script (example below), or any co-change tool that reads git history. Chained awk across `git log` output is fragile; a real script is easier to maintain and extend.
+Run `python3 co_change.py` in the repo root - works on macOS, Linux, and anywhere Python 3 is available. Any co-change tool that reads git history works as well; the primitive is the commit-level file set, not the language.
 
 When a section says "these two files always move together," that is co-change intelligence. Record it explicitly - the new owner will not notice it otherwise.
 
@@ -243,6 +256,9 @@ Payment Service → Postgres (Orders) · Redis (Cache) · RabbitMQ (Events)
 3. Publish `payment.completed` → Order Service marks order as paid
 4. On failure: record marked failed, `payment.failed` event, Order Service rolls back
 ```
+
+**What the tools show**: call graphs, HTTP/RPC entry points, event subscribers, which queues and topics exist.
+**What they miss**: which error paths have actually fired in production (vs defensive code that never runs), the intended rollback behavior when two services disagree, the flows customers exercise vs the flows that exist on paper.
 
 ---
 
@@ -410,6 +426,9 @@ Payment Service → Postgres (Orders) · Redis (Cache) · RabbitMQ (Events)
 **Config**: Kubernetes secrets for env vars, Unleash for feature flags.
 **Verify**: dashboard (success rate, latency) → alerts clean → `make smoke-test-prod` → watch 1h.
 ```
+
+**What the tools show**: CI pipeline definitions, deploy scripts, migration tooling, feature-flag config.
+**What they miss**: which rollbacks have actually been used in anger, migrations that looked safe in staging and bit in prod, the unwritten rule about never deploying after 4pm Friday, which config changes need a warm-up window, which flags are load-bearing vs stale.
 
 ---
 
@@ -666,6 +685,7 @@ Week 1 after the KT session (did it actually land?):
 - [ ] New dev opened at least one PR (any scope, even docs)
 - [ ] New dev read at least one real incident alert (or, if the week stayed quiet, walked a past postmortem with the departing engineer)
 - [ ] New dev can explain each ungoverned hotspot from the risk map in their own words
+- [ ] New dev can explain at least one `WHY:`/`DECISION:`/`TRADEOFF:` marker in the hot paths, unprompted, without the departing engineer in the room
 - [ ] New dev has opened the main monitoring dashboards during a normal day
 - [ ] New dev can tell which Slack channels carry real signal vs noise
 - [ ] Week-2 follow-up 1:1 scheduled to catch drift
@@ -674,10 +694,11 @@ Week 1 after the KT session (did it actually land?):
 
 **Doc hygiene after handoff:**
 
-A KT doc has no cadence of its own. Absent a named owner and scheduled reviews, assume it is stale 90 days after the engineer leaves.
+A KT doc has no cadence of its own. Absent a named owner and scheduled reviews, assume it goes stale within a quarter of the engineer's departure - adjust to your team's pace, but do not assume longer without evidence.
 
 - [ ] KT doc has a named owner (usually the receiving engineer)
-- [ ] Next-review date set in the doc header (3 months from handoff by default)
+- [ ] Review dates set as calendar invites during the KT session itself, not as checklist aspirations - the 3-month invite is what survives; the checkbox is not
+- [ ] Default cadence 3 / 6 / 12 months; tighten for safety-critical services, loosen for stable ones
 - [ ] 3-month review: check links still work, verify local setup instructions still work, flag stale sections
 - [ ] 6-month review: verify ungoverned hotspots now have inline markers, review Access & Authority list for drift
 - [ ] 12-month review: decide keep / rewrite / archive
