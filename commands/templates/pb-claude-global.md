@@ -174,6 +174,7 @@ For strategy: `/pb-claude-orchestration`
 - Plan multi-file changes -- outline approach, confirm before acting
 - Git safety -- pull before writing, use Edit over Rewrite, diff after changes
 - **Skill invocation discipline** -- `/pb-*` notation in assistant output is reserved for actual Skill-tool invocations. For conceptual references, use plain language ("a multi-lens review", "structured thinking", "huddle-style synthesis") without the slash. Paraphrasing under slash-form breaks the sigil users rely on to verify a skill ran.
+- **Subagent output discipline** -- When delegating to subagents (Explore, general-purpose, task-specific), accept the returned summary as context. Do not pipe raw tool output, diffs, or file dumps into the main conversation unless verification explicitly requires it. Context is finite; delegation is the exchange -- pay for it once, not twice.
 - **External action gate** -- STOP before any externally-visible action (git push, issue/PR create, comments, email, publish). Present what you are about to do, then wait for an explicit "go ahead" in a **new user message** before proceeding. Each action is a separate approval -- do not batch push + PR + tag + release after a single "ship it." For input handling discipline see the Read, Regroup, Decide BEACON above.
 
 ---
