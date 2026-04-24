@@ -5,6 +5,16 @@ All notable changes to this project are documented here.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Changed
+
+- **`/pb-handcraft` v1.1.0** -- Additive expansion to cover reviewer communication.
+  - **New Lens 5: Scope Check.** Inserted between Clipping (4) and Register (now 6). Codifies "don't explain the reader's own system back to them" -- the cut-this-sentence test, the common failure modes (explaining their library, teaching their domain, citing "per the RFC" on a spec they authored, prescribing fix values), and why it matters. Register (6) and Read-Aloud (7) renumbered accordingly; header updated to "The 7-Lens Pass".
+  - **New section: Review Comment Craft.** Parallel to *Submission Quality Gate (Security Reports)*. Covers PR/issue/thread review comments: one load-bearing observation per comment, no performative hedge, opinion flagged as opinion ("I'd be tempted to"), no closing ceremony, paired options or single opinionated lean, scene-setter up front. The test: does the comment read like a dev typed this into the GitHub box, or like a generated review artifact?
+  - **Read-Aloud sub-check: typed shape for conversational artifacts.** Beyond spoken rhythm, check whether PR/issue comments, emails, and Slack messages read like someone typed them live or like a generated artifact with section headers and bullet padding. Structured submissions (GHSA, VRP) skip this sub-check -- required sections drive their shape.
+  - No breaking changes. Existing references in the file (e.g. "Run Lens 2 (AI Tell Scan) separately") stay valid -- Lens 2 is unchanged.
+
 ## [v2.21.1] - 2026-04-23 "Otter"
 
 Patch release on the Otter series. Single-command refinement of `/pb-knowledge-transfer` after the v2.21.0 enrichment got a three-persona review. Structural additions, correctness fixes, and a portable recipe replacement; no breaking changes elsewhere in the catalog.

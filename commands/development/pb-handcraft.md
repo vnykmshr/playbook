@@ -6,10 +6,10 @@ difficulty: "intermediate"
 model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-voice', 'pb-review', 'pb-linus-agent', 'pb-commit']
-last_reviewed: "2026-03-24"
-last_evolved: ""
-version: "1.0.0"
-version_notes: "Initial: 6-lens quality pass for AI-assisted output."
+last_reviewed: "2026-04-24"
+last_evolved: "2026-04-24"
+version: "1.1.0"
+version_notes: "v1.1: added Scope Check as Lens 5 (don't explain the reader's own system back), added Review Comment Craft section for PR/issue reviewers, added typed-register sub-check under Read-Aloud for conversational artifacts."
 breaking_changes: []
 ---
 # AI Output Quality Gate
@@ -75,9 +75,9 @@ New code that works differently from adjacent code signals an outsider. The swee
 
 ---
 
-## The 6-Lens Pass
+## The 7-Lens Pass
 
-Read the work through six lenses, in order. Fix as you go.
+Read the work through seven lenses, in order. Fix as you go.
 
 ### Lens 1: Convention Match
 
@@ -164,7 +164,24 @@ Verify nothing was accidentally removed.
 
 **The test:** diff against the original. For each removed line, confirm it's genuinely unnecessary.
 
-### Lens 5: Register Check
+### Lens 5: Scope Check
+
+The reader built the system. Don't explain their code, their spec, their domain, or their role back to them.
+
+**Cut sentences that:**
+
+- Explain how their own library/API works ("the Authenticate method handles...")
+- Teach their domain back to them (OIDC primer to an auth maintainer, SDP sizes to a WebRTC author)
+- Interpret their intent ("this suggests it was missed rather than intentional")
+- Describe their own role/permission model
+- Reference "as documented in..." / "per the RFC..." to justify a point they authored
+- Prescribe specific fix values they would choose themselves ("64KB-256KB would cover...")
+
+**The test:** remove the sentence. Can the reader still reproduce, understand, and fix the issue? If yes, cut.
+
+**Why it matters:** Reviewer text that explains a maintainer's own system back reads as outsider, AI-assisted, or condescending -- even when factually correct. The strongest review comments show the bug, the proof, and the fix without restating what the reader built.
+
+### Lens 6: Register Check
 
 Apply project-specific voice guidelines. If the project defines a voice guide or `/pb-voice` has been configured, use those rules. Otherwise, match the register of the target project's existing docs and comments.
 
@@ -176,7 +193,7 @@ General dev-to-dev register:
 - Scope unknowns explicitly
 - Use dev abbreviations (PoC, SSRF, authz, impl, etc.)
 
-### Lens 6: Read-Aloud Check
+### Lens 7: Read-Aloud Check
 
 Read the output as if speaking it to the maintainer over a call.
 
@@ -186,6 +203,8 @@ Read the output as if speaking it to the maintainer over a call.
 - Would you actually say this to a colleague?
 
 If it sounds like a press release, rewrite until it sounds like a person.
+
+**For conversational artifacts (PR/issue comments, emails, Slack):** beyond spoken rhythm, check the shape. Does it read like someone typed this live, or like a generated review artifact with section headers and bullet padding? Scene-setter up front, specific pointers, flowing prose. Structured submissions (GHSA fields, VRP forms) skip this sub-check -- required sections drive their shape.
 
 ---
 
@@ -200,6 +219,21 @@ Before any security submission -- GHSA, bounty platform, email -- verify these i
 - **Impact field isolation.** Platform triagers read Impact separately from Description. Read the Impact field with zero other context. Two tests: (a) does a triager who reads ONLY this field understand the attack? (b) can they dismiss it without reading Description? If yes to (b), rewrite until the answer is no. Name the actor, the action, the blast radius, and the preconditions in the Impact field itself.
 - **PoC code as evidence.** Run Lens 2 (AI Tell Scan) separately on all PoC code. Docstrings, argparse, class hierarchies, try/except with helpful messages, unused imports, and trailing summaries are the most common AI tells in PoC scripts. The PoC is what the triager scrutinizes most -- a clean report with an over-engineered PoC gets flagged.
 - **Comparison case.** Show what the code DOES handle correctly next to what it misses. Vulnerable line vs safe alternative. Blocked path vs bypassed path. This demonstrates manual code reading and is the strongest signal that you understand the codebase.
+
+---
+
+## Review Comment Craft
+
+Before posting any review comment on a PR, issue, or thread, check:
+
+- **One load-bearing observation per comment, not a list.** If three concerns arise, pick the most load-bearing and raise the others only after the first is resolved.
+- **No performative hedge.** "Just wanted to flag..." or "This might be wrong, but..." weakens signal without softening tone. Either state the observation or don't raise it.
+- **Opinion flagged as opinion.** "I'd be tempted to X" or "My lean would be X" signals personal preference and leaves the maintainer room to disagree. Better than either a flat demand or a hedged question.
+- **No closing ceremony.** "Happy to pair", "Let me know if...", "Hope this helps" -- strip unless the offer is concrete and specific to this thread.
+- **Paired options or single opinionated lean.** Not a multi-section review with headers. A PR comment should read like a typed message, not a consulting deliverable.
+- **Scene-setter up front.** Open with evidence or a specific file/function pointer, not a preamble. "Pulled locally; suite runs green" beats "Thanks for the contribution! I took a look at..."
+
+**The test:** does the comment read like a dev typed this into the GitHub box, or like a generated review artifact? If the latter, reshape until it reads typed.
 
 ---
 
