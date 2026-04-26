@@ -9,7 +9,7 @@ related_commands: ['pb-start', 'pb-commit', 'pb-pr', 'pb-review-code', 'pb-testi
 last_reviewed: "2026-04-26"
 last_evolved: "2026-04-26"
 version: "1.2.0"
-version_notes: "v1.2.0: Reference global GitHub Artifact Register rule for commit messages; make body optional in HEREDOC template instead of forcing 'Body explaining what and why'."
+version_notes: "v1.2.0: Reference global GitHub Artifact Register rule via single-line pointer; subject-only as default in HEREDOC template, body optional only when WHY is non-obvious."
 breaking_changes: []
 ---
 # Development Cycle: Self-Review + Peer Review
@@ -182,7 +182,7 @@ EOF
 )"
 ```
 
-Commit message register follows the global rule (see `~/.claude/CLAUDE.md` § GitHub Artifact Register). Subject line is the default. Add a body only when the WHY is genuinely non-obvious -- never to restate what the diff already shows.
+Commit message register: `~/.claude/CLAUDE.md` § GitHub Artifact Register.
 
 **Warning:** Never use `git add .` or `git add -A`. Always stage specific files intentionally. Blind adds lead to:
 - Committing debug code, secrets, or unrelated changes

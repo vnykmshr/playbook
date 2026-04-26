@@ -9,7 +9,7 @@ related_commands: ['pb-start', 'pb-commit', 'pb-review-code', 'pb-review-compreh
 last_reviewed: "2026-04-26"
 last_evolved: "2026-04-26"
 version: "2.6.0"
-version_notes: "v2.6.0: Reference global GitHub Artifact Register rule for auto-commit messages; tighten example body to remove diff-restating noise."
+version_notes: "v2.6.0: Reference global GitHub Artifact Register rule for auto-commit messages via single-line pointer; tighten example body."
 breaking_changes: []
 ---
 # Automated Quality Gate
@@ -56,7 +56,7 @@ Most reviews hit outcome 1 or 2. You only get involved for genuinely ambiguous c
 
 **Critical-severity surfacing.** When a critical-severity finding is detected, system surfaces it individually - one issue at a time, not batched. Critical findings require explicit acknowledgment before proceeding. This prevents critical issues from getting lost in a list of suggestions.
 
-**Commit message register.** Auto-drafted messages follow the global rule (see `~/.claude/CLAUDE.md` § GitHub Artifact Register). Subject line by default; body 0-2 short lines, added only when the WHY is genuinely non-obvious. Never include assistant-attribution footers, narration ("I examined..."), severity adjectives, closing summaries, or restatements of what the diff already shows. The reader is a peer reviewing the diff.
+**Commit message register.** Auto-drafted messages follow `~/.claude/CLAUDE.md` § GitHub Artifact Register.
 
 ---
 

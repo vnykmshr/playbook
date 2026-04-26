@@ -9,7 +9,7 @@ related_commands: ['pb-commit', 'pb-cycle', 'pb-review-code', 'pb-ship']
 last_reviewed: "2026-04-26"
 last_evolved: "2026-04-26"
 version: "1.1.0"
-version_notes: "v1.1.0 -- size-tiered templates, drop Screenshots section, reference global GitHub Artifact Register rule"
+version_notes: "v1.1.0: Size-tiered templates (small/large by file count + concern count), drop Screenshots section, reference global GitHub Artifact Register rule via single-line pointer."
 breaking_changes: []
 ---
 # Quick PR Creation
@@ -110,8 +110,6 @@ EOF
 )"
 ```
 
-**Never include** (per global rule): `Co-Authored-By`, `Generated-With`, `🤖 Generated with [Claude Code]`, thumbs-up/down feedback prompts, narration ("I examined..."), severity adjectives ("critical", "important to note"), closing summaries, or restatements of what the diff shows.
-
 ---
 
 ## PR Title Format
@@ -136,12 +134,6 @@ fix(auth): handle expired token redirect loop
 refactor(miniplayer): extract shared button components
 perf(fonts): self-host fonts for faster loading
 ```
-
----
-
-## PR Description Guidelines
-
-See `~/.claude/CLAUDE.md` § GitHub Artifact Register for length ceilings and always-strip / never-write rules. The Step 3 templates already encode the size-tier choice -- pick by file count and concern count, not by perceived "importance."
 
 ---
 

@@ -9,7 +9,7 @@ related_commands: ['pb-review', 'pb-start', 'pb-pr']
 last_reviewed: "2026-04-26"
 last_evolved: "2026-04-26"
 version: "2.3.0"
-version_notes: "v2.3.0: Reference global GitHub Artifact Register rule, drop implicit 4-bullet template that produced essay-form commits."
+version_notes: "v2.3.0: Reference global GitHub Artifact Register rule via single-line pointer; drop local restatement and implicit 4-bullet template."
 breaking_changes: []
 ---
 # Commit (Usually Automatic)
@@ -88,13 +88,7 @@ For changes touching >3 files across >1 concern, consider splitting into bisecta
 
 ## Message Register
 
-Commit messages follow the global rule (see `~/.claude/CLAUDE.md` § GitHub Artifact Register):
-
-- **Format:** `<type>(<scope>): <subject>` -- present tense, atomic.
-- **Length:** Subject line. Body 0-2 short lines, only when the WHY is genuinely non-obvious.
-- **Never include:** `Co-Authored-By`, `Generated-With`, `🤖 Generated with [Claude Code]`, narration ("I examined...", "After analysis..."), severity adjectives ("critical", "important to note"), closing summaries, restatements of what the diff already shows.
-
-The reader is a peer reviewing the diff. Do not re-explain the diff in prose.
+Follow `~/.claude/CLAUDE.md` § GitHub Artifact Register for format, length ceilings, strip list, and never-write list. Subject-only by default.
 
 ---
 
