@@ -172,11 +172,22 @@ For strategy: `/pb-claude-orchestration`
 
 ---
 
-## Commits
+## GitHub Artifact Register (commits, PRs, issues, comments)
 
-**Format:** `<type>(<scope>): <subject>` -- `feat:`, `fix:`, `refactor:`, `docs:`, `test:`, `chore:`, `perf:`
-**Style:** Atomic, present tense, explain WHY not what. Auto-drafted by `/pb-review`.
-**Register:** Minimum-sufficient dev-to-dev. Subject alone when the diff shows the change; body lines only when the WHY is non-obvious. No `Co-Authored-By`, `Generated-With`, or other assistant-attribution footers on commits, issues, or PR descriptions.
+Minimum-sufficient dev-to-dev. The reader is a peer; do not re-explain the diff.
+
+**Length ceilings (default; exceed only when the WHY is genuinely non-obvious):**
+- Commit: subject line. Body = 0-2 short lines max.
+- PR body: 1 paragraph, ~3-5 sentences. No `## Summary` / `## Test plan` headers unless >3 files or >1 concern.
+- Issue: 1 paragraph + repro steps if applicable. No template scaffolding.
+- Review/PR comments: state the issue, cite the line, stop. One sentence per finding.
+
+**Format:** `<type>(<scope>): <subject>` -- `feat:`, `fix:`, `refactor:`, `docs:`, `test:`, `chore:`, `perf:`. Present tense. Atomic. Auto-drafted by `/pb-review`.
+
+**Always strip** (on every GitHub artifact -- commits, issues, PR descriptions, PR/review/inline comments -- even when a skill template includes them by default): `Co-Authored-By`, `Generated-With`, `🤖 Generated with [Claude Code]`, thumbs-up/down feedback prompts, any assistant-attribution or engagement-bait footers.
+
+**Never write:** narration ("I examined...", "After analysis..."), scope reminders, severity adjectives ("critical", "important to note"), closing summaries, restatements of what the diff already shows.
+
 **Large changes (>3 files, >1 concern):** Split bisectable -- infra -> data+tests -> logic -> versioning.
 
 ---
