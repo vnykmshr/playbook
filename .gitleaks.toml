@@ -1,0 +1,30 @@
+# Gitleaks config. Uses default rules + a project-specific allowlist for
+# documented examples and intentional public values.
+#
+# Add new entries only after verifying the match is genuinely a non-secret.
+
+[extend]
+useDefault = true
+
+[allowlist]
+description = "Documented examples, placeholders, and intentional public values"
+
+regexes = [
+  # Cloudflare Web Analytics beacon token -- intentionally public client-side
+  '''e8e97fc461cc42fd9e67894088d8dab8''',
+
+  # Documented age public key -- explicitly labeled "Public key" in pb-secrets.md
+  '''age1ql3z7hjy54pw3hyww5ayyfg7zqgvc7w3j2elw8zmrj2kg5sfn9aqmcac8p''',
+
+  # Pedagogical anti-pattern: Stripe-format key shown as what NOT to commit
+  '''sk_live_abc123def456''',
+
+  # Placeholder ellipsis form
+  '''sk_live_abc123\.\.\.''',
+
+  # X-API-Key placeholder in API patterns doc
+  '''api_key_abc123''',
+
+  # Bearer-token placeholders in curl/auth examples (ellipsis form)
+  '''sk_live_\.\.\.''',
+]
