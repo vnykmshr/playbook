@@ -6,10 +6,10 @@ difficulty: "beginner"
 model_hint: "sonnet"
 execution_pattern: "automatic"
 related_commands: ['pb-review', 'pb-start', 'pb-pr']
-last_reviewed: "2026-02-17"
-last_evolved: "2026-02-17"
-version: "2.2.0"
-version_notes: "v2.2.0: Added bisectable commit splitting guidance for large changes."
+last_reviewed: "2026-04-26"
+last_evolved: "2026-04-26"
+version: "2.3.0"
+version_notes: "v2.3.0: Reference global GitHub Artifact Register rule, drop implicit 4-bullet template that produced essay-form commits."
 breaking_changes: []
 ---
 # Commit (Usually Automatic)
@@ -42,11 +42,7 @@ You: Keep working or run /pb-start on next feature
 
 **Your involvement:** 0%
 
-**What happened:** Commit message auto-drafted with:
-- What changed
-- Why you did it
-- Review decisions made
-- Issues addressed
+**What happened:** Commit message auto-drafted per the global register rule (see `~/.claude/CLAUDE.md` § GitHub Artifact Register). Subject line only by default; body added only when the WHY is non-obvious.
 
 ---
 
@@ -90,6 +86,18 @@ For changes touching >3 files across >1 concern, consider splitting into bisecta
 
 ---
 
+## Message Register
+
+Commit messages follow the global rule (see `~/.claude/CLAUDE.md` § GitHub Artifact Register):
+
+- **Format:** `<type>(<scope>): <subject>` -- present tense, atomic.
+- **Length:** Subject line. Body 0-2 short lines, only when the WHY is genuinely non-obvious.
+- **Never include:** `Co-Authored-By`, `Generated-With`, `🤖 Generated with [Claude Code]`, narration ("I examined...", "After analysis..."), severity adjectives ("critical", "important to note"), closing summaries, restatements of what the diff already shows.
+
+The reader is a peer reviewing the diff. Do not re-explain the diff in prose.
+
+---
+
 ## If Something Went Wrong
 
 ```
@@ -128,4 +136,4 @@ For changes touching >3 files across >1 concern, consider splitting into bisecta
 
 ---
 
-*Automatic by default | Manual if you prefer | v2.1.0*
+*Automatic by default | Manual if you prefer | v2.3.0*
