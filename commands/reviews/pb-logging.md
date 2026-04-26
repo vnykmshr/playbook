@@ -6,10 +6,10 @@ difficulty: "advanced"
 model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-security', 'pb-observability', 'pb-incident', 'pb-guide', 'pb-testing']
-last_reviewed: "2026-02-09"
-last_evolved: ""
-version: "1.0.0"
-version_notes: "v2.10.0 baseline"
+last_reviewed: "2026-04-26"
+last_evolved: "2026-04-26"
+version: "1.1.0"
+version_notes: "v1.1.0: Reference global GitHub Artifact Register rule for review-comment register."
 breaking_changes: []
 ---
 # Logging Strategy & Standards
@@ -481,6 +481,12 @@ Before deploying, verify:
 - [ ] **Not noisy**: Not logging every normal operation
 - [ ] **Parsing-friendly**: JSON structured logging (not raw strings)
 - [ ] **Performance impact**: Logging overhead acceptable in hot paths
+
+---
+
+## Comment Register
+
+Findings posted as PR/issue comments follow `~/.claude/CLAUDE.md` § GitHub Artifact Register: one load-bearing observation per comment, one sentence per finding, no narration or severity adjectives.
 
 ---
 

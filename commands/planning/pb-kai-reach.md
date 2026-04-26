@@ -6,10 +6,10 @@ difficulty: "intermediate"
 model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-maya-product', 'pb-repo-polish', 'pb-preamble', 'pb-design-rules', 'pb-review-product']
-last_reviewed: "2026-03-05"
-last_evolved: ""
-version: "1.0.0"
-version_notes: "Initial: distribution thinking lens -- creation-to-consumption gap analysis"
+last_reviewed: "2026-04-26"
+last_evolved: "2026-04-26"
+version: "1.1.0"
+version_notes: "v1.1.0: Reference global GitHub Artifact Register rule for review-comment register."
 breaking_changes: []
 ---
 
@@ -267,6 +267,12 @@ Maya works before building. Kai works before publishing. They're sequential: May
 - Repository discoverability audit: `/pb-repo-polish`
 - Documentation quality: `/pb-sam-documentation`
 - Technical content accuracy: `/pb-review-docs`
+
+---
+
+## Comment Register
+
+Findings posted as PR/issue comments follow `~/.claude/CLAUDE.md` § GitHub Artifact Register: one load-bearing observation per comment, one sentence per finding, no narration or severity adjectives.
 
 ---
 

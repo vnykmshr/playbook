@@ -6,10 +6,10 @@ difficulty: "advanced"
 model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-think', 'pb-review-docs', 'pb-documentation', 'pb-design-rules', 'pb-preamble']
-last_reviewed: "2026-02-28"
-last_evolved: "2026-02-28"
-version: "2.1.0"
-version_notes: "Added Step 0 (Register Calibration) and Category 12 (Register Mismatch) to catch textbook phrasing that's correct but wrong for conversational registers. Added explanatory completeness and precise-sounding vagueness subcategories. Enhanced Verify with register-specific read-aloud test. Added register-aware examples. Updated score calibration with category-count guidance. Based on production session where 3 review rounds were needed to catch register drift that category-based detection missed."
+last_reviewed: "2026-04-26"
+last_evolved: "2026-04-26"
+version: "2.2.0"
+version_notes: "v2.2.0: Reference global GitHub Artifact Register rule for review-comment register."
 breaking_changes: ["Detection categories expanded from 11 to 12", "Step 0 (Register Calibration) added before Category 1", "Persona file now loaded in Step 0 (before detection) instead of Stage 2 (rewrite)"]
 ---
 # Voice Review
@@ -485,6 +485,12 @@ The profile becomes a calibration reference that detection and rewrite stages us
 | Ignoring author voice | Generic "human" isn't specific enough | Use persona when available |
 | Over-shortening | Losing meaning | Cut padding, keep substance |
 | Fixing subtle tells first | Low impact | Fix HIGH severity first |
+
+---
+
+## Comment Register
+
+Findings posted as PR/issue comments follow `~/.claude/CLAUDE.md` § GitHub Artifact Register: one load-bearing observation per comment, one sentence per finding, no narration or severity adjectives.
 
 ---
 
