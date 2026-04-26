@@ -6,10 +6,10 @@ difficulty: "advanced"
 model_hint: "opus"
 execution_pattern: "sequential"
 related_commands: ['pb-review', 'pb-review-hygiene', 'pb-review-tests', 'pb-security', 'pb-cycle']
-last_reviewed: "2026-02-18"
-last_evolved: "2026-02-18"
-version: "2.1.0"
-version_notes: "v2.1.0: Added LLM output trust boundary to security review, critical-severity single-issue surfacing."
+last_reviewed: "2026-04-26"
+last_evolved: "2026-04-26"
+version: "2.2.0"
+version_notes: "v2.2.0: Reference global GitHub Artifact Register rule for review-comment register via single-line pointer."
 breaking_changes: []
 ---
 # Code Review (Specific Changes)
@@ -167,6 +167,8 @@ Q1: Is this for a specific change (PR/commit)?
 - **Be constructive** - Suggest alternatives when criticizing
 - **Be curious** - Ask questions when you don't understand a choice
 - **Surface criticals individually** - For MUST-level findings, raise one issue at a time. Don't batch critical findings into a list - each one requires explicit acknowledgment before moving to the next
+
+**Comment register:** `~/.claude/CLAUDE.md` § GitHub Artifact Register. State the issue, cite the line, stop -- the reader wrote the code.
 
 ### Feedback Categories
 

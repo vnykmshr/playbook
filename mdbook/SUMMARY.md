@@ -64,6 +64,8 @@
 # Commands: Planning
 
 - [Plan](commands/planning/pb-plan.md)
+- [Sketch](commands/planning/pb-sketch.md)
+- [Spec](commands/planning/pb-spec.md)
 - [ADR](commands/planning/pb-adr.md)
 - [Design Language](commands/planning/pb-design-language.md)
 - [Maya: Product Agent](commands/planning/pb-maya-product.md)

@@ -6,10 +6,10 @@ difficulty: "intermediate"
 model_hint: "sonnet"
 execution_pattern: "checklist"
 related_commands: ['pb-design-rules', 'pb-standards', 'pb-security', 'pb-review-product', 'pb-review-frontend']
-last_reviewed: "2026-02-18"
-last_evolved: "2026-02-18"
-version: "1.2.0"
-version_notes: "v2.19.0: Added Section E (Ethical Calm) — dark patterns, meaningful consent, engagement well-being"
+last_reviewed: "2026-04-26"
+last_evolved: "2026-04-26"
+version: "1.3.0"
+version_notes: "v1.3.0: Reference global GitHub Artifact Register rule for review-comment register."
 breaking_changes: []
 ---
 
@@ -365,6 +365,12 @@ Before shipping, ask yourself:
 ```
 
 If all 7: Calm. If 5-6: Good start; refine. If <5: Revisit design.
+
+---
+
+## Comment Register
+
+Findings posted as PR/issue comments follow `~/.claude/CLAUDE.md` § GitHub Artifact Register: one load-bearing observation per comment, one sentence per finding, no narration or severity adjectives.
 
 ---
 

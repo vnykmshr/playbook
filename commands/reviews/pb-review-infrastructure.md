@@ -6,10 +6,10 @@ difficulty: "advanced"
 model_hint: "opus"
 execution_pattern: "parallel"
 related_commands: ['pb-review-code', 'pb-review-backend', 'pb-alex-infra', 'pb-security']
-last_reviewed: "2026-02-12"
-last_evolved: ""
-version: "1.1.0"
-version_notes: "Initial v2.11.0 (Phase 1-4 enhancements)"
+last_reviewed: "2026-04-26"
+last_evolved: "2026-04-26"
+version: "1.2.0"
+version_notes: "v1.2.0: Reference global GitHub Artifact Register rule for review-comment register."
 breaking_changes: []
 ---
 
@@ -207,6 +207,12 @@ Common disagreement: "Should we add encryption everywhere?"
 - Resolution: Enable audit logging. Profile to measure impact. Add to monitoring.
 
 **Approval:** Conditional on both Alex's and Linus's changes.
+
+---
+
+## Comment Register
+
+Findings posted as PR/issue comments follow `~/.claude/CLAUDE.md` § GitHub Artifact Register: one load-bearing observation per comment, one sentence per finding, no narration or severity adjectives.
 
 ---
 

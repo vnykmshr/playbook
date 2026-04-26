@@ -6,10 +6,10 @@ difficulty: "beginner"
 model_hint: "sonnet"
 execution_pattern: "automatic"
 related_commands: ['pb-review', 'pb-start', 'pb-pr']
-last_reviewed: "2026-02-17"
-last_evolved: "2026-02-17"
-version: "2.2.0"
-version_notes: "v2.2.0: Added bisectable commit splitting guidance for large changes."
+last_reviewed: "2026-04-26"
+last_evolved: "2026-04-26"
+version: "2.3.0"
+version_notes: "v2.3.0: Reference global GitHub Artifact Register rule via single-line pointer; drop local restatement and implicit 4-bullet template."
 breaking_changes: []
 ---
 # Commit (Usually Automatic)
@@ -42,11 +42,7 @@ You: Keep working or run /pb-start on next feature
 
 **Your involvement:** 0%
 
-**What happened:** Commit message auto-drafted with:
-- What changed
-- Why you did it
-- Review decisions made
-- Issues addressed
+**What happened:** Commit message auto-drafted per the global register rule (see `~/.claude/CLAUDE.md` § GitHub Artifact Register). Subject line only by default; body added only when the WHY is non-obvious.
 
 ---
 
@@ -90,6 +86,12 @@ For changes touching >3 files across >1 concern, consider splitting into bisecta
 
 ---
 
+## Message Register
+
+Follow `~/.claude/CLAUDE.md` § GitHub Artifact Register for format, length ceilings, strip list, and never-write list. Subject-only by default.
+
+---
+
 ## If Something Went Wrong
 
 ```
@@ -128,4 +130,4 @@ For changes touching >3 files across >1 concern, consider splitting into bisecta
 
 ---
 
-*Automatic by default | Manual if you prefer | v2.1.0*
+*Automatic by default | Manual if you prefer | v2.3.0*
