@@ -6,10 +6,10 @@ difficulty: "beginner"
 model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-claude-project', 'pb-claude-orchestration', 'pb-preamble', 'pb-design-rules', 'pb-standards']
-last_reviewed: "2026-04-23"
-last_evolved: "2026-04-23"
-version: "2.2.5"
-version_notes: "v2.20.0 -- Reframe Model Selection tier as cost guidance; acknowledge Opus 4.7 GA, /fast, and [1m] context variant. v2.2.0-2.2.4: Non-Negotiables backfill, Skill invocation discipline, Commits register, Authorship rule, Read-Regroup-Decide BEACON. v2.2.5: compress Read-Regroup-Decide 13 -> 5 lines (procedural ritual + trap, philosophy relocated); merge Commits Register + Authorship into one bullet; relocate Subagent-output discipline to /pb-claude-orchestration (it fails the day-1 test for users who don't delegate, and contextualizes naturally in the orchestration template)."
+last_reviewed: "2026-04-26"
+last_evolved: "2026-04-26"
+version: "2.3.0"
+version_notes: "v2.3.0: Replace 'Commits' section with 'GitHub Artifact Register' covering commits, PRs, issues, and PR/review/inline comments. Numeric length ceilings (subject-only commits, 0-2 line bodies, 1-paragraph small PRs, one sentence per review-comment finding). Strip list extended to all GitHub artifact types. Never-write list with narration, severity adjectives, closing summaries, restatements of the diff."
 breaking_changes: ['Template output restructured -- BEACON headers, standalone Non-Negotiables, Session Ritual added', 'Personas list removed from global (project-specific)', 'Context Efficiency section removed (generic)', 'Project-Specific Overrides section removed (obvious)']
 ---
 # Generate Global CLAUDE.md

@@ -7,13 +7,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v2.22.0] - 2026-04-26 "Beaver"
+
+GitHub Artifact Register rollout. One canonical rule in `~/.claude/CLAUDE.md` replaces six divergent local templates; downstream commands point to it instead of restating it; 22 review-producing commands that previously had no rule reference now do.
+
+### Added
+
+- **GitHub Artifact Register rule** in `/pb-claude-global` template (commits, PRs, issues, PR/review/inline comments). Numeric length ceilings (subject-only commits; 0-2 line bodies; 1-paragraph small PRs; one sentence per review-comment finding; sectioned PR only when >3 files OR >1 concern). Strip list (`Co-Authored-By`, `Generated-With`, `🤖 Generated`, thumbs-up/down). Never-write list (narration, severity adjectives, closing summaries, restatements of the diff). Format rule (`<type>(<scope>): <subject>`, atomic, present tense). Splitting rule for large changes.
+- **`/pb-handcraft` v1.2.0** -- New Lens 5 *Scope Check* between Clipping (4) and Register (now 6). Codifies "don't explain the reader's own system back to them" with a cut-this-sentence test. Register (6) and Read-Aloud (7) renumbered. Header updated to *The 7-Lens Pass*. New *Review Comment Craft* section parallel to *Submission Quality Gate (Security Reports)*. Read-Aloud sub-check for conversational artifacts (typed-shape vs generated-artifact). Existing in-file references (Lens 2) stay valid. Lens 6 references the global Register rule via single-line pointer.
+- **Enforcement test** in `tests/test_command_conventions.py::TestRegisterRuleReference`. Allowlist of 28 artifact-producing commands; each must reference "GitHub Artifact Register". Future maintainers adding a new artifact-producing command must extend the set.
+
 ### Changed
 
-- **`/pb-handcraft` v1.1.0** -- Additive expansion to cover reviewer communication.
-  - **New Lens 5: Scope Check.** Inserted between Clipping (4) and Register (now 6). Codifies "don't explain the reader's own system back to them" -- the cut-this-sentence test, the common failure modes (explaining their library, teaching their domain, citing "per the RFC" on a spec they authored, prescribing fix values), and why it matters. Register (6) and Read-Aloud (7) renumbered accordingly; header updated to "The 7-Lens Pass".
-  - **New section: Review Comment Craft.** Parallel to *Submission Quality Gate (Security Reports)*. Covers PR/issue/thread review comments: one load-bearing observation per comment, no performative hedge, opinion flagged as opinion ("I'd be tempted to"), no closing ceremony, paired options or single opinionated lean, scene-setter up front. The test: does the comment read like a dev typed this into the GitHub box, or like a generated review artifact?
-  - **Read-Aloud sub-check: typed shape for conversational artifacts.** Beyond spoken rhythm, check whether PR/issue comments, emails, and Slack messages read like someone typed them live or like a generated artifact with section headers and bullet padding. Structured submissions (GHSA, VRP) skip this sub-check -- required sections drive their shape.
-  - No breaking changes. Existing references in the file (e.g. "Run Lens 2 (AI Tell Scan) separately") stay valid -- Lens 2 is unchanged.
+- **22 review-producing commands** now reference the global Register rule for review-comment register. Direct review-comment producers (Tier 1, 13): `/pb-review-comprehensive`, `/pb-review-hygiene`, `/pb-review-tests`, `/pb-review-backend`, `/pb-review-frontend`, `/pb-review-infrastructure`, `/pb-review-microservice`, `/pb-review-product`, `/pb-review-docs`, `/pb-review-playbook`, `/pb-security`, `/pb-linus-agent`, `/pb-jordan-testing`. Persona reviewers and design lenses (Tier 2, 9): `/pb-maya-product`, `/pb-kai-reach`, `/pb-sam-documentation`, `/pb-alex-infra`, `/pb-a11y`, `/pb-calm-design`, `/pb-logging`, `/pb-usability`, `/pb-voice`. Each gets a uniform `## Comment Register` section ahead of `## Related Commands`.
+- **`/pb-commit` v2.3.0, `/pb-pr` v1.1.0, `/pb-review` v2.6.0, `/pb-cycle` v1.2.0, `/pb-handcraft` v1.2.0, `/pb-review-code` v2.2.0** -- collapse local Register-rule restatements to one-line pointers to the global rule. Six restatements would have required 6-file lockstep updates on every future global-rule edit. Command-specific mechanism (size-tier templates, HEREDOC, lens structure) preserved.
+- **`/pb-pr` v1.1.0** -- size-tiered PR templates (small ≤3 files / single concern: 1 paragraph, no headers; large >3 files OR multiple concerns: sectioned form). Drops the always-on Screenshots section. Drops the `## PR Description Guidelines` self-pointing section.
+- **`/pb-ship` v1.2.0** -- delegates PR template to `/pb-pr`. Drops the bloated 5-header (Summary/Changes/Review Focus/Test Plan/Ship Review) PR template. Ship-review status moves to `todos/ship-review-*.md` artifacts, not the PR body. Replaces `git add -A` in the feedback-iteration commit pattern with specific-file staging.
+- **`/pb-pause` v1.4.0** -- short-break and standard-mode wip commits use `git add <specific files>` instead of `git add -A`. The pb-standards rule "never use git add ." is now applied here too.
+- **`/pb-todo-implement` v1.1.0** -- checkpoint and atomic-commit steps use `git add <specific files>` instead of `git add -A`.
+- **`/pb-git-hygiene` v1.0.1** -- inline comment documents `git add .` in the fresh-init recipe as a documented exception to the "never `git add .`" rule.
+
+### Notes
+
+Command count unchanged at 111. No breaking changes -- the rule is enforced on artifact production going forward; existing artifacts are not retroactively rewritten. Maintainers regenerating `~/.claude/CLAUDE.md` get the canonical Register rule.
 
 ## [v2.21.1] - 2026-04-23 "Otter"
 
