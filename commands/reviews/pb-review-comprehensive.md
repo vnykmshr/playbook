@@ -6,10 +6,10 @@ difficulty: "advanced"
 model_hint: "opus"
 execution_pattern: "reference"
 related_commands: ['pb-review', 'pb-review-code', 'pb-review-hygiene', 'pb-review-tests', 'pb-security']
-last_reviewed: "2026-02-18"
-last_evolved: ""
-version: "2.0.0"
-version_notes: "v2.13.1: Renamed from pb-review to pb-review-comprehensive to resolve duplication with automated quality gate"
+last_reviewed: "2026-04-26"
+last_evolved: "2026-04-26"
+version: "2.1.0"
+version_notes: "v2.1.0: Reference global GitHub Artifact Register rule for review-comment register."
 breaking_changes: []
 ---
 # Comprehensive Project Review
@@ -320,6 +320,12 @@ Create review document at todos/project-review-2026-01-21.md
 4. **Prioritize ruthlessly** - Not every finding needs immediate action
 5. **Track progress** - Use the review document across sessions
 6. **Follow up** - Schedule remediation session after review
+
+---
+
+## Comment Register
+
+Findings posted as PR/issue comments follow `~/.claude/CLAUDE.md` § GitHub Artifact Register: one load-bearing observation per comment, one sentence per finding, no narration or severity adjectives.
 
 ---
 

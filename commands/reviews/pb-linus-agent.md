@@ -6,10 +6,10 @@ difficulty: "advanced"
 model_hint: "opus"
 execution_pattern: "sequential"
 related_commands: ['pb-review-code', 'pb-security', 'pb-preamble', 'pb-design-rules', 'pb-standards']
-last_reviewed: "2026-02-12"
-last_evolved: ""
-version: "1.3.0"
-version_notes: "v1.3.0: Added single-issue surfacing for automatic rejection criteria."
+last_reviewed: "2026-04-26"
+last_evolved: "2026-04-26"
+version: "1.4.0"
+version_notes: "v1.4.0: Reference global GitHub Artifact Register rule for review-comment register."
 breaking_changes: []
 ---
 
@@ -588,6 +588,12 @@ app.get('/api/v1/users/:id', (req, res) => {
 - Explain why your approach is better for this context
 - Be willing to change your mind if the reasoning is sound
 - Document the trade-off you're choosing
+
+---
+
+## Comment Register
+
+Findings posted as PR/issue comments follow `~/.claude/CLAUDE.md` § GitHub Artifact Register: one load-bearing observation per comment, one sentence per finding, no narration or severity adjectives.
 
 ---
 
