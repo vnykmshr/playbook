@@ -6,10 +6,10 @@ difficulty: "beginner"
 model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-claude-global', 'pb-claude-project', 'pb-learn', 'pb-review-playbook', 'pb-new-playbook']
-last_reviewed: "2026-04-17"
-last_evolved: "2026-04-17"
-version: "1.1.0"
-version_notes: "v2.20.0 -- Acknowledge Opus 4.7 GA, /fast (Opus 4.6), and [1m] 1M-context variant; reframe tier table as cost guidance"
+last_reviewed: "2026-04-23"
+last_evolved: "2026-04-23"
+version: "1.2.0"
+version_notes: "v2.20.0 -- Acknowledge Opus 4.7 GA, /fast (Opus 4.6), and [1m] 1M-context variant; reframe tier table as cost guidance. v1.2.0: add Output Discipline subsection to Task Delegation Patterns -- accept subagent summaries as context, do not pipe raw tool output back into main conversation. Relocated from pb-claude-global where it failed the day-1 test."
 breaking_changes: []
 ---
 # Claude Code Orchestration
@@ -99,6 +99,10 @@ When unsure, start with sonnet. Upgrade to opus if results lack depth. Downgrade
 - Architecture and planning
 - Work requiring conversational continuity with the user
 - Anything where the user needs to see the reasoning
+
+### Output Discipline
+
+When a subagent returns a summary, **accept the summary as context**. Do not pipe raw tool output, diffs, or file dumps back into the main conversation unless verification explicitly requires it. Context is finite; delegation is the exchange -- pay for it once, not twice.
 
 ### Parallel vs Sequential
 

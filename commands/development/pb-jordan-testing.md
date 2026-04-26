@@ -6,10 +6,10 @@ difficulty: "advanced"
 model_hint: "opus"
 execution_pattern: "sequential"
 related_commands: ['pb-testing', 'pb-preamble', 'pb-design-rules', 'pb-review-tests', 'pb-standards']
-last_reviewed: "2026-02-12"
-last_evolved: ""
-version: "1.2.0"
-version_notes: "v1.2.0: Added shadow path tracing, diff-aware test mapping, browser testing guidance."
+last_reviewed: "2026-04-26"
+last_evolved: "2026-04-26"
+version: "1.3.0"
+version_notes: "v1.3.0: Reference global GitHub Artifact Register rule for review-comment register."
 breaking_changes: []
 ---
 
@@ -790,6 +790,12 @@ When Jordan sees a test suite:
          Headless browser testing closes the feedback loop between code and user experience
    NO → Unit/integration tests are sufficient
 ```
+
+---
+
+## Comment Register
+
+Findings posted as PR/issue comments follow `~/.claude/CLAUDE.md` § GitHub Artifact Register: one load-bearing observation per comment, one sentence per finding, no narration or severity adjectives.
 
 ---
 

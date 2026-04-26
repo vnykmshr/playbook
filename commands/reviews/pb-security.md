@@ -6,10 +6,10 @@ difficulty: "advanced"
 model_hint: "opus"
 execution_pattern: "sequential"
 related_commands: ['pb-review', 'pb-review-hygiene', 'pb-hardening', 'pb-secrets', 'pb-patterns-security']
-last_reviewed: "2026-02-09"
-last_evolved: ""
-version: "1.2.0"
-version_notes: "v1.2.0: Added User-Facing Trust & Privacy section for post-deploy audits"
+last_reviewed: "2026-04-26"
+last_evolved: "2026-04-26"
+version: "1.3.0"
+version_notes: "v1.3.0: Reference global GitHub Artifact Register rule for review-comment register."
 breaking_changes: []
 ---
 # Security Review & Checklist
@@ -720,6 +720,12 @@ Additional: Privacy by design, user data export/deletion
 - `/pb-review-hygiene` - Security section in code review
 - `/pb-guide` §4.5 - Security design during planning
 - `/pb-release` - Pre-release security checklist
+
+---
+
+## Comment Register
+
+Findings posted as PR/issue comments follow `~/.claude/CLAUDE.md` § GitHub Artifact Register: one load-bearing observation per comment, one sentence per finding, no narration or severity adjectives.
 
 ---
 

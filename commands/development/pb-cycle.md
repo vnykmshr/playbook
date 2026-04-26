@@ -6,10 +6,10 @@ difficulty: "advanced"
 model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-start', 'pb-commit', 'pb-pr', 'pb-review-code', 'pb-testing']
-last_reviewed: "2026-02-09"
-last_evolved: ""
-version: "1.1.0"
-version_notes: "Initial v2.11.0 (Phase 1-4 enhancements)"
+last_reviewed: "2026-04-26"
+last_evolved: "2026-04-26"
+version: "1.2.0"
+version_notes: "v1.2.0: Reference global GitHub Artifact Register rule via single-line pointer; subject-only as default in HEREDOC template, body optional only when WHY is non-obvious."
 breaking_changes: []
 ---
 # Development Cycle: Self-Review + Peer Review
@@ -169,13 +169,20 @@ After reviews pass, create a logical commit:
 git add [specific files]    # NEVER use git add . or git add -A
 git status                  # Verify what's staged
 git diff --staged           # Review staged changes
+
+# Subject-only (default for most commits):
+git commit -m "type(scope): subject"
+
+# OR with body (only when WHY is non-obvious; max 0-2 short lines):
 git commit -m "$(cat <<'EOF'
 type(scope): subject
 
-Body explaining what and why
+WHY this change is needed (skip this body when the diff and subject are self-explanatory)
 EOF
 )"
 ```
+
+Commit message register: `~/.claude/CLAUDE.md` § GitHub Artifact Register.
 
 **Warning:** Never use `git add .` or `git add -A`. Always stage specific files intentionally. Blind adds lead to:
 - Committing debug code, secrets, or unrelated changes

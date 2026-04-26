@@ -539,6 +539,50 @@ Match depth to purpose. Simple commands don't need 500 lines.
 
 ---
 
+## Appendix: Review-Skill Design — Scope-Locked Passes
+
+When authoring a new `/pb-review-*` skill (or extending one), use scope-locked passes rather than omnibus reviews.
+
+**Anti-pattern — the Omnibus Review:** one skill or prompt asked to evaluate correctness AND simplicity AND duplication AND performance AND security AND style AND tests in a single pass. Symptoms: mixed-severity bullet lists, no natural stop condition, earlier findings bleed into later ones ("already flagged complexity; I'll go lighter on duplication").
+
+**Pattern — Named Passes with Explicit Refusal:** split the review into passes, each with a narrow mandate. Each pass declares what it does AND what it refuses, routing refused concerns to another pass.
+
+Canonical pass division:
+
+| Pass | Mandate | Refuses |
+|---|---|---|
+| Simplify | Reduce complexity, eliminate convoluted logic | Not correctness, not dedup |
+| Dedup | Find duplicates introduced by the diff; reuse existing utilities | Not a general review |
+| Correctness | Assumption-first: what does the code assume, can it be violated? | Not simplification, not dedup |
+| Security (optional) | Trust boundaries, input validation, threat model | Not performance, not style |
+
+**Why it works:**
+
+- Clean stopping signal per pass ("found nothing more to simplify" → stop).
+- Findings are type-sorted by construction.
+- Bounded iteration per pass; natural early-exit when a pass finds nothing.
+- Different passes can use different reviewer personas or models.
+
+**Refusal-language template** (include in the skill's Scope section):
+
+```markdown
+## Scope
+
+This pass **does**: flag duplicate code introduced by the diff; propose reuse of existing shared utilities.
+
+This pass **does not**: evaluate correctness, style, performance, or security. If the dedupe requires a behavior change, flag it and stop -- do not fix it. Correctness/style/perf/security belong to other passes.
+```
+
+**Warning signs** when reviewing an existing skill for drift:
+
+- "Also consider X" (where X is a different domain) -- omnibus drift
+- "As a bonus, this skill can also..." -- scope creep
+- "Comprehensive review of..." -- omnibus by name
+
+**Existing playbook alignment:** the `code-simplifier`, `silent-failure-hunter`, `type-design-analyzer`, `pr-test-analyzer`, and `code-reviewer` subagents all refuse by prompt training. The `/pb-review-*` skills refuse by doc-only convention -- make that refusal explicit in skill prose.
+
+---
+
 ## Related Commands
 
 - `/pb-evolve` -- Quarterly evolution cycles for updating the playbook ecosystem

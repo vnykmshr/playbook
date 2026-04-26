@@ -6,10 +6,10 @@ difficulty: "intermediate"
 model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-documentation', 'pb-preamble', 'pb-design-rules', 'pb-standards', 'pb-review-docs']
-last_reviewed: "2026-02-12"
-last_evolved: ""
-version: "1.2.0"
-version_notes: "v1.2.0: Added intentional omissions check to completeness review."
+last_reviewed: "2026-04-26"
+last_evolved: "2026-04-26"
+version: "1.3.0"
+version_notes: "v1.3.0: Reference global GitHub Artifact Register rule for review-comment register."
 breaking_changes: []
 ---
 
@@ -685,6 +685,12 @@ When Sam sees documentation:
    NO → Add structure (headings, TOC, examples)
    YES → Documentation is ready
 ```
+
+---
+
+## Comment Register
+
+Findings posted as PR/issue comments follow `~/.claude/CLAUDE.md` § GitHub Artifact Register: one load-bearing observation per comment, one sentence per finding, no narration or severity adjectives.
 
 ---
 

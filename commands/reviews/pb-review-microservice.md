@@ -6,10 +6,10 @@ difficulty: "advanced"
 model_hint: "opus"
 execution_pattern: "sequential"
 related_commands: ['pb-patterns-core', 'pb-patterns-resilience', 'pb-patterns-distributed', 'pb-observability', 'pb-incident']
-last_reviewed: "2026-02-09"
-last_evolved: ""
-version: "1.0.0"
-version_notes: "v2.10.0 baseline"
+last_reviewed: "2026-04-26"
+last_evolved: "2026-04-26"
+version: "1.1.0"
+version_notes: "v1.1.0: Reference global GitHub Artifact Register rule for review-comment register."
 breaking_changes: []
 ---
 # Microservice Architecture Review
@@ -824,6 +824,12 @@ Reviewed by: [Name]
 Date: [Date]
 Status: APPROVED / APPROVED WITH CONDITIONS / REJECTED
 ```
+
+---
+
+## Comment Register
+
+Findings posted as PR/issue comments follow `~/.claude/CLAUDE.md` § GitHub Artifact Register: one load-bearing observation per comment, one sentence per finding, no narration or severity adjectives.
 
 ---
 

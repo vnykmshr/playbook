@@ -6,10 +6,10 @@ difficulty: "intermediate"
 model_hint: "opus"
 execution_pattern: "parallel"
 related_commands: ['pb-review-frontend', 'pb-a11y', 'pb-calm-design', 'pb-security', 'pb-performance']
-last_reviewed: "2026-03-27"
-last_evolved: ""
-version: "1.0.0"
-version_notes: "Initial release: post-deploy usability audit orchestrator"
+last_reviewed: "2026-04-26"
+last_evolved: "2026-04-26"
+version: "1.1.0"
+version_notes: "v1.1.0: Reference global GitHub Artifact Register rule for review-comment register."
 breaking_changes: []
 ---
 
@@ -335,6 +335,12 @@ After completing audit sections, synthesize findings into a severity-tiered repo
 - **Use incognito/private mode.** Removes personalization bias.
 - **Test with real tasks, not abstract browsing.** "Buy the cheapest X" is better than "look around."
 - **Include someone outside the team.** Fresh eyes catch what familiarity hides.
+
+---
+
+## Comment Register
+
+Findings posted as PR/issue comments follow `~/.claude/CLAUDE.md` § GitHub Artifact Register: one load-bearing observation per comment, one sentence per finding, no narration or severity adjectives.
 
 ---
 

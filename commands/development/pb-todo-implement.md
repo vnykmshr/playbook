@@ -5,11 +5,11 @@ category: "development"
 difficulty: "advanced"
 model_hint: "sonnet"
 execution_pattern: "sequential"
-related_commands: ['pb-start', 'pb-review', 'pb-cycle', 'pb-commit']
-last_reviewed: "2026-02-09"
-last_evolved: ""
-version: "1.0.0"
-version_notes: "v2.10.0 baseline"
+related_commands: ['pb-spec', 'pb-start', 'pb-review', 'pb-cycle', 'pb-commit']
+last_reviewed: "2026-04-26"
+last_evolved: "2026-04-26"
+version: "1.1.0"
+version_notes: "v1.1.0: Replace git add -A with specific-file staging in checkpoint and atomic-commit steps."
 breaking_changes: []
 ---
 # Todo-Based Implementation Workflow
@@ -328,7 +328,7 @@ Show what was changed, why, and how it aligns with the plan.
 
 **D. Mark complete and stage**
 - Update checkbox in task.md: `- [x] [description]`
-- Stage changes: `git add -A`
+- Stage changes: `git add <files modified for this checkpoint>` (never `git add -A`)
 
 **2. Handle Unexpected Work**
 
@@ -427,7 +427,8 @@ rmdir todos/work/[timestamp]-[task-slug]/
 **4. Create Atomic Commit**
 
 ```bash
-git add -A
+git status
+git add <files modified for this task>   # never git add -A
 git commit -m "[task-title]: [one-line summary]
 
 [More detailed description if needed]
@@ -607,6 +608,7 @@ The workflow will:
 
 ## Related Commands
 
+- `/pb-spec` -- Upstream source of numbered plans this workflow executes
 - `/pb-start` -- Scope and kick off new work before creating todos
 - `/pb-review` -- Full review workflow after implementation is complete
 - `/pb-cycle` -- Self-review and peer review once code is ready

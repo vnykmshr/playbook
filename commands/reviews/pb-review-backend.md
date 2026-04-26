@@ -6,10 +6,10 @@ difficulty: "advanced"
 model_hint: "opus"
 execution_pattern: "parallel"
 related_commands: ['pb-review-code', 'pb-review-infrastructure', 'pb-alex-infra', 'pb-jordan-testing']
-last_reviewed: "2026-02-12"
-last_evolved: ""
-version: "1.1.0"
-version_notes: "Initial v2.11.0 (Phase 1-4 enhancements)"
+last_reviewed: "2026-04-26"
+last_evolved: "2026-04-26"
+version: "1.2.0"
+version_notes: "v1.2.0: Reference global GitHub Artifact Register rule for review-comment register."
 breaking_changes: []
 ---
 
@@ -189,6 +189,12 @@ Common disagreement: "Should this be async or sync?"
 - If no: Simplify retry logic until tests can verify it
 
 **Approval:** Conditional on both changes.
+
+---
+
+## Comment Register
+
+Findings posted as PR/issue comments follow `~/.claude/CLAUDE.md` § GitHub Artifact Register: one load-bearing observation per comment, one sentence per finding, no narration or severity adjectives.
 
 ---
 

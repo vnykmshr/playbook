@@ -6,10 +6,10 @@ difficulty: "advanced"
 model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-resume', 'pb-start', 'pb-standup']
-last_reviewed: "2026-03-28"
-last_evolved: "2026-03-28"
-version: "1.3.0"
-version_notes: "v2.20.0: Two-tier mode system (standard/deep), content consolidation, leaner pause notes template"
+last_reviewed: "2026-04-26"
+last_evolved: "2026-04-26"
+version: "1.4.0"
+version_notes: "v1.4.0: Replace git add -A with specific-file staging in short-break and standard wip flows."
 breaking_changes: []
 ---
 # Pause Development Work
@@ -38,7 +38,10 @@ Gracefully pause work. Use before stepping away for hours, days, or longer.
 For breaks of a few hours:
 
 ```bash
-git add -A && git commit -m "wip: [current state]" && git push
+git status                          # verify what's modified
+git add <specific files>            # stage your in-flight work; never git add -A
+git commit -m "wip: [current state]"
+git push
 ```
 
 That's it. No pause notes, no health check. Use `/pb-pause` when you need to preserve context for future-you or someone else.
@@ -54,7 +57,8 @@ git status
 git stash list
 
 # Option A: Commit (preferred)
-git add -A
+git status                              # verify what's modified
+git add <specific files in your scope>  # never git add -A
 git commit -m "wip: [describe current state]"
 
 # Option B: Stash if not ready to commit
