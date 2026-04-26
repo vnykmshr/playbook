@@ -6,10 +6,10 @@ difficulty: "intermediate"
 model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-plan', 'pb-adr', 'pb-review-product', 'pb-preamble', 'pb-design-rules']
-last_reviewed: "2026-02-12"
-last_evolved: ""
-version: "1.2.0"
-version_notes: "v2.13.2: Value adoption lens - articulation test, value timeline, perception checks"
+last_reviewed: "2026-04-26"
+last_evolved: "2026-04-26"
+version: "1.3.0"
+version_notes: "v1.3.0: Reference global GitHub Artifact Register rule for review-comment register."
 breaking_changes: []
 ---
 
@@ -526,6 +526,12 @@ When Maya sees a feature request:
    NO → Break into smaller pieces
    YES → Plan build
 ```
+
+---
+
+## Comment Register
+
+Findings posted as PR/issue comments follow `~/.claude/CLAUDE.md` § GitHub Artifact Register: one load-bearing observation per comment, one sentence per finding, no narration or severity adjectives.
 
 ---
 

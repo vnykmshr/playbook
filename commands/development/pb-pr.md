@@ -6,10 +6,10 @@ difficulty: "advanced"
 model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-commit', 'pb-cycle', 'pb-review-code', 'pb-ship']
-last_reviewed: "2026-02-09"
-last_evolved: ""
-version: "1.0.0"
-version_notes: "v2.10.0 baseline"
+last_reviewed: "2026-04-26"
+last_evolved: "2026-04-26"
+version: "1.1.0"
+version_notes: "v1.1.0: Size-tiered templates (small/large by file count + concern count), drop Screenshots section, reference global GitHub Artifact Register rule via single-line pointer."
 breaking_changes: []
 ---
 # Quick PR Creation
@@ -76,31 +76,36 @@ git diff origin/main...HEAD --stat
 
 ## Step 3: Create PR
 
-Use this template:
+PR body register follows the global rule (see `~/.claude/CLAUDE.md` § GitHub Artifact Register). Pick the form that matches the change size.
+
+### Default: small PR (≤3 files OR single concern)
+
+No headers. Body length scales with the change:
+
+- Trivial (typo, lint, 1-line fix): 1-2 sentences.
+- Single concern: one paragraph, 3-5 sentences. State the WHY, the change, how verified.
+
+```bash
+gh pr create --title "<type>(<scope>): <description>" --body "$(cat <<'EOF'
+<one paragraph or 1-2 sentences -- WHY, what, how verified>
+EOF
+)"
+```
+
+### Large PR (>3 files OR multiple concerns)
+
+Sectioned template:
 
 ```bash
 gh pr create --title "<type>(<scope>): <description>" --body "$(cat <<'EOF'
 ## Summary
-
-<!-- 1-3 bullet points: what changed and why -->
--
--
+<1-3 bullets: what changed and why>
 
 ## Changes
-
-<!-- Key technical changes, grouped logically -->
--
+<key technical changes, grouped logically>
 
 ## Test Plan
-
-<!-- How to verify this works -->
-- [ ]
-- [ ]
-
-## Screenshots
-
-<!-- If UI changes, add before/after screenshots -->
-
+<specific steps to verify; edge cases>
 EOF
 )"
 ```
@@ -129,25 +134,6 @@ fix(auth): handle expired token redirect loop
 refactor(miniplayer): extract shared button components
 perf(fonts): self-host fonts for faster loading
 ```
-
----
-
-## PR Description Guidelines
-
-### Summary Section
-- What changed (user-facing impact)
-- Why this change (problem being solved)
-- Keep to 1-3 bullet points
-
-### Changes Section
-- Group related changes logically
-- Mention key files/components affected
-- Note any breaking changes
-
-### Test Plan Section
-- Specific steps to verify the change
-- Include edge cases tested
-- Note any manual testing performed
 
 ---
 

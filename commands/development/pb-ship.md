@@ -6,10 +6,10 @@ difficulty: "advanced"
 model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-cycle', 'pb-pr', 'pb-release', 'pb-review-hygiene', 'pb-deployment']
-last_reviewed: "2026-02-09"
-last_evolved: ""
-version: "1.1.0"
-version_notes: "v1.1.0: Added bisectable commit splitting guidance for large changes."
+last_reviewed: "2026-04-26"
+last_evolved: "2026-04-26"
+version: "1.2.0"
+version_notes: "v1.2.0: Reference global GitHub Artifact Register rule for PR body and feedback-iteration commits; replace bloated 5-header PR template with delegation to /pb-pr; fix git add -A violation."
 breaking_changes: []
 ---
 # Ship Focus Area to Production
@@ -310,36 +310,23 @@ If NO-GO, document blockers and return to appropriate phase.
 
 ### Step 4.1: Create Pull Request
 
-Run `/pb-pr`:
+Run `/pb-pr`. Body register follows the global rule (see `~/.claude/CLAUDE.md` § GitHub Artifact Register) -- `/pb-pr` selects the size-tier template based on file count and concern count. For a ship-scope PR (multi-concern by definition), the sectioned form usually applies:
 
 ```bash
-# Create PR with comprehensive context
-gh pr create --title "[type]: brief description" --body "$(cat <<'EOF'
+gh pr create --title "<type>(<scope>): brief description" --body "$(cat <<'EOF'
 ## Summary
-[1-3 bullet points: what and why]
+<1-3 bullets: what shipped and why>
 
 ## Changes
-[Key changes, grouped logically]
-
-## Review Focus
-[What reviewers should pay attention to]
+<key technical changes, grouped logically>
 
 ## Test Plan
-[How to verify this works]
-
-## Ship Review
-- Release artifacts: PASS (CHANGELOG updated)
-- Code quality: PASS
-- Hygiene: PASS
-- Tests: PASS
-- Security: PASS
-- Docs: PASS
-- Pre-release: PASS
-
-Issues addressed: X | Deferred: X (see todos/ship-review-*.md)
+<specific verification steps; edge cases>
 EOF
 )"
 ```
+
+Ship review status (release artifacts, hygiene, tests, security, docs) belongs in the local `todos/ship-review-*.md` artifact, not in the PR body. Reviewers don't need a status checklist re-stated -- they read the diff and the linked review docs if needed.
 
 ### Step 4.2: Request Peer Review
 
@@ -388,13 +375,18 @@ For each feedback item:
 3. **Re-request** - Ask for re-review
 
 ```bash
-# After addressing feedback
-git add -A && git commit -m "fix: address review feedback"
+# After addressing feedback (NEVER use git add -A or git add .)
+git add <specific files>
+git status                  # verify what's staged
+git diff --staged           # review staged changes
+git commit -m "fix(<scope>): <one-line WHY of the fix>"
 git push
 
 # Re-request review
 gh pr ready [PR-NUMBER]
 ```
+
+Commit messages here follow the global rule (see `~/.claude/CLAUDE.md` § GitHub Artifact Register) -- subject line by default; body only when the WHY is non-obvious. Avoid generic `"address review feedback"` subjects; cite the actual fix.
 
 ### Step 4.5: Get Approved Sign-Off
 

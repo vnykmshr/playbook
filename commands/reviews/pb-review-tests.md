@@ -6,10 +6,10 @@ difficulty: "advanced"
 model_hint: "opus"
 execution_pattern: "sequential"
 related_commands: ['pb-review', 'pb-review-code', 'pb-review-hygiene', 'pb-testing', 'pb-cycle']
-last_reviewed: "2026-02-18"
-last_evolved: "2026-02-18"
-version: "2.0.0"
-version_notes: "v2.13.1: Clarified focus on test quality (not code quality). Part of code review family decision tree."
+last_reviewed: "2026-04-26"
+last_evolved: "2026-04-26"
+version: "2.1.0"
+version_notes: "v2.1.0: Reference global GitHub Artifact Register rule for review-comment register."
 breaking_changes: []
 ---
 # Test Suite Review (Coverage & Reliability)
@@ -217,6 +217,12 @@ Specific actions:
 | Unit test coverage | 72% | 80% |
 | Integration tests | 45 | 30 (reduce) |
 ```
+
+---
+
+## Comment Register
+
+Findings posted as PR/issue comments follow `~/.claude/CLAUDE.md` § GitHub Artifact Register: one load-bearing observation per comment, one sentence per finding, no narration or severity adjectives.
 
 ---
 

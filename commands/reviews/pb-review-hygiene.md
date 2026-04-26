@@ -6,10 +6,10 @@ difficulty: "advanced"
 model_hint: "opus"
 execution_pattern: "sequential"
 related_commands: ['pb-review', 'pb-review-code', 'pb-review-tests', 'pb-security', 'pb-repo-organize']
-last_reviewed: "2026-02-18"
-last_evolved: "2026-02-18"
-version: "2.0.0"
-version_notes: "v2.13.1: Clarified purpose as periodic health check (not specific code review). Part of code review family decision tree."
+last_reviewed: "2026-04-26"
+last_evolved: "2026-04-26"
+version: "2.1.0"
+version_notes: "v2.1.0: Reference global GitHub Artifact Register rule for review-comment register."
 breaking_changes: []
 ---
 # Codebase Hygiene Review (Periodic Health Check)
@@ -240,6 +240,12 @@ Areas that need deeper follow-up next cycle.
 - Deep security audit before v2.0 release
 - Performance review after new caching layer
 ```
+
+---
+
+## Comment Register
+
+Findings posted as PR/issue comments follow `~/.claude/CLAUDE.md` § GitHub Artifact Register: one load-bearing observation per comment, one sentence per finding, no narration or severity adjectives.
 
 ---
 
