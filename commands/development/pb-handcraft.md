@@ -6,10 +6,10 @@ difficulty: "intermediate"
 model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-voice', 'pb-review', 'pb-linus-agent', 'pb-commit']
-last_reviewed: "2026-04-24"
-last_evolved: "2026-04-24"
-version: "1.1.0"
-version_notes: "v1.1: added Scope Check as Lens 5 (don't explain the reader's own system back), added Review Comment Craft section for PR/issue reviewers, added typed-register sub-check under Read-Aloud for conversational artifacts."
+last_reviewed: "2026-04-26"
+last_evolved: "2026-04-26"
+version: "1.2.0"
+version_notes: "v1.2.0: Lens 6 cross-references global GitHub Artifact Register rule for commits/PRs/issues/comments; AI tell scan tightens commit-body identification."
 breaking_changes: []
 ---
 # AI Output Quality Gate
@@ -192,6 +192,8 @@ General dev-to-dev register:
 - Mechanism before impact in technical reports
 - Scope unknowns explicitly
 - Use dev abbreviations (PoC, SSRF, authz, impl, etc.)
+
+**For GitHub artifacts** (commits, PRs, issues, PR/review/inline comments) the global rule (`~/.claude/CLAUDE.md` § GitHub Artifact Register) sets numeric length ceilings -- subject-only commits, one-paragraph PR bodies for small PRs, one sentence per review-comment finding. Strip assistant-attribution footers, narration, severity adjectives, and restatements of what the diff shows.
 
 ### Lens 7: Read-Aloud Check
 
