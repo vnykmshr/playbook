@@ -250,3 +250,76 @@ class TestPersonaIntegrity:
         assert not security_issues, f"Security issues in persona agents:\n" + "\n".join(
             f"  {issue}" for issue in security_issues
         )
+
+
+class TestRegisterRuleReference:
+    """Verify artifact-producing commands reference the global GitHub Artifact Register rule.
+
+    Introduced in v2.22.0 Register Rollout. Prevents future commands from
+    drifting back to local restatements or silent omissions of the rule.
+    Maintainers adding a new artifact-producing command must extend the
+    ARTIFACT_PRODUCING_COMMANDS set.
+    """
+
+    # Commands that produce GitHub artifacts (commits, PRs, issues, PR/review comments).
+    # Each must reference the global rule defined in ~/.claude/CLAUDE.md
+    # (template: commands/templates/pb-claude-global.md).
+    ARTIFACT_PRODUCING_COMMANDS = {
+        # Commit + PR producers
+        "pb-commit.md",
+        "pb-cycle.md",
+        "pb-handcraft.md",
+        "pb-pr.md",
+        "pb-review.md",
+        "pb-ship.md",
+        # Direct review-comment producers
+        "pb-review-code.md",
+        "pb-review-comprehensive.md",
+        "pb-review-hygiene.md",
+        "pb-review-tests.md",
+        "pb-review-backend.md",
+        "pb-review-frontend.md",
+        "pb-review-infrastructure.md",
+        "pb-review-microservice.md",
+        "pb-review-product.md",
+        "pb-review-docs.md",
+        "pb-review-playbook.md",
+        "pb-security.md",
+        "pb-linus-agent.md",
+        "pb-jordan-testing.md",
+        # Persona reviewers + design lenses
+        "pb-maya-product.md",
+        "pb-kai-reach.md",
+        "pb-sam-documentation.md",
+        "pb-alex-infra.md",
+        "pb-a11y.md",
+        "pb-calm-design.md",
+        "pb-logging.md",
+        "pb-usability.md",
+        "pb-voice.md",
+    }
+
+    REGISTER_REFERENCE = "GitHub Artifact Register"
+
+    def test_artifact_producing_commands_reference_register_rule(self):
+        """Every artifact-producing command must reference the global Register rule."""
+        files = get_command_files()
+        file_names = {f.name for f in files}
+
+        missing_files = self.ARTIFACT_PRODUCING_COMMANDS - file_names
+        assert not missing_files, (
+            f"Expected artifact-producing commands not found: {missing_files}"
+        )
+
+        no_reference = []
+        for path in files:
+            if path.name not in self.ARTIFACT_PRODUCING_COMMANDS:
+                continue
+            content = path.read_text()
+            if self.REGISTER_REFERENCE not in content:
+                no_reference.append(path.name)
+
+        assert not no_reference, (
+            f"Commands missing '{self.REGISTER_REFERENCE}' reference:\n"
+            + "\n".join(f"  {c}" for c in no_reference)
+        )
