@@ -1,0 +1,24 @@
+# Allowlist for gitleaks. Each entry is a verified false-positive.
+# Format: <file>:<rule>:<line>. Update line numbers if files shift.
+
+# Cloudflare Web Analytics beacon token -- intentionally public client-side
+book/review.html:generic-api-key:148
+book/adoption.html:generic-api-key:174
+book/index.html:generic-api-key:125
+book/design-rules.html:generic-api-key:216
+book/preamble.html:generic-api-key:168
+book/ritual.html:generic-api-key:148
+
+# curl Authorization header documentation examples (no actual token)
+commands/core/pb-sam-documentation.md:curl-auth-header:516
+commands/core/pb-sam-documentation.md:curl-auth-header:547
+
+# age public key in pb-secrets.md -- explicitly labeled "Public key", public by design
+commands/deployment/pb-secrets.md:generic-api-key:165
+commands/deployment/pb-secrets.md:generic-api-key:203
+
+# X-API-Key placeholder example in API patterns doc
+commands/planning/pb-patterns-api.md:generic-api-key:377
+
+# Stripe sk_live_abc123def456 -- anti-pattern teaching example showing what NOT to commit
+commands/reviews/pb-security.md:stripe-access-token:374
