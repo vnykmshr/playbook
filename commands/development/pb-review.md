@@ -6,10 +6,10 @@ difficulty: "beginner"
 model_hint: "sonnet"
 execution_pattern: "automatic"
 related_commands: ['pb-start', 'pb-commit', 'pb-review-code', 'pb-review-comprehensive']
-last_reviewed: "2026-02-28"
-last_evolved: "2026-02-28"
-version: "2.5.0"
-version_notes: "v2.5.0: Added LLM trust boundary check, diff-aware QA pre-check, critical-severity single-issue surfacing."
+last_reviewed: "2026-04-26"
+last_evolved: "2026-04-26"
+version: "2.6.0"
+version_notes: "v2.6.0: Reference global GitHub Artifact Register rule for auto-commit messages; tighten example body to remove diff-restating noise."
 breaking_changes: []
 ---
 # Automated Quality Gate
@@ -56,6 +56,8 @@ Most reviews hit outcome 1 or 2. You only get involved for genuinely ambiguous c
 
 **Critical-severity surfacing.** When a critical-severity finding is detected, system surfaces it individually - one issue at a time, not batched. Critical findings require explicit acknowledgment before proceeding. This prevents critical issues from getting lost in a list of suggestions.
 
+**Commit message register.** Auto-drafted messages follow the global rule (see `~/.claude/CLAUDE.md` § GitHub Artifact Register). Subject line by default; body 0-2 short lines, added only when the WHY is genuinely non-obvious. Never include assistant-attribution footers, narration ("I examined..."), severity adjectives, closing summaries, or restatements of what the diff already shows. The reader is a peer reviewing the diff.
+
 ---
 
 ## Examples
@@ -95,8 +97,7 @@ Issues found:
 ✓ Committed: abc1234f
   feat(auth): add email verification with retry logic
 
-  Extract email service for reuse, add explicit error handling
-  on token expiration. Testing gap deferred (coverage 85%).
+  Email service extracted so signup flow can reuse it.
 ```
 
 ### Ambiguous issue (asks you)
@@ -153,4 +154,4 @@ During `/pb-review`, system matches each issue to your preference and decides. O
 
 ---
 
-*Fast quality gate. Preferences decide. You handle the edge cases. | v2.3.0*
+*Fast quality gate. Preferences decide. You handle the edge cases. | v2.6.0*
