@@ -6,10 +6,10 @@ difficulty: "advanced"
 model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-spec', 'pb-start', 'pb-review', 'pb-cycle', 'pb-commit']
-last_reviewed: "2026-04-26"
-last_evolved: "2026-04-26"
-version: "1.1.0"
-version_notes: "v1.1.0: Replace git add -A with specific-file staging in checkpoint and atomic-commit steps."
+last_reviewed: "2026-05-26"
+last_evolved: "2026-05-26"
+version: "1.2.0"
+version_notes: "v1.2.0: Phase 4 Step 2 wires plan-notes deviation log (`plan/{name}-notes.md`) into the STOP gate -- append bullet before proceeding. Format and discipline live in /pb-spec § Implementation Notes File."
 breaking_changes: []
 ---
 # Todo-Based Implementation Workflow
@@ -332,11 +332,11 @@ Show what was changed, why, and how it aligns with the plan.
 
 **2. Handle Unexpected Work**
 
-If you discover work not in the plan:
+When implementation diverges from the spec -- new checkpoint, abandoned step, swapped approach, accepted tradeoff, deferred item, or surprise discovery -- append a one-line bullet to the plan-notes file (`plan/{name}-notes.md` or `todos/releases/vX.Y.Z/notes.md`) *before* the next checkpoint proceeds. See `/pb-spec` § Implementation Notes File for format and discipline.
 
 **STOP → "Plan needs a new checkpoint: [description]. Add it? (y/n)"**
-- If yes: Add checkbox to plan, proceed with work
-- If no: Record in Notes as deferred, continue with plan
+- If yes: append note, add checkbox to plan, proceed with work
+- If no: append note (deferred + trigger), continue with plan
 
 **3. Validation**
 

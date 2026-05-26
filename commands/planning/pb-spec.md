@@ -6,11 +6,12 @@ difficulty: "advanced"
 model_hint: "opus"
 execution_pattern: "interactive"
 related_commands: ['pb-plan', 'pb-sketch', 'pb-adr', 'pb-todo-implement', 'pb-start']
-last_reviewed: "2026-04-23"
-last_evolved: "2026-04-23"
-version: "1.0.0"
-version_notes: "v2.21.0: New skill. Extracted from pb-plan Phases 3-4, plus size-gate (small feature vs release cycle). Pairs with pb-sketch via pb-plan wrapper."
-breaking_changes: []
+last_reviewed: "2026-05-26"
+last_evolved: "2026-05-26"
+version: "1.1.0"
+version_notes: "v1.1.0: Add Implementation Notes File section (running deviation log written during implementation). Rename Path A template's static 'Notes' section to 'Design Notes' to disambiguate."
+breaking_changes:
+  - "Path A template renamed '## Notes' to '## Design Notes'. Existing plan/{name}.md files keep working; only new specs use the new heading."
 ---
 # Implementation Spec: Detailed Plan from Resolved Sketch
 
@@ -164,9 +165,9 @@ Write to `plan/{name}.md`:
 
 {git revert, or specific steps if more involved}
 
-## Notes
+## Design Notes
 
-{design decisions, trade-offs, out-of-band references -- keep short}
+{pre-implementation design decisions, trade-offs, out-of-band references -- keep short. Distinct from `{name}-notes.md`, which is the running deviation log written during implementation.}
 ```
 
 ### Path B: Release Scaffold
@@ -231,6 +232,62 @@ Update Current Status each session so resume is instant. Scope Lock is permanent
 ## Rollback
 
 [How to undo if needed]
+```
+
+---
+
+## Implementation Notes File (applies to both paths)
+
+A running deviation log written *during* implementation. Sibling to the spec; distinct from the spec's "Design Notes" section (pre-impl context).
+
+- **Path A:** `plan/{name}-notes.md`
+- **Path B:** `todos/releases/vX.Y.Z/notes.md`
+
+### Format
+
+```markdown
+# {Plan Title} - Implementation Notes
+
+## YYYY-MM-DD
+
+- <one-line statement; cite file:line or step# if useful>
+```
+
+No prefixes, no slots. One bullet per concern. One date header per session.
+
+### Goes in
+
+- Decisions made between equivalent options the spec didn't pick
+- Plan steps that changed in flight (what got swapped, why)
+- Tradeoffs accepted under constraint
+- Items deferred (with revisit trigger)
+- Surprises that altered the approach
+- Anything a reviewer can't infer from the diff
+
+### Stays out
+
+- Step-by-step narration ("ran tests, all green")
+- Restating the spec or commit messages
+- Status updates, WIP markers, progress cheers
+- Code snippets, diffs, or file content (lives in git)
+
+### Discipline
+
+- Append at the moment of decision. `/pb-todo-implement` Phase 4 Step 2 enforces this at its STOP gate: bullet first, then proceed.
+- One bullet per concern. If it needs paragraphs, it's two entries.
+- Terse dev-to-dev register. Skip "decided:" / "changed:" prefixes -- content speaks for itself.
+
+### Anti-pattern (journal, not log)
+
+```
+- After analysis I refactored auth to handle case-insensitive emails by adding .toLowerCase() and then updated the tests which all passed.
+```
+
+### Better (atomic, sufficient)
+
+```
+- email comparison: case-insensitive (user.ts:45) -- deviates from spec step 2 (exact match assumed)
+- test for uppercase email (user.test.ts:120)
 ```
 
 ---
