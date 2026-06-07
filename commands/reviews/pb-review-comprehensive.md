@@ -6,10 +6,10 @@ difficulty: "advanced"
 model_hint: "opus"
 execution_pattern: "reference"
 related_commands: ['pb-review', 'pb-review-code', 'pb-review-hygiene', 'pb-review-tests', 'pb-security']
-last_reviewed: "2026-04-26"
-last_evolved: "2026-04-26"
-version: "2.1.0"
-version_notes: "v2.1.0: Reference global GitHub Artifact Register rule for review-comment register."
+last_reviewed: "2026-06-07"
+last_evolved: "2026-06-07"
+version: "2.2.0"
+version_notes: "v2.2.0: Add coverage ledger to consolidation (changed-file -> covering-review map; OCR --preview honesty for the large-changeset case) and recommend an independent automated second pass (/code-review or ocr). Patterns from alibaba/open-code-review + Claude /code-review."
 breaking_changes: []
 ---
 # Comprehensive Project Review
@@ -201,7 +201,7 @@ For Deep Review (add):
 
 ### Step 3: Consolidate Findings
 
-After all reviews complete, synthesize into unified report:
+After all reviews complete, synthesize into unified report. Start by reconciling the changed-file list against what each sub-review actually covered (the coverage ledger below) - an unassigned file is a gap, not a pass.
 
 ```markdown
 ## Executive Summary
@@ -212,6 +212,16 @@ After all reviews complete, synthesize into unified report:
 ### Top 5 Priorities
 1. [Issue] - [Severity] - [Source review]
 2. ...
+
+### Coverage Ledger
+
+Changed files mapped to the review that covered each; anything skipped is named with a reason. A visible record, not a guarantee - but a silently dropped file shows up here. (OCR's `--preview` honesty, scoped to where coverage actually bites: large, multi-file changesets.)
+
+| Changed file / area | Covered by | Notes |
+|---------------------|------------|-------|
+| [path] | /pb-review-code | |
+| [path] | /pb-security | |
+| [path] | skipped | [reason] |
 
 ---
 
@@ -320,6 +330,7 @@ Create review document at todos/project-review-2026-01-21.md
 4. **Prioritize ruthlessly** - Not every finding needs immediate action
 5. **Track progress** - Use the review document across sessions
 6. **Follow up** - Schedule remediation session after review
+7. **Independent second pass** - These reviews orchestrate internal personas; for true independence, follow with a separate automated reviewer that re-derives findings from scratch (Claude Code's `/code-review`, or `alibaba/open-code-review`). Distinct from `/pb-pr` human peer review.
 
 ---
 
@@ -339,5 +350,5 @@ Findings posted as PR/issue comments follow `~/.claude/CLAUDE.md` § GitHub Arti
 
 ---
 
-**Last Updated:** 2026-01-21
-**Version:** 2.0.0
+**Last Updated:** 2026-06-07
+**Version:** 2.2.0
