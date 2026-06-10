@@ -7,7 +7,7 @@ model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-resume', 'pb-start', 'pb-standup']
 last_reviewed: "2026-04-26"
-last_evolved: "2026-04-26"
+last_evolved: "2026-06-10"
 version: "1.4.0"
 version_notes: "v1.4.0: Replace git add -A with specific-file staging in short-break and standard wip flows."
 breaking_changes: []
@@ -123,8 +123,8 @@ Target: ~20-30 lines. Be specific about what's next. Skip sections that don't ap
 **3c. Context health check:**
 
 ```bash
-wc -l ~/.claude/CLAUDE.md            # Global (target: ~140)
-wc -l .claude/CLAUDE.md              # Project (target: ~160)
+wc -l ~/.claude/CLAUDE.md            # Global (target: ~160)
+wc -l .claude/CLAUDE.md              # Project (target: ~180)
 # memory/MEMORY.md                   # Auto-loaded (target: ~100)
 wc -l todos/1-working-context.md     # Working context (target: ~50)
 wc -l todos/pause-notes.md           # Pause notes (target: ~30)

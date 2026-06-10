@@ -6,7 +6,7 @@ Solo-curated playbook. PRs welcome -- open an issue first, it saves rework.
 
 - Bugs: [issues](https://github.com/vnykmshr/playbook/issues). Ideas: [discussions](https://github.com/vnykmshr/playbook/discussions)
 - New command: read `commands/core/pb-new-playbook.md`. Structure is enforced by lint and tests
-- Existing command: metadata schema in `.playbook-metadata-schema.yaml` -- 14-field front-matter
+- Existing command: metadata schema in `.playbook-metadata-schema.yaml` -- 13 required front-matter fields (+ optional `tags`)
 
 ## Local checks (all must pass)
 

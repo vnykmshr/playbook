@@ -6,7 +6,7 @@ difficulty: "advanced"
 model_hint: "opus"
 execution_pattern: "sequential"
 related_commands: ['pb-observability', 'pb-sre-practices', 'pb-dr', 'pb-logging', 'pb-maintenance']
-last_reviewed: "2026-02-09"
+last_reviewed: "2026-06-10"
 last_evolved: ""
 version: "1.0.0"
 version_notes: "v2.10.0 baseline"

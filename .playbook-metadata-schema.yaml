@@ -83,13 +83,16 @@ fields:
     required: true
     max_items: 5
 
-  # DISCOVERABILITY (required)
-  # How do users find this playbook?
+  # DISCOVERABILITY (optional)
+  # How do users find this playbook? Not enforced by the test suite; mdbook
+  # indexes title/category/related_commands. Left optional rather than dropped
+  # so commands may opt in. (Q2 2026: aligned schema to reality — no command
+  # carries tags; was spuriously required.)
   tags:
     type: array[string]
     description: "Searchable tags for discoverability. Max 5 items."
     examples: ["workflow", "onboarding", "code-review"]
-    required: true
+    required: false
     max_items: 5
 
   # MAINTENANCE (required)

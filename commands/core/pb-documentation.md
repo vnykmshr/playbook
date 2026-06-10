@@ -6,10 +6,10 @@ difficulty: "beginner"
 model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-adr', 'pb-review-docs', 'pb-repo-readme', 'pb-repo-blog', 'pb-onboarding']
-last_reviewed: "2026-02-09"
-last_evolved: ""
-version: "1.0.0"
-version_notes: "v2.10.0 baseline"
+last_reviewed: "2026-06-10"
+last_evolved: "2026-06-10"
+version: "1.1.0"
+version_notes: "v1.1.0: Q2 2026 staleness audit -- bump Node 18 install pins to Node 22 (current LTS; Node 18 EOL Apr 2025), including the 'keep version pins fresh' before/after example that had itself gone stale. v2.10.0 baseline."
 breaking_changes: []
 ---
 # Writing Great Engineering Documentation
@@ -451,9 +451,9 @@ Fix:
 # Installing
 
 1. Clone the repo
-2. Install Node 18+ (required)
-   - macOS: `brew install node@18`
-   - Ubuntu: `sudo apt-get install nodejs=18.*`
+2. Install Node 22+ (current LTS, required)
+   - macOS: `brew install node@22`
+   - Ubuntu: `sudo apt-get install nodejs=22.*`
 3. Run `npm install`
 4. Run `npm start`
 
@@ -542,7 +542,7 @@ Good:
 
 ### Prerequisites
 - Docker installed from docker.com
-- Node 18+
+- Node 22+
 - npm 9+
 
 ### Steps
@@ -570,7 +570,7 @@ Short description of what this does.
 ## Quick Start
 
 ### Prerequisites
-- Node 18+
+- Node 22+
 - PostgreSQL 14+
 
 ### Installation

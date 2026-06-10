@@ -6,10 +6,10 @@ difficulty: "beginner"
 model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-claude-global', 'pb-claude-project', 'pb-learn', 'pb-review-playbook', 'pb-new-playbook']
-last_reviewed: "2026-04-23"
-last_evolved: "2026-04-23"
-version: "1.2.0"
-version_notes: "v2.20.0 -- Acknowledge Opus 4.7 GA, /fast (Opus 4.6), and [1m] 1M-context variant; reframe tier table as cost guidance. v1.2.0: add Output Discipline subsection to Task Delegation Patterns -- accept subagent summaries as context, do not pipe raw tool output back into main conversation. Relocated from pb-claude-global where it failed the day-1 test."
+last_reviewed: "2026-06-10"
+last_evolved: "2026-06-10"
+version: "1.3.0"
+version_notes: "v1.3.0: Q2 2026 capability refresh -- Harness Reality to Opus 4.8 GA; corrected /fast (keeps Opus with faster output, no Sonnet downgrade); [1m] 1M-context framing; brief Fable 5 note (Opus stays default). v1.2.0: add Output Discipline subsection to Task Delegation Patterns -- accept subagent summaries as context, do not pipe raw tool output back into main conversation."
 breaking_changes: []
 ---
 # Claude Code Orchestration
@@ -42,12 +42,13 @@ breaking_changes: []
 
 Opus reasons. Sonnet builds. Haiku runs.
 
-### Harness Reality (Opus 4.7 GA)
+### Harness Reality (Opus 4.8 GA)
 
-The table above is cost-oriented guidance, not harness description. Claude Code defaults to Opus 4.7 for coding sessions, so Engineer-tier work frequently runs on Opus anyway. Two adjustments matter:
+The table above is cost-oriented guidance, not harness description. Claude Code defaults to Opus 4.8 for coding sessions, so Engineer-tier work frequently runs on Opus anyway. Three adjustments matter:
 
-- `/fast` pins the session to **Opus 4.6** for speed without tier downgrade to Sonnet.
-- A **1M-context variant** (`[1m]` suffix on the model ID) is available as an opt-in tier; standard stays at 200K.
+- `/fast` keeps the session on Opus with faster output (available on Opus 4.8/4.7/4.6) — it does not downgrade to Sonnet.
+- The `[1m]` model-ID suffix opts into a **1M-context** window (standard default is 200K); Opus 4.8 carries 1M at standard pricing, no long-context premium.
+- **Fable 5** is an emerging tier above Opus for complex, long-running work — try via `/model`. Opus stays the recommended default.
 
 When cost discipline matters (routine dev loop, CI, automation), switch to Sonnet explicitly rather than relying on the harness default. Haiku remains subagent-only via the Task tool.
 
@@ -135,7 +136,7 @@ model: "sonnet"  → Code writing, analysis, standard reviews
 
 Every unnecessary line in CLAUDE.md or MEMORY.md costs tokens on every single turn. Be ruthlessly concise in persistent files.
 
-The 1M-context `[1m]` tier (Opus 4.7) does not retire this hygiene. Compaction is still lossy, every turn still pays the tokens, and cost scales with context size. Budget for the 200K default; treat 1M as headroom for specific long-horizon work.
+The 1M-context `[1m]` tier (Opus 4.8) does not retire this hygiene. Compaction is still lossy, every turn still pays the tokens, and cost scales with context size. Budget for the 200K default; treat 1M as headroom for specific long-horizon work.
 
 ### Efficiency Principles
 

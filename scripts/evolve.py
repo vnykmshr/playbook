@@ -106,9 +106,11 @@ class PlaybookEvolutionEngine:
 
             meta = cmd["metadata"]
 
-            # Check required fields
+            # Check required fields. 'tags' is optional (Q2 2026: aligned to
+            # reality -- no command carries it; mdbook indexes title/category;
+            # validated below only when present). See .playbook-metadata-schema.yaml.
             required = ["name", "title", "category", "difficulty", "model_hint",
-                       "execution_pattern", "related_commands", "tags", "last_reviewed"]
+                       "execution_pattern", "related_commands", "last_reviewed"]
             for field in required:
                 if field not in meta:
                     issues[filename].append(f"MISSING: Required field '{field}'")
