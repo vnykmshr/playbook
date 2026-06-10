@@ -7,15 +7,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v2.24.0] - 2026-06-10 "Ferret"
+
+Q2 2026 evolution -- Opus 4.8 capability refresh, metadata-schema + context hygiene, ops/infra audit. No new commands (112).
+
 ### Changed
 
 - **`/pb-voice` v2.2.1** -- related-link swap: drops `pb-think`, adds `pb-handcraft` (completes the voice <-> handcraft bidirectional pair).
-- **Q2 2026 evolution -- capability refresh** -- model-selection guidance to Opus 4.8 GA (`/pb-claude-global` v2.4.0, `/pb-claude-orchestration` v1.3.0, `/pb-evolve` v1.3.0): `/fast` keeps Opus with faster output (no Sonnet downgrade), `[1m]` opts into 1M context, brief Fable 5 forward note (Opus stays the default).
+- **Capability refresh** -- model-selection guidance to Opus 4.8 GA (`/pb-claude-global` v2.4.0, `/pb-claude-orchestration` v1.3.0, `/pb-evolve` v1.3.0): `/fast` keeps Opus with faster output (no Sonnet downgrade), `[1m]` opts into 1M context, brief Fable 5 forward note (Opus stays the default).
 - **Context-layer targets re-baselined** -- global CLAUDE.md ~140->~160 (content confirmed load-bearing by audit), project ~160->~180 (headroom), auto-loaded total ~400->~440 (`/pb-context-review` v2.1.0, `/pb-pause`, `/pb-resume`).
 
 ### Fixed
 
-- **Metadata schema drift** -- `tags` was marked required but is absent from all 112 commands and unenforced by tests; set optional in `.playbook-metadata-schema.yaml` and `scripts/evolve.py` (clears 112 spurious "missing tags" validation flags).
+- **Metadata schema drift** -- `tags` was marked required but is absent from all 112 commands and unenforced by tests; set optional in `.playbook-metadata-schema.yaml` and `scripts/evolve.py` (clears 112 spurious "missing tags" flags) and corrected the "13 required fields" docs.
 - **`/pb-documentation` v1.1.0** -- bump Node 18 install pins to Node 22 (Node 18 EOL Apr 2025), including the "keep version pins fresh" before/after example that had itself gone stale. Ops/infra cluster (`pb-dr`/`pb-incident`/`pb-hardening`/`pb-database-ops`/`pb-templates`) audited and confirmed current.
 
 ## [v2.23.0] - 2026-06-10 "Badger"
