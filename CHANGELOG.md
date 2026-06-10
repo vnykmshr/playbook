@@ -11,6 +11,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - **`/pb-forge` v1.0.0** -- lifecycle step-runner that drives the per-deliverable outer arc (think -> ... -> release), the executing twin of `/pb-what-next`. Auto-drives mechanical stages, hands off to the inner loop during execute, stops hard at judgment seams and each external action. Arc cursor at `todos/forge/{slug}.md` doubles as the `/pb-resume` hook. Command count 111 -> 112. `pb-what-next` related-link swap (drops `pb-cycle`, adds `pb-forge`).
 
+### Changed
+
+- **`/pb-handcraft`** -- badge test folded in: the defend-every-line standard now frames the whole pass, ambient rather than a separate step.
+
 ## [v2.22.0] - 2026-04-26 "Beaver"
 
 GitHub Artifact Register rollout. One canonical rule in `~/.claude/CLAUDE.md` replaces six divergent local templates; downstream commands point to it instead of restating it; 22 review-producing commands that previously had no rule reference now do.

@@ -54,6 +54,19 @@ Minimal sufficient. No bloat. No clipping.
 
 ---
 
+## The Badge Test
+
+One question stands behind all seven lenses: **would you defend every line of this as your own in review -- without "the AI wrote that part"?** If any line fails, it is not done.
+
+This is ambient, not a step you invoke. It holds for every artifact -- code, commit, PR, comment, report -- whether or not the project asks for it. The lenses are how you make it true; the question is the bar. Beyond clean prose, work that carries your name is:
+
+- **Self-evidencing** -- claims backed by a test, a repro, or a measurement, not "should work."
+- **Scope-honest** -- name what you did not do; no silent truncation.
+- **One voice** -- code, commit, and PR read as one hand wrote them.
+- **Ceremony-free** -- the absence of scaffolding and attribution footers is the signature.
+
+---
+
 ## No AI Policy
 
 Treat ALL output as subject to manual quality review -- not just projects that explicitly require it. This is deliberate practice: consistent application builds the muscle that prevents AI tells from creeping in. If we only handcraft when forced to, the muscle atrophies and the tells creep back.
