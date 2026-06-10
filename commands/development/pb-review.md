@@ -7,9 +7,9 @@ model_hint: "sonnet"
 execution_pattern: "automatic"
 related_commands: ['pb-start', 'pb-commit', 'pb-review-code', 'pb-review-comprehensive']
 last_reviewed: "2026-04-26"
-last_evolved: "2026-04-26"
-version: "2.6.0"
-version_notes: "v2.6.0: Reference global GitHub Artifact Register rule for auto-commit messages via single-line pointer; tighten example body."
+last_evolved: "2026-06-07"
+version: "2.7.0"
+version_notes: "v2.7.0: Add validation gate (re-read self-check before code-mutating auto-fix) and recommend an independent second pass (/code-review or ocr) for true verification; coverage honesty folded into flow-mapping, full coverage ledger lives in /pb-review-comprehensive. Patterns from alibaba/open-code-review + Claude /code-review."
 breaking_changes: []
 ---
 # Automated Quality Gate
@@ -50,7 +50,11 @@ System analyzes your change (LOC, files, domains, complexity, criticality), dete
 
 Most reviews hit outcome 1 or 2. You only get involved for genuinely ambiguous cases or loop detection.
 
-**Pre-check: Diff-aware flow mapping.** Before reviewing, system maps changed files to affected user flows. "This diff touches `auth/` and `email/` - affected flows: login, password reset, signup verification." This focuses review on what the change actually impacts, not the entire codebase.
+**Validation gate (before auto-fix).** Before auto-applying a code-mutating fix, re-read the cited code as a deliberate second look and confirm the issue actually holds. A false positive that reaches the auto-fix branch becomes an auto-committed wrong change; findings that fail the recheck are dropped, not fixed. This is a self-check, not independent verification - same context, so treat it as a first filter. Auto-defer and auto-accept need no gate; only code-mutating fixes do.
+
+**Independent second pass (recommended).** The gate above is a self-check within one review; true independence comes from a separate reviewer that re-derives findings from scratch - Claude Code's `/code-review`, or a tool like `alibaba/open-code-review`. That's the adversarial-verification bet (find, then refute independently), and it catches what a same-context recheck can't. Run it after `/pb-review` commits. Distinct from `/pb-pr`, which is human peer review.
+
+**Pre-check: Diff-aware flow mapping.** Before reviewing, system maps changed files to affected user flows. "This diff touches `auth/` and `email/` - affected flows: login, password reset, signup verification." This focuses review on what the change actually impacts, not the entire codebase. Any changed file deliberately left unreviewed is named with a reason - a silently dropped file is the failure mode worth surfacing. For multi-file changesets where coverage is itself the question, use `/pb-review-comprehensive`, which keeps an explicit coverage ledger.
 
 **LLM trust boundary.** If changes include LLM-generated code (SQL, auth logic, security boundaries, data mutations), system flags for elevated scrutiny. LLM output is untrusted input - validate it at trust boundaries the same way you'd validate user input. Escalates to `/pb-review-code` or `/pb-security` if LLM-generated code touches security-critical paths.
 
@@ -154,4 +158,4 @@ During `/pb-review`, system matches each issue to your preference and decides. O
 
 ---
 
-*Fast quality gate. Preferences decide. You handle the edge cases. | v2.6.0*
+*Fast quality gate. Preferences decide. You handle the edge cases. | v2.7.0*

@@ -60,6 +60,7 @@
 - [Learn](commands/development/pb-learn.md)
 - [Preferences](commands/development/pb-preferences.md)
 - [What Next](commands/development/pb-what-next.md)
+- [Forge](commands/development/pb-forge.md)
 
 # Commands: Planning
 

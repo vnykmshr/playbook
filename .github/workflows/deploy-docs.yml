@@ -25,6 +25,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v6
+        with:
+          fetch-depth: 0  # gitleaks-action needs full history to resolve the push diff range
 
       - name: Lint markdown files
         run: |
