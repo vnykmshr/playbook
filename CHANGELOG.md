@@ -9,11 +9,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- **`/pb-forge` v1.0.0** -- lifecycle step-runner that drives the per-deliverable outer arc (think -> ... -> release), the executing twin of `/pb-what-next`. Auto-drives mechanical stages, hands off to the inner loop during execute, stops hard at judgment seams and each external action. Arc cursor at `todos/forge/{slug}.md` doubles as the `/pb-resume` hook. Command count 111 -> 112. `pb-what-next` related-link swap (drops `pb-cycle`, adds `pb-forge`).
+- **`/pb-forge` v1.0.0** -- lifecycle step-runner that drives the per-deliverable outer arc (think -> ... -> release); executing twin of `/pb-what-next`. Auto-drives mechanical stages, hands off to the inner loop during execute, stops hard at judgment seams and each external action. Arc cursor at `todos/forge/{slug}.md` doubles as the `/pb-resume` hook. Count 111 -> 112.
 
 ### Changed
 
-- **`/pb-handcraft`** -- badge test folded in: the defend-every-line standard now frames the whole pass, ambient rather than a separate step.
+- **`/pb-review` v2.7.0** -- validation gate (re-read self-check before code-mutating auto-fix) and recommended independent second pass (`/code-review`); coverage honesty folded into flow-mapping.
+- **`/pb-review-comprehensive` v2.2.0** -- coverage ledger (changed-file -> covering-review map) relocated here as the large-changeset home.
+- **`/pb-spec` v1.1.0, `/pb-todo-implement` v1.2.0** -- implementation-notes deviation log written during implementation; Phase 4 STOP gate appends before proceeding.
+- **`/pb-handcraft` v1.3.0** -- badge test folded in: the defend-every-line standard frames the whole pass, ambient rather than a separate step.
+- **`/pb-what-next` v2.0.1** -- related-link swap (drops `pb-cycle`, adds `pb-forge`).
+
+### Security
+
+- **gitleaks secret scanning** -- `.gitleaks.toml` content-regex allowlist, pre-commit hook, and CI job in `deploy-docs.yml`.
+
+### CI
+
+- **`fetch-depth: 0`** on the lint checkout so gitleaks resolves the push diff range on multi-commit pushes.
+- **Dependabot:** `gitleaks-action` 2->3, `checkout` 4->6, `configure-pages` 5->6, `upload-pages-artifact` 4->5, `deploy-pages` 4->5.
 
 ## [v2.22.0] - 2026-04-26 "Beaver"
 

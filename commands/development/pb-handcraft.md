@@ -8,8 +8,8 @@ execution_pattern: "sequential"
 related_commands: ['pb-voice', 'pb-review', 'pb-linus-agent', 'pb-commit']
 last_reviewed: "2026-04-26"
 last_evolved: "2026-04-26"
-version: "1.2.0"
-version_notes: "v1.2.0: Lens 6 references global GitHub Artifact Register rule via single-line pointer for commits/PRs/issues/comments."
+version: "1.3.0"
+version_notes: "v1.3.0: Add The Badge Test -- the defend-every-line standard now frames the whole pass, ambient rather than a separate step."
 breaking_changes: []
 ---
 # AI Output Quality Gate
