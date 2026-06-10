@@ -46,7 +46,7 @@ Forge walks these stages. It auto-runs the mechanical ones, hands off during exe
 |-------|-----------|----------|
 | Frame | `/pb-think` on the deliverable | confirm direction |
 | Pressure-test | `/pb-huddle` -- only when a genuine fork exists; else skips | resolve forks |
-| Plan | `/pb-plan` (sketch + spec) | resolve forks |
+| Plan | `/pb-plan` (sketch + spec) | confirm picks |
 | Execute | hands off to `/pb-start` or `/pb-todo-implement`; releases control | inner loop owns it |
 | Self-gate | `/pb-review` + `/pb-handcraft` | accept/reject findings |
 | Peer | `/pb-pr` opens the PR; `/code-review` independent pass | external -- approve |
@@ -58,14 +58,14 @@ The arc is the default for new, non-trivial work. Triage decides how much of the
 
 ## Triage: How Much Arc to Run
 
-Forge reuses the scope signal `/pb-start` already establishes (size: small/medium/large; mode: expand/hold/reduce). No new taxonomy.
+Forge reuses the scope signal `/pb-start` already establishes (size: small/medium/large; mode: expand/hold/reduce) to decide how much arc to run -- no new triage taxonomy.
 
 - **Small and obvious** -> skip the front (think/huddle/plan), hand straight to the inner loop.
 - **Medium or large, or a genuine fork in the approach** -> run the full arc.
-- **Override:** `--mode full | build | tail` when you already know.
+- **Override:** `--arc full | build | tail` when you already know.
   - `full` -- every stage. `build` -- skip the front, start at execute. `tail` -- review -> land only, for work already done.
 
-If triage keeps short-circuiting to the tail on your real work, that's a signal: shrink your use of forge to the review -> land tail and stop pretending the front earns its place.
+If triage keeps short-circuiting to the tail on your real work, that's the signal the front arc isn't earning its place here.
 
 ---
 
@@ -92,7 +92,7 @@ This file is the `/pb-resume` hook for the arc. Where `/pb-resume` tells you the
 
 ## External Actions Stop Hard
 
-Opening a PR, merging, syncing to remote, and releasing are each a separate stop. Forge states what it is about to do and waits for an explicit go in a new message. It never batches them -- not push+PR, not merge+release. This is the global External Action Gate; forge enforces it so you never tag a release on a reflex. The gate and the GitHub Artifact Register (commit/PR/release message register) live in `~/.claude/CLAUDE.md`.
+Opening a PR, merging, syncing to remote, and releasing are each a separate stop. Forge states what it is about to do and waits for an explicit go in a new message. It never batches them -- not push+PR, not merge+release. This is the global External Action Gate; forge enforces it so you never tag a release on a reflex. The gate and the GitHub Artifact Register (the rules for commit/PR/release messages) live in `~/.claude/CLAUDE.md`.
 
 ---
 
@@ -135,7 +135,7 @@ Re-invoking `/pb-forge` on a deliverable with an existing cursor resumes at the 
 - `/pb-plan` - The planning stage forge drives (sketch + spec).
 - `/pb-start` - The execute entry forge hands off to.
 - `/pb-review` - The self-gate stage.
-- `/pb-ship` - The land stage (PR through release).
+- `/pb-ship` - The ship workflow (PR -> merge -> release) forge's tail stages map to.
 
 ---
 
