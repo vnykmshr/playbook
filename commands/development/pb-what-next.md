@@ -5,7 +5,7 @@ category: "development"
 difficulty: "advanced"
 model_hint: "sonnet"
 execution_pattern: "sequential"
-related_commands: ['pb-start', 'pb-cycle', 'pb-commit', 'pb-pr', 'pb-release']
+related_commands: ['pb-start', 'pb-forge', 'pb-commit', 'pb-pr', 'pb-release']
 last_reviewed: "2026-02-18"
 last_evolved: "2026-02-18"
 version: "2.0.0"
@@ -342,7 +342,7 @@ Status:    Mid-feature, tests need updating
 ## Related Commands
 
 - `/pb-start` - Begin feature work (creates branch)
-- `/pb-cycle` - Self-review + peer review loop
+- `/pb-forge` - Drive a deliverable through its arc (the executing twin of this command)
 - `/pb-commit` - Craft atomic commits
 - `/pb-pr` - Create pull request
 - `/pb-release` - Release preparation

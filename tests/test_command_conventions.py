@@ -16,7 +16,7 @@ from pathlib import Path
 import pytest
 
 COMMANDS_DIR = Path(__file__).parent.parent / "commands"
-EXPECTED_COUNT = 111  # 109 baseline + pb-sketch + pb-spec (pb-review-patterns demoted to pb-new-playbook appendix)
+EXPECTED_COUNT = 112  # 111 (v2.22.0) + pb-forge
 
 # Hub commands allowed to exceed the 5-link limit
 HUB_COMMANDS = {"pb-patterns.md"}
@@ -268,6 +268,7 @@ class TestRegisterRuleReference:
         # Commit + PR producers
         "pb-commit.md",
         "pb-cycle.md",
+        "pb-forge.md",
         "pb-handcraft.md",
         "pb-pr.md",
         "pb-review.md",
