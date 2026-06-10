@@ -6,10 +6,10 @@ difficulty: "beginner"
 model_hint: "opus"
 execution_pattern: "sequential"
 related_commands: ['pb-claude-global', 'pb-claude-project', 'pb-standards', 'pb-preamble', 'pb-design-rules']
-last_reviewed: "2026-04-17"
-last_evolved: "2026-04-17"
-version: "1.2.0"
-version_notes: "v2.20.0 -- Refresh running examples to Opus 4.7 + 1M [1m] scenario; bring evolution-log, opportunity, release-notes, and Scenario B templates into alignment with current capability trigger"
+last_reviewed: "2026-06-10"
+last_evolved: "2026-06-10"
+version: "1.3.0"
+version_notes: "v1.3.0: Q2 2026 -- refresh currency markers to Opus 4.8 GA (footer version); running examples left illustrative. v2.20.0 -- Refresh running examples to Opus 4.7 + 1M [1m] scenario; bring evolution-log, opportunity, release-notes, and Scenario B templates into alignment with current capability trigger."
 breaking_changes: []
 ---
 
@@ -991,7 +991,7 @@ This is self-healing DNA in action.
 
 ---
 
-**Last Updated:** 2026-04-17
-**Version:** 1.2 (Opus 4.7 GA refresh)
+**Last Updated:** 2026-06-10
+**Version:** 1.3 (Opus 4.8 GA refresh)
 
 *Self-improvement is how we stay relevant. When Claude evolves, we evolve. When users teach us better patterns, we implement them. This playbook is never "done"-it's always improving.*

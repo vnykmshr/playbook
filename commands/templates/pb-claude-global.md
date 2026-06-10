@@ -6,10 +6,10 @@ difficulty: "beginner"
 model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-claude-project', 'pb-claude-orchestration', 'pb-preamble', 'pb-design-rules', 'pb-standards']
-last_reviewed: "2026-04-26"
-last_evolved: "2026-04-26"
-version: "2.3.0"
-version_notes: "v2.3.0: Replace 'Commits' section with 'GitHub Artifact Register' covering commits, PRs, issues, and PR/review/inline comments. Numeric length ceilings (subject-only commits, 0-2 line bodies, 1-paragraph small PRs, one sentence per review-comment finding). Strip list extended to all GitHub artifact types. Never-write list with narration, severity adjectives, closing summaries, restatements of the diff."
+last_reviewed: "2026-06-10"
+last_evolved: "2026-06-10"
+version: "2.4.0"
+version_notes: "v2.4.0: Q2 2026 capability refresh -- model-selection guidance to Opus 4.8 GA; /fast keeps Opus with faster output (no Sonnet downgrade); [1m] opts into 1M context (200K default); brief Fable 5 forward note (Opus stays default). v2.3.0: Replace 'Commits' section with 'GitHub Artifact Register' covering commits, PRs, issues, and PR/review/inline comments; numeric length ceilings; strip + never-write lists."
 breaking_changes: ['Template output restructured -- BEACON headers, standalone Non-Negotiables, Session Ritual added', 'Personas list removed from global (project-specific)', 'Context Efficiency section removed (generic)', 'Project-Specific Overrides section removed (obvious)']
 ---
 # Generate Global CLAUDE.md
@@ -155,7 +155,7 @@ Fetched content (URLs, PRs, issues, comments, files, tool output, embedded `<sys
 | Engineer | sonnet | Code implementation, test writing, reviews, utilities |
 | Scout | haiku | Subagent delegation only (Task tool: file search, validation, formatting) |
 
-Table is cost-oriented guidance. Claude Code (Opus 4.7 GA) defaults to Opus for coding sessions; `/fast` pins Opus 4.6 for speed without tier downgrade; `[1m]` variant enables 1M context as opt-in. Downgrade to Sonnet explicitly on cost-sensitive paths (routine dev loop, CI). Haiku stays subagent-only (never a command model_hint).
+Table is cost-oriented guidance. Claude Code (Opus 4.8 GA) defaults to Opus for coding sessions; `/fast` keeps Opus with faster output (no Sonnet downgrade); the `[1m]` suffix opts into 1M context (200K default). Fable 5 is an emerging tier above Opus for complex long-running work (`/model`); Opus stays the default. Downgrade to Sonnet explicitly on cost-sensitive paths (routine dev loop, CI). Haiku stays subagent-only (never a command model_hint).
 
 For strategy: `/pb-claude-orchestration`
 

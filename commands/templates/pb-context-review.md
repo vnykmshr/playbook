@@ -6,10 +6,10 @@ difficulty: "intermediate"
 model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-pause', 'pb-resume', 'pb-context', 'pb-claude-global', 'pb-evolve']
-last_reviewed: "2026-02-18"
-last_evolved: ""
-version: "2.0.0"
-version_notes: "Consolidated: merged automated conversation audit into single command with structural and behavioral modes"
+last_reviewed: "2026-06-10"
+last_evolved: "2026-06-10"
+version: "2.1.0"
+version_notes: "v2.1.0: Q2 2026 -- re-baseline CLAUDE.md targets (global ~140->~160, project ~160->~180, auto-loaded total ~400->~440); global accepts confirmed load-bearing growth, project adds headroom. Consolidated: merged automated conversation audit into single command with structural and behavioral modes."
 breaking_changes: ["pb-review-context merged into this command; use `--violations` mode instead"]
 ---
 # Context Layer Review & Hygiene
@@ -59,10 +59,10 @@ Analyze recent conversations for CLAUDE.md violations, missing patterns, and sta
 
 ```
 AUTO-LOADED (every session - budget matters most here):
-  ~/.claude/CLAUDE.md              Global principles, BEACONs       ~140 lines
-  .claude/CLAUDE.md                Project guardrails, tech stack    ~160 lines
+  ~/.claude/CLAUDE.md              Global principles, BEACONs       ~160 lines
+  .claude/CLAUDE.md                Project guardrails, tech stack    ~180 lines
   memory/MEMORY.md                 Index + active patterns           ~100 lines
-                                                          Target: ~400 total
+                                                          Target: ~440 total
 
 LOADED VIA /pb-resume (small, focused):
   todos/*working-context*          Project snapshot                   ~50 lines
@@ -89,8 +89,8 @@ Report current sizes against targets.
 ```bash
 # Auto-loaded layers
 echo "=== Auto-loaded Context ==="
-wc -l ~/.claude/CLAUDE.md                        # Target: ~140
-wc -l .claude/CLAUDE.md                          # Target: ~160
+wc -l ~/.claude/CLAUDE.md                        # Target: ~160
+wc -l .claude/CLAUDE.md                          # Target: ~180
 wc -l <memory-path>/MEMORY.md                    # Target: ~100
 
 # Session state (working-context filename varies by project)
@@ -186,14 +186,14 @@ For each auto-loaded file over its soft target, review content:
 **Should contain:** BEACONs (6), operational guardrails, workflow commands, session ritual
 **Should NOT contain:** Version-specific details, session management explanations, release promo
 
-**Action:** If over ~140 lines, review and trim or regenerate via `/pb-claude-global`. If at target, no action needed.
+**Action:** If over ~160 lines, review and trim or regenerate via `/pb-claude-global`. If at target, no action needed.
 
 ### Project CLAUDE.md (.claude/CLAUDE.md)
 
 **Should contain:** Tech stack, project structure, BEACONs (3), verification commands, relevant playbooks
 **Should NOT contain:** Detailed phase descriptions, session management explanations, capability promo
 
-**Action:** If over ~160 lines, review and trim or regenerate via `/pb-claude-project`. If at target, no action needed.
+**Action:** If over ~180 lines, review and trim or regenerate via `/pb-claude-project`. If at target, no action needed.
 
 ### Memory Index (memory/MEMORY.md)
 
@@ -240,12 +240,12 @@ Summarize the review. Use this template:
 ### Layer Sizes (Before → After)
 | Layer | Before | After | Target | Status |
 |-------|--------|-------|--------|--------|
-| Global CLAUDE.md | X | Y | ~140 | OK/OVER |
-| Project CLAUDE.md | X | Y | ~160 | OK/OVER |
+| Global CLAUDE.md | X | Y | ~160 | OK/OVER |
+| Project CLAUDE.md | X | Y | ~180 | OK/OVER |
 | Memory index | X | Y | ~100 | OK/OVER |
 | Working context | X | Y | ~50 | OK/OVER |
 | Pause notes | X | Y | ~30 | OK/OVER |
-| **Auto-loaded total** | **X** | **Y** | **~400** | |
+| **Auto-loaded total** | **X** | **Y** | **~440** | |
 
 ### Actions Taken
 - [Action 1]

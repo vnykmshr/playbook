@@ -7,7 +7,7 @@ model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-start', 'pb-pause', 'pb-cycle']
 last_reviewed: "2026-03-28"
-last_evolved: "2026-03-28"
+last_evolved: "2026-06-10"
 version: "1.3.0"
 version_notes: "v2.20.0: Two-tier mode system (standard/deep), content consolidation, proper step numbering"
 breaking_changes: []
@@ -81,8 +81,8 @@ cat todos/pause-notes.md               # Where you left off
 **Context health check — report actual sizes:**
 
 ```bash
-wc -l ~/.claude/CLAUDE.md              # Global (target: ~140)
-wc -l .claude/CLAUDE.md                # Project (target: ~160)
+wc -l ~/.claude/CLAUDE.md              # Global (target: ~160)
+wc -l .claude/CLAUDE.md                # Project (target: ~180)
 # memory/MEMORY.md                     # Auto-loaded (target: ~100)
 wc -l todos/1-working-context.md       # Working context (target: ~50)
 wc -l todos/pause-notes.md             # Pause notes (target: ~30)
