@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v2.23.0] - 2026-06-10 "Badger"
+
+The `/pb-forge` lifecycle conductor, review/planning workflow tuning, and gitleaks + CI hardening.
+
 ### Added
 
 - **`/pb-forge` v1.0.0** -- lifecycle step-runner that drives the per-deliverable outer arc (think -> ... -> release); executing twin of `/pb-what-next`. Auto-drives mechanical stages, hands off to the inner loop during execute, stops hard at judgment seams and each external action. Arc cursor at `todos/forge/{slug}.md` doubles as the `/pb-resume` hook. Count 111 -> 112.
