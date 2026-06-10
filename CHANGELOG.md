@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- **`/pb-voice` v2.2.1** -- related-link swap: drops `pb-think`, adds `pb-handcraft` (completes the voice <-> handcraft bidirectional pair).
+
 ## [v2.23.0] - 2026-06-10 "Badger"
 
 The `/pb-forge` lifecycle conductor, review/planning workflow tuning, and gitleaks + CI hardening.

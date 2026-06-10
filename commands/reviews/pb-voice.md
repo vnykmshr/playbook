@@ -5,11 +5,11 @@ category: "reviews"
 difficulty: "advanced"
 model_hint: "sonnet"
 execution_pattern: "sequential"
-related_commands: ['pb-think', 'pb-review-docs', 'pb-documentation', 'pb-design-rules', 'pb-preamble']
+related_commands: ['pb-handcraft', 'pb-review-docs', 'pb-documentation', 'pb-design-rules', 'pb-preamble']
 last_reviewed: "2026-04-26"
 last_evolved: "2026-04-26"
-version: "2.2.0"
-version_notes: "v2.2.0: Reference global GitHub Artifact Register rule for review-comment register."
+version: "2.2.1"
+version_notes: "v2.2.1: Related-link swap -- pb-think -> pb-handcraft (voice is handcraft's voice-only subset; completes the bidirectional pair)."
 breaking_changes: ["Detection categories expanded from 11 to 12", "Step 0 (Register Calibration) added before Category 1", "Persona file now loaded in Step 0 (before detection) instead of Stage 2 (rewrite)"]
 ---
 # Voice Review
@@ -496,7 +496,7 @@ Findings posted as PR/issue comments follow `~/.claude/CLAUDE.md` § GitHub Arti
 
 ## Related Commands
 
-- `/pb-think` - General thinking toolkit; use `mode=refine` for output refinement
+- `/pb-handcraft` - The comprehensive output-quality pass; pb-voice is its voice-only subset
 - `/pb-review-docs` - Documentation quality review (structural, not voice)
 - `/pb-documentation` - Writing engineering documentation
 - `/pb-design-rules` - Clarity over cleverness applies to prose
