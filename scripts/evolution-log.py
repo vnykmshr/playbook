@@ -349,11 +349,13 @@ def main():
         sys.exit(0)
 
     elif args.record_change:
-        if not (args.cycle and args.field and args.before and args.after and args.rationale):
+        # Presence check, not truthiness: an empty-string before/after value
+        # (e.g. recording a field that was previously unset) is legitimate.
+        if None in (args.cycle, args.field, args.before, args.after, args.rationale):
             print("❌ Missing required arguments for recording change.\n")
             parser.print_help()
             sys.exit(1)
-        log.record_change(
+        ok = log.record_change(
             args.cycle,
             args.record_change,
             args.field,
@@ -361,19 +363,19 @@ def main():
             args.after,
             args.rationale
         )
-        sys.exit(0)
+        sys.exit(0 if ok else 1)
 
     elif args.snapshot:
-        log.set_cycle_snapshot(args.cycle, args.snapshot)
-        sys.exit(0)
+        ok = log.set_cycle_snapshot(args.cycle, args.snapshot)
+        sys.exit(0 if ok else 1)
 
     elif args.complete:
-        log.complete_cycle(args.complete, args.pr)
-        sys.exit(0)
+        ok = log.complete_cycle(args.complete, args.pr)
+        sys.exit(0 if ok else 1)
 
     elif args.revert:
-        log.revert_cycle(args.revert, args.reason or "No reason provided")
-        sys.exit(0)
+        ok = log.revert_cycle(args.revert, args.reason or "No reason provided")
+        sys.exit(0 if ok else 1)
 
     elif args.show:
         log.show_history()
