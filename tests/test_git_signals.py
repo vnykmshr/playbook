@@ -296,6 +296,25 @@ class TestGitSignalsAnalyzer:
             assert kwargs.get('shell') is not True
             assert f'--since={payload}' in argv[0]     # the payload is one literal arg
 
+    def test_get_commit_files_propagates_git_failure(self, temp_output_dir):
+        """A git failure in _get_commit_files propagates, rather than being read
+        as 'no files changed' (which would silently skew adoption/pain metrics)."""
+        analyzer = GitSignalsAnalyzer(output_dir=temp_output_dir)
+        with mock.patch.object(analyzer, '_run_git_command', side_effect=GitCommandError('boom')):
+            with pytest.raises(GitCommandError):
+                analyzer._get_commit_files('a' * 40)
+
+    def test_pain_points_fail_loud_on_git_failure(self, temp_output_dir):
+        """_extract_pain_points propagates a git failure instead of emitting empty
+        pain points and letting the run exit 0."""
+        analyzer = GitSignalsAnalyzer(output_dir=temp_output_dir)
+        analyzer.commits = [
+            {'hash': 'a' * 40, 'subject': 'fix: x', 'date': '2026-06-10', 'author': 'A'}
+        ]
+        with mock.patch.object(analyzer, '_get_commit_files', side_effect=GitCommandError('boom')):
+            with pytest.raises(GitCommandError):
+                analyzer._extract_pain_points()
+
     def test_analyze_full_pipeline(self, temp_output_dir, mock_commits, mock_numstat):
         """Test full analysis pipeline."""
         analyzer = GitSignalsAnalyzer(output_dir=temp_output_dir)

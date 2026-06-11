@@ -327,6 +327,8 @@ class GitSignalsAnalyzer:
                 f"{len(bug_fixes)} bug fixes, {len(hotfixes)} hotfixes"
             )
 
+        except GitCommandError:
+            raise  # a broken git is fatal, not empty pain points
         except Exception as e:
             self.logger.error(f"Error extracting pain points: {e}")
             self.pain_points = {
@@ -344,6 +346,8 @@ class GitSignalsAnalyzer:
                 'git', 'show', '--name-only', '--pretty=', commit_hash,
             ])
             return [f.strip() for f in output.split('\n') if f.strip()]
+        except GitCommandError:
+            raise  # a broken git is fatal, not "no files changed"
         except Exception:
             return []
 
