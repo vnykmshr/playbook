@@ -22,7 +22,9 @@ if [[ -z "$transcript_path" || ! -f "$transcript_path" ]]; then
   exit 0
 fi
 
-max_context=200000
+# The Stop hook payload carries no context_window (status-line-only), so read the
+# real window cached by context-bar.sh; a usage-based fallback is applied below.
+max_context=$(cat "$HOME/.claude/.context-window" 2>/dev/null)
 
 # Get token count from the last assistant message with usage data
 context_length=$(tail -200 "$transcript_path" \
@@ -38,6 +40,12 @@ context_length=$(tail -200 "$transcript_path" \
 
 if ! [[ "$context_length" =~ ^[0-9]+$ ]] || [[ "$context_length" -eq 0 ]]; then
   exit 0
+fi
+
+# No cached window yet? Infer what's certain: exceeding 200K is only possible on
+# the 1M window. Below 200K, assume the 200K default.
+if ! [[ "$max_context" =~ ^[0-9]+$ && "$max_context" -gt 0 ]]; then
+  if [[ "$context_length" -gt 200000 ]]; then max_context=1000000; else max_context=200000; fi
 fi
 
 pct=$((context_length * 100 / max_context))
