@@ -78,76 +78,36 @@ class GitSignalsAnalyzer:
     def _parse_commits(self) -> bool:
         """Parse git log and extract commit metadata."""
         try:
-            # Get full git log with all info we need
-            command = (
-                f'git log --format="%H|%an|%ae|%ad|%s|%b" '
+            # Record-delimited format: unit separator (\x1f) between fields,
+            # record separator (\x1e) between commits. Both are control bytes
+            # that never appear in commit metadata, so a subject can be anything
+            # -- empty, or even a bare 40-char SHA -- and still parse correctly.
+            # A single git log call (the old parser ran two and discarded one).
+            output = self._run_git_command(
+                f'git log --format="%H%x1f%an%x1f%ae%x1f%ad%x1f%s%x1e" '
                 f'--date=short --since="{self.since}"'
             )
-            output = self._run_git_command(command)
 
-            if not output:
+            if not output.strip():
                 self.logger.warning("No commits found in specified time range")
                 return True  # Not an error, just empty result
 
-            # Parse each commit
-            # Note: We split on commit delimiter and parse carefully since body can have pipes
-            commits_raw = self._run_git_command(
-                f'git log --format="%H%n%an%n%ae%n%ad%n%s%n---END---" '
-                f'--date=short --since="{self.since}"'
-            )
-
-            if not commits_raw:
-                return True
-
-            # Parse structured format
-            current_commit = {}
-            lines = commits_raw.split('\n')
-            i = 0
-
-            while i < len(lines):
-                line = lines[i]
-
-                if not line.strip():
-                    i += 1
+            for record in output.split('\x1e'):
+                record = record.strip('\n')
+                if not record:
                     continue
-
-                # Start of new commit (hash)
-                if len(line) == 40 and all(c in '0123456789abcdef' for c in line):
-                    if current_commit:
-                        self.commits.append(current_commit)
-                    current_commit = {
-                        'hash': line,
-                        'author': '',
-                        'email': '',
-                        'date': '',
-                        'subject': '',
-                        'body': '',
-                    }
-                elif current_commit:
-                    # Fill in fields in order
-                    if 'author' in current_commit and not current_commit['author']:
-                        current_commit['author'] = line
-                    elif 'email' in current_commit and not current_commit['email']:
-                        current_commit['email'] = line
-                    elif 'date' in current_commit and not current_commit['date']:
-                        current_commit['date'] = line
-                    elif 'subject' in current_commit and not current_commit['subject']:
-                        current_commit['subject'] = line
-                    elif line == '---END---':
-                        # End of this commit
-                        pass
-                    else:
-                        # Body content
-                        if current_commit['body']:
-                            current_commit['body'] += '\n' + line
-                        else:
-                            current_commit['body'] = line
-
-                i += 1
-
-            # Add last commit if exists
-            if current_commit and current_commit.get('hash'):
-                self.commits.append(current_commit)
+                fields = record.split('\x1f')
+                if len(fields) < 5:
+                    continue
+                commit_hash, author, email, date, subject = fields[:5]
+                self.commits.append({
+                    'hash': commit_hash,
+                    'author': author,
+                    'email': email,
+                    'date': date,
+                    'subject': subject,
+                    'body': '',
+                })
 
             self.logger.info(f"Parsed {len(self.commits)} commits")
             return True
@@ -342,9 +302,10 @@ class GitSignalsAnalyzer:
                         pain_by_file[file_path] += 1
 
             self.pain_points = {
-                'reverted_commits': reverts[-10:],  # Last 10 reverts
-                'bug_fix_patterns': bug_fixes[-10:],  # Last 10 bug fixes
-                'hotfix_patterns': hotfixes[-10:],  # Last 10 hotfixes
+                # git log is newest-first, so [:10] is the 10 most recent.
+                'reverted_commits': reverts[:10],
+                'bug_fix_patterns': bug_fixes[:10],
+                'hotfix_patterns': hotfixes[:10],
                 'pain_score_by_file': sorted(
                     [{'file': file, 'pain_score': score}
                      for file, score in pain_by_file.items()],

@@ -29,42 +29,16 @@ def temp_output_dir():
 
 @pytest.fixture
 def mock_commits():
-    """Mock git log output with sample commits."""
-    return """aaaa1234aaaa1234aaaa1234aaaa1234aaaa1234
-John Doe
-john@example.com
-2025-01-15
-feat(commands): add new pb-example command
-Initial implementation
----END---
-bbbb5678bbbb5678bbbb5678bbbb5678bbbb5678
-Jane Smith
-jane@example.com
-2025-01-10
-fix: resolve metadata validation issue
-Fixed edge case in YAML parsing
----END---
-cccc9012cccc9012cccc9012cccc9012cccc9012
-John Doe
-john@example.com
-2025-01-05
-Revert "feat: remove deprecated command"
-This commit reverts a breaking change
----END---
-dddd3456dddd3456dddd3456dddd3456dddd3456
-Jane Smith
-jane@example.com
-2024-12-28
-fix: handle null pointer in context analyzer
-Added safety check for empty metadata
----END---
-eeee7890eeee7890eeee7890eeee7890eeee7890
-John Doe
-john@example.com
-2024-12-20
-hotfix: urgent performance regression
-Critical fix for query timeout
----END---"""
+    """Mock git log output, record-delimited (\\x1f between fields, \\x1e between
+    commits) to match the parser's --format."""
+    rows = [
+        ("aaaa1234aaaa1234aaaa1234aaaa1234aaaa1234", "John Doe", "john@example.com", "2025-01-15", "feat(commands): add new pb-example command"),
+        ("bbbb5678bbbb5678bbbb5678bbbb5678bbbb5678", "Jane Smith", "jane@example.com", "2025-01-10", "fix: resolve metadata validation issue"),
+        ("cccc9012cccc9012cccc9012cccc9012cccc9012", "John Doe", "john@example.com", "2025-01-05", 'Revert "feat: remove deprecated command"'),
+        ("dddd3456dddd3456dddd3456dddd3456dddd3456", "Jane Smith", "jane@example.com", "2024-12-28", "fix: handle null pointer in context analyzer"),
+        ("eeee7890eeee7890eeee7890eeee7890eeee7890", "John Doe", "john@example.com", "2024-12-20", "hotfix: urgent performance regression"),
+    ]
+    return "".join("\x1f".join(row) + "\x1e\n" for row in rows)
 
 
 @pytest.fixture
@@ -314,12 +288,8 @@ class TestGitSignalsAnalyzer:
         analyzer = GitSignalsAnalyzer(output_dir=temp_output_dir)
 
         with mock.patch.object(analyzer, '_run_git_command') as mock_run:
-            # First call: parse_commits
-            # Second call: adoption metrics files
-            # Third call: churn metrics
             mock_run.side_effect = [
-                mock_commits,  # parse_commits: first call (format check)
-                mock_commits,  # parse_commits: second call (structured parse)
+                mock_commits,  # parse_commits (single call)
                 'commands/core/pb-test.md\ncommands/planning/pb-plan.md',  # adoption metrics
                 mock_numstat,  # churn metrics
             ]
@@ -343,35 +313,25 @@ class TestGitSignalsAnalyzer:
 class TestCommitParsing:
     """Additional tests for commit parsing edge cases."""
 
-    def test_parse_commits_with_multiline_body(self, temp_output_dir):
-        """Test parsing commits with multi-line bodies."""
+    def test_parse_commits_subject_with_delimiter_chars(self, temp_output_dir):
+        """The record format must survive subjects that broke the old parser:
+        pipes (the old field separator) and a literal '---END---'."""
         analyzer = GitSignalsAnalyzer(output_dir=temp_output_dir)
-        commits_with_body = """aaaa1234aaaa1234aaaa1234aaaa1234aaaa1234
-John Doe
-john@example.com
-2025-01-15
-feat: add new feature
-This is a longer commit body
-with multiple lines
-of description
----END---"""
+        subject = "fix: handle a|b pipes and a literal ---END--- in the subject"
+        out = f"{'a' * 40}\x1fJohn Doe\x1fjohn@example.com\x1f2025-01-15\x1f{subject}\x1e\n"
 
-        with mock.patch.object(analyzer, '_run_git_command', return_value=commits_with_body):
+        with mock.patch.object(analyzer, '_run_git_command', return_value=out):
             analyzer._parse_commits()
             assert len(analyzer.commits) == 1
-            assert 'multiple lines' in analyzer.commits[0]['body']
+            assert analyzer.commits[0]['subject'] == subject
 
     def test_parse_commits_with_special_characters(self, temp_output_dir):
         """Test parsing commits with special characters in subjects."""
         analyzer = GitSignalsAnalyzer(output_dir=temp_output_dir)
-        commits_special = """aaaa1234aaaa1234aaaa1234aaaa1234aaaa1234
-John Doe
-john@example.com
-2025-01-15
-feat(utils): add "special" & <characters> handling
----END---"""
+        subject = 'feat(utils): add "special" & <characters> handling'
+        out = f"{'a' * 40}\x1fJohn Doe\x1fjohn@example.com\x1f2025-01-15\x1f{subject}\x1e\n"
 
-        with mock.patch.object(analyzer, '_run_git_command', return_value=commits_special):
+        with mock.patch.object(analyzer, '_run_git_command', return_value=out):
             analyzer._parse_commits()
             assert len(analyzer.commits) == 1
             assert '"special"' in analyzer.commits[0]['subject']
@@ -404,3 +364,44 @@ invalid line
 
             # Should handle gracefully
             assert 'high_churn_areas' in analyzer.churn_analysis
+
+    def test_parser_handles_sha_like_subject(self, temp_output_dir):
+        """#6: a commit whose subject is a bare 40-char SHA parses as one commit,
+        not split into a phantom record."""
+        analyzer = GitSignalsAnalyzer(output_dir=temp_output_dir)
+        sha = 'b' * 40
+        out = (
+            f"{'a' * 40}\x1fAlice\x1falice@x\x1f2026-06-10\x1f{sha}\x1e\n"
+            f"{'c' * 40}\x1fBob\x1fbob@x\x1f2026-06-09\x1fnormal subject\x1e\n"
+        )
+        with mock.patch.object(analyzer, '_run_git_command', return_value=out):
+            assert analyzer._parse_commits() is True
+        assert len(analyzer.commits) == 2
+        assert analyzer.commits[0]['hash'] == 'a' * 40
+        assert analyzer.commits[0]['subject'] == sha
+        assert analyzer.commits[1]['subject'] == 'normal subject'
+
+    def test_parser_handles_empty_subject(self, temp_output_dir):
+        """#7: an empty commit subject stays empty, not the record delimiter."""
+        analyzer = GitSignalsAnalyzer(output_dir=temp_output_dir)
+        out = f"{'a' * 40}\x1fAlice\x1falice@x\x1f2026-06-10\x1f\x1e\n"
+        with mock.patch.object(analyzer, '_run_git_command', return_value=out):
+            assert analyzer._parse_commits() is True
+        assert len(analyzer.commits) == 1
+        assert analyzer.commits[0]['subject'] == ''
+
+    def test_pain_points_keep_most_recent(self, temp_output_dir):
+        """#8: git log is newest-first, so the 'last 10' slice keeps the most
+        recent matches, not the oldest."""
+        analyzer = GitSignalsAnalyzer(output_dir=temp_output_dir)
+        analyzer.commits = [
+            {'hash': f'{i:040d}', 'subject': f'fix: item {i:02d}',
+             'date': '2026-06-10', 'author': 'A'}
+            for i in range(12)  # newest-first: item 00 newest, item 11 oldest
+        ]
+        with mock.patch.object(analyzer, '_get_commit_files', return_value=[]):
+            analyzer._extract_pain_points()
+        bug_fixes = analyzer.pain_points['bug_fix_patterns']
+        assert len(bug_fixes) == 10
+        assert bug_fixes[0]['subject'] == 'fix: item 00'  # newest kept
+        assert 'fix: item 11' not in [b['subject'] for b in bug_fixes]  # oldest dropped
