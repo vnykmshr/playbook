@@ -75,8 +75,14 @@ class EvolutionTriggerDetector:
             with open(filepath) as f:
                 content = f.read()
 
-            # Extract last_reviewed date
-            match = re.search(r'^last_reviewed:\s*"([^"]+)"', content, re.MULTILINE)
+            # Extract last_reviewed date. Accept any YAML quoting style (double,
+            # single, or unquoted) -- a double-quote-only match silently dropped
+            # schema-valid dates and deflated the stale count below threshold.
+            match = re.search(
+                r'^last_reviewed:\s*["\']?(\d{4}-\d{2}-\d{2})["\']?',
+                content,
+                re.MULTILINE,
+            )
             if match:
                 try:
                     reviewed_date = datetime.fromisoformat(match.group(1)).date()
@@ -104,31 +110,15 @@ class EvolutionTriggerDetector:
         return None
 
     def check_claude_version_change(self) -> dict | None:
-        """Check if Claude version has changed significantly.
+        """Claude version changes are not auto-detected here.
 
-        Note: This requires manual input since we can't query version directly.
+        There is no reliable in-repo signal: scanning CHANGELOG prose for
+        'Claude X.Y' and treating the first textual mention as the latest version
+        fired false upgrades and missed real ones (document order is not recency).
+        Rather than emit a confident-but-wrong high-severity trigger, this returns
+        None -- raise a version trigger manually, or via a recorded version
+        baseline, when a real implementation exists.
         """
-        # Placeholder: In real implementation, check against saved version
-        # For now, check CLAUDE.md or CHANGELOG for version hints
-        changelog_path = Path("CHANGELOG.md")
-
-        if changelog_path.exists():
-            with open(changelog_path) as f:
-                content = f.read()
-
-            # Look for recent Claude version mentions
-            claude_versions = re.findall(r'Claude (\d+\.\d+)', content)
-            if claude_versions and len(claude_versions) >= 2:
-                latest = claude_versions[0]
-                if latest != claude_versions[1]:
-                    return {
-                        "type": "version_upgrade",
-                        "severity": "high",
-                        "new_version": latest,
-                        "message": f"Claude version upgraded to {latest}",
-                        "recommendation": "Run evolution to optimize for new capabilities",
-                    }
-
         return None
 
     def check_git_log_for_user_feedback(self) -> dict | None:
