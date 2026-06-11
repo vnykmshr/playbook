@@ -439,7 +439,7 @@ class GitSignalsAnalyzer:
 
         # Churn section
         summary.append("\n## High-Churn Areas\n")
-        if self.adoption_metrics.get('high_churn_areas'):
+        if self.churn_analysis.get('high_churn_areas'):
             summary.append("**Files with most changes:**\n")
             for item in self.churn_analysis.get('high_churn_areas', [])[:5]:
                 summary.append(
