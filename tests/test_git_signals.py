@@ -245,7 +245,7 @@ class TestGitSignalsAnalyzer:
         analyzer = GitSignalsAnalyzer(output_dir=temp_output_dir)
         with mock.patch('subprocess.run') as mock_run:
             mock_run.return_value = mock.Mock(stdout='output', returncode=0)
-            result = analyzer._run_git_command('git log')
+            result = analyzer._run_git_command(['git', 'log'])
             assert result == 'output'
 
     def test_run_git_command_timeout(self, temp_output_dir):
@@ -253,14 +253,14 @@ class TestGitSignalsAnalyzer:
         analyzer = GitSignalsAnalyzer(output_dir=temp_output_dir)
         with mock.patch('subprocess.run', side_effect=TimeoutExpired('git log', 10)):
             with pytest.raises(GitCommandError):
-                analyzer._run_git_command('git log')
+                analyzer._run_git_command(['git', 'log'])
 
     def test_run_git_command_error(self, temp_output_dir):
         """A launch failure fails loudly rather than masquerading as empty output."""
         analyzer = GitSignalsAnalyzer(output_dir=temp_output_dir)
         with mock.patch('subprocess.run', side_effect=Exception("Command failed")):
             with pytest.raises(GitCommandError):
-                analyzer._run_git_command('git log')
+                analyzer._run_git_command(['git', 'log'])
 
     def test_run_git_command_nonzero_exit(self, temp_output_dir):
         """A non-zero exit (e.g. not a git repo) raises, not returns ''."""
@@ -270,7 +270,7 @@ class TestGitSignalsAnalyzer:
                 stdout='', stderr='fatal: not a git repository', returncode=128
             )
             with pytest.raises(GitCommandError):
-                analyzer._run_git_command('git log')
+                analyzer._run_git_command(['git', 'log'])
 
     def test_analyze_fails_loud_on_git_failure(self, temp_output_dir):
         """#1: a git failure makes analyze() return False (-> nonzero exit), not
@@ -282,6 +282,19 @@ class TestGitSignalsAnalyzer:
                 stdout='', stderr='fatal: not a git repository', returncode=128
             )
             assert analyzer.analyze() is False
+
+    def test_since_is_not_shell_interpreted(self, temp_output_dir):
+        """A --since carrying shell metacharacters is passed as one literal argv
+        element, not interpreted by a shell (no command injection)."""
+        payload = '"; touch /tmp/pwned; echo "'
+        analyzer = GitSignalsAnalyzer(output_dir=temp_output_dir, since=payload)
+        with mock.patch('subprocess.run') as mock_run:
+            mock_run.return_value = mock.Mock(stdout='', stderr='', returncode=0)
+            analyzer._parse_commits()
+            argv, kwargs = mock_run.call_args
+            assert isinstance(argv[0], list)          # argv list, not a shell string
+            assert kwargs.get('shell') is not True
+            assert f'--since={payload}' in argv[0]     # the payload is one literal arg
 
     def test_analyze_full_pipeline(self, temp_output_dir, mock_commits, mock_numstat):
         """Test full analysis pipeline."""

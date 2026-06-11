@@ -83,10 +83,11 @@ class GitSignalsAnalyzer:
             # that never appear in commit metadata, so a subject can be anything
             # -- empty, or even a bare 40-char SHA -- and still parse correctly.
             # A single git log call (the old parser ran two and discarded one).
-            output = self._run_git_command(
-                f'git log --format="%H%x1f%an%x1f%ae%x1f%ad%x1f%s%x1e" '
-                f'--date=short --since="{self.since}"'
-            )
+            output = self._run_git_command([
+                'git', 'log',
+                '--format=%H%x1f%an%x1f%ae%x1f%ad%x1f%s%x1e',
+                '--date=short', f'--since={self.since}',
+            ])
 
             if not output.strip():
                 self.logger.warning("No commits found in specified time range")
@@ -120,8 +121,9 @@ class GitSignalsAnalyzer:
         """Extract which files/commands are most touched."""
         try:
             # Get file changes by running git log with name-only
-            command = f'git log --name-only --pretty="" --since="{self.since}"'
-            output = self._run_git_command(command)
+            output = self._run_git_command([
+                'git', 'log', '--name-only', '--pretty=', f'--since={self.since}',
+            ])
 
             if not output:
                 self.adoption_metrics = {'commands_by_touch_frequency': [], 'files_by_change_frequency': []}
@@ -188,8 +190,9 @@ class GitSignalsAnalyzer:
         """Extract files with high change frequency (churn)."""
         try:
             # Get line changes using numstat
-            command = f'git log --numstat --pretty="" --since="{self.since}"'
-            output = self._run_git_command(command)
+            output = self._run_git_command([
+                'git', 'log', '--numstat', '--pretty=', f'--since={self.since}',
+            ])
 
             if not output:
                 self.churn_analysis = {'files_by_commit_frequency': [], 'files_by_line_changes': []}
@@ -337,36 +340,38 @@ class GitSignalsAnalyzer:
     def _get_commit_files(self, commit_hash: str) -> List[str]:
         """Get list of files changed in a specific commit."""
         try:
-            command = f'git show --name-only --pretty="" {commit_hash}'
-            output = self._run_git_command(command)
+            output = self._run_git_command([
+                'git', 'show', '--name-only', '--pretty=', commit_hash,
+            ])
             return [f.strip() for f in output.split('\n') if f.strip()]
         except Exception:
             return []
 
-    def _run_git_command(self, command: str) -> str:
-        """Run a git command and return stdout.
+    def _run_git_command(self, args: List[str]) -> str:
+        """Run a git command (argv list) and return stdout.
 
-        Raises GitCommandError on a non-zero exit, timeout, or launch failure, so
-        a broken git can't be misread as an empty history. A successful command
-        with empty output (e.g. no commits in range) returns "" as normal.
+        Runs without a shell, so values like --since are passed literally and
+        can't be interpreted as shell syntax. Raises GitCommandError on a non-zero
+        exit, timeout, or launch failure, so a broken git can't be misread as an
+        empty history. A successful command with empty output (e.g. no commits in
+        range) returns "" as normal.
         """
         try:
             result = subprocess.run(
-                command,
-                shell=True,
+                args,
                 capture_output=True,
                 text=True,
                 timeout=10,  # Slightly longer for large history
             )
         except subprocess.TimeoutExpired as e:
-            raise GitCommandError(f"git command timed out: {command}") from e
+            raise GitCommandError(f"git command timed out: {' '.join(args)}") from e
         except Exception as e:
-            raise GitCommandError(f"git command could not run: {command} - {e}") from e
+            raise GitCommandError(f"git command could not run: {' '.join(args)} - {e}") from e
 
         if result.returncode != 0:
             stderr = (result.stderr or "").strip()
             raise GitCommandError(
-                f"git command failed (exit {result.returncode}): {command}"
+                f"git command failed (exit {result.returncode}): {' '.join(args)}"
                 + (f"\n{stderr}" if stderr else "")
             )
         return result.stdout
