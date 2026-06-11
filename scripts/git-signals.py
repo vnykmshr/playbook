@@ -26,6 +26,14 @@ from collections import defaultdict, Counter
 from playbook_utils import setup_logger
 
 
+class GitCommandError(Exception):
+    """A git command exited non-zero, timed out, or could not run.
+
+    Raised so a broken git (e.g. running outside a repo) fails loudly instead of
+    being silently read as an empty history.
+    """
+
+
 class GitSignalsAnalyzer:
     """Analyze git history for adoption, churn, and pain point signals."""
 
@@ -210,6 +218,8 @@ class GitSignalsAnalyzer:
 
             self.logger.info(f"Extracted adoption metrics for {len(command_counts)} commands")
 
+        except GitCommandError:
+            raise  # a broken git is fatal, not an empty result
         except Exception as e:
             self.logger.error(f"Error extracting adoption metrics: {e}")
             self.adoption_metrics = {'commands_by_touch_frequency': [], 'files_by_change_frequency': []}
@@ -279,6 +289,8 @@ class GitSignalsAnalyzer:
 
             self.logger.info(f"Extracted churn metrics: {len(file_commits)} files analyzed")
 
+        except GitCommandError:
+            raise  # a broken git is fatal, not an empty result
         except Exception as e:
             self.logger.error(f"Error extracting churn metrics: {e}")
             self.churn_analysis = {'files_by_commit_frequency': [], 'files_by_line_changes': []}
@@ -371,7 +383,12 @@ class GitSignalsAnalyzer:
             return []
 
     def _run_git_command(self, command: str) -> str:
-        """Run git command safely."""
+        """Run a git command and return stdout.
+
+        Raises GitCommandError on a non-zero exit, timeout, or launch failure, so
+        a broken git can't be misread as an empty history. A successful command
+        with empty output (e.g. no commits in range) returns "" as normal.
+        """
         try:
             result = subprocess.run(
                 command,
@@ -380,13 +397,18 @@ class GitSignalsAnalyzer:
                 text=True,
                 timeout=10,  # Slightly longer for large history
             )
-            return result.stdout
-        except subprocess.TimeoutExpired:
-            self.logger.warning(f"Git command timed out: {command}")
-            return ""
+        except subprocess.TimeoutExpired as e:
+            raise GitCommandError(f"git command timed out: {command}") from e
         except Exception as e:
-            self.logger.warning(f"Git command failed: {command} - {e}")
-            return ""
+            raise GitCommandError(f"git command could not run: {command} - {e}") from e
+
+        if result.returncode != 0:
+            stderr = (result.stderr or "").strip()
+            raise GitCommandError(
+                f"git command failed (exit {result.returncode}): {command}"
+                + (f"\n{stderr}" if stderr else "")
+            )
+        return result.stdout
 
     def _write_outputs(self) -> None:
         """Write analysis results to JSON and markdown files."""

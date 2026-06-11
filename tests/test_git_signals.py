@@ -17,7 +17,7 @@ import pytest
 # Import the analyzer class
 import sys
 sys.path.insert(0, str(Path(__file__).parent.parent / "scripts"))
-from git_signals import GitSignalsAnalyzer
+from git_signals import GitSignalsAnalyzer, GitCommandError
 
 
 @pytest.fixture
@@ -275,18 +275,39 @@ class TestGitSignalsAnalyzer:
             assert result == 'output'
 
     def test_run_git_command_timeout(self, temp_output_dir):
-        """Test git command timeout handling."""
+        """A timeout fails loudly rather than masquerading as empty output."""
         analyzer = GitSignalsAnalyzer(output_dir=temp_output_dir)
         with mock.patch('subprocess.run', side_effect=TimeoutExpired('git log', 10)):
-            result = analyzer._run_git_command('git log')
-            assert result == ""
+            with pytest.raises(GitCommandError):
+                analyzer._run_git_command('git log')
 
     def test_run_git_command_error(self, temp_output_dir):
-        """Test git command error handling."""
+        """A launch failure fails loudly rather than masquerading as empty output."""
         analyzer = GitSignalsAnalyzer(output_dir=temp_output_dir)
         with mock.patch('subprocess.run', side_effect=Exception("Command failed")):
-            result = analyzer._run_git_command('git log')
-            assert result == ""
+            with pytest.raises(GitCommandError):
+                analyzer._run_git_command('git log')
+
+    def test_run_git_command_nonzero_exit(self, temp_output_dir):
+        """A non-zero exit (e.g. not a git repo) raises, not returns ''."""
+        analyzer = GitSignalsAnalyzer(output_dir=temp_output_dir)
+        with mock.patch('subprocess.run') as mock_run:
+            mock_run.return_value = mock.Mock(
+                stdout='', stderr='fatal: not a git repository', returncode=128
+            )
+            with pytest.raises(GitCommandError):
+                analyzer._run_git_command('git log')
+
+    def test_analyze_fails_loud_on_git_failure(self, temp_output_dir):
+        """#1: a git failure makes analyze() return False (-> nonzero exit), not
+        write zeroed reports and exit 0. Empty output with a clean exit still
+        counts as 'no commits' (success)."""
+        analyzer = GitSignalsAnalyzer(output_dir=temp_output_dir)
+        with mock.patch('subprocess.run') as mock_run:
+            mock_run.return_value = mock.Mock(
+                stdout='', stderr='fatal: not a git repository', returncode=128
+            )
+            assert analyzer.analyze() is False
 
     def test_analyze_full_pipeline(self, temp_output_dir, mock_commits, mock_numstat):
         """Test full analysis pipeline."""
