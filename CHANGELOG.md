@@ -7,6 +7,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v2.24.1] - 2026-06-11
+
+Tooling hardening from a model-comparison audit and follow-up code review. No command changes (112).
+
+### Added
+
+- **CI test gate** -- `pytest` now runs in the `deploy-docs` lint job; the test suite previously ran only locally. +18 regression tests pin the fixes below.
+
+### Fixed
+
+- **`check-links.py`** -- a bare `"/"` in the example-skip list matched ~97% of links as substrings, so the checker validated 70 of 2390 links and reported green on broken ones. Restricted the glob; repaired the one real broken link it surfaced.
+- **`git-signals.py`** -- fails loud on git errors (was: zeroed reports, exit 0); runs git without a shell (closes a `--since` injection); commit parser rewritten to a record-delimited format that survives empty and SHA-like subjects; high-churn summary reads the correct dict; "last 10" pain-point slice corrected.
+- **`evolve.py` / `evolution-trigger-detector.py`** -- tolerate valid unquoted/single-quoted YAML `last_reviewed` dates and non-list `related_commands` (was: crash or silently-deflated stale count).
+- **`evolution-log.py`** -- exits non-zero on a failed mutation (was: always 0); accepts an empty `--before`.
+- **`evolution-snapshot.py`** -- survives a fresh clone (`mkdir(parents=True)`); `--cleanup` is now wired up.
+- **`evolution-diff.py`** -- the report `Generated` field is a timestamp, not the working-directory name.
+- **`validate-conventions.py`** -- globs `pb-*.md`, not all markdown, so a stray non-command file can't break the CI count check.
+
 ## [v2.24.0] - 2026-06-10 "Ferret"
 
 Q2 2026 evolution -- Opus 4.8 capability refresh, metadata-schema + context hygiene, ops/infra audit. No new commands (112).
