@@ -13,9 +13,11 @@ import re
 import sys
 from pathlib import Path
 
-# Links that are examples in command prose, not real references
+# Links that are examples in command prose, not real references.
+# Matched as substrings (see is_example_link), so every entry must be
+# specific enough not to match real internal links -- never a bare "/".
 EXAMPLE_PATTERNS = [
-    "/products", "/about", "/", "/api",
+    "/products", "/about", "/api",
     "style.css", "critical.css", "non-critical.css",
     "docs/architecture", "docs/api.html", "docs/contributing",
     "docs/troubleshooting", "docs/advanced-migrations",

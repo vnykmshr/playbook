@@ -26,6 +26,14 @@ from collections import defaultdict, Counter
 from playbook_utils import setup_logger
 
 
+class GitCommandError(Exception):
+    """A git command exited non-zero, timed out, or could not run.
+
+    Raised so a broken git (e.g. running outside a repo) fails loudly instead of
+    being silently read as an empty history.
+    """
+
+
 class GitSignalsAnalyzer:
     """Analyze git history for adoption, churn, and pain point signals."""
 
@@ -70,76 +78,37 @@ class GitSignalsAnalyzer:
     def _parse_commits(self) -> bool:
         """Parse git log and extract commit metadata."""
         try:
-            # Get full git log with all info we need
-            command = (
-                f'git log --format="%H|%an|%ae|%ad|%s|%b" '
-                f'--date=short --since="{self.since}"'
-            )
-            output = self._run_git_command(command)
+            # Record-delimited format: unit separator (\x1f) between fields,
+            # record separator (\x1e) between commits. Both are control bytes
+            # that never appear in commit metadata, so a subject can be anything
+            # -- empty, or even a bare 40-char SHA -- and still parse correctly.
+            # A single git log call (the old parser ran two and discarded one).
+            output = self._run_git_command([
+                'git', 'log',
+                '--format=%H%x1f%an%x1f%ae%x1f%ad%x1f%s%x1e',
+                '--date=short', f'--since={self.since}',
+            ])
 
-            if not output:
+            if not output.strip():
                 self.logger.warning("No commits found in specified time range")
                 return True  # Not an error, just empty result
 
-            # Parse each commit
-            # Note: We split on commit delimiter and parse carefully since body can have pipes
-            commits_raw = self._run_git_command(
-                f'git log --format="%H%n%an%n%ae%n%ad%n%s%n---END---" '
-                f'--date=short --since="{self.since}"'
-            )
-
-            if not commits_raw:
-                return True
-
-            # Parse structured format
-            current_commit = {}
-            lines = commits_raw.split('\n')
-            i = 0
-
-            while i < len(lines):
-                line = lines[i]
-
-                if not line.strip():
-                    i += 1
+            for record in output.split('\x1e'):
+                record = record.strip('\n')
+                if not record:
                     continue
-
-                # Start of new commit (hash)
-                if len(line) == 40 and all(c in '0123456789abcdef' for c in line):
-                    if current_commit:
-                        self.commits.append(current_commit)
-                    current_commit = {
-                        'hash': line,
-                        'author': '',
-                        'email': '',
-                        'date': '',
-                        'subject': '',
-                        'body': '',
-                    }
-                elif current_commit:
-                    # Fill in fields in order
-                    if 'author' in current_commit and not current_commit['author']:
-                        current_commit['author'] = line
-                    elif 'email' in current_commit and not current_commit['email']:
-                        current_commit['email'] = line
-                    elif 'date' in current_commit and not current_commit['date']:
-                        current_commit['date'] = line
-                    elif 'subject' in current_commit and not current_commit['subject']:
-                        current_commit['subject'] = line
-                    elif line == '---END---':
-                        # End of this commit
-                        pass
-                    else:
-                        # Body content
-                        if current_commit['body']:
-                            current_commit['body'] += '\n' + line
-                        else:
-                            current_commit['body'] = line
-
-                i += 1
-
-            # Add last commit if exists
-            if current_commit and current_commit.get('hash'):
-                self.commits.append(current_commit)
+                fields = record.split('\x1f')
+                if len(fields) < 5:
+                    continue
+                commit_hash, author, email, date, subject = fields[:5]
+                self.commits.append({
+                    'hash': commit_hash,
+                    'author': author,
+                    'email': email,
+                    'date': date,
+                    'subject': subject,
+                    'body': '',
+                })
 
             self.logger.info(f"Parsed {len(self.commits)} commits")
             return True
@@ -152,8 +121,9 @@ class GitSignalsAnalyzer:
         """Extract which files/commands are most touched."""
         try:
             # Get file changes by running git log with name-only
-            command = f'git log --name-only --pretty="" --since="{self.since}"'
-            output = self._run_git_command(command)
+            output = self._run_git_command([
+                'git', 'log', '--name-only', '--pretty=', f'--since={self.since}',
+            ])
 
             if not output:
                 self.adoption_metrics = {'commands_by_touch_frequency': [], 'files_by_change_frequency': []}
@@ -210,6 +180,8 @@ class GitSignalsAnalyzer:
 
             self.logger.info(f"Extracted adoption metrics for {len(command_counts)} commands")
 
+        except GitCommandError:
+            raise  # a broken git is fatal, not an empty result
         except Exception as e:
             self.logger.error(f"Error extracting adoption metrics: {e}")
             self.adoption_metrics = {'commands_by_touch_frequency': [], 'files_by_change_frequency': []}
@@ -218,8 +190,9 @@ class GitSignalsAnalyzer:
         """Extract files with high change frequency (churn)."""
         try:
             # Get line changes using numstat
-            command = f'git log --numstat --pretty="" --since="{self.since}"'
-            output = self._run_git_command(command)
+            output = self._run_git_command([
+                'git', 'log', '--numstat', '--pretty=', f'--since={self.since}',
+            ])
 
             if not output:
                 self.churn_analysis = {'files_by_commit_frequency': [], 'files_by_line_changes': []}
@@ -279,6 +252,8 @@ class GitSignalsAnalyzer:
 
             self.logger.info(f"Extracted churn metrics: {len(file_commits)} files analyzed")
 
+        except GitCommandError:
+            raise  # a broken git is fatal, not an empty result
         except Exception as e:
             self.logger.error(f"Error extracting churn metrics: {e}")
             self.churn_analysis = {'files_by_commit_frequency': [], 'files_by_line_changes': []}
@@ -330,9 +305,10 @@ class GitSignalsAnalyzer:
                         pain_by_file[file_path] += 1
 
             self.pain_points = {
-                'reverted_commits': reverts[-10:],  # Last 10 reverts
-                'bug_fix_patterns': bug_fixes[-10:],  # Last 10 bug fixes
-                'hotfix_patterns': hotfixes[-10:],  # Last 10 hotfixes
+                # git log is newest-first, so [:10] is the 10 most recent.
+                'reverted_commits': reverts[:10],
+                'bug_fix_patterns': bug_fixes[:10],
+                'hotfix_patterns': hotfixes[:10],
                 'pain_score_by_file': sorted(
                     [{'file': file, 'pain_score': score}
                      for file, score in pain_by_file.items()],
@@ -351,6 +327,8 @@ class GitSignalsAnalyzer:
                 f"{len(bug_fixes)} bug fixes, {len(hotfixes)} hotfixes"
             )
 
+        except GitCommandError:
+            raise  # a broken git is fatal, not empty pain points
         except Exception as e:
             self.logger.error(f"Error extracting pain points: {e}")
             self.pain_points = {
@@ -364,29 +342,43 @@ class GitSignalsAnalyzer:
     def _get_commit_files(self, commit_hash: str) -> List[str]:
         """Get list of files changed in a specific commit."""
         try:
-            command = f'git show --name-only --pretty="" {commit_hash}'
-            output = self._run_git_command(command)
+            output = self._run_git_command([
+                'git', 'show', '--name-only', '--pretty=', commit_hash,
+            ])
             return [f.strip() for f in output.split('\n') if f.strip()]
+        except GitCommandError:
+            raise  # a broken git is fatal, not "no files changed"
         except Exception:
             return []
 
-    def _run_git_command(self, command: str) -> str:
-        """Run git command safely."""
+    def _run_git_command(self, args: List[str]) -> str:
+        """Run a git command (argv list) and return stdout.
+
+        Runs without a shell, so values like --since are passed literally and
+        can't be interpreted as shell syntax. Raises GitCommandError on a non-zero
+        exit, timeout, or launch failure, so a broken git can't be misread as an
+        empty history. A successful command with empty output (e.g. no commits in
+        range) returns "" as normal.
+        """
         try:
             result = subprocess.run(
-                command,
-                shell=True,
+                args,
                 capture_output=True,
                 text=True,
                 timeout=10,  # Slightly longer for large history
             )
-            return result.stdout
-        except subprocess.TimeoutExpired:
-            self.logger.warning(f"Git command timed out: {command}")
-            return ""
+        except subprocess.TimeoutExpired as e:
+            raise GitCommandError(f"git command timed out: {' '.join(args)}") from e
         except Exception as e:
-            self.logger.warning(f"Git command failed: {command} - {e}")
-            return ""
+            raise GitCommandError(f"git command could not run: {' '.join(args)} - {e}") from e
+
+        if result.returncode != 0:
+            stderr = (result.stderr or "").strip()
+            raise GitCommandError(
+                f"git command failed (exit {result.returncode}): {' '.join(args)}"
+                + (f"\n{stderr}" if stderr else "")
+            )
+        return result.stdout
 
     def _write_outputs(self) -> None:
         """Write analysis results to JSON and markdown files."""
@@ -439,7 +431,7 @@ class GitSignalsAnalyzer:
 
         # Churn section
         summary.append("\n## High-Churn Areas\n")
-        if self.adoption_metrics.get('high_churn_areas'):
+        if self.churn_analysis.get('high_churn_areas'):
             summary.append("**Files with most changes:**\n")
             for item in self.churn_analysis.get('high_churn_areas', [])[:5]:
                 summary.append(

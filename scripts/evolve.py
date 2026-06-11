@@ -140,15 +140,19 @@ class PlaybookEvolutionEngine:
                     issues[filename].append(f"INVALID: model_hint='{meta['model_hint']}'")
 
             if "related_commands" in meta:
-                if not isinstance(meta["related_commands"], list):
+                related = meta["related_commands"]
+                if not isinstance(related, list):
                     issues[filename].append("INVALID: related_commands must be a list")
-                elif len(meta["related_commands"]) > 5:
-                    issues[filename].append(
-                        f"TOO_MANY: related_commands has {len(meta['related_commands'])} items (max 5)"
-                    )
-                # Check for self-reference
-                if "name" in meta and meta["name"] in meta["related_commands"]:
-                    issues[filename].append(f"CIRCULAR: related_commands includes self")
+                else:
+                    if len(related) > 5:
+                        issues[filename].append(
+                            f"TOO_MANY: related_commands has {len(related)} items (max 5)"
+                        )
+                    # Self-reference check only inside the list branch: on a null
+                    # value `name in None` raises, and on a string it would
+                    # false-positive via substring matching.
+                    if "name" in meta and meta["name"] in related:
+                        issues[filename].append("CIRCULAR: related_commands includes self")
 
             if "tags" in meta:
                 if not isinstance(meta["tags"], list):
@@ -161,15 +165,19 @@ class PlaybookEvolutionEngine:
             # Check dates
             if "last_reviewed" in meta and meta["last_reviewed"]:
                 try:
-                    review_date = datetime.strptime(meta["last_reviewed"], "%Y-%m-%d")
+                    # str(): an unquoted YAML date parses to a datetime.date,
+                    # whose str() is already YYYY-MM-DD. Without it,
+                    # strptime(date, ...) raises TypeError -- not caught below --
+                    # and crashes the whole validate run.
+                    review_date = datetime.strptime(str(meta["last_reviewed"]), "%Y-%m-%d")
                     days_old = (datetime.now() - review_date).days
                     if days_old > 90:
                         self.warnings.append(
                             f"{filename}: last_reviewed is {days_old} days old"
                         )
-                except ValueError:
+                except (ValueError, TypeError):
                     issues[filename].append(
-                        f"INVALID: last_reviewed date format (use YYYY-MM-DD)"
+                        "INVALID: last_reviewed date format (use YYYY-MM-DD)"
                     )
 
         return issues

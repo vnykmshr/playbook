@@ -28,6 +28,11 @@ jobs:
         with:
           fetch-depth: 0  # gitleaks-action needs full history to resolve the push diff range
 
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
       - name: Lint markdown files
         run: |
           npm install -g markdownlint-cli
@@ -35,6 +40,11 @@ jobs:
 
       - name: Validate command conventions
         run: python3 scripts/validate-conventions.py
+
+      - name: Run Python tests
+        run: |
+          python3 -m pip install --quiet pytest pyyaml
+          python3 -m pytest tests/ -q
 
       - name: Scan for secrets (gitleaks)
         uses: gitleaks/gitleaks-action@v3

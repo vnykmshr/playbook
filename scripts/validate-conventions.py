@@ -132,7 +132,10 @@ class ConventionValidator:
 
     def run(self) -> bool:
         """Run all convention checks. Returns True if all pass."""
-        files = sorted(COMMANDS_DIR.rglob("*.md"))
+        # Match command files only (pb-*.md), like evolve.py / trigger-detector.
+        # A plain *.md glob would sweep in any stray non-command markdown under
+        # commands/, inflating the count and emitting spurious per-file FAILs.
+        files = sorted(COMMANDS_DIR.glob("**/pb-*.md"))
 
         self.logger.info(f"Validating conventions for {len(files)} commands")
         self.logger.info(f"Commands directory: {COMMANDS_DIR}")

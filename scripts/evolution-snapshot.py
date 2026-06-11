@@ -30,7 +30,9 @@ class EvolutionSnapshot:
 
     def __init__(self):
         self.snapshots_dir = Path("todos/evolution-snapshots")
-        self.snapshots_dir.mkdir(exist_ok=True)
+        # parents=True: todos/ is gitignored and absent on a fresh clone, so
+        # without it even read-only --list/--show crash here in the constructor.
+        self.snapshots_dir.mkdir(parents=True, exist_ok=True)
         self.snapshots_file = self.snapshots_dir / "snapshots.json"
         self._load_snapshots()
 
@@ -275,8 +277,9 @@ def main():
     parser.add_argument(
         "--cleanup",
         type=int,
-        default=5,
-        help="Cleanup old snapshots, keep N most recent (default: 5)"
+        metavar="N",
+        default=None,
+        help="Cleanup old snapshots, keep N most recent"
     )
 
     args = parser.parse_args()
@@ -300,6 +303,10 @@ def main():
     elif args.rollback:
         success = snapshot.rollback(args.rollback, force=args.force)
         sys.exit(0 if success else 1)
+
+    elif args.cleanup is not None:
+        snapshot.cleanup_old_snapshots(args.cleanup)
+        sys.exit(0)
 
     else:
         # Default: list snapshots

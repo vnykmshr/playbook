@@ -20,6 +20,7 @@ import json
 import re
 import sys
 import subprocess
+from datetime import datetime
 from pathlib import Path
 from collections import defaultdict
 
@@ -169,7 +170,7 @@ class EvolutionDiff:
         """Generate markdown report of evolution diff."""
         with open(output_file, 'w') as f:
             f.write("# Evolution Diff Report\n\n")
-            f.write(f"**Generated:** {Path('').absolute().name}\n")
+            f.write(f"**Generated:** {datetime.now().isoformat()}\n")
             f.write(f"**Total Changes:** {len(changes)}\n\n")
 
             # Summary by field
