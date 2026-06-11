@@ -4,7 +4,7 @@ Welcome to the Engineering Playbook! This guide will help you get up and running
 
 ## Installation
 
-See [Installation & Setup](../README.md#installation) in the main README for prerequisites and installation steps.
+See [Installation & Setup](https://github.com/vnykmshr/playbook/blob/main/README.md#install) in the main README for prerequisites and installation steps.
 
 **Quick summary:**
 ```bash
