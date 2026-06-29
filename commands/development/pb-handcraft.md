@@ -5,7 +5,7 @@ category: "development"
 difficulty: "intermediate"
 model_hint: "sonnet"
 execution_pattern: "sequential"
-related_commands: ['pb-voice', 'pb-review', 'pb-linus-agent', 'pb-commit']
+related_commands: ['pb-voice', 'pb-review', 'pb-linus-agent', 'pb-commit', 'pb-llm-guidelines']
 last_reviewed: "2026-04-26"
 last_evolved: "2026-04-26"
 version: "1.3.0"
@@ -273,6 +273,7 @@ All work stays local until explicitly approved for external action. No auto-push
 - Expand scope
 - Write additional tests beyond what the change requires
 - Refactor adjacent code
+- Delete pre-existing dead code (mention it, don't delete unless asked)
 - Execute any external action
 
 If the handcraft pass reveals a real issue (missing test case, logic bug), fix it -- but don't use it as an excuse to expand scope.

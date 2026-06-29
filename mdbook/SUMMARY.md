@@ -61,6 +61,7 @@
 - [Preferences](commands/development/pb-preferences.md)
 - [What Next](commands/development/pb-what-next.md)
 - [Forge](commands/development/pb-forge.md)
+- [LLM Guidelines](commands/development/pb-llm-guidelines.md)
 
 # Commands: Planning
 

@@ -6,10 +6,10 @@ difficulty: "intermediate"
 model_hint: "sonnet"
 execution_pattern: "interactive"
 related_commands: ['pb-preamble', 'pb-review', 'pb-commit', 'pb-pause', 'pb-plan']
-last_reviewed: "2026-02-18"
-last_evolved: "2026-02-18"
-version: "2.2.0"
-version_notes: "v2.2.0: Added scope mode question (expand/hold/reduce) to clarify intent before coding."
+last_reviewed: "2026-06-29"
+last_evolved: "2026-06-29"
+version: "2.3.0"
+version_notes: "v2.3.0: Added verifiable success criteria question (how will you know it's done?). v2.2.0: Added scope mode question (expand/hold/reduce) to clarify intent before coding."
 breaking_changes: ["Replaced detailed pre-start checklist with 3-4 adaptive scope questions. Old commands pb-cycle/pb-review-code merged into /pb-review. See MIGRATION section."]
 ---
 # Start Development Work
@@ -68,7 +68,11 @@ The system asks clarifying questions naturally-like a peer reviewing your approa
    - You: "Payment processing, yes"
    - System prepares review depth accordingly
 
-5. **Any blockers?**
+5. **How will you know it's done?** (verifiable success criteria)
+   - You: "Tests pass, can reset password end-to-end in staging"
+   - System records criteria; `/pb-review` verifies against them
+
+6. **Any blockers?**
    - You: "Need staging DB access" or "None"
    - System pauses if blockers exist, otherwise proceeds
 
@@ -76,7 +80,9 @@ The system asks clarifying questions naturally-like a peer reviewing your approa
 
 ## After You Answer
 
-System detects complexity level, criticality, and affected domains. Creates a feature branch with conventional naming, saves your scope for `/pb-review` later, then gets out of your way. You code. No more decisions, no ceremony. System watches in the background, tracking change complexity as you work.
+System detects complexity level, criticality, and affected domains. Creates a feature branch with conventional naming, saves your scope and success criteria for `/pb-review` later, then gets out of your way. You code. No more decisions, no ceremony. System watches in the background, tracking change complexity as you work.
+
+See `/pb-llm-guidelines` §4 for the goal-driven execution pattern: strong success criteria let you loop independently; weak criteria require constant clarification.
 
 ---
 

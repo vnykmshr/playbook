@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- **LLM Coding Guidelines** -- 4 behavioral guidelines for reducing LLM coding mistakes (think before coding, simplicity first, surgical changes, goal-driven execution), sourced from Karpathy's observations. `/pb-llm-guidelines` reference command with playbook cross-references. `/pb-start` now asks for verifiable success criteria.
+
 ### Fixed
 
 - **Status-line context %** -- `context-bar.sh` read the context window from a model-name case statement with no arm for Opus 4.8 / Fable 5, so those sessions divided usage by 200K (a 1M session at 547K showed 273%). It now reads the real window from the status-line payload's `context_window` object (the `[1m]` tier is not in the model id, so it can't be inferred from the name); falls back to the transcript for older versions. `check-context.sh` (a Stop hook, whose payload carries no `context_window`) reads a window value the status line caches, inferring 1M when usage exceeds 200K otherwise.
