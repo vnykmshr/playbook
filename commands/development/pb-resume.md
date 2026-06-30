@@ -7,9 +7,9 @@ model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-start', 'pb-pause', 'pb-cycle']
 last_reviewed: "2026-03-28"
-last_evolved: "2026-06-10"
-version: "1.3.0"
-version_notes: "v2.20.0: Two-tier mode system (standard/deep), content consolidation, proper step numbering"
+last_evolved: "2026-06-30"
+version: "1.4.0"
+version_notes: "v1.4.0: Add Session Recap Review (Step 0) — surface, decide, archive loop."
 breaking_changes: []
 ---
 # Resume Development Work
@@ -34,6 +34,35 @@ Quickly get back into context after a break. Use this to resume work on an exist
 ---
 
 ## Standard Mode (Default)
+
+### Step 0: Session Recap Review
+
+Read the `### Session Recap` section from `todos/pause-notes.md`. If present, surface it before loading state:
+
+```
+## Session Recap (from last session)
+
+[recap content]
+```
+
+**After surfacing, the assistant handles it:**
+
+1. **Append to `memory/lessons.md`** first (before stripping — prevents data loss if interrupted):
+   ```markdown
+   ## [YYYY-MM-DD] — [session context]
+   [recap content]
+   ```
+2. **Strip from pause notes** after confirming the archive write succeeded.
+3. **Act on findings with sensible defaults:**
+   - Obvious fix (wording, guardrail, convention) → apply it. Commit.
+   - Complex or needs operator judgment → flag: "Noted for this session: [finding]" — add to working context.
+   - No immediate action needed → archived; `/pb-evolve` mines it later.
+
+The operator can override any action, but the default is "handle it, don't present a menu."
+
+**If no Session Recap section exists:** skip silently. (First-time use with pre-v1.5.0 pause notes: say "Session Recap: none — recaps are written by `/pb-pause` when a session produces learnings." Once.)
+
+---
 
 ### Step 1: Check Current State
 

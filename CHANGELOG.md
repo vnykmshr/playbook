@@ -9,6 +9,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- **Session Recap** — `/pb-pause` writes a thorough `### Session Recap` section in pause notes (assistant-driven reflection on lessons, patterns, and playbook feedback). `/pb-resume` surfaces it as Step 0, handles findings with sensible defaults (apply obvious fixes, flag complex ones, archive the rest), then strips from pause notes and archives to `memory/lessons.md`. Append-before-strip ordering prevents data loss. Closes the session-to-session feedback loop without new files in `todos/`.
+
 - **LLM Coding Guidelines** -- 4 behavioral guidelines for reducing LLM coding mistakes (think before coding, simplicity first, surgical changes, goal-driven execution), sourced from Karpathy's observations. `/pb-llm-guidelines` reference command with playbook cross-references. `/pb-start` now asks for verifiable success criteria.
 
 ### Fixed

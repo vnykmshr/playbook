@@ -7,9 +7,9 @@ model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-resume', 'pb-start', 'pb-standup']
 last_reviewed: "2026-04-26"
-last_evolved: "2026-06-10"
-version: "1.4.0"
-version_notes: "v1.4.0: Replace git add -A with specific-file staging in short-break and standard wip flows."
+last_evolved: "2026-06-30"
+version: "1.5.0"
+version_notes: "v1.5.0: Add Session Recap step — assistant-driven reflection surfaced at resume."
 breaking_changes: []
 ---
 # Pause Development Work
@@ -114,9 +114,18 @@ Latest session pause context. Old entries archived to `todos/done/`.
 
 ### Open Questions (if any)
 - [Question] - [context]
+
+### Session Recap
+*(Assistant-written -- thorough reflection on the session)*
+
+Key observations:
+- [observation]
+
+Patterns / playbook feedback:
+- [pattern or playbook command that needs attention]
 ```
 
-Target: ~20-30 lines. Be specific about what's next. Skip sections that don't apply.
+Target: ~30-40 lines. Be specific about what's next. Skip sections that don't apply. The Session Recap section is written by the assistant, not the user -- it is a thorough analysis, not a quick skim.
 
 **3b. Archive old entries** — if pause-notes has entries beyond the latest, move old entries to `todos/done/pause-notes-archive-YYYY-MM-DD.md`.
 
@@ -137,11 +146,23 @@ Flag if:
 
 ---
 
+### Step 4: Write Session Recap
+
+After the pause entry is written, reflect on the session and fill in the `### Session Recap` section of the pause notes. This is assistant-driven — the user does not fill it in.
+
+**What to include:** Key observations (what was learned, what went wrong, what surprised you, what you'd do differently) and patterns/playbook feedback (did a playbook command mislead or help? is a command missing or wrong? did a workflow deviate and need correction?). Observations can target playbook commands, project workflows, or personal patterns.
+
+**Depth:** Thorough reflection. Analyze the session's git log, conversation, decisions made, and paths not taken. If nothing meaningful happened, the section can be brief or omitted.
+
+The recap is surfaced at `/pb-resume` and archived to `memory/lessons.md` after review.
+
+---
+
 ## Deep Mode
 
 Run standard mode first, then continue with these steps.
 
-### Step 4: Refresh Working Context
+### Step 5: Refresh Working Context
 
 Run `/pb-context` to update the working context document:
 
@@ -159,7 +180,7 @@ Update in working context:
 
 ---
 
-### Step 5: Update Project CLAUDE.md
+### Step 6: Update Project CLAUDE.md
 
 Run `/pb-claude-project` if the session introduced:
 
