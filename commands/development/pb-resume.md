@@ -7,9 +7,9 @@ model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-start', 'pb-pause', 'pb-cycle']
 last_reviewed: "2026-03-28"
-last_evolved: "2026-06-30"
-version: "1.4.0"
-version_notes: "v1.4.0: Add Session Recap Review (Step 0) — surface, decide, archive loop."
+last_evolved: "2026-07-01"
+version: "1.5.0"
+version_notes: "v1.5.0: Restructure Step 0 — SURFACE→ACT→ARCHIVE phases with dedup check, archive-failure handling, and Recap Disposition summary."
 breaking_changes: []
 ---
 # Resume Development Work
@@ -37,30 +37,71 @@ Quickly get back into context after a break. Use this to resume work on an exist
 
 ### Step 0: Session Recap Review
 
-Read the `### Session Recap` section from `todos/pause-notes.md`. If present, surface it before loading state:
+Read the `### Session Recap` section from `todos/pause-notes.md`.
+
+**If no Session Recap section exists:** skip to Step 1. (First-time use with pre-v1.5.0 pause notes: say "Session Recap: none — recaps are written by `/pb-pause` when a session produces learnings." Once.)
+
+---
+
+#### 0a. SURFACE: Present Findings
+
+Before surfacing, check for duplicates: if the recap content already appears as the most recent entry in `memory/lessons.md`, skip to Step 1 (already processed on a prior resume).
+
+Otherwise, surface the recap visibly. Present findings as a structured summary — the recap is a learning loop, not a write-only log:
 
 ```
 ## Session Recap (from last session)
 
-[recap content]
+Key observations:
+- [what was observed]
+
+**Finding:** [observation with playbook/project implication] → [action to take]
+**Finding:** [observation] → [action to take]
 ```
 
-**After surfacing, the assistant handles it:**
+Findings that need action should be called out explicitly. Observations with no action item can be summarized briefly.
 
-1. **Append to `memory/lessons.md`** first (before stripping — prevents data loss if interrupted):
+---
+
+#### 0b. ACT: Address Each Finding
+
+Address actionable findings while visible, with sensible defaults:
+
+- **Obvious fix** (wording, guardrail, convention) → apply it. Commit.
+- **Worth doing, needs planning** → add to working context under Next. Note: "Queued: [finding]"
+- **Q3 candidate** → note it; `/pb-evolve` mines quarterly.
+- **No action** → state explicitly: "Archived only — no immediate action."
+
+The default is "act, then report." The user can override any action before archiving.
+
+---
+
+#### 0c. ARCHIVE: Append → Strip
+
+1. **Append to `memory/lessons.md`** first (create the file if new) — prevents data loss if interrupted:
    ```markdown
    ## [YYYY-MM-DD] — [session context]
    [recap content]
    ```
-2. **Strip from pause notes** after confirming the archive write succeeded.
-3. **Act on findings with sensible defaults:**
-   - Obvious fix (wording, guardrail, convention) → apply it. Commit.
-   - Complex or needs operator judgment → flag: "Noted for this session: [finding]" — add to working context.
-   - No immediate action needed → archived; `/pb-evolve` mines it later.
+2. **If the append fails:** leave the recap in pause notes, flag the error. Do not strip.
+3. **Strip from pause notes** only after confirming the archive write succeeded.
 
-The operator can override any action, but the default is "handle it, don't present a menu."
+---
 
-**If no Session Recap section exists:** skip silently. (First-time use with pre-v1.5.0 pause notes: say "Session Recap: none — recaps are written by `/pb-pause` when a session produces learnings." Once.)
+#### Recap Disposition
+
+After archiving, report what was done:
+
+```
+## Recap Disposition
+
+- Finding 1: fixed → <commit-hash>
+- Finding 2: queued → working context
+- Finding 3: Q3 candidate noted
+- Finding 4: archived only
+```
+
+Then proceed to Step 1.
 
 ---
 
