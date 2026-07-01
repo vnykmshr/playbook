@@ -25,7 +25,7 @@ Quickly get back into context after a break. Use this to resume work on an exist
 ## Modes
 
 ```
-/pb-resume             → Standard (default): git state, sync, load context, health check
+/pb-resume             → Standard (default): recap review, git state, sync, load context, health check
 /pb-resume deep        → Deep: standard + verify/regenerate stale layers + run tests
 ```
 
@@ -88,7 +88,7 @@ The default is "act, then report." The user can override any action before archi
 
 ---
 
-#### Recap Disposition
+#### 0d. Recap Disposition
 
 After archiving, report what was done:
 

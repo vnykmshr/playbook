@@ -193,6 +193,7 @@ Save the decision and rationale to the relevant project doc. Future sessions sho
 /pb-huddle "How do we communicate this breaking API change to existing clients?"
 /pb-huddle "Do we optimize for developer experience or runtime performance in the SDK?"
 /pb-huddle --re-huddle "Given we picked DX over perf, how should we measure the trade-off?"
+/pb-huddle "re-huddle: Given we picked DX over perf, how should we measure the trade-off?"
 ```
 
 ---
