@@ -11,9 +11,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - **Session Recap** — `/pb-pause` writes a thorough `### Session Recap` section in pause notes (assistant-driven reflection on lessons, patterns, and playbook feedback). `/pb-resume` surfaces it as Step 0, handles findings with sensible defaults (apply obvious fixes, flag complex ones, archive the rest), then strips from pause notes and archives to `memory/lessons.md`. Append-before-strip ordering prevents data loss. Closes the session-to-session feedback loop without new files in `todos/`.
 
+- **Huddle Re-Huddle Mode** — `/pb-huddle --re-huddle "refined question"` reuses the same persona set from the prior huddle with lighter context (skips context loading, shorter persona prompts referencing prior output). Full huddle output format preserved. Natural-language trigger `"re-huddle: ..."` also works. Same-conversation guardrail; falls back to full huddle if prior output can't be found.
+
 - **LLM Coding Guidelines** -- 4 behavioral guidelines for reducing LLM coding mistakes (think before coding, simplicity first, surgical changes, goal-driven execution), sourced from Karpathy's observations. `/pb-llm-guidelines` reference command with playbook cross-references. `/pb-start` now asks for verifiable success criteria.
 
 ### Fixed
+
+- **`/pb-resume` Step 0 recap flow** — the original Step 0 ordered operations as append→strip→act, causing assistants to mechanically archive findings before addressing them, making the recap a write-only log. Restructured to SURFACE→ACT→ARCHIVE phases with dedup check (skip if already the most recent lessons.md entry), archive-failure handling (don't strip on write errors), and a Recap Disposition summary that closes the loop visibly.
 
 - **Status-line context %** -- `context-bar.sh` read the context window from a model-name case statement with no arm for Opus 4.8 / Fable 5, so those sessions divided usage by 200K (a 1M session at 547K showed 273%). It now reads the real window from the status-line payload's `context_window` object (the `[1m]` tier is not in the model id, so it can't be inferred from the name); falls back to the transcript for older versions. `check-context.sh` (a Stop hook, whose payload carries no `context_window`) reads a window value the status line caches, inferring 1M when usage exceeds 200K otherwise.
 

@@ -7,9 +7,9 @@ model_hint: "opus"
 execution_pattern: "parallel-then-sequential"
 related_commands: ['pb-think', 'pb-preamble', 'pb-linus-agent', 'pb-maya-product', 'pb-adr']
 last_reviewed: "2026-03-24"
-last_evolved: ""
-version: "1.0.0"
-version_notes: "Initial: multi-persona decision framework with persona selection guide."
+last_evolved: "2026-07-01"
+version: "1.1.0"
+version_notes: "v1.1.0: Add re-huddle mode — refined follow-up with same personas, lighter context."
 breaking_changes: []
 ---
 # Multi-Perspective Decision Session
@@ -36,6 +36,48 @@ Apply `/pb-preamble` thinking: best ideas win regardless of source. Personas sho
 - When pacing, framing, or sequencing matters as much as content
 
 **Do NOT use for:** routine code review, simple go/no-go decisions, or when the answer is obvious. Use `/pb-linus-agent` for technical review, `/pb-voice` for writing quality. Huddle is for strategy.
+
+---
+
+## Modes
+
+```
+/pb-huddle "question"             → Standard (default): full huddle with context loading
+/pb-huddle --re-huddle "question" → Re-huddle: refined follow-up, same personas, lighter context
+```
+
+**Natural-language trigger:** `"re-huddle: new focus question"` also invokes re-huddle mode. The flag and the prefix are equivalent; use whichever reads more naturally.
+
+---
+
+### Re-Huddle Mode
+
+When a huddle's synthesis identifies a refined follow-up question, run a re-huddle instead of a full huddle. It reuses the persona set and context from the prior huddle, focusing only on the new question.
+
+**When to use:**
+- The prior huddle surfaced a refined question worth deeper exploration
+- The same personas should weigh in on the follow-up
+- The context hasn't changed (same session, same files)
+
+**What changes:**
+- **Skip context loading** (Step 2) — personas already have the background from the prior huddle
+- **Shorter persona prompts** — reference the prior huddle output instead of re-loading raw context
+- **Keep framing** (Step 1) — the refined question still needs clear framing; it's a different question from the original
+
+**What stays the same:**
+- Full huddle output format (persona arguments, tensions, synthesis, decision, recording)
+- Steps 3-6 run identically to standard mode
+
+**Guardrails:**
+- **Same-conversation only** — re-huddle depends on the personas having the prior huddle's context in memory. Across sessions, run a full huddle.
+- **Fall back to full huddle** if the prior huddle output can't be found or persona names can't be extracted. If in doubt, ask which personas to use.
+
+**How it works:**
+1. Read the most recent huddle output from the conversation
+2. Extract the persona names used
+3. Frame the new question (Step 1)
+4. Run personas with abbreviated prompts that reference the prior output (Step 3)
+5. Find tensions, synthesize, record (Steps 4-6)
 
 ---
 
@@ -138,7 +180,8 @@ Save the decision and rationale to the relevant project doc. Future sessions sho
 | Average the opinions | Find the approach that survives all lenses |
 | Huddle without loaded context | Read all relevant state files first |
 | Skip recording the decision | Write it to the project doc immediately |
-| Re-huddle the same question | Read the previous decision and build on it |
+| Re-huddle the same question unchanged | Read the previous decision and build on it |
+| Run full huddle for a refined follow-up question | Use re-huddle mode (`--re-huddle`) — reuse personas, skip context reloading |
 | Use huddle as a delay tactic | If you're stalling, just do the work |
 
 ---
@@ -149,6 +192,8 @@ Save the decision and rationale to the relevant project doc. Future sessions sho
 /pb-huddle "Should we refactor the auth module before adding OAuth support?"
 /pb-huddle "How do we communicate this breaking API change to existing clients?"
 /pb-huddle "Do we optimize for developer experience or runtime performance in the SDK?"
+/pb-huddle --re-huddle "Given we picked DX over perf, how should we measure the trade-off?"
+/pb-huddle "re-huddle: Given we picked DX over perf, how should we measure the trade-off?"
 ```
 
 ---
