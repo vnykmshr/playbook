@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v2.25.0] - 2026-07-02
+
 ### Added
 
 - **Session Recap** — `/pb-pause` writes a thorough `### Session Recap` section in pause notes (assistant-driven reflection on lessons, patterns, and playbook feedback). `/pb-resume` surfaces it as Step 0, handles findings with sensible defaults (apply obvious fixes, flag complex ones, archive the rest), then strips from pause notes and archives to `memory/lessons.md`. Append-before-strip ordering prevents data loss. Closes the session-to-session feedback loop without new files in `todos/`.
@@ -1744,6 +1746,32 @@ When releasing a new version:
 
 ---
 
+[v2.25.0]: https://github.com/vnykmshr/playbook/releases/tag/v2.25.0
+[v2.24.1]: https://github.com/vnykmshr/playbook/releases/tag/v2.24.1
+[v2.24.0]: https://github.com/vnykmshr/playbook/releases/tag/v2.24.0
+[v2.23.0]: https://github.com/vnykmshr/playbook/releases/tag/v2.23.0
+[v2.22.0]: https://github.com/vnykmshr/playbook/releases/tag/v2.22.0
+[v2.21.1]: https://github.com/vnykmshr/playbook/releases/tag/v2.21.1
+[v2.21.0]: https://github.com/vnykmshr/playbook/releases/tag/v2.21.0
+[v2.20.0]: https://github.com/vnykmshr/playbook/releases/tag/v2.20.0
+[v2.19.2]: https://github.com/vnykmshr/playbook/releases/tag/v2.19.2
+[v2.19.1]: https://github.com/vnykmshr/playbook/releases/tag/v2.19.1
+[v2.19.0]: https://github.com/vnykmshr/playbook/releases/tag/v2.19.0
+[v2.18.0]: https://github.com/vnykmshr/playbook/releases/tag/v2.18.0
+[v2.17.0]: https://github.com/vnykmshr/playbook/releases/tag/v2.17.0
+[v2.16.0]: https://github.com/vnykmshr/playbook/releases/tag/v2.16.0
+[v2.15.0]: https://github.com/vnykmshr/playbook/releases/tag/v2.15.0
+[v2.14.0]: https://github.com/vnykmshr/playbook/releases/tag/v2.14.0
+[v2.13.3]: https://github.com/vnykmshr/playbook/releases/tag/v2.13.3
+[v2.13.2]: https://github.com/vnykmshr/playbook/releases/tag/v2.13.2
+[v2.13.1]: https://github.com/vnykmshr/playbook/releases/tag/v2.13.1
+[v2.13.0]: https://github.com/vnykmshr/playbook/releases/tag/v2.13.0
+[v2.12.0]: https://github.com/vnykmshr/playbook/releases/tag/v2.12.0
+[v2.11.0]: https://github.com/vnykmshr/playbook/releases/tag/v2.11.0
+[v2.10.0]: https://github.com/vnykmshr/playbook/releases/tag/v2.10.0
+[v2.9.0]: https://github.com/vnykmshr/playbook/releases/tag/v2.9.0
+[v2.8.1]: https://github.com/vnykmshr/playbook/releases/tag/v2.8.1
+[v2.8.0]: https://github.com/vnykmshr/playbook/releases/tag/v2.8.0
 [v2.7.0]: https://github.com/vnykmshr/playbook/releases/tag/v2.7.0
 [v2.6.0]: https://github.com/vnykmshr/playbook/releases/tag/v2.6.0
 [v2.5.0]: https://github.com/vnykmshr/playbook/releases/tag/v2.5.0
