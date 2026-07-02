@@ -220,6 +220,13 @@ Create `.claude/CLAUDE.md` with this structure:
 
 ---
 
+## Generated Artifacts (do not commit)
+
+[If any from Step 7 — list paths that are generated output, never source]
+[Delete this section if none]
+
+---
+
 ## Commands
 
 **Development:**

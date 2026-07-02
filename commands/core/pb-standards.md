@@ -277,6 +277,9 @@ make test        # All tests pass
 * **Never skip testing** - Manual QA minimum, automated preferred
 * **Never ignore warnings** - Warnings become bugs
 * **Never "just push it"** - Every change deserves the full cycle
+
+### Command Quality
+
 * **Every multi-step command includes a Definition of Done checklist** — execution gates on all boxes checked, not judgment of "feels done"
 
 ### Quick Reference

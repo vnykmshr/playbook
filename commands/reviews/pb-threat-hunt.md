@@ -7,13 +7,14 @@ model_hint: "opus"
 execution_pattern: "sequential"
 related_commands: ['pb-security', 'pb-secrets', 'pb-hardening', 'pb-incident', 'pb-debug']
 last_reviewed: "2026-07-02"
+last_evolved: "2026-07-02"
 version: "1.0.0"
 version_notes: "v1.0.0: 12-step executable deep audit with adversarial payload catalog, severity rubric, and terminal DoD gate. Multi-language: Go default + Python/Node appendices."
 breaking_changes: []
 ---
 # Security Threat Hunt: Deep Audit Methodology
 
-A 12-step executable security audit that treats every auth shortcut, redirect, token source, cookie, forwarded header, parser, cache, and cryptographic decision as a security boundary until proven otherwise. Not a checklist — a hunt.
+A 12-step executable security audit that treats every auth shortcut, redirect, token source, cookie, forwarded header, parser, cache, and cryptographic decision as a security boundary until proven otherwise. The default answer to "is this safe?" is "prove it." Not a checklist — a hunt.
 
 **Mindset:** Apply `/pb-preamble` thinking (challenge every safety assumption) and `/pb-design-rules` thinking (fail noisily, distrust "one true way," recovery-oriented errors). The hunt is adversarial by design.
 
@@ -34,11 +35,6 @@ For quick pre-release checks, use `/pb-security`. This command is the deep pass.
 
 ---
 
-## Operating Posture
-
-Treat every auth shortcut, redirect, token source, cookie, forwarded header, parser, cache, and cryptographic decision as a security boundary until proven otherwise. The default answer to "is this safe?" is "prove it."
-
----
 
 ## Severity Rubric
 
@@ -92,7 +88,7 @@ rg -n 'ParseWithClaims|jwt\.Sign|jwt\.NewWithClaims|jwt\.Parse|SetCookie|cookie\
 
 **Run — Parsing/Deserialization:**
 ```bash
-rg -n 'json\.Unmarshal|xml\.Unmarshal|gob\.NewDecoder|\.\(\w+\)|fmt\.Sscanf|strconv\.Parse|template\.Must'
+rg -n 'json\.Unmarshal|xml\.Unmarshal|gob\.NewDecoder|\.\(\w+\)|fmt\.Sscanf|strconv\.Atoi|strconv\.Parse|template\.Must'
 ```
 
 **Run — Crypto:**
@@ -102,12 +98,12 @@ rg -n 'md5\.Sum|md5\.New|sha1\.Sum|sha1\.New|crypto/aes|crypto/rsa|ecdsa\.|hmac\
 
 **Run — Concurrency/Race:**
 ```bash
-rg -n 'go func|sync\.Mutex|sync\.RWMutex|sync\.Map|chan\s|sync\.Once|sync\.WaitGroup'
+rg -n 'go func|sync\.Mutex|sync\.RWMutex|sync\.Map|chan\b|sync\.Once|sync\.WaitGroup'
 ```
 
 **Run — Dangerous Standard Library:**
 ```bash
-rg -n 'os\.Exec|exec\.Command|os/exec|net/http\.Get.*userInput|reflect\.|unsafe\.'
+rg -n 'exec\.Command|os/exec|net/http\.Get|reflect\.|unsafe\.'
 ```
 
 **Exit:** Every search pass executed; every hit reviewed. Fails when a pass is skipped because "that won't find anything here."
@@ -221,7 +217,7 @@ Find data races, cache poisoning, and goroutine leaks.
 
 **Run:**
 ```bash
-rg -n 'sync\.Map\.|sync\.Mutex|sync\.RWMutex|\.Lock\(\)|\.Unlock\(\)|\.RLock\(\)|go func|chan\s|context\.WithCancel|context\.WithTimeout'
+rg -n 'sync\.Map\.|sync\.Mutex|sync\.RWMutex|\.Lock\(\)|\.Unlock\(\)|\.RLock\(\)|go func|chan\b|context\.WithCancel|context\.WithTimeout'
 ```
 
 For each hit:
@@ -409,7 +405,7 @@ rg -n '\$where|\$regex.*req\.|\.find\({.*req\.'
 
 ## Report Path
 
-Write findings to `todos/revenue/security/reports/{target}/threat-hunt-{YYYY-MM-DD}.md`.
+Write findings to `todos/security/reports/{target}/threat-hunt-{YYYY-MM-DD}.md`.
 
 ---
 
