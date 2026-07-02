@@ -6,10 +6,10 @@ difficulty: "intermediate"
 model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-voice', 'pb-review', 'pb-linus-agent', 'pb-commit', 'pb-llm-guidelines']
-last_reviewed: "2026-04-26"
-last_evolved: "2026-04-26"
-version: "1.3.0"
-version_notes: "v1.3.0: Add The Badge Test -- the defend-every-line standard now frames the whole pass, ambient rather than a separate step."
+last_reviewed: "2026-07-02"
+last_evolved: "2026-07-02"
+version: "1.4.0"
+version_notes: "v1.4.0: Lens 6+7 boundary redrawn (register → L6, mechanical read-aloud → L7). Per-lens exit questions + failure modes. Repeated section anatomy detection. Surgeon Rule compressed. Review Comment Craft moved to Per-Artifact. Final re-read pass."
 breaking_changes: []
 ---
 # AI Output Quality Gate
@@ -48,8 +48,6 @@ Apply `/pb-preamble` thinking: challenge your own output before anyone else does
 
 ## The Surgeon Rule
 
-A surgeon doesn't narrate while cutting. Doesn't explain the scalpel. Doesn't add tissue. Doesn't nick adjacent structures.
-
 Minimal sufficient. No bloat. No clipping.
 
 ---
@@ -77,7 +75,7 @@ Some projects enforce this explicitly. Most don't but will judge it. The standar
 
 ## Horizontal Sweep (External Code Contributions)
 
-Before the six lenses, sweep horizontally: does the new code follow existing idioms, or does it introduce new ways of doing old things?
+Before the seven lenses, sweep horizontally: does the new code follow existing idioms, or does it introduce new ways of doing old things?
 
 - How does the project parse directives? Use the same parser.
 - How does the project manage slice fields on structs? Add the same lifecycle methods.
@@ -114,6 +112,8 @@ The work must be indistinguishable from what the target maintainer would write t
 - Error wrapping style (project's error package or stdlib?)
 - Import grouping (stdlib / external / internal?)
 
+**Exit:** Did you read the target codebase, or match from memory? (Fails when you match from memory — you'll miss convention drift.)
+
 ### Lens 2: AI Tell Scan
 
 Read every line looking for machine patterns. If a line makes you think "a human wouldn't write it that way," rewrite it.
@@ -147,10 +147,13 @@ Read every line looking for machine patterns. If a line makes you think "a human
 - Numbered lists where prose would be more natural
 - Summary at the end restating what was just said
 - Opener repetition across posts (scan last 5 before writing new)
+- Repeated section anatomy — identical beat structure (scene → diagnosis → prescription → close) across N > 1 sections. Break one section's rhythm.
 
 **Typography tells:**
 - Em dashes anywhere -- use `--` for internal docs, match project conventions for external output
 - Exotic/unicode symbols -- stick to ASCII
+
+**Exit:** Did you flag at least one tell you initially overlooked? (Fails when you've read so much AI output you've normalized the patterns — you literally can't see them anymore.)
 
 ### Lens 3: Bloat Check
 
@@ -166,6 +169,10 @@ Remove anything that doesn't earn its place.
 
 **The test:** cover each line with your hand. Does removing it lose information? If no, cut it.
 
+**The structure test:** scan section openings. If Lens 2 flagged repeated section anatomy, verify you broke at least one section's rhythm. Uniform structure is bloat regardless of who (or what) wrote it.
+
+**Exit:** Did you remove anything, or did everything earn its place on first pass? (Fails when attachment to your own prose makes every line feel load-bearing.)
+
 ### Lens 4: Clipping Check
 
 Verify nothing was accidentally removed.
@@ -176,6 +183,8 @@ Verify nothing was accidentally removed.
 - Is there a blank line or import that was load-bearing?
 
 **The test:** diff against the original. For each removed line, confirm it's genuinely unnecessary.
+
+**Exit:** Did you diff against the original and confirm every removal? (Fails when the diff is large and you skim instead of checking each line.)
 
 ### Lens 5: Scope Check
 
@@ -194,6 +203,8 @@ The reader built the system. Don't explain their code, their spec, their domain,
 
 **Why it matters:** Reviewer text that explains a maintainer's own system back reads as outsider, AI-assisted, or condescending -- even when factually correct. The strongest review comments show the bug, the proof, and the fix without restating what the reader built.
 
+**Exit:** Did you cut anything that explained the reader's domain back to them? (Fails when you assume the reader needs context you'd find condescending if roles were reversed.)
+
 ### Lens 6: Register Check
 
 Apply project-specific voice guidelines. If the project defines a voice guide or `/pb-voice` has been configured, use those rules. Otherwise, match the register of the target project's existing docs and comments.
@@ -208,24 +219,41 @@ General dev-to-dev register:
 
 **For GitHub artifacts** (commits, PRs, issues, PR/review/inline comments): `~/.claude/CLAUDE.md` § GitHub Artifact Register sets the ceilings, strip list, and never-write list.
 
+**Conversational check:** read the output aloud as if saying it to a colleague over a drink. Mouth the words — silent reading skips what the tongue catches.
+
+- Would you actually say this sentence to another human in conversation?
+- Would they check their phone midway through?
+- Does it sound like you typed this live, or like a generated artifact?
+
+If the conversational check flags something your eye skipped, the problem is register, not cadence. Fix it here.
+
+**Exit:** Would you say every sentence aloud to a colleague without hedging or apologizing? (Fails when you read silently — your eye skips what your tongue would catch.)
+
 ### Lens 7: Read-Aloud Check
+
+This is a detection method, not a problem category. Your eyes skip what your tongue catches — reading aloud surfaces issues the other lenses miss, regardless of what kind of issue it is.
 
 Read the output as if speaking it to the maintainer over a call.
 
 - Does any sentence feel robotic when spoken?
 - Are sentence lengths varied, or is it mechanical?
 - Does the flow have rhythm, or does it plod?
-- Would you actually say this to a colleague?
 
 If it sounds like a press release, rewrite until it sounds like a person.
 
 **For conversational artifacts (PR/issue comments, emails, Slack):** beyond spoken rhythm, check the shape. Does it read like someone typed this live, or like a generated review artifact with section headers and bullet padding? Scene-setter up front, specific pointers, flowing prose. Structured submissions (GHSA fields, VRP forms) skip this sub-check -- required sections drive their shape.
 
+**Exit:** Did reading aloud catch something silent reading skipped? (Fails when you mutter instead of reading aloud — whispering is still silent reading.)
+
+### Final Re-Read
+
+Not an eighth lens — a closing sweep. After all seven lenses, re-read the final output once from top to bottom. You changed things. Confirm the fixes didn't introduce new tells. If you find one, fix it and re-read; one clean pass is enough. Don't restart the lens pass.
+
 ---
 
 ## Submission Quality Gate (Security Reports)
 
-Before any security submission -- GHSA, bounty platform, email -- verify these in addition to the six lenses:
+Before any security submission -- GHSA, bounty platform, email -- verify these in addition to the seven lenses:
 
 - **PoC or traced input path.** "I tested this" or "I traced input from annotation to fmt.Sprintf with no sanitization." Code analysis is silver; observable output is gold. Prefer gold.
 - **Realistic scenario.** What does the attacker do, what breaks. State preconditions (RBAC, auth, config).
@@ -237,7 +265,11 @@ Before any security submission -- GHSA, bounty platform, email -- verify these i
 
 ---
 
-## Review Comment Craft
+## Per-Artifact
+
+Extensions for specific artifact types that need more than the seven lenses.
+
+### Review Comments
 
 Before posting any review comment on a PR, issue, or thread, check:
 
@@ -293,6 +325,7 @@ Run after work is functionally complete, before presenting externally. Integrate
 - `/pb-review` -- Code review (bugs, logic, tests)
 - `/pb-linus-agent` -- Peer review persona
 - `/pb-commit` -- Commit message quality
+- `/pb-llm-guidelines` -- LLM coding guardrails referenced in Scope Guard
 
 ---
 
