@@ -1,5 +1,6 @@
 # Dev-only tracking folder
 todos/
+memory/
 
 # Claude Code context (auto-generated)
 .claude/

@@ -102,6 +102,7 @@
 - [Review: Comprehensive](commands/reviews/pb-review-comprehensive.md)
 - [Review: Playbook](commands/reviews/pb-review-playbook.md)
 - [Security](commands/reviews/pb-security.md)
+- [Threat Hunt](commands/reviews/pb-threat-hunt.md)
 - [Accessibility](commands/reviews/pb-a11y.md)
 - [Logging](commands/reviews/pb-logging.md)
 - [Calm Design](commands/reviews/pb-calm-design.md)

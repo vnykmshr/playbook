@@ -15,6 +15,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - **LLM Coding Guidelines** -- 4 behavioral guidelines for reducing LLM coding mistakes (think before coding, simplicity first, surgical changes, goal-driven execution), sourced from Karpathy's observations. `/pb-llm-guidelines` reference command with playbook cross-references. `/pb-start` now asks for verifiable success criteria.
 
+- **`/pb-threat-hunt`** — 12-step executable security audit methodology with adversarial payload catalog (15 canonicalization variants), 5-level severity rubric, and terminal Definition of Done gate. Multi-language: Go default + Python/Node appendices. Fills the deep-audit gap between `/pb-security` (quick checklists) and incident response. Pattern hardenings: Tests honesty in `/pb-commit` register, generated-artifact awareness in `/pb-claude-project`, DoD checklist convention in `/pb-documentation` and `/pb-standards`, cross-reference from `/pb-security`.
+
 ### Fixed
 
 - **`/pb-resume` Step 0 recap flow** — the original Step 0 ordered operations as append→strip→act, causing assistants to mechanically archive findings before addressing them, making the recap a write-only log. Restructured to SURFACE→ACT→ARCHIVE phases with dedup check (skip if already the most recent lessons.md entry), archive-failure handling (don't strip on write errors), and a Recap Disposition summary that closes the loop visibly.

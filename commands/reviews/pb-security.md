@@ -5,7 +5,7 @@ category: "reviews"
 difficulty: "advanced"
 model_hint: "opus"
 execution_pattern: "sequential"
-related_commands: ['pb-review', 'pb-review-hygiene', 'pb-hardening', 'pb-secrets', 'pb-patterns-security']
+related_commands: ['pb-review', 'pb-review-hygiene', 'pb-hardening', 'pb-secrets', 'pb-threat-hunt']
 last_reviewed: "2026-04-26"
 last_evolved: "2026-04-26"
 version: "1.3.0"
@@ -45,6 +45,8 @@ Choose the checklist that fits your context:
 - **Quick Checklist** - 5-10 minutes, S tier changes
 - **Standard Checklist** - 20 minutes, M tier changes
 - **Deep Dive** - 1+ hour, L tier changes, security-critical features
+
+For a full 12-step executable audit methodology with adversarial payload testing and severity rubric, use `/pb-threat-hunt`.
 
 ---
 
@@ -735,7 +737,7 @@ Findings posted as PR/issue comments follow `~/.claude/CLAUDE.md` § GitHub Arti
 - `/pb-review-hygiene` - Code quality including security
 - `/pb-hardening` - Infrastructure security (servers, containers, networks)
 - `/pb-secrets` - Secrets management lifecycle
-- `/pb-patterns-security` - Security patterns for microservices
+- `/pb-threat-hunt` - Deep audit: 12-step executable methodology with adversarial payload testing
 
 ---
 

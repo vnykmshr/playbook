@@ -88,7 +88,7 @@ For changes touching >3 files across >1 concern, consider splitting into bisecta
 
 ## Message Register
 
-Follow `~/.claude/CLAUDE.md` § GitHub Artifact Register for format, length ceilings, strip list, and never-write list. Subject-only by default.
+Follow `~/.claude/CLAUDE.md` § GitHub Artifact Register for format, length ceilings, strip list, and never-write list. Subject-only by default. When body includes test results: name the exact command run, or state "not run" with reason. No silent validation gaps.
 
 ---
 

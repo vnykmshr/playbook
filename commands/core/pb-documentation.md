@@ -753,6 +753,43 @@ Engineer: "Yes, added new endpoint and examples"
 
 ---
 
+## Command Structure: Definition of Done Checklists
+
+Multi-step playbook commands should end with a terminal Definition of Done checklist. The checklist converts a qualitative "are we done?" into a quantitative "N of N checked."
+
+**Why:** A multi-step methodology without a terminal gate allows an agent to claim completion after step 8 because it "feels done." The checklist is mechanical verification — every box must be checked.
+
+**Structure:**
+```markdown
+## Definition of Done
+
+The [task] is not complete until ALL boxes are checked:
+
+- [ ] [Criterion 1]
+- [ ] [Criterion 2]
+...
+- [ ] [Criterion N]
+```
+
+**Rules:**
+- Place after the final step, before Related Commands
+- Each item is a falsifiable, specific gate — not "ensure quality" but "all 6 search passes executed"
+- The checklist is part of the command's executable flow, not a separate reference
+- Number of items varies by command (not a fixed count)
+
+**Example from `/pb-threat-hunt`:**
+```markdown
+## Definition of Done
+
+The hunt is not complete until ALL boxes are checked:
+
+- [ ] Scope documented (what was hunted, what was out of bounds)
+- [ ] All 6 search passes from Step 3 executed (no skipped passes)
+- [ ] Every Confirmed and Likely finding has a concrete exploit scenario
+```
+
+---
+
 ## Integration with Playbook
 
 **Part of SDLC:**

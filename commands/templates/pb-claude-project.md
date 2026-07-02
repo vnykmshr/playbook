@@ -139,7 +139,23 @@ If a working context exists:
 3. **Update if stale** - If working context is outdated, update it as part of generation
 4. **Extract key info** - Use it to populate Tech Stack, Commands, and Active Development sections
 
-### Step 7: Detect CI/CD
+### Step 7: Identify Generated Artifacts
+
+Ask: "Are there generated files in this project that should never be committed or treated as source?"
+
+If yes, list them explicitly so future agents can skip them. Common generated paths:
+
+| Type | Examples |
+|------|----------|
+| Build output | `dist/`, `build/`, `out/`, `target/` |
+| Generated code | `*.pb.go`, `*.generated.*`, `__generated__/` |
+| Package locks | `package-lock.json`, `yarn.lock` (auto-generated) |
+| Asset bundles | `public/build/`, `static/dist/` |
+| Migration diffs | auto-generated migration files (check tooling) |
+
+Add to the generated CLAUDE.md under a "Generated Artifacts (do not commit)" section.
+
+### Step 8: Detect CI/CD
 
 Check for CI configuration:
 - `.github/workflows/` - GitHub Actions
