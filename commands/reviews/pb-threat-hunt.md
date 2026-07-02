@@ -296,7 +296,7 @@ The hunt is not complete until ALL boxes are checked:
 - [ ] Every Confirmed and Likely finding has a concrete exploit scenario
 - [ ] Every Confirmed finding has a fix with a regression test
 - [ ] Report written with all 7 fields per finding for Confirmed/Likely
-- [ ] Provider boundaries checked (OAuth, SAML, LDAP, KMS, DB — all present)
+- [ ] Provider boundaries checked (each present in this project — OAuth, SAML, LDAP, KMS, DB)
 - [ ] `go test -race ./...` passes (or explained if not run)
 
 ---

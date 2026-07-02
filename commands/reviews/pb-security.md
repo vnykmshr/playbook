@@ -28,7 +28,7 @@ Your job is to surface risks and vulnerabilities. Reviewers should ask hard ques
 
 - **Code review** - Checking PRs for security issues
 - **Pre-release** - Security validation before shipping
-- **Security audit** - Periodic comprehensive review
+- **Security audit** - Periodic comprehensive review. For deep 12-step methodology with adversarial payload testing, use `/pb-threat-hunt`.
 - **New authentication/authorization** - Changes to access control
 - **Handling sensitive data** - PII, payments, credentials
 
