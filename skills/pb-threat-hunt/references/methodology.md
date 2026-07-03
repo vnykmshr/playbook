@@ -1,50 +1,6 @@
----
-name: "pb-threat-hunt"
-title: "Security Threat Hunt: Deep Audit Methodology"
-category: "reviews"
-difficulty: "expert"
-model_hint: "opus"
-execution_pattern: "sequential"
-related_commands: ['pb-security', 'pb-secrets', 'pb-hardening', 'pb-incident', 'pb-debug']
-last_reviewed: "2026-07-02"
-last_evolved: "2026-07-02"
-version: "1.1.0"
-version_notes: "v1.1.0: Pre-Hunt Sweeps (govulncheck, config drift, supply-chain). 3-vote adversarial verify with diverse skeptic prompts + Scope Sweep gate. CSP contextual audit (3 questions, not binary). DNS rebinding payload (nip.io). WebSocket/SSE search pass. Progressive disclosure: .claude/skills/pb-threat-hunt/ for Claude Code executable workflow."
-breaking_changes: []
----
-# Security Threat Hunt: Deep Audit Methodology
+# Threat Hunt Methodology Reference
 
-A 12-step executable security audit that treats every auth shortcut, redirect, token source, cookie, forwarded header, parser, cache, and cryptographic decision as a security boundary until proven otherwise. The default answer to "is this safe?" is "prove it." Not a checklist — a hunt.
-
-**Mindset:** Apply `/pb-preamble` thinking (challenge every safety assumption) and `/pb-design-rules` thinking (fail noisily, distrust "one true way," recovery-oriented errors). The hunt is adversarial by design.
-
-**Resource Hint:** opus — deep audit requires tracing decision paths end-to-end, evaluating cryptographic boundaries, and validating findings against exploit scenarios.
-
-**Language:** This methodology targets **Go** projects by default. For Python equivalents, see **Appendix A**. For Node, see **Appendix B**. Language-agnostic steps (canonicalization, header trust, reporting) apply to all. Steps marked with `[Go]` need appendix translation.
-
----
-
-## When to Use This Command
-
-- **Deep security audit** — full methodology, every step executed
-- **Pre-release security gate** — for L-tier changes touching auth, crypto, or input parsing
-- **Post-incident review** — hunt the vulnerability class that caused the incident across the codebase
-- **Dependency boundary audit** — when integrating a new auth provider, payment processor, or identity system
-
-For quick pre-release checks, use `/pb-security`. This command is the deep pass.
-
----
-
-
-## Severity Rubric
-
-| Level | Criteria |
-|-------|----------|
-| **Critical** | Remote code execution, authentication bypass, credential exfiltration, privilege escalation to admin |
-| **High** | Data exfiltration (non-credential), token forgery, SSRF to internal services, broken access control on sensitive data |
-| **Medium** | Information disclosure (non-sensitive), open redirect, DoS with restart requirement, debug info leak |
-| **Low** | Configuration weakness (no direct exploit), missing security headers (defense-in-depth), verbose error messages |
-| **Info** | Hardening opportunity (no vulnerability), code pattern that could become exploitable with future changes |
+Full 12-step breakdown with per-step exits, judgment calls, payload tables, and multi-language search passes. Automated phases annotated `[Workflow: Phase N]`; judgment-only steps annotated `[Manual only]`.
 
 ---
 
@@ -52,7 +8,7 @@ For quick pre-release checks, use `/pb-security`. This command is the deep pass.
 
 Run before the 12 steps. These catch what human auditors skip because it's tedious.
 
-### govulncheck
+### govulncheck `[Workflow: Phase 1]`
 
 ```bash
 govulncheck ./...
@@ -60,22 +16,22 @@ govulncheck ./...
 
 Known CVEs in dependencies. Deterministic, zero false positives. If a dependency has a public RCE, the rest of the hunt is cosmetic.
 
-### Config Drift
+### Config Drift `[Workflow: Phase 1]`
 
 ```bash
 diff <(grep -E '^[A-Z_]+\s*=' .env.example | sort) <(grep -E '^[A-Z_]+\s*=' .env 2>/dev/null | sort) 2>/dev/null || echo "Check config drift manually"
 ```
 
-Flag: `DEBUG=true`, `ENVIRONMENT=development`, default credentials in config.
+Flag: `DEBUG=true`, `ENVIRONMENT=development`, default credentials in config. Single grep, 10 seconds.
 
-### Supply-Chain Integrity
+### Supply-Chain Integrity `[Workflow: Phase 1]`
 
 ```bash
 rg -n 'uses:\s+(?!.*@[a-f0-9]{40})' .github/workflows/  # Actions not SHA-pinned
-test -f go.sum && echo "go.sum present" || echo "MISSING: go.sum"
+test -f go.sum && echo "go.sum present" || echo "MISSING: go.sum"  # Go sumdb
 ```
 
-Not a SLSA audit — flag obvious gaps.
+Three greps. Not a SLSA audit — flag obvious gaps.
 
 **Exit:** All three sweeps executed. Fails when govulncheck is skipped because "dependencies are up to date."
 
@@ -83,7 +39,7 @@ Not a SLSA audit — flag obvious gaps.
 
 ## The Hunt
 
-### Step 1: Scope the Hunt
+### Step 1: Scope the Hunt `[Manual only]`
 
 Define what you are hunting and what is out of bounds.
 
@@ -94,7 +50,7 @@ Define what you are hunting and what is out of bounds.
 
 **Exit:** Is the scope concrete enough that two independent hunters would search the same surface? Fails when scope is "the whole codebase" with no focus.
 
-### Step 2: Map the Decision Path
+### Step 2: Map the Decision Path `[Manual only]`
 
 For each critical input from Step 1, trace the decision path end-to-end. Do not stop at `grep`.
 
@@ -105,48 +61,48 @@ For each critical input from Step 1, trace the decision path end-to-end. Do not 
 
 **Exit:** For every critical input, can you name the last function that makes a trust decision based on it? Fails when you have inputs with no traced path.
 
-### Step 3: Targeted Search Passes `[Go]`
+### Step 3: Targeted Search Passes `[Go]` `[Workflow: Phase 2]`
 
 Run structured searches across the codebase. Each pattern targets a specific vulnerability class. Run all passes; skip none.
 
-**Run — URL/Path:**
+**URL/Path:**
 ```bash
 rg -n 'url\.Parse|path\.Join|filepath\.Join|path\.Clean|fmt\.Sprintf.*/%s|http\.Redirect'
 ```
 
-**Run — Token/Cookie/Session:**
+**Token/Cookie/Session:**
 ```bash
 rg -n 'ParseWithClaims|jwt\.Sign|jwt\.NewWithClaims|jwt\.Parse|SetCookie|cookie\.Set|http\.Cookie'
 ```
 
-**Run — Parsing/Deserialization:**
+**Parsing/Deserialization:**
 ```bash
 rg -n 'json\.Unmarshal|xml\.Unmarshal|gob\.NewDecoder|\.\(\w+\)|fmt\.Sscanf|strconv\.Atoi|strconv\.Parse|template\.Must'
 ```
 
-**Run — Crypto:**
+**Crypto:**
 ```bash
 rg -n 'md5\.Sum|md5\.New|sha1\.Sum|sha1\.New|crypto/aes|crypto/rsa|ecdsa\.|hmac\.|rand\.Read|crypto/rand'
 ```
 
-**Run — Concurrency/Race:**
+**Concurrency/Race:**
 ```bash
-rg -n 'go func|sync\.Mutex|sync\.RWMutex|sync\.Map|chan\b|sync\.Once|sync\.WaitGroup'
+rg -n 'go func|sync\.Mutex|sync\.RWMutex|sync\.Map|chan\b|<-chan|chan<-|chan\)|chan\{|sync\.Once|sync\.WaitGroup'
 ```
 
-**Run — Dangerous Standard Library:**
+**Dangerous Standard Library:**
 ```bash
 rg -n 'exec\.Command|os/exec|net/http\.Get|reflect\.|unsafe\.'
 ```
 
-**Run — WebSocket/SSE:**
+**WebSocket/SSE:**
 ```bash
 rg -n 'websocket|gorilla/websocket|nhooyr.io/websocket|sse|ServerSentEvent|EventSource'
 ```
 
 **Exit:** Every search pass executed; every hit reviewed. Fails when a pass is skipped because "that won't find anything here."
 
-### Step 4: URL/Path Canonicalization
+### Step 4: URL/Path Canonicalization `[Workflow: Phase 2]`
 
 Test every URL and path input with adversarial payloads. Path traversal and open redirect share a root cause: trust in canonical form.
 
@@ -169,15 +125,17 @@ Test every URL and path input with adversarial payloads. Path traversal and open
 | 13 | `http://localhost:6379` | SSRF to local services |
 | 14 | `http://169.254.169.254/latest/meta-data/` | SSRF to cloud metadata |
 | 15 | `http://[::1]:8080/admin` | SSRF via IPv6 localhost |
-| 16 | `http://<rand>.127.0.0.1.nip.io:6379` | DNS rebinding (reasoning-required — static grep won't catch this; requires understanding the two-step resolution pattern. Use `nip.io`, not `xip.io` for availability.) |
+| 16 | `http://<rand>.127.0.0.1.nip.io:6379` | DNS rebinding (reasoning-required — static grep won't catch; requires understanding two-step resolution) |
 
-**Exit:** Every URL/path input tested against all 16 payloads. Fails when only `../` variants are tested (the first payload catches only the simplest cases).
+Use `nip.io`, not `xip.io` (availability).
 
-### Step 5: Redirect and Header Trust
+**Exit:** Every URL/path input tested against all 16 payloads. Fails when only `../` variants are tested.
+
+### Step 5: Redirect, Header Trust, and CSP `[Workflow: Phase 2]`
 
 Verify that user-controlled headers and redirect targets are not trusted.
 
-**Run:**
+**Run (headers/redirects):**
 ```bash
 rg -n 'X-Forwarded-For|X-Real-IP|X-Forwarded-Host|X-Forwarded-Proto|Location.*http|Referer|Origin'
 ```
@@ -187,7 +145,7 @@ For each hit:
 - Is a user-controlled `Location` header or `redirect_uri` used without allowlist validation?
 - Is `Referer` used for CSRF protection (it can be spoofed)?
 
-**CSP contextual audit — 3 questions** (not binary "is CSP set?"):
+**CSP contextual audit** — replace binary "is CSP set?" with 3 questions:
 1. Does CSP prevent inline script execution? (`unsafe-inline` defeats this)
 2. Does CSP restrict `script-src` to known origins?
 3. Does CSP avoid `unsafe-eval`?
@@ -196,7 +154,7 @@ A CSP with `default-src * 'unsafe-inline'` passes a binary check and blocks noth
 
 **Exit:** Every header hit reviewed; every redirect target validated; CSP evaluated against all 3 questions. Fails when forwarded headers are used for auth without explicit documentation of the trust boundary.
 
-### Step 6: Token, Cookie, and Session Security
+### Step 6: Token, Cookie, and Session Security `[Workflow: Phase 2]`
 
 Audit token handling end-to-end: creation, storage, transmission, validation, revocation.
 
@@ -206,14 +164,14 @@ rg -n 'jwt\.Sign|jwt\.NewWithClaims|jwt\.Parse|jwt\.ParseWithClaims|SetCookie|co
 ```
 
 For each hit:
-- JWT: Is the algorithm pinned (`jwt.SigningMethodHS256`) or left to the token header? (Header-controlled algorithm enables algorithm confusion.)
+- JWT: Is the algorithm pinned (`jwt.SigningMethodHS256`) or left to the token header?
 - Cookie: Is `HttpOnly` set? `Secure`? `SameSite`?
 - Session: Is the session ID cryptographically random? Is it regenerated on login?
 - CSRF tokens: Are they per-session or per-request?
 
 **Exit:** Every token/cookie hit reviewed. Fails when JWTs accept the algorithm from the token header rather than pinning it server-side.
 
-### Step 7: Parser, DoS, and Panic Boundaries
+### Step 7: Parser, DoS, and Panic Boundaries `[Workflow: Phase 2]`
 
 Find parsing paths that can crash, hang, or leak.
 
@@ -223,10 +181,10 @@ rg -n 'io\.ReadAll|ioutil\.ReadAll|json\.NewDecoder.*Decode|xml\.NewDecoder.*Dec
 ```
 
 For each hit:
-- Is there a body size limit before `io.ReadAll`? (No limit = memory exhaustion.)
+- Is there a body size limit before `io.ReadAll`?
 - Is `json.NewDecoder(r).Decode(&v)` called without `http.MaxBytesReader`?
-- Is `template.Execute` processing user-controlled template strings? (Server-side template injection.)
-- Is `panic` used for expected errors? (Should be error returns, not panics.)
+- Is `template.Execute` processing user-controlled template strings?
+- Is `panic` used for expected errors?
 - In test/benchmark files only — safe to skip.
 
 **Run (race detector):**
@@ -236,7 +194,7 @@ go test -race ./...
 
 **Exit:** Every unbounded read flagged; every user-controlled template string verified. Fails when `io.ReadAll` is used without a size limit at a network boundary.
 
-### Step 8: Provider and Crypto Boundaries
+### Step 8: Provider and Crypto Boundaries `[Manual only]`
 
 Audit cryptographic decisions at integration boundaries.
 
@@ -257,7 +215,7 @@ rg -n 'md5\.|sha1\.|DES|3DES|RC4|ECB|crypto/md5|golang\.org/x/crypto/md5'
 
 **Exit:** Every protocol boundary checked. Fails when a provider integration is skipped because "that's a third-party library."
 
-### Step 9: Concurrency and Cache Safety
+### Step 9: Concurrency and Cache Safety `[Workflow: Phase 2]`
 
 Find data races, cache poisoning, and goroutine leaks.
 
@@ -267,19 +225,30 @@ rg -n 'sync\.Map\.|sync\.Mutex|sync\.RWMutex|\.Lock\(\)|\.Unlock\(\)|\.RLock\(\)
 ```
 
 For each hit:
-- Mutex: Is the unlock in a `defer`? (Early return without unlock = deadlock.)
-- RWMutex: Are writes happening under `RLock`? (Read lock doesn't protect against concurrent writes.)
-- Goroutine: Is there a cancel/context to stop it? (Goroutine without lifecycle = leak.)
-- Channel: Is there a reader for every writer? (Unread channel send = goroutine leak.)
-- Cache: Are cache keys derived from user input? (Cache poisoning.)
+- Mutex: Is the unlock in a `defer`?
+- RWMutex: Are writes happening under `RLock`?
+- Goroutine: Is there a cancel/context to stop it?
+- Channel: Is there a reader for every writer?
+- Cache: Are cache keys derived from user input?
 
 **Exit:** Every lock checked for defer-unlock; every goroutine checked for lifecycle. Fails when goroutines lack cancellation paths.
 
-### Step 10: Validate Findings — 3-Vote Adversarial Verify
+### Step 10: Validate Findings — 3-Vote Adversarial Verify `[Workflow: Phase 3]`
 
 Not every hit from Steps 3-9 is a vulnerability. Validate before reporting.
 
-**Scope Sweep gate (run first).** One agent reads the project's security docs (`docs/security.md`, threat model, CLAUDE.md security boundaries) and flags findings whose claimed vulnerability is already an accepted risk. Prevents wasting verification time on mechanisms the threat model already accepted.
+**6-state outcome:**
+
+| Outcome | Criteria |
+|---------|----------|
+| **Confirmed** | Exploit path demonstrated end-to-end |
+| **Likely** | Exploit path partially demonstrated; missing link plausible |
+| **Possible** | Exploit path not demonstrated; evidence suggests risk |
+| **Needs investigation** | Suspicious pattern; cannot confirm or rule out |
+| **False positive** | Pattern is safe; verified by code-path analysis |
+| **Unknown** | Insufficient information; requires domain expertise |
+
+**Scope Sweep gate (run first).** One agent reads the project's security docs (`docs/security.md`, threat model, CLAUDE.md security boundaries) and flags findings whose claimed vulnerability is already an accepted risk. This prevents wasting verification time on mechanisms the threat model already accepted.
 
 **3-vote adversarial verify (default).** Three independent skeptics, each with a different starting angle:
 
@@ -293,25 +262,14 @@ Kill if ≥2 refute. Diverse prompts prevent correlated errors — three identic
 
 **Single-vote mode (`--quick`).** One skeptic per finding. Adequate for low-stakes hunts or small codebases.
 
-**6-state outcome:**
-
-| Outcome | Criteria |
-|---------|----------|
-| **Confirmed** | Exploit path demonstrated end-to-end |
-| **Likely** | Exploit path partially demonstrated; missing link plausible |
-| **Possible** | Exploit path not demonstrated; evidence suggests risk |
-| **Needs investigation** | Suspicious pattern; cannot confirm or rule out |
-| **False positive** | Pattern is safe; verified by code-path analysis |
-| **Unknown** | Insufficient information; requires domain expertise |
-
 **Run:**
 - For every Confirmed and Likely finding: write a one-sentence exploit scenario
 - For every Possible and Needs Investigation: document what additional evidence would confirm or refute
 - Downgrade or discard False Positives explicitly
 
-**Exit:** Every finding classified into one of the 6 outcomes; ≥2 skeptics concur on each Confirmed/Likely classification (or `--quick` flag used). Fails when "Confirmation" is just "I read the code and it looks suspicious."
+**Exit:** Every finding classified into one of the 6 outcomes; ≥2 skeptics concur on each Confirmed/Likely classification. Fails when "Confirmation" is just "I read the code and it looks suspicious."
 
-### Step 11: Report Clearly
+### Step 11: Report Clearly `[Manual only]`
 
 Structure each finding so a reviewer can understand the risk without redoing the hunt.
 
@@ -330,7 +288,7 @@ Structure each finding so a reviewer can understand the risk without redoing the
 
 **Exit:** Every Confirmed/Likely finding has all 7 fields. Fails when exploit scenarios are vague ("could lead to RCE").
 
-### Step 12: Fix Conservatively
+### Step 12: Fix Conservatively `[Manual only]`
 
 How you fix matters as much as what you find.
 
@@ -360,12 +318,6 @@ The hunt is not complete until ALL boxes are checked:
 - [ ] Report written with all 7 fields per finding for Confirmed/Likely
 - [ ] Provider boundaries checked (each present in this project — OAuth, SAML, LDAP, KMS, DB)
 - [ ] `go test -race ./...` passes (or explained if not run)
-
----
-
-## Claude Code Skill
-
-A compound executable skill is available at `skills/pb-threat-hunt/` with workflow automation for the mechanical phases (Pre-Hunt Sweeps, search passes, canonicalization, 3-vote verify). The skill runs automated steps and stops for manual judgment. Run `./scripts/install.sh` to install to `~/.claude/skills/`; the installer also creates a local `.claude/skills/` → `skills/` symlink for the project itself.
 
 ---
 
@@ -471,20 +423,22 @@ rg -n '\$where|\$regex.*req\.|\.find\({.*req\.'
 
 ---
 
+## Appendix C: WebSocket/SSE Real-Time Channel Audit
+
+Audit real-time communication channels for auth boundary gaps. Added in v1.1.0.
+
+**WebSocket auth:**
+- Is the WebSocket upgrade request authenticated before the connection is established?
+- Are session tokens validated on each message, not just on handshake?
+- Is there a per-connection rate limit?
+
+**SSE auth:**
+- Is the EventSource endpoint authenticated?
+- Are events scoped to the authenticated user, or broadcast globally?
+- Is reconnection handled safely (no token leakage in URL params)?
+
+---
+
 ## Report Path
 
 Write findings to `todos/security/reports/{target}/threat-hunt-{YYYY-MM-DD}.md`.
-
----
-
-## Related Commands
-
-- `/pb-security` — Quick pre-release security checklist (run first; use this for deep follow-up)
-- `/pb-secrets` — Secrets management lifecycle
-- `/pb-hardening` — Infrastructure hardening (servers, containers, networks)
-- `/pb-incident` — Incident response when a finding becomes an active threat
-- `/pb-debug` — Tracing exploit paths through code
-
----
-
-*12-step executable methodology. The hunt is not complete until all 9 DoD boxes are checked.*

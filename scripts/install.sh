@@ -74,6 +74,37 @@ echo "  Failed:    $failed"
 echo ""
 echo "Commands available in: $TARGET_DIR"
 
+# --- Skills: executable compound commands with workflows ---
+SKILLS_DIR="$REPO_DIR/skills"
+SKILLS_TARGET="$HOME/.claude/skills"
+
+if [ -d "$SKILLS_DIR" ]; then
+    skill_count=$(find "$SKILLS_DIR" -name "SKILL.md" -type f | wc -l | tr -d ' ')
+    echo ""
+    echo "Installing $skill_count skill(s)..."
+
+    while IFS= read -r skill_md; do
+        skill_name=$(basename "$(dirname "$skill_md")")
+        target_dir="$SKILLS_TARGET/$skill_name"
+
+        # Remove old symlink or directory
+        if [ -L "$target_dir" ] || [ -d "$target_dir" ]; then
+            rm -rf "$target_dir"
+        fi
+
+        mkdir -p "$(dirname "$target_dir")"
+        ln -sfn "$(dirname "$skill_md")" "$target_dir"
+        echo "  ✓ Installed: ~/.claude/skills/$skill_name"
+    done < <(find "$SKILLS_DIR" -name "SKILL.md" -type f | sort)
+
+    # Create project-local symlink if running inside the playbook repo
+    local_link="$REPO_DIR/.claude/skills"
+    if [ -d "$REPO_DIR/.claude" ] && [ ! -e "$local_link" ]; then
+        ln -sfn "$SKILLS_DIR" "$local_link"
+        echo "  ✓ Linked: .claude/skills → skills/"
+    fi
+fi
+
 # --- DX Scripts: context bar + context hook ---
 SCRIPTS_DIR="$REPO_DIR/scripts"
 CLAUDE_HOME="$HOME/.claude"
