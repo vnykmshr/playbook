@@ -1754,8 +1754,6 @@ When releasing a new version:
 [v2.21.1]: https://github.com/vnykmshr/playbook/releases/tag/v2.21.1
 [v2.21.0]: https://github.com/vnykmshr/playbook/releases/tag/v2.21.0
 [v2.20.0]: https://github.com/vnykmshr/playbook/releases/tag/v2.20.0
-[v2.19.2]: https://github.com/vnykmshr/playbook/releases/tag/v2.19.2
-[v2.19.1]: https://github.com/vnykmshr/playbook/releases/tag/v2.19.1
 [v2.19.0]: https://github.com/vnykmshr/playbook/releases/tag/v2.19.0
 [v2.18.0]: https://github.com/vnykmshr/playbook/releases/tag/v2.18.0
 [v2.17.0]: https://github.com/vnykmshr/playbook/releases/tag/v2.17.0
@@ -1764,8 +1762,6 @@ When releasing a new version:
 [v2.14.0]: https://github.com/vnykmshr/playbook/releases/tag/v2.14.0
 [v2.13.3]: https://github.com/vnykmshr/playbook/releases/tag/v2.13.3
 [v2.13.2]: https://github.com/vnykmshr/playbook/releases/tag/v2.13.2
-[v2.13.1]: https://github.com/vnykmshr/playbook/releases/tag/v2.13.1
-[v2.13.0]: https://github.com/vnykmshr/playbook/releases/tag/v2.13.0
 [v2.12.0]: https://github.com/vnykmshr/playbook/releases/tag/v2.12.0
 [v2.11.0]: https://github.com/vnykmshr/playbook/releases/tag/v2.11.0
 [v2.10.0]: https://github.com/vnykmshr/playbook/releases/tag/v2.10.0
@@ -1780,5 +1776,12 @@ When releasing a new version:
 [v2.2.0]: https://github.com/vnykmshr/playbook/releases/tag/v2.2.0
 [v2.1.0]: https://github.com/vnykmshr/playbook/releases/tag/v2.1.0
 [v2.0.0]: https://github.com/vnykmshr/playbook/releases/tag/v2.0.0
+[v1.9.0]: https://github.com/vnykmshr/playbook/releases/tag/v1.9.0
 [v1.8.0]: https://github.com/vnykmshr/playbook/releases/tag/v1.8.0
 [v1.7.0]: https://github.com/vnykmshr/playbook/releases/tag/v1.7.0
+[v1.6.0]: https://github.com/vnykmshr/playbook/releases/tag/v1.6.0
+[v1.5.1]: https://github.com/vnykmshr/playbook/releases/tag/v1.5.1
+[v1.4.1]: https://github.com/vnykmshr/playbook/releases/tag/v1.4.1
+[v1.4.0]: https://github.com/vnykmshr/playbook/releases/tag/v1.4.0
+[v1.3.0]: https://github.com/vnykmshr/playbook/releases/tag/v1.3.0
+[v1.2.0]: https://github.com/vnykmshr/playbook/releases/tag/v1.2.0

@@ -5,7 +5,7 @@ category: "planning"
 difficulty: "advanced"
 model_hint: "sonnet"
 execution_pattern: "sequential"
-related_commands: ['pb-patterns-core', 'pb-patterns-async', 'pb-observability']
+related_commands: ['pb-patterns-core', 'pb-patterns-async', 'pb-patterns-security', 'pb-observability']
 last_reviewed: "2026-02-09"
 last_evolved: ""
 version: "1.0.0"
@@ -1131,6 +1131,7 @@ Other patterns (Event-Driven, Outbox, CQRS, Eventual Consistency) follow similar
 
 - `/pb-patterns-core` - Foundation patterns (SOA, Event-Driven)
 - `/pb-patterns-async` - Async patterns needed for distributed operations
+- `/pb-patterns-security` - Security patterns for microservice architectures
 - `/pb-observability` - Tracing and monitoring distributed systems
 
 ---

@@ -13,6 +13,7 @@ Usage:
 """
 
 import argparse
+import re
 import sys
 from pathlib import Path
 
@@ -20,6 +21,7 @@ from playbook_utils import setup_logger
 
 COMMANDS_DIR = Path(__file__).parent.parent / "commands"
 EXPECTED_COUNT = 114  # 113 (v2.24.1) + pb-threat-hunt
+CHANGELOG_PATH = Path(__file__).parent.parent / "CHANGELOG.md"
 
 # Hub commands allowed to exceed the 5-link limit
 HUB_COMMANDS = {"pb-patterns.md"}
@@ -130,6 +132,52 @@ class ConventionValidator:
                 f"limit of {limit}"
             )
 
+    def validate_changelog_links(self) -> None:
+        """Check every version header has a matching footer link and vice versa.
+
+        Headers: ``## [vX.Y.Z] (...)``
+        Footers: ``[vX.Y.Z]: https://github.com/.../releases/tag/vX.Y.Z``
+
+        Headers without footers break navigation (can't click through to the
+        release).  Footers without headers are stale — the version section was
+        consolidated or removed.
+        """
+        if not CHANGELOG_PATH.exists():
+            self._warn("CHANGELOG.md not found — skipping version link check")
+            return
+
+        content = CHANGELOG_PATH.read_text()
+        headers = set(
+            re.findall(r"^## \[(v\d+\.\d+\.\d+)\]", content, re.MULTILINE)
+        )
+        footers = set(
+            re.findall(
+                r"^\[(v\d+\.\d+\.\d+)\]: https://github\.com/",
+                content,
+                re.MULTILINE,
+            )
+        )
+
+        missing_footer = sorted(headers - footers)
+        missing_header = sorted(footers - headers)
+
+        for v in missing_footer:
+            self._warn(
+                f"CHANGELOG: {v} header has no footer link"
+            )
+
+        for v in missing_header:
+            self._warn(
+                f"CHANGELOG: {v} footer link has no header section — "
+                f"stale link"
+            )
+
+        if not missing_footer and not missing_header:
+            self._pass(
+                f"CHANGELOG version links ({len(headers)} headers, "
+                f"{len(footers)} footers)"
+            )
+
     def run(self) -> bool:
         """Run all convention checks. Returns True if all pass."""
         # Match command files only (pb-*.md), like evolve.py / trigger-detector.
@@ -150,6 +198,9 @@ class ConventionValidator:
             self.validate_resource_hint(path, content)
             self.validate_when_to_use(path, content)
             self.validate_related_commands(path, content)
+
+        # CHANGELOG consistency
+        self.validate_changelog_links()
 
         # Report
         self.logger.info("")
