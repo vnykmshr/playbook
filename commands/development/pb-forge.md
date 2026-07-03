@@ -5,11 +5,11 @@ category: "development"
 difficulty: "advanced"
 model_hint: "opus"
 execution_pattern: "interactive"
-related_commands: ['pb-what-next', 'pb-plan', 'pb-start', 'pb-review', 'pb-ship']
-last_reviewed: "2026-06-10"
+related_commands: ['pb-what-next', 'pb-review', 'pb-huddle', 'pb-preflight', 'pb-ship']
+last_reviewed: "2026-07-03"
 last_evolved: "2026-06-10"
-version: "1.0.0"
-version_notes: "Initial: stateful step-runner that drives the per-deliverable outer arc (think -> ... -> release), the executing twin of /pb-what-next. Auto-drives mechanical stages, hands off to the inner loop during execute, stops hard at judgment seams and external actions."
+version: "1.1.0"
+version_notes: "Review arc formalized: Self-gate is now a compound verify stage (review → code-review → handcraft → huddle signoff → preflight). Each sub-stage runs conditionally on concrete triggers; sub-stages compound — each catches what the prior missed. Cursor tracks sub-stage progress for correct resumption. Peer simplifies to /pb-pr only."
 breaking_changes: []
 ---
 # Lifecycle Step-Runner
@@ -48,11 +48,33 @@ Forge walks these stages. It auto-runs the mechanical ones, hands off during exe
 | Pressure-test | `/pb-huddle` -- only when a genuine fork exists; else skips | resolve forks |
 | Plan | `/pb-plan` (sketch + spec) | confirm picks |
 | Execute | hands off to `/pb-start` or `/pb-todo-implement`; releases control | inner loop owns it |
-| Self-gate | `/pb-review` + `/pb-handcraft` | accept/reject findings |
-| Peer | `/pb-pr` opens the PR; `/code-review` independent pass | external -- approve |
+| Self-gate | Compound verify (see "Self-Gate Chain" below) | accept/reject findings |
+| Peer | `/pb-pr` opens the PR | external -- approve |
 | Land | merge, then sync, then release | external -- each separate |
 
 The arc is the default for new, non-trivial work. Triage decides how much of the front you actually run.
+
+---
+
+## Self-Gate Chain
+
+Self-gate is a compound stage of ordered sub-stages. Each catches what the prior missed — they compound, they don't overlap. Forge auto-advances through clean sub-stages and stops when a finding needs a decision.
+
+| # | Sub-stage | What it catches | Trigger |
+|---|-----------|----------------|---------|
+| 1 | `/pb-review` | Lint, tests, conventions — the quick mechanical gate | Always |
+| 2 | `/code-review` at high effort | Bugs, correctness, efficiency — independent adversarial pass | `>3 files` or `>50 LOC` or new command or security/auth/regex in diff |
+| 3 | `/pb-handcraft` | Prose quality, voice, clarity — form, not function | Content/docs changes (markdown commands, prose in any file) |
+| 4 | Huddle signoff | Design coherence across the whole diff — intent, not content | `/code-review` or handcraft reports ≥1 finding where the fix isn't obvious from the diff |
+| 5 | `/pb-preflight` | Ship-readiness wiring check — gaps, not issues | Always (last gate before Peer) |
+
+**Order matters.** Run cheap automated gates first (review, code-review), then form gates (handcraft), then judgment gates (huddle), then the final wiring check (preflight). The compound chain reduces the surface area each huddle needs to cover: by the time you reach sub-stage 4, the obvious bugs and prose issues are already fixed.
+
+**Sub-stage triggers are concrete OR gates, not judgment calls.** "My diff is 3 files and 40 lines" → skip code-review. "I added a new command" → run code-review. No "should I?" hand-wringing.
+
+**Belt-and-suspenders exit.** If the user stops at any sub-stage ("fix the code-review findings first"), forge records the sub-stage as done in the cursor and the next as pending. Re-invoking forge resumes at the pending sub-stage, not the start of Self-gate.
+
+**Tail mode.** `--arc tail` on already-completed work skips sub-stages recorded as done in the cursor. If the cursor has no sub-stage records (pre-v1.1.0), forge runs the full chain — the user can skip explicitly.
 
 ---
 
@@ -82,6 +104,7 @@ Forge treats execute as complete when you say so. Hints it offers but never acts
 Forge keeps one file per deliverable at `todos/forge/{slug}.md` -- under the dev-only `todos/` tree, gitignored, not a tracked artifact. It holds:
 
 - current stage
+- sub-stage progress within Self-gate (which sub-stages completed, which is pending)
 - deliverable paths as they appear: sketch -> plan -> branch -> PR
 - decisions resolved at each seam
 - one log line per stage transition
@@ -124,7 +147,7 @@ Re-invoking `/pb-forge` on a deliverable with an existing cursor resumes at the 
 ## Red Flags
 
 - **Forge auto-advanced a seam.** It picked a fork, accepted a review finding, or pushed without asking. That's a bug, not a convenience -- the seam stops are the whole contract.
-- **Triage always lands on tail.** Most of your work skips the front arc, so forge wraps two stages. Shrink it to the tail or drop it for that work.
+- **Triage always lands on tail.** Most of your work skips the front arc, so forge wraps the review chain + PR + release. The compound self-gate is the meat of the tail — not thin ceremony. Still, if you never need think/huddle/plan, the front arc may not earn its place for this project.
 - **Cursor outlived the deliverable.** A stale `todos/forge/*.md` for shipped work is a position, not an archive -- delete it.
 
 ---
@@ -132,9 +155,9 @@ Re-invoking `/pb-forge` on a deliverable with an existing cursor resumes at the 
 ## Related Commands
 
 - `/pb-what-next` - The recommending twin; suggests the next command without running it.
-- `/pb-plan` - The planning stage forge drives (sketch + spec).
-- `/pb-start` - The execute entry forge hands off to.
-- `/pb-review` - The self-gate stage.
+- `/pb-review` - First sub-stage of Self-gate (quick mechanical gate).
+- `/pb-huddle` - Huddle signoff sub-stage of Self-gate (design coherence on non-obvious findings).
+- `/pb-preflight` - Ship-readiness sub-stage of Self-gate (last gate before Peer).
 - `/pb-ship` - The ship workflow (PR -> merge -> release) forge's tail stages map to.
 
 ---
