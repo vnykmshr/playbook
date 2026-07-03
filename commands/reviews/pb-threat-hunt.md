@@ -8,8 +8,8 @@ execution_pattern: "sequential"
 related_commands: ['pb-security', 'pb-secrets', 'pb-hardening', 'pb-incident', 'pb-debug']
 last_reviewed: "2026-07-02"
 last_evolved: "2026-07-02"
-version: "1.0.0"
-version_notes: "v1.0.0: 12-step executable deep audit with adversarial payload catalog, severity rubric, and terminal DoD gate. Multi-language: Go default + Python/Node appendices."
+version: "1.1.0"
+version_notes: "v1.1.0: Pre-Hunt Sweeps (govulncheck, config drift, supply-chain). 3-vote adversarial verify with diverse skeptic prompts + Scope Sweep gate. CSP contextual audit (3 questions, not binary). DNS rebinding payload (nip.io). WebSocket/SSE search pass. Progressive disclosure: .claude/skills/pb-threat-hunt/ for Claude Code executable workflow."
 breaking_changes: []
 ---
 # Security Threat Hunt: Deep Audit Methodology
@@ -45,6 +45,39 @@ For quick pre-release checks, use `/pb-security`. This command is the deep pass.
 | **Medium** | Information disclosure (non-sensitive), open redirect, DoS with restart requirement, debug info leak |
 | **Low** | Configuration weakness (no direct exploit), missing security headers (defense-in-depth), verbose error messages |
 | **Info** | Hardening opportunity (no vulnerability), code pattern that could become exploitable with future changes |
+
+---
+
+## Pre-Hunt Sweeps
+
+Run before the 12 steps. These catch what human auditors skip because it's tedious.
+
+### govulncheck
+
+```bash
+govulncheck ./...
+```
+
+Known CVEs in dependencies. Deterministic, zero false positives. If a dependency has a public RCE, the rest of the hunt is cosmetic.
+
+### Config Drift
+
+```bash
+diff <(grep -E '^[A-Z_]+\s*=' .env.example | sort) <(grep -E '^[A-Z_]+\s*=' .env 2>/dev/null | sort) 2>/dev/null || echo "Check config drift manually"
+```
+
+Flag: `DEBUG=true`, `ENVIRONMENT=development`, default credentials in config.
+
+### Supply-Chain Integrity
+
+```bash
+rg -n 'uses:\s+(?!.*@[a-f0-9]{40})' .github/workflows/  # Actions not SHA-pinned
+test -f go.sum && echo "go.sum present" || echo "MISSING: go.sum"
+```
+
+Not a SLSA audit — flag obvious gaps.
+
+**Exit:** All three sweeps executed. Fails when govulncheck is skipped because "dependencies are up to date."
 
 ---
 
@@ -106,6 +139,11 @@ rg -n 'go func|sync\.Mutex|sync\.RWMutex|sync\.Map|chan\b|sync\.Once|sync\.WaitG
 rg -n 'exec\.Command|os/exec|net/http\.Get|reflect\.|unsafe\.'
 ```
 
+**Run — WebSocket/SSE:**
+```bash
+rg -n 'websocket|gorilla/websocket|nhooyr.io/websocket|sse|ServerSentEvent|EventSource'
+```
+
 **Exit:** Every search pass executed; every hit reviewed. Fails when a pass is skipped because "that won't find anything here."
 
 ### Step 4: URL/Path Canonicalization
@@ -131,8 +169,9 @@ Test every URL and path input with adversarial payloads. Path traversal and open
 | 13 | `http://localhost:6379` | SSRF to local services |
 | 14 | `http://169.254.169.254/latest/meta-data/` | SSRF to cloud metadata |
 | 15 | `http://[::1]:8080/admin` | SSRF via IPv6 localhost |
+| 16 | `http://<rand>.127.0.0.1.nip.io:6379` | DNS rebinding (reasoning-required — static grep won't catch this; requires understanding the two-step resolution pattern. Use `nip.io`, not `xip.io` for availability.) |
 
-**Exit:** Every URL/path input tested against all 15 payloads. Fails when only `../` variants are tested (the first payload catches only the simplest cases).
+**Exit:** Every URL/path input tested against all 16 payloads. Fails when only `../` variants are tested (the first payload catches only the simplest cases).
 
 ### Step 5: Redirect and Header Trust
 
@@ -148,7 +187,14 @@ For each hit:
 - Is a user-controlled `Location` header or `redirect_uri` used without allowlist validation?
 - Is `Referer` used for CSRF protection (it can be spoofed)?
 
-**Exit:** Every header hit reviewed; every redirect target validated. Fails when forwarded headers are used for auth without explicit documentation of the trust boundary.
+**CSP contextual audit — 3 questions** (not binary "is CSP set?"):
+1. Does CSP prevent inline script execution? (`unsafe-inline` defeats this)
+2. Does CSP restrict `script-src` to known origins?
+3. Does CSP avoid `unsafe-eval`?
+
+A CSP with `default-src * 'unsafe-inline'` passes a binary check and blocks nothing.
+
+**Exit:** Every header hit reviewed; every redirect target validated; CSP evaluated against all 3 questions. Fails when forwarded headers are used for auth without explicit documentation of the trust boundary.
 
 ### Step 6: Token, Cookie, and Session Security
 
@@ -229,9 +275,23 @@ For each hit:
 
 **Exit:** Every lock checked for defer-unlock; every goroutine checked for lifecycle. Fails when goroutines lack cancellation paths.
 
-### Step 10: Validate Findings
+### Step 10: Validate Findings — 3-Vote Adversarial Verify
 
 Not every hit from Steps 3-9 is a vulnerability. Validate before reporting.
+
+**Scope Sweep gate (run first).** One agent reads the project's security docs (`docs/security.md`, threat model, CLAUDE.md security boundaries) and flags findings whose claimed vulnerability is already an accepted risk. Prevents wasting verification time on mechanisms the threat model already accepted.
+
+**3-vote adversarial verify (default).** Three independent skeptics, each with a different starting angle:
+
+| Skeptic | Starting Angle |
+|---------|---------------|
+| Skeptic 1 | Read the project's security/threat-model doc first, then evaluate |
+| Skeptic 2 | Trace the exploit chain from input to sink, verify each hop |
+| Skeptic 3 | Read the proposed fix site; check if the vulnerability is already mitigated elsewhere |
+
+Kill if ≥2 refute. Diverse prompts prevent correlated errors — three identical agents reading the same files = one vote, 3x cost.
+
+**Single-vote mode (`--quick`).** One skeptic per finding. Adequate for low-stakes hunts or small codebases.
 
 **6-state outcome:**
 
@@ -249,7 +309,7 @@ Not every hit from Steps 3-9 is a vulnerability. Validate before reporting.
 - For every Possible and Needs Investigation: document what additional evidence would confirm or refute
 - Downgrade or discard False Positives explicitly
 
-**Exit:** Every finding classified into one of the 6 outcomes. Fails when "Confirmation" is just "I read the code and it looks suspicious."
+**Exit:** Every finding classified into one of the 6 outcomes; ≥2 skeptics concur on each Confirmed/Likely classification (or `--quick` flag used). Fails when "Confirmation" is just "I read the code and it looks suspicious."
 
 ### Step 11: Report Clearly
 
@@ -290,14 +350,22 @@ How you fix matters as much as what you find.
 The hunt is not complete until ALL boxes are checked:
 
 - [ ] Scope documented (what was hunted, what was out of bounds)
-- [ ] All 6 search passes from Step 3 executed (no skipped passes)
-- [ ] URL/path inputs tested against all 15 adversarial payloads from Step 4
+- [ ] Pre-Hunt Sweeps executed (govulncheck, config drift, supply-chain)
+- [ ] All 7 search passes from Step 3 executed (no skipped passes)
+- [ ] URL/path inputs tested against all 16 adversarial payloads from Step 4
 - [ ] Every finding classified into one of 6 validation outcomes (Step 10)
+- [ ] ≥2 skeptics concur on each Confirmed/Likely classification (or `--quick` flag used)
 - [ ] Every Confirmed and Likely finding has a concrete exploit scenario
 - [ ] Every Confirmed finding has a fix with a regression test
 - [ ] Report written with all 7 fields per finding for Confirmed/Likely
 - [ ] Provider boundaries checked (each present in this project — OAuth, SAML, LDAP, KMS, DB)
 - [ ] `go test -race ./...` passes (or explained if not run)
+
+---
+
+## Claude Code Skill
+
+A compound executable skill is available at `.claude/skills/pb-threat-hunt/` with workflow automation for the mechanical phases (Pre-Hunt Sweeps, search passes, canonicalization, 3-vote verify). The skill runs the automated steps and stops for manual judgment (scoping, provider boundaries, fix application). See `SKILL.md` in that directory for the entry point.
 
 ---
 
