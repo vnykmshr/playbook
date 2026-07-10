@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- **`/pb-voice` v2.3.0: research-driven tell refresh.** Adds the shapes-over-words meta-principle (the vocabulary rotates every model generation, so the word lists are corroborating signal, not a blocklist; weight structural and syntactic tells over any single word). New tells: markup-leak artifacts (`contentReference`, `oaicite`, `turn0search`) in Cat 9, vague-authority attribution in Cat 8. Positive-craft tests wired into existing categories: name-the-dog + verifiable-detail-per-paragraph (Cat 8), earned-vs-named transition delete-test (Cat 5), 5-word-band burstiness test (Cat 7). Antithesis elevated to the strongest current syntactic tell (Cat 3).
+- **`/pb-handcraft` v1.5.0: fires `/pb-voice` as a required lens.** The voice pass was conditional ("if configured") and Lens 2 kept a shallow duplicate of voice's prose-tell list. Now the voice pass runs on every prose-bearing artifact, and the duplicated prose/structure/typography blocks are removed; voice is the single source of truth for prose tells. Lens 2 keeps code/comment tells and gains code-specific ones (comments explain what-not-why, commit body re-narrates the diff, over-descriptive identifiers). Lens 6 defers register calibration to the voice pass. A `tests/` regression check guards the delegation from drifting back.
+
 ## [v2.25.0] - 2026-07-02
 
 ### Added
