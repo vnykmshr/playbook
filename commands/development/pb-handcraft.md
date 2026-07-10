@@ -6,10 +6,10 @@ difficulty: "intermediate"
 model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-voice', 'pb-review', 'pb-linus-agent', 'pb-commit', 'pb-llm-guidelines']
-last_reviewed: "2026-07-02"
-last_evolved: "2026-07-02"
-version: "1.4.0"
-version_notes: "v1.4.0: Lens 6+7 boundary redrawn (register → L6, mechanical read-aloud → L7). Per-lens exit questions + failure modes. Repeated section anatomy detection. Surgeon Rule compressed. Review Comment Craft moved to Per-Artifact. Final re-read pass."
+last_reviewed: "2026-07-10"
+last_evolved: "2026-07-10"
+version: "1.5.0"
+version_notes: "v1.5.0: Voice pass is now a required lens (was conditional 'if configured'). /pb-voice fires on every prose-bearing artifact. Prose/structure/typography tell blocks removed from Lens 2, delegated to pb-voice's canonical Categories 1-12 (kills the duplicate). Lens 2 keeps code/comment tells plus new code-specific tells (comments explain what-not-why, commit body re-narrates diff, over-descriptive identifiers). Lens 6 defers register calibration to the voice pass. Shapes-over-words meta-principle echoed."
 breaking_changes: []
 ---
 # AI Output Quality Gate
@@ -33,13 +33,13 @@ Apply `/pb-preamble` thinking: challenge your own output before anyone else does
 - When contributing to external projects where convention match matters
 - As the final pass before `/pb-commit` or `/pb-pr`
 
-**Do NOT use for:** finding bugs (use `/pb-review`), voice-only checks (use `/pb-voice`), or peer review (use `/pb-linus-agent`). Handcraft is specifically about making AI-assisted output indistinguishable from hand-written.
+**Do NOT use for:** finding bugs (use `/pb-review`), voice-only checks on a piece of prose (run `/pb-voice` directly; handcraft fires it for you as part of the full pass), or peer review (use `/pb-linus-agent`). Handcraft is specifically about making AI-assisted output indistinguishable from hand-written.
 
 ---
 
 ## Relationship to Existing Commands
 
-- `/pb-voice` is the voice-only subset. `/pb-handcraft` is the comprehensive pass (voice + code + structure + conventions).
+- `/pb-voice` is the canonical prose-tell engine. `/pb-handcraft` runs it as a required lens (Lens 2) and layers code, convention, PoC, and scope checks on top. Voice owns prose; handcraft owns the whole artifact.
 - `/pb-review` catches bugs and logic issues. `/pb-handcraft` catches machine fingerprints.
 - `/pb-linus-agent` is a peer review persona. `/pb-handcraft` is a self-review process.
 - `/pb-commit` formats the message. `/pb-handcraft` ensures the message reads like a human wrote it.
@@ -116,44 +116,32 @@ The work must be indistinguishable from what the target maintainer would write t
 
 ### Lens 2: AI Tell Scan
 
-Read every line looking for machine patterns. If a line makes you think "a human wouldn't write it that way," rewrite it.
+Read every line looking for machine patterns. If a line makes you think "a human wouldn't write it that way," rewrite it. These patterns rotate every model generation, so weight the *shapes* (copula avoidance, antithesis density, participial padding, inline-header lists, metronomic rhythm) over any single word. The word lists age; the shapes don't.
+
+**Prose, structure, typography, and register tells: run the voice pass.** `/pb-voice` owns the canonical list (Categories 1-12): dead-giveaway vocabulary, copula avoidance, antithesis, participial clauses, hedging density, stock transitions, metronomic rhythm, abstraction, inline-header lists, em-dashes, title case, summary endings, register mismatch. It runs on **every** prose-bearing artifact: commit, PR, report, doc, issue, comment prose. Not optional. Do not re-list or re-fix prose tells here; that duplicates voice and drifts. Handcraft owns only what voice can't see, in code and comments:
 
 **Comment tells:**
 - "Split on X to separate Y from Z" -- the code says that
 - "Parse challenge types from the first part" -- obvious narration
 - "This is the auth bypass guard" -- dramatic labeling
-- Multi-line docstrings on internal functions that need 1-2 lines
+- Comments that explain *what* the code does, never *why*; the mechanism is visible, the rationale and the edge case are not
+- Multi-line docstrings on internal functions that need 1-2 lines; ceremonial Args/Returns blocks on trivial helpers
 - "Example directives:" as a label -- just show the directives
-
-**Prose tells:**
-- Named transitions ("To set the context", "A quick note on")
-- Triple declarative sentences with no contractions
-- "It's important to note" / "It's worth mentioning"
-- Hedge words before accurate claims ("potentially", "consider")
-- Resume-listing prior work to establish credibility
-- Perfectly parallel bullet points (same length, same structure)
-- `## Summary` / `## Test plan` headers on small fixes
 
 **Code tells:**
 - Exhaustive test permutations (3 cases cover it, don't write 12)
 - Labeled sections in PoCs ("--- Extracted from ---", "// VULNERABLE:")
 - 30-line header comments explaining what the code proves
+- Over-descriptive identifiers (`total_user_input_character_count`) that read like a contract
 - Perfectly uniform formatting that no human would produce
 - Over-defensive error handling in places that can't fail
 
-**Structure tells:**
-- Every paragraph the same length
-- Every section with a header
-- Numbered lists where prose would be more natural
-- Summary at the end restating what was just said
-- Opener repetition across posts (scan last 5 before writing new)
-- Repeated section anatomy — identical beat structure (scene → diagnosis → prescription → close) across N > 1 sections. Break one section's rhythm.
+**Commit and PR tells:**
+- Commit body re-narrates the diff ("This commit adds...", "The following changes were made"). The diff shows what; the body is for why. It should be explainable from the message in a line or two, not a paragraph-by-paragraph replay.
+- PR template-header boilerplate (`## Changes` / `## Motivation` / `## Testing`) on a small change
+- Attribution trailers (`Co-Authored-By`, `🤖 Generated with`); strip per the GitHub Artifact Register
 
-**Typography tells:**
-- Em dashes anywhere -- use `--` for internal docs, match project conventions for external output
-- Exotic/unicode symbols -- stick to ASCII
-
-**Exit:** Did you flag at least one tell you initially overlooked? (Fails when you've read so much AI output you've normalized the patterns — you literally can't see them anymore.)
+**Exit:** Did the voice pass run on the prose, and did you flag at least one code/comment tell you initially overlooked? (Fails when you skip the voice pass, or when you've read so much AI output you've normalized the patterns.)
 
 ### Lens 3: Bloat Check
 
@@ -169,7 +157,7 @@ Remove anything that doesn't earn its place.
 
 **The test:** cover each line with your hand. Does removing it lose information? If no, cut it.
 
-**The structure test:** scan section openings. If Lens 2 flagged repeated section anatomy, verify you broke at least one section's rhythm. Uniform structure is bloat regardless of who (or what) wrote it.
+**The structure test:** scan section openings. If the voice pass flagged repeated section anatomy or uniform structure (voice Cat 2), verify you broke at least one section's rhythm. Uniform structure is bloat regardless of who (or what) wrote it.
 
 **Exit:** Did you remove anything, or did everything earn its place on first pass? (Fails when attachment to your own prose makes every line feel load-bearing.)
 
@@ -207,7 +195,7 @@ The reader built the system. Don't explain their code, their spec, their domain,
 
 ### Lens 6: Register Check
 
-Apply project-specific voice guidelines. If the project defines a voice guide or `/pb-voice` has been configured, use those rules. Otherwise, match the register of the target project's existing docs and comments.
+Register is calibrated by the voice pass (`/pb-voice` Step 0 + Category 12), which already ran in Lens 2; it reads the target register from the artifact type or persona and flags register mismatch. This lens applies the handcraft-specific register concerns voice doesn't own: the GitHub Artifact Register ceilings for commits/PRs/issues, and the dev-to-dev defaults for code-adjacent output.
 
 General dev-to-dev register:
 - No named transitions
@@ -321,7 +309,7 @@ Run after work is functionally complete, before presenting externally. Integrate
 
 ## Related Commands
 
-- `/pb-voice` -- Voice-only subset of the handcraft pass
+- `/pb-voice` -- Canonical prose-tell engine; handcraft fires it as a required lens (Lens 2)
 - `/pb-review` -- Code review (bugs, logic, tests)
 - `/pb-linus-agent` -- Peer review persona
 - `/pb-commit` -- Commit message quality
