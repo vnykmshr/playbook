@@ -6,11 +6,11 @@ difficulty: "advanced"
 model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-handcraft', 'pb-review-docs', 'pb-documentation', 'pb-design-rules', 'pb-preamble']
-last_reviewed: "2026-04-26"
-last_evolved: "2026-04-26"
-version: "2.2.1"
-version_notes: "v2.2.1: Related-link swap -- pb-think -> pb-handcraft (voice is handcraft's voice-only subset; completes the bidirectional pair)."
-breaking_changes: ["Detection categories expanded from 11 to 12", "Step 0 (Register Calibration) added before Category 1", "Persona file now loaded in Step 0 (before detection) instead of Stage 2 (rewrite)"]
+last_reviewed: "2026-07-10"
+last_evolved: "2026-07-10"
+version: "2.3.0"
+version_notes: "v2.3.0: Shapes-over-words meta-principle (the vocabulary rotates each model generation; weight structural tells over any single word). New tells: markup-leak artifacts (Cat 9), vague-authority attribution (Cat 8). Positive-craft tests wired into existing categories: name-the-dog + verifiable-detail-per-paragraph (Cat 8), earned-vs-named transition delete-test (Cat 5), 5-word-band burstiness test (Cat 7). Antithesis elevated to the strongest current syntactic tell (Cat 3). Canonical prose engine that /pb-handcraft fires as a required lens."
+breaking_changes: []
 ---
 # Voice Review
 
@@ -105,6 +105,10 @@ Before running any detection category, determine what register the text should b
 
 **Voice Profile:** If a persona file is provided, load it now -- before detection, not after. The persona's vocabulary anchors and formality ceiling inform what counts as a tell across all categories. See "Voice Profile Integration" in Stage 2 for how the persona also calibrates rewrites.
 
+### Reading these categories
+
+The word lists below are corroborating signal, not a blocklist. The vocabulary rotates every model generation: "delve" and "tapestry" marked 2023-24 output; "showcase," "enhance," and "highlighting" mark 2025+; the next cohort is already forming. A blocklist rots. What persists is *shape*: copula avoidance, antithesis density, participial padding, inline-header lists, metronomic sentence length. Weight the structural and syntactic categories (2, 3, 7, 9) over any single flagged word, and don't chase every new vocabulary tell into the list. The shapes catch what the words miss.
+
 ### Category 1: Dead Giveaway Vocabulary (HIGH)
 
 Words and phrases that almost never appear in natural writing but are statistically overrepresented in LLM output.
@@ -137,6 +141,9 @@ Document-level organization patterns that reveal algorithmic generation. (For in
 - **Symmetrical sections** - All H2s same length. All bullets identical grammar.
 - **Colon introductions** - "Several factors to consider: X, Y, and Z."
 - **Parallel openings** - Consecutive paragraphs starting the same way ("This approach...", "This method...", "This strategy...").
+- **Repeated section anatomy** - Identical beat structure across sections (scene → diagnosis → prescription → close, every time). Distinct from parallel openings, which is intra-paragraph. Break one section's rhythm.
+- **Opener repetition across pieces** - The same opening move every post. Cross-artifact, not intra-document: scan your last 5 before writing a new one.
+- **Over-sectioning** - Every point gets its own header; numbered or bulleted lists where flowing prose would read more naturally. Real writing doesn't sub-head every thought.
 
 **Action:** Restructure. Make one paragraph a fragment. Make another twice as long. Break the template.
 
@@ -148,7 +155,7 @@ Sentence-construction habits and repetition patterns that go beyond individual w
 - **Significance inflation** - Puffing up importance with legacy/testament/pivotal framing. "Marking a pivotal moment in the evolution of..." The whole sentence construction inflates, not just the word.
 - **Superficial -ing clauses** - Present participle phrases tacked on for fake depth: "highlighting the interplay," "underscoring the importance," "reflecting the community's values." The -ing clause adds no information; it just sounds analytical.
 - **Synonym cycling** - Repetition-penalty-driven substitution. "The protagonist... The main character... The central figure... The hero..." all in one paragraph. Real writers repeat or use pronouns.
-- **Negative parallelisms** - "Not only X but Y" / "It's not just about X; it's about Y." Overused construction that sounds profound but usually restates.
+- **Negative parallelisms / antithesis** - "Not only X but Y" / "It's not just about X; it's about Y" / "The issue isn't X, it's Y." The strongest current syntactic tell: models make the contrast explicit with "not/isn't" instead of trusting the reader to see it. Legitimate rhetoric in moderation; the tell is *saturation*. Cap at one per section; don't ban it.
 - **False ranges** - "from X to Y" where X and Y aren't on a meaningful scale. "From hobbyist experiments to enterprise-wide rollouts."
 - **Explanatory completeness** - The model can't leave anything unexplained. If it mentions a concept, it defines it. A person writing to peers assumes shared context. "Claude's project files" is enough -- the model adds "which allow you to store persistent context for your projects." If the audience already knows, the explanation is a tell.
 - **Clause-final summation** - Restating the point in abstract terms at the end of a sentence. "...which makes it ideal for teams that need both speed and reliability." "...providing a robust foundation for future development." The clause after "which" or the participial phrase adds no information. People end sentences on the specific, not the abstract.
@@ -172,7 +179,7 @@ Stock transitions humans rarely use in professional writing.
 
 **Flag:** Moreover, Furthermore, Additionally, In conclusion, To summarize, That said, Having established, It is worth mentioning, Consequently, Subsequently, Notably, Importantly, Interestingly, Conversely, Nevertheless, Notwithstanding
 
-**Action:** Delete most. If connection needed, use "But," "And," "So," "Still," or restructure.
+**Action:** Delete most. If connection needed, use "But," "And," "So," "Still," or restructure. The delete-test: remove the transition word. If the paragraph still flows, it was scaffolding; leave it out. If it collapses, the underlying logic was never there; fix the logic, don't re-add the label. Human prose earns transitions through flow; machine prose signposts them.
 
 ### Category 6: Enthusiasm and Communication Artifacts (HIGH)
 
@@ -197,7 +204,7 @@ AI produces unnaturally even rhythm.
 - **No contractions** - "It is" instead of "it's." "Do not" instead of "don't."
 - **Over-complete thoughts** - Every idea fully resolved in one sentence. No trailing thoughts.
 
-**Action:** Vary length deliberately. Let a thought stand incomplete. Contract where natural. Let a thought trail off.
+**Action:** Vary length deliberately. Let a thought stand incomplete. Contract where natural. Let a thought trail off. The 5-word-band test: count words per sentence across a paragraph; if four or more consecutive sentences land within a 5-word band, the rhythm is machine-flat; cut one to a fragment or fuse two into a long one. Sentence-length variance (burstiness) is the single most measurable separator of human from machine text.
 
 ### Category 8: Abstraction Level (MEDIUM)
 
@@ -208,19 +215,22 @@ AI defaults to conceptual language. Humans anchor in specifics.
 - **Conceptual hand-waving** - "Improves efficiency" without saying how much or for whom
 - **Category language** - "Various factors," "multiple considerations," "several approaches"
 - **Precise-sounding vagueness** - Modifiers that sound specific but say nothing. "Significantly faster," "substantially improved," "considerably more efficient." The concrete nouns might be there, but the quantifiers are empty. How much faster? Compared to what?
+- **Vague-authority attribution** - "Experts argue," "Studies show," "Industry reports suggest," "Research indicates" with no named source. Cite the actual source or drop the claim.
 
-**Action:** One concrete anchor per paragraph. A number, tool, date, name, or constraint from lived experience. Replace vague quantifiers with actual measurements or drop them.
+**Action:** One concrete anchor per paragraph. A number, tool, date, name, or constraint from lived experience. Replace vague quantifiers with actual measurements or drop them. Name the dog: swap category nouns (things, issues, changes, aspects) for the specific referent. Not "a recent change broke the pipeline" but "commit 6ef0eb8 broke the deploy-docs job." Verifiable-detail test: every paragraph should carry one thing a reader could check, whether a number, filename, command, quoted string, or timestamp. A paragraph of pure abstraction is the machine's native register.
 
 ### Category 9: Style and Formatting Tells (HIGH)
 
 Formatting patterns that are quick to spot and high-signal.
 
-- **Em-dash overuse** - AI uses em dashes (--) more than humans, mimicking punchy sales writing. Use commas, periods, parentheses, or restructure instead.
+- **Em-dash / double-hyphen overuse** - AI reaches for the em dash (or its ASCII stand-in `--`) far more than humans, mimicking punchy sales writing. Default to a comma, period, colon, or single hyphen; they are easier to type and read. Reserve `--` for an emphatic break that is genuinely earned, not as a general-purpose connector. Several `--` in one paragraph means most are unearned; restructure.
 - **Boldface overuse** - Mechanical emphasis on key terms. "It blends **OKRs**, **KPIs**, and **BSC**." Remove most bold; let sentence structure do the emphasis.
 - **Inline-header vertical lists** - Bullet points starting with bolded headers followed by colons. "- **Speed:** Significantly faster..." Restructure into prose or use plain bullets.
 - **Title case in headings** - AI capitalizes all main words. "## Strategic Negotiations And Global Partnerships"  "## Strategic negotiations and global partnerships." Use sentence case.
 - **Emoji decoration** - Emojis on headings or bullet points. Delete.
 - **Curly quotation marks** - AI sometimes uses curly quotes instead of straight quotes. Normalize.
+- **Markup-leak artifacts** - Copy-paste residue from the generation surface: `contentReference`, `oaicite`, `oai_citation`, `turn0search0`, stray `:::` fences, `utm_source=` left in pasted URLs. Dead giveaways. Grep and delete.
+- **Exotic/unicode symbols in prose** - Non-ASCII glyphs (decorative arrows, math-alphanumeric bold/italic) where the surrounding text is plain ASCII. Match the project's convention; when in doubt, ASCII.
 
 **Action:** Fix on sight. These are fast, high-confidence corrections.
 
@@ -496,7 +506,7 @@ Findings posted as PR/issue comments follow `~/.claude/CLAUDE.md` § GitHub Arti
 
 ## Related Commands
 
-- `/pb-handcraft` - The comprehensive output-quality pass; pb-voice is its voice-only subset
+- `/pb-handcraft` - The whole-artifact quality pass; fires this command as a required prose lens, then layers code, convention, and PoC checks on top
 - `/pb-review-docs` - Documentation quality review (structural, not voice)
 - `/pb-documentation` - Writing engineering documentation
 - `/pb-design-rules` - Clarity over cleverness applies to prose
