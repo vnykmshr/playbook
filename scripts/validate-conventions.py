@@ -20,7 +20,7 @@ from pathlib import Path
 from playbook_utils import setup_logger
 
 COMMANDS_DIR = Path(__file__).parent.parent / "commands"
-EXPECTED_COUNT = 114  # 113 (v2.24.1) + pb-threat-hunt
+EXPECTED_COUNT = 117  # 114 (v2.26.0) + 3 personas: elena-design, travis-security, clara-curator
 CHANGELOG_PATH = Path(__file__).parent.parent / "CHANGELOG.md"
 
 # Hub commands allowed to exceed the 5-link limit

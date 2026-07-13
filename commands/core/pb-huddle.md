@@ -5,11 +5,11 @@ category: "core"
 difficulty: "intermediate"
 model_hint: "opus"
 execution_pattern: "parallel-then-sequential"
-related_commands: ['pb-think', 'pb-preamble', 'pb-linus-agent', 'pb-maya-product', 'pb-adr']
-last_reviewed: "2026-03-24"
-last_evolved: "2026-07-01"
-version: "1.1.0"
-version_notes: "v1.1.0: Add re-huddle mode — refined follow-up with same personas, lighter context."
+related_commands: ['pb-think', 'pb-preamble', 'pb-clara-curator', 'pb-maya-product', 'pb-adr']
+last_reviewed: "2026-07-13"
+last_evolved: "2026-07-13"
+version: "1.2.0"
+version_notes: "v1.2.0: Four-role model (process + curatorial orchestrators, topic-selected lead, panel); register the 9-persona roster with a Lead column; Clara holds the synthesis seat."
 breaking_changes: []
 ---
 # Multi-Perspective Decision Session
@@ -100,24 +100,36 @@ Read relevant state files. The huddle is only as good as the context loaded. Per
 
 If no relevant context exists for this question, spend five minutes writing it first. A context-free huddle is worse than no huddle.
 
-### Step 3: Select and Run Personas
+### Step 3: Assign Roles and Select the Panel
 
-Pick 3-4 personas whose lenses match the decision's dimensions. Each persona gets the SAME brief. Disagreement is expected and valuable.
+A huddle has four roles. Two are fixed; two are chosen per decision.
 
-**Selection guide:**
+| Role | Who | Job |
+|---|---|---|
+| **Process orchestrator** | Claude | Neutral engine: run the panel in parallel, prevent anchoring, record, execute |
+| **Curatorial orchestrator** | Clara (`/pb-clara-curator`) | The whole-system voice at synthesis: does it belong, what does it cost to carry, are these voices actually disagreeing |
+| **Lead** | topic-selected domain authority | Frames the question, decisive in-lane. Not first-and-loudest: the panel challenges in parallel before the lead rebuts. In-lane authority, not a cross-domain veto |
+| **Panel** | 2-4 other lenses | Challenge from their lanes |
 
-| Decision type | Recommended personas |
-|---------------|---------------------|
-| Technical trade-off | Linus + Jordan + Alex |
-| External-facing (launch, comms) | Kai + Maya + Sam |
-| Architecture / system design | Linus + Alex + Jordan |
-| Strategic positioning | Kai + Maya + Linus |
-| Quality / reliability concern | Jordan + Linus + Sam |
-| Documentation / clarity | Sam + Maya + Kai |
+Name the lead by the decision's center of gravity and record it ("Lead: Travis -- trust-boundary decision"). The user can override. When the topic genuinely is the whole (scope, lifecycle, coherence), Clara is both orchestrator and lead, and Claude stays the second, neutral orchestrator to keep her honest.
 
-**Available personas:** `/pb-linus-agent`, `/pb-jordan-testing`, `/pb-kai-reach`, `/pb-maya-product`, `/pb-sam-documentation`, `/pb-alex-infra`
+**Lead and panel by decision type:**
 
-Run personas in parallel when possible. Give each equal treatment -- don't let the first response anchor the others. Claude plays the synthesis role, not another persona.
+| Decision type | Lead | Panel |
+|---|---|---|
+| Technical / architecture | Linus | Jordan + Alex + Travis |
+| Security / trust boundary | Travis | Linus + Alex |
+| Testing / reliability | Jordan | Linus + Alex |
+| Infrastructure / resilience | Alex | Jordan + Linus |
+| Product / user value | Maya | Sam + Kai + Elena |
+| Design / UX / brand | Elena | Maya + Sam |
+| Distribution / launch | Kai | Maya + Sam |
+| Documentation / clarity | Sam | Maya + Elena |
+| Scope / lifecycle / coherence | Clara | Maya + Linus |
+
+**Roster (9):** `/pb-linus-agent`, `/pb-travis-security`, `/pb-jordan-testing`, `/pb-alex-infra`, `/pb-maya-product`, `/pb-elena-design`, `/pb-kai-reach`, `/pb-sam-documentation`, `/pb-clara-curator`.
+
+Each persona gets the SAME brief; disagreement is expected and valuable. Run the panel in parallel so the first response doesn't anchor the others. The lead frames and closes in its lane; the orchestrators synthesize.
 
 ### Step 4: Find the Tensions
 
@@ -128,7 +140,7 @@ After personas argue, identify:
 
 ### Step 5: Synthesize
 
-Don't average the opinions. Find the approach that survives all selected lenses. If no single approach satisfies all, state the trade-off explicitly and recommend which lens to prioritize for THIS decision.
+Clara (curatorial orchestrator) synthesizes; Claude records. Don't average the opinions. Find the approach that survives all selected lenses. If no single approach satisfies all, surface the dissent and the irreconcilable trade-off explicitly, and recommend which lens to prioritize for THIS decision -- the domain owner's call is decisive in-lane. Synthesis that smooths disagreement into consensus is the failure mode; a huddle that agreed too easily did not huddle.
 
 ### Step 6: Record
 
@@ -140,6 +152,9 @@ Save the decision and rationale to the relevant project doc. Future sessions sho
 
 ```
 ## Huddle: [question]
+
+### Roles
+Lead: [persona] -- [why this lane leads]. Orchestrators: Clara (curatorial) + Claude (process). Panel: [list].
 
 ### Context loaded
 [list of files read]
@@ -175,7 +190,7 @@ Save the decision and rationale to the relevant project doc. Future sessions sho
 | Don't | Do Instead |
 |-------|------------|
 | Run huddle on routine decisions | Use direct review (Linus, voice pass) |
-| Let one persona dominate | Force all selected lenses, even when one feels "right" |
+| Lead anchors the round or overrules cross-lane | Lead frames and closes in-lane; panel challenges in parallel; Clara arbitrates across lanes |
 | All personas agree too easily | Generate the best counterargument before synthesizing |
 | Average the opinions | Find the approach that survives all lenses |
 | Huddle without loaded context | Read all relevant state files first |
@@ -202,8 +217,8 @@ Save the decision and rationale to the relevant project doc. Future sessions sho
 
 - `/pb-think` -- Structured problem decomposition (solo reasoning)
 - `/pb-preamble` -- Collaboration philosophy (challenge assumptions)
-- `/pb-linus-agent` -- Technical peer review persona
-- `/pb-maya-product` -- Product and org dynamics persona
+- `/pb-clara-curator` -- Curator and huddle orchestrator (the synthesis seat)
+- `/pb-maya-product` -- Product and user strategy persona
 - `/pb-adr` -- Architecture Decision Records (for recording decisions)
 
 ---

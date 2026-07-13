@@ -106,6 +106,8 @@ Quick reference for all playbook commands.
 | `/pb-review` | Orchestrate multi-perspective review | Monthly or pre-release |
 | `/pb-review-code` | Dedicated code review for reviewers (peer review checklist) | Every PR review |
 | `/pb-linus-agent` | Direct, unfiltered technical feedback grounded in pragmatism | Security-critical code, architecture decisions |
+| `/pb-elena-design` | Design craft review: usability, visual hierarchy, design-system/brand | Frontend/design PRs, new surfaces |
+| `/pb-travis-security` | Adversarial security review: attacker mind, trust boundaries, PoC-driven | Input parsing, auth, trust boundaries |
 | `/pb-review-backend` | Backend review (Alex infrastructure + Jordan testing) | Backend PRs |
 | `/pb-review-frontend` | Frontend review (Maya product + Sam documentation) | Frontend PRs |
 | `/pb-review-infrastructure` | Infrastructure review (Alex resilience + Linus security) | Infrastructure PRs |
@@ -128,6 +130,7 @@ Self-sufficient thinking partner methodology for expert-quality collaboration.
 |---------|-------------|
 | `/pb-think` | Complete thinking toolkit with modes: ideate, synthesize, refine |
 | `/pb-huddle` | Multi-perspective decision session -- structured multi-persona debate for strategic trade-offs |
+| `/pb-clara-curator` | Curator and huddle orchestrator: coherence, complexity budget, lifecycle |
 | `/pb-think mode=ideate` | Divergent exploration - generate options and possibilities |
 | `/pb-think mode=synthesize` | Integration - combine multiple inputs into coherent insight |
 | `/pb-think mode=refine` | Convergent refinement - polish to expert-quality |

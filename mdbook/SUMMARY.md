@@ -33,6 +33,7 @@
 - [Templates](commands/core/pb-templates.md)
 - [Documentation](commands/core/pb-documentation.md)
 - [Sam: Documentation Agent](commands/core/pb-sam-documentation.md)
+- [Clara: Curator Agent](commands/core/pb-clara-curator.md)
 - [Think](commands/core/pb-think.md)
 - [Huddle](commands/core/pb-huddle.md)
 - [Git Signals](commands/core/pb-git-signals.md)
@@ -90,6 +91,8 @@
 # Commands: Reviews
 
 - [Linus: Peer Review Agent](commands/reviews/pb-linus-agent.md)
+- [Elena: Design Agent](commands/reviews/pb-elena-design.md)
+- [Travis: Security Agent](commands/reviews/pb-travis-security.md)
 - [Review: Code](commands/reviews/pb-review-code.md)
 - [Review: Backend](commands/reviews/pb-review-backend.md)
 - [Review: Frontend](commands/reviews/pb-review-frontend.md)

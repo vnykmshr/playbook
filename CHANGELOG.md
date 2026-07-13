@@ -7,8 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- **Three new personas complete the team (114 → 117 commands).** `/pb-elena-design` (Elena Rossi): design craft across usability, visual hierarchy, and design-system/brand, modeled on Norman, Rams, and Zhuo. `/pb-travis-security` (Travis Ormandy): the adversarial security voice, attacker's mind and trust boundaries, PoC-driven, modeled on the Project Zero researcher. `/pb-clara-curator` (Clara Ellis): curator and huddle orchestrator, owning coherence, the complexity budget, and lifecycle, and holding the synthesis seat of `/pb-huddle`.
+
 ### Changed
 
+- **Persona sharpening: a Boundary & Authority block on every persona.** The six existing personas (Linus, Maya, Alex, Jordan, Kai, Sam) each gained a `## Boundary & Authority` section: the lane they own, the concerns they route to a sibling, a "don't confuse me with" line for the collision pair, and their domain authority. Legacy `*Created: … | vX.Y.Z*` footers dropped in the same pass. Minor version bump each.
+- **`/pb-huddle` v1.2.0: four-role model and the nine-persona roster.** Explicit roles replace the flat "no persona dominates" rule: Claude (process orchestrator), Clara (curatorial orchestrator and synthesis seat), a topic-selected Lead who frames and closes in-lane without anchoring the parallel challenge round, and the Panel. The selection guide gains a Lead column, the roster registers all nine personas, and a test guards it against drift. The old egalitarian rule becomes equal voice plus weighted in-lane authority.
 - **`/pb-new-playbook` v2.1.0: encode this cycle's authoring guards.** Step 4 teaches dash discipline (single hyphen default, `--` earned) and points at `/pb-handcraft` as the last pass before shipping, framed by the shapes-over-words meta-principle so the banned-phrase list reads as corroborating signal, not a blocklist that rots. Integration Validation gains a changelog-as-it-lands check and a command-count-bump check.
 
 ### Fixed

@@ -16,7 +16,7 @@ from pathlib import Path
 import pytest
 
 COMMANDS_DIR = Path(__file__).parent.parent / "commands"
-EXPECTED_COUNT = 114  # 113 (v2.24.1) + pb-threat-hunt
+EXPECTED_COUNT = 117  # 114 (v2.26.0) + 3 personas: elena-design, travis-security, clara-curator
 
 # Hub commands allowed to exceed the 5-link limit
 HUB_COMMANDS = {"pb-patterns.md"}
@@ -157,17 +157,21 @@ class TestMetadataConsistency:
 class TestPersonaIntegrity:
     """Validate persona agent structure and consistency."""
 
-    # Persona agents introduced in v2.11.0 Phase 1
+    # Persona agents (9): original 5 + kai-reach + elena/travis/clara (added 2026-07-13)
     PERSONA_COMMANDS = {
         "pb-linus-agent.md": {"model": "opus", "category": "reviews", "difficulty": "advanced"},
         "pb-alex-infra.md": {"model": "opus", "category": "deployment", "difficulty": "advanced"},
         "pb-maya-product.md": {"model": "sonnet", "category": "planning", "difficulty": "intermediate"},
         "pb-sam-documentation.md": {"model": "sonnet", "category": "core", "difficulty": "intermediate"},
         "pb-jordan-testing.md": {"model": "opus", "category": "development", "difficulty": "advanced"},
+        "pb-kai-reach.md": {"model": "sonnet", "category": "planning", "difficulty": "intermediate"},
+        "pb-elena-design.md": {"model": "opus", "category": "reviews", "difficulty": "advanced"},
+        "pb-travis-security.md": {"model": "opus", "category": "reviews", "difficulty": "advanced"},
+        "pb-clara-curator.md": {"model": "opus", "category": "core", "difficulty": "advanced"},
     }
 
     def test_persona_agents_exist(self):
-        """Ensure all 5 persona agents are present."""
+        """Ensure all 9 persona agents are present."""
         files = get_command_files()
         file_names = {f.name for f in files}
         missing = []
@@ -223,6 +227,42 @@ class TestPersonaIntegrity:
                 missing_framework.append(path.name)
 
         assert not missing_framework, f"Persona agents missing decision framework: {missing_framework}"
+
+    def test_personas_have_boundary_section(self):
+        """Every persona must carry a Boundary & Authority section (sharpen pass, 2026-07-13).
+
+        The block is what makes a boundary legible: the lane, the routes out, the
+        collision-pair callout, and the domain authority. Applied inconsistently across
+        nine files, the sharpening silently rots -- this guard is the belt for that.
+        """
+        files = get_command_files()
+        missing = []
+        for path in files:
+            if path.name not in self.PERSONA_COMMANDS:
+                continue
+            if "## Boundary & Authority" not in path.read_text():
+                missing.append(path.name)
+        assert not missing, f"Personas missing Boundary & Authority: {missing}"
+
+    def test_huddle_registers_all_personas(self):
+        """pb-huddle must reference every persona (roster drift guard, 2026-07-13).
+
+        The huddle roster is curated by hand, not auto-discovered. This guard fails
+        if a persona is added without registering it in pb-huddle -- the "did you
+        forget to wire it in" belt.
+        """
+        huddle = None
+        for path in get_command_files():
+            if path.name == "pb-huddle.md":
+                huddle = path.read_text()
+                break
+        assert huddle is not None, "pb-huddle.md not found"
+        missing = []
+        for persona_name in self.PERSONA_COMMANDS:
+            slug = persona_name[:-3]  # drop .md
+            if f"/{slug}" not in huddle:
+                missing.append(persona_name)
+        assert not missing, f"Personas not registered in pb-huddle roster: {missing}"
 
     def test_multi_perspective_reviews_exist(self):
         """Ensure multi-perspective review commands exist (Phase 2)."""
