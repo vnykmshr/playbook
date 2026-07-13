@@ -122,11 +122,6 @@ Every playbook must have:
 
 - /pb-related-1 - [Brief description]
 - /pb-related-2 - [Brief description]
-
----
-
-**Last Updated:** [Date]
-**Version:** X.Y.Z
 ```
 
 ### By Classification
@@ -345,11 +340,6 @@ Copy this template and fill in:
 ## Related Commands
 
 - /pb-related - [Description]
-
----
-
-**Last Updated:** YYYY-MM-DD
-**Version:** 1.0.0
 ```
 
 ### Resource Hint by Classification
@@ -378,7 +368,7 @@ Run this checklist before finalizing:
 - [ ] "When to Use" section exists with 3+ scenarios
 - [ ] Major sections separated by `---`
 - [ ] Related Commands section at end
-- [ ] Version and date in footer
+- [ ] `version` and `last_reviewed` set in YAML frontmatter
 
 ### Content Validation
 
@@ -461,13 +451,11 @@ When a playbook is no longer needed:
 
 ### Version Convention
 
-```
-**Version:** MAJOR.MINOR.PATCH
+Version lives in the YAML frontmatter `version` field (`MAJOR.MINOR.PATCH`), the single source of truth. There is no separate footer.
 
-MAJOR: Breaking changes, significant restructure
-MINOR: New sections, expanded content
-PATCH: Typos, clarifications, minor fixes
-```
+- MAJOR: Breaking changes, significant restructure
+- MINOR: New sections, expanded content
+- PATCH: Typos, clarifications, minor fixes
 
 ---
 
