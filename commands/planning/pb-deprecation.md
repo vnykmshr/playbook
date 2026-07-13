@@ -490,7 +490,3 @@ At removal time:
 - `/pb-adr` - Document deprecation decisions with rationale
 - `/pb-release` - Communicate deprecations in release notes
 - `/pb-documentation` - Write migration guides and deprecation notices
-
----
-
-*Created: 2026-01-11 | Category: Planning | Tier: M/L*

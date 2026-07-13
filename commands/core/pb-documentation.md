@@ -827,8 +827,3 @@ The hunt is not complete until ALL boxes are checked:
 - [ ] Examples actually work
 - [ ] Docs reviewed quarterly
 - [ ] Obsolete docs deleted
-
----
-
-*Created: 2026-01-11 | Category: Documentation | Tier: M/L*
-

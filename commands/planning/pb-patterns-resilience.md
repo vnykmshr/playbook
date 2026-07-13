@@ -570,7 +570,3 @@ Lesson:
 - `/pb-patterns-async` - Asynchronous patterns (Job Queues, Reactive Streams)
 - `/pb-hardening` - Production security hardening
 - `/pb-incident` - Incident response and recovery
-
----
-
-*Created: 2026-02-07 | Category: Architecture | Tier: L*

@@ -492,8 +492,3 @@ Before last day:
 - `/pb-documentation` - How to write for onboarding
 - `/pb-cycle` - Code review process they'll follow
 - `/pb-knowledge-transfer` - KT session preparation
-
----
-
-*Created: 2026-01-11 | Category: People | Tier: M/L*
-

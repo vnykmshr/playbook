@@ -840,8 +840,3 @@ Findings posted as PR/issue comments follow `~/.claude/CLAUDE.md` § GitHub Arti
 - `/pb-patterns-distributed` - Saga, CQRS patterns
 - `/pb-observability` - Health checks, monitoring
 - `/pb-incident` - Handling microservice failures
-
----
-
-*Created: 2026-01-11 | Category: Architecture | Tier: L*
-

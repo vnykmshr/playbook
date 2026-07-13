@@ -738,7 +738,3 @@ Findings posted as PR/issue comments follow `~/.claude/CLAUDE.md` § GitHub Arti
 - `/pb-hardening` - Infrastructure security (servers, containers, networks)
 - `/pb-secrets` - Secrets management lifecycle
 - `/pb-threat-hunt` - Deep audit: 12-step executable methodology with adversarial payload testing
-
----
-
-*Created: 2026-01-11 | Category: Reviews | Last updated: 2026-02-03*

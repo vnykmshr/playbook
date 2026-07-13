@@ -662,8 +662,3 @@ Use results to identify problems and improve.
 - `/pb-onboarding` - Developer onboarding and knowledge transfer
 - `/pb-knowledge-transfer` - KT session preparation and execution
 - `/pb-sre-practices` - Site reliability engineering practices for teams
-
----
-
-*Created: 2026-01-11 | Category: People | Tier: M/L*
-

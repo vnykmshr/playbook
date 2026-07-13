@@ -407,7 +407,3 @@ A: Only if they significantly affected work. "Lots of meetings" is context but n
 
 **Q: How long should a standup take?**
 A: 5 minutes to write, 2 minutes to read. If it's longer, you're over-explaining.
-
----
-
-*Created: 2026-01-11 | Category: Development | Updated: When first shipped*

@@ -652,8 +652,3 @@ Lesson: Cache read-heavy data, not mutable data
 - `/pb-observability` - Set up monitoring to track performance metrics
 - `/pb-review-hygiene` - Code review for performance regressions
 - `/pb-patterns-core` - Architectural patterns that affect performance
-
----
-
-*Created: 2026-01-11 | Category: Planning | Tier: M/L*
-

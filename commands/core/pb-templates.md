@@ -376,7 +376,3 @@ Run periodically to reduce technical debt.
 - `/pb-context` - Working context templates and session management
 - `/pb-documentation` - Writing great engineering documentation
 - `/pb-standards` - Project guidelines and code quality standards
-
----
-
-*Created: 2026-01-11 | Category: Core | Tier: M*

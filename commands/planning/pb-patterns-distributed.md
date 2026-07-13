@@ -1134,8 +1134,3 @@ Other patterns (Event-Driven, Outbox, CQRS, Eventual Consistency) follow similar
 - `/pb-patterns-security` - Security patterns for microservice architectures
 - `/pb-observability` - Tracing and monitoring distributed systems
 
----
-
-*Created: 2026-01-11 | Category: Distributed Systems | Tier: L*
-*Updated: 2026-01-11 | Added Go examples*
-

@@ -386,8 +386,3 @@ All patterns in this family follow these standards:
 - `/pb-patterns-api` - API design patterns (REST, GraphQL, gRPC)
 - `/pb-patterns-deployment` - Deployment strategies and patterns
 - `/pb-patterns-cloud` - Cloud deployment patterns (AWS, GCP, Azure)
-
----
-
-*Created: 2026-01-11 | Category: Architecture | Tier: L*
-

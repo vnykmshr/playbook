@@ -743,7 +743,3 @@ See `/pb-guide` for general SDLC process, `/pb-patterns-core` for architectural 
 - `/pb-guide-python` - Language-specific guide for Python projects
 - `/pb-testing` - Advanced testing strategies and patterns
 - `/pb-patterns-core` - Architectural patterns applicable to Go services
-
----
-
-*Created: 2026-01-11 | Category: Language Guides | Language: Go | Tier: L*

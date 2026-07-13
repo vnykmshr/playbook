@@ -713,8 +713,3 @@ Go uses goroutines and channels for concurrency. Key patterns:
 - `/pb-patterns-distributed` - Distributed patterns that build on async
 - `/pb-observability` - Monitor and trace async operations
 
----
-
-*Created: 2026-01-11 | Category: Architecture | Tier: L*
-*Updated: 2026-01-11 | Added Go examples*
-

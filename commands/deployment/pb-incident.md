@@ -689,8 +689,3 @@ See `/pb-sre-practices` for on-call setup, rotation health, and escalation polic
 - [ ] Monitoring improved to detect earlier
 - [ ] Prevention implemented if applicable
 - [ ] All participants thanked
-
----
-
-*Created: 2026-01-11 | Category: Deployment | Tier: S/M/L*
-

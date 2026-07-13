@@ -613,7 +613,3 @@ The workflow will:
 - `/pb-review` - Full review workflow after implementation is complete
 - `/pb-cycle` - Self-review and peer review once code is ready
 - `/pb-commit` - Commit implementation with proper message format
-
----
-
-*Created: 2026-01-11 | Category: Development | Tier: M*

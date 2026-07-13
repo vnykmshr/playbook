@@ -506,7 +506,3 @@ Findings posted as PR/issue comments follow `~/.claude/CLAUDE.md` § GitHub Arti
 - **Local**: Python `logging`, Node.js `winston`, Go `zap`
 - **Cloud**: AWS CloudWatch, GCP Cloud Logging, Azure Monitor
 - **Aggregation**: ELK Stack, Splunk, Datadog, New Relic
-
----
-
-*Created: 2026-01-11 | Category: Code Review | Tier: M*
