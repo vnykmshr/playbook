@@ -437,9 +437,4 @@ Signs the server needs a hygiene pass now:
 
 ---
 
-**Last Updated:** 2026-02-07
-**Version:** 1.0.0
-
----
-
 *Production systems accumulate entropy. This ritual is how you pay down the interest before it compounds.*

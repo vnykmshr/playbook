@@ -863,8 +863,3 @@ components:
 | **Separation** | API contract decoupled from data layer; explicit DTOs over model serialization |
 | **Extensibility** | Add fields without breaking, versioning strategy |
 | **Robustness** | Clear error handling, rate limiting |
-
----
-
-**Last Updated:** 2026-02-03
-**Version:** 1.1

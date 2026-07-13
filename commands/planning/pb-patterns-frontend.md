@@ -941,8 +941,3 @@ Frontend patterns MUST be accessible by default. See `/pb-a11y` for comprehensiv
 | **Composition** | Compound components, composition over props explosion |
 | **Resilience** | Error boundaries, graceful degradation, loading states |
 | **Extensibility** | Design tokens enable theming without code changes |
-
----
-
-**Last Updated:** 2026-01-19
-**Version:** 1.0

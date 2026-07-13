@@ -347,8 +347,3 @@ Findings posted as PR/issue comments follow `~/.claude/CLAUDE.md` § GitHub Arti
 - `/pb-review-tests` - Test suite health
 - `/pb-security` - Security audit
 - `/pb-cycle` - Self-review + peer review iteration
-
----
-
-**Last Updated:** 2026-06-07
-**Version:** 2.2.0

@@ -218,8 +218,3 @@ Findings posted as PR/issue comments follow `~/.claude/CLAUDE.md` § GitHub Arti
 - `/pb-review-hygiene` - Code quality and operational readiness
 - `/pb-plan` - Feature and release planning
 - `/pb-adr` - Architecture decision records
-
----
-
-**Last Updated:** 2026-01-21
-**Version:** 2.0

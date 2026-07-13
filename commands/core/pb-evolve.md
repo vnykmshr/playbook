@@ -991,7 +991,4 @@ This is self-healing DNA in action.
 
 ---
 
-**Last Updated:** 2026-06-10
-**Version:** 1.3 (Opus 4.8 GA refresh)
-
 *Self-improvement is how we stay relevant. When Claude evolves, we evolve. When users teach us better patterns, we implement them. This playbook is never "done"-it's always improving.*

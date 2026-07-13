@@ -577,8 +577,3 @@ When production is down, see `/pb-incident` for the full process. Quick reminder
 | **Repair** | Fail noisily with useful error messages |
 | **Clarity** | Simple code is easier to debug |
 | **Economy** | Measure before optimizing; hypothesis before fixing |
-
----
-
-**Last Updated:** 2026-01-19
-**Version:** 1.0

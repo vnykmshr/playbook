@@ -284,8 +284,3 @@ This creates a virtuous cycle: use playbooks → discover gaps → propose impro
 - `/pb-learn` - Pattern learning from debugging (complements operational learning here)
 - `/pb-review-playbook` - Playbook review (model delegation by phase)
 - `/pb-new-playbook` - Meta-playbook (resource hint in scaffold)
-
----
-
-**Last Updated:** 2026-04-17
-**Version:** 1.1.0

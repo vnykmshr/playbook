@@ -434,6 +434,4 @@ Daily context hygiene is embedded in `/pb-pause` (Step 6):
 
 ---
 
-**Last Updated:** 2026-02-18
-**Version:** 2.0.0
 **Note:** pb-review-context merged into this command. Use `--violations` mode for automated audit.

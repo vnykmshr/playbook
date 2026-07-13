@@ -256,8 +256,3 @@ Findings posted as PR/issue comments follow `~/.claude/CLAUDE.md` § GitHub Arti
 - `/pb-review-tests` - Test suite health review
 - `/pb-security` - Security audit
 - `/pb-repo-organize` - Clean up repository structure
-
----
-
-**Last Updated:** 2026-01-21
-**Version:** 2.0.0

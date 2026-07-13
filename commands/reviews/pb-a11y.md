@@ -931,8 +931,3 @@ Findings posted as PR/issue comments follow `~/.claude/CLAUDE.md` § GitHub Arti
 - [MDN Accessibility](https://developer.mozilla.org/en-US/docs/Web/Accessibility)
 - [A11y Project Checklist](https://www.a11yproject.com/checklist/)
 - [Inclusive Components](https://inclusive-components.design/)
-
----
-
-**Last Updated:** 2026-01-19
-**Version:** 1.0

@@ -218,8 +218,3 @@ Findings posted as PR/issue comments follow `~/.claude/CLAUDE.md` § GitHub Arti
 - `/pb-documentation` - Documentation writing guidance
 - `/pb-repo-readme` - Generate comprehensive README
 - `/pb-repo-docsite` - Set up documentation site
-
----
-
-**Last Updated:** 2026-01-21
-**Version:** 2.0

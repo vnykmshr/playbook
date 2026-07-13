@@ -748,8 +748,3 @@ Use the right mode for the task:
 - `/pb-plan` - Structure implementation approach
 - `/pb-adr` - Document architecture decisions
 - `/pb-debug` - Systematic debugging methodology
-
----
-
-**Last Updated:** 2026-01-21
-**Version:** 2.0.0

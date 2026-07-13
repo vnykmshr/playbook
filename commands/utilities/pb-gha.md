@@ -231,8 +231,3 @@ Then follow up with the full methodology if the cause isn't obvious.
 - `/pb-doctor` - Local system health check
 - `/pb-review-hygiene` - Codebase operational health
 - `/pb-release` - Release orchestration (needs green CI)
-
----
-
-**Last Updated:** 2026-02-18
-**Version:** 1.0.0

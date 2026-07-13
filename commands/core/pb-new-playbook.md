@@ -589,8 +589,3 @@ This pass **does not**: evaluate correctness, style, performance, or security. I
 - `/pb-review-playbook` -- Review existing playbooks for quality and conventions
 - `/pb-standards` -- Code and content quality standards applied during validation
 - `/pb-documentation` -- Writing guidelines for clear, maintainable documentation
-
----
-
-**Last Updated:** 2026-02-07
-**Version:** 1.1.0

@@ -483,8 +483,3 @@ After completing hygiene audit:
 - `/pb-repo-organize` - Repository structure cleanup
 - `/pb-repo-enhance` - Repository polish suite
 - `/pb-doctor` - System health check
-
----
-
-**Last Updated:** 2026-01-24
-**Version:** 1.0.0

@@ -232,8 +232,3 @@ Findings posted as PR/issue comments follow `~/.claude/CLAUDE.md` § GitHub Arti
 - `/pb-review-hygiene` - Code quality and operational readiness
 - `/pb-testing` - Testing guidance and patterns
 - `/pb-cycle` - Self-review + peer review iteration
-
----
-
-**Last Updated:** 2026-01-21
-**Version:** 2.0
