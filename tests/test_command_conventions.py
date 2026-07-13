@@ -190,26 +190,18 @@ class TestPersonaIntegrity:
             content = path.read_text()
             expected = self.PERSONA_COMMANDS[path.name]
 
-            # Check model_hint
-            meta_hint = re.search(r'^model_hint:\s*"([^"]+)"', content, re.MULTILINE)
-            if meta_hint and meta_hint.group(1) != expected["model"]:
-                errors.append(
-                    f"{path.name}: model_hint={meta_hint.group(1)}, expected {expected['model']}"
-                )
-
-            # Check category
-            meta_cat = re.search(r'^category:\s*"([^"]+)"', content, re.MULTILINE)
-            if meta_cat and meta_cat.group(1) != expected["category"]:
-                errors.append(
-                    f"{path.name}: category={meta_cat.group(1)}, expected {expected['category']}"
-                )
-
-            # Check difficulty
-            meta_diff = re.search(r'^difficulty:\s*"([^"]+)"', content, re.MULTILINE)
-            if meta_diff and meta_diff.group(1) != expected["difficulty"]:
-                errors.append(
-                    f"{path.name}: difficulty={meta_diff.group(1)}, expected {expected['difficulty']}"
-                )
+            # Each field: a missing or unquoted value fails, not silently skips.
+            for field, expected_val in (
+                ("model_hint", expected["model"]),
+                ("category", expected["category"]),
+                ("difficulty", expected["difficulty"]),
+            ):
+                m = re.search(rf'^{field}:\s*"([^"]+)"', content, re.MULTILINE)
+                actual = m.group(1) if m else None
+                if actual != expected_val:
+                    errors.append(
+                        f"{path.name}: {field}={actual}, expected {expected_val}"
+                    )
 
         assert not errors, f"Persona metadata mismatches:\n" + "\n".join(f"  {e}" for e in errors)
 
@@ -245,11 +237,12 @@ class TestPersonaIntegrity:
         assert not missing, f"Personas missing Boundary & Authority: {missing}"
 
     def test_huddle_registers_all_personas(self):
-        """pb-huddle must reference every persona (roster drift guard, 2026-07-13).
+        """pb-huddle's roster line must list every persona (roster drift guard).
 
-        The huddle roster is curated by hand, not auto-discovered. This guard fails
-        if a persona is added without registering it in pb-huddle -- the "did you
-        forget to wire it in" belt.
+        Checks the explicit "**Roster (N):**" line, not the whole file: an incidental
+        mention (a collision-line cross-reference, a related_commands entry) must not
+        satisfy the guard. A persona in PERSONA_COMMANDS but absent from the roster is
+        the "forgot to seat it" drift this catches.
         """
         huddle = None
         for path in get_command_files():
@@ -257,12 +250,13 @@ class TestPersonaIntegrity:
                 huddle = path.read_text()
                 break
         assert huddle is not None, "pb-huddle.md not found"
-        missing = []
-        for persona_name in self.PERSONA_COMMANDS:
-            slug = persona_name[:-3]  # drop .md
-            if f"/{slug}" not in huddle:
-                missing.append(persona_name)
-        assert not missing, f"Personas not registered in pb-huddle roster: {missing}"
+        roster_match = re.search(r"^\*\*Roster \(\d+\):\*\*(.+)$", huddle, re.MULTILINE)
+        assert roster_match, "pb-huddle.md has no '**Roster (N):**' line"
+        roster = roster_match.group(1)
+        missing = [
+            name for name in self.PERSONA_COMMANDS if f"/{name[:-3]}" not in roster
+        ]
+        assert not missing, f"Personas absent from the pb-huddle roster line: {missing}"
 
     def test_multi_perspective_reviews_exist(self):
         """Ensure multi-perspective review commands exist (Phase 2)."""
