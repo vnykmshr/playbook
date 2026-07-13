@@ -32,7 +32,7 @@ cd playbook
 ./scripts/install.sh
 ```
 
-`install.sh` symlinks `commands/` and helper scripts to `~/.claude/`. Using a different toolchain? Read the files directly -- each command is self-contained Markdown.
+`install.sh` symlinks `commands/`, `skills/`, and helper scripts to `~/.claude/`. Using a different toolchain? Read the files directly -- each command is self-contained Markdown.
 
 Uninstall: `./scripts/uninstall.sh`.
 

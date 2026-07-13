@@ -14,7 +14,7 @@ Five chapters on engineering culture, design principles, and development workflo
 
 ## Full Command Reference
 
-- [107 Commands across 9 Categories](https://vnykmshr.github.io/playbook/): The complete reference for every playbook command.
+- [114 Commands across 9 Categories](https://vnykmshr.github.io/playbook/): The complete reference for every playbook command.
 
 ## About
 
