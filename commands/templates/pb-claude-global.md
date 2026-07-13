@@ -7,9 +7,9 @@ model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-claude-project', 'pb-claude-orchestration', 'pb-preamble', 'pb-design-rules', 'pb-standards']
 last_reviewed: "2026-07-13"
-last_evolved: "2026-06-10"
-version: "2.4.1"
-version_notes: "v2.4.1: Align the CLAUDE.md quality-checklist dash item to voice v2.3.0 (single hyphen the default; `--` earned, not simply the em-dash replacement). v2.4.0: Q2 2026 capability refresh -- model-selection guidance to Opus 4.8 GA; /fast keeps Opus with faster output (no Sonnet downgrade); [1m] opts into 1M context (200K default); brief Fable 5 forward note (Opus stays default). v2.3.0: Replace 'Commits' section with 'GitHub Artifact Register' covering commits, PRs, issues, and PR/review/inline comments; numeric length ceilings; strip + never-write lists."
+last_evolved: "2026-07-13"
+version: "2.5.0"
+version_notes: "v2.5.0: Sync template to the live global file -- add the LLM Coding Guardrails BEACON (shipped v2.25.0 but missing here) and /pb-threat-hunt (deep audit) to the Quick Reference security row. v2.4.1: Align the CLAUDE.md quality-checklist dash item to voice v2.3.0 (single hyphen the default; `--` earned, not simply the em-dash replacement). v2.4.0: Q2 2026 capability refresh -- model-selection guidance to Opus 4.8 GA; /fast keeps Opus with faster output (no Sonnet downgrade); [1m] opts into 1M context (200K default); brief Fable 5 forward note (Opus stays default). v2.3.0: Replace 'Commits' section with 'GitHub Artifact Register' covering commits, PRs, issues, and PR/review/inline comments; numeric length ceilings; strip + never-write lists."
 breaking_changes: ['Template output restructured -- BEACON headers, standalone Non-Negotiables, Session Ritual added', 'Personas list removed from global (project-specific)', 'Context Efficiency section removed (generic)', 'Project-Specific Overrides section removed (obvious)']
 ---
 # Generate Global CLAUDE.md
@@ -101,6 +101,10 @@ For all 18 rules: `/pb-design-rules`
 - Never ship flaky tests -- test reliability matters as much as code reliability
 
 For detailed standards: `/pb-standards`
+
+## BEACON: LLM Coding Guardrails
+
+When coding with LLMs: think before coding (assumptions, options, push back), keep it simple (no speculative code), make surgical changes (touch only what you must), and define verifiable goals before starting (loop until verified). See `/pb-llm-guidelines` for the full reference.
 
 ---
 
@@ -201,7 +205,7 @@ Minimum-sufficient dev-to-dev. The reader is a peer; do not re-explain the diff.
 | Finishing feature | `/pb-review` |
 | Peer review | `/pb-pr` |
 | Deep architecture | `/pb-plan` |
-| Security concern | `/pb-security` |
+| Security concern | `/pb-security` (quick) or `/pb-threat-hunt` (deep audit) |
 | CI failure | `/pb-gha` |
 | Context audit | `/pb-context-review` |
 | Pause/resume | `/pb-pause` -> `/pb-resume` |
@@ -243,7 +247,7 @@ After generation, verify:
 
 - [ ] File exists at `~/.claude/CLAUDE.md`
 - [ ] Version and date are current in header
-- [ ] All BEACON sections present (Preamble, Design Rules, Code Quality, Non-Negotiables, Quality Bar, **Read-Regroup-Decide**, Model Selection)
+- [ ] All BEACON sections present (Preamble, Design Rules, Code Quality, **LLM Coding Guardrails**, Non-Negotiables, Quality Bar, **Read-Regroup-Decide**, Model Selection)
 - [ ] Read, Regroup, Decide BEACON present with ritual (curl -> disk -> Read), frictionless-question trap (what is 2+2?), and eagerness root-cause line
 - [ ] External action gate present in Operational Guardrails (cross-references Read-Regroup-Decide, does not duplicate)
 - [ ] Skill invocation discipline bullet present in Operational Guardrails
