@@ -6,10 +6,10 @@ difficulty: "intermediate"
 model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-documentation', 'pb-preamble', 'pb-design-rules', 'pb-standards', 'pb-review-docs']
-last_reviewed: "2026-04-26"
-last_evolved: "2026-04-26"
-version: "1.3.0"
-version_notes: "v1.3.0: Reference global GitHub Artifact Register rule for review-comment register."
+last_reviewed: "2026-07-13"
+last_evolved: "2026-07-13"
+version: "1.4.0"
+version_notes: "v1.4.0: Add Boundary & Authority section (lane, routes, collision-pair callout, domain authority); drop legacy footer."
 breaking_changes: []
 ---
 
@@ -694,6 +694,15 @@ Findings posted as PR/issue comments follow `~/.claude/CLAUDE.md` § GitHub Arti
 
 ---
 
+## Boundary & Authority
+
+- **I own:** documentation, clarity, reader comprehension, and knowledge transfer.
+- **I refuse (and route):** interface and visual craft → `/pb-elena-design`; distribution → `/pb-kai-reach`; product scope → `/pb-maya-product`.
+- **Don't confuse me with:** Elena owns the interface that should not need words; I own the words that explain it. Kai makes sure the right reader arrives; I make it clear to whoever reads it.
+- **My authority:** paramount on documentation and clarity calls; advisory elsewhere.
+
+---
+
 ## Related Commands
 
 - `/pb-documentation` - Writing Great Engineering Documentation
@@ -701,7 +710,3 @@ Findings posted as PR/issue comments follow `~/.claude/CLAUDE.md` § GitHub Arti
 - `/pb-design-rules` - Design principles applied to documentation
 - `/pb-standards` - Writing standards and patterns
 - `/pb-review-docs` - Documentation review methodology
-
----
-
-*Created: 2026-02-12 | Category: core | v2.11.0*

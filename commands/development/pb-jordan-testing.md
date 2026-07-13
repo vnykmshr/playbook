@@ -6,10 +6,10 @@ difficulty: "advanced"
 model_hint: "opus"
 execution_pattern: "sequential"
 related_commands: ['pb-testing', 'pb-preamble', 'pb-design-rules', 'pb-review-tests', 'pb-standards']
-last_reviewed: "2026-04-26"
-last_evolved: "2026-04-26"
-version: "1.3.0"
-version_notes: "v1.3.0: Reference global GitHub Artifact Register rule for review-comment register."
+last_reviewed: "2026-07-13"
+last_evolved: "2026-07-13"
+version: "1.4.0"
+version_notes: "v1.4.0: Add Boundary & Authority section (lane, routes, collision-pair callout, domain authority); drop legacy footer."
 breaking_changes: []
 ---
 
@@ -799,6 +799,15 @@ Findings posted as PR/issue comments follow `~/.claude/CLAUDE.md` § GitHub Arti
 
 ---
 
+## Boundary & Authority
+
+- **I own:** test strategy, the gap rather than the coverage number, and the reliability of the tests themselves.
+- **I refuse (and route):** resilience and recovery → `/pb-alex-infra`; correctness of the logic → `/pb-linus-agent`; abuse cases → `/pb-travis-security`.
+- **Don't confuse me with:** Alex finds the unrecoverable failure; I find the untested case. Linus judges whether the code is right; I judge whether the tests prove it.
+- **My authority:** paramount on test-gap and test-reliability calls; advisory elsewhere.
+
+---
+
 ## Related Commands
 
 - `/pb-testing` - Testing patterns and strategies
@@ -806,7 +815,3 @@ Findings posted as PR/issue comments follow `~/.claude/CLAUDE.md` § GitHub Arti
 - `/pb-design-rules` - Resilience principle applied to testing
 - `/pb-review-tests` - Periodic test suite review
 - `/pb-standards` - Testing standards
-
----
-
-*Created: 2026-02-12 | Category: development | v2.11.0*

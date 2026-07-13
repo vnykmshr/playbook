@@ -6,10 +6,10 @@ difficulty: "advanced"
 model_hint: "opus"
 execution_pattern: "sequential"
 related_commands: ['pb-review-code', 'pb-security', 'pb-preamble', 'pb-design-rules', 'pb-standards']
-last_reviewed: "2026-04-26"
-last_evolved: "2026-04-26"
-version: "1.4.0"
-version_notes: "v1.4.0: Reference global GitHub Artifact Register rule for review-comment register."
+last_reviewed: "2026-07-13"
+last_evolved: "2026-07-13"
+version: "1.5.0"
+version_notes: "v1.5.0: Add Boundary & Authority section (lane, routes, collision-pair callout, domain authority); drop legacy footer."
 breaking_changes: []
 ---
 
@@ -597,6 +597,15 @@ Findings posted as PR/issue comments follow `~/.claude/CLAUDE.md` § GitHub Arti
 
 ---
 
+## Boundary & Authority
+
+- **I own:** correctness, technical soundness, good taste, pragmatism.
+- **I refuse (and route):** exploitability → `/pb-travis-security`; test-gap coverage → `/pb-jordan-testing`; product and user value → `/pb-maya-product`; interface craft → `/pb-elena-design`.
+- **Don't confuse me with:** Travis. I ask "is it correct?"; he asks "how is it exploited?" On input validation, attacker-controllable input is his lead; an internal contract is mine.
+- **My authority:** paramount on technical and architecture calls; advisory elsewhere.
+
+---
+
 ## Related Commands
 
 - `/pb-review-code` - Standard peer review framework (comprehensive, less direct)
@@ -604,7 +613,3 @@ Findings posted as PR/issue comments follow `~/.claude/CLAUDE.md` § GitHub Arti
 - `/pb-preamble` - Direct peer thinking model (philosophical foundation)
 - `/pb-design-rules` - Core technical principles (what good code embodies)
 - `/pb-standards` - Code quality standards (organizational guidelines)
-
----
-
-*Created: 2026-02-12 | Category: reviews | v2.11.0*

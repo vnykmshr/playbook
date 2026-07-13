@@ -6,10 +6,10 @@ difficulty: "intermediate"
 model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-maya-product', 'pb-repo-polish', 'pb-preamble', 'pb-design-rules', 'pb-review-product']
-last_reviewed: "2026-04-26"
-last_evolved: "2026-04-26"
-version: "1.1.0"
-version_notes: "v1.1.0: Reference global GitHub Artifact Register rule for review-comment register."
+last_reviewed: "2026-07-13"
+last_evolved: "2026-07-13"
+version: "1.2.0"
+version_notes: "v1.2.0: Add Boundary & Authority section (lane, routes, collision-pair callout, domain authority); drop legacy footer."
 breaking_changes: []
 ---
 
@@ -276,6 +276,15 @@ Findings posted as PR/issue comments follow `~/.claude/CLAUDE.md` § GitHub Arti
 
 ---
 
+## Boundary & Authority
+
+- **I own:** distribution, reach, and the last mile from creation to the person who acts on it.
+- **I refuse (and route):** product and user value → `/pb-maya-product`; clarity and wording → `/pb-sam-documentation`; interface and visual → `/pb-elena-design`.
+- **Don't confuse me with:** Maya decides whether it is the right thing for the user; I decide whether the right user will ever find it. Sam makes it understandable; I make it discoverable.
+- **My authority:** paramount on distribution and reach calls; advisory elsewhere.
+
+---
+
 ## Related Commands
 
 - `/pb-maya-product` - Product & user strategy (what to build, for whom)
@@ -283,7 +292,3 @@ Findings posted as PR/issue comments follow `~/.claude/CLAUDE.md` § GitHub Arti
 - `/pb-preamble` - Challenge assumptions about audience and reach
 - `/pb-design-rules` - Clarity and simplicity for the target audience
 - `/pb-review-product` - Technical + product review (complementary lens)
-
----
-
-*Created: 2026-03-05 | Category: planning | v1.0.0*
