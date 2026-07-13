@@ -22,7 +22,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
-- **CHANGELOG version-link check.** `validate-conventions.py` now flags any `[vX.Y.Z]` header missing its footer link; backfilled the missing v1.x links; added the `pb-patterns-security` back-link.
+- **CHANGELOG version-link check.** `validate-conventions.py` now flags any `[vX.Y.Z]` header missing its footer link; backfilled footer links for the tagged v1.x releases (v1.1.0 and v2.14.1 have no tag, so remain intentionally unlinked); added the `pb-patterns-security` back-link.
 
 ## [v2.25.0] - 2026-07-02
 
@@ -1798,7 +1798,9 @@ When releasing a new version:
 [v1.7.0]: https://github.com/vnykmshr/playbook/releases/tag/v1.7.0
 [v1.6.0]: https://github.com/vnykmshr/playbook/releases/tag/v1.6.0
 [v1.5.1]: https://github.com/vnykmshr/playbook/releases/tag/v1.5.1
+[v1.5.0]: https://github.com/vnykmshr/playbook/releases/tag/v1.5.0
 [v1.4.1]: https://github.com/vnykmshr/playbook/releases/tag/v1.4.1
 [v1.4.0]: https://github.com/vnykmshr/playbook/releases/tag/v1.4.0
 [v1.3.0]: https://github.com/vnykmshr/playbook/releases/tag/v1.3.0
+[v1.2.1]: https://github.com/vnykmshr/playbook/releases/tag/v1.2.1
 [v1.2.0]: https://github.com/vnykmshr/playbook/releases/tag/v1.2.0
