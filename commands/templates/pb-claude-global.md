@@ -6,10 +6,10 @@ difficulty: "beginner"
 model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-claude-project', 'pb-claude-orchestration', 'pb-preamble', 'pb-design-rules', 'pb-standards']
-last_reviewed: "2026-06-10"
+last_reviewed: "2026-07-13"
 last_evolved: "2026-06-10"
-version: "2.4.0"
-version_notes: "v2.4.0: Q2 2026 capability refresh -- model-selection guidance to Opus 4.8 GA; /fast keeps Opus with faster output (no Sonnet downgrade); [1m] opts into 1M context (200K default); brief Fable 5 forward note (Opus stays default). v2.3.0: Replace 'Commits' section with 'GitHub Artifact Register' covering commits, PRs, issues, and PR/review/inline comments; numeric length ceilings; strip + never-write lists."
+version: "2.4.1"
+version_notes: "v2.4.1: Align the CLAUDE.md quality-checklist dash item to voice v2.3.0 (single hyphen the default; `--` earned, not simply the em-dash replacement). v2.4.0: Q2 2026 capability refresh -- model-selection guidance to Opus 4.8 GA; /fast keeps Opus with faster output (no Sonnet downgrade); [1m] opts into 1M context (200K default); brief Fable 5 forward note (Opus stays default). v2.3.0: Replace 'Commits' section with 'GitHub Artifact Register' covering commits, PRs, issues, and PR/review/inline comments; numeric length ceilings; strip + never-write lists."
 breaking_changes: ['Template output restructured -- BEACON headers, standalone Non-Negotiables, Session Ritual added', 'Personas list removed from global (project-specific)', 'Context Efficiency section removed (generic)', 'Project-Specific Overrides section removed (obvious)']
 ---
 # Generate Global CLAUDE.md
@@ -252,7 +252,7 @@ After generation, verify:
 - [ ] Playbook references are correct (`/pb-*` commands)
 - [ ] **File is under 180 lines / 2.5K tokens** (context efficiency -- slight bump for Read-Regroup-Decide BEACON)
 - [ ] No duplication of content available in playbooks (reference instead)
-- [ ] Uses `--` not em dashes, no exotic unicode
+- [ ] Single hyphen `-` the default; `--` only when earned; no em dashes or exotic unicode
 
 ---
 

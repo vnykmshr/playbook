@@ -6,10 +6,10 @@ difficulty: "intermediate"
 model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-start', 'pb-pause', 'pb-plan', 'pb-preamble', 'pb-voice']
-last_reviewed: "2026-03-05"
+last_reviewed: "2026-07-13"
 last_evolved: ""
-version: "1.0.0"
-version_notes: "Initial: universal handoff pattern with acceptance criteria and constraints"
+version: "1.0.1"
+version_notes: "v1.0.1: Align the /pb-voice writing note to voice v2.3.0 dash rule (single hyphen the default; `--` earned, not a blanket em-dash substitute). Initial: universal handoff pattern with acceptance criteria and constraints"
 breaking_changes: []
 ---
 
@@ -140,7 +140,7 @@ new dependencies", "Timeline: this week."
 
 **Dated, not versioned.** Handoffs are point-in-time artifacts. If the work evolves, write a new handoff, don't update the old one.
 
-**Apply `/pb-voice`.** Organic prose, no em dashes in the template (use -- instead), free-flowing reasoning.
+**Apply `/pb-voice`.** Organic prose (single hyphen `-` the default; `--` only when earned, never em dashes), free-flowing reasoning.
 
 ---
 
