@@ -6,12 +6,13 @@ difficulty: "advanced"
 model_hint: "opus"
 execution_pattern: "interactive"
 related_commands: ['pb-plan', 'pb-sketch', 'pb-adr', 'pb-todo-implement', 'pb-start']
-last_reviewed: "2026-05-26"
-last_evolved: "2026-05-26"
-version: "1.1.0"
-version_notes: "v1.1.0: Add Implementation Notes File section (running deviation log written during implementation). Rename Path A template's static 'Notes' section to 'Design Notes' to disambiguate."
+last_reviewed: "2026-07-13"
+last_evolved: "2026-07-13"
+version: "1.2.0"
+version_notes: "v1.1.0: Add Implementation Notes File section (running deviation log written during implementation). Rename Path A template's static 'Notes' section to 'Design Notes' to disambiguate. v1.2.0: Path A output moves to todos/plan/ (working-material root) instead of git-visible plan/ at repo root; sketch input path aligned to todos/sketch/."
 breaking_changes:
   - "Path A template renamed '## Notes' to '## Design Notes'. Existing plan/{name}.md files keep working; only new specs use the new heading."
+  - "Path A output path changed from plan/{name}.md to todos/plan/{name}.md. Existing plan/{name}.md files keep working; new specs write under todos/."
 ---
 # Implementation Spec: Detailed Plan from Resolved Sketch
 
@@ -99,7 +100,7 @@ Match the spec artifact to the work. Two paths:
 
 **When:** single concern, 1-3 files, one or two commits, no release cycle
 
-**Output:** single file at `plan/{generated-kebab-case-name}.md` using the **Single-Plan Template** below.
+**Output:** single file at `todos/plan/{generated-kebab-case-name}.md` using the **Single-Plan Template** below. Lands under `todos/` (the working-material root) -- gitignore `todos/` to keep plans out of the repo.
 
 ### Path B: Release Cycle / Multi-Phase Work
 
@@ -126,14 +127,14 @@ Match the spec artifact to the work. Two paths:
 
 ### Path A: Single-Plan Template
 
-Write to `plan/{name}.md`:
+Write to `todos/plan/{name}.md`:
 
 ```markdown
 # Plan: {Title}
 
 **Created:** {YYYY-MM-DD}
 **Scope Lock:** locked {YYYY-MM-DD}
-**Sketch:** (optional) `sketch/{name}.md`
+**Sketch:** (optional) `todos/sketch/{name}.md`
 
 ## Goal
 
@@ -240,7 +241,7 @@ Update Current Status each session so resume is instant. Scope Lock is permanent
 
 A running deviation log written *during* implementation. Sibling to the spec; distinct from the spec's "Design Notes" section (pre-impl context).
 
-- **Path A:** `plan/{name}-notes.md`
+- **Path A:** `todos/plan/{name}-notes.md`
 - **Path B:** `todos/releases/vX.Y.Z/notes.md`
 
 ### Format

@@ -6,10 +6,10 @@ difficulty: "advanced"
 model_hint: "opus"
 execution_pattern: "interactive"
 related_commands: ['pb-sketch', 'pb-spec', 'pb-adr', 'pb-start', 'pb-todo-implement']
-last_reviewed: "2026-04-23"
-last_evolved: "2026-04-23"
-version: "2.0.0"
-version_notes: "v2.21.0: Rewrite as orchestrator. Delegates to /pb-sketch (decision forks) + /pb-spec (detailed plan). Typing /pb-plan still produces an end-to-end plan, but the flow now includes a mid-step interactive decision prompt -- users confirm or override recommended picks before the spec is written. New behavior, not invisible preservation."
+last_reviewed: "2026-07-13"
+last_evolved: "2026-07-13"
+version: "2.1.0"
+version_notes: "v2.21.0: Rewrite as orchestrator. Delegates to /pb-sketch (decision forks) + /pb-spec (detailed plan). Typing /pb-plan still produces an end-to-end plan, but the flow now includes a mid-step interactive decision prompt -- users confirm or override recommended picks before the spec is written. New behavior, not invisible preservation. v2.1.0: sketch/spec output paths moved under todos/ (working-material root); file side-effect note updated."
 breaking_changes:
   - "Content moved out of this file. /pb-plan no longer contains Phase 1-4 framework; it orchestrates /pb-sketch and /pb-spec. Direct readers looking for the discovery/analysis framework: see /pb-sketch. Direct readers looking for scope-lock/release-doc templates: see /pb-spec."
 ---
@@ -53,13 +53,13 @@ If the user has done `/pb-start` or similar, context may already be loaded. Don'
 ### Step 2: Run `/pb-sketch`
 
 Invoke `/pb-sketch` with the focus area. This produces:
-- A sketch file at `sketch/{name}.md`
+- A sketch file at `todos/sketch/{name}.md`
 - Decision Forks (2-4 options per fork, recommended tagged)
 - Recommended picks (copy/paste line)
 
 Read the sketch output. If it says "No forks," skip to Step 4.
 
-> **File side-effect:** `/pb-sketch` writes `sketch/{name}.md` and `/pb-spec` writes either `plan/{name}.md` or `todos/releases/vX.Y.Z/`. Both are git-visible. For throwaway exploration, run against a scratch branch or `.gitignore` the directory.
+> **File side-effect:** `/pb-sketch` writes `todos/sketch/{name}.md` and `/pb-spec` writes either `todos/plan/{name}.md` or `todos/releases/vX.Y.Z/`. All land under `todos/`, the working-material root -- gitignore `todos/` to keep dogfood planning artifacts out of the repo.
 
 ### Step 3: Present decisions to user
 
@@ -72,7 +72,7 @@ Wait for user response. Update the sketch's `Recommended Picks` line with the re
 ### Step 4: Run `/pb-spec`
 
 Invoke `/pb-spec` with the resolved sketch. This produces:
-- **Path A (small feature):** single file at `plan/{name}.md`
+- **Path A (small feature):** single file at `todos/plan/{name}.md`
 - **Path B (release cycle):** directory at `todos/releases/vX.Y.Z/`
 
 Hand off the plan path to the user.

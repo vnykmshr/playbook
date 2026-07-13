@@ -6,11 +6,12 @@ difficulty: "advanced"
 model_hint: "opus"
 execution_pattern: "interactive"
 related_commands: ['pb-plan', 'pb-spec', 'pb-think', 'pb-adr']
-last_reviewed: "2026-04-23"
-last_evolved: "2026-04-23"
-version: "1.0.0"
-version_notes: "v2.21.0: New skill. Extracted from pb-plan Phases 1-2, plus Decision Forks pattern. Pairs with pb-spec via pb-plan wrapper."
-breaking_changes: []
+last_reviewed: "2026-07-13"
+last_evolved: "2026-07-13"
+version: "1.1.0"
+version_notes: "v2.21.0: New skill. Extracted from pb-plan Phases 1-2, plus Decision Forks pattern. Pairs with pb-spec via pb-plan wrapper. v1.1.0: sketch output moves to todos/sketch/ (working-material root) instead of git-visible sketch/ at repo root."
+breaking_changes:
+  - "Sketch output path changed from sketch/{name}.md to todos/sketch/{name}.md. Existing sketch/{name}.md files keep working; new sketches write under todos/."
 ---
 # Planning Sketch: Decision Forks Before Implementation
 
@@ -175,7 +176,7 @@ Proceed to sketch output with no forks to resolve.
 
 ## Sketch Output
 
-Write the sketch to `sketch/{generated-kebab-case-name}.md` (create `sketch/` if it doesn't exist).
+Write the sketch to `todos/sketch/{generated-kebab-case-name}.md` (create `todos/sketch/` if it doesn't exist). This lands under `todos/`, the working-material root -- gitignore `todos/` to keep planning artifacts out of the repo.
 
 ### Sketch File Structure
 
@@ -297,10 +298,10 @@ Sketch is complete when:
 - [ ] Decision Forks enumerated (or explicitly marked "no forks")
 - [ ] Recommended Picks listed (if forks exist)
 - [ ] Open Questions captured (if any)
-- [ ] File saved at `sketch/{name}.md`
+- [ ] File saved at `todos/sketch/{name}.md`
 - [ ] User has resolved decisions (interactive mode) OR auto-picks applied (non-interactive mode)
 
-Then invoke `/pb-spec sketch/{name}.md` (or let the `/pb-plan` wrapper do it).
+Then invoke `/pb-spec todos/sketch/{name}.md` (or let the `/pb-plan` wrapper do it).
 
 ---
 
