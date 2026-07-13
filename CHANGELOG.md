@@ -7,12 +7,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- **skills/ infrastructure.** New `skills/` tree (sibling to `commands/`) for compound executable skills: a `SKILL.md` entry point plus `references/` and `workflows/`. Installed to `~/.claude/skills/` via `install.sh`. First skill: `pb-threat-hunt`.
+
 ### Changed
 
+- **`/pb-forge` v1.1.0: review arc as a compound Self-gate chain.** Self-gate is now a compound verify stage (review → code-review → handcraft → huddle signoff → preflight); each sub-stage fires on concrete triggers and catches what the prior missed. The cursor tracks sub-stage progress for resumption; Peer simplifies to `/pb-pr`.
+- **`/pb-threat-hunt` v1.1.0: deeper audit passes.** Pre-Hunt Sweeps gate the hunt (govulncheck, config drift, supply-chain); a 3-vote adversarial verify with diverse skeptic prompts replaces single-vote; CSP contextual audit; DNS-rebinding payload; a WebSocket/SSE search pass. Cross-references the executable skill.
 - **`/pb-voice` v2.3.0: research-driven tell refresh.** Adds the shapes-over-words meta-principle (the vocabulary rotates every model generation, so the word lists are corroborating signal, not a blocklist; weight structural and syntactic tells over any single word). New tells: markup-leak artifacts (`contentReference`, `oaicite`, `turn0search`) in Cat 9, vague-authority attribution in Cat 8. Positive-craft tests wired into existing categories: name-the-dog + verifiable-detail-per-paragraph (Cat 8), earned-vs-named transition delete-test (Cat 5), 5-word-band burstiness test (Cat 7). Antithesis elevated to the strongest current syntactic tell (Cat 3).
 - **`/pb-handcraft` v1.5.0: fires `/pb-voice` as a required lens.** The voice pass was conditional ("if configured") and Lens 2 kept a shallow duplicate of voice's prose-tell list. Now the voice pass runs on every prose-bearing artifact, and the duplicated prose/structure/typography blocks are removed; voice is the single source of truth for prose tells. Lens 2 keeps code/comment tells and gains code-specific ones (comments explain what-not-why, commit body re-narrates the diff, over-descriptive identifiers). Lens 6 defers register calibration to the voice pass. A `tests/` regression check guards the delegation from drifting back.
 - **`/pb-handoff` v1.0.1, `/pb-claude-global` v2.4.1: dash-rule alignment.** Both still framed `--` as the em-dash substitute (`use -- instead`, `Uses -- not em dashes`). Aligned to voice v2.3.0 Cat 9: single hyphen is the default, `--` is earned, not a blanket stand-in.
-- **Corpus-wide hygiene sweep (prose + dead references).** Two-lens pass (structural hygiene + `/pb-voice` v2.3.0 AI-tell detection) over 150 surfaces: 114 commands, the `pb-threat-hunt` skill, 23 docs pages, the book site, and README. Fixed stale counts (`107`/`17`→`114`/`18` design rules), dead references (`/pb-review-context`→`/pb-context-review`, dropped the non-existent `examples/` section), a stale install note (now installs `skills/`), and dash/prose tells (single hyphen default, `--` earned). Prose-level maintenance, no command version bumps. 79 files, net -23 lines. Legacy per-command version footers deleted (18 files, mostly drifted or placeholder); frontmatter `version` is the single source of truth.
+- **Corpus-wide hygiene sweep (prose + dead references).** Two-lens pass (structural hygiene + `/pb-voice` v2.3.0 AI-tell detection) over 150 surfaces: 114 commands, the `pb-threat-hunt` skill, 23 docs pages, the book site, and README. Fixed stale counts (`107`/`17`→`114`/`18` design rules), dead references (`/pb-review-context`→`/pb-context-review`, dropped the non-existent `examples/` section), a stale install note (now installs `skills/`), and dash/prose tells (single hyphen default, `--` earned). Prose-level maintenance, no command version bumps. 79 files, net -23 lines. Legacy per-command version footers deleted (18 files, mostly drifted or placeholder); frontmatter `version` is the single source of truth. `/pb-new-playbook` no longer teaches the footer in its scaffold templates.
+
+### Fixed
+
+- **CHANGELOG version-link check.** `validate-conventions.py` now flags any `[vX.Y.Z]` header missing its footer link; backfilled the missing v1.x links; added the `pb-patterns-security` back-link.
 
 ## [v2.25.0] - 2026-07-02
 
