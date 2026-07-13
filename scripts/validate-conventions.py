@@ -107,15 +107,25 @@ class ConventionValidator:
         lines = content.splitlines()
 
         in_section = False
+        in_fence = False
         link_count = 0
         for line in lines:
-            if line.strip().startswith("## Related Commands"):
+            stripped = line.strip()
+            # Generator/meta commands (e.g. pb-new-playbook) embed sample
+            # Related Commands blocks inside ``` fences. Skip fenced lines so a
+            # template heading isn't mistaken for the command's own section.
+            if stripped.startswith("```"):
+                in_fence = not in_fence
+                continue
+            if in_fence:
+                continue
+            if stripped.startswith("## Related Commands"):
                 in_section = True
                 continue
             if in_section:
                 if line.startswith("## ") or line.startswith("---"):
                     break
-                if line.strip().startswith("- `/pb-"):
+                if stripped.startswith("- `/pb-"):
                     link_count += 1
 
         if link_count == 0:
