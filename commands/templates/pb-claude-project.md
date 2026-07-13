@@ -6,10 +6,10 @@ difficulty: "beginner"
 model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-claude-global', 'pb-claude-orchestration', 'pb-context', 'pb-onboarding', 'pb-repo-init']
-last_reviewed: "2026-02-09"
-last_evolved: ""
-version: "1.0.0"
-version_notes: "v2.10.0 baseline"
+last_reviewed: "2026-07-13"
+last_evolved: "2026-07-13"
+version: "1.1.0"
+version_notes: "v2.10.0 baseline; v1.1.0 collapse duplicate Guardrails, add BEACON marker alignment"
 breaking_changes: []
 ---
 # Generate Project CLAUDE.md
@@ -167,7 +167,9 @@ Check for CI configuration:
 
 ## Generate CLAUDE.md
 
-Create `.claude/CLAUDE.md` with this structure:
+Create `.claude/CLAUDE.md` with this structure.
+
+**BEACON alignment:** Global CLAUDE.md marks load-bearing sections with a `BEACON:` prefix so they survive context compression. Do the same for this project's non-negotiable sections (guardrails, critical conventions) — prefix the heading (e.g. `## BEACON: Project Guardrails`).
 
 ```markdown
 # [Project Name] Development Context
@@ -289,32 +291,15 @@ Based on this project's tech stack:
 
 ---
 
-## Guardrails
+## BEACON: Project Guardrails
 
-[Project-specific safety constraints - customize as needed]
-
-- **Infrastructure** - [Lock level: strict/moderate/flexible]
-- **Dependencies** - [Approval required: yes/no]
-- **Ports** - [List fixed ports if any]
-- **Data** - [Database modification rules]
-
----
-
-## Project Guardrails
-
-Project-specific safety constraints (supplement global guardrails):
-
-```markdown
-## Guardrails
+Project-specific safety constraints (supplement global guardrails). Customize; remove irrelevant constraints.
 
 - **Infrastructure lock** - No Docker/DB/environment changes without approval
 - **Dependency lock** - No new dependencies without approval
 - **Port lock** - Backend: [port], Frontend: [port] - do not change
 - **Design system** - Follow existing UI patterns in [path]
 - **Data safety** - No database deletions without explicit approval
-```
-
-Customize based on project needs. Remove irrelevant constraints.
 
 ---
 
