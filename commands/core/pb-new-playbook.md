@@ -6,10 +6,10 @@ difficulty: "beginner"
 model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-evolve', 'pb-review-playbook', 'pb-standards', 'pb-documentation']
-last_reviewed: "2026-02-18"
-last_evolved: "2026-02-18"
-version: "2.0.0"
-version_notes: "v2.13.1: Clarified title to emphasize playbook creation. Added related_commands."
+last_reviewed: "2026-07-13"
+last_evolved: "2026-07-13"
+version: "2.1.0"
+version_notes: "v2.1.0: Encode dash discipline, the /pb-handcraft gate, and a changelog-as-it-lands guard so new commands inherit them."
 breaking_changes: []
 ---
 # Create New Engineering Playbook
@@ -264,6 +264,10 @@ After completion, verify:
 - "Simply" / "Just" / "Easily"
 - "Best practices" (be specific instead)
 
+**Dash discipline:** Single hyphen or ordinary punctuation (comma, colon, period) is the default. `--` is earned, not a stand-in for the em-dash: an em-dash written as `--` carries the same overuse tell. Reach for one only when the break genuinely sharpens the sentence.
+
+**The banned list rots; the shape does not.** That vocabulary ages every model generation, so treat the list as corroborating signal rather than a blocklist. The durable tells are structural: metronomic sentence rhythm, uniform section anatomy, copula avoidance, hedging density. Run `/pb-handcraft` (it fires `/pb-voice` as a required lens) as the last pass before you ship a new command; it catches the structural tells a word list misses.
+
 ### Structure Guidelines
 
 | Element | Rule |
@@ -395,6 +399,8 @@ Run this checklist before finalizing:
 - [ ] Filename matches command name (pb-foo.md for /pb-foo)
 - [ ] All /pb-* references point to existing commands
 - [ ] Added to `docs/command-index.md`
+- [ ] Command count bumped everywhere it is tracked (convention validator, test EXPECTED_COUNT, reference-site summary)
+- [ ] CHANGELOG entry added now, not batched at release (a new command is a notable change)
 - [ ] At least one other command references this (edit a related command's "Related Commands" section to add back-link)
 - [ ] If command affects CLAUDE.md content, regenerate with `/pb-claude-global`
 - [ ] Run `/pb-review-playbook` quick review on the new command

@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- **`/pb-new-playbook` v2.1.0: encode this cycle's authoring guards.** Step 4 teaches dash discipline (single hyphen default, `--` earned) and points at `/pb-handcraft` as the last pass before shipping, framed by the shapes-over-words meta-principle so the banned-phrase list reads as corroborating signal, not a blocklist that rots. Integration Validation gains a changelog-as-it-lands check and a command-count-bump check.
+
 ### Fixed
 
 - **`validate-conventions.py`: fenced Related Commands templates no longer shadow the real section.** The Related Commands scan skips ``` fenced blocks, so generator commands like `/pb-new-playbook` (which embed sample sections in code fences) validate against their own section instead of a template placeholder. Adds a regression test.
