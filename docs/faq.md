@@ -7,7 +7,7 @@ Common questions about the Engineering Playbook.
 ## Getting Started
 
 ### Q: What is the Engineering Playbook?
-**A:** The Engineering Playbook is a decision framework-a set of commands and guides that codify how to approach development work. It covers planning, development, code review, release, and team operations. It's not a tool, but a structured process that reduces friction and maintains quality at every step.
+**A:** The Engineering Playbook is a decision framework: a set of commands and guides that codify how to approach development work. It covers planning, development, code review, release, and team operations. It's not a tool, but a structured process that reduces friction and maintains quality at every step.
 
 ### Q: Do I have to use all commands?
 **A:** No. Start with the commands that address your current challenges. Most teams begin with `/pb-plan`, `/pb-cycle`, and `/pb-release`. You can adopt others gradually as you need them.
@@ -122,7 +122,7 @@ If reviews are taking longer, consider smaller, more frequent PRs.
 - Unit tests: Core business logic (aim for 80%+)
 - Integration tests: Critical workflows
 - E2E tests: User-facing features
-- Don't aim for 100%-aim for meaningful coverage
+- Don't aim for 100%; aim for meaningful coverage
 
 Use `/pb-testing` for detailed guidance.
 

@@ -130,10 +130,10 @@ Before deploying to production.
 
 After deployment to production.
 
-- [ ] Monitor error rates (0 duration)
-- [ ] Monitor latency (0 duration)
-- [ ] Monitor resource usage (0 duration)
-- [ ] Check logs for anomalies (0 duration)
+- [ ] Monitor error rates
+- [ ] Monitor latency
+- [ ] Monitor resource usage
+- [ ] Check logs for anomalies
 - [ ] Verify SLO adherence (for M/L tiers, 1+ hours)
 - [ ] Smoke test key flows (if applicable)
 - [ ] Notify stakeholders of successful deployment

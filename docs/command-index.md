@@ -117,7 +117,7 @@ Quick reference for all playbook commands.
 | `/pb-logging` | Logging strategy & standards audit | During code review, pre-release |
 | `/pb-a11y` | Accessibility deep-dive (semantic HTML, keyboard, ARIA, screen readers) | During frontend development, every PR |
 | `/pb-review-playbook` | Review playbook commands for quality, consistency, and completeness | Every PR, monthly |
-| `/pb-review-context` | Audit CLAUDE.md files against conversation history (violated rules, missing patterns, stale content) | Quarterly, before `/pb-evolve` |
+| `/pb-context-review` | Audit CLAUDE.md files against conversation history (violated rules, missing patterns, stale content) | Quarterly, before `/pb-evolve` |
 | `/pb-voice` | Detect and remove AI tells from prose (two-stage: detect → rewrite) | After AI-assisted drafting, before publishing |
 
 ## Thinking Partner
@@ -153,7 +153,7 @@ Self-sufficient thinking partner methodology for expert-quality collaboration.
 | `/pb-standards` | Coding standards, quality principles |
 | `/pb-documentation` | Writing technical docs at 5 levels |
 | `/pb-sam-documentation` | Documentation & clarity review (reader-centric, assumption surfacing, structural clarity) |
-| `/pb-design-rules` | 17 classical design principles (Clarity, Simplicity, Resilience, Extensibility) |
+| `/pb-design-rules` | 18 classical design principles (Clarity, Simplicity, Resilience, Extensibility) |
 | `/pb-preamble-async` | Async/distributed team collaboration patterns |
 | `/pb-preamble-power` | Power dynamics and psychological safety |
 | `/pb-preamble-decisions` | Decision-making and constructive dissent |
@@ -190,22 +190,6 @@ Developer machine health and maintenance.
 | `/pb-claude-project` | Generate project .claude/CLAUDE.md by analyzing codebase |
 | `/pb-claude-orchestration` | Model selection, task delegation, and resource efficiency guide |
 | `/pb-context-review` | Audit and maintain all context layers - quarterly or after releases |
-
-## Example Projects
-
-Real-world implementations of the playbook in action:
-
-| Project | Stack | Purpose | Location |
-|---------|-------|---------|----------|
-| **Go Backend API** | Go 1.22 + PostgreSQL | REST API with graceful shutdown, connection pooling | `examples/go-backend-api/` |
-| **Python Pipeline** | Python 3.11 + SQLAlchemy | Async data pipeline with event aggregation | `examples/python-data-pipeline/` |
-| **Node.js REST API** | Node.js 20 + TypeScript + Express | Type-safe REST API with request tracing | `examples/node-api/` |
-
-**See [`docs/playbook-in-action.md`](playbook-in-action.md) for detailed walkthrough showing:**
-- How to use `/pb-start`, `/pb-cycle`, and `/pb-pr` with real examples
-- Complete development workflows for each stack
-- Testing, code quality, and deployment patterns
-- Common scenarios with step-by-step commands
 
 ## Typical Workflows
 

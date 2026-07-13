@@ -2,8 +2,6 @@
 
 Complete reference for how all playbook commands work together to form a unified SDLC framework.
 
-Complete reference for how commands compose into workflows.
-
 ---
 
 ## Table of Contents

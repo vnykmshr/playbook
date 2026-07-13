@@ -20,7 +20,7 @@ commands/*.md → extract-playbook-metadata.py → .playbook-metadata.json
 - Tier applicability (XS, S, M, L)
 - Content metadata (has examples, has checklist)
 
-**Validation** can be run manually via `validate-metadata.yml` workflow (manual trigger) or locally:
+**Validation** can be run locally:
 
 ```bash
 python scripts/extract-playbook-metadata.py --verbose
@@ -167,7 +167,7 @@ When writing or updating commands:
 
 ## Validation Workflow
 
-The `validate-metadata.yml` workflow is available for manual triggering:
+Validation performs these steps:
 
 1. Extracts metadata from all commands
 2. Validates against quality rules

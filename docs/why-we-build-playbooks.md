@@ -139,7 +139,7 @@ The playbook provides the structure. You decide how strictly to enforce it based
 
 ## How It Works: The Integrated System
 
-The playbook isn't 52 independent commands. It's an **integrated system** grounded in two foundational frameworks that all others build on:
+The playbook isn't 114 independent commands. It's an **integrated system** grounded in two foundational frameworks that all others build on:
 
 ### Foundational Frameworks
 Two documents establish the complete philosophy:

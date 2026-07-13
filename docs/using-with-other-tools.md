@@ -24,7 +24,7 @@ The underlying patterns work with **any agentic development tool** - different f
 
 ### Layer 2: Commands (95% Portable)
 
-**What it is:** 100 structured prompts covering full SDLC (planning → dev → review → ship)
+**What it is:** 114 structured prompts covering full SDLC (planning → dev → review → ship)
 
 - **Command content:** Universal. Patterns, questions, checklists don't care about your tool.
 - **Invocation:** Tool-specific. Claude Code users type `/pb-start`. You adapt to your tool.
@@ -223,7 +223,7 @@ cat ~/playbook/commands/reviews/pb-review-hygiene.md  # Copy the checklist
 
 ### 1. Skill Invocation (`/pb-start`)
 
-Claude Code surface commands as skills. Your tool has different affordances.
+Claude Code surfaces commands as skills. Your tool has different affordances.
 
 **Solution:** Use the closest equivalent (alias, CLI subcommand, web form, manual reference).
 

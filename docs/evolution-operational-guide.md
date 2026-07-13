@@ -2,9 +2,7 @@
 
 > **For playbook maintainers only.** If you're adopting the playbook, start with [Getting Started](getting-started.md) instead.
 
-This guide covers how the playbook itself evolves through quarterly cycles.
-
-This guide walks through the complete evolution process with all safety mechanisms in place.
+This guide covers how the playbook itself evolves through quarterly cycles, walking through the complete process with all safety mechanisms in place.
 
 ---
 
@@ -411,7 +409,7 @@ pytest tests/test_evolution_execution.py -v
 ```bash
 # Ensure nothing broke
 python3 scripts/validate-conventions.py
-mkdocs build --strict
+./scripts/build-mdbook.sh
 npx markdownlint-cli --config .markdownlint.json 'commands/**/*.md'
 
 # All must pass!

@@ -13,7 +13,7 @@ A single commit that addresses one logical change and is always deployable. See 
 The process of developing code, reviewing it (self and peer), and getting approval before committing. See `/pb-cycle`.
 
 ### Decision Framework
-The Engineering Playbook itself-a set of structured processes for making engineering decisions.
+The Engineering Playbook itself, a set of structured processes for making engineering decisions.
 
 ### Integration Guide
 Documentation showing how all commands work together. See `/docs/integration-guide.md`.
@@ -202,7 +202,7 @@ Comments and suggestions on PR from reviewer.
 | API | Application Programming Interface |
 | CQRS | Command Query Responsibility Segregation |
 | CI/CD | Continuous Integration / Continuous Deployment |
-| DB/DB | Database |
+| DB | Database |
 | DRY | Don't Repeat Yourself |
 | E2E | End-to-End |
 | HTTP | HyperText Transfer Protocol |

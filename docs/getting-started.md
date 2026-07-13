@@ -60,8 +60,7 @@ Your project already has code and processes. Let's integrate the playbook gradua
 ```bash
 # Step 1: Understand current state
 /pb-context           # Document project context and decisions
-/pb-review-hygiene       # Audit existing code quality
-/pb-review-hygiene    # Identify technical debt
+/pb-review-hygiene    # Audit code quality, identify technical debt
 
 # Step 2: Establish baseline
 /pb-standards         # Define working principles for your team

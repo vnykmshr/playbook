@@ -11,7 +11,7 @@ An integrated set of commands and guides for structuring iterative development w
 
 ## What is the Engineering Playbook?
 
-The playbook is a **decision framework** that codifies how to approach development work-from planning through production operations. It's not a tool; it's a set of structured, well-documented processes that work together to reduce friction, prevent common mistakes, and maintain quality at every step.
+The playbook is a **decision framework** that codifies how to approach development work, from planning through production operations. It's not a tool; it's a set of structured, well-documented processes that work together to reduce friction, prevent common mistakes, and maintain quality at every step.
 
 **Built on two complementary insights:**
 
@@ -119,7 +119,7 @@ Commands are organized into categories: core foundation, planning and architectu
 ## Key Principles: Embodying Preamble + Design Rules
 
 ### 1. Preamble: Challenge is Built Into Process
-Quality gates aren't about trust-they're about explicitly inviting challenge:
+Quality gates aren't about trust. They're about explicitly inviting challenge:
 - **Self-review** challenges your own assumptions (preamble thinking)
 - **Peer review** surfaces risks and flaws using design principles as language (design rules)
 - **Security & testing** represent different expertise challenging the work professionally (preamble)
@@ -244,7 +244,7 @@ cd playbook
 
 ## Philosophy: How Teams Think Together
 
-> **The playbook isn't just documentation-it's a decision framework that makes good development practices the default by making peer thinking the default.**
+> **The playbook isn't just documentation. It's a decision framework that makes good development practices the default by making peer thinking the default.**
 
 The Engineering Playbook is built on the insight that **the quality of development depends on how teams think together, not individual brilliance**. This means:
 
