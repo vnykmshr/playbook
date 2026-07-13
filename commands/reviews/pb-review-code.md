@@ -329,7 +329,7 @@ For smaller changes or when time is limited:
 ## Related Commands
 
 - `/pb-cycle` - Author's development iteration (includes self-review)
-- `/pb-review` - Comprehensive periodic project review orchestrator
+- `/pb-review` - Automated quality gate (fast, post-coding analysis)
 - `/pb-review-hygiene` - Code quality and operational readiness
 - `/pb-review-tests` - Test coverage review
 - `/pb-security` - Security audit

@@ -42,7 +42,7 @@ Core preamble works in real-time: face-to-face conversation, synchronous meeting
 
 **The opportunity:** Written communication forces clarity. Challenge must be explicit. Reasoning is documented. Disagreement becomes visible.
 
-The preamble still applies-but it requires new discipline in async contexts.
+The preamble still applies, but it requires new discipline in async contexts.
 
 ---
 
@@ -299,7 +299,7 @@ Result: Team stops trying. Async becomes performative.
 **Prevention:**
 - Make disagreement visible: "I think this is a risk, but I understand the decision"
 - Document your concern: "I wanted this recorded because it might matter later"
-- If you can't live with the decision, escalate-don't hide and sabotage
+- If you can't live with the decision, escalate; don't hide and sabotage
 
 ### Anti-Pattern 4: Performative Inclusivity
 **What it looks like:**

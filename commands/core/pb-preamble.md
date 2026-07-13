@@ -147,7 +147,7 @@ Thinking like peers means respecting each other's attention.
 
 **In practice**: "This feature is powerful, but it demands constant tweaking. Can we make it self-tuning so operators don't have to think about it?"
 
-See `/pb-calm-design` for the complete calm design framework-how to build systems that respect user attention.
+See `/pb-calm-design` for the complete calm design framework: how to build systems that respect user attention.
 
 ---
 
@@ -314,7 +314,7 @@ Better plan emerges: 12-month deprecation, migration guide, support window. Fewe
 
 ### Q: "Doesn't this feel disrespectful?"
 
-**A**: Only if you conflate *challenge* with *rudeness*. Challenging assumptions respectfully is professional. Disagreement shows you care about getting it right. Silence is disrespect to the team-you're withholding your best thinking.
+**A**: Only if you conflate *challenge* with *rudeness*. Challenging assumptions respectfully is professional. Disagreement shows you care about getting it right. Silence is disrespect to the team; you're withholding your best thinking.
 
 ### Q: "What if I'm wrong in my challenge?"
 
@@ -326,7 +326,7 @@ Better plan emerges: 12-month deprecation, migration guide, support window. Fewe
 
 ### Q: "How is this different from just 'speaking up'?"
 
-**A**: It's systemic. Without this preamble, speaking up feels risky. Your instinct is to agree. With it, silence feels risky-to quality. It flips the default from "agree unless proven wrong" to "challenge unless it's clearly rock-solid."
+**A**: It's systemic. Without this preamble, speaking up feels risky. Your instinct is to agree. With it, silence feels risky to quality. It flips the default from "agree unless proven wrong" to "challenge unless it's clearly rock-solid."
 
 ### Q: "What if the team uses this to nitpick everything?"
 
@@ -388,7 +388,7 @@ Remember: they're operating from this preamble. They're not being rude; they're 
 - `/pb-review-tests` - "Question test assumptions. Challenge coverage claims. Point out flaky or brittle tests."
 - `/pb-review-docs` - "Find unclear sections, challenge stated assumptions, and surface gaps"
 - `/pb-security` - "Your job is to find what was missed, challenge assumptions about safety, and surface risks"
-- `/pb-review-product` - "Each perspective should challenge the others. Surface disagreements-they surface real problems."
+- `/pb-review-product` - "Each perspective should challenge the others. Surface disagreements; they surface real problems."
 - `/pb-review-microservice` - "Question service boundaries. Challenge coupling. Surface design flaws early."
 - `/pb-logging` - "Logs must reveal assumptions and make failures obvious, not hide them"
 - `/pb-release` - "Challenge readiness assumptions. Surface risks directly. Don't hide issues at last gate."

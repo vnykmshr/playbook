@@ -220,7 +220,7 @@ For each major playbook category, ask:
 - Should we escalate fewer things to Opus?
 - Can we simplify playbooks for routine decisions?
 
-**Utilities** (pb-patterns, pb-guidance, pb-learn)
+**Utilities** (pb-patterns, pb-learn)
 - Are best practices still current?
 - Do patterns still make sense?
 - Are examples still best-practice?

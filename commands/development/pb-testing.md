@@ -690,7 +690,7 @@ orders = OrderFactory.create_batch(10)  # Create 10 orders
 
 ---
 
-## Advanced Testing Checklist
+## Advanced Testing Adoption Checklist
 
 ### Setup
 

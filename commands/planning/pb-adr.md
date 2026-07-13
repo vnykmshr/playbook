@@ -20,7 +20,7 @@ Document significant architectural decisions to capture the context, alternative
 
 When you write an ADR:
 - **Preamble:** You must consider alternatives, document trade-offs explicitly, and explain reasoning so decisions can be challenged
-- **Design Rules:** Your architecture is guided by Clarity, Simplicity, Modularity, Extensibility-not arbitrary choices
+- **Design Rules:** Your architecture is guided by Clarity, Simplicity, Modularity, Extensibility - not arbitrary choices
 - **Together:** Better decisions that survive challenge and stand the test of time
 
 Good ADRs show both: sound reasoning (preamble) and sound design (design rules).

@@ -35,7 +35,7 @@ Use the sketch sub-skill directly to explore without committing. Use the spec su
 
 ## Why a Wrapper
 
-Planning is two jobs: **decide** (problem + forks + recommended picks) and **do** (numbered steps + verification + rollback). Conflating them writes the plan around the first viable approach. Splitting them forces decisions *before* step-writing -- and the wrapper makes that discipline the default path.
+Planning is two jobs: **decide** (problem + forks + recommended picks) and **do** (numbered steps + verification + rollback). Conflating them writes the plan around the first viable approach. Splitting them forces decisions *before* step-writing, and the wrapper makes that discipline the default path.
 
 ---
 

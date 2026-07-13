@@ -41,7 +41,7 @@ Run this after you finish coding. System analyzes what you built, applies your e
 
 System analyzes your change (LOC, files, domains, complexity, criticality), determines review depth, and runs quality checks through your preferences (from `/pb-preferences`).
 
-**Three outcomes:**
+**Four outcomes:**
 
 1. **Clean** - No issues found. Auto-commits and reports.
 2. **Issues covered by preferences** - Preferences decide: auto-fix, auto-defer, or auto-accept. Then auto-commits.

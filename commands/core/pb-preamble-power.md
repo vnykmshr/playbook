@@ -234,7 +234,7 @@ It's not perfect-tradeoffs are [list]. But for us, this is the right call.
 Questions?"
 ```
 
-**Why this matters:** When people understand your reasoning, they can challenge it meaningfully. When you just assert, they either agree or resist-no real thinking happens.
+**Why this matters:** When people understand your reasoning, they can challenge it meaningfully. When you just assert, they either agree or resist; no real thinking happens.
 
 ### Responsibility 3: Demonstrate You Can Change Your Mind
 

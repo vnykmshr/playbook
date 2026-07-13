@@ -16,7 +16,7 @@ breaking_changes: []
 
 Patterns for efficient, scalable database operations.
 
-**Caveat:** Database patterns solve specific problems. Use `/pb-preamble` thinking (question assumptions) and `/pb-design-rules` thinking (especially Simplicity and Transparency-can you keep it simple and observable?).
+**Caveat:** Database patterns solve specific problems. Use `/pb-preamble` thinking (question assumptions) and `/pb-design-rules` thinking (especially Simplicity and Transparency: can you keep it simple and observable?).
 
 Challenge the assumption that the database is the bottleneck. Question whether you need this complexity. Measure before optimizing.
 

@@ -25,10 +25,10 @@ Produces the committed, numbered implementation plan. Input: a sketch with resol
 
 ## When to Use
 
-- **After `/pb-sketch` with resolved forks** -- decisions are settled; turn them into numbered steps
-- **Via `/pb-plan` wrapper** -- muscle memory; wrapper runs sketch → presents decisions → spec
-- **When sketch is unnecessary** -- the approach is already obvious; skip sketch, spec directly
-- **Before `/pb-todo-implement`** -- spec provides the structure that todo-implement executes
+- **After `/pb-sketch` with resolved forks** - decisions are settled; turn them into numbered steps
+- **Via `/pb-plan` wrapper** - muscle memory; wrapper runs sketch → presents decisions → spec
+- **When sketch is unnecessary** - the approach is already obvious; skip sketch, spec directly
+- **Before `/pb-todo-implement`** - spec provides the structure that todo-implement executes
 
 **Don't use for:**
 - Plans that still have unresolved decision forks (run `/pb-sketch` first)

@@ -29,7 +29,7 @@ Gracefully pause work. Use before stepping away for hours, days, or longer.
 /pb-pause deep         → Deep: standard + refresh working context + update CLAUDE.md
 ```
 
-**When to use deep:** After releases, heavy sessions with structural changes, or before extended breaks. Standard mode's health check will flag stale context layers — that's your signal.
+**When to use deep:** After releases, heavy sessions with structural changes, or before extended breaks. Standard mode's health check will flag stale context layers. That's your signal.
 
 ---
 
@@ -87,7 +87,7 @@ Skip this step if there are no active trackers.
 
 ### Step 3: Write Pause Notes + Context Hygiene
 
-**3a. Write pause entry** — replace contents of `todos/pause-notes.md`:
+**3a. Write pause entry** -- replace contents of `todos/pause-notes.md`:
 
 ```markdown
 # Pause Notes
@@ -127,7 +127,7 @@ Patterns / playbook feedback:
 
 Target: ~30-40 lines. Be specific about what's next. Skip sections that don't apply. The Session Recap section is written by the assistant, not the user -- it is a thorough analysis, not a quick skim.
 
-**3b. Archive old entries** — if pause-notes has entries beyond the latest, move old entries to `todos/done/pause-notes-archive-YYYY-MM-DD.md`.
+**3b. Archive old entries** -- if pause-notes has entries beyond the latest, move old entries to `todos/done/pause-notes-archive-YYYY-MM-DD.md`.
 
 **3c. Context health check:**
 
@@ -148,7 +148,7 @@ Flag if:
 
 ### Step 4: Write Session Recap
 
-After the pause entry is written, reflect on the session and fill in the `### Session Recap` section of the pause notes. This is assistant-driven — the user does not fill it in.
+After the pause entry is written, reflect on the session and fill in the `### Session Recap` section of the pause notes. This is assistant-driven. The user does not fill it in.
 
 **What to include:** Key observations (what was learned, what went wrong, what surprised you, what you'd do differently) and patterns/playbook feedback (did a playbook command mislead or help? is a command missing or wrong? did a workflow deviate and need correction?). Observations can target playbook commands, project workflows, or personal patterns.
 

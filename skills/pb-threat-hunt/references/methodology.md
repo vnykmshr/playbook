@@ -31,7 +31,7 @@ rg -n 'uses:\s+(?!.*@[a-f0-9]{40})' .github/workflows/  # Actions not SHA-pinned
 test -f go.sum && echo "go.sum present" || echo "MISSING: go.sum"  # Go sumdb
 ```
 
-Three greps. Not a SLSA audit — flag obvious gaps.
+Three greps. Not a SLSA audit. Flag obvious gaps.
 
 **Exit:** All three sweeps executed. Fails when govulncheck is skipped because "dependencies are up to date."
 
@@ -125,7 +125,7 @@ Test every URL and path input with adversarial payloads. Path traversal and open
 | 13 | `http://localhost:6379` | SSRF to local services |
 | 14 | `http://169.254.169.254/latest/meta-data/` | SSRF to cloud metadata |
 | 15 | `http://[::1]:8080/admin` | SSRF via IPv6 localhost |
-| 16 | `http://<rand>.127.0.0.1.nip.io:6379` | DNS rebinding (reasoning-required — static grep won't catch; requires understanding two-step resolution) |
+| 16 | `http://<rand>.127.0.0.1.nip.io:6379` | DNS rebinding (reasoning-required: static grep won't catch; requires understanding two-step resolution) |
 
 Use `nip.io`, not `xip.io` (availability).
 
@@ -145,7 +145,7 @@ For each hit:
 - Is a user-controlled `Location` header or `redirect_uri` used without allowlist validation?
 - Is `Referer` used for CSRF protection (it can be spoofed)?
 
-**CSP contextual audit** — replace binary "is CSP set?" with 3 questions:
+**CSP contextual audit** - replace binary "is CSP set?" with 3 questions:
 1. Does CSP prevent inline script execution? (`unsafe-inline` defeats this)
 2. Does CSP restrict `script-src` to known origins?
 3. Does CSP avoid `unsafe-eval`?
@@ -185,7 +185,7 @@ For each hit:
 - Is `json.NewDecoder(r).Decode(&v)` called without `http.MaxBytesReader`?
 - Is `template.Execute` processing user-controlled template strings?
 - Is `panic` used for expected errors?
-- In test/benchmark files only — safe to skip.
+- In test/benchmark files only - safe to skip.
 
 **Run (race detector):**
 ```bash
@@ -233,7 +233,7 @@ For each hit:
 
 **Exit:** Every lock checked for defer-unlock; every goroutine checked for lifecycle. Fails when goroutines lack cancellation paths.
 
-### Step 10: Validate Findings — 3-Vote Adversarial Verify `[Workflow: Phase 3]`
+### Step 10: Validate Findings - 3-Vote Adversarial Verify `[Workflow: Phase 3]`
 
 Not every hit from Steps 3-9 is a vulnerability. Validate before reporting.
 
@@ -258,7 +258,7 @@ Not every hit from Steps 3-9 is a vulnerability. Validate before reporting.
 | Skeptic 2 | Trace the exploit chain from input to sink, verify each hop |
 | Skeptic 3 | Read the proposed fix site; check if the vulnerability is already mitigated elsewhere |
 
-Kill if ≥2 refute. Diverse prompts prevent correlated errors — three identical agents reading the same files = one vote, 3x cost.
+Kill if ≥2 refute. Diverse prompts prevent correlated errors: three identical agents reading the same files = one vote, 3x cost.
 
 **Single-vote mode (`--quick`).** One skeptic per finding. Adequate for low-stakes hunts or small codebases.
 
@@ -294,7 +294,7 @@ How you fix matters as much as what you find.
 
 **Rules:**
 - Normalize at the validation boundary, not deep in processing
-- Fail closed — deny by default, allow explicitly
+- Fail closed: deny by default, allow explicitly
 - Keep the patch near the boundary where the input enters
 - Add a regression test that reproduces the exploit scenario before fixing
 - Verify the fix passes the test AND the existing suite
@@ -316,18 +316,18 @@ The hunt is not complete until ALL boxes are checked:
 - [ ] Every Confirmed and Likely finding has a concrete exploit scenario
 - [ ] Every Confirmed finding has a fix with a regression test
 - [ ] Report written with all 7 fields per finding for Confirmed/Likely
-- [ ] Provider boundaries checked (each present in this project — OAuth, SAML, LDAP, KMS, DB)
+- [ ] Provider boundaries checked (each present in this project: OAuth, SAML, LDAP, KMS, DB)
 - [ ] `go test -race ./...` passes (or explained if not run)
 
 ---
 
 ## Key Judgment Calls
 
-- **Govulncheck stdlib findings** — report as release/toolchain notes. Do not recommend raising the `go` directive to clear scanner warnings.
-- **Forwarded-IP trust** — this is a deployment assumption, not a library vulnerability. Flag if the code silently trusts it without documentation.
-- **OAuth debug logging** — intentional admin diagnostics unless the data escapes outside debug level. Flag only if production log level exposes tokens or codes.
-- **Test/benchmark panic patterns** — `panic` in `_test.go` or benchmark files is normal. Skip.
-- **`unsafe` usage** — flag for review but do not auto-classify as a vulnerability. `unsafe` has legitimate uses (FFI, performance-critical paths). The question is whether it's exploitable from outside.
+- **Govulncheck stdlib findings** - report as release/toolchain notes. Do not recommend raising the `go` directive to clear scanner warnings.
+- **Forwarded-IP trust** - this is a deployment assumption, not a library vulnerability. Flag if the code silently trusts it without documentation.
+- **OAuth debug logging** - intentional admin diagnostics unless the data escapes outside debug level. Flag only if production log level exposes tokens or codes.
+- **Test/benchmark panic patterns** - `panic` in `_test.go` or benchmark files is normal. Skip.
+- **`unsafe` usage** - flag for review but do not auto-classify as a vulnerability. `unsafe` has legitimate uses (FFI, performance-critical paths). The question is whether it's exploitable from outside.
 
 ---
 

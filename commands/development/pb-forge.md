@@ -58,15 +58,15 @@ The arc is the default for new, non-trivial work. Triage decides how much of the
 
 ## Self-Gate Chain
 
-Self-gate is a compound stage of ordered sub-stages. Each catches what the prior missed — they compound, they don't overlap. Forge auto-advances through clean sub-stages and stops when a finding needs a decision.
+Self-gate is a compound stage of ordered sub-stages. Each catches what the prior missed -- they compound, they don't overlap. Forge auto-advances through clean sub-stages and stops when a finding needs a decision.
 
 | # | Sub-stage | What it catches | Trigger |
 |---|-----------|----------------|---------|
-| 1 | `/pb-review` | Lint, tests, conventions — the quick mechanical gate | Always |
-| 2 | `/code-review` at high effort | Bugs, correctness, efficiency — independent adversarial pass | `>3 files` or `>50 LOC` or new command or security/auth/regex in diff |
-| 3 | `/pb-handcraft` | Prose quality, voice, clarity — form, not function | Content/docs changes (markdown commands, prose in any file) |
-| 4 | Huddle signoff | Design coherence across the whole diff — intent, not content | `/code-review` or handcraft reports ≥1 finding where the fix isn't obvious from the diff |
-| 5 | `/pb-preflight` | Ship-readiness wiring check — gaps, not issues | Always (last gate before Peer) |
+| 1 | `/pb-review` | Lint, tests, conventions: the quick mechanical gate | Always |
+| 2 | `/code-review` at high effort | Bugs, correctness, efficiency: independent adversarial pass | `>3 files` or `>50 LOC` or new command or security/auth/regex in diff |
+| 3 | `/pb-handcraft` | Prose quality, voice, clarity: form, not function | Content/docs changes (markdown commands, prose in any file) |
+| 4 | Huddle signoff | Design coherence across the whole diff: intent, not content | `/code-review` or handcraft reports ≥1 finding where the fix isn't obvious from the diff |
+| 5 | `/pb-preflight` | Ship-readiness wiring check: gaps, not issues | Always (last gate before Peer) |
 
 **Order matters.** Run cheap automated gates first (review, code-review), then form gates (handcraft), then judgment gates (huddle), then the final wiring check (preflight). The compound chain reduces the surface area each huddle needs to cover: by the time you reach sub-stage 4, the obvious bugs and prose issues are already fixed.
 
@@ -74,7 +74,7 @@ Self-gate is a compound stage of ordered sub-stages. Each catches what the prior
 
 **Belt-and-suspenders exit.** If the user stops at any sub-stage ("fix the code-review findings first"), forge records the sub-stage as done in the cursor and the next as pending. Re-invoking forge resumes at the pending sub-stage, not the start of Self-gate.
 
-**Tail mode.** `--arc tail` on already-completed work skips sub-stages recorded as done in the cursor. If the cursor has no sub-stage records (pre-v1.1.0), forge runs the full chain — the user can skip explicitly.
+**Tail mode.** `--arc tail` on already-completed work skips sub-stages recorded as done in the cursor. If the cursor has no sub-stage records (pre-v1.1.0), forge runs the full chain -- the user can skip explicitly.
 
 ---
 
@@ -147,7 +147,7 @@ Re-invoking `/pb-forge` on a deliverable with an existing cursor resumes at the 
 ## Red Flags
 
 - **Forge auto-advanced a seam.** It picked a fork, accepted a review finding, or pushed without asking. That's a bug, not a convenience -- the seam stops are the whole contract.
-- **Triage always lands on tail.** Most of your work skips the front arc, so forge wraps the review chain + PR + release. The compound self-gate is the meat of the tail — not thin ceremony. Still, if you never need think/huddle/plan, the front arc may not earn its place for this project.
+- **Triage always lands on tail.** Most of your work skips the front arc, so forge wraps the review chain + PR + release. The compound self-gate is the meat of the tail, not thin ceremony. Still, if you never need think/huddle/plan, the front arc may not earn its place for this project.
 - **Cursor outlived the deliverable.** A stale `todos/forge/*.md` for shipped work is a position, not an archive -- delete it.
 
 ---

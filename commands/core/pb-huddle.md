@@ -60,16 +60,16 @@ When a huddle's synthesis identifies a refined follow-up question, run a re-hudd
 - The context hasn't changed (same session, same files)
 
 **What changes:**
-- **Skip context loading** (Step 2) — personas already have the background from the prior huddle
-- **Shorter persona prompts** — reference the prior huddle output instead of re-loading raw context
-- **Keep framing** (Step 1) — the refined question still needs clear framing; it's a different question from the original
+- **Skip context loading** (Step 2) -- personas already have the background from the prior huddle
+- **Shorter persona prompts** -- reference the prior huddle output instead of re-loading raw context
+- **Keep framing** (Step 1) -- the refined question still needs clear framing; it's a different question from the original
 
 **What stays the same:**
 - Full huddle output format (persona arguments, tensions, synthesis, decision, recording)
 - Steps 3-6 run identically to standard mode
 
 **Guardrails:**
-- **Same-conversation only** — re-huddle depends on the personas having the prior huddle's context in memory. Across sessions, run a full huddle.
+- **Same-conversation only** -- re-huddle depends on the personas having the prior huddle's context in memory. Across sessions, run a full huddle.
 - **Fall back to full huddle** if the prior huddle output can't be found or persona names can't be extracted. If in doubt, ask which personas to use.
 
 **How it works:**
@@ -181,7 +181,7 @@ Save the decision and rationale to the relevant project doc. Future sessions sho
 | Huddle without loaded context | Read all relevant state files first |
 | Skip recording the decision | Write it to the project doc immediately |
 | Re-huddle the same question unchanged | Read the previous decision and build on it |
-| Run full huddle for a refined follow-up question | Use re-huddle mode (`--re-huddle`) — reuse personas, skip context reloading |
+| Run full huddle for a refined follow-up question | Use re-huddle mode (`--re-huddle`) -- reuse personas, skip context reloading |
 | Use huddle as a delay tactic | If you're stalling, just do the work |
 
 ---

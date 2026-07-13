@@ -137,7 +137,7 @@ GOOD: Testing observable behavior from consumer's perspective
 
 ### Test Maintenance Burden
 
-Every test is maintenance debt. A bad test is worse than no test-it prevents refactoring.
+Every test is maintenance debt. A bad test is worse than no test: it prevents refactoring.
 
 ```
 BAD TEST (high maintenance):

@@ -18,7 +18,7 @@ Create a meticulous, incremental execution plan for a new project from scratch.
 
 **Mindset:** Starting a project is an opportunity to question assumptions. Use `/pb-preamble` thinking (challenge conventions) and `/pb-design-rules` thinking (choose patterns that serve Simplicity, Clarity, Modularity).
 
-Don't copy patterns blindly-understand why you're choosing them. Question conventions if they don't fit your needs.
+Don't copy patterns blindly. Understand why you're choosing them. Question conventions if they don't fit your needs.
 
 **Resource Hint:** sonnet - project scaffolding follows established patterns and language conventions
 

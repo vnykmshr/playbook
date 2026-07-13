@@ -16,7 +16,7 @@ breaking_changes: []
 
 **Purpose:** Meta-playbook for creating new playbook commands. Ensures every new command meets quality standards, follows conventions, and integrates coherently with the existing ecosystem.
 
-**Mindset:** Playbooks should exemplify what they preach. Apply `/pb-preamble` thinking (clear reasoning invites challenge-your playbook should be easy to critique and improve) and `/pb-design-rules` thinking (Clarity, Modularity, Representation: structure should make intent obvious).
+**Mindset:** Playbooks should exemplify what they preach. Apply `/pb-preamble` thinking (clear reasoning invites challenge: your playbook should be easy to critique and improve) and `/pb-design-rules` thinking (Clarity, Modularity, Representation: structure should make intent obvious).
 
 **Resource Hint:** sonnet - Structured command creation; follows established conventions.
 
@@ -539,13 +539,13 @@ Match depth to purpose. Simple commands don't need 500 lines.
 
 ---
 
-## Appendix: Review-Skill Design — Scope-Locked Passes
+## Appendix: Review-Skill Design -- Scope-Locked Passes
 
 When authoring a new `/pb-review-*` skill (or extending one), use scope-locked passes rather than omnibus reviews.
 
-**Anti-pattern — the Omnibus Review:** one skill or prompt asked to evaluate correctness AND simplicity AND duplication AND performance AND security AND style AND tests in a single pass. Symptoms: mixed-severity bullet lists, no natural stop condition, earlier findings bleed into later ones ("already flagged complexity; I'll go lighter on duplication").
+**Anti-pattern -- the Omnibus Review:** one skill or prompt asked to evaluate correctness AND simplicity AND duplication AND performance AND security AND style AND tests in a single pass. Symptoms: mixed-severity bullet lists, no natural stop condition, earlier findings bleed into later ones ("already flagged complexity; I'll go lighter on duplication").
 
-**Pattern — Named Passes with Explicit Refusal:** split the review into passes, each with a narrow mandate. Each pass declares what it does AND what it refuses, routing refused concerns to another pass.
+**Pattern -- Named Passes with Explicit Refusal:** split the review into passes, each with a narrow mandate. Each pass declares what it does AND what it refuses, routing refused concerns to another pass.
 
 Canonical pass division:
 

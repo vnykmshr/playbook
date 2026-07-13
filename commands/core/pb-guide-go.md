@@ -739,10 +739,10 @@ See `/pb-guide` for general SDLC process, `/pb-patterns-core` for architectural 
 
 ## Related Commands
 
-- `/pb-guide` -- General SDLC process this guide extends
-- `/pb-guide-python` -- Language-specific guide for Python projects
-- `/pb-testing` -- Advanced testing strategies and patterns
-- `/pb-patterns-core` -- Architectural patterns applicable to Go services
+- `/pb-guide` - General SDLC process this guide extends
+- `/pb-guide-python` - Language-specific guide for Python projects
+- `/pb-testing` - Advanced testing strategies and patterns
+- `/pb-patterns-core` - Architectural patterns applicable to Go services
 
 ---
 

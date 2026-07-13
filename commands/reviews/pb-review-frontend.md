@@ -207,10 +207,10 @@ Findings posted as PR/issue comments follow `~/.claude/CLAUDE.md` § GitHub Arti
 
 ## Related Commands
 
-- `/pb-review-code` -- General code review framework both agents apply
-- `/pb-review-product` -- Product-focused review for feature validation
-- `/pb-maya-product` -- Maya's deep dive: problem validation, scope discipline, user impact
-- `/pb-a11y` -- Detailed accessibility review reference standard
+- `/pb-review-code` - General code review framework both agents apply
+- `/pb-review-product` - Product-focused review for feature validation
+- `/pb-maya-product` - Maya's deep dive: problem validation, scope discipline, user impact
+- `/pb-a11y` - Detailed accessibility review reference standard
 
 ---
 

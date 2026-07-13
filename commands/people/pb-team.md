@@ -353,7 +353,7 @@ See `/pb-onboarding` for detailed remote onboarding checklists (first day, first
 
 ## Burnout Prevention & Recovery
 
-Burnout is a silent killer. People don't announce it-they just quit.
+Burnout is a silent killer. People don't announce it - they just quit.
 
 **Burnout warning signs:**
 

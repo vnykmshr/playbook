@@ -775,10 +775,10 @@ func isStrongPassword(pwd string) bool {
 
 ## Related Commands
 
-- `/pb-security` -- Security review checklist for code and infrastructure
-- `/pb-hardening` -- Security hardening reference for deployment configs
-- `/pb-patterns-core` -- Core architectural patterns including OWASP overview
-- `/pb-patterns-distributed` -- Distributed system patterns and service-to-service concerns
+- `/pb-security` - Security review checklist for code and infrastructure
+- `/pb-hardening` - Security hardening reference for deployment configs
+- `/pb-patterns-core` - Core architectural patterns including OWASP overview
+- `/pb-patterns-distributed` - Distributed system patterns and service-to-service concerns
 
 ---
 

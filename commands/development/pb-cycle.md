@@ -111,7 +111,7 @@ Reviewer should:
 - Surface flaws directly
 - **Verify outcomes and success criteria met** (not just code quality)
 
-Author should welcome and respond to critical feedback. This is how we catch problems early-in code review, not production.
+Author should welcome and respond to critical feedback. This is how we catch problems early, in code review, not production.
 
 ### Architecture Review
 

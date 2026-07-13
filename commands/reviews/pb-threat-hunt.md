@@ -14,11 +14,11 @@ breaking_changes: []
 ---
 # Security Threat Hunt: Deep Audit Methodology
 
-A 12-step executable security audit that treats every auth shortcut, redirect, token source, cookie, forwarded header, parser, cache, and cryptographic decision as a security boundary until proven otherwise. The default answer to "is this safe?" is "prove it." Not a checklist — a hunt.
+A 12-step executable security audit that treats every auth shortcut, redirect, token source, cookie, forwarded header, parser, cache, and cryptographic decision as a security boundary until proven otherwise. The default answer to "is this safe?" is "prove it." Not a checklist -- a hunt.
 
 **Mindset:** Apply `/pb-preamble` thinking (challenge every safety assumption) and `/pb-design-rules` thinking (fail noisily, distrust "one true way," recovery-oriented errors). The hunt is adversarial by design.
 
-**Resource Hint:** opus — deep audit requires tracing decision paths end-to-end, evaluating cryptographic boundaries, and validating findings against exploit scenarios.
+**Resource Hint:** opus - deep audit requires tracing decision paths end-to-end, evaluating cryptographic boundaries, and validating findings against exploit scenarios.
 
 **Language:** This methodology targets **Go** projects by default. For Python equivalents, see **Appendix A**. For Node, see **Appendix B**. Language-agnostic steps (canonicalization, header trust, reporting) apply to all. Steps marked with `[Go]` need appendix translation.
 
@@ -26,10 +26,10 @@ A 12-step executable security audit that treats every auth shortcut, redirect, t
 
 ## When to Use This Command
 
-- **Deep security audit** — full methodology, every step executed
-- **Pre-release security gate** — for L-tier changes touching auth, crypto, or input parsing
-- **Post-incident review** — hunt the vulnerability class that caused the incident across the codebase
-- **Dependency boundary audit** — when integrating a new auth provider, payment processor, or identity system
+- **Deep security audit** - full methodology, every step executed
+- **Pre-release security gate** - for L-tier changes touching auth, crypto, or input parsing
+- **Post-incident review** - hunt the vulnerability class that caused the incident across the codebase
+- **Dependency boundary audit** - when integrating a new auth provider, payment processor, or identity system
 
 For quick pre-release checks, use `/pb-security`. This command is the deep pass.
 
@@ -75,7 +75,7 @@ rg -n 'uses:\s+(?!.*@[a-f0-9]{40})' .github/workflows/  # Actions not SHA-pinned
 test -f go.sum && echo "go.sum present" || echo "MISSING: go.sum"
 ```
 
-Not a SLSA audit — flag obvious gaps.
+Not a SLSA audit; flag obvious gaps.
 
 **Exit:** All three sweeps executed. Fails when govulncheck is skipped because "dependencies are up to date."
 
@@ -109,37 +109,37 @@ For each critical input from Step 1, trace the decision path end-to-end. Do not 
 
 Run structured searches across the codebase. Each pattern targets a specific vulnerability class. Run all passes; skip none.
 
-**Run — URL/Path:**
+**Run - URL/Path:**
 ```bash
 rg -n 'url\.Parse|path\.Join|filepath\.Join|path\.Clean|fmt\.Sprintf.*/%s|http\.Redirect'
 ```
 
-**Run — Token/Cookie/Session:**
+**Run - Token/Cookie/Session:**
 ```bash
 rg -n 'ParseWithClaims|jwt\.Sign|jwt\.NewWithClaims|jwt\.Parse|SetCookie|cookie\.Set|http\.Cookie'
 ```
 
-**Run — Parsing/Deserialization:**
+**Run - Parsing/Deserialization:**
 ```bash
 rg -n 'json\.Unmarshal|xml\.Unmarshal|gob\.NewDecoder|\.\(\w+\)|fmt\.Sscanf|strconv\.Atoi|strconv\.Parse|template\.Must'
 ```
 
-**Run — Crypto:**
+**Run - Crypto:**
 ```bash
 rg -n 'md5\.Sum|md5\.New|sha1\.Sum|sha1\.New|crypto/aes|crypto/rsa|ecdsa\.|hmac\.|rand\.Read|crypto/rand'
 ```
 
-**Run — Concurrency/Race:**
+**Run - Concurrency/Race:**
 ```bash
 rg -n 'go func|sync\.Mutex|sync\.RWMutex|sync\.Map|chan\b|sync\.Once|sync\.WaitGroup'
 ```
 
-**Run — Dangerous Standard Library:**
+**Run - Dangerous Standard Library:**
 ```bash
 rg -n 'exec\.Command|os/exec|net/http\.Get|reflect\.|unsafe\.'
 ```
 
-**Run — WebSocket/SSE:**
+**Run - WebSocket/SSE:**
 ```bash
 rg -n 'websocket|gorilla/websocket|nhooyr.io/websocket|sse|ServerSentEvent|EventSource'
 ```
@@ -169,7 +169,7 @@ Test every URL and path input with adversarial payloads. Path traversal and open
 | 13 | `http://localhost:6379` | SSRF to local services |
 | 14 | `http://169.254.169.254/latest/meta-data/` | SSRF to cloud metadata |
 | 15 | `http://[::1]:8080/admin` | SSRF via IPv6 localhost |
-| 16 | `http://<rand>.127.0.0.1.nip.io:6379` | DNS rebinding (reasoning-required — static grep won't catch this; requires understanding the two-step resolution pattern. Use `nip.io`, not `xip.io` for availability.) |
+| 16 | `http://<rand>.127.0.0.1.nip.io:6379` | DNS rebinding (reasoning-required: static grep won't catch this; requires understanding the two-step resolution pattern. Use `nip.io`, not `xip.io` for availability.) |
 
 **Exit:** Every URL/path input tested against all 16 payloads. Fails when only `../` variants are tested (the first payload catches only the simplest cases).
 
@@ -187,7 +187,7 @@ For each hit:
 - Is a user-controlled `Location` header or `redirect_uri` used without allowlist validation?
 - Is `Referer` used for CSRF protection (it can be spoofed)?
 
-**CSP contextual audit — 3 questions** (not binary "is CSP set?"):
+**CSP contextual audit - 3 questions** (not binary "is CSP set?"):
 1. Does CSP prevent inline script execution? (`unsafe-inline` defeats this)
 2. Does CSP restrict `script-src` to known origins?
 3. Does CSP avoid `unsafe-eval`?
@@ -227,7 +227,7 @@ For each hit:
 - Is `json.NewDecoder(r).Decode(&v)` called without `http.MaxBytesReader`?
 - Is `template.Execute` processing user-controlled template strings? (Server-side template injection.)
 - Is `panic` used for expected errors? (Should be error returns, not panics.)
-- In test/benchmark files only — safe to skip.
+- In test/benchmark files only, safe to skip.
 
 **Run (race detector):**
 ```bash
@@ -275,7 +275,7 @@ For each hit:
 
 **Exit:** Every lock checked for defer-unlock; every goroutine checked for lifecycle. Fails when goroutines lack cancellation paths.
 
-### Step 10: Validate Findings — 3-Vote Adversarial Verify
+### Step 10: Validate Findings - 3-Vote Adversarial Verify
 
 Not every hit from Steps 3-9 is a vulnerability. Validate before reporting.
 
@@ -289,7 +289,7 @@ Not every hit from Steps 3-9 is a vulnerability. Validate before reporting.
 | Skeptic 2 | Trace the exploit chain from input to sink, verify each hop |
 | Skeptic 3 | Read the proposed fix site; check if the vulnerability is already mitigated elsewhere |
 
-Kill if ≥2 refute. Diverse prompts prevent correlated errors — three identical agents reading the same files = one vote, 3x cost.
+Kill if ≥2 refute. Diverse prompts prevent correlated errors: three identical agents reading the same files = one vote, 3x cost.
 
 **Single-vote mode (`--quick`).** One skeptic per finding. Adequate for low-stakes hunts or small codebases.
 
@@ -336,7 +336,7 @@ How you fix matters as much as what you find.
 
 **Rules:**
 - Normalize at the validation boundary, not deep in processing
-- Fail closed — deny by default, allow explicitly
+- Fail closed: deny by default, allow explicitly
 - Keep the patch near the boundary where the input enters
 - Add a regression test that reproduces the exploit scenario before fixing
 - Verify the fix passes the test AND the existing suite
@@ -358,7 +358,7 @@ The hunt is not complete until ALL boxes are checked:
 - [ ] Every Confirmed and Likely finding has a concrete exploit scenario
 - [ ] Every Confirmed finding has a fix with a regression test
 - [ ] Report written with all 7 fields per finding for Confirmed/Likely
-- [ ] Provider boundaries checked (each present in this project — OAuth, SAML, LDAP, KMS, DB)
+- [ ] Provider boundaries checked (each present in this project: OAuth, SAML, LDAP, KMS, DB)
 - [ ] `go test -race ./...` passes (or explained if not run)
 
 ---
@@ -371,11 +371,11 @@ A compound executable skill is available at `skills/pb-threat-hunt/` with workfl
 
 ## Key Judgment Calls
 
-- **Govulncheck stdlib findings** — report as release/toolchain notes. Do not recommend raising the `go` directive to clear scanner warnings.
-- **Forwarded-IP trust** — this is a deployment assumption, not a library vulnerability. Flag if the code silently trusts it without documentation.
-- **OAuth debug logging** — intentional admin diagnostics unless the data escapes outside debug level. Flag only if production log level exposes tokens or codes.
-- **Test/benchmark panic patterns** — `panic` in `_test.go` or benchmark files is normal. Skip.
-- **`unsafe` usage** — flag for review but do not auto-classify as a vulnerability. `unsafe` has legitimate uses (FFI, performance-critical paths). The question is whether it's exploitable from outside.
+- **Govulncheck stdlib findings** - report as release/toolchain notes. Do not recommend raising the `go` directive to clear scanner warnings.
+- **Forwarded-IP trust** - this is a deployment assumption, not a library vulnerability. Flag if the code silently trusts it without documentation.
+- **OAuth debug logging** - intentional admin diagnostics unless the data escapes outside debug level. Flag only if production log level exposes tokens or codes.
+- **Test/benchmark panic patterns** - `panic` in `_test.go` or benchmark files is normal. Skip.
+- **`unsafe` usage** - flag for review but do not auto-classify as a vulnerability. `unsafe` has legitimate uses (FFI, performance-critical paths). The question is whether it's exploitable from outside.
 
 ---
 
@@ -479,12 +479,12 @@ Write findings to `todos/security/reports/{target}/threat-hunt-{YYYY-MM-DD}.md`.
 
 ## Related Commands
 
-- `/pb-security` — Quick pre-release security checklist (run first; use this for deep follow-up)
-- `/pb-secrets` — Secrets management lifecycle
-- `/pb-hardening` — Infrastructure hardening (servers, containers, networks)
-- `/pb-incident` — Incident response when a finding becomes an active threat
-- `/pb-debug` — Tracing exploit paths through code
+- `/pb-security` - Quick pre-release security checklist (run first; use this for deep follow-up)
+- `/pb-secrets` - Secrets management lifecycle
+- `/pb-hardening` - Infrastructure hardening (servers, containers, networks)
+- `/pb-incident` - Incident response when a finding becomes an active threat
+- `/pb-debug` - Tracing exploit paths through code
 
 ---
 
-*12-step executable methodology. The hunt is not complete until all 9 DoD boxes are checked.*
+*12-step executable methodology. The hunt is not complete until all 11 DoD boxes are checked.*

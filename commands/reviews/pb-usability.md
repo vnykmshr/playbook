@@ -15,9 +15,9 @@ breaking_changes: []
 
 # Webapp Usability Audit
 
-Post-deploy audit of the live product from a user's perspective. Not a code review — a product audit. Run this against a staging URL or production site to surface usability gaps, trust issues, and readiness for AI-era expectations.
+Post-deploy audit of the live product from a user's perspective. Not a code review -- a product audit. Run this against a staging URL or production site to surface usability gaps, trust issues, and readiness for AI-era expectations.
 
-**Mindset:** Apply `/pb-preamble` thinking — challenge "works for me" assumptions by auditing as if you're a first-time visitor. Apply `/pb-design-rules` thinking — clarity (is it obvious?), simplicity (is it minimal?), resilience (does it recover?).
+**Mindset:** Apply `/pb-preamble` thinking: challenge "works for me" assumptions by auditing as if you're a first-time visitor. Apply `/pb-design-rules` thinking: clarity (is it obvious?), simplicity (is it minimal?), resilience (does it recover?).
 
 **Resource Hint:** opus - Multi-section audit requiring judgment across product, accessibility, trust, and technical dimensions.
 
@@ -190,7 +190,7 @@ Audit the homepage and landing pages as a first-time visitor.
 
 **4.4 Content is current**
 - Identify: pages missing publication or last-updated dates, broken links (404s, wrong redirects), references to past events or expired promotions, outdated statistics.
-- Copyright year in footer — is it current?
+- Copyright year in footer, is it current?
 
 ---
 
@@ -204,7 +204,7 @@ Audit the homepage and landing pages as a first-time visitor.
 **5.2 Undo, cancel, and escape**
 - Map every multi-step flow, modal, overlay, and state change. For each: is there a clearly visible way to undo, cancel, go back, or dismiss?
 - Test every destructive action (delete, unsubscribe, remove). Are they confirmed before execution? Can they be undone within a grace period?
-- Flag any flow where the user could feel trapped — no back button, no cancel, no escape key support.
+- Flag any flow where the user could feel trapped: no back button, no cancel, no escape key support.
 
 **5.3 Error resilience**
 - Visit non-existent URLs: does the 404 page offer navigation, search, and helpful suggestions?
@@ -218,18 +218,18 @@ Audit the homepage and landing pages as a first-time visitor.
 
 Run these existing playbooks as part of the comprehensive audit:
 
-**Accessibility** — Run `/pb-a11y` or its manual testing checklist:
+**Accessibility** - Run `/pb-a11y` or its manual testing checklist:
 - Keyboard navigation, focus indicators, color contrast, alt text, heading hierarchy, screen reader experience, motion preferences
 
-**Ethical Calm** — Run `/pb-calm-design` Section E:
+**Ethical Calm** - Run `/pb-calm-design` Section E:
 - Dark patterns detection, meaningful consent, engagement well-being
 
-**Trust & Privacy** — Run `/pb-security` User-Facing Trust section:
+**Trust & Privacy** - Run `/pb-security` User-Facing Trust section:
 - Privacy policy readability, cookie audit, trust indicators, third-party disclosure, data proportionality, AI transparency
 
-**Performance & Discoverability** — Run `/pb-performance` with SEO section:
+**Performance & Discoverability** - Run `/pb-performance` with SEO section:
 - Core Web Vitals (LCP < 2.5s, INP < 200ms, CLS < 0.1), image optimization, JS audit, SEO meta tags, LLM discoverability
-- Site root convention files: `robots.txt`, `sitemap.xml`, `llms.txt`, `humans.txt` — all served at root, not nested
+- Site root convention files: `robots.txt`, `sitemap.xml`, `llms.txt`, `humans.txt`, all served at root, not nested
 
 ---
 
@@ -346,11 +346,11 @@ Findings posted as PR/issue comments follow `~/.claude/CLAUDE.md` § GitHub Arti
 
 ## Related Commands
 
-- `/pb-review-frontend` — Code-level frontend review (Maya + Sam). Use during PR review.
-- `/pb-a11y` — Deep accessibility audit. Delegated by this command.
-- `/pb-calm-design` — Attention-respecting design including dark patterns. Delegated by this command.
-- `/pb-security` — Security review including user-facing trust. Delegated by this command.
-- `/pb-performance` — Performance optimization including SEO/LLM discoverability. Delegated by this command.
+- `/pb-review-frontend` - Code-level frontend review (Maya + Sam). Use during PR review.
+- `/pb-a11y` - Deep accessibility audit. Delegated by this command.
+- `/pb-calm-design` - Attention-respecting design including dark patterns. Delegated by this command.
+- `/pb-security` - Security review including user-facing trust. Delegated by this command.
+- `/pb-performance` - Performance optimization including SEO/LLM discoverability. Delegated by this command.
 
 ---
 

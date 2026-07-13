@@ -187,7 +187,7 @@ This command focuses on **incident response** - what to do when an incident occu
    - Was there a deployment? (check git log)
    - Configuration change? (check configs)
    - Traffic spike? (check metrics)
-   - External dependency failure? (check upstreamhealth)
+   - External dependency failure? (check upstream health)
 
 4. **Initial action** (2 minutes)
    - **If recent deployment:** Consider rollback immediately

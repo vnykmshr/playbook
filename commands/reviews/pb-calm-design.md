@@ -42,7 +42,7 @@ See `/pb-design-rules` for clarity and simplicity principles. Calm design extend
 
 ---
 
-## The 10-Question Calm Design Checklist
+## The 13-Question Calm Design Checklist
 
 Use this to evaluate features, systems, or interfaces for attention-efficiency.
 
@@ -54,7 +54,7 @@ Use this to evaluate features, systems, or interfaces for attention-efficiency.
 - Or does it demand attention at every step?
 - Example: Auto-save works silently ✅ vs. Manual save button everywhere ❌
 
-**2. What happens during normal operation-silence or chatter?**
+**2. What happens during normal operation: silence or chatter?**
 
 - Does the system only communicate when something's wrong?
 - Or does it provide constant status updates?
@@ -74,7 +74,7 @@ Use this to evaluate features, systems, or interfaces for attention-efficiency.
 
 ### Section B: Graceful Degradation (System Failures)
 
-**5. What happens when this system fails-alarm or adaptation?**
+**5. What happens when this system fails: alarm or adaptation?**
 
 - Does failure break everything, or does the system gracefully degrade?
 - Can users continue with partial functionality?
@@ -154,7 +154,7 @@ Calm design extends beyond attention efficiency into ethical interaction. System
 
 - Run through questions 5-6 (failure modes)
 - Ask: "Does this fail quietly or loudly?"
-- Calm doesn't mean no errors-it means kind errors
+- Calm doesn't mean no errors; it means kind errors
 
 ### Before Shipping
 
@@ -175,7 +175,7 @@ Calm design extends beyond attention efficiency into ethical interaction. System
 |-------------------|-------------|------|
 | **Minimal Attention** | Does it work in the background? | Questions 1-2 |
 | **Use the Periphery** | Can secondary info move to edges? | Question 3 |
-| **Alternative Communication** | Not just alerts-use status, light, subtle indicators | Question 4 |
+| **Alternative Communication** | Not just alerts; use status, light, subtle indicators | Question 4 |
 | **Graceful Failure** | Does it fail gently or catastrophically? | Questions 5-6 |
 | **Minimum Viable Design** | Have we cut to the core? | Question 7 |
 | **Least Surprise** | Would a first-time user understand? | Question 8 |

@@ -222,7 +222,7 @@ eventBus.subscribe('order.created', async (event) => {
 
 ## Resilience Patterns
 
-See `/pb-patterns-resilience` for Retry, Circuit Breaker, Rate Limiting, Cache-Aside, and Bulkhead patterns -- defensive patterns for making systems reliable under failure.
+See `/pb-patterns-resilience` for Retry, Circuit Breaker, Rate Limiting, Cache-Aside, and Bulkhead patterns: defensive patterns for making systems reliable under failure.
 
 ---
 

@@ -17,7 +17,7 @@ breaking_changes: []
 
 Distribution-focused strategic thinking that bridges the gap between creation and consumption. Reviews work through the lens of "who needs to see this and where are they?" Great work nobody finds is indistinguishable from work that doesn't exist.
 
-**Resource Hint:** sonnet -- Strategic distribution thinking, audience analysis, channel-fit evaluation.
+**Resource Hint:** sonnet - Strategic distribution thinking, audience analysis, channel-fit evaluation.
 
 ---
 
@@ -29,11 +29,11 @@ Apply `/pb-preamble` thinking: Challenge the assumption that good work finds its
 
 ## When to Use
 
-- **Before shipping anything external** -- Reports, posts, PRs, products, emails
-- **Content platform selection** -- Which platform, which format, which audience
-- **Product discoverability** -- How does someone learn this exists?
-- **Bounty reports** -- Is the report framed so the triager acts, not just reads?
-- **Hiring** -- Does this story land with the hiring manager in 30 seconds?
+- **Before shipping anything external** - Reports, posts, PRs, products, emails
+- **Content platform selection** - Which platform, which format, which audience
+- **Product discoverability** - How does someone learn this exists?
+- **Bounty reports** - Is the report framed so the triager acts, not just reads?
+- **Hiring** - Does this story land with the hiring manager in 30 seconds?
 
 ---
 
@@ -278,11 +278,11 @@ Findings posted as PR/issue comments follow `~/.claude/CLAUDE.md` § GitHub Arti
 
 ## Related Commands
 
-- `/pb-maya-product` -- Product & user strategy (what to build, for whom)
-- `/pb-repo-polish` -- Repository AI discoverability audit (Kai thinking applied to repos)
-- `/pb-preamble` -- Challenge assumptions about audience and reach
-- `/pb-design-rules` -- Clarity and simplicity for the target audience
-- `/pb-review-product` -- Technical + product review (complementary lens)
+- `/pb-maya-product` - Product & user strategy (what to build, for whom)
+- `/pb-repo-polish` - Repository AI discoverability audit (Kai thinking applied to repos)
+- `/pb-preamble` - Challenge assumptions about audience and reach
+- `/pb-design-rules` - Clarity and simplicity for the target audience
+- `/pb-review-product` - Technical + product review (complementary lens)
 
 ---
 

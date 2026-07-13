@@ -16,9 +16,9 @@ breaking_changes: []
 
 Audit a repository's visibility to AI coding agents and developer search.
 
-**Mindset:** AI agents are becoming the primary way developers discover libraries. A functionally strong library that scores poorly on machine-readable signals will never get recommended. This command measures the gap between code quality and discoverability -- and surfaces what polish can fix vs. what requires usage evidence that polish alone cannot create.
+**Mindset:** AI agents are becoming the primary way developers discover libraries. A functionally strong library that scores poorly on machine-readable signals will never get recommended. This command measures the gap between code quality and discoverability, and surfaces what polish can fix vs. what requires usage evidence that polish alone cannot create.
 
-**Resource Hint:** sonnet -- structured audit with concrete rubrics, optional content drafting
+**Resource Hint:** sonnet - structured audit with concrete rubrics, optional content drafting
 
 ---
 
@@ -88,8 +88,8 @@ Is the library findable and current on the expected package registry?
 | 3 | Published, current, correct path, visible on registry search |
 
 **How to assess:**
-- Go: check `pkg.go.dev/{module}` -- is it indexed? Is the latest version shown? Is the module path correct (especially `/v2` suffixes)?
-- Node: check `npmjs.com/package/{name}` -- is it published? Is the latest version current?
+- Go: check `pkg.go.dev/{module}` - is it indexed? Is the latest version shown? Is the module path correct (especially `/v2` suffixes)?
+- Node: check `npmjs.com/package/{name}` - is it published? Is the latest version current?
 - Other: check the language-appropriate registry
 
 ### Dimension 4: Metadata Completeness (0-3)
@@ -186,7 +186,7 @@ Ordered by impact. Each item is concrete and actionable:
 
 When `--draft` is passed, produce these after the scorecard:
 
-**1. llms.txt draft** (P2 -- experimental format, not widely consumed yet):
+**1. llms.txt draft** (P2 - experimental format, not widely consumed yet):
 
 ```
 # {name}
@@ -211,7 +211,7 @@ When `--draft` is passed, produce these after the scorecard:
 {anti-use-cases, alternatives}
 ```
 
-**2. README "When to use this" section** -- comparison anchor against the dominant alternative. Format:
+**2. README "When to use this" section** - comparison anchor against the dominant alternative. Format:
 
 ```markdown
 ## When to Use This
@@ -226,9 +226,9 @@ Use {name} when you need {specific scenario}.
 - {scenario where alternative wins}
 ```
 
-**3. Description improvement** -- if search terms are missing from the current description, draft a better one (max 160 chars).
+**3. Description improvement** - if search terms are missing from the current description, draft a better one (max 160 chars).
 
-**4. Metadata fix commands** -- exact `gh repo edit` commands:
+**4. Metadata fix commands** - exact `gh repo edit` commands:
 
 ```bash
 gh repo edit owner/repo --description "new description"
@@ -272,7 +272,7 @@ gh api repos/owner/repo/contents/examples 2>/dev/null
 
 ### Step 2: Score Each Dimension
 
-Walk through each dimension's rubric. Be precise -- score what exists, not what could exist.
+Walk through each dimension's rubric. Be precise: score what exists, not what could exist.
 
 ### Step 3: Identify Search Terms
 
@@ -306,10 +306,10 @@ Generate llms.txt, "When to use this" section, improved description, and `gh rep
 
 ## Related Commands
 
-- `/pb-repo-enhance` -- Full repository polish (organize + docs + presentation)
-- `/pb-repo-about` -- Generate GitHub About section + tags
-- `/pb-repo-readme` -- Write or rewrite project README
-- `/pb-repo-organize` -- Clean up project root structure
+- `/pb-repo-enhance` - Full repository polish (organize + docs + presentation)
+- `/pb-repo-about` - Generate GitHub About section + tags
+- `/pb-repo-readme` - Write or rewrite project README
+- `/pb-repo-organize` - Clean up project root structure
 
 ---
 

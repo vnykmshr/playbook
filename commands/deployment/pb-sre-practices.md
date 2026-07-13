@@ -14,7 +14,7 @@ breaking_changes: []
 ---
 # SRE Practices
 
-Build sustainable, reliable operations through toil reduction, error budgets, and healthy on-call practices. This command focuses on prevention and culture-complementing `/pb-incident` (response) and `/pb-observability` (monitoring).
+Build sustainable, reliable operations through toil reduction, error budgets, and healthy on-call practices. This command focuses on prevention and culture, complementing `/pb-incident` (response) and `/pb-observability` (monitoring).
 
 **Mindset:** SRE practices embody `/pb-preamble` thinking: blameless culture, honest assessment of reliability, and challenging "we've always done it this way." Apply `/pb-design-rules` thinking: Robustness (systems should handle failure gracefully) and Transparency (make operational health visible).
 
@@ -188,7 +188,7 @@ SRE: "Our error budget is at 15%. If we deploy and cause an outage,
       Which tradeoff works for the business?"
 ```
 
-**Document the decision.** If product chooses to spend budget, that's a valid business decision-but make it explicit.
+**Document the decision.** If product chooses to spend budget, that's a valid business decision, but make it explicit.
 
 ---
 

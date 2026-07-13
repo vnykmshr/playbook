@@ -14,7 +14,7 @@ breaking_changes: []
 ---
 # Logging Strategy & Standards
 
-Comprehensive guidance for designing effective logging that aids troubleshooting without creating noise.
+Guidance for designing effective logging that aids troubleshooting without creating noise.
 
 **Principle:** Good logging embodies `/pb-preamble` thinking (reveal assumptions, surface problems) and `/pb-design-rules` thinking (especially Transparency and Silence: systems should be observable when important, quiet otherwise).
 

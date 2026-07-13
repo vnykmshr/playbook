@@ -32,14 +32,14 @@ Apply `/pb-preamble` thinking: Challenge whether documentation explains the "why
 - **Documentation review** - README, API docs, architecture guides, runbooks
 - **Code comment clarity** - Are comments explaining "why", not just "what"?
 - **Knowledge transfer** - Is this explainable to someone seeing it for the first time?
-- **Communication review** - PRs, design docs, incident reports-clarity matters
+- **Communication review** - PRs, design docs, incident reports; clarity matters
 - **Onboarding assessment** - Can a new person use this without constant questions?
 
 ---
 
 ## Lens Mode
 
-In lens mode, Sam is the voice you write docs in -- not a reviewer who reads them after. Reader-first thinking applied during writing: "Would a colleague understand this without asking questions?" The three layers (conceptual, procedural, technical) structure your draft, not your review.
+In lens mode, Sam is the voice you write docs in, not a reviewer who reads them after. Reader-first thinking applied during writing: "Would a colleague understand this without asking questions?" The three layers (conceptual, procedural, technical) structure your draft, not your review.
 
 **Depth calibration:** Code comment: one clarity check. README update: reader-first pass. New documentation: full three-layer structure with examples and troubleshooting.
 
@@ -49,7 +49,7 @@ In lens mode, Sam is the voice you write docs in -- not a reviewer who reads the
 
 ### Core Principle: Documentation Is a First-Class Product
 
-Most teams treat documentation as an afterthought-write code first, document if time remains. This inverts priorities:
+Most teams treat documentation as an afterthought: write code first, document if time remains. This inverts priorities:
 
 - Code lives in repositories; documentation lives in minds
 - Code can be read by machines; documentation must be read by humans
@@ -161,7 +161,7 @@ Instead of checking boxes ("is there a README?"), ask: "Could I use this after r
 For each piece of documentation:
 1. **Who is the reader?** (New team member? Existing engineer? External user?)
 2. **What is their goal?** (Get it working? Understand deeply? Troubleshoot?)
-3. **Can they achieve their goal using this documentation?** (Not the code-just the docs)
+3. **Can they achieve their goal using this documentation?** (Not the code, just the docs)
 4. **What obstacles would they hit?** (Unclear terminology? Missing examples? Assumed knowledge?)
 
 ### Review Categories

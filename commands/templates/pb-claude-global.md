@@ -18,7 +18,7 @@ Generate or regenerate the global `~/.claude/CLAUDE.md` file from Engineering Pl
 
 **Purpose:** Create a concise, authoritative context file that informs Claude Code behavior across ALL projects.
 
-**Philosophy:** Playbooks are the source of truth. Global CLAUDE.md is a derived artifact-concise, with references to playbooks for depth.
+**Philosophy:** Playbooks are the source of truth. Global CLAUDE.md is a derived artifact, concise, with references to playbooks for depth.
 
 **Resource Hint:** sonnet - template generation from existing playbook content.
 

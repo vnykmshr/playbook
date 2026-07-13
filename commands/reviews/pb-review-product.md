@@ -20,7 +20,7 @@ breaking_changes: []
 
 **Mindset:** Multi-perspective review embodies `/pb-preamble` thinking (each perspective challenges the others) and `/pb-design-rules` thinking (design decisions should honor Clarity, Simplicity, and user needs).
 
-Surface disagreements-they often surface real problems that single views miss.
+Surface disagreements; they often reveal real problems that single views miss.
 
 **Resource Hint:** opus - multi-perspective review spanning engineering, architecture, security, and product strategy
 

@@ -39,7 +39,7 @@ Quickly get back into context after a break. Use this to resume work on an exist
 
 Read the `### Session Recap` section from `todos/pause-notes.md`.
 
-**If no Session Recap section exists:** skip to Step 1. (First-time use with pre-v1.5.0 pause notes: say "Session Recap: none — recaps are written by `/pb-pause` when a session produces learnings." Once.)
+**If no Session Recap section exists:** skip to Step 1. (First-time use with pre-v1.5.0 pause notes: say "Session Recap: none - recaps are written by `/pb-pause` when a session produces learnings." Once.)
 
 ---
 
@@ -47,7 +47,7 @@ Read the `### Session Recap` section from `todos/pause-notes.md`.
 
 Before surfacing, check for duplicates: if the recap content already appears as the most recent entry in `memory/lessons.md`, skip to Step 1 (already processed on a prior resume).
 
-Otherwise, surface the recap visibly. Present findings as a structured summary — the recap is a learning loop, not a write-only log:
+Otherwise, surface the recap visibly. Present findings as a structured summary. The recap is a learning loop, not a write-only log:
 
 ```
 ## Session Recap (from last session)
@@ -70,7 +70,7 @@ Address actionable findings while visible, with sensible defaults:
 - **Obvious fix** (wording, guardrail, convention) → apply it. Commit.
 - **Worth doing, needs planning** → add to working context under Next. Note: "Queued: [finding]"
 - **Q3 candidate** → note it; `/pb-evolve` mines quarterly.
-- **No action** → state explicitly: "Archived only — no immediate action."
+- **No action** → state explicitly: "Archived only - no immediate action."
 
 The default is "act, then report." The user can override any action before archiving.
 
@@ -78,7 +78,7 @@ The default is "act, then report." The user can override any action before archi
 
 #### 0c. ARCHIVE: Append → Strip
 
-1. **Append to `memory/lessons.md`** first (create the file if new) — prevents data loss if interrupted:
+1. **Append to `memory/lessons.md`** first (create the file if new) - prevents data loss if interrupted:
    ```markdown
    ## [YYYY-MM-DD] — [session context]
    [recap content]
@@ -148,7 +148,7 @@ cat todos/pause-notes.md               # Where you left off
 
 **If pause notes exist:** Follow documented next steps, verify blockers resolved.
 
-**Context health check — report actual sizes:**
+**Context health check - report actual sizes:**
 
 ```bash
 wc -l ~/.claude/CLAUDE.md              # Global (target: ~160)

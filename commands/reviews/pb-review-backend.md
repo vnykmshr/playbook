@@ -200,10 +200,10 @@ Findings posted as PR/issue comments follow `~/.claude/CLAUDE.md` § GitHub Arti
 
 ## Related Commands
 
-- `/pb-review-code` -- General code review framework both agents apply
-- `/pb-review-infrastructure` -- Infrastructure-focused review for backend dependencies
-- `/pb-alex-infra` -- Alex's deep dive: systems thinking, failure modes, resilience
-- `/pb-jordan-testing` -- Jordan's deep dive: gap detection, test coverage, reliability
+- `/pb-review-code` - General code review framework both agents apply
+- `/pb-review-infrastructure` - Infrastructure-focused review for backend dependencies
+- `/pb-alex-infra` - Alex's deep dive: systems thinking, failure modes, resilience
+- `/pb-jordan-testing` - Jordan's deep dive: gap detection, test coverage, reliability
 
 ---
 

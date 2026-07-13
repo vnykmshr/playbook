@@ -204,4 +204,4 @@ Start with:
 
 ---
 
-*Context transfers cleanly. Receivers start building, not re-discovering. | v1.0.0*
+*Context transfers cleanly. Receivers start building, not re-discovering. | v1.0.1*

@@ -16,9 +16,9 @@ breaking_changes: []
 
 Behavioral guidelines to reduce common LLM coding mistakes, derived from [Andrej Karpathy's observations](https://x.com/karpathy/status/2015883857489522876) on LLM coding pitfalls. These principles bias toward caution over speed. For trivial tasks, use judgment.
 
-**Mindset:** Apply `/pb-preamble` thinking (challenge assumptions, surface trade-offs) and `/pb-design-rules` thinking (clarity over cleverness, simplicity by default). These guidelines are a complementary lens — they don't replace existing commands; they reinforce the behaviors those commands already expect.
+**Mindset:** Apply `/pb-preamble` thinking (challenge assumptions, surface trade-offs) and `/pb-design-rules` thinking (clarity over cleverness, simplicity by default). These guidelines are a complementary lens. They don't replace existing commands; they reinforce the behaviors those commands already expect.
 
-**Resource Hint:** sonnet — Reference guidelines for coding discipline; no architecture judgment.
+**Resource Hint:** sonnet - Reference guidelines for coding discipline; no architecture judgment.
 
 ---
 
@@ -37,7 +37,7 @@ Behavioral guidelines to reduce common LLM coding mistakes, derived from [Andrej
 
 Before implementing:
 - State your assumptions explicitly. If uncertain, ask.
-- If multiple interpretations exist, present them — don't pick silently.
+- If multiple interpretations exist, present them. Don't pick silently.
 - If a simpler approach exists, say so. Push back when warranted.
 - If something is unclear, stop. Name what's confusing. Ask.
 
@@ -69,7 +69,7 @@ When editing existing code:
 - Don't "improve" adjacent code, comments, or formatting.
 - Don't refactor things that aren't broken.
 - Match existing style, even if you'd do it differently.
-- If you notice unrelated dead code, mention it — don't delete it.
+- If you notice unrelated dead code, mention it. Don't delete it.
 
 When your changes create orphans:
 - Remove imports/variables/functions that YOUR changes made unused.
@@ -106,7 +106,7 @@ Strong success criteria let you loop independently. Weak criteria ("make it work
 
 ## Integration
 
-These guidelines are ambient — they apply every time you code with an LLM, regardless of which command you're running. They don't add ceremony; they're a lens.
+These guidelines are ambient. They apply every time you code with an LLM, regardless of which command you're running. They don't add ceremony; they're a lens.
 
 | Principle | Primary commands |
 |-----------|-----------------|
@@ -119,11 +119,11 @@ These guidelines are ambient — they apply every time you code with an LLM, reg
 
 ## Related Commands
 
-- `/pb-preamble` — Collaboration philosophy (challenge assumptions)
-- `/pb-design-rules` — Technical principles (clarity, simplicity, modularity)
-- `/pb-handcraft` — AI output quality gate (surgical precision, convention match)
-- `/pb-start` — Begin work with scope and success criteria
-- `/pb-forge` — Step-runner with verification per stage
+- `/pb-preamble` - Collaboration philosophy (challenge assumptions)
+- `/pb-design-rules` - Technical principles (clarity, simplicity, modularity)
+- `/pb-handcraft` - AI output quality gate (surgical precision, convention match)
+- `/pb-start` - Begin work with scope and success criteria
+- `/pb-forge` - Step-runner with verification per stage
 
 ---
 

@@ -16,7 +16,7 @@ breaking_changes: []
 
 The 5-minute binary check before you deploy to production. Thirty bullets across six categories. If you cannot tick every box, you are not ready to ship.
 
-**Resource Hint:** sonnet -- Gate execution, not deep audit. Invoke `/pb-security` or `/pb-hardening` when a bullet fails and you need depth.
+**Resource Hint:** sonnet - Gate execution, not deep audit. Invoke `/pb-security` or `/pb-hardening` when a bullet fails and you need depth.
 
 ---
 
@@ -37,10 +37,10 @@ This is the gate, not the audit. It exists because the patch after launch costs 
 
 ## When NOT to Use
 
-- Mid-feature development -- use `/pb-review` and `/pb-cycle`
-- Infrastructure hardening from scratch -- use `/pb-hardening`
-- Deep security audit -- use `/pb-security`
-- Post-incident recovery -- use `/pb-incident`
+- Mid-feature development - use `/pb-review` and `/pb-cycle`
+- Infrastructure hardening from scratch - use `/pb-hardening`
+- Deep security audit - use `/pb-security`
+- Post-incident recovery - use `/pb-incident`
 
 This gate assumes your code already passed review. It checks the seams between code-complete and production-serving.
 
@@ -155,11 +155,11 @@ The gate is not done at "deploy succeeded." It is done at "the thing works for r
 
 ## Related Commands
 
-- `/pb-ship` -- The ship workflow this gate slots into
-- `/pb-security` -- Depth audit when the secrets/authn/data category keeps failing
-- `/pb-hardening` -- Infra depth when infrastructure checks keep failing
-- `/pb-deployment` -- The deployment step itself, downstream of this gate
-- `/pb-release` -- Versioning and release orchestration
+- `/pb-ship` - The ship workflow this gate slots into
+- `/pb-security` - Depth audit when the secrets/authn/data category keeps failing
+- `/pb-hardening` - Infra depth when infrastructure checks keep failing
+- `/pb-deployment` - The deployment step itself, downstream of this gate
+- `/pb-release` - Versioning and release orchestration
 
 ---
 

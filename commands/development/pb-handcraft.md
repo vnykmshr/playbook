@@ -112,7 +112,7 @@ The work must be indistinguishable from what the target maintainer would write t
 - Error wrapping style (project's error package or stdlib?)
 - Import grouping (stdlib / external / internal?)
 
-**Exit:** Did you read the target codebase, or match from memory? (Fails when you match from memory — you'll miss convention drift.)
+**Exit:** Did you read the target codebase, or match from memory? (Fails when you match from memory -- you'll miss convention drift.)
 
 ### Lens 2: AI Tell Scan
 
@@ -207,7 +207,7 @@ General dev-to-dev register:
 
 **For GitHub artifacts** (commits, PRs, issues, PR/review/inline comments): `~/.claude/CLAUDE.md` § GitHub Artifact Register sets the ceilings, strip list, and never-write list.
 
-**Conversational check:** read the output aloud as if saying it to a colleague over a drink. Mouth the words — silent reading skips what the tongue catches.
+**Conversational check:** read the output aloud as if saying it to a colleague over a drink. Mouth the words -- silent reading skips what the tongue catches.
 
 - Would you actually say this sentence to another human in conversation?
 - Would they check their phone midway through?
@@ -215,11 +215,11 @@ General dev-to-dev register:
 
 If the conversational check flags something your eye skipped, the problem is register, not cadence. Fix it here.
 
-**Exit:** Would you say every sentence aloud to a colleague without hedging or apologizing? (Fails when you read silently — your eye skips what your tongue would catch.)
+**Exit:** Would you say every sentence aloud to a colleague without hedging or apologizing? (Fails when you read silently -- your eye skips what your tongue would catch.)
 
 ### Lens 7: Read-Aloud Check
 
-This is a detection method, not a problem category. Your eyes skip what your tongue catches — reading aloud surfaces issues the other lenses miss, regardless of what kind of issue it is.
+This is a detection method, not a problem category. Your eyes skip what your tongue catches -- reading aloud surfaces issues the other lenses miss, regardless of what kind of issue it is.
 
 Read the output as if speaking it to the maintainer over a call.
 
@@ -231,11 +231,11 @@ If it sounds like a press release, rewrite until it sounds like a person.
 
 **For conversational artifacts (PR/issue comments, emails, Slack):** beyond spoken rhythm, check the shape. Does it read like someone typed this live, or like a generated review artifact with section headers and bullet padding? Scene-setter up front, specific pointers, flowing prose. Structured submissions (GHSA fields, VRP forms) skip this sub-check -- required sections drive their shape.
 
-**Exit:** Did reading aloud catch something silent reading skipped? (Fails when you mutter instead of reading aloud — whispering is still silent reading.)
+**Exit:** Did reading aloud catch something silent reading skipped? (Fails when you mutter instead of reading aloud -- whispering is still silent reading.)
 
 ### Final Re-Read
 
-Not an eighth lens — a closing sweep. After all seven lenses, re-read the final output once from top to bottom. You changed things. Confirm the fixes didn't introduce new tells. If you find one, fix it and re-read; one clean pass is enough. Don't restart the lens pass.
+Not an eighth lens -- a closing sweep. After all seven lenses, re-read the final output once from top to bottom. You changed things. Confirm the fixes didn't introduce new tells. If you find one, fix it and re-read; one clean pass is enough. Don't restart the lens pass.
 
 ---
 

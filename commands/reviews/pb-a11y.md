@@ -14,7 +14,7 @@ breaking_changes: []
 ---
 # Accessibility Deep-Dive
 
-Comprehensive accessibility guidance for web applications. Semantic HTML first, ARIA as enhancement, keyboard-first interaction model.
+Accessibility guidance for web applications. Semantic HTML first, ARIA as enhancement, keyboard-first interaction model.
 
 **Accessibility is not optional.** It's not a feature. It's not "nice to have." It's a requirement for professional software.
 

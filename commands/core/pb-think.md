@@ -265,7 +265,7 @@ For synthesis requests:
 5. **Form coherent view** - Integrate into unified understanding
 6. **Make it actionable** - What does this synthesis mean for decisions?
 
-Do not summarize-synthesize. Summaries compress; synthesis integrates. The output should reveal something the inputs alone don't show.
+Do not summarize; synthesize. Summaries compress; synthesis integrates. The output should reveal something the inputs alone don't show.
 
 ### Synthesis Modes
 
@@ -458,7 +458,7 @@ Can prioritize by user value, but can't sequence by effort or cost
 - Reveals insight not visible in individual inputs
 - Explicitly addresses contradictions
 - Distinguishes high-confidence from uncertain conclusions
-- Actionable-clear implications for decisions
+- Actionable: clear implications for decisions
 - Acknowledges gaps and limitations
 
 **Bad Synthesis:**
@@ -486,7 +486,7 @@ Can prioritize by user value, but can't sequence by effort or cost
 - Contradiction suggests: users want capability, not complexity
 
 **Synthesis:**
-The core issue isn't missing features-it's that existing features are hard to access. Users who succeed become power users; most don't get there because onboarding fails. Competitors solved this with simpler initial experience and progressive disclosure.
+The core issue isn't missing features; it's that existing features are hard to access. Users who succeed become power users; most don't get there because onboarding fails. Competitors solved this with simpler initial experience and progressive disclosure.
 
 **Confidence & Gaps:**
 - High confidence: Onboarding needs simplification

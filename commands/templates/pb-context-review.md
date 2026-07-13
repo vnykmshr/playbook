@@ -14,7 +14,7 @@ breaking_changes: ["pb-review-context merged into this command; use `--violation
 ---
 # Context Layer Review & Hygiene
 
-**Purpose:** Comprehensive audit of all context layers-both structural (sizes, duplication, archival) and behavioral (CLAUDE.md violations, staleness). Run quarterly before `/pb-evolve` to ensure context earns its space and actually works.
+**Purpose:** Comprehensive audit of all context layers, both structural (sizes, duplication, archival) and behavioral (CLAUDE.md violations, staleness). Run quarterly before `/pb-evolve` to ensure context earns its space and actually works.
 
 **Mindset:** Context is necessary but expensive. Every line loaded competes for attention. Every guideline either influences behavior or should be deleted. Apply `/pb-design-rules` thinking: Simplicity (remove what doesn't earn its place) and Clarity (what remains should be immediately useful). Apply `/pb-preamble` thinking: challenge whether each section is still relevant.
 

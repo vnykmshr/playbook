@@ -97,7 +97,7 @@ See `/pb-preamble` for the team thinking philosophy that enables these perspecti
 
 ## Resolving Persona Conflicts
 
-**If personas disagree,** it's not a bug-it's a design decision:
+**If personas disagree,** it's not a bug, it's a design decision:
 
 **Example:**
 - **Linus says:** "Add input validation (improves security)"

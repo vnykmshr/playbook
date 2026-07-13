@@ -18,7 +18,7 @@ Complete a focus area through comprehensive review, PR creation, peer review, me
 
 **Mindset:** This command embodies `/pb-preamble` thinking (challenge readiness assumptions, surface risks directly) and `/pb-design-rules` thinking (verify Clarity, Robustness, Simplicity before shipping).
 
-Ship when ready, not when tired. Every review step is an opportunity to find issues-embrace them.
+Ship when ready, not when tired. Every review step is an opportunity to find issues - embrace them.
 
 **Resource Hint:** sonnet - review orchestration and release coordination
 
@@ -310,7 +310,7 @@ If NO-GO, document blockers and return to appropriate phase.
 
 ### Step 4.1: Create Pull Request
 
-Run `/pb-pr`. Body register follows the global rule (see `~/.claude/CLAUDE.md` § GitHub Artifact Register) -- `/pb-pr` selects the size-tier template based on file count and concern count. For a ship-scope PR (multi-concern by definition), the sectioned form usually applies:
+Run `/pb-pr`. Body register follows the global rule (see `~/.claude/CLAUDE.md` § GitHub Artifact Register). `/pb-pr` selects the size-tier template based on file count and concern count. For a ship-scope PR (multi-concern by definition), the sectioned form usually applies:
 
 ```bash
 gh pr create --title "<type>(<scope>): brief description" --body "$(cat <<'EOF'
@@ -326,7 +326,7 @@ EOF
 )"
 ```
 
-Ship review status (release artifacts, hygiene, tests, security, docs) belongs in the local `todos/ship-review-*.md` artifact, not in the PR body. Reviewers don't need a status checklist re-stated -- they read the diff and the linked review docs if needed.
+Ship review status (release artifacts, hygiene, tests, security, docs) belongs in the local `todos/ship-review-*.md` artifact, not in the PR body. Reviewers don't need a status checklist re-stated. They read the diff and the linked review docs if needed.
 
 ### Step 4.2: Request Peer Review
 
@@ -386,7 +386,7 @@ git push
 gh pr ready [PR-NUMBER]
 ```
 
-Commit messages here follow the global rule (see `~/.claude/CLAUDE.md` § GitHub Artifact Register) -- subject line by default; body only when the WHY is non-obvious. Avoid generic `"address review feedback"` subjects; cite the actual fix.
+Commit messages here follow the global rule (see `~/.claude/CLAUDE.md` § GitHub Artifact Register): subject line by default; body only when the WHY is non-obvious. Avoid generic `"address review feedback"` subjects; cite the actual fix.
 
 ### Step 4.5: Get Approved Sign-Off
 

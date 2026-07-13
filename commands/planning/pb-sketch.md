@@ -24,10 +24,10 @@ A high-level exploration of a focus area that surfaces hidden complexity, identi
 
 ## When to Use
 
-- **Before `/pb-spec`** -- decide the hard calls first, then write the detailed plan
-- **Via `/pb-plan` wrapper** -- muscle memory; wrapper runs sketch → presents decisions → spec
-- **Standalone research sketch** -- when you want to enumerate decision forks without committing to implementation detail yet
-- **Before `/pb-adr`** -- sketch the forks, choose one, then document the decision formally
+- **Before `/pb-spec`** - decide the hard calls first, then write the detailed plan
+- **Via `/pb-plan` wrapper** - muscle memory; wrapper runs sketch → presents decisions → spec
+- **Standalone research sketch** - when you want to enumerate decision forks without committing to implementation detail yet
+- **Before `/pb-adr`** - sketch the forks, choose one, then document the decision formally
 
 **Don't use for:**
 - Decisions with one obvious path (just implement it)
@@ -112,7 +112,7 @@ Name the lens where the biggest risk sits. That focuses the rest of the sketch.
 
 ## Phase 3: Bounded Research (Optional)
 
-When the analysis hits unstable facts -- pricing, API surface, version constraints, deprecations -- research them before committing to an approach. Keep research bounded.
+When the analysis hits unstable facts (pricing, API surface, version constraints, deprecations), research them before committing to an approach. Keep research bounded.
 
 **In scope:**
 - Official docs (vendor, library, framework)

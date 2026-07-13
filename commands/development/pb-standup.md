@@ -314,7 +314,7 @@ Standups create a paper trail of:
 
 ## Building Team Culture Around Standups
 
-Standups are more than status updates-they're about building trust and psychological safety.
+Standups are more than status updates. They're about building trust and psychological safety.
 
 ### Create Psychological Safety for Blockers
 

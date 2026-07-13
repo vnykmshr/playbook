@@ -888,10 +888,10 @@ See `/pb-guide` for general SDLC process, `/pb-patterns-core` for architectural 
 
 ## Related Commands
 
-- `/pb-guide` -- General SDLC process this guide extends
-- `/pb-guide-go` -- Language-specific guide for Go projects
-- `/pb-testing` -- Advanced testing strategies and patterns
-- `/pb-patterns-async` -- Async and concurrency patterns for Python services
+- `/pb-guide` - General SDLC process this guide extends
+- `/pb-guide-go` - Language-specific guide for Go projects
+- `/pb-testing` - Advanced testing strategies and patterns
+- `/pb-patterns-async` - Async and concurrency patterns for Python services
 
 ---
 

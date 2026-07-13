@@ -16,7 +16,7 @@ breaking_changes: []
 
 Non-blocking execution patterns for concurrent operations. Essential for scalable systems.
 
-**Trade-offs exist:** Async patterns add complexity. Use `/pb-preamble` thinking (challenge assumptions) and `/pb-design-rules` thinking (especially Simplicity-do you need this complexity?).
+**Trade-offs exist:** Async patterns add complexity. Use `/pb-preamble` thinking (challenge assumptions) and `/pb-design-rules` thinking (especially Simplicity: do you need this complexity?).
 
 Question whether async is necessary. Challenge the complexity cost. Understand the actual constraints before choosing.
 
@@ -674,8 +674,6 @@ await Promise.all(
   userIds.map(userId => fetchUser(userId))
 );
 ```
-
----
 
 ---
 

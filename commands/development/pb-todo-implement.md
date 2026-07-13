@@ -608,11 +608,11 @@ The workflow will:
 
 ## Related Commands
 
-- `/pb-spec` -- Upstream source of numbered plans this workflow executes
-- `/pb-start` -- Scope and kick off new work before creating todos
-- `/pb-review` -- Full review workflow after implementation is complete
-- `/pb-cycle` -- Self-review and peer review once code is ready
-- `/pb-commit` -- Commit implementation with proper message format
+- `/pb-spec` - Upstream source of numbered plans this workflow executes
+- `/pb-start` - Scope and kick off new work before creating todos
+- `/pb-review` - Full review workflow after implementation is complete
+- `/pb-cycle` - Self-review and peer review once code is ready
+- `/pb-commit` - Commit implementation with proper message format
 
 ---
 

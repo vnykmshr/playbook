@@ -46,9 +46,9 @@ Opus reasons. Sonnet builds. Haiku runs.
 
 The table above is cost-oriented guidance, not harness description. Claude Code defaults to Opus 4.8 for coding sessions, so Engineer-tier work frequently runs on Opus anyway. Three adjustments matter:
 
-- `/fast` keeps the session on Opus with faster output (available on Opus 4.8/4.7/4.6) — it does not downgrade to Sonnet.
+- `/fast` keeps the session on Opus with faster output (available on Opus 4.8/4.7/4.6); it does not downgrade to Sonnet.
 - The `[1m]` model-ID suffix opts into a **1M-context** window (standard default is 200K); Opus 4.8 carries 1M at standard pricing, no long-context premium.
-- **Fable 5** is an emerging tier above Opus for complex, long-running work — try via `/model`. Opus stays the recommended default.
+- **Fable 5** is an emerging tier above Opus for complex, long-running work; try via `/model`. Opus stays the recommended default.
 
 When cost discipline matters (routine dev loop, CI, automation), switch to Sonnet explicitly rather than relying on the harness default. Haiku remains subagent-only via the Task tool.
 

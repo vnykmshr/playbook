@@ -14,7 +14,7 @@ breaking_changes: ["Replaced detailed pre-start checklist with 3-4 adaptive scop
 ---
 # Start Development Work
 
-Begin work on a feature, bug fix, or enhancement. Establishes scope through adaptive questions, then you work. No ceremony-just clarity.
+Begin work on a feature, bug fix, or enhancement. Establishes scope through adaptive questions, then you work. No ceremony - just clarity.
 
 **Part of the ritual:** `/pb-start` → code → `/pb-review` → decide → `/pb-commit`
 
@@ -48,7 +48,7 @@ Begin work on a feature, bug fix, or enhancement. Establishes scope through adap
 
 **What the conversation looks like:**
 
-The system asks clarifying questions naturally-like a peer reviewing your approach before you dive in. Adapt to what you describe:
+The system asks clarifying questions naturally, like a peer reviewing your approach before you dive in. Adapt to what you describe:
 
 1. **What are you building?** (outcome, not solution)
    - You: "Users can reset passwords via email"

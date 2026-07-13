@@ -218,10 +218,10 @@ Findings posted as PR/issue comments follow `~/.claude/CLAUDE.md` § GitHub Arti
 
 ## Related Commands
 
-- `/pb-review-code` -- General code review framework both agents apply
-- `/pb-review-backend` -- Backend service review for infrastructure dependencies
-- `/pb-alex-infra` -- Alex's deep dive: systems thinking, failure modes, resilience design
-- `/pb-security` -- Security review checklist for infrastructure and configuration
+- `/pb-review-code` - General code review framework both agents apply
+- `/pb-review-backend` - Backend service review for infrastructure dependencies
+- `/pb-alex-infra` - Alex's deep dive: systems thinking, failure modes, resilience design
+- `/pb-security` - Security review checklist for infrastructure and configuration
 
 ---
 

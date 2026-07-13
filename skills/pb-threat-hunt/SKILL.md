@@ -9,7 +9,7 @@ A 12-step executable security audit that treats every auth shortcut, redirect, t
 
 **Mindset:** Apply `/pb-preamble` thinking (challenge every safety assumption) and `/pb-design-rules` thinking (fail noisily, distrust "one true way," recovery-oriented errors). The hunt is adversarial by design.
 
-**Resource Hint:** opus — deep audit requires tracing decision paths end-to-end, evaluating cryptographic boundaries, and validating findings against exploit scenarios.
+**Resource Hint:** opus - deep audit requires tracing decision paths end-to-end, evaluating cryptographic boundaries, and validating findings against exploit scenarios.
 
 **Language:** This methodology targets **Go** projects by default. For Python equivalents, see `references/methodology.md` Appendix A. For Node, see Appendix B.
 
@@ -17,10 +17,10 @@ A 12-step executable security audit that treats every auth shortcut, redirect, t
 
 ## When to Use This Command
 
-- **Deep security audit** — full methodology, every step executed
-- **Pre-release security gate** — for L-tier changes touching auth, crypto, or input parsing
-- **Post-incident review** — hunt the vulnerability class that caused the incident across the codebase
-- **Dependency boundary audit** — when integrating a new auth provider, payment processor, or identity system
+- **Deep security audit** - full methodology, every step executed
+- **Pre-release security gate** - for L-tier changes touching auth, crypto, or input parsing
+- **Post-incident review** - hunt the vulnerability class that caused the incident across the codebase
+- **Dependency boundary audit** - when integrating a new auth provider, payment processor, or identity system
 
 For quick pre-release checks, use `/pb-security`. This command is the deep pass.
 
@@ -53,7 +53,7 @@ The hunt splits into workflow-automated phases and manual-judgment steps:
 | Step 9: Concurrency and cache safety | |
 | Step 10: 3-vote adversarial verify (with Scope Sweep gate) | |
 
-Workflow phases run in sequence with step-completion enforcement — a phase producing shallow output is rejected, not passed. The 3-vote verify in Step 10 uses diverse skeptic prompts (threat-model reader, exploit-chain tracer, fix-site checker). Kill if ≥2 refute.
+Workflow phases run in sequence with step-completion enforcement: a phase producing shallow output is rejected, not passed. The 3-vote verify in Step 10 uses diverse skeptic prompts (threat-model reader, exploit-chain tracer, fix-site checker). Kill if ≥2 refute.
 
 ---
 
@@ -110,8 +110,8 @@ Run `./scripts/install.sh` to install to `~/.claude/skills/pb-threat-hunt/`.
 
 ## Related Commands
 
-- `/pb-security` — Quick pre-release security checklist (run first; use this for deep follow-up)
-- `/pb-secrets` — Secrets management lifecycle
-- `/pb-hardening` — Infrastructure hardening (servers, containers, networks)
-- `/pb-incident` — Incident response when a finding becomes an active threat
-- `/pb-debug` — Tracing exploit paths through code
+- `/pb-security` - Quick pre-release security checklist (run first; use this for deep follow-up)
+- `/pb-secrets` - Secrets management lifecycle
+- `/pb-hardening` - Infrastructure hardening (servers, containers, networks)
+- `/pb-incident` - Incident response when a finding becomes an active threat
+- `/pb-debug` - Tracing exploit paths through code

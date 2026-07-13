@@ -18,7 +18,7 @@ Generate a project-specific `.claude/CLAUDE.md` by analyzing the current project
 
 **Purpose:** Create project-specific context that complements global CLAUDE.md with details relevant to THIS project.
 
-**Philosophy:** Project CLAUDE.md should capture what's unique about this project-tech stack, structure, commands, patterns-so Claude Code understands the project context across sessions.
+**Philosophy:** Project CLAUDE.md should capture what's unique about this project (tech stack, structure, commands, patterns) so Claude Code understands the project context across sessions.
 
 **Context efficiency:** This file is loaded every conversation turn. Keep it **under 2K tokens** (~150 lines). Move detailed documentation to `docs/` and reference it.
 

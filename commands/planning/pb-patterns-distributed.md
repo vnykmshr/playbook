@@ -16,7 +16,7 @@ breaking_changes: []
 
 Patterns for coordinating operations across multiple services/databases.
 
-**Caveat:** Distributed patterns add significant complexity. Use `/pb-preamble` thinking (challenge assumptions) and `/pb-design-rules` thinking (especially Simplicity and Resilience-can you achieve your goals with simpler approaches?).
+**Caveat:** Distributed patterns add significant complexity. Use `/pb-preamble` thinking (challenge assumptions) and `/pb-design-rules` thinking (especially Simplicity and Resilience: can you achieve your goals with simpler approaches?).
 
 Question whether you truly need distributed systems. Challenge the assumption that you can't keep things simple. Understand the real constraints before choosing.
 
@@ -1106,7 +1106,7 @@ func (s *OrderSaga) compensate(ctx context.Context, completed []string, order *O
 }
 ```
 
-Other patterns (Event-Driven, Outbox, CQRS, Eventual Consistency) follow similar Go idioms-use channels for events, context for cancellation, and interfaces for testability.
+Other patterns (Event-Driven, Outbox, CQRS, Eventual Consistency) follow similar Go idioms: use channels for events, context for cancellation, and interfaces for testability.
 
 ---
 
