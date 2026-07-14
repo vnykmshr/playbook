@@ -134,7 +134,7 @@ Integrating the engineering playbook into your team's workflow. This guide shows
 
 | Stage | Focus | Key Commands |
 |-------|-------|--------------|
-| **Greenfield** | Structure first | `/pb-repo-init`, `/pb-plan`, `/pb-adr`, `/pb-patterns-*` |
+| **Greenfield** | Structure first | `/pb-greenfield`, `/pb-plan`, `/pb-adr`, `/pb-patterns-*` |
 | **Growth** | Quality gates | `/pb-cycle`, `/pb-review-*`, `/pb-testing`, `/pb-standards` |
 | **Maintenance** | Consistency | `/pb-review-hygiene`, `/pb-deprecation`, `/pb-context` |
 | **Scaling** | Governance | `/pb-plan`, `/pb-adr`, `/pb-design-rules`, `/pb-review` |

@@ -5,7 +5,7 @@ category: "repo"
 difficulty: "advanced"
 model_hint: "sonnet"
 execution_pattern: "sequential"
-related_commands: ['pb-repo-init', 'pb-repo-organize', 'pb-repo-docsite', 'pb-repo-polish']
+related_commands: ['pb-greenfield', 'pb-repo-organize', 'pb-repo-docsite', 'pb-repo-polish']
 last_reviewed: "2026-02-18"
 last_evolved: "2026-02-18"
 version: "1.1.0"
@@ -222,7 +222,7 @@ After enhancement, verify:
 
 ## Related Commands
 
-- `/pb-repo-init` - Initialize new project structure
+- `/pb-greenfield` - New project from an idea (this suite is for repos that already exist)
 - `/pb-repo-organize` - Clean up repository structure
 - `/pb-repo-docsite` - Set up documentation site
 - `/pb-repo-polish` - Audit AI discoverability (scorecard after enhance)

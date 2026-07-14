@@ -5,7 +5,7 @@ category: "templates"
 difficulty: "beginner"
 model_hint: "sonnet"
 execution_pattern: "sequential"
-related_commands: ['pb-claude-global', 'pb-claude-orchestration', 'pb-context', 'pb-onboarding', 'pb-repo-init']
+related_commands: ['pb-claude-global', 'pb-claude-orchestration', 'pb-context', 'pb-onboarding', 'pb-greenfield']
 last_reviewed: "2026-07-13"
 last_evolved: "2026-07-13"
 version: "1.1.0"
@@ -477,7 +477,7 @@ Project CLAUDE.md complements global:
 - `/pb-claude-orchestration` - Model selection and resource efficiency guide
 - `/pb-context` - Project working context template
 - `/pb-onboarding` - New developer onboarding
-- `/pb-repo-init` - Initialize new project structure
+- `/pb-greenfield` - New project from an idea (hands off to this command for the project CLAUDE.md)
 
 ---
 

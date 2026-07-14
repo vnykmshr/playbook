@@ -5,7 +5,7 @@ category: "repo"
 difficulty: "advanced"
 model_hint: "sonnet"
 execution_pattern: "sequential"
-related_commands: ['pb-repo-readme', 'pb-repo-enhance']
+related_commands: ['pb-repo-readme', 'pb-repo-enhance', 'pb-greenfield']
 last_reviewed: "2026-02-09"
 last_evolved: ""
 version: "1.0.0"
@@ -155,6 +155,7 @@ Tags: tag1, tag2, tag3, tag4, tag5, tag6
 
 - `/pb-repo-readme` - Generate comprehensive README
 - `/pb-repo-enhance` - Full repository enhancement suite
+- `/pb-greenfield` - New project from an idea (its one-sentence answer is this command's input)
 
 ---
 

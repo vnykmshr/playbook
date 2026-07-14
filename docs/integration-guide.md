@@ -22,7 +22,7 @@ Complete reference for how all playbook commands work together to form a unified
 ### By Situation
 
 **Starting a new project?**
-→ `/pb-plan` (planning) → `/pb-adr` (architecture) → `/pb-patterns-*` (select patterns) → `/pb-repo-init` (setup)
+→ `/pb-plan` (planning) → `/pb-adr` (architecture) → `/pb-patterns-*` (select patterns) → `/pb-greenfield` (setup)
 
 **Implementing a feature?**
 → `/pb-start` (begin) → `/pb-cycle` (iterate) → `/pb-commit` (atomic commits) → `/pb-pr` (merge)
@@ -345,9 +345,9 @@ INCIDENT DETECTED
 ### REPOSITORY MANAGEMENT
 Professional repository structure and presentation.
 
-| # | Command | Purpose | Use | Tier |
-|---|---------|---------|-----|------|
-| 35 | **pb-repo-init** | Initialize greenfield project | Project start | Directory structure, README template, CI/CD | Project start |
+| # | Command | Purpose | Use | Delivers | Tier |
+|---|---------|---------|-----|----------|------|
+| 35 | **pb-greenfield** | Idea to working repo | Project start | Scaffold, `.claude/CLAUDE.md`, `todos/`, lint+test CI | M |
 | 36 | **pb-repo-organize** | Organize repository structure | Cleanup/improvement | Root layout, folder org, GitHub special files | S/M |
 | 37 | **pb-repo-readme** | Write high-quality README | Repository documentation | Clear, searchable, language-specific | S |
 | 38 | **pb-repo-about** | Set GitHub About section + tags | GitHub presentation | Profile optimization, tag selection | S |
@@ -357,11 +357,9 @@ Professional repository structure and presentation.
 **Repository setup flow**:
 ```
 NEW PROJECT:
-  /pb-repo-init (initial setup)
+  /pb-greenfield (idea → working repo; scaffold + playbook layer + stub README)
     ↓
-  /pb-repo-organize (structure directories)
-    ↓
-  /pb-repo-readme (create README)
+  /pb-repo-readme (replace the stub with the real README)
     ↓
   /pb-repo-about (set GitHub About)
     ↓
@@ -627,7 +625,7 @@ RELEASE
 **Who**: SREs, DevOps, on-call engineers
 
 ### Cluster 7: Repository Management
-**Commands**: pb-repo-init, pb-repo-organize, pb-repo-readme, pb-repo-about, pb-repo-blog, pb-repo-enhance
+**Commands**: pb-greenfield, pb-repo-organize, pb-repo-readme, pb-repo-about, pb-repo-blog, pb-repo-enhance
 **Purpose**: Professional repository structure and presentation
 **Frequency**: Project start, periodic enhancement
 **Who**: Tech leads, project owners

@@ -5,7 +5,7 @@ category: "templates"
 difficulty: "beginner"
 model_hint: "sonnet"
 execution_pattern: "sequential"
-related_commands: ['pb-claude-project', 'pb-start', 'pb-resume', 'pb-onboarding']
+related_commands: ['pb-claude-project', 'pb-greenfield', 'pb-start', 'pb-resume', 'pb-onboarding']
 last_reviewed: "2026-02-09"
 last_evolved: ""
 version: "1.0.0"
@@ -330,6 +330,7 @@ git log --oneline -10                  # Recent commits
 ## Related Commands
 
 - `/pb-claude-project` - Generate project CLAUDE.md
+- `/pb-greenfield` - New project from an idea (calls this command to seed the working context)
 - `/pb-start` - Begin development work
 - `/pb-resume` - Resume after break
 - `/pb-onboarding` - New team member integration

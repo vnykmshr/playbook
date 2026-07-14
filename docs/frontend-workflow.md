@@ -10,7 +10,8 @@ Complete guide to frontend development using the Engineering Playbook. Covers th
 
 **New frontend project?**
 ```
-/pb-repo-init → /pb-design-language → /pb-patterns-frontend → /pb-start
+/pb-greenfield  (scaffolds; hands to /pb-zero-stack if it's a static $0/month site)
+    → /pb-design-language → /pb-patterns-frontend → /pb-start
 ```
 
 **Adding frontend feature?**

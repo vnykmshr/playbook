@@ -89,7 +89,7 @@ Quick reference for all playbook commands.
 
 | Command | When to Use |
 |---------|-------------|
-| `/pb-repo-init` | Initialize new greenfield project |
+| `/pb-greenfield` | Start a new project from an idea |
 | `/pb-repo-organize` | Clean up project root structure |
 | `/pb-repo-about` | Generate GitHub About section + tags |
 | `/pb-repo-readme` | Write or rewrite project README |
@@ -219,7 +219,7 @@ Developer machine health and maintenance.
 
 ### New Project Setup
 ```
-/pb-repo-init      → Plan project structure (generic)
+/pb-greenfield     → Idea → working repo (any topology; routes to zero-stack if it fits)
 /pb-zero-stack     → Scaffold $0/month app (static + edge + CI)
 /pb-repo-organize  → Clean folder layout
 /pb-repo-readme    → Write documentation

@@ -5,7 +5,7 @@ category: "planning"
 difficulty: "advanced"
 model_hint: "sonnet"
 execution_pattern: "sequential"
-related_commands: ['pb-patterns-frontend', 'pb-a11y', 'pb-adr', 'pb-repo-init', 'pb-documentation']
+related_commands: ['pb-patterns-frontend', 'pb-a11y', 'pb-adr', 'pb-greenfield', 'pb-documentation']
 last_reviewed: "2026-02-09"
 last_evolved: ""
 version: "1.0.0"
@@ -470,7 +470,7 @@ Consider automated checks:
 
 ## Starting a New Project
 
-When initializing a project with `/pb-repo-init`:
+After `/pb-greenfield` scaffolds a project (it does not set up design language itself):
 
 1. Copy the bootstrap template to `docs/design-language.md`
 2. Fill in project overview and principles
@@ -487,7 +487,7 @@ Then evolve as the project matures.
 - `/pb-patterns-frontend` - Implementation patterns using design tokens
 - `/pb-a11y` - Accessibility requirements that constrain design
 - `/pb-adr` - For significant design decisions
-- `/pb-repo-init` - Bootstrap includes design language
+- `/pb-greenfield` - New project scaffold (add the design language after)
 - `/pb-documentation` - Documentation standards
 
 ---

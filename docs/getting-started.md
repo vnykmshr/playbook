@@ -31,7 +31,7 @@ You've decided to build something new. Here's how to establish a strong foundati
 /pb-plan              # Define scope, success criteria, phases
 
 # Step 2: Set up repository
-/pb-repo-init         # Initialize directory structure
+/pb-greenfield        # Idea → working repo (scaffold + playbook layer)
 /pb-repo-organize     # Clean folder layout
 /pb-repo-readme       # Write compelling README
 

@@ -129,7 +129,7 @@
 
 # Commands: Repo
 
-- [Repo Init](commands/repo/pb-repo-init.md)
+- [New Project (Idea → Repo)](commands/repo/pb-greenfield.md)
 - [Repo Organize](commands/repo/pb-repo-organize.md)
 - [Repo README](commands/repo/pb-repo-readme.md)
 - [Repo About](commands/repo/pb-repo-about.md)

@@ -5,7 +5,7 @@ category: "repo"
 difficulty: "advanced"
 model_hint: "sonnet"
 execution_pattern: "sequential"
-related_commands: ['pb-repo-init', 'pb-repo-enhance', 'pb-review-hygiene']
+related_commands: ['pb-greenfield', 'pb-repo-enhance', 'pb-review-hygiene']
 last_reviewed: "2026-02-09"
 last_evolved: ""
 version: "1.0.0"
@@ -200,7 +200,7 @@ project/
 
 ## Related Commands
 
-- `/pb-repo-init` - Initialize new project structure
+- `/pb-greenfield` - New project from an idea (this command is for repos that already exist)
 - `/pb-repo-enhance` - Full repository enhancement suite
 - `/pb-review-hygiene` - Codebase quality review
 

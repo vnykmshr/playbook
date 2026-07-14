@@ -9,7 +9,7 @@ This guide helps you find the right command for any situation. Answer the questi
 ### I'm starting new work...
 
 **Starting a new project?**
-→ Use `/pb-plan` to lock scope, then `/pb-repo-init` to set up structure
+→ Use `/pb-greenfield` (it goes from idea to working repo). Lock scope with `/pb-plan` first when the stakes warrant it
 
 **Starting a feature or bug fix?**
 → Use `/pb-start` to create a branch and establish iteration rhythm
@@ -135,7 +135,7 @@ This guide helps you find the right command for any situation. Answer the questi
 ### I'm working on repository or documentation...
 
 **Setting up a new project?**
-→ Use `/pb-repo-init` to initialize structure
+→ Use `/pb-greenfield` to go from idea to working repo
 
 **Need to organize/clean up project directory?**
 → Use `/pb-repo-organize` for repository cleanup
@@ -179,7 +179,7 @@ This guide helps you find the right command for any situation. Answer the questi
 START
 │
 ├─ "I'm starting something new"
-│  ├─ "Entire project?" → /pb-plan → /pb-repo-init
+│  ├─ "Entire project?" → /pb-greenfield (add /pb-plan first if scope is unsettled)
 │  ├─ "Feature/bug?" → /pb-start
 │  └─ "Resuming?" → /pb-resume
 │
@@ -219,7 +219,7 @@ START
 │  └─ "Daily standup?" → /pb-standup
 │
 └─ "Repository/Docs"
-   ├─ "New project?" → /pb-repo-init
+   ├─ "New project?" → /pb-greenfield
    ├─ "Organize?" → /pb-repo-organize
    ├─ "README?" → /pb-repo-readme
    ├─ "GitHub about?" → /pb-repo-about
@@ -272,7 +272,7 @@ START
 - `/pb-team` - Team dynamics
 
 ### One-Time
-- `/pb-repo-init` - New project
+- `/pb-greenfield` - New project
 - `/pb-repo-organize` - Cleanup
 - `/pb-repo-readme` - Write README
 - `/pb-repo-about` - GitHub about

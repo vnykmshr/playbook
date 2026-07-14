@@ -82,7 +82,7 @@ What type of playbook is this? Classification determines required sections.
 | `development/` | Daily workflow commands | pb-start, pb-commit, pb-cycle |
 | `deployment/` | Release, ops, infrastructure | pb-deployment, pb-release, pb-incident |
 | `reviews/` | Quality gates, audits | `pb-review-*`, pb-security |
-| `repo/` | Repository management | pb-repo-init, pb-repo-enhance |
+| `repo/` | Repository management | pb-greenfield, pb-repo-enhance |
 | `people/` | Team operations | pb-team, pb-onboarding |
 | `templates/` | Context generators, Claude Code configuration | pb-claude-global, pb-context |
 | `utilities/` | System maintenance | pb-doctor, pb-storage, pb-ports |
@@ -508,7 +508,7 @@ Version lives in the YAML frontmatter `version` field (`MAJOR.MINOR.PATCH`), the
 - [ ] Pre-commit hook installed
 
 ## Related Commands
-- /pb-repo-init - Project initialization
+- /pb-greenfield - Project initialization
 ```
 
 ### Step 5: Validate

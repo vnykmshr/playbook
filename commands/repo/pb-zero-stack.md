@@ -5,7 +5,7 @@ category: "repo"
 difficulty: "intermediate"
 model_hint: "opus"
 execution_pattern: "interactive"
-related_commands: ['pb-repo-init', 'pb-start', 'pb-patterns-cloud', 'pb-design-language', 'pb-calm-design']
+related_commands: ['pb-greenfield', 'pb-start', 'pb-patterns-cloud', 'pb-design-language', 'pb-calm-design']
 last_reviewed: "2026-02-25"
 last_evolved: "2026-02-25"
 version: "3.2.0"
@@ -42,10 +42,10 @@ A structured conversation that takes an idea (or PRD) and walks through the prod
 
 ## When NOT to Use
 
-- Real-time collaboration or WebSocket-heavy - use `/pb-repo-init` + `/pb-patterns-async`
-- Complex relational data or SQL queries - use `/pb-repo-init` + `/pb-patterns-db`
-- OAuth flows, user accounts, or session management - use `/pb-repo-init`
-- Dynamic file uploads from users or media processing - use `/pb-repo-init`
+- Real-time collaboration or WebSocket-heavy - use `/pb-greenfield` + `/pb-patterns-async`
+- Complex relational data or SQL queries - use `/pb-greenfield` + `/pb-patterns-db`
+- OAuth flows, user accounts, or session management - use `/pb-greenfield`
+- Dynamic file uploads from users or media processing - use `/pb-greenfield`
 - SSR required - this topology serves static files at the edge
 
 If the idea doesn't fit, redirect early. Don't force the topology.
@@ -174,7 +174,7 @@ Does this idea fit the zero-stack topology?
 - **Fits with adaptation:** Simple forms (POST to handler), personal storage (localStorage), optional admin auth (CF Access)
 - **Doesn't fit:** User accounts, OAuth, file uploads, real-time collaboration, complex queries, SSR
 
-If the adaptation is small, proceed. If it reshapes the architecture, redirect to `/pb-repo-init`.
+If the adaptation is small, proceed. If it reshapes the architecture, redirect to `/pb-greenfield`.
 
 ### Step 2: Data Architecture
 
@@ -594,7 +594,7 @@ API hits/day = (active_hours * 60 / kv_ttl_minutes) + cron_runs
 
 | Don't | Do Instead |
 |-------|------------|
-| Force-fit an idea that needs auth/accounts | Redirect to `/pb-repo-init` in Step 1 |
+| Force-fit an idea that needs auth/accounts | Redirect to `/pb-greenfield` in Step 1 |
 | Skip budget math | Calculate it - free tier surprise is the #1 failure mode |
 | Deploy before local dev works | Phase A must complete before Phase B |
 | Use `[env.dev.vars]` in wrangler.toml | Use `.dev.vars` file (not committed) |
@@ -610,7 +610,7 @@ API hits/day = (active_hours * 60 / kv_ttl_minutes) + cron_runs
 
 ## Related Commands
 
-- `/pb-repo-init` - Generic greenfield initiation (when the Gist topology doesn't fit)
+- `/pb-greenfield` - The general path (start there if unsure; it routes here when the Gist topology fits)
 - `/pb-start` - Begin feature work after scaffolding
 - `/pb-patterns-cloud` - Cloud deployment patterns reference
 - `/pb-design-language` - Deeper design system work (optional, after scaffold)
