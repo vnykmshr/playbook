@@ -230,7 +230,7 @@ Shorthand for commands used throughout documentation:
 | Shorthand | Full Command | Purpose |
 |-----------|--------------|---------|
 | `/pb-adr` | Architecture Decision Record | Document major decisions |
-| `/pb-commit` | Craft Atomic Commits | Create logical, well-formatted commits |
+| `/pb-commit` | Commit (Usually Automatic) | Create logical, well-formatted commits |
 | `/pb-cycle` | Development Cycle | Self-review and peer review iteration |
 | `/pb-guide` | SDLC Guide | Full development framework |
 | `/pb-incident` | Incident Response | Handle production issues |
@@ -245,9 +245,9 @@ Shorthand for commands used throughout documentation:
 | `/pb-performance` | Performance Optimization | Profiling and optimization |
 | `/pb-pr` | Pull Request Creation | Create PR with context |
 | `/pb-release` | Release Checklist | Pre-release verification |
-| `/pb-review` | Comprehensive Review | Multi-perspective code audit |
+| `/pb-review` | Automated Quality Gate | Analyze, consult personas, commit |
 | `/pb-security` | Security Checklist | Input validation, auth, secrets |
-| `/pb-start` | Start Feature Branch | Create branch and set rhythm |
+| `/pb-start` | Start Development Work | Create branch and set rhythm |
 | `/pb-standup` | Daily Standup | Async status update |
 | `/pb-standards` | Team Standards | Coding standards and norms |
 | `/pb-templates` | Reusable Templates | Commit, PR, review templates |

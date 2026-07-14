@@ -23,6 +23,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- **`docs/glossary.md`: three command-reference rows named commands by titles they no longer have.** `/pb-review` was listed as "Comprehensive Review -- Multi-perspective code audit", which is `/pb-review-comprehensive`'s job, so the published site sent readers confidently to the wrong command; it is "Automated Quality Gate". `/pb-commit` and `/pb-start` had stale titles from earlier renames.
+- **`mdbook/SUMMARY.md`: the `docs/voice.md` nav label promised a standard the file doesn't set.** "Voice Guide" reads as a prose style guide; the file documents how playbook commands talk to *you*. Relabelled "How Commands Talk". `/pb-voice` remains the prose gate, and the two are unrelated on purpose.
+
 - **`validate-conventions.py`: fenced Related Commands templates no longer shadow the real section.** The Related Commands scan skips ``` fenced blocks, so generator commands like `/pb-new-playbook` (which embed sample sections in code fences) validate against their own section instead of a template placeholder. Adds a regression test.
 
 ## [v2.26.0] - 2026-07-13

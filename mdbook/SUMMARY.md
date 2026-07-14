@@ -172,7 +172,7 @@
 - [Checklists](docs/checklists.md)
 - [FAQ](docs/faq.md)
 - [Glossary](docs/glossary.md)
-- [Voice Guide](docs/voice.md)
+- [How Commands Talk](docs/voice.md)
 - [Preamble Quick Reference](docs/preamble-quick-ref.md)
 - [Design Rules Quick Reference](docs/design-rules-quick-ref.md)
 
