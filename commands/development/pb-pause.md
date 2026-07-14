@@ -7,9 +7,9 @@ model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-resume', 'pb-start', 'pb-standup']
 last_reviewed: "2026-04-26"
-last_evolved: "2026-06-30"
-version: "1.5.0"
-version_notes: "v1.5.0: Add Session Recap step — assistant-driven reflection surfaced at resume."
+last_evolved: "2026-07-14"
+version: "1.5.1"
+version_notes: "v1.5.1: Deep-mode Step 6 caveat — diff before regenerating a hand-evolved project CLAUDE.md."
 breaking_changes: []
 ---
 # Pause Development Work
@@ -191,6 +191,8 @@ Run `/pb-claude-project` if the session introduced:
 - Workflow changes
 
 **When to skip:** Minor bug fixes, small features, no structural changes.
+
+**If the file is heavily hand-evolved:** a full regen overwrites it. Diff the generated output against the live file first; if the live file carries content the generator won't reproduce, apply targeted edits to the stale facts instead of regenerating.
 
 ---
 
