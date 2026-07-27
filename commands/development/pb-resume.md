@@ -6,10 +6,10 @@ difficulty: "advanced"
 model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-start', 'pb-pause', 'pb-cycle']
-last_reviewed: "2026-03-28"
-last_evolved: "2026-07-01"
-version: "1.5.0"
-version_notes: "v1.5.0: Restructure Step 0 — SURFACE→ACT→ARCHIVE phases with dedup check, archive-failure handling, and Recap Disposition summary."
+last_reviewed: "2026-07-27"
+last_evolved: "2026-07-27"
+version: "1.6.0"
+version_notes: "v1.6.0: Recap archive moves from memory/lessons.md to todos/done/lessons.md — session and lesson notes stay in the gitignored dev tree. Strip now means remove the body, not comment it out. v1.5.0: Restructure Step 0 — SURFACE→ACT→ARCHIVE phases with dedup check, archive-failure handling, and Recap Disposition summary."
 breaking_changes: []
 ---
 # Resume Development Work
@@ -45,7 +45,7 @@ Read the `### Session Recap` section from `todos/pause-notes.md`.
 
 #### 0a. SURFACE: Present Findings
 
-Before surfacing, check for duplicates: if the recap content already appears as the most recent entry in `memory/lessons.md`, skip to Step 1 (already processed on a prior resume).
+Before surfacing, check for duplicates: if the recap content already appears as the most recent entry in `todos/done/lessons.md`, skip to Step 1 (already processed on a prior resume).
 
 Otherwise, surface the recap visibly. Present findings as a structured summary. The recap is a learning loop, not a write-only log:
 
@@ -78,13 +78,15 @@ The default is "act, then report." The user can override any action before archi
 
 #### 0c. ARCHIVE: Append → Strip
 
-1. **Append to `memory/lessons.md`** first (create the file if new) - prevents data loss if interrupted:
+1. **Append to `todos/done/lessons.md`** first (create the file and `todos/done/` if new) - prevents data loss if interrupted:
    ```markdown
    ## [YYYY-MM-DD] — [session context]
    [recap content]
    ```
 2. **If the append fails:** leave the recap in pause notes, flag the error. Do not strip.
-3. **Strip from pause notes** only after confirming the archive write succeeded.
+3. **Strip from pause notes** only after confirming the archive write succeeded. Strip means remove the body and leave a one-line pointer to the archive - not a comment marker around retained text.
+
+Session notes and lesson notes live under `todos/`, alongside the pause notes they continue, and inherit its gitignore. They are position and reflection, not tracked artifacts; anything durable belongs in `docs/`.
 
 ---
 

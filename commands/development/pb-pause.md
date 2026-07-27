@@ -6,10 +6,10 @@ difficulty: "advanced"
 model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-resume', 'pb-start', 'pb-standup']
-last_reviewed: "2026-04-26"
-last_evolved: "2026-07-14"
-version: "1.5.1"
-version_notes: "v1.5.1: Deep-mode Step 6 caveat — diff before regenerating a hand-evolved project CLAUDE.md."
+last_reviewed: "2026-07-27"
+last_evolved: "2026-07-27"
+version: "1.6.0"
+version_notes: "v1.6.0: Step 0 bootstraps the todos/ tree — a first pause no longer assumes todos/done/ and the working context already exist. Recap archive path moves to todos/done/lessons.md. v1.5.1: Deep-mode Step 6 caveat — diff before regenerating a hand-evolved project CLAUDE.md."
 breaking_changes: []
 ---
 # Pause Development Work
@@ -49,6 +49,21 @@ That's it. No pause notes, no health check. Use `/pb-pause` when you need to pre
 ---
 
 ## Standard Mode (Default)
+
+### Step 0: Bootstrap the `todos/` Tree
+
+The rest of this command writes into `todos/`. On a project's **first** pause none of it exists yet, so create what is missing before writing:
+
+```bash
+mkdir -p todos/done
+# todos/pause-notes.md and todos/1-working-context.md are created by Steps 3 and 6.
+```
+
+Confirm `todos/` is gitignored. If it is not, add it -- `todos/` is the dev-only tree: position, scratch, and reflection, never a tracked artifact. Anything durable that lands there belongs in `docs/` instead.
+
+Do not treat a missing file as "nothing to preserve." A first pause is exactly when the breadcrumbs matter most.
+
+---
 
 ### Step 1: Preserve Work State
 
@@ -154,7 +169,7 @@ After the pause entry is written, reflect on the session and fill in the `### Se
 
 **Depth:** Thorough reflection. Analyze the session's git log, conversation, decisions made, and paths not taken. If nothing meaningful happened, the section can be brief or omitted.
 
-The recap is surfaced at `/pb-resume` and archived to `memory/lessons.md` after review.
+The recap is surfaced at `/pb-resume` and archived to `todos/done/lessons.md` after review -- session and lesson notes stay under `todos/`, next to the pause notes they continue.
 
 ---
 
