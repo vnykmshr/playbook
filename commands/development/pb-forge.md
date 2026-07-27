@@ -6,10 +6,10 @@ difficulty: "advanced"
 model_hint: "opus"
 execution_pattern: "interactive"
 related_commands: ['pb-what-next', 'pb-review', 'pb-huddle', 'pb-preflight', 'pb-ship']
-last_reviewed: "2026-07-03"
-last_evolved: "2026-06-10"
-version: "1.1.0"
-version_notes: "Review arc formalized: Self-gate is now a compound verify stage (review → code-review → handcraft → huddle signoff → preflight). Each sub-stage runs conditionally on concrete triggers; sub-stages compound — each catches what the prior missed. Cursor tracks sub-stage progress for correct resumption. Peer simplifies to /pb-pr only."
+last_reviewed: "2026-07-27"
+last_evolved: "2026-07-27"
+version: "1.2.0"
+version_notes: "v1.2.0: Slice escape added — the front arc now carries an iteration tally, and forge stops at three to propose the smallest executable slice. Acceptance gates must state a falsifier before their first run. Cursor records the tally and the falsifier."
 breaking_changes: []
 ---
 # Lifecycle Step-Runner
@@ -91,6 +91,28 @@ If triage keeps short-circuiting to the tail on your real work, that's the signa
 
 ---
 
+## The Slice Escape
+
+The front arc -- Frame, Pressure-test, Plan -- produces text about work. Nothing in it can fail, so it can iterate indefinitely and feel productive the entire time. Forge counts the iterations and forces the question.
+
+**The counter.** The arc cursor keeps a front-arc tally: increment it each time forge re-enters Frame, Pressure-test, or Plan for the same deliverable without having reached Execute in between. Revisions inside one stage count. A re-run the user asked for counts.
+
+| Tally | Forge |
+|-------|-------|
+| 1 | proceeds normally |
+| 2 | states the count, asks what this round will find that the last did not, and offers the slice |
+| 3 | **stops.** Proposes the smallest slice that executes; does not re-enter the front arc until it is built or explicitly declined |
+
+A front-arc gate that returns a verdict of *not ready* moves the tally regardless of which stage produced it. Two rounds is the point to reach for an executable -- not five.
+
+**The slice** is the smallest thing that runs against real inputs: real data, real files, the real adjacent system. Not a mock, not a skeleton returning constants. Its job is to produce artifacts a review cannot -- something that fails, or passes when it should not. Prefer the path that is also the production path; a slice built on a shortcut proves the shortcut.
+
+**Every acceptance gate states its falsifier before it is run the first time.** "Done when X," where X is observable and could come out either way. A gate phrased as an open question -- *could a reader who has never seen this implement it?* -- has no failing condition and therefore no passing one. It returns NO for as many rounds as it is run, and each NO reads as a finding rather than as evidence the instrument is broken. If you cannot state what would end the gate, the gate is not ready to run.
+
+**The tell is usually in your own writing.** "Another round will likely find another layer" is not a plan; it is a prediction that the loop does not converge. Read it as the stop signal it is.
+
+---
+
 ## Execute Hand-off
 
 Execute is where forge gets out of the way. It invokes `/pb-start` (or `/pb-todo-implement` when a plan exists), records the branch and plan path in the arc cursor, and releases control. From there the inner loop and `/pb-pause` / `/pb-resume` own session continuity exactly as they do today -- forge does not wrap or micromanage your coding.
@@ -104,8 +126,10 @@ Forge treats execute as complete when you say so. Hints it offers but never acts
 Forge keeps one file per deliverable at `todos/forge/{slug}.md` -- under the dev-only `todos/` tree, gitignored, not a tracked artifact. It holds:
 
 - current stage
+- front-arc tally (see "The Slice Escape") -- reset to 0 on reaching Execute
 - sub-stage progress within Self-gate (which sub-stages completed, which is pending)
 - deliverable paths as they appear: sketch -> plan -> branch -> PR
+- the falsifier stated for any acceptance gate the front arc runs
 - decisions resolved at each seam
 - one log line per stage transition
 
@@ -149,6 +173,8 @@ Re-invoking `/pb-forge` on a deliverable with an existing cursor resumes at the 
 - **Forge auto-advanced a seam.** It picked a fork, accepted a review finding, or pushed without asking. That's a bug, not a convenience -- the seam stops are the whole contract.
 - **Triage always lands on tail.** Most of your work skips the front arc, so forge wraps the review chain + PR + release. The compound self-gate is the meat of the tail, not thin ceremony. Still, if you never need think/huddle/plan, the front arc may not earn its place for this project.
 - **Cursor outlived the deliverable.** A stale `todos/forge/*.md` for shipped work is a position, not an archive -- delete it.
+- **The front-arc tally is climbing.** Plan is iterating on itself. The spec is growing and nothing has run. Take the slice escape; the thing that has never executed is where the defects are.
+- **An acceptance gate has returned the same verdict twice.** Check whether it can return the other one. A gate with no falsifier is not a finding generator, it is a loop.
 
 ---
 
