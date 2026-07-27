@@ -6,10 +6,10 @@ difficulty: "intermediate"
 model_hint: "opus"
 execution_pattern: "parallel-then-sequential"
 related_commands: ['pb-think', 'pb-preamble', 'pb-clara-curator', 'pb-maya-product', 'pb-adr']
-last_reviewed: "2026-07-13"
-last_evolved: "2026-07-13"
-version: "1.2.0"
-version_notes: "v1.2.0: Four-role model (process + curatorial orchestrators, topic-selected lead, panel); register the 9-persona roster with a Lead column; Clara holds the synthesis seat."
+last_reviewed: "2026-07-27"
+last_evolved: "2026-07-27"
+version: "1.3.0"
+version_notes: "v1.3.0: Bring a proposal to break, not a blank page — the panel is adversarially sharp and generatively weak, so Step 1 requires a concrete candidate. v1.2.0: Four-role model (process + curatorial orchestrators, topic-selected lead, panel); register the 9-persona roster with a Lead column; Clara holds the synthesis seat."
 breaking_changes: []
 ---
 # Multi-Perspective Decision Session
@@ -93,6 +93,8 @@ State the question clearly. Not "what should we do?" but the specific tension:
 - "Do we optimize for developer experience or runtime performance in the SDK?"
 
 The question must have genuine tension -- if there's an obvious answer, skip the huddle.
+
+**Bring a proposal to break, not a blank page.** A panel is sharpest when it is adversarial against something concrete -- a specific resolution, a written rule, a chosen default -- and weakest when asked to generate options from nothing. If you have no candidate answer yet, write the worst defensible one and hand the panel that; being wrong in a specific direction gives every lens something to push on.
 
 ### Step 2: Load Context
 
@@ -194,6 +196,7 @@ Lead: [persona] -- [why this lane leads]. Orchestrators: Clara (curatorial) + Cl
 | All personas agree too easily | Generate the best counterargument before synthesizing |
 | Average the opinions | Find the approach that survives all lenses |
 | Huddle without loaded context | Read all relevant state files first |
+| Ask the panel to generate from a blank page | Hand it a concrete proposal to break |
 | Skip recording the decision | Write it to the project doc immediately |
 | Re-huddle the same question unchanged | Read the previous decision and build on it |
 | Run full huddle for a refined follow-up question | Use re-huddle mode (`--re-huddle`) -- reuse personas, skip context reloading |
