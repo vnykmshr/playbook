@@ -6,10 +6,10 @@ difficulty: "beginner"
 model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-claude-global', 'pb-claude-project', 'pb-learn', 'pb-review-playbook', 'pb-new-playbook']
-last_reviewed: "2026-06-10"
-last_evolved: "2026-06-10"
-version: "1.3.0"
-version_notes: "v1.3.0: Q2 2026 capability refresh -- Harness Reality to Opus 4.8 GA; corrected /fast (keeps Opus with faster output, no Sonnet downgrade); [1m] 1M-context framing; brief Fable 5 note (Opus stays default). v1.2.0: add Output Discipline subsection to Task Delegation Patterns -- accept subagent summaries as context, do not pipe raw tool output back into main conversation."
+last_reviewed: "2026-07-27"
+last_evolved: "2026-07-27"
+version: "1.4.0"
+version_notes: "v1.4.0: Size the Pass, Not the Agent — inline the evidence and narrow the question; the whole-repo-reading subagent is the one that dies late. v1.3.0: Q2 2026 capability refresh -- Harness Reality to Opus 4.8 GA; corrected /fast (keeps Opus with faster output, no Sonnet downgrade); [1m] 1M-context framing; brief Fable 5 note (Opus stays default). v1.2.0: add Output Discipline subsection to Task Delegation Patterns -- accept subagent summaries as context, do not pipe raw tool output back into main conversation."
 breaking_changes: []
 ---
 # Claude Code Orchestration
@@ -104,6 +104,14 @@ When unsure, start with sonnet. Upgrade to opus if results lack depth. Downgrade
 ### Output Discipline
 
 When a subagent returns a summary, **accept the summary as context**. Do not pipe raw tool output, diffs, or file dumps back into the main conversation unless verification explicitly requires it. Context is finite; delegation is the exchange -- pay for it once, not twice.
+
+### Size the Pass, Not the Agent
+
+The subagent that has to read a whole repo before it can answer is the one that dies mid-run on an API error -- and it is the expensive one to lose, because it dies late.
+
+**Inline the evidence, narrow the question.** Paste the file excerpt, the failing output, the rule text you already have, and ask one specific thing. Several lean passes beat one heavy pass that reconstructs context from disk: they finish, they are cheap to retry, and a failure costs one narrow answer instead of the whole analysis.
+
+Reserve broad exploratory delegation for when you genuinely do not know where to look. Once you know, stop delegating the search and delegate the judgment.
 
 ### Parallel vs Sequential
 
