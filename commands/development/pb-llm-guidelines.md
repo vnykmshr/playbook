@@ -6,10 +6,10 @@ difficulty: "beginner"
 model_hint: "sonnet"
 execution_pattern: "reference"
 related_commands: ['pb-preamble', 'pb-design-rules', 'pb-handcraft', 'pb-start', 'pb-forge']
-last_reviewed: "2026-06-29"
+last_reviewed: "2026-07-28"
 last_evolved: ""
-version: "1.0.0"
-version_notes: "Initial: 4 behavioral guidelines for reducing LLM coding mistakes, sourced from Karpathy's observations, cross-referenced with existing playbook commands."
+version: "1.1.0"
+version_notes: "v1.1.0: verify the thing, not the signal that reports it -- a piped build exits with the pipe's status and a dropped watch reports failure on a green run, so a completion notification is a hint rather than a verdict. Initial: 4 behavioral guidelines for reducing LLM coding mistakes, sourced from Karpathy's observations, cross-referenced with existing playbook commands."
 breaking_changes: []
 ---
 # LLM Coding Guidelines
@@ -97,6 +97,8 @@ For multi-step tasks, state a brief plan:
 2. [Step] → verify: [check]
 3. [Step] → verify: [check]
 ```
+
+**Verify the thing, not the signal that reports it.** A verification step is only as good as what carries its result. A build piped through `tail` exits with `tail`'s status, so it reports success on a failure one second in. A `gh run watch` whose connection drops reports failure on a green run. When an outcome arrives as a notification rather than as something you observed, check the underlying state independently before acting on it: the notification is a hint, not a verdict. When you write the wrapper, carry the exit code through, because a pipeline discards it silently.
 
 Strong success criteria let you loop independently. Weak criteria ("make it work") require constant clarification.
 
