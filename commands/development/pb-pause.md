@@ -8,8 +8,8 @@ execution_pattern: "sequential"
 related_commands: ['pb-resume', 'pb-start', 'pb-standup']
 last_reviewed: "2026-07-28"
 last_evolved: "2026-07-28"
-version: "1.6.1"
-version_notes: "v1.6.1: An existing memory/lessons.md stays put and is linked from the new archive -- the path move must not fork a project's history silently. v1.6.0: Step 0 bootstraps the todos/ tree — a first pause no longer assumes todos/done/ and the working context already exist. Recap archive path moves to todos/done/lessons.md. v1.5.1: Deep-mode Step 6 caveat — diff before regenerating a hand-evolved project CLAUDE.md."
+version: "1.6.2"
+version_notes: "v1.6.2: Deep Step 6 no longer routes around the generator -- pb-claude-project v1.2.0 preserves `## Custom (Manual)` blocks, so regenerate-then-diff replaces the hand-edit caveat. v1.6.1: An existing memory/lessons.md stays put and is linked from the new archive -- the path move must not fork a project's history silently. v1.6.0: Step 0 bootstraps the todos/ tree — a first pause no longer assumes todos/done/ and the working context already exist. Recap archive path moves to todos/done/lessons.md. v1.5.1: Deep-mode Step 6 caveat — diff before regenerating a hand-evolved project CLAUDE.md."
 breaking_changes: []
 ---
 # Pause Development Work
@@ -207,7 +207,7 @@ Run `/pb-claude-project` if the session introduced:
 
 **When to skip:** Minor bug fixes, small features, no structural changes.
 
-**If the file is heavily hand-evolved:** a full regen overwrites it. Diff the generated output against the live file first; if the live file carries content the generator won't reproduce, apply targeted edits to the stale facts instead of regenerating.
+**Regenerate, then diff** -- `/pb-claude-project` preserves every `## Custom (Manual)` block verbatim, so a regen is the normal path, not a hazard. Compare against the backup and read for content that *vanished* rather than changed. Anything lost that analysis could not have derived belongs under that marker and never got there: put it there and regenerate again. Hand-editing around the generator is what lets the two drift apart in the first place.
 
 ---
 

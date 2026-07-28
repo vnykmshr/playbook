@@ -6,10 +6,10 @@ difficulty: "beginner"
 model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-claude-global', 'pb-claude-orchestration', 'pb-context', 'pb-onboarding', 'pb-greenfield']
-last_reviewed: "2026-07-13"
-last_evolved: "2026-07-13"
-version: "1.1.0"
-version_notes: "v2.10.0 baseline; v1.1.0 collapse duplicate Guardrails, add BEACON marker alignment"
+last_reviewed: "2026-07-28"
+last_evolved: "2026-07-28"
+version: "1.2.0"
+version_notes: "v1.2.0: wire the preservation contract that was only ever described. Step 0 reads the file being replaced and inventories `## Custom (Manual)` blocks; the generated structure carries that section; the checklist verifies the blocks survived. Regeneration is now the default path rather than a hazard. v2.10.0 baseline; v1.1.0 collapse duplicate Guardrails, add BEACON marker alignment"
 breaking_changes: []
 ---
 # Generate Project CLAUDE.md
@@ -38,6 +38,26 @@ Generate a project-specific `.claude/CLAUDE.md` by analyzing the current project
 ---
 
 ## Analysis Process
+
+### Step 0: Read the File You Are About to Replace
+
+Regeneration overwrites. Before analyzing anything, read the existing `.claude/CLAUDE.md` if there is one, and inventory what must survive.
+
+```bash
+grep -n '^## ' .claude/CLAUDE.md 2>/dev/null
+```
+
+**The contract, in one line:** this command owns the structural sections; the author owns every `## Custom (Manual)` block, and those are carried across verbatim.
+
+Copy each `## Custom (Manual)` block out before you write, and paste it back into the generated file unchanged. Do not paraphrase, reorder, or "improve" it -- it is there because analysis could not derive it.
+
+**If the existing file has hand-written content that is *not* under that marker**, stop and resolve it before regenerating. Three outcomes, in order of preference:
+
+1. It is derivable from the project -- let generation reproduce it, and drop the hand-written copy.
+2. It is knowledge analysis cannot reach (tribal conventions, gotchas, a rule that lives in someone's head) -- move it under `## Custom (Manual)` first, then regenerate.
+3. It is reference material rather than per-turn context -- move it to `docs/` and link it. The line budget below is the forcing function.
+
+A file that cannot survive its own generator is a defect in one of them. Resolve which, rather than hand-editing forever.
 
 ### Step 1: Detect Tech Stack
 
@@ -303,13 +323,13 @@ Project-specific safety constraints (supplement global guardrails). Customize; r
 
 ---
 
-## Project-Specific Guidelines
+## Custom (Manual)
 
-### [Area 1]
-[Any project-specific conventions or overrides]
+[Preserved verbatim on regeneration. Everything analysis cannot derive belongs here:
+project conventions, known gotchas, files that must be touched together, decisions whose
+rationale lives nowhere else. Carried across from Step 0 -- never rewritten.]
 
-### [Area 2]
-[Any project-specific conventions or overrides]
+[Delete this section only if the project genuinely has none.]
 
 ---
 
@@ -391,10 +411,17 @@ mkdir -p .claude
 # Write generated content to .claude/CLAUDE.md
 ```
 
-If file exists, back it up:
+If file exists, back it up and diff afterwards -- the backup is worthless if nobody compares:
+
 ```bash
 cp .claude/CLAUDE.md .claude/CLAUDE.md.backup
+# ... generate ...
+diff .claude/CLAUDE.md.backup .claude/CLAUDE.md
 ```
+
+Read the diff for content that vanished rather than changed. Anything lost that was not
+derivable belonged under `## Custom (Manual)` and did not get there -- fix that, not the
+output. Delete the backup once the diff is clean.
 
 ---
 
@@ -411,23 +438,28 @@ After generation, verify:
 - [ ] Relevant playbooks are appropriate for this stack
 - [ ] Working context (if exists) is current and referenced
 - [ ] Detailed docs moved to `docs/`, not duplicated in CLAUDE.md
+- [ ] **Every `## Custom (Manual)` block from Step 0 is present, verbatim** -- diff against the backup and confirm nothing vanished
+- [ ] No hand-written content survives *outside* that marker; if any does, it was resolved via Step 0's three outcomes rather than left to erode
 
 ---
 
 ## Customization
 
-After generation, manually add:
+Hand-written content goes under `## Custom (Manual)` -- the section in the generated
+structure above, inventoried by Step 0 and verified by the checklist. That is the whole
+mechanism; there is nowhere else that survives a regeneration.
+
+What belongs there:
 
 - **Team conventions** specific to this project
 - **Known gotchas** or quirks
+- **Files that must be touched together** and other tribal ordering rules
 - **Architecture decisions** not captured elsewhere
 - **Integration details** (external services, APIs)
 
-Mark manual sections:
-```markdown
-## Custom (Manual)
-[Preserved on regeneration]
-```
+What does not: anything analysis can derive (stack, structure, commands, CI) -- let
+generation own it, so it updates itself. And anything a reader consults rather than needs
+every turn -- that goes to `docs/` and gets linked.
 
 ---
 
