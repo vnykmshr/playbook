@@ -6,10 +6,10 @@ difficulty: "intermediate"
 model_hint: "opus"
 execution_pattern: "parallel-then-sequential"
 related_commands: ['pb-think', 'pb-preamble', 'pb-clara-curator', 'pb-maya-product', 'pb-adr']
-last_reviewed: "2026-07-27"
-last_evolved: "2026-07-27"
-version: "1.3.0"
-version_notes: "v1.3.0: Bring a proposal to break, not a blank page — the panel is adversarially sharp and generatively weak, so Step 1 requires a concrete candidate. v1.2.0: Four-role model (process + curatorial orchestrators, topic-selected lead, panel); register the 9-persona roster with a Lead column; Clara holds the synthesis seat."
+last_reviewed: "2026-07-28"
+last_evolved: "2026-07-28"
+version: "1.4.0"
+version_notes: "v1.4.0: 'what should be deleted rather than maintained' is a standing brief question and a Step 4 tension, whoever leads — it is Clara's lens, but she synthesizes rather than argues, so it never entered a technical huddle. v1.3.0: Bring a proposal to break, not a blank page — the panel is adversarially sharp and generatively weak, so Step 1 requires a concrete candidate. v1.2.0: Four-role model (process + curatorial orchestrators, topic-selected lead, panel); register the 9-persona roster with a Lead column; Clara holds the synthesis seat."
 breaking_changes: []
 ---
 # Multi-Perspective Decision Session
@@ -133,12 +133,15 @@ Name the lead by the decision's center of gravity and record it ("Lead: Travis -
 
 Each persona gets the SAME brief; disagreement is expected and valuable. Run the panel in parallel so the first response doesn't anchor the others. The lead frames and closes in its lane; the orchestrators synthesize.
 
+**One question is standing, whoever leads: what should be deleted rather than maintained?** Put it in every brief. It is Clara's lens, but Clara synthesizes rather than argues, so on a technical or infrastructure huddle it never enters the room -- and a panel asked only what to build will answer only what to build. The candidate proposed in Step 1 is not the only thing on the table; the code already carrying the problem is too.
+
 ### Step 4: Find the Tensions
 
 After personas argue, identify:
 - Where do they agree? (high-confidence signals)
 - Where do they disagree? (genuine trade-offs)
 - What are the irreconcilable tensions? (requires a decision, not more analysis)
+- What did they name for deletion? (a deletion is a decision -- record it, or it gets re-proposed as new work next quarter)
 
 ### Step 5: Synthesize
 
