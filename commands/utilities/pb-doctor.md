@@ -6,10 +6,10 @@ difficulty: "advanced"
 model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-storage', 'pb-ports', 'pb-update', 'pb-debug', 'pb-git-hygiene']
-last_reviewed: "2026-02-09"
-last_evolved: ""
-version: "1.0.0"
-version_notes: "v2.10.0 baseline"
+last_reviewed: "2026-07-28"
+last_evolved: "2026-07-28"
+version: "1.1.0"
+version_notes: "v1.1.0: measure the APFS Data volume (`/` is the read-only system volume and its capacity never moves); BSD `ps` throughout -- macOS rejects GNU --sort= outright."
 breaking_changes: []
 ---
 # System Health Check
@@ -56,10 +56,13 @@ Diagnose system health issues: disk space, memory pressure, CPU usage, and commo
 Run this for a fast overview:
 
 ```bash
-echo "=== Disk ===" && df -h / | tail -1
-echo "=== Memory ===" && vm_stat | head -5
+# On APFS, `/` is the read-only signed SYSTEM volume and its capacity % never moves.
+# User data lives on the Data volume; measure that or the 80% trigger never fires.
+VOL=$([ -d /System/Volumes/Data ] && echo /System/Volumes/Data || echo /)
+echo "=== Disk ===" && df -h "$VOL" | tail -1
+echo "=== Memory ===" && sysctl vm.swapusage
 echo "=== CPU Load ===" && uptime
-echo "=== Top Processes ===" && ps aux | sort -nrk 3,3 | head -6
+echo "=== Top Processes ===" && ps -Ao pcpu,pmem,comm -r | head -6
 ```
 
 ---
@@ -69,15 +72,22 @@ echo "=== Top Processes ===" && ps aux | sort -nrk 3,3 | head -6
 ### Check Available Space
 
 ```bash
-# Overall disk usage
-df -h /
+# Measure the DATA volume, not `/`. On APFS they are separate volumes in one container:
+# `/` is the read-only signed system volume, and its capacity percentage is a constant.
+# Measured on a real machine: `df -h /` said 24% while the Data volume was at 84% --
+# a threshold read off `/` would never have fired.
+VOL=$([ -d /System/Volumes/Data ] && echo /System/Volumes/Data || echo /)
+df -h "$VOL"
 
-# Check if approaching limits
-USAGE=$(df -h / | tail -1 | awk '{print $5}' | tr -d '%')
+USAGE=$(df -h "$VOL" | tail -1 | awk '{print $5}' | tr -d '%')
 if [ "$USAGE" -gt 80 ]; then
-  echo "WARNING: Disk usage at ${USAGE}%"
+  echo "WARNING: Disk usage at ${USAGE}% on $VOL"
 fi
 ```
+
+**Free space is shared, capacity is not.** Both volumes report the same `Avail` because they share
+an APFS container; only `Used` and `Capacity` differ. If you quote one number, quote `Avail` — it
+is true on either volume.
 
 ### Find Large Directories
 
@@ -140,7 +150,7 @@ sysctl vm.swapusage
 
 ```bash
 # Top 10 by memory usage
-ps aux --sort=-%mem | head -11
+ps -Ao pmem,pcpu,comm -m | head -11
 
 # Or using top (snapshot)
 top -l 1 -n 10 -o mem
@@ -174,13 +184,13 @@ sysctl -n hw.ncpu  # Number of cores
 
 ```bash
 # Top 10 by CPU
-ps aux --sort=-%cpu | head -11
+ps -Ao pcpu,pmem,comm -r | head -11
 
 # Real-time view (quit with 'q')
 top -o cpu
 
 # Find processes using > 50% CPU
-ps aux | awk '$3 > 50 {print $0}'
+ps -Ao pcpu,pid,comm -r | awk '$1 > 50'
 ```
 
 ### Check for Runaway Processes
@@ -205,7 +215,7 @@ ps -eo pid,etime,pcpu,comm | awk '$3 > 50 && $2 ~ /-/ {print}'
 
 ```bash
 # Combined CPU + Memory view
-ps aux | awk 'NR==1 || $3 > 10 || $4 > 5' | head -20
+ps -Ao pcpu,pmem,pid,comm -r | awk 'NR==1 || $1 > 10 || $2 > 5' | head -20
 ```
 
 ### Common Developer Culprits
@@ -224,7 +234,7 @@ docker stats --no-stream 2>/dev/null | head -10
 
 ```bash
 # Find zombie processes
-ps aux | awk '$8 ~ /Z/ {print}'
+ps -Ao stat,pid,comm | awk '$1 ~ /Z/'
 ```
 
 ---
@@ -330,7 +340,7 @@ Save as `~/bin/doctor.sh`:
 #!/bin/bash
 
 echo "=== DISK ==="
-df -h / | tail -1
+df -h "$([ -d /System/Volumes/Data ] && echo /System/Volumes/Data || echo /)" | tail -1
 
 echo -e "\n=== MEMORY ==="
 memory_pressure 2>/dev/null || vm_stat | head -5
@@ -339,10 +349,10 @@ echo -e "\n=== CPU LOAD ==="
 uptime
 
 echo -e "\n=== TOP PROCESSES (CPU) ==="
-ps aux --sort=-%cpu | head -6
+ps -Ao pcpu,pmem,comm -r | head -6
 
 echo -e "\n=== TOP PROCESSES (MEM) ==="
-ps aux --sort=-%mem | head -6
+ps -Ao pmem,pcpu,comm -m | head -6
 
 echo -e "\n=== DOCKER ==="
 docker system df 2>/dev/null || echo "Not running"

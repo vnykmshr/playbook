@@ -6,10 +6,10 @@ difficulty: "advanced"
 model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-debug', 'pb-start']
-last_reviewed: "2026-02-09"
-last_evolved: ""
-version: "1.0.0"
-version_notes: "v2.10.0 baseline"
+last_reviewed: "2026-07-28"
+last_evolved: "2026-07-28"
+version: "1.1.0"
+version_notes: "v1.1.0: ~/.cache is enumerated, never globbed -- it holds model weights and VM images that do not regenerate. Measure the APFS Data volume, not `/`. zsh-safe deletion forms."
 breaking_changes: []
 ---
 # macOS Storage Cleanup
@@ -56,8 +56,11 @@ Tiered storage cleanup for developer machines. Reclaim disk space safely with us
 Run these commands to assess storage:
 
 ```bash
-# Overall disk usage
-df -h /
+# Overall disk usage. On APFS, `/` is the read-only signed SYSTEM volume and its capacity
+# percentage is effectively constant -- measured on a real machine, `df -h /` said 24%
+# while the Data volume holding everything was at 84%. Measure the Data volume.
+VOL=$([ -d /System/Volumes/Data ] && echo /System/Volumes/Data || echo /)
+df -h "$VOL"
 
 # Scan major cleanup targets (run all, report sizes)
 du -sh ~/Library/Caches 2>/dev/null || echo "Library/Caches: N/A"
@@ -84,24 +87,45 @@ brew cleanup --dry-run 2>/dev/null | tail -3 || echo "Homebrew: N/A"
 | Target | Path | Notes |
 |--------|------|-------|
 | Library Caches | `~/Library/Caches/*` | Apps regenerate on demand |
-| User Cache | `~/.cache/*` | General cache directory |
+| User Cache | `~/.cache/*` | **Enumerate first — see below.** Not everything here regenerates |
 | System Logs | `~/Library/Logs/*` | Old log files |
 | Trash | `~/.Trash/*` | Already "deleted" items |
 | Safari Cache | `~/Library/Safari/LocalStorage/*` | Browser regenerates |
+
+**`~/.cache` is a convention, not a guarantee.** Tools park things there that no amount of waiting
+brings back: downloaded model weights, provisioned VM images, vendored toolchains. A real example —
+`~/.cache/whisper-cpp/ggml-base.en.bin` is a hand-downloaded speech model a project depended on for
+its verification stage; a blanket `rm -rf ~/.cache/*` would have broken that pipeline silently, and
+"the cache regenerates" would have been the reason nobody looked there.
+
+**Enumerate before deleting, and exclude by name:**
+
+```bash
+# 1. LOOK. One line per entry, largest first. Decide what is genuinely a cache.
+du -sh ~/.cache/* 2>/dev/null | sort -rh
+
+# 2. Delete everything EXCEPT what you just decided to keep.
+find ~/.cache -mindepth 1 -maxdepth 1 ! -name whisper-cpp ! -name colima -exec rm -rf {} +
+```
 
 **Commands:**
 ```bash
 # Preview sizes first
 du -sh ~/Library/Caches ~/.cache ~/Library/Logs ~/.Trash 2>/dev/null
 
-# Execute (after confirmation)
-rm -rf ~/Library/Caches/* 2>/dev/null
-rm -rf ~/.cache/* 2>/dev/null
-rm -rf ~/Library/Logs/* 2>/dev/null
-rm -rf ~/.Trash/* 2>/dev/null
+# Execute (after confirmation). Brace expansion, NOT globs: in zsh a glob that matches
+# nothing (an empty ~/.Trash) aborts the WHOLE command before any of it runs, so a tidy
+# one-liner silently deletes nothing and reports success.
+rm -rf ~/Library/Caches/*
+find ~/Library/Logs -mindepth 1 -delete
+find ~/.Trash -mindepth 1 -delete
+# ~/.cache: use the enumerate-then-exclude form above, never `rm -rf ~/.cache/*`
 ```
 
-**Risk:** None. All items regenerate automatically.
+**Risk:** None for the listed paths — *provided* `~/.cache` was enumerated rather than assumed.
+
+**Apps holding files open** (Chrome especially) will produce `Directory not empty` as they recreate
+what `rm` removes. Harmless; check the size afterwards rather than trusting the error.
 
 ---
 
@@ -208,8 +232,8 @@ Options:
 After cleanup completes:
 
 ```bash
-# Show new disk usage
-df -h /
+# Show new disk usage (the Data volume, same as the scan)
+df -h "$([ -d /System/Volumes/Data ] && echo /System/Volumes/Data || echo /)"
 
 # Compare before/after
 echo "Cleanup complete. Verify freed space above."
@@ -222,15 +246,17 @@ echo "Cleanup complete. Verify freed space above."
 For users who know what they want:
 
 ```bash
-# Safe tier only (no confirmation needed)
-rm -rf ~/Library/Caches/* ~/.cache/* ~/Library/Logs/* ~/.Trash/* 2>/dev/null
+# Safe tier only. ~/.cache is OMITTED on purpose -- enumerate it, do not glob it.
+rm -rf ~/Library/Caches/*; find ~/Library/Logs ~/.Trash -mindepth 1 -delete
 
 # Full moderate tier
 npm cache clean --force && rm -rf ~/.gradle/caches/* ~/.pub-cache/* && brew cleanup
 
 # Nuclear option (all tiers, no prompts)
-# WARNING: Only run if you understand all consequences
-rm -rf ~/Library/Caches/* ~/.cache/* ~/Library/Logs/* ~/.Trash/*
+# WARNING: Only run if you understand all consequences. ~/.cache is STILL not globbed
+# here -- "nuclear" means you accept re-downloading caches, not silently destroying a
+# model file that never comes back.
+rm -rf ~/Library/Caches/*; find ~/Library/Logs ~/.Trash -mindepth 1 -delete
 npm cache clean --force && rm -rf ~/.gradle/caches/* ~/.pub-cache/* && brew cleanup
 docker system prune -a --volumes -f
 rm -rf ~/.android/avd/*.avd ~/Library/Android/sdk/system-images/*
@@ -260,7 +286,7 @@ For automatic maintenance, add to crontab:
 
 ```bash
 # Run safe tier weekly (Sunday 3am)
-0 3 * * 0 rm -rf ~/Library/Caches/* ~/.cache/* ~/Library/Logs/* 2>/dev/null
+0 3 * * 0 rm -rf ~/Library/Caches/*; find ~/Library/Logs -mindepth 1 -delete
 ```
 
 ---
