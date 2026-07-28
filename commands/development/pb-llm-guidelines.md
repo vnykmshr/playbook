@@ -8,8 +8,8 @@ execution_pattern: "reference"
 related_commands: ['pb-preamble', 'pb-design-rules', 'pb-handcraft', 'pb-start', 'pb-forge']
 last_reviewed: "2026-07-28"
 last_evolved: ""
-version: "1.1.0"
-version_notes: "v1.1.0: verify the thing, not the signal that reports it -- a piped build exits with the pipe's status and a dropped watch reports failure on a green run, so a completion notification is a hint rather than a verdict. Initial: 4 behavioral guidelines for reducing LLM coding mistakes, sourced from Karpathy's observations, cross-referenced with existing playbook commands."
+version: "1.2.0"
+version_notes: "v1.2.0: a watch that matches only progress is silent on a stall -- silence and health are indistinguishable unless the filter also matches failure signatures or the watch carries a deadline. v1.1.0: verify the thing, not the signal that reports it -- a piped build exits with the pipe's status and a dropped watch reports failure on a green run, so a completion notification is a hint rather than a verdict. Initial: 4 behavioral guidelines for reducing LLM coding mistakes, sourced from Karpathy's observations, cross-referenced with existing playbook commands."
 breaking_changes: []
 ---
 # LLM Coding Guidelines
@@ -99,6 +99,8 @@ For multi-step tasks, state a brief plan:
 ```
 
 **Verify the thing, not the signal that reports it.** A verification step is only as good as what carries its result. A build piped through `tail` exits with `tail`'s status, so it reports success on a failure one second in. A `gh run watch` whose connection drops reports failure on a green run. When an outcome arrives as a notification rather than as something you observed, check the underlying state independently before acting on it: the notification is a hint, not a verdict. When you write the wrapper, carry the exit code through, because a pipeline discards it silently.
+
+**A watch that matches only progress is silent on a stall.** The same discipline applies to filters. A monitor keyed to `^  chunk` and a completion line reports nothing when the run hangs for 25 minutes -- and nothing is exactly what a healthy quiet run also produces, so silence carries no information. Match the failure signatures too (timeout, retry, traceback, the empty-output case), or give the watch a deadline, so that "no news" cannot mean both states at once.
 
 Strong success criteria let you loop independently. Weak criteria ("make it work") require constant clarification.
 
