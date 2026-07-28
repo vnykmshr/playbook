@@ -1,263 +1,129 @@
-# Glossary
+# Playbook Vocabulary
 
-Common terms and abbreviations used in the Engineering Playbook.
+Terms this playbook coins, or gives a narrower meaning than they carry elsewhere.
 
----
+## What belongs here
 
-## Playbook-Specific Terms
+A term earns an entry when it appears across many commands and a reader would otherwise
+have to infer it. General software vocabulary does not qualify: *branch*, *refactor*,
+*circuit breaker* and their kin are defined better elsewhere, and a copy here is a copy
+that ages.
 
-### Atomic Commit
-A single commit that addresses one logical change and is always deployable. See `/pb-commit`.
+**What must never appear here:** command titles, command descriptions, command counts,
+version numbers, thresholds, or file paths written as prose. Each of those already lives
+in exactly one authoritative place and changes without announcing itself. This page
+carried twenty-three such rows for months; seven of seven sampled were wrong, and one
+published the wrong description for `/pb-review` on the public site, sending readers
+confidently to a different command. A corpus-wide hygiene sweep touched this file a day
+earlier and walked past all seven, because nothing here could be checked.
 
-### Code Review Cycle
-The process of developing code, reviewing it (self and peer), and getting approval before committing. See `/pb-cycle`.
+So the rule is mechanical rather than a matter of care:
 
-### Decision Framework
-The Engineering Playbook itself, a set of structured processes for making engineering decisions.
+> **Every claim on this page is either definitionally stable -- still true no matter what
+> ships -- or machine-checked. Nothing in between.**
 
-### Integration Guide
-Documentation showing how all commands work together. See `/docs/integration-guide.md`.
-
-### Quality Gate
-A checkpoint that must pass before code moves forward. Examples: linting, testing, security review.
-
-### Self-Review
-Review by the code author before requesting peer review. Catches obvious issues and respects reviewers' time.
-
-### Peer Review
-Review by another engineer (usually senior) checking architecture, correctness, security, and maintainability.
-
----
-
-## Development Process Terms
-
-### Branch
-A copy of the codebase where you work on a feature without affecting main code. See `/pb-start`.
-
-### Commit
-A logical unit of work saved to git with a message explaining what changed and why. See `/pb-commit`.
-
-### Pull Request (PR)
-A formal request to merge your branch into main. Includes code, description, and rationale. See `/pb-pr`.
-
-### Feature
-A new capability or user-facing improvement.
-
-### Hotfix
-An emergency fix for production issues, using expedited process. See `/pb-incident`.
-
-### Refactor
-Code change that doesn't change behavior, just improves structure/readability.
-
-### Release
-Publishing code to production. Includes pre-release checks and deployment. See `/pb-release`.
-
-### Rollback
-Reverting to previous code version if release breaks something.
+Markdown links to files are verified by `scripts/check-links.py` on every build. Command
+names written in prose are verified by `tests/test_glossary_conventions.py`, which also
+rejects titles, counts, and version strings outright. If a fact cannot be made checkable,
+define the concept and let the fact live where it is owned.
 
 ---
 
-## Architecture & Design Terms
+## Terms
 
-### ADR
-Architecture Decision Record. Documents major decisions with context, options, and rationale. See `/pb-adr`.
+### BEACON
 
-### Pattern
-A proven solution to a recurring design problem. See `/pb-patterns-*`.
+A marker prefixing a load-bearing section in a `CLAUDE.md` file, as `## BEACON: Non-Negotiables`.
+It flags content that must survive skimming and summarization. Generated context files mark
+their sections this way so the sections that matter stay findable after the file grows.
 
-### Microservice
-A small, independent service focused on one business capability.
+### Resource Hint
 
-### SOA
-Service-Oriented Architecture. Breaking system into independent services.
+The line in a command naming which model tier it expects and why. It is guidance about the
+shape of the work -- planning and adversarial review versus mechanical execution -- not a
+constraint the harness enforces.
 
-### Event-Driven
-Architecture where components communicate via events rather than direct calls.
+### Model Hint
 
-### CQRS
-Command Query Responsibility Segregation. Separating read and write models.
+The front-matter field carrying the same judgement as the Resource Hint in machine-readable
+form, so tooling can reason about a command without parsing its prose.
 
-### Saga
-Pattern for distributed transactions across multiple services.
+### Persona
 
-### Circuit Breaker
-Pattern for preventing cascading failures by stopping requests to failing services.
+A named reviewing voice with a defined domain, invoked as its own command. Personas exist to
+disagree: running several over one artifact surfaces the objection a single pass would smooth
+over. See [Boundary & Authority](#boundary--authority).
 
-### Retry
-Pattern for automatically retrying failed operations with backoff.
+### Boundary & Authority
 
----
+The block in each persona naming four things: what it owns, what it refuses and routes
+elsewhere, the persona it is most often confused with, and where its judgement is decisive.
+Together these blocks are the playbook's concept-to-owner index -- distributed, each one
+next to the authority it describes, which is the only arrangement that cannot drift out of
+sync with the thing it indexes.
 
-## Code Quality Terms
+### Lane
 
-### Linting
-Automatic code style checking. Catches style violations and common mistakes.
+A persona's domain. Authority is decisive in-lane and advisory outside it, which is what
+lets a panel disagree without deadlocking: the owner of the lane closes the question.
 
-### Type Checking
-Verifying code types match (especially in typed languages like TypeScript, Go).
+### Definition of Done
 
-### Test Coverage
-Percentage of code executed by tests. Target: 70%+ for critical paths.
+The closing checklist on a multi-step command. Its purpose is to make completion observable
+rather than felt -- each item states a condition that can come out either way.
 
-### Edge Case
-Unusual or boundary condition that code must handle correctly.
+### MLP
 
-### Flaky Test
-Test that sometimes passes and sometimes fails (usually due to timing or randomness).
+Minimum Lovable Product. The completion bar this playbook uses in place of "it works":
+would you use this daily without frustration, can you recommend it without apology, and did
+you build the smallest thing that feels complete. Any "no" means keep refining.
 
-### Technical Debt
-Code shortcuts taken for speed that require later rework. Accumulates if not managed.
+### Shadow Path
 
----
+For a given data flow, the nil, empty, and error paths enumerated deliberately alongside the
+happy path. Distinct from "test the edge cases": the shadow paths are named systematically,
+and being unable to name them is the signal that the flow is not yet understood.
 
-## Security Terms
+### Scope Mode
 
-### Authentication
-Verifying who the user is (login). See `/pb-security`.
+Whether the current work is expanding, holding, or reducing scope -- declared before coding
+rather than discovered during review, so that "this grew" is a decision instead of a surprise.
 
-### Authorization
-Checking if authenticated user has permission for an action.
+### Working Context
 
-### Injection Attack
-Attack where attacker inserts code through input fields (SQL injection, command injection).
+The short project snapshot a session loads to recover state: current version, recent work,
+and what comes next. It is regenerated rather than accumulated, and it is working material,
+not a tracked artifact.
 
-### Rate Limiting
-Restricting requests from single user/IP to prevent abuse.
+### Session Recap
 
-### Secret
-Sensitive data like passwords, tokens, API keys. Must never be in code.
+The reflection written at the end of a session and surfaced at the start of the next one --
+once. It is read, acted on, then archived. A recap that is only ever written is a log; the
+surfacing is what makes it a loop.
 
-### Input Validation
-Checking user input is valid before processing.
+### The Ritual
 
----
+The default working loop: start work, write code, run the quality gate, open a pull request
+when peer review is needed. Most sessions need nothing beyond these.
 
-## Operations Terms
+### Evolution Cycle
 
-### CI/CD
-Continuous Integration / Continuous Deployment. Automated build, test, and deployment.
+The quarterly pass that revises commands against how they have actually been used, plus the
+out-of-band updates triggered when tooling capability changes underneath them.
 
-### Observability
-System's ability to be understood from outside. Includes logging, metrics, tracing.
+### Tool-Agnostic
 
-### Monitoring
-Continuous observation of system health and performance.
-
-### Alerting
-Automatic notifications when metrics exceed thresholds.
-
-### Runbook
-Step-by-step guide for handling operational issues.
-
-### SLA
-Service Level Agreement. Commitment to availability/performance.
-
-### P0/P1/P2/P3
-Incident severity levels. P0=all users affected, P1=major impact, P2=limited, P3=minor.
-
-### Deployment
-Moving code from development to production.
-
-### Rollout
-Gradual deployment to percentage of users (canary deployment).
-
-### Downtime
-System is unavailable or significantly degraded.
-
----
-
-## Team & Process Terms
-
-### Standup
-Daily status update (synchronous or async). See `/pb-standup`.
-
-### Retrospective
-Team reflection on what went well and what could improve.
-
-### Onboarding
-Process of bringing new team member up to speed. See `/pb-onboarding`.
-
-### Knowledge Transfer
-Sharing knowledge between team members or with new joiners. See `/pb-knowledge-transfer`.
-
-### Tech Lead
-Senior engineer responsible for technical decisions and code quality.
-
-### Code Owner
-Engineer responsible for specific code area. Should review changes to that area.
-
-### Pair Programming
-Two developers working on same code simultaneously.
-
-### Code Review Feedback
-Comments and suggestions on PR from reviewer.
-
----
-
-## Abbreviations
-
-| Abbreviation | Meaning |
-|--------------|---------|
-| ADR | Architecture Decision Record |
-| API | Application Programming Interface |
-| CQRS | Command Query Responsibility Segregation |
-| CI/CD | Continuous Integration / Continuous Deployment |
-| DB | Database |
-| DRY | Don't Repeat Yourself |
-| E2E | End-to-End |
-| HTTP | HyperText Transfer Protocol |
-| JSON | JavaScript Object Notation |
-| ORM | Object-Relational Mapping |
-| PR | Pull Request |
-| QA | Quality Assurance |
-| REST | Representational State Transfer |
-| SLA | Service Level Agreement |
-| SOA | Service-Oriented Architecture |
-| SQL | Structured Query Language |
-| SSH | Secure Shell |
-| TDD | Test-Driven Development |
-| TTL | Time To Live |
-| UI/UX | User Interface / User Experience |
-| UTC | Coordinated Universal Time |
-| YAML | YAML Ain't Markup Language |
-
----
-
-## Command Reference
-
-Shorthand for commands used throughout documentation:
-
-| Shorthand | Full Command | Purpose |
-|-----------|--------------|---------|
-| `/pb-adr` | Architecture Decision Record | Document major decisions |
-| `/pb-commit` | Commit (Usually Automatic) | Create logical, well-formatted commits |
-| `/pb-cycle` | Development Cycle | Self-review and peer review iteration |
-| `/pb-guide` | SDLC Guide | Full development framework |
-| `/pb-incident` | Incident Response | Handle production issues |
-| `/pb-logging` | Logging Standards | Structured logging audit |
-| `/pb-observability` | Observability Setup | Monitor, log, trace systems |
-| `/pb-patterns` | Pattern Overview | Architecture patterns |
-| `/pb-patterns-async` | Async Patterns | Async/concurrent patterns |
-| `/pb-patterns-core` | Core Patterns | SOA, events, repository, DTO |
-| `/pb-patterns-resilience` | Resilience Patterns | Retry, circuit breaker, rate limiting |
-| `/pb-patterns-db` | Database Patterns | Pooling, optimization, sharding |
-| `/pb-patterns-distributed` | Distributed Patterns | Saga, CQRS, eventual consistency |
-| `/pb-performance` | Performance Optimization | Profiling and optimization |
-| `/pb-pr` | Pull Request Creation | Create PR with context |
-| `/pb-release` | Release Checklist | Pre-release verification |
-| `/pb-review` | Automated Quality Gate | Analyze, consult personas, commit |
-| `/pb-security` | Security Checklist | Input validation, auth, secrets |
-| `/pb-start` | Start Development Work | Create branch and set rhythm |
-| `/pb-standup` | Daily Standup | Async status update |
-| `/pb-standards` | Team Standards | Coding standards and norms |
-| `/pb-templates` | Reusable Templates | Commit, PR, review templates |
-| `/pb-testing` | Testing Patterns | Unit, integration, E2E tests |
+The property that a command's substance is readable as plain Markdown and executable by hand
+or by any assistant. The Claude Code integration is a convenience layer over that substance,
+never a prerequisite -- with the deliberate exception of the commands whose subject *is* that
+integration.
 
 ---
 
 ## See Also
 
 - **[Decision Guide](decision-guide.md)** - Which command to use?
-- **[Command Reference](command-index.md)** - All commands
+- **[Command Reference](command-index.md)** - All commands, generated
 - **[Getting Started](getting-started.md)** - Quick start
+- **[How Commands Talk](voice.md)** - The register commands use with you
 - **[FAQ](faq.md)** - Common questions
