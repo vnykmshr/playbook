@@ -8,9 +8,9 @@ execution_pattern: "sequential"
 related_commands: ['pb-debug', 'pb-start']
 last_reviewed: "2026-07-28"
 last_evolved: "2026-07-28"
-version: "1.2.0"
-version_notes: "v1.2.0: dry run before every tier, and a tier audit against the membership test ~/.cache failed -- can this be deleted without a human deciding anything? Five more rows failed it: ~/.Trash and Safari LocalStorage leave Tier 1, docker --volumes and Xcode Archives leave the sweep entirely, ~/.pub-cache gains its executables caveat. Tier 1's Caches glob is documented as subsuming two Tier 2 rows. v1.1.0: ~/.cache moves to Tier 2 and is enumerated, never globbed -- it holds model weights and VM images that do not regenerate, so it cannot sit in a tier labelled always-reversible. Measure the APFS Data volume, not `/`. One zsh-safe deletion idiom throughout. Full Disk Access documented for ~/.Trash."
-breaking_changes: []
+version: "2.0.0"
+version_notes: "v2.0.0: tiers re-cut on time to recover -- SECONDS / A BUILD / A DOWNLOAD / NEVER -- replacing SAFE / MODERATE / AGGRESSIVE. The old scale described how a deletion felt; recovery time describes what it costs, and it exposes the offline question the old names could not ask: Tier 3 needs a network, so do not clear it before a flight. Tier 4 is not a tier you run. v1.2.0: dry run before every tier, and a tier audit against the membership test ~/.cache failed -- can this be deleted without a human deciding anything? Five more rows failed it. v1.1.0: ~/.cache out of the always-reversible tier and enumerated, never globbed. Measure the APFS Data volume, not `/`. One zsh-safe deletion idiom throughout. Full Disk Access documented for ~/.Trash."
+breaking_changes: ['Tier names and membership changed: SAFE/MODERATE/AGGRESSIVE -> SECONDS/A BUILD/A DOWNLOAD/NEVER. A script or habit that ran "Tier 1" now sweeps less (~/.Trash left it) and "Tier 3" now means network-recoverable rather than most-destructive. Re-read the tier tables before reusing any saved invocation.']
 ---
 # macOS Storage Cleanup
 
@@ -82,65 +82,131 @@ brew cleanup --dry-run 2>/dev/null | tail -3 || echo "Homebrew: N/A"
 
 ## Step 2: Tier Definitions
 
-### Tier 1: SAFE (Always reversible, no side effects)
+Tiers are cut on **how long it takes to get the thing back**, because that is the question you
+are actually answering at 2am with a full disk. "Safe" and "aggressive" describe how the deletion
+feels; recovery time describes what it costs you, and only one of those is checkable.
 
-**The membership test for this tier:** *can it be deleted without a human deciding anything?*
-If the answer needs a look first, it is not Tier 1. Two paths that used to live here failed
-that test and moved -- see the tier notes below.
+| Tier | Recovery | Needs network? | Use when |
+|------|----------|----------------|----------|
+| 1 | **Seconds** -- regenerates on its own | No | Always. Start here |
+| 2 | **A build** -- local compute, once | No | You can afford one slow compile |
+| 3 | **A download** -- refetched over the network | **Yes** | You are online and staying online |
+| 4 | **Never** -- gone | n/a | Never sweep. Decide per item, or not at all |
 
-| Target | Path | Notes |
-|--------|------|-------|
-| Library Caches | `~/Library/Caches/*` | Apps regenerate on demand. This glob **subsumes** the `pip` and `CocoaPods` rows in Tier 2 -- running Tier 1 alone already clears them |
-| System Logs | `~/Library/Logs/*` | Old log files |
+**The membership test, applied to every row:** *can this be deleted without a human deciding
+anything, and if so, what does getting it back cost?* A path whose answer is "it depends what is
+in it" belongs in Tier 4 no matter how cache-shaped its name is.
 
-Three paths that look like they belong here and do not: `~/.cache` (Tier 2 -- holds things that
-never come back), `~/.Trash` (Tier 2 -- irreversible, and *you* put those files there),
-`~/Library/Safari/LocalStorage` (not cleaned at all -- it is site data, not cache).
+**Read Tier 3 before a flight.** Clearing a download-tier cache on Tuesday costs a coffee; clearing
+it an hour before you board costs you the afternoon. This is the distinction the old
+safe/moderate/aggressive scale could not express.
+
+---
+
+### Tier 1: SECONDS (regenerates on its own, offline)
+
+| Target | Path | Recovery |
+|--------|------|----------|
+| Library Caches | `~/Library/Caches/*` | Apps repopulate on next launch. This glob **subsumes** the `pip` and `CocoaPods` rows in Tier 3 -- running Tier 1 alone already clears them, and those are downloads |
+| System Logs | `~/Library/Logs/*` | Regenerate as apps run. Skip if you are mid-investigation: they are your evidence, and deleting them is the one way this tier costs you something |
 
 **Commands:**
 ```bash
-# Preview sizes first
-du -sh ~/Library/Caches ~/Library/Logs 2>/dev/null
-
 # 1. DRY RUN -- always. Same command, `echo` in place of `rm -rf`. Read the list.
 find ~/Library/Caches ~/Library/Logs -mindepth 1 -maxdepth 1 -exec echo "WOULD DELETE" {} +
 
 # 2. Execute. One idiom, no globs: in zsh a glob that matches nothing -- an empty directory --
-#    aborts the whole `rm` before it deletes any of its OTHER arguments and exits 1, which the
-#    `2>/dev/null` these lines used to carry turned into silence. Pointing `find` at the
-#    directory has no such failure mode: nothing to match is nothing to do.
+#    aborts the whole `rm` before it deletes any of its OTHER arguments and exits 1, which a
+#    `2>/dev/null` turns into silence. Pointing `find` at the directory has no such failure
+#    mode: nothing to match is nothing to do.
 find ~/Library/Caches -mindepth 1 -maxdepth 1 -exec rm -rf {} +
 find ~/Library/Logs   -mindepth 1 -maxdepth 1 -exec rm -rf {} +
 ```
-
-**Risk:** None for the listed paths.
 
 **Apps holding files open** (Chrome especially) will produce `Directory not empty` as they recreate
 what `rm` removes. Harmless; check the size afterwards rather than trusting the error.
 
 ---
 
-### Tier 2: MODERATE (Rebuilds on next use)
+### Tier 2: A BUILD (local compute, offline-safe)
 
-| Target | Path | Notes |
-|--------|------|-------|
-| User Cache | `~/.cache/*` | **Enumerate first -- see below.** Not everything here rebuilds |
-| Trash | `~/.Trash/*` | **Irreversible, and not a cache** -- you put these here and have not confirmed deletion. Look before emptying |
-| npm cache | `~/.npm/_cacache` | `npm install` rebuilds |
-| Gradle caches | `~/.gradle/caches/*` | Next build downloads |
-| pip cache | `~/Library/Caches/pip` | `pip install` rebuilds |
-| Homebrew cache | `brew cleanup` | Old versions removed |
-| pub-cache | `~/.pub-cache/*` | Flutter/Dart packages -- also holds `dart pub global activate` executables, which need reinstalling, not just re-downloading |
-| CocoaPods | `~/Library/Caches/CocoaPods` | `pod install` rebuilds |
-| Cargo cache | `~/.cargo/registry/cache` | Rust crates |
+| Target | Path | Recovery |
+|--------|------|----------|
+| Xcode DerivedData | `~/Library/Developer/Xcode/DerivedData/*` | Next compile rebuilds it. Frequently the single largest reclaim on a Mac, and it costs you one slow build and no network |
 
-**`~/.cache` is a convention, not a guarantee** -- which is why it sits here and not in Tier 1. Tools
-park things there that no amount of waiting brings back: downloaded model weights, provisioned VM
-images, vendored toolchains. One real case: a hand-downloaded speech model under `~/.cache`, which a
-project depended on for its verification stage. A blanket `rm -rf ~/.cache/*` would have broken that
-pipeline silently, and "the cache regenerates" would have been the reason nobody looked there.
+**Commands:**
+```bash
+# DRY RUN
+find ~/Library/Developer/Xcode/DerivedData -mindepth 1 -maxdepth 1 -exec echo "WOULD DELETE" {} +
 
-**Enumerate before deleting, and exclude by name:**
+# Execute
+find ~/Library/Developer/Xcode/DerivedData -mindepth 1 -maxdepth 1 -exec rm -rf {} +
+```
+
+**Recovery:** one clean build per project you return to. Nothing is fetched.
+
+---
+
+### Tier 3: A DOWNLOAD (needs network -- check your connectivity first)
+
+| Target | Path / Command | Recovery |
+|--------|----------------|----------|
+| npm cache | `~/.npm/_cacache` | `npm install` refetches |
+| Gradle caches | `~/.gradle/caches/*` | Next build refetches |
+| pip cache | `~/Library/Caches/pip` | `pip install` refetches |
+| Homebrew | `brew cleanup` | Refetches on next install |
+| CocoaPods | `~/Library/Caches/CocoaPods` | `pod install` refetches |
+| Cargo registry | `~/.cargo/registry/cache` | `cargo build` refetches crates |
+| pub-cache | `~/.pub-cache/*` | Refetches packages -- **also holds `dart pub global activate` executables**, which need reinstalling, not just refetching |
+| Docker images | `docker system prune -a` | Re-pull. **No `--volumes`** -- see Tier 4 |
+| Android system-images | `~/Library/Android/sdk/system-images/*` | Re-download, and these are large |
+| iOS simulators | `xcrun simctl delete unavailable` | Only removes sims whose runtime is already gone; recreating needs a runtime download |
+| Rust toolchains | `rustup toolchain uninstall` | Re-download; keeps default only |
+| Node globals | `/usr/local/lib/node_modules/*` | `npm i -g` again |
+
+**Commands:**
+```bash
+# 1. DRY RUN -- sizes, then exactly what would go.
+du -sh ~/.npm ~/.gradle/caches ~/Library/Caches/pip ~/.pub-cache 2>/dev/null
+brew cleanup --dry-run 2>/dev/null
+docker system prune -a --dry-run 2>/dev/null || docker system df
+docker volume ls                                   # volumes are NOT pruned below; look anyway
+rustup toolchain list 2>/dev/null
+find ~/.gradle/caches ~/Library/Caches/pip ~/.pub-cache ~/Library/Caches/CocoaPods \
+     ~/.cargo/registry/cache ~/Library/Android/sdk/system-images \
+     -mindepth 1 -maxdepth 1 -exec echo "WOULD DELETE" {} +
+
+# 2. Execute (after reading the list, and while you still have bandwidth).
+npm cache clean --force
+brew cleanup
+find ~/.gradle/caches ~/Library/Caches/pip ~/.pub-cache ~/Library/Caches/CocoaPods \
+     ~/.cargo/registry/cache ~/Library/Android/sdk/system-images \
+     -mindepth 1 -maxdepth 1 -exec rm -rf {} +
+docker system prune -a -f                          # NO --volumes; see Tier 4
+xcrun simctl delete unavailable
+rustup toolchain list 2>/dev/null | grep -v default | xargs -I {} rustup toolchain uninstall {}
+```
+
+**Recovery:** bandwidth and time. Do not run this tier on a tethered connection or before you
+need to be productive offline.
+
+---
+
+### Tier 4: NEVER (unrecoverable -- decide per item, never sweep)
+
+These look like cleanup targets. They are not. Nothing here is swept by any command on this page,
+including the nuclear block, because no flag can make the decision for you.
+
+| Target | Path | What you actually lose |
+|--------|------|------------------------|
+| User Cache | `~/.cache/*` | **Enumerate first.** A convention, not a guarantee -- it holds downloaded model weights, provisioned VM images, vendored toolchains |
+| Trash | `~/.Trash/*` | Files *you* put there and have not confirmed deleting. "Already deleted" is the same reasoning that nearly cost a model file |
+| Docker named volumes | `docker volume ls` | Databases. Your local Postgres, the seeded test data. Re-pulling an image does not bring data back |
+| Xcode Archives | `~/Library/Developer/Xcode/Archives/*` | dSYMs for builds you shipped. Without them you cannot symbolicate a crash report from a release already in users' hands |
+| Safari LocalStorage | `~/Library/Safari/LocalStorage/*` | Site data -- drafts, offline state, signed-in sessions. It does not regenerate. Safari's actual cache is `~/Library/Caches/com.apple.Safari` |
+| Android AVDs | `~/.android/avd/*.avd` | The emulator is a download; the state inside it -- installed apps, configuration -- is not |
+
+**`~/.cache`: enumerate, then exclude by name.**
 
 ```bash
 # 1. LOOK. One line per entry, largest first. Decide what is genuinely a cache.
@@ -151,82 +217,16 @@ du -sh ~/.cache/* 2>/dev/null | sort -rh
 find ~/.cache -mindepth 1 -maxdepth 1 ! -name <keep-this> ! -name <and-this> -exec rm -rf {} +
 ```
 
-This step needs a human. That is the reason `~/.cache` never appears in the unattended blocks below.
+**`~/.Trash`: empty it deliberately, from Finder or after reading a dry run.** It also needs Full
+Disk Access; without it macOS returns `Operation not permitted` and deletes nothing.
 
-**Commands:**
 ```bash
-# 1. DRY RUN -- sizes, then exactly what would go.
-du -sh ~/.npm ~/.gradle/caches ~/Library/Caches/pip ~/.pub-cache ~/.Trash 2>/dev/null
-brew cleanup --dry-run 2>/dev/null
-find ~/.gradle/caches ~/Library/Caches/pip ~/.pub-cache ~/Library/Caches/CocoaPods \
-     ~/.cargo/registry/cache ~/.Trash -mindepth 1 -maxdepth 1 -exec echo "WOULD DELETE" {} +
-
-# 2. Execute (after reading the list above).
-npm cache clean --force
-brew cleanup
-find ~/.gradle/caches ~/Library/Caches/pip ~/.pub-cache ~/Library/Caches/CocoaPods \
-     ~/.cargo/registry/cache -mindepth 1 -maxdepth 1 -exec rm -rf {} +
-
-# ~/.Trash is deliberately separate -- emptying it is irreversible. Empty it only after
-# reading the dry run, and note it needs Full Disk Access (see Troubleshooting).
-find ~/.Trash -mindepth 1 -maxdepth 1 -exec rm -rf {} +
-
-# ~/.cache: use the enumerate-then-exclude form above, never a blanket sweep.
+find ~/.Trash -mindepth 1 -maxdepth 1 -exec echo "WOULD DELETE" {} +   # look first
+find ~/.Trash -mindepth 1 -maxdepth 1 -exec rm -rf {} +                # then, if you mean it
 ```
 
-**Risk:** Low for the package caches -- next build/install takes longer. `~/.Trash` is the
-exception in this tier: it does not rebuild, it is gone.
+**Recovery:** none. That is the whole tier.
 
----
-
-### Tier 3: AGGRESSIVE (May require reinstall/reconfiguration)
-
-| Target | Path | Notes |
-|--------|------|-------|
-| Docker images | `docker system prune -a` | Removes all unused images. Re-pull to recover |
-| Android AVDs | `~/.android/avd/*.avd` | Must recreate emulators; installed apps and state inside them are lost |
-| Android system-images | `~/Library/Android/sdk/system-images/*` | Must re-download |
-| iOS Simulators | `xcrun simctl delete unavailable` | Only removes runtimes you no longer have |
-| Xcode DerivedData | `~/Library/Developer/Xcode/DerivedData/*` | Rebuilds on compile |
-| Old Rust toolchains | `rustup toolchain uninstall` | Keeps default only |
-| Node global modules | `/usr/local/lib/node_modules/*` | Must reinstall globals |
-
-**Two things this tier deliberately does not sweep**, because "reinstall or reconfigure" undersells
-what they cost:
-
-- **`docker system prune --volumes`.** Named volumes are *data* -- your local Postgres, the seeded
-  test database, whatever a compose file mounted. That is not reconfiguration, it is data loss, and
-  no amount of re-pulling brings it back. Run `docker volume ls` first, and add `--volumes` only once
-  you have looked at that list.
-- **`~/Library/Developer/Xcode/Archives`.** Archives carry the dSYMs for builds you shipped. Without
-  them you cannot symbolicate a crash report from a release already in users' hands. Delete archives
-  for builds that never shipped; keep the rest, however old they look.
-
-**Commands:**
-```bash
-# Preview sizes first
-docker system df 2>/dev/null
-du -sh ~/.android/avd ~/Library/Android/sdk/system-images 2>/dev/null
-du -sh ~/Library/Developer/Xcode/DerivedData ~/Library/Developer/Xcode/Archives 2>/dev/null
-
-# DRY RUN first -- this tier is the one where a mistake costs an afternoon.
-docker system prune -a --dry-run 2>/dev/null || docker system df
-docker volume ls                                   # volumes are NOT pruned below; look anyway
-find ~/.android/avd ~/Library/Android/sdk/system-images \
-     ~/Library/Developer/Xcode/DerivedData -mindepth 1 -maxdepth 1 -exec echo "WOULD DELETE" {} +
-rustup toolchain list 2>/dev/null
-
-# Execute (after reading the above)
-docker system prune -a -f                          # NO --volumes; see the note above
-find ~/.android/avd -mindepth 1 -maxdepth 1 \( -name '*.avd' -o -name '*.ini' \) -exec rm -rf {} +
-find ~/Library/Android/sdk/system-images -mindepth 1 -maxdepth 1 -exec rm -rf {} +
-xcrun simctl delete unavailable
-find ~/Library/Developer/Xcode/DerivedData -mindepth 1 -maxdepth 1 -exec rm -rf {} +
-rustup toolchain list 2>/dev/null | grep -v default | xargs -I {} rustup toolchain uninstall {}
-# Xcode Archives: not swept. Delete per-archive, only for builds you never shipped.
-```
-
-**Risk:** Medium. Requires re-downloading images, recreating emulators, or reinstalling tools.
 
 ---
 
@@ -242,19 +242,30 @@ When executing this playbook:
 
 ### AskUserQuestion Structure
 
-**Tier Selection:**
+**Tier Selection** -- lead with recovery cost, since that is the choice being made:
 ```
 Question: "Which cleanup tiers should I run?"
 Options:
-  - Tier 1: SAFE (~X GB) - Caches, logs, trash
-  - Tier 2: MODERATE (~X GB) - Package manager caches
-  - Tier 3: AGGRESSIVE (~X GB) - Docker, SDKs, emulators
+  - Tier 1: SECONDS (~X GB) - app caches and logs, regenerate on their own
+  - Tier 2: A BUILD (~X GB) - Xcode DerivedData, costs one compile, no network
+  - Tier 3: A DOWNLOAD (~X GB) - package caches, Docker images, SDKs. NEEDS NETWORK
 MultiSelect: true
 ```
 
-**Within-Tier Confirmation (for Tier 2 and 3):**
+Tier 4 is never offered. It is not a tier you run.
+
+**Before offering Tier 3, ask about connectivity** -- it is the only tier that can leave someone
+stuck. If they are about to travel, tether, or demo, say so and let them decline:
 ```
-Question: "Tier 2 will clean these items. Proceed?"
+Question: "Tier 3 refetches over the network. Are you staying online?"
+Options:
+  - Yes, run it
+  - Skip Tier 3 - I need to work offline soon
+```
+
+**Within-Tier Confirmation (Tiers 2 and 3):**
+```
+Question: "Tier 3 will clean these items. Proceed?"
 Options:
   - Yes, clean all selected
   - Let me pick specific items
@@ -288,43 +299,53 @@ you have read the list -- that substitution is the whole ritual.
 # Dry run, any tier: same paths, harmless verb.
 find <paths> -mindepth 1 -maxdepth 1 -exec echo "WOULD DELETE" {} +
 
-# Safe tier. ~/.cache and ~/.Trash are OMITTED on purpose -- both need a human first.
+# Tier 1 -- SECONDS. Offline-safe.
 find ~/Library/Caches ~/Library/Logs -mindepth 1 -maxdepth 1 -exec rm -rf {} +
 
-# Full moderate tier (minus ~/.cache and ~/.Trash, same reason)
-npm cache clean --force && brew cleanup
-find ~/.gradle/caches ~/.pub-cache ~/Library/Caches/pip ~/Library/Caches/CocoaPods \
-     ~/.cargo/registry/cache -mindepth 1 -maxdepth 1 -exec rm -rf {} +
+# Tier 2 -- A BUILD. Offline-safe; costs one compile.
+find ~/Library/Developer/Xcode/DerivedData -mindepth 1 -maxdepth 1 -exec rm -rf {} +
 
-# Nuclear (all tiers, no prompts). "Nuclear" means accepting re-downloads -- NOT destroying
-# data. So it still excludes ~/.cache, ~/.Trash, docker volumes and Xcode Archives; each of
-# those is unrecoverable and needs you to look first. There is no flag for that.
-find ~/Library/Caches ~/Library/Logs -mindepth 1 -maxdepth 1 -exec rm -rf {} +
+# Tier 3 -- A DOWNLOAD. NEEDS NETWORK. Do not run this before going offline.
 npm cache clean --force && brew cleanup
 find ~/.gradle/caches ~/.pub-cache ~/Library/Caches/pip ~/Library/Caches/CocoaPods \
-     ~/.cargo/registry/cache -mindepth 1 -maxdepth 1 -exec rm -rf {} +
+     ~/.cargo/registry/cache ~/Library/Android/sdk/system-images \
+     -mindepth 1 -maxdepth 1 -exec rm -rf {} +
+docker system prune -a -f                          # NO --volumes
+xcrun simctl delete unavailable
+rustup toolchain list 2>/dev/null | grep -v default | xargs -I {} rustup toolchain uninstall {}
+
+# Everything (Tiers 1-3, no prompts). "Everything" means accepting rebuilds and re-downloads --
+# never destroying data. Tier 4 is absent by construction: ~/.cache, ~/.Trash, docker volumes,
+# Xcode Archives, Safari LocalStorage and AVD state each need you to look first, and no flag
+# can do that for you.
+find ~/Library/Caches ~/Library/Logs ~/Library/Developer/Xcode/DerivedData \
+     -mindepth 1 -maxdepth 1 -exec rm -rf {} +
+npm cache clean --force && brew cleanup
+find ~/.gradle/caches ~/.pub-cache ~/Library/Caches/pip ~/Library/Caches/CocoaPods \
+     ~/.cargo/registry/cache ~/Library/Android/sdk/system-images \
+     -mindepth 1 -maxdepth 1 -exec rm -rf {} +
 docker system prune -a -f
-find ~/.android/avd ~/Library/Android/sdk/system-images \
-     ~/Library/Developer/Xcode/DerivedData -mindepth 1 -maxdepth 1 -exec rm -rf {} +
 ```
 
 ---
 
 ## What This Does NOT Clean
 
-Items requiring manual decision (not automated):
+Your data. These are not storage-cleanup candidates at any tier -- they are listed so nobody
+scripts them by accident.
 
-| Item | Why Manual |
-|------|------------|
+| Item | Why |
+|------|-----|
 | `~/Downloads` | May contain wanted files |
 | `~/Documents` | User data |
 | `node_modules` in projects | Breaks projects until reinstall |
 | `.env` files | Contains secrets |
 | Git repositories | User code |
 | Application data | App-specific, may lose settings |
-| `~/Library/Safari/LocalStorage` | **Site data, not cache** -- web apps persist drafts, offline data and signed-in state here. It does not regenerate. Safari's actual cache is `~/Library/Caches/com.apple.Safari` |
-| Docker named volumes | Databases and seeded test data. `docker volume ls` first; `--volumes` is opt-in |
-| `~/Library/Developer/Xcode/Archives` | dSYMs for shipped builds -- needed to symbolicate crash reports from releases already in users' hands |
+
+Distinct from **Tier 4**, which lists paths that *do* look like cleanup targets -- `~/.cache`,
+`~/.Trash`, docker volumes, Xcode Archives, Safari LocalStorage, AVD state -- and are unrecoverable
+anyway. Those are decided per item; these are not decided at all.
 
 ---
 
@@ -333,7 +354,9 @@ Items requiring manual decision (not automated):
 For automatic maintenance, add to crontab:
 
 ```bash
-# Run safe tier weekly (Sunday 3am). Same idiom as everywhere else -- cron runs /bin/sh, where an
+# Run Tier 1 weekly (Sunday 3am). Tier 1 only: it is the sole tier that needs neither a network
+# nor a decision, which is what makes it safe to run unattended.
+# Same idiom as everywhere else -- cron runs /bin/sh, where an
 # unmatched glob passes through literally rather than aborting, which is its own quiet way to be wrong.
 # ~/.Trash is omitted (cron has no Full Disk Access) and so is ~/.cache (it needs a human).
 0 3 * * 0 find ~/Library/Caches ~/Library/Logs -mindepth 1 -maxdepth 1 -exec rm -rf {} +
