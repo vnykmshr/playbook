@@ -6,10 +6,10 @@ difficulty: "advanced"
 model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-resume', 'pb-start', 'pb-standup']
-last_reviewed: "2026-07-27"
-last_evolved: "2026-07-27"
-version: "1.6.0"
-version_notes: "v1.6.0: Step 0 bootstraps the todos/ tree — a first pause no longer assumes todos/done/ and the working context already exist. Recap archive path moves to todos/done/lessons.md. v1.5.1: Deep-mode Step 6 caveat — diff before regenerating a hand-evolved project CLAUDE.md."
+last_reviewed: "2026-07-28"
+last_evolved: "2026-07-28"
+version: "1.6.1"
+version_notes: "v1.6.1: An existing memory/lessons.md stays put and is linked from the new archive -- the path move must not fork a project's history silently. v1.6.0: Step 0 bootstraps the todos/ tree — a first pause no longer assumes todos/done/ and the working context already exist. Recap archive path moves to todos/done/lessons.md. v1.5.1: Deep-mode Step 6 caveat — diff before regenerating a hand-evolved project CLAUDE.md."
 breaking_changes: []
 ---
 # Pause Development Work
@@ -169,7 +169,7 @@ After the pause entry is written, reflect on the session and fill in the `### Se
 
 **Depth:** Thorough reflection. Analyze the session's git log, conversation, decisions made, and paths not taken. If nothing meaningful happened, the section can be brief or omitted.
 
-The recap is surfaced at `/pb-resume` and archived to `todos/done/lessons.md` after review -- session and lesson notes stay under `todos/`, next to the pause notes they continue.
+The recap is surfaced at `/pb-resume` and archived to `todos/done/lessons.md` after review -- session and lesson notes stay under `todos/`, next to the pause notes they continue. A project that predates v1.6.0 keeps its old `memory/lessons.md` where it is; `/pb-resume` links the two rather than moving history to chase a path change.
 
 ---
 

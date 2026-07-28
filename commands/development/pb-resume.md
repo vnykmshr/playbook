@@ -6,10 +6,10 @@ difficulty: "advanced"
 model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-start', 'pb-pause', 'pb-cycle']
-last_reviewed: "2026-07-27"
-last_evolved: "2026-07-27"
-version: "1.6.0"
-version_notes: "v1.6.0: Recap archive moves from memory/lessons.md to todos/done/lessons.md — session and lesson notes stay in the gitignored dev tree. Strip now means remove the body, not comment it out. v1.5.0: Restructure Step 0 — SURFACE→ACT→ARCHIVE phases with dedup check, archive-failure handling, and Recap Disposition summary."
+last_reviewed: "2026-07-28"
+last_evolved: "2026-07-28"
+version: "1.6.1"
+version_notes: "v1.6.1: An existing memory/lessons.md stays put and is linked from the new archive -- the path move must not fork a project's history silently. v1.6.0: Recap archive moves from memory/lessons.md to todos/done/lessons.md — session and lesson notes stay in the gitignored dev tree. Strip now means remove the body, not comment it out. v1.5.0: Restructure Step 0 — SURFACE→ACT→ARCHIVE phases with dedup check, archive-failure handling, and Recap Disposition summary."
 breaking_changes: []
 ---
 # Resume Development Work
@@ -78,7 +78,7 @@ The default is "act, then report." The user can override any action before archi
 
 #### 0c. ARCHIVE: Append → Strip
 
-1. **Append to `todos/done/lessons.md`** first (create the file and `todos/done/` if new) - prevents data loss if interrupted:
+1. **Append to `todos/done/lessons.md`** first (create the file and `todos/done/` if new) - prevents data loss if interrupted. **If an archive exists at the pre-v1.6.0 path `memory/lessons.md`, leave it where it is and open the new file with a line pointing at it.** Do not migrate the old entries and do not keep writing to the old path: moving history to chase a path change is churn, and splitting the log without saying so is how a five-month record quietly forks.
    ```markdown
    ## [YYYY-MM-DD] — [session context]
    [recap content]
