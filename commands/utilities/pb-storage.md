@@ -9,7 +9,7 @@ related_commands: ['pb-debug', 'pb-start']
 last_reviewed: "2026-07-28"
 last_evolved: "2026-07-28"
 version: "1.1.0"
-version_notes: "v1.1.0: ~/.cache is enumerated, never globbed -- it holds model weights and VM images that do not regenerate. Measure the APFS Data volume, not `/`. zsh-safe deletion forms."
+version_notes: "v1.1.0: ~/.cache moves to Tier 2 and is enumerated, never globbed -- it holds model weights and VM images that do not regenerate, so it cannot sit in a tier labelled always-reversible. Measure the APFS Data volume, not `/`. One zsh-safe deletion idiom throughout. Full Disk Access documented for ~/.Trash."
 breaking_changes: []
 ---
 # macOS Storage Cleanup
@@ -87,42 +87,31 @@ brew cleanup --dry-run 2>/dev/null | tail -3 || echo "Homebrew: N/A"
 | Target | Path | Notes |
 |--------|------|-------|
 | Library Caches | `~/Library/Caches/*` | Apps regenerate on demand |
-| User Cache | `~/.cache/*` | **Enumerate first — see below.** Not everything here regenerates |
 | System Logs | `~/Library/Logs/*` | Old log files |
 | Trash | `~/.Trash/*` | Already "deleted" items |
 | Safari Cache | `~/Library/Safari/LocalStorage/*` | Browser regenerates |
 
-**`~/.cache` is a convention, not a guarantee.** Tools park things there that no amount of waiting
-brings back: downloaded model weights, provisioned VM images, vendored toolchains. A real example —
-`~/.cache/whisper-cpp/ggml-base.en.bin` is a hand-downloaded speech model a project depended on for
-its verification stage; a blanket `rm -rf ~/.cache/*` would have broken that pipeline silently, and
-"the cache regenerates" would have been the reason nobody looked there.
-
-**Enumerate before deleting, and exclude by name:**
-
-```bash
-# 1. LOOK. One line per entry, largest first. Decide what is genuinely a cache.
-du -sh ~/.cache/* 2>/dev/null | sort -rh
-
-# 2. Delete everything EXCEPT what you just decided to keep.
-find ~/.cache -mindepth 1 -maxdepth 1 ! -name whisper-cpp ! -name colima -exec rm -rf {} +
-```
+`~/.cache` is **not** in this tier -- see Tier 2, it holds things that do not come back.
 
 **Commands:**
 ```bash
 # Preview sizes first
-du -sh ~/Library/Caches ~/.cache ~/Library/Logs ~/.Trash 2>/dev/null
+du -sh ~/Library/Caches ~/Library/Logs ~/.Trash 2>/dev/null
 
-# Execute (after confirmation). Brace expansion, NOT globs: in zsh a glob that matches
-# nothing (an empty ~/.Trash) aborts the WHOLE command before any of it runs, so a tidy
-# one-liner silently deletes nothing and reports success.
-rm -rf ~/Library/Caches/*
-find ~/Library/Logs -mindepth 1 -delete
-find ~/.Trash -mindepth 1 -delete
-# ~/.cache: use the enumerate-then-exclude form above, never `rm -rf ~/.cache/*`
+# Execute (after confirmation). One idiom, no globs: in zsh a glob that matches nothing --
+# an empty ~/.Trash -- aborts the whole `rm` before it deletes any of its OTHER arguments
+# and exits 1, which the `2>/dev/null` these lines used to carry turned into silence.
+# Pointing `find` at the directory has no such failure mode: nothing to match is nothing to do.
+find ~/Library/Caches -mindepth 1 -maxdepth 1 -exec rm -rf {} +
+find ~/Library/Logs   -mindepth 1 -maxdepth 1 -exec rm -rf {} +
+find ~/.Trash         -mindepth 1 -maxdepth 1 -exec rm -rf {} +
 ```
 
-**Risk:** None for the listed paths — *provided* `~/.cache` was enumerated rather than assumed.
+**Risk:** None for the listed paths.
+
+**`~/.Trash` needs Full Disk Access.** Without it macOS returns `Operation not permitted` and deletes
+nothing. Grant it under System Settings -> Privacy & Security -> Full Disk Access, or empty the Trash
+from Finder instead.
 
 **Apps holding files open** (Chrome especially) will produce `Directory not empty` as they recreate
 what `rm` removes. Harmless; check the size afterwards rather than trusting the error.
@@ -133,6 +122,7 @@ what `rm` removes. Harmless; check the size afterwards rather than trusting the 
 
 | Target | Path | Notes |
 |--------|------|-------|
+| User Cache | `~/.cache/*` | **Enumerate first -- see below.** Not everything here rebuilds |
 | npm cache | `~/.npm/_cacache` | `npm install` rebuilds |
 | Gradle caches | `~/.gradle/caches/*` | Next build downloads |
 | pip cache | `~/Library/Caches/pip` | `pip install` rebuilds |
@@ -140,6 +130,25 @@ what `rm` removes. Harmless; check the size afterwards rather than trusting the 
 | pub-cache | `~/.pub-cache/*` | Flutter/Dart packages |
 | CocoaPods | `~/Library/Caches/CocoaPods` | `pod install` rebuilds |
 | Cargo cache | `~/.cargo/registry/cache` | Rust crates |
+
+**`~/.cache` is a convention, not a guarantee** -- which is why it sits here and not in Tier 1. Tools
+park things there that no amount of waiting brings back: downloaded model weights, provisioned VM
+images, vendored toolchains. One real case: a hand-downloaded speech model under `~/.cache`, which a
+project depended on for its verification stage. A blanket `rm -rf ~/.cache/*` would have broken that
+pipeline silently, and "the cache regenerates" would have been the reason nobody looked there.
+
+**Enumerate before deleting, and exclude by name:**
+
+```bash
+# 1. LOOK. One line per entry, largest first. Decide what is genuinely a cache.
+du -sh ~/.cache/* 2>/dev/null | sort -rh
+
+# 2. Delete everything EXCEPT what you just decided to keep. The exclusions are YOURS --
+#    they come from step 1 on THIS machine. There is no correct default list.
+find ~/.cache -mindepth 1 -maxdepth 1 ! -name <keep-this> ! -name <and-this> -exec rm -rf {} +
+```
+
+This step needs a human. That is the reason `~/.cache` never appears in the unattended blocks below.
 
 **Commands:**
 ```bash
@@ -246,17 +255,17 @@ echo "Cleanup complete. Verify freed space above."
 For users who know what they want:
 
 ```bash
-# Safe tier only. ~/.cache is OMITTED on purpose -- enumerate it, do not glob it.
-rm -rf ~/Library/Caches/*; find ~/Library/Logs ~/.Trash -mindepth 1 -delete
+# Safe tier only. ~/.cache is OMITTED on purpose -- it needs the enumerate step, which needs you.
+find ~/Library/Caches ~/Library/Logs ~/.Trash -mindepth 1 -maxdepth 1 -exec rm -rf {} +
 
 # Full moderate tier
 npm cache clean --force && rm -rf ~/.gradle/caches/* ~/.pub-cache/* && brew cleanup
 
 # Nuclear option (all tiers, no prompts)
-# WARNING: Only run if you understand all consequences. ~/.cache is STILL not globbed
-# here -- "nuclear" means you accept re-downloading caches, not silently destroying a
-# model file that never comes back.
-rm -rf ~/Library/Caches/*; find ~/Library/Logs ~/.Trash -mindepth 1 -delete
+# WARNING: Only run if you understand all consequences. ~/.cache is STILL absent here --
+# "nuclear" means you accept re-downloading caches, not silently destroying a model file
+# that never comes back.
+find ~/Library/Caches ~/Library/Logs ~/.Trash -mindepth 1 -maxdepth 1 -exec rm -rf {} +
 npm cache clean --force && rm -rf ~/.gradle/caches/* ~/.pub-cache/* && brew cleanup
 docker system prune -a --volumes -f
 rm -rf ~/.android/avd/*.avd ~/Library/Android/sdk/system-images/*
@@ -285,8 +294,10 @@ Items requiring manual decision (not automated):
 For automatic maintenance, add to crontab:
 
 ```bash
-# Run safe tier weekly (Sunday 3am)
-0 3 * * 0 rm -rf ~/Library/Caches/*; find ~/Library/Logs -mindepth 1 -delete
+# Run safe tier weekly (Sunday 3am). Same idiom as everywhere else -- cron runs /bin/sh, where an
+# unmatched glob passes through literally rather than aborting, which is its own quiet way to be wrong.
+# ~/.Trash is omitted (cron has no Full Disk Access) and so is ~/.cache (it needs a human).
+0 3 * * 0 find ~/Library/Caches ~/Library/Logs -mindepth 1 -maxdepth 1 -exec rm -rf {} +
 ```
 
 ---
@@ -296,6 +307,7 @@ For automatic maintenance, add to crontab:
 | Issue | Solution |
 |-------|----------|
 | "Permission denied" | Some caches locked by running apps. Quit apps first. |
+| "Operation not permitted" on `~/.Trash` | Terminal lacks Full Disk Access. Grant it in System Settings -> Privacy & Security, or empty Trash from Finder. |
 | Docker won't prune | Start Docker Desktop first |
 | Space not freed immediately | macOS may delay reporting. Run `sudo purge` to update |
 | Xcode paths not found | Xcode not installed, skip those items |

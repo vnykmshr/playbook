@@ -60,7 +60,7 @@ Run this for a fast overview:
 # User data lives on the Data volume; measure that or the 80% trigger never fires.
 VOL=$([ -d /System/Volumes/Data ] && echo /System/Volumes/Data || echo /)
 echo "=== Disk ===" && df -h "$VOL" | tail -1
-echo "=== Memory ===" && sysctl vm.swapusage
+echo "=== Memory ===" && (memory_pressure 2>/dev/null | tail -1 || vm_stat | head -5)
 echo "=== CPU Load ===" && uptime
 echo "=== Top Processes ===" && ps -Ao pcpu,pmem,comm -r | head -6
 ```
