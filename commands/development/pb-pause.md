@@ -5,11 +5,11 @@ category: "development"
 difficulty: "advanced"
 model_hint: "sonnet"
 execution_pattern: "sequential"
-related_commands: ['pb-resume', 'pb-start', 'pb-standup']
+related_commands: ['pb-resume', 'pb-start', 'pb-standup', 'pb-handoff']
 last_reviewed: "2026-07-28"
 last_evolved: "2026-07-28"
-version: "1.6.2"
-version_notes: "v1.6.2: Deep Step 6 no longer routes around the generator -- pb-claude-project v1.2.0 preserves `## Custom (Manual)` blocks, so regenerate-then-diff replaces the hand-edit caveat. v1.6.1: An existing memory/lessons.md stays put and is linked from the new archive -- the path move must not fork a project's history silently. v1.6.0: Step 0 bootstraps the todos/ tree — a first pause no longer assumes todos/done/ and the working context already exist. Recap archive path moves to todos/done/lessons.md. v1.5.1: Deep-mode Step 6 caveat — diff before regenerating a hand-evolved project CLAUDE.md."
+version: "1.7.0"
+version_notes: "v1.7.0: Deep Step 7 runs any handoff the session wrote, from the receiver's directory. A document verified only from inside the repo that produced it passes every runnable claim it makes. v1.6.2: Deep Step 6 no longer routes around the generator -- pb-claude-project v1.2.0 preserves `## Custom (Manual)` blocks, so regenerate-then-diff replaces the hand-edit caveat. v1.6.1: An existing memory/lessons.md stays put and is linked from the new archive -- the path move must not fork a project's history silently. v1.6.0: Step 0 bootstraps the todos/ tree — a first pause no longer assumes todos/done/ and the working context already exist. Recap archive path moves to todos/done/lessons.md. v1.5.1: Deep-mode Step 6 caveat — diff before regenerating a hand-evolved project CLAUDE.md."
 breaking_changes: []
 ---
 # Pause Development Work
@@ -211,6 +211,14 @@ Run `/pb-claude-project` if the session introduced:
 
 ---
 
+### Step 7: Run any handoff the session wrote
+
+Skip when the session produced no document another repo or person will follow. Otherwise `cd` to where the receiver will be standing and execute its opening moves -- see `/pb-handoff` Step 6.
+
+A handoff pauses cleanly and reads correctly from inside the repo that wrote it, because that repo supplies every working directory, installed package and credential its instructions assume. Writing it is not verifying it, and the gap surfaces on the receiver's first five minutes rather than on yours.
+
+---
+
 ## Cleanup (Optional, Extended Breaks)
 
 For vacations, handoffs, or long breaks:
@@ -249,6 +257,7 @@ Additional checks:
 - `/pb-resume` - Get back into context after a break
 - `/pb-start` - Begin work on a new feature or fix
 - `/pb-standup` - Post async status update to team
+- `/pb-handoff` - Write a handoff for another repo or person (deep Step 7 runs it)
 
 ---
 

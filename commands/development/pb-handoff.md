@@ -8,8 +8,8 @@ execution_pattern: "sequential"
 related_commands: ['pb-start', 'pb-pause', 'pb-plan', 'pb-preamble', 'pb-voice']
 last_reviewed: "2026-07-13"
 last_evolved: ""
-version: "1.0.1"
-version_notes: "v1.0.1: Align the /pb-voice writing note to voice v2.3.0 dash rule (single hyphen the default; `--` earned, not a blanket em-dash substitute). Initial: universal handoff pattern with acceptance criteria and constraints"
+version: "1.1.0"
+version_notes: "v1.1.0: Step 6 runs the handoff from the receiver's directory. \"File paths must make sense from the target project\" was a rule with no mechanism, and the producing repo is the one place every instruction resolves. v1.0.1: Align the /pb-voice writing note to voice v2.3.0 dash rule (single hyphen the default; `--` earned, not a blanket em-dash substitute). Initial: universal handoff pattern with acceptance criteria and constraints"
 breaking_changes: []
 ---
 
@@ -132,7 +132,7 @@ new dependencies", "Timeline: this week."
 
 **Reasoning is the payload.** The *why* behind decisions, not just the *what*. "Chose X over Y because Z" lets the receiver challenge decisions intelligently. "Use X" gives them no basis to evaluate.
 
-**All references must be resolvable.** Use full URLs for external repos, not bare relative paths. File paths must make sense from the target project.
+**All references must be resolvable.** Use full URLs for external repos, not bare relative paths. File paths must make sense from the target project -- and Step 6 is where you find out whether they do, because from inside the producing repo every one of them resolves.
 
 **No template filler.** Every line earns its keep. If a section heading has nothing meaningful under it, drop the section.
 
@@ -183,6 +183,16 @@ Start with:
 
 ---
 
+### Step 6: Run it from the receiver's directory
+
+Skip only when the receiver shares your working directory. Otherwise `cd` to where they will actually be standing and execute the handoff's opening moves -- the first command, the invocation the entry point names, the paths the References section cites.
+
+Every instruction in a handoff is written from inside the repo that produced it, which is the one place it cannot fail. The producing repo supplies the working directory, the installed package, the environment file and the scratch directory the instructions assume, so an unrunnable command and a correct one look identical from there. What surfaces are the cheap blockers that cost the receiver their first session: a module invocation that only resolves inside the source tree, a credential named in neither document, a relative path that pointed somewhere real one directory up.
+
+Fix what breaks in the handoff, then re-run. A blocker found here costs a minute; the same blocker found by the receiver costs their first five and arrives with no idea which of the two repos is wrong.
+
+---
+
 ## Design Principles
 
 1. **Handoff initiates, receiver decides.** The handoff starts work, it doesn't prescribe every step. The receiver has context the source doesn't. Trust them to make execution decisions.
@@ -191,6 +201,7 @@ Start with:
 4. **Dated, not versioned.** Handoffs are point-in-time artifacts. If the work evolves, write a new handoff.
 5. **One handoff, one concern.** Don't bundle unrelated work.
 6. **Two speeds.** Detailed when the source has done the thinking, exploratory when the idea needs context to develop. Both are valid.
+7. **Written here, run there.** A handoff is instructions for a directory you are not in. Until it has been executed from that directory, its runnable claims are untested -- and the producing repo will pass every one of them.
 
 ---
 
@@ -204,4 +215,4 @@ Start with:
 
 ---
 
-*Context transfers cleanly. Receivers start building, not re-discovering. | v1.0.1*
+*Context transfers cleanly. Receivers start building, not re-discovering. | v1.1.0*
