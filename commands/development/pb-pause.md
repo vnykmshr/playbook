@@ -6,7 +6,7 @@ difficulty: "advanced"
 model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-resume', 'pb-start', 'pb-standup', 'pb-handoff']
-last_reviewed: "2026-07-28"
+last_reviewed: "2026-07-31"
 last_evolved: "2026-07-28"
 version: "1.7.0"
 version_notes: "v1.7.0: Deep Step 7 runs any handoff the session wrote, from the receiver's directory. A document verified only from inside the repo that produced it passes every runnable claim it makes. v1.6.2: Deep Step 6 no longer routes around the generator -- pb-claude-project v1.2.0 preserves `## Custom (Manual)` blocks, so regenerate-then-diff replaces the hand-edit caveat. v1.6.1: An existing memory/lessons.md stays put and is linked from the new archive -- the path move must not fork a project's history silently. v1.6.0: Step 0 bootstraps the todos/ tree — a first pause no longer assumes todos/done/ and the working context already exist. Recap archive path moves to todos/done/lessons.md. v1.5.1: Deep-mode Step 6 caveat — diff before regenerating a hand-evolved project CLAUDE.md."

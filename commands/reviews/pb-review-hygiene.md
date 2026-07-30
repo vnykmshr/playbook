@@ -6,7 +6,7 @@ difficulty: "advanced"
 model_hint: "opus"
 execution_pattern: "sequential"
 related_commands: ['pb-review', 'pb-review-code', 'pb-review-tests', 'pb-security', 'pb-repo-organize']
-last_reviewed: "2026-04-26"
+last_reviewed: "2026-07-31"
 last_evolved: "2026-04-26"
 version: "2.2.0"
 version_notes: "v2.2.0: Step 1.2a -- a backstop is unreachable by design, so ask what the guard in front of it assumes rather than whether it fires. Cleanup passes had a delete-dead-code checkbox and no way to tell a backstop from an orphan; a real guard sat on a delete list for three review rounds because the guard in front of it compared each item to its cohort's own median, which moves with the damage under correlated failure. v2.1.0: Reference global GitHub Artifact Register rule for review-comment register."

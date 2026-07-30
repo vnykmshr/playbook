@@ -6,7 +6,7 @@ difficulty: "intermediate"
 model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-start', 'pb-pause', 'pb-plan', 'pb-preamble', 'pb-voice']
-last_reviewed: "2026-07-13"
+last_reviewed: "2026-07-31"
 last_evolved: ""
 version: "1.1.0"
 version_notes: "v1.1.0: Step 6 runs the handoff from the receiver's directory. \"File paths must make sense from the target project\" was a rule with no mechanism, and the producing repo is the one place every instruction resolves. v1.0.1: Align the /pb-voice writing note to voice v2.3.0 dash rule (single hyphen the default; `--` earned, not a blanket em-dash substitute). Initial: universal handoff pattern with acceptance criteria and constraints"
