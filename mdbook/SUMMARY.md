@@ -94,6 +94,7 @@
 - [Elena: Design Agent](commands/reviews/pb-elena-design.md)
 - [Travis: Security Agent](commands/reviews/pb-travis-security.md)
 - [Review: Code](commands/reviews/pb-review-code.md)
+- [Review: Incoming](commands/reviews/pb-review-incoming.md)
 - [Review: Backend](commands/reviews/pb-review-backend.md)
 - [Review: Frontend](commands/reviews/pb-review-frontend.md)
 - [Review: Infrastructure](commands/reviews/pb-review-infrastructure.md)

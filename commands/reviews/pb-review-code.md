@@ -6,10 +6,10 @@ difficulty: "advanced"
 model_hint: "opus"
 execution_pattern: "sequential"
 related_commands: ['pb-review', 'pb-review-hygiene', 'pb-review-tests', 'pb-security', 'pb-cycle']
-last_reviewed: "2026-04-26"
-last_evolved: "2026-04-26"
-version: "2.2.0"
-version_notes: "v2.2.0: Reference global GitHub Artifact Register rule for review-comment register via single-line pointer."
+last_reviewed: "2026-07-31"
+last_evolved: "2026-07-31"
+version: "2.3.0"
+version_notes: "v2.3.0: Family decision tree forks on whether the author is reachable -- an unreachable author routes to /pb-review-incoming, since this command's feedback loop assumes someone to hand findings back to. v2.2.0: Reference global GitHub Artifact Register rule for review-comment register via single-line pointer."
 breaking_changes: []
 ---
 # Code Review (Specific Changes)
@@ -39,10 +39,17 @@ START: "I want to review code"
   ↓
 Q1: Is this for a specific change (PR/commit)?
   │
-  ├─ YES → /pb-review-code (YOU ARE HERE)
-  │        ✓ Reviews specific code change
-  │        ✓ Detailed architecture/security/correctness analysis
-  │        ✓ ~30-60 min per PR
+  ├─ YES → Is the author reachable to answer findings?
+  │        │
+  │        ├─ YES → /pb-review-code (YOU ARE HERE)
+  │        │        ✓ Reviews specific code change
+  │        │        ✓ Detailed architecture/security/correctness analysis
+  │        │        ✓ ~30-60 min per PR
+  │        │
+  │        └─ NO (authored in another project's session) → /pb-review-incoming
+  │                 ✓ Trusts the content, scrutinizes the conformance
+  │                 ✓ Checks against THIS project's declared conventions
+  │                 ✓ Verdict resolves to take / fix-then-take / revert
   │
   └─ NO → What's your priority?
            │

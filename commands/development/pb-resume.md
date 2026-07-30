@@ -5,11 +5,11 @@ category: "development"
 difficulty: "advanced"
 model_hint: "sonnet"
 execution_pattern: "sequential"
-related_commands: ['pb-start', 'pb-pause', 'pb-cycle']
-last_reviewed: "2026-07-28"
-last_evolved: "2026-07-28"
-version: "1.6.1"
-version_notes: "v1.6.1: An existing memory/lessons.md stays put and is linked from the new archive -- the path move must not fork a project's history silently. v1.6.0: Recap archive moves from memory/lessons.md to todos/done/lessons.md — session and lesson notes stay in the gitignored dev tree. Strip now means remove the body, not comment it out. v1.5.0: Restructure Step 0 — SURFACE→ACT→ARCHIVE phases with dedup check, archive-failure handling, and Recap Disposition summary."
+related_commands: ['pb-start', 'pb-pause', 'pb-cycle', 'pb-review-incoming']
+last_reviewed: "2026-07-31"
+last_evolved: "2026-07-31"
+version: "1.7.0"
+version_notes: "v1.7.0: Step 3 routes an unratified batch to /pb-review-incoming -- commits authored in another project's session arrive with sound content and undrifted conformance, and resume is where they surface. v1.6.1: An existing memory/lessons.md stays put and is linked from the new archive -- the path move must not fork a project's history silently. v1.6.0: Recap archive moves from memory/lessons.md to todos/done/lessons.md — session and lesson notes stay in the gitignored dev tree. Strip now means remove the body, not comment it out. v1.5.0: Restructure Step 0 — SURFACE→ACT→ARCHIVE phases with dedup check, archive-failure handling, and Recap Disposition summary."
 breaking_changes: []
 ---
 # Resume Development Work
@@ -139,6 +139,8 @@ git diff                                # Uncommitted changes
 git diff --staged                       # Staged changes
 ```
 
+**If commits here were authored from another project's session, they have not been ratified against this project's conventions -- run `/pb-review-incoming` before pushing.** The author had the evidence and not your conventions, so the content is usually sound and the conformance is where it drifts.
+
 ### Step 4: Load Session State + Context Health Check
 
 **Load session state:**
@@ -239,6 +241,7 @@ cat todos/pause-notes.md               # Any breadcrumbs?
 - `/pb-start` - Begin work on a new feature or fix
 - `/pb-pause` - Gracefully pause work and preserve context
 - `/pb-cycle` - Self-review and peer review during development
+- `/pb-review-incoming` - Ratify commits authored in another project's session
 
 ---
 

@@ -105,6 +105,7 @@ Quick reference for all playbook commands.
 |---------|-------------|-----------|
 | `/pb-review` | Orchestrate multi-perspective review | Monthly or pre-release |
 | `/pb-review-code` | Dedicated code review for reviewers (peer review checklist) | Every PR review |
+| `/pb-review-incoming` | Ratify changes authored in another project's session against this project's conventions | When a sibling-authored batch arrives |
 | `/pb-linus-agent` | Direct, unfiltered technical feedback grounded in pragmatism | Security-critical code, architecture decisions |
 | `/pb-elena-design` | Design craft review: usability, visual hierarchy, design-system/brand | Frontend/design PRs, new surfaces |
 | `/pb-travis-security` | Adversarial security review: attacker mind, trust boundaries, PoC-driven | Input parsing, auth, trust boundaries |
