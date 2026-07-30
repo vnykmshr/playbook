@@ -8,8 +8,8 @@ execution_pattern: "sequential"
 related_commands: ['pb-review', 'pb-review-code', 'pb-review-tests', 'pb-security', 'pb-repo-organize']
 last_reviewed: "2026-04-26"
 last_evolved: "2026-04-26"
-version: "2.1.0"
-version_notes: "v2.1.0: Reference global GitHub Artifact Register rule for review-comment register."
+version: "2.2.0"
+version_notes: "v2.2.0: Step 1.2a -- a backstop is unreachable by design, so ask what the guard in front of it assumes rather than whether it fires. Cleanup passes had a delete-dead-code checkbox and no way to tell a backstop from an orphan; a real guard sat on a delete list for three review rounds because the guard in front of it compared each item to its cohort's own median, which moves with the damage under correlated failure. v2.1.0: Reference global GitHub Artifact Register rule for review-comment register."
 breaking_changes: []
 ---
 # Codebase Hygiene Review (Periodic Health Check)
@@ -76,6 +76,26 @@ Act as these roles simultaneously:
 - [ ] Consolidate constants, paths, config variables into single source of truth
 - [ ] Strip unused code, comments, placeholders from prior iterations
 - [ ] Refactor overly complex logic into simple, maintainable patterns
+- [ ] Every deletion candidate that is a guard, limit, fallback or backstop passed 1.2a
+
+#### 1.2a Before Deleting a Guard: What Does the Primary Guard Assume?
+
+A backstop is unreachable in every test you have, because the guard in front of it fires first. That is what a backstop is for, and it is indistinguishable from dead code by coverage, by grep, and by reading.
+
+So do not ask whether it fires. Ask **what the guard in front of it assumes, and what happens to this backstop when that assumption breaks.** Answer in one sentence before deciding:
+
+| The primary guard | Assumes | Breaks when | Leaving only |
+|---|---|---|---|
+| Compares each item to the population's own median | the population is mostly healthy | failure is correlated -- the median moves with the damage | the absolute ceiling |
+| Retries on a transient error class | the error is classified correctly | a new failure arrives wearing the wrong class | the total-attempt cap |
+| Validates at the boundary | every path enters through it | a second caller is added later | the invariant check downstream |
+
+Relative guards, freshness windows and anything comparing a member to its own cohort share the failure mode: **the reference moves with the damage.** Under correlated failure they read healthy at the exact moment the absolute limit is the only thing left.
+
+Two rules follow:
+
+- **A guard proposed for deletion twice and kept twice is evidence, not indecision.** If a candidate keeps returning, the register owes it a recorded reason -- the assumption it covers, written down -- so the next review reads a finding instead of re-litigating a hunch.
+- **Delete the assumption, not the backstop.** When the primary guard's assumption genuinely cannot break, say why in the deletion note. If you cannot, you are removing the only thing standing under the case nobody tested.
 
 ### 1.3 AI/Boilerplate Bloat Detection
 
@@ -103,7 +123,7 @@ Look for telltale signs of over-generation:
 
 ### 2.1 Codebase Health
 
-- [ ] Clear, readable structure with no major dead code
+- [ ] Clear, readable structure with no major dead code (guards and backstops go through 1.2a, not this checkbox)
 - [ ] Dependencies up to date and pinned
 - [ ] Build scripts and Makefiles functional and minimal
 - [ ] Linting, formatting, and static checks passing
