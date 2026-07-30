@@ -11,6 +11,7 @@ Verifies all command files follow audit conventions established in v2.8.0:
 """
 
 import re
+import subprocess
 from pathlib import Path
 
 import pytest
@@ -42,6 +43,84 @@ def get_command_files():
     return sorted(COMMANDS_DIR.rglob("*.md"))
 
 
+REPO_ROOT = COMMANDS_DIR.parent
+
+# Front-matter keys. A commit touching only these edited metadata, not content.
+META_KEYS = (
+    "name|title|category|difficulty|model_hint|execution_pattern|related_commands"
+    "|last_reviewed|last_evolved|version|version_notes|breaking_changes|tags"
+)
+META_LINE = re.compile(rf"^[+-]({META_KEYS}):")
+
+# Substantive edits that predate this guard and never bumped their review date.
+# These are real debt, not exemptions: the list must only ever shrink. Bumping a
+# file's last_reviewed removes it here, and test_baseline_only_shrinks fails if
+# an entry is fixed but left behind.
+REVIEW_DATE_BASELINE = {
+    "pb-adr.md",
+    "pb-design-rules.md",
+    "pb-performance.md",
+    "pb-preamble.md",
+    "pb-release.md",
+    "pb-review.md",
+    "pb-standards.md",
+    "pb-threat-hunt.md",
+}
+
+
+def git(*args: str) -> str:
+    """Run git at the repo root.
+
+    Raises if git is unavailable rather than skipping. A check that passes
+    silently when it cannot run reports the same result for healthy and broken.
+    """
+    return subprocess.run(
+        ["git", *args],
+        cwd=REPO_ROOT,
+        capture_output=True,
+        text=True,
+        check=True,
+    ).stdout
+
+
+def read_front_matter_field(path: Path, field: str) -> str | None:
+    """Read a quoted scalar from a command's YAML front matter."""
+    match = re.search(
+        rf'^{re.escape(field)}:\s*"([^"]*)"',
+        path.read_text(),
+        re.MULTILINE,
+    )
+    return match.group(1) if match else None
+
+
+def commit_changed_body(sha: str, rel_path: str) -> bool:
+    """True if the commit changed lines outside this file's front matter.
+
+    A bulk pass that only sets `version:` across the corpus is not a review, so
+    its `last_reviewed` is correctly left alone. Only a substantive edit that
+    also claims a version owes a review date.
+    """
+    diff = git("show", "--format=", "-U0", sha, "--", rel_path)
+    for line in diff.splitlines():
+        if line.startswith(("+++", "---", "@@", "diff ", "index ")):
+            continue
+        if line.startswith(("+", "-")):
+            if not META_LINE.match(line) and line.strip() not in ("+", "-"):
+                return True
+    return False
+
+
+def last_substantive_version_bump(rel_path: str) -> str | None:
+    """Date of the newest commit that bumped `version:` and changed the body."""
+    for line in git("log", "--format=%H %cs", "--", rel_path).strip().splitlines():
+        if not line.strip():
+            continue
+        sha, date = line.split()
+        if re.search(r"^\+version:", git("show", sha, "--", rel_path), re.MULTILINE):
+            return date if commit_changed_body(sha, rel_path) else None
+    return None
+
+
 def get_related_commands_count(content: str) -> int:
     """Count Related Commands links in standard section."""
     in_section = False
@@ -63,6 +142,81 @@ class TestCommandCount:
         files = get_command_files()
         assert len(files) == EXPECTED_COUNT, (
             f"Expected {EXPECTED_COUNT} commands, found {len(files)}"
+        )
+
+
+class TestReviewDateFreshness:
+    """`last_reviewed` must not predate the file's most recent commit.
+
+    A command edited without touching its review date claims a review that did
+    not happen. This is the failure mode of changes authored in another
+    project's session: the author has the evidence and not the conventions, so
+    the body is sound and the metadata drifts. See /pb-review-incoming.
+    """
+
+    def _violations(self) -> dict[str, str]:
+        found = {}
+        for path in get_command_files():
+            rel = str(path.relative_to(REPO_ROOT))
+            bumped = last_substantive_version_bump(rel)
+            declared = read_front_matter_field(path, "last_reviewed")
+            if bumped and declared and declared < bumped:
+                found[path.name] = f"last_reviewed={declared}, edited={bumped}"
+        return found
+
+    def test_no_new_stale_review_dates(self):
+        new = {k: v for k, v in self._violations().items() if k not in REVIEW_DATE_BASELINE}
+        assert not new, (
+            "Commands whose body and version changed without bumping last_reviewed:\n  "
+            + "\n  ".join(f"{k}: {v}" for k, v in sorted(new.items()))
+            + "\nBump last_reviewed in the same commit as the change."
+        )
+
+    def test_baseline_only_shrinks(self):
+        fixed = REVIEW_DATE_BASELINE - self._violations().keys()
+        assert not fixed, (
+            f"Fixed but still baselined: {sorted(fixed)}. "
+            "Remove them from REVIEW_DATE_BASELINE -- the list is debt, not exemptions."
+        )
+
+
+class TestChangelogLandsWithChange:
+    """A commit that bumps a command's version must carry its CHANGELOG line.
+
+    Splitting them produces a commit documenting work its own tree does not
+    contain, or shipping work its changelog does not mention. Both survive every
+    other checker and make bisect lie. See /pb-review-incoming Step 0.
+    """
+
+    # Commits that split the paperwork, found by the first /pb-review-incoming
+    # run and already pushed. Recorded rather than rewritten -- the gap is
+    # evidence about the intake path.
+    GRANDFATHERED = {
+        "5912757": "pb-llm-guidelines v1.2.0 -- changelog line landed one commit late",
+        "b20e99c": "pb-review-hygiene v2.2.0 -- changelog line landed one commit early",
+        "fa6ac59": "personas Boundary & Authority, 6 files -- covered by the persona-team entry in a later commit",
+        "03a9fbf": "pb-claude-global template sync -- covered by the LLM Guardrails entry in a later commit",
+    }
+
+    def test_version_bumps_carry_their_changelog_line(self):
+        last_tag = git("describe", "--tags", "--abbrev=0").strip()
+        offenders = []
+        for line in git("log", "--format=%H", f"{last_tag}..HEAD").strip().splitlines():
+            sha = line.strip()
+            if not sha or sha[:7] in self.GRANDFATHERED:
+                continue
+            touched = git("show", "--stat", "--format=", "--name-only", sha).split()
+            bumped = [
+                f for f in touched
+                if f.startswith("commands/") and f.endswith(".md")
+                and re.search(r"^\+version:", git("show", sha, "--", f), re.MULTILINE)
+            ]
+            if bumped and "CHANGELOG.md" not in touched:
+                offenders.append(f"{sha[:7]}: bumped {', '.join(bumped)} without a CHANGELOG line")
+        assert not offenders, (
+            "Version bumps missing their changelog entry:\n  "
+            + "\n  ".join(offenders)
+            + "\nThe changelog line belongs in the same commit as the change."
         )
 
 
