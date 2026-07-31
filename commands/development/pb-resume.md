@@ -8,8 +8,8 @@ execution_pattern: "sequential"
 related_commands: ['pb-start', 'pb-pause', 'pb-cycle', 'pb-review-incoming']
 last_reviewed: "2026-07-31"
 last_evolved: "2026-07-31"
-version: "1.7.0"
-version_notes: "v1.7.0: Step 3 routes an unratified batch to /pb-review-incoming -- commits authored in another project's session arrive with sound content and undrifted conformance, and resume is where they surface. v1.6.1: An existing memory/lessons.md stays put and is linked from the new archive -- the path move must not fork a project's history silently. v1.6.0: Recap archive moves from memory/lessons.md to todos/done/lessons.md — session and lesson notes stay in the gitignored dev tree. Strip now means remove the body, not comment it out. v1.5.0: Restructure Step 0 — SURFACE→ACT→ARCHIVE phases with dedup check, archive-failure handling, and Recap Disposition summary."
+version: "1.8.0"
+version_notes: "v1.8.0: The recap archive is the project's existing archive, not a fixed path -- Step 0a's dedup and Step 0c's write now name one location instead of diverging, and the v1.6.1 fork-and-point-back rule is gone (it created the split it cited as the hazard). `memory/` in a consumer project may be an auto-memory directory outside the repo, which the v1.6.0 rationale was not about. v1.7.0: Step 3 routes an unratified batch to /pb-review-incoming -- commits authored in another project's session arrive with sound content and undrifted conformance, and resume is where they surface. v1.6.1: An existing memory/lessons.md stays put and is linked from the new archive -- the path move must not fork a project's history silently. v1.6.0: Recap archive moves from memory/lessons.md to todos/done/lessons.md — session and lesson notes stay in the gitignored dev tree. Strip now means remove the body, not comment it out. v1.5.0: Restructure Step 0 — SURFACE→ACT→ARCHIVE phases with dedup check, archive-failure handling, and Recap Disposition summary."
 breaking_changes: []
 ---
 # Resume Development Work
@@ -45,7 +45,7 @@ Read the `### Session Recap` section from `todos/pause-notes.md`.
 
 #### 0a. SURFACE: Present Findings
 
-Before surfacing, check for duplicates: if the recap content already appears as the most recent entry in `todos/done/lessons.md`, skip to Step 1 (already processed on a prior resume).
+Before surfacing, check for duplicates: if the recap content already appears as the most recent entry in **the project's recap archive** (Step 0c names it), skip to Step 1 (already processed on a prior resume).
 
 Otherwise, surface the recap visibly. Present findings as a structured summary. The recap is a learning loop, not a write-only log:
 
@@ -78,7 +78,9 @@ The default is "act, then report." The user can override any action before archi
 
 #### 0c. ARCHIVE: Append → Strip
 
-1. **Append to `todos/done/lessons.md`** first (create the file and `todos/done/` if new) - prevents data loss if interrupted. **If an archive exists at the pre-v1.6.0 path `memory/lessons.md`, leave it where it is and open the new file with a line pointing at it.** Do not migrate the old entries and do not keep writing to the old path: moving history to chase a path change is churn, and splitting the log without saying so is how a five-month record quietly forks.
+1. **Append to the project's recap archive** first - prevents data loss if interrupted. **The archive is wherever this project's recaps already go.** A project that has none starts one at `todos/done/lessons.md`, the default because `todos/` is gitignored and keeps session narrative out of the repo. Step 0a's dedup check reads the same file this step writes; if you find yourself reading one path and writing another, that is the bug.
+
+   Do not relocate an existing archive to match the default. Moving history to chase a path change is churn, and writing new entries to a second location forks the record whether or not you leave a pointer behind. If an existing archive genuinely violates the property above - tracked, leaking session narrative into git - moving it is a decision to raise with the user, not a silent migration.
    ```markdown
    ## [YYYY-MM-DD] — [session context]
    [recap content]
@@ -86,7 +88,7 @@ The default is "act, then report." The user can override any action before archi
 2. **If the append fails:** leave the recap in pause notes, flag the error. Do not strip.
 3. **Strip from pause notes** only after confirming the archive write succeeded. Strip means remove the body and leave a one-line pointer to the archive - not a comment marker around retained text.
 
-Session notes and lesson notes live under `todos/`, alongside the pause notes they continue, and inherit its gitignore. They are position and reflection, not tracked artifacts; anything durable belongs in `docs/`.
+Session notes and lesson notes are position and reflection, not tracked artifacts; anything durable belongs in `docs/`. `todos/` is the default home because it already carries the pause notes they continue and inherits its gitignore - but a project whose archive lives outside the repo entirely (a Claude Code auto-memory directory, for instance) already satisfies that, and `memory/` in such a project is not the repo directory this rule was written about.
 
 ---
 

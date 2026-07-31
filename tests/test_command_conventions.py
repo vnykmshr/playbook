@@ -512,3 +512,51 @@ class TestRegisterRuleReference:
             f"Commands missing '{self.REGISTER_REFERENCE}' reference:\n"
             + "\n".join(f"  {c}" for c in no_reference)
         )
+
+
+class TestRecapArchiveCoherence:
+    """The pause/resume pair writes and re-reads one recap archive.
+
+    Three version bumps shipped a divergence here -- pb-resume's dedup check
+    named `todos/done/lessons.md` while its own archive step told a project with
+    an existing `memory/lessons.md` to keep using that -- so the check read a
+    file the write never touched and a recap could be archived twice. Every
+    other test in this file guards metadata shape; none could see a
+    contradiction between two steps of one command.
+    """
+
+    PAIR = ("pb-resume.md", "pb-pause.md")
+
+    def test_no_command_hardcodes_a_migration_away_from_an_existing_archive(self):
+        """A fixed destination for an *existing* archive is the fork this rule caused.
+
+        `todos/done/lessons.md` may still appear as the default for a project
+        that has no archive yet. What must not come back is an instruction to
+        keep writing somewhere other than where a project's recaps already go.
+        """
+        offenders = []
+        for name in self.PAIR:
+            path = COMMANDS_DIR / "development" / name
+            body = path.read_text().split("---", 2)[-1]
+            for marker in ("pre-v1.6.0 path", "leave it where it is and open the new file"):
+                if marker in body:
+                    offenders.append(f"{name}: reintroduces the fork-and-point-back rule ({marker!r})")
+
+        assert not offenders, (
+            "Recap archive must be the project's existing archive:\n  "
+            + "\n  ".join(offenders)
+            + "\nA second location forks the record whether or not a pointer connects them."
+        )
+
+    def test_pause_and_resume_agree_on_the_default_archive(self):
+        """Both halves of the loop must name the same default, or a first archive splits."""
+        default = "todos/done/lessons.md"
+        missing = [
+            name for name in self.PAIR
+            if default not in (COMMANDS_DIR / "development" / name).read_text()
+        ]
+        assert not missing, (
+            f"These commands no longer name the default archive {default!r}: {missing}\n"
+            "pb-pause writes the recap and pb-resume re-reads it; a project with no "
+            "archive yet needs both to start it in the same place."
+        )
