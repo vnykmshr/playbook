@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v2.27.0] - 2026-08-03
+
 ### Added
 
 - **`/pb-review-incoming` v1.2.0: a third mode, for the consumer side of a release.** Four directions exist between a project and a sibling library; the command owned three, and *a consumer adapting to a release that was just cut* was covered nowhere. That work is not a version bump: read the changelog, diff what you actually consume, decide, migrate config, re-pin, update contract checks. **Release mode** resolves scope to a version delta paired with the consumed surface, inherits the empty-resolution hard stop (*"already on that version"* is an answer, not a clean intake), and states that **what you consume and what was published may differ** -- a SHA pin, a fork, a vendored patch, a pre-release, a registry artifact disagreeing with its own tag. Step 5 gains **adopt / pin / skip** per unit of the delta, the per-commit table now scoped explicitly to range mode, and a **required digest**: concerns surviving adoption is mandatory with no empty case, because it exists in no other artifact and evaporates once a green intake feels finished; highlights and adjustments are required when non-empty, since forcing a line into an empty section teaches filler. Step 3 gains a mandatory release-notes-versus-code check on the mechanism already used for the register -- extract, compare, cite -- because a release note can be wrong in a way your tests cannot catch, having encoded what you believed the note said. Two corrections the requesting handoff did not have. **The security signal list already contained *new or bumped third-party dependencies***, the entire subject matter of a release intake, so it fired on every run; a rule that always fires carries no information and discredits its neighbours, and release mode now narrows it to transitive-dependency changes, new egress, new subprocess or build hooks, changed parsing of untrusted input, and maintainer or signing changes. **And the founding asymmetry does not transfer:** a published artifact carries its own contract, so *trust the content* -- which is derived from that asymmetry -- is not a licence here. Every forking step answers all three modes. `/pb-learn` v1.1.0 lands in the same commit, since separately is how a cross-reference becomes never: a session looking for dependency intake reached for it and guessed wrong, so its When-NOT-to-Use names the right door. **The claim is scoped** -- demand evidence from one project that did the work by hand, not evidence the shape works.
@@ -1817,6 +1819,7 @@ When releasing a new version:
 
 ---
 
+[v2.27.0]: https://github.com/vnykmshr/playbook/releases/tag/v2.27.0
 [v2.26.0]: https://github.com/vnykmshr/playbook/releases/tag/v2.26.0
 [v2.25.0]: https://github.com/vnykmshr/playbook/releases/tag/v2.25.0
 [v2.24.1]: https://github.com/vnykmshr/playbook/releases/tag/v2.24.1
