@@ -6,10 +6,10 @@ difficulty: "beginner"
 model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-claude-project', 'pb-claude-orchestration', 'pb-preamble', 'pb-design-rules', 'pb-standards']
-last_reviewed: "2026-07-13"
-last_evolved: "2026-07-13"
-version: "2.5.0"
-version_notes: "v2.5.0: Sync template to the live global file -- add the LLM Coding Guardrails BEACON (shipped v2.25.0 but missing here) and /pb-threat-hunt (deep audit) to the Quick Reference security row. v2.4.1: Align the CLAUDE.md quality-checklist dash item to voice v2.3.0 (single hyphen the default; `--` earned, not simply the em-dash replacement). v2.4.0: Q2 2026 capability refresh -- model-selection guidance to Opus 4.8 GA; /fast keeps Opus with faster output (no Sonnet downgrade); [1m] opts into 1M context (200K default); brief Fable 5 forward note (Opus stays default). v2.3.0: Replace 'Commits' section with 'GitHub Artifact Register' covering commits, PRs, issues, and PR/review/inline comments; numeric length ceilings; strip + never-write lists."
+last_reviewed: "2026-08-03"
+last_evolved: "2026-08-03"
+version: "2.6.0"
+version_notes: "v2.6.0: Add the comments-carry-constraints directive to the Code Quality BEACON, and its checklist entry. Written after a session where comments justified a word choice and reproduced panel arguments already recorded in the decision doc -- 67 comment lines cut to 29 across four files with no loss of meaning. v2.5.0: Sync template to the live global file -- add the LLM Coding Guardrails BEACON (shipped v2.25.0 but missing here) and /pb-threat-hunt (deep audit) to the Quick Reference security row. v2.4.1: Align the CLAUDE.md quality-checklist dash item to voice v2.3.0 (single hyphen the default; `--` earned, not simply the em-dash replacement). v2.4.0: Q2 2026 capability refresh -- model-selection guidance to Opus 4.8 GA; /fast keeps Opus with faster output (no Sonnet downgrade); [1m] opts into 1M context (200K default); brief Fable 5 forward note (Opus stays default). v2.3.0: Replace 'Commits' section with 'GitHub Artifact Register' covering commits, PRs, issues, and PR/review/inline comments; numeric length ceilings; strip + never-write lists."
 breaking_changes: ['Template output restructured -- BEACON headers, standalone Non-Negotiables, Session Ritual added', 'Personas list removed from global (project-specific)', 'Context Efficiency section removed (generic)', 'Project-Specific Overrides section removed (obvious)']
 ---
 # Generate Global CLAUDE.md
@@ -99,6 +99,7 @@ For all 18 rules: `/pb-design-rules`
 - Security awareness -- no hardcoded secrets, validate inputs at boundaries
 - LLM output trust -- treat LLM-generated code as untrusted input at security boundaries
 - Never ship flaky tests -- test reliability matters as much as code reliability
+- Comments carry constraints, not rationale -- an invariant, a gotcha, why the obvious approach fails. Decisions, justifications and restatements of the code belong in the commit message or the decision doc. If a comment reads like an essay, it is one, and it lives elsewhere
 
 For detailed standards: `/pb-standards`
 
@@ -252,6 +253,7 @@ After generation, verify:
 - [ ] External action gate present in Operational Guardrails (cross-references Read-Regroup-Decide, does not duplicate)
 - [ ] Skill invocation discipline bullet present in Operational Guardrails
 - [ ] LLM output trust bullet present in Code Quality
+- [ ] Comments-carry-constraints bullet present in Code Quality
 - [ ] Session Ritual section present
 - [ ] Playbook references are correct (`/pb-*` commands)
 - [ ] **File is under 180 lines / 2.5K tokens** (context efficiency -- slight bump for Read-Regroup-Decide BEACON)
