@@ -8,8 +8,8 @@ execution_pattern: "reference"
 related_commands: ['pb-preamble', 'pb-design-rules', 'pb-handcraft', 'pb-voice', 'pb-testing']
 last_reviewed: "2026-08-03"
 last_evolved: "2026-08-03"
-version: "1.2.0"
-version_notes: "v1.2.0: Add the Register section -- how authored output reads (minimal sufficient, humble-best, peer-to-peer), covering code, comments and prose, deferring to a project register where one exists, with a falsifiable delete-and-ask test. Fix two defects: the [Country] placeholder shipped as a standard, and an unpunctuated docs rule that could not be parsed. v1.1.0: Added Calm Quality Bar to MLP criteria (playbook v2.12.0)."
+version: "1.3.0"
+version_notes: "v1.3.0: Trim IV and VIII. Stack guidance now points at the playbooks that own it (Node keeps its three rules, having no guide yet); VIII keeps only what /pb-cycle and the Non-Negotiables BEACON do not already carry. Removes a duplicated non-negotiables list, an ASCII cycle diagram, a Make-specific gate block and a redundant quick-reference table. 303 -> 257 lines. v1.2.0: Add the Register section -- how authored output reads (minimal sufficient, humble-best, peer-to-peer), covering code, comments and prose, deferring to a project register where one exists, with a falsifiable delete-and-ask test. Fix two defects: the [Country] placeholder shipped as a standard, and an unpunctuated docs rule that could not be parsed. v1.1.0: Added Calm Quality Bar to MLP criteria (playbook v2.12.0)."
 breaking_changes: []
 ---
 # Project Guidelines & Working Principles
@@ -119,24 +119,20 @@ Tests should catch bugs, not chase coverage numbers.
 
 ## IV. Technology-Specific Standards
 
-### A. Go (Microservices & High Performance)
-* **Concurrency:** Use `sync.WaitGroup` and `context` to manage Goroutine lifecycles. Prevent leaks.
-* **Error Handling:** Use `errors.Is` and `errors.As`. **Do not use panic** for expected runtime errors. Wrap errors with context.
-* **Architecture:** Favor **Interfaces over concrete types** for dependency injection and testability.
+Stack-level guidance lives in its own playbook, so it can go deep without drifting from a summary kept here:
 
-### B. Node.js (APIs & Event-Driven)
-* **Async/Await:** **Never block the Event Loop.** Always use `async/await` for I/O operations.
-* **Separation of Concerns:** Use a layered structure (Controller-Service-Repository). Never put business logic in Express middleware.
-* **Security:** Centralize error handling. Use libraries like Helmet for headers and implement rate limiting.
+| Stack | Playbook |
+|-------|----------|
+| Go | `/pb-guide-go` |
+| Python | `/pb-guide-python` |
+| Frontend | `/pb-patterns-frontend` |
+| APIs, async, data, resilience | `/pb-patterns-api`, `/pb-patterns-async`, `/pb-patterns-db`, `/pb-patterns-resilience` |
 
-### C. Python (Data & Automation)
-* **Environment:** Always use a **Virtual Environment** (`venv`) and lock files.
-* **Typing:** Use **Type Hinting** extensively (e.g., `def func(x: int) -> bool:`) to improve readability and tooling support.
-* **Frameworks:** Prefer lightweight frameworks (FastAPI, Flask) for microservices over monolithic structures.
+**Node.js has no dedicated guide yet**, so its three load-bearing rules stay here until one exists:
 
-### D. Frontend & Mobile Decisions
-* **Styling:** Standardize on **Component-Based Styling** (CSS Modules, Styled Components, Tailwind). Avoid global stylesheets.
-* **Data Fetching:** Use dedicated libraries (React Query, SWR) for API state management to handle caching and loading states automatically.
+* **Never block the event loop.** `async/await` for all I/O.
+* **Layer it:** controller, service, repository. Business logic never lives in middleware.
+* **Centralize error handling**, set security headers, rate-limit at the edge.
 
 ---
 
@@ -238,76 +234,17 @@ MLP is a discipline, not a milestone. Build less. Care more.
 
 ---
 
-## VIII. SDLC Discipline & Code Quality Commitment
+## VIII. SDLC Discipline
 
-### Our Commitment
-We commit to **bug-free, rock-solid results** through disciplined adherence to a full Software Development Life Cycle. Every iteration, regardless of size, follows the same rigorous process. We do not cut corners.
+The cycle itself lives in `/pb-cycle` (develop, self-review, test, peer review, commit) and is entered by `/pb-start`, closed by `/pb-release`. What follows is only what those commands do not already carry.
 
-### Development Workflow
+**Quality gates.** Lint, typecheck and tests all pass before the work proceeds, every iteration, regardless of size. Wire them to one command the project already has; the runner is a project choice, the gate is not.
 
-**Start work:** `/pb-start` - Creates feature branch, establishes iteration rhythm
+**Commit discipline.** One concern per commit, every commit deployable, conventional prefix, and **never `git add .`** -- stage the specific files that belong together. Commit after each meaningful unit of work, not at end of session.
 
-**Each iteration:** `/pb-cycle` - Guides through develop → self-review → peer review → commit
+**Command quality.** Every multi-step command carries a Definition of Done checklist. Execution gates on the boxes, not on a judgment that it feels done.
 
-**Release:** `/pb-release` - Pre-release checks, deployment
-
-### Iteration Cycle (Mandatory for All Changes)
-
-```
-┌─────────────────────────────────────────────────────────────┐
-│  1. DEVELOP      Write code following standards             │
-│         ↓                                                    │
-│  2. SELF-REVIEW  Review your own changes critically         │
-│         ↓                                                    │
-│  3. TEST         Verify: lint, typecheck, tests pass        │
-│         ↓                                                    │
-│  4. PEER REVIEW  Get feedback on approach and quality       │
-│         ↓                                                    │
-│  5. COMMIT       Logical, atomic commit with clear message  │
-└─────────────────────────────────────────────────────────────┘
-```
-
-**Run `/pb-cycle` for detailed checklists at each iteration.**
-
-### Quality Gates
-
-Run after each iteration:
-```bash
-make lint        # Lint check passes
-make typecheck   # Type check passes
-make test        # All tests pass
-```
-
-**All gates must pass before proceeding. Fix issues immediately.**
-
-### Commit Discipline
-
-* **One concern per commit** - Each commit addresses a single feature, fix, or refactor
-* **Always deployable** - Every commit leaves the codebase working
-* **Conventional format** - Use `feat:`, `fix:`, `refactor:`, `docs:`, `test:`, `chore:` prefixes
-* **Never use git add .** - Add specific files that belong together
-
-**Commit timing:** After each meaningful unit of work, not at end of session.
-
-### The Non-Negotiables
-
-* **Never ship known bugs** - Fix or explicitly defer with ticket
-* **Never skip testing** - Manual QA minimum, automated preferred
-* **Never ignore warnings** - Warnings become bugs
-* **Never "just push it"** - Every change deserves the full cycle
-
-### Command Quality
-
-* **Every multi-step command includes a Definition of Done checklist** — execution gates on all boxes checked, not judgment of "feels done"
-
-### Quick Reference
-
-| Action | Command |
-|--------|---------|
-| Start development | `/pb-start` |
-| Iteration cycle | `/pb-cycle` |
-| Release prep | `/pb-release` |
-| Full review | `/pb-review` |
+Non-negotiables (never ship known bugs, never skip testing, never ignore warnings) are stated once in the global CLAUDE.md Non-Negotiables BEACON and are not repeated here.
 
 ---
 
