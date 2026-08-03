@@ -10,6 +10,7 @@ Verifies all command files follow audit conventions established in v2.8.0:
 - Metadata model_hint matches body Resource Hint (consistency)
 """
 
+import functools
 import re
 import subprocess
 from pathlib import Path
@@ -92,6 +93,7 @@ def read_front_matter_field(path: Path, field: str) -> str | None:
     return match.group(1) if match else None
 
 
+@functools.lru_cache(maxsize=None)
 def commit_changed_body(sha: str, rel_path: str) -> bool:
     """True if the commit changed lines outside this file's front matter.
 
@@ -109,8 +111,14 @@ def commit_changed_body(sha: str, rel_path: str) -> bool:
     return False
 
 
+@functools.lru_cache(maxsize=None)
 def last_substantive_version_bump(rel_path: str) -> str | None:
-    """Date of the newest commit that bumped `version:` and changed the body."""
+    """Date of the newest commit that bumped `version:` and changed the body.
+
+    Cached: two tests call this across all 118 commands, and each call walks the
+    file's history one `git show` at a time -- 537 subprocesses and ~10s per
+    uncached pass. Git state does not change during a run.
+    """
     for line in git("log", "--format=%H %cs", "--", rel_path).strip().splitlines():
         if not line.strip():
             continue
@@ -121,17 +129,32 @@ def last_substantive_version_bump(rel_path: str) -> str | None:
 
 
 def get_related_commands_count(content: str) -> int:
-    """Count Related Commands links in standard section."""
+    """Count Related Commands links in standard section.
+
+    Fenced lines are skipped, matching scripts/validate-conventions.py. Generator
+    commands embed a sample Related Commands block inside ```; counting the
+    sample's heading first ends the scan at the fence and returns 0, which
+    `test_related_commands_within_limits` reads as "no section" and skips. The
+    file then sits outside the ceiling entirely -- one rule, two implementations,
+    and the blind one is the one CI runs.
+    """
     in_section = False
+    in_fence = False
     count = 0
     for line in content.splitlines():
-        if line.strip().startswith("## Related Commands"):
+        stripped = line.strip()
+        if stripped.startswith("```"):
+            in_fence = not in_fence
+            continue
+        if in_fence:
+            continue
+        if stripped.startswith("## Related Commands"):
             in_section = True
             continue
         if in_section:
             if line.startswith("## ") or line.startswith("---"):
                 break
-            if line.strip().startswith("- `/pb-"):
+            if stripped.startswith("- `/pb-"):
                 count += 1
     return count
 
@@ -268,6 +291,43 @@ class TestRelatedCommands:
             if count > limit:
                 over_limit.append(f"{path.name} ({count}/{limit})")
         assert not over_limit, f"Over Related Commands limit: {over_limit}"
+
+    def test_fenced_sample_blocks_are_not_counted(self):
+        """A sample block inside ``` must not be mistaken for the file's own section.
+
+        Counting the sample's heading ends the scan at the fence and returns 0,
+        which test_related_commands_within_limits reads as "no section" and
+        skips -- so the file leaves the ceiling check silently. pb-new-playbook
+        hit exactly this: the test counted 0 where the validator counted 4.
+        """
+        content = (
+            "## Related Commands\n\n"
+            "- `/pb-alpha` - one\n"
+            "- `/pb-beta` - two\n\n"
+            "---\n\n"
+            "## Template\n\n"
+            "```markdown\n"
+            "## Related Commands\n\n"
+            "- `/pb-sample-a` - not this file's\n"
+            "- `/pb-sample-b` - nor this\n"
+            "```\n"
+        )
+        assert get_related_commands_count(content) == 2
+
+        fenced_first = (
+            "## Template\n\n"
+            "```markdown\n"
+            "## Related Commands\n\n"
+            "- `/pb-sample-a` - sample\n"
+            "```\n\n"
+            "## Related Commands\n\n"
+            "- `/pb-alpha` - one\n"
+            "- `/pb-beta` - two\n"
+            "- `/pb-gamma` - three\n"
+        )
+        assert get_related_commands_count(fenced_first) == 3, (
+            "A fenced sample appearing before the real section must not consume it"
+        )
 
     def test_front_matter_related_commands_within_limits(self):
         """The limit applies to both lists; until now only one was counted.
