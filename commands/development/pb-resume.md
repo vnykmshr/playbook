@@ -9,7 +9,7 @@ related_commands: ['pb-start', 'pb-pause', 'pb-cycle', 'pb-review-incoming']
 last_reviewed: "2026-08-03"
 last_evolved: "2026-08-03"
 version: "1.9.0"
-version_notes: "v1.9.0: Standard mode ends in a proposal, not a change. Step 0b becomes CLASSIFY rather than ACT (the SURFACE-ACT-ARCHIVE model cuts to SURFACE-ARCHIVE, with acting relocated behind one gate), Step 3's /pb-review-incoming routing demotes from imperative to detection, and a new terminal Step 5 consolidates everything into a single proposal and stops. The act/propose test is a property of the action -- could the user undo it without knowing it happened -- not of whether a file is gitignored. Deep mode is unchanged and ungated: its authorization is the invocation. Also: findings from unprescribed investigation are proposals, never actions; Quick Commands deleted (6 of 6 rows duplicated Steps 1-3). v1.8.0: The recap archive is the project's existing archive, not a fixed path -- Step 0a's dedup and Step 0c's write now name one location instead of diverging, and the v1.6.1 fork-and-point-back rule is gone (it created the split it cited as the hazard). `memory/` in a consumer project may be an auto-memory directory outside the repo, which the v1.6.0 rationale was not about. v1.7.0: Step 3 routes an unratified batch to /pb-review-incoming -- commits authored in another project's session arrive with sound content and undrifted conformance, and resume is where they surface. v1.6.1: An existing memory/lessons.md stays put and is linked from the new archive -- the path move must not fork a project's history silently. v1.6.0: Recap archive moves from memory/lessons.md to todos/done/lessons.md — session and lesson notes stay in the gitignored dev tree. Strip now means remove the body, not comment it out. v1.5.0: Restructure Step 0 — SURFACE→ACT→ARCHIVE phases with dedup check, archive-failure handling, and Recap Disposition summary."
+version_notes: "v1.9.0: Standard mode ends in a proposal, not a change. Step 0b becomes CLASSIFY rather than ACT (the SURFACE-ACT-ARCHIVE model cuts to SURFACE-ARCHIVE, with acting relocated behind one gate), Step 3's /pb-review-incoming routing demotes from imperative to detection, and a new terminal Step 5 consolidates everything into a single proposal and stops. The act/propose test is a property of the action -- could the user undo it without knowing it happened -- not of whether a file is gitignored. Deep mode is unchanged and ungated: its authorization is the invocation. Also: findings from unprescribed investigation are proposals, never actions -- a rule that generalizes past resume to any session that goes looking, kept here at n=1 where the evidence is rather than promoted; Quick Commands deleted (6 of 6 rows duplicated Steps 1-3). v1.8.0: The recap archive is the project's existing archive, not a fixed path -- Step 0a's dedup and Step 0c's write now name one location instead of diverging, and the v1.6.1 fork-and-point-back rule is gone (it created the split it cited as the hazard). `memory/` in a consumer project may be an auto-memory directory outside the repo, which the v1.6.0 rationale was not about. v1.7.0: Step 3 routes an unratified batch to /pb-review-incoming -- commits authored in another project's session arrive with sound content and undrifted conformance, and resume is where they surface. v1.6.1: An existing memory/lessons.md stays put and is linked from the new archive -- the path move must not fork a project's history silently. v1.6.0: Recap archive moves from memory/lessons.md to todos/done/lessons.md — session and lesson notes stay in the gitignored dev tree. Strip now means remove the body, not comment it out. v1.5.0: Restructure Step 0 — SURFACE→ACT→ARCHIVE phases with dedup check, archive-failure handling, and Recap Disposition summary."
 breaking_changes: ['Step 0b changes from ACT to CLASSIFY -- standard mode no longer applies fixes or commits while surfacing the recap; the SURFACE-ACT-ARCHIVE model becomes SURFACE-ARCHIVE', 'Standard mode gains a terminal Step 5 and ends there; deep-mode steps renumber 5-6 to 6-7', 'Quick Commands section removed -- every row duplicated a command already in Steps 1-3']
 ---
 # Resume Development Work
@@ -31,7 +31,7 @@ Quickly get back into context after a break. Use this to resume work on an exist
 
 **When to use deep:** After long breaks (days/weeks), picking up someone else's work, or when standard mode flags stale context layers.
 
-**Standard mode ends in a proposal, not a change.** Everything before Step 5 is read-only. Resume exists to rebuild context and hand it back, and the person who paused knows things the repository does not -- what the batch was for, what they had already decided to do with it. A command that starts fixing what it finds spends that context before it is offered.
+**Standard mode ends in a proposal, not a change.** Everything before Step 5 is read-only. Resume exists to rebuild context and hand it back, and the person who paused knows things the repository does not: what the batch was for, what they had already decided to do with it. A command that starts fixing what it finds spends that context before it is offered.
 
 **Deep mode is different, and the difference is consent:** typing `/pb-resume deep` is the instruction to regenerate stale layers and run the baseline. That authorization is in the invocation, so Steps 6 and 7 act without asking again.
 
@@ -69,7 +69,7 @@ Findings that need action should be called out explicitly. Observations with no 
 
 #### 0b. CLASSIFY: Sort Each Finding
 
-Sort every finding into one of four dispositions. **Do not execute any of them here** -- they are carried to Step 5 and proposed as one list, alongside whatever Steps 1-4 turn up:
+Sort every finding into one of four dispositions. **Do not execute any of them here.** They are carried to Step 5 and proposed as one list, alongside whatever Steps 1-4 turn up:
 
 - **Fixable now** (wording, guardrail, convention) → goes to Step 5 as a proposed change, with the file and the edit named
 - **Worth doing, needs planning** → goes to Step 5 as a proposed working-context entry under Next
@@ -98,7 +98,7 @@ Session notes and lesson notes are position and reflection, not tracked artifact
 
 #### 0d. Recap Disposition
 
-After archiving, report how each finding was **classified** -- not what was done to it:
+After archiving, report how each finding was **classified**, not what was done to it:
 
 ```
 ## Recap Disposition
@@ -109,7 +109,7 @@ After archiving, report how each finding was **classified** -- not what was done
 - Finding 4: archived only
 ```
 
-The archive itself is the one thing this step does rather than proposes. It is the command's declared job, it is announced in the same breath, and it is reversible -- which is the test Step 5 states.
+The archive itself is the one thing this step does rather than proposes. It is the command's declared job, it is announced in the same breath, and it is reversible, which is the test Step 5 states.
 
 Then proceed to Step 1.
 
@@ -197,11 +197,9 @@ Nothing has been changed. What do you want to pick up, and what do you know
 about this state that I don't?
 ```
 
-**The act/propose test: could the user undo this without knowing it happened?** If not, it is a proposal. A commit is trivially reversible and completely invisible, which is the combination that costs someone their afternoon; an append to a gitignored log announced in the same breath is neither. The test is a property of the *action*, not of the file it touches -- do not reduce it to whether something is gitignored.
+**The act/propose test: could the user undo this without knowing it happened?** If not, it is a proposal. A commit is trivially reversible and completely invisible, which is the combination that costs someone their afternoon; an append to a gitignored log announced in the same breath is neither. The test is a property of the *action*, not of the file it touches. Do not reduce it to whether something is gitignored.
 
-**Findings from investigation this command did not prescribe are proposals, never actions.** Nothing stops you running the test suite, `gh run list`, or a linter during a standard resume, and nothing should. But a red result you went looking for does not authorize you to fix it -- that is a separate decision, and it belongs in the list above. Going looking is cheap and often right; acting on what you find is what needed permission.
-
-*(This rule generalizes past resume -- it governs any session that goes looking. It lives here at n=1, where the evidence is; promoting it is a `/pb-evolve` question, not a claim this command should make.)*
+**Findings from investigation this command did not prescribe are proposals, never actions.** Nothing stops you running the test suite, `gh run list`, or a linter during a standard resume, and nothing should. But a red result you went looking for does not authorize you to fix it; that is a separate decision, and it belongs in the list above. Going looking is cheap and often right; acting on what you find is what needed permission.
 
 ---
 

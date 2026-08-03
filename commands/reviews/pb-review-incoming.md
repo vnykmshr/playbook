@@ -106,7 +106,7 @@ Release mode inherits the empty-resolution hard stop: **"already on that version
 
 **What you consume and what was published may differ, and the delta is written about the published thing.** A SHA pin ahead of or behind the tag, a fork, a vendored copy carrying local patches, a pre-release, a registry artifact that does not match its own git tag -- each breaks the same assumption, that reading the release notes tells you what you are running. Resolve the delta against **what this project actually consumes**, and when the two differ, say so in the printed scope rather than reconciling it silently. A consumer pinned to something never released is a normal early state for a sibling dependency, not an exotic one.
 
-### Release mode's asymmetry is a different asymmetry
+### Release mode's asymmetry is different in kind
 
 The rest of this command rests on one thing: the author had evidence you cannot reconstruct and did not have your conventions. **That does not describe a release.** A published artifact carries its own contract, was authored by people who owe you nothing about your conventions, and cannot be trusted-by-default on the grounds that justify it elsewhere in this file.
 
