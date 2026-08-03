@@ -6,10 +6,10 @@ difficulty: "intermediate"
 model_hint: "opus"
 execution_pattern: "sequential"
 related_commands: ['pb-review-code', 'pb-standards', 'pb-handoff', 'pb-resume', 'pb-git-hygiene']
-last_reviewed: "2026-07-31"
-last_evolved: "2026-07-31"
-version: "1.1.0"
-version_notes: "v1.1.0: Scope is resolved from any input (last N, since a SHA, a branch, a patch, the working tree) and printed, because push state was never a proxy for ratification -- an already-synced batch is equally unratified, and origin/main..HEAD silently resolved to empty on it. An empty resolution is now a hard stop. Worktree scope is a distinct mode outputting a commit plan rather than verdicts. The register check gained a mechanism (quote, extract, compare, cite) instead of asserting conformance, and trust-the-content now stops at a declared security signal list. Initial: ratify changes authored in another project's session against this project's declared conventions. Policy comes from the receiving project; the command supplies mechanism. Every run installs the check that would have caught what it found by hand."
+last_reviewed: "2026-08-03"
+last_evolved: "2026-08-03"
+version: "1.2.0"
+version_notes: "v1.2.0: Third mode -- release, for a consumer deciding what to do about a dependency's new version. Scope resolves to a version delta paired with the consumed surface, and what you consume may differ from what was published (SHA pins, forks, vendored patches, pre-releases). Step 3 gains a mandatory release-notes-versus-code check with a mechanism, and narrows the dependency security signal, which read literally fires on every release intake and so carried no information. Step 5 gains adopt/pin/skip per unit of the delta plus a required digest whose concerns-surviving-adoption section has no empty case. Release mode's asymmetry is stated as different in kind: a published artifact with its own contract, not an author who lacked your conventions, so trust-the-content does not carry over. Every forking step now answers all three modes. Built from a directed handoff on demand evidence from one project that did the work by hand; the shape is unproven until someone runs it. v1.1.0: Scope is resolved from any input (last N, since a SHA, a branch, a patch, the working tree) and printed, because push state was never a proxy for ratification -- an already-synced batch is equally unratified, and origin/main..HEAD silently resolved to empty on it. An empty resolution is now a hard stop. Worktree scope is a distinct mode outputting a commit plan rather than verdicts. The register check gained a mechanism (quote, extract, compare, cite) instead of asserting conformance, and trust-the-content now stops at a declared security signal list. Initial: ratify changes authored in another project's session against this project's declared conventions. Policy comes from the receiving project; the command supplies mechanism. Every run installs the check that would have caught what it found by hand."
 breaking_changes: []
 ---
 # Review Incoming Changes (Authored Elsewhere)
@@ -30,8 +30,9 @@ The author was deep in another project's context when they wrote it -- they had 
 - Before pushing a batch you did not author in this project's context
 - A contributor dropped work and you need a conformance verdict, not a redesign
 - **Before you commit into a repo you are a guest in** (Step 0 -- run it from the producing side)
+- **A dependency you consume cut a release** and you have to decide adopt, pin or skip -- a version upgrade, a library bump, a sibling package's new tag (Step 1, release mode)
 
-**When NOT to use:** your own work in your own project (`/pb-review`), a PR where the author is present to answer (`/pb-review-code`), or a periodic health check (`/pb-review-hygiene`).
+**When NOT to use:** your own work in your own project (`/pb-review`), a PR where the author is present to answer (`/pb-review-code`), or a periodic health check (`/pb-review-hygiene`). Capturing a reusable pattern out of a session is `/pb-learn`, which is a different job -- it writes a document and has no accept/reject axis.
 
 ---
 
@@ -63,7 +64,7 @@ Say what arrived in whatever form is natural -- "the last 4 commits", "everythin
 
 **Do not use push state as a proxy for ratification.** `origin/main..HEAD` answers *what has not been pushed*, which is a fact about the remote. Ratification is a fact about this project's review, and work that was already synced is exactly as unratified as work that was not. Conflating them makes the scope silently empty on the most common case.
 
-Normalize any input to one of two shapes, then **print what it resolved to** before going further:
+Normalize any input to one of three shapes, then **print what it resolved to** before going further:
 
 | You say | Resolves to |
 |---|---|
@@ -72,6 +73,7 @@ Normalize any input to one of two shapes, then **print what it resolved to** bef
 | since origin / a branch | `<ref>..HEAD` (range) |
 | a branch or patch | merge-base..tip (range) |
 | uncommitted / staged work | working tree (worktree) |
+| a dependency's new version, tag, or SHA range | version delta + consumed surface (release) |
 
 ```bash
 git log --format='%h %ad %s' --date=short <range>   # what is in scope
@@ -85,9 +87,28 @@ Then read the commit bodies. Provenance is usually already there: the evidence t
 
 ### Which mode you are in
 
-**Worktree scope is pre-ratification, not ratification.** There are no commits, so there is no message register to check, no paperwork to ride along, and nothing to revert. Steps 3 and 4 still apply to the content; Step 5 produces a **commit plan** instead of verdicts -- how to split the work so each change carries its own paperwork -- and you run this command again after committing. Say which mode you are in before Step 5.
+**Name the mode before Step 2 runs, not before Step 5.** Steps 3, 4 and 5 each fork on it, and a step that answers two modes leaves the third to be guessed.
 
-**Range scope has a second question: is this history still private?** If the batch is unpushed, REVERT is free. If it is already on the remote, a revert is itself a published change. Check `git branch -r --contains <sha>` before offering it.
+**Range** -- commits arrived. The full command applies. One further question: is this history still private? If the batch is unpushed, REVERT is free; if it is already on the remote, a revert is itself a published change. Check `git branch -r --contains <sha>` before offering it.
+
+**Worktree** -- pre-ratification, not ratification. There are no commits, so there is no message register to check, no paperwork to ride along, and nothing to revert. Steps 3 and 4 still apply to the content; Step 5 produces a **commit plan** instead of verdicts -- how to split the work so each change carries its own paperwork -- and you run this command again after committing.
+
+**Release** -- a dependency you consume published something and you are deciding what to do about it. Scope is not a commit range: it is the **version delta paired with the surface this project actually consumes**. Resolve both, and print both, because the delta alone will send you re-narrating a changelog.
+
+```bash
+<pkg-manager> outdated / diff <old>..<new>     # the delta, however your ecosystem expresses it
+grep -rn "<dependency>" --include=<src> .      # the surface: what this project actually reads or calls
+```
+
+Release mode inherits the empty-resolution hard stop: **"already on that version" is a real answer and must be said as one.** It must not walk the remaining steps and report a clean intake, because a clean intake looks identical.
+
+**What you consume and what was published may differ, and the delta is written about the published thing.** A SHA pin ahead of or behind the tag, a fork, a vendored copy carrying local patches, a pre-release, a registry artifact that does not match its own git tag -- each breaks the same assumption, that reading the release notes tells you what you are running. Resolve the delta against **what this project actually consumes**, and when the two differ, say so in the printed scope rather than reconciling it silently. A consumer pinned to something never released is a normal early state for a sibling dependency, not an exotic one.
+
+### Release mode's asymmetry is a different asymmetry
+
+The rest of this command rests on one thing: the author had evidence you cannot reconstruct and did not have your conventions. **That does not describe a release.** A published artifact carries its own contract, was authored by people who owe you nothing about your conventions, and cannot be trusted-by-default on the grounds that justify it elsewhere in this file.
+
+Four of the six steps transfer to a release nearly unchanged. The asymmetry underneath them does not, and **trust the content, scrutinize the conformance is derived from it** -- so in release mode that heading is not a licence. What replaces it is narrower and is the whole of Step 3's release beat: the release notes are a claim about the code, and claims get verified.
 
 ---
 
@@ -133,6 +154,26 @@ Trust-the-content is a rule about *unfamiliar style*, not about unexamined risk.
 
 Grep the diff for these signals rather than judging by the commit subject -- the subject describes the intent, and the risk is in the lines. Escalate to `/pb-review-tests` if the batch changes test behaviour.
 
+**Release mode narrows this list, and must.** Signal six -- *new or bumped third-party dependencies* -- is the entire subject matter of a release intake, so read literally it fires on every run. A rule that always fires carries no information: it gets read once, routed around, and its neighbours in the list are discredited with it. In release mode the signal is not that a version moved. It is:
+
+- A **transitive** dependency added, removed, or moved to a different source
+- A new network egress, endpoint, or callback target
+- A new subprocess, shell invocation, or build/install-time hook
+- A change in how untrusted input is parsed, deserialized, or rendered
+- A change of maintainer, signing key, or publishing origin
+
+Those are the lines to read the diff for; the version number is not one of them.
+
+### The release notes are a claim about the code
+
+**In release mode this beat is mandatory, and it is where the trust that does not transfer gets replaced by something checkable.** Do not assert that the notes are accurate -- the mechanism is the one Step 4 already uses for the register: extract, compare, cite.
+
+1. **Take each claim in the release notes that touches your consumed surface.** Ignore the rest; a claim about a subsystem you never call cannot mislead you.
+2. **Read the code that implements it** -- the diff for that change, not the summary of it.
+3. **Cite the disagreement when they differ**, quoting both sides. A note saying a flag moved into config, against a diff where it moved and the old flag still silently wins, is two different systems.
+
+A release note can be wrong in a way no test of yours will catch, because your tests encode what you believed the release said. When notes and code disagree, **the code is what you are running** -- and the disagreement is a concern that survives adoption even if it does not block it. It goes in the Step 5 digest whether or not it changes the verdict.
+
 ---
 
 ## Step 4: Check Conformance
@@ -166,13 +207,15 @@ git log --format='%b' <range>     # bodies -- ceilings, forbidden trailers
 
 Forbidden elements are the ones that survive review most often, because they read as normal: attribution and generated-by trailers, co-author lines the project does not use, engagement footers, emoji the register bans. They arrive from the producing repo's conventions and nobody reads past the subject line.
 
-**Worktree mode has no messages to check.** Carry the register into the commit plan instead -- Step 5.
+**Per mode, so none is left implied:** range mode checks the messages as above. **Worktree mode** has no messages to check -- carry the register into the commit plan instead (Step 5). **Release mode** has no messages of yours at all: the table above is about work authored into this project, and a release was not. What conformance means there is narrower and entirely local -- did your own pin, lockfile, config and contract checks move together, and do the project's gates still pass against the new version? A release cannot violate your register. Your adoption of it can.
 
 ---
 
 ## Step 5: Verdict and Action
 
 ### Range mode: one verdict per commit
+
+**This table is range mode only.** Worktree mode produces a commit plan and release mode has its own vocabulary; both are below.
 
 Not per batch. A batch is rarely uniformly good, and a single verdict on five commits hides the one that is wrong.
 
@@ -202,6 +245,39 @@ There is nothing to take or revert yet, which is the advantage -- every conforma
 
 Then commit the plan and run this command again in range mode. The second pass is cheap and it is the one that produces verdicts.
 
+### Release mode: adopt / pin / skip, per unit of the delta
+
+Per unit, not per release -- the same reason range mode is per commit. A release is rarely uniformly adoptable, and one verdict on twelve changes hides the one that breaks you.
+
+| Verdict | Meaning | Action |
+|---|---|---|
+| **ADOPT** | Lands, with whatever migration it requires | Move the pin. Land the migration and the contract updates in the same commit |
+| **PIN** | Not now, and here is the version we stay on | Record the version, the date, and the reason. A pin is a decision, not a deferral |
+| **SKIP** | Does not touch what this project consumes | Say so explicitly -- it is what makes the next delta smaller |
+
+**A pin with no reason and no date is how a project ends up four majors behind with nobody able to say why.** Write both, where the pin lives, so the next intake reads a decision rather than an accident.
+
+### The digest -- required, and the reason the run was worth doing
+
+A verdict answers *does this land*. It does not answer what the consumer opened the release for. Emit this as a named block; a skipped block is visible, a skipped habit is not.
+
+```markdown
+## Intake digest: <dependency> <old> → <new>
+
+### Concerns surviving adoption
+- ...
+
+### Highlights, filtered through what we consume     (omit if genuinely none)
+- ...
+
+### What was adjusted                                (omit if genuinely none)
+- ...
+```
+
+**Concerns surviving adoption is mandatory and has no empty case.** If nothing worries you, write that sentence and say what you checked to reach it. This is the highest-value output and the easiest to lose, because a green intake feels finished: a release-notes-versus-code disagreement from Step 3 lands here even when it did not block adoption, and so does behaviour that changed in a way this project tolerates now and might not later. These are the input to the next intake and the justification for every pin.
+
+The other two are **required when non-empty** rather than always. Highlights are a projection, not a restatement -- of everything in this release, the items touching what this project actually reads or calls, with the rest noted as not applicable. A consumer who reads twelve entries and names the two that matter has done the work; one who reproduces all twelve has not. Forcing a line into an empty section teaches filler, and filler is how the whole block stops being read.
+
 ---
 
 ## Step 6: Install the Check
@@ -219,16 +295,23 @@ Two things this cannot do, stated plainly:
 
 ## Definition of Done
 
-- [ ] Scope resolved and **printed** -- range or worktree, never implied, never silently empty
-- [ ] Mode stated (range = verdicts, worktree = commit plan)
+- [ ] Scope resolved and **printed** -- range, worktree or release, never implied, never silently empty
+- [ ] Mode stated **before Step 2** (range = verdicts, worktree = commit plan, release = adopt/pin/skip + digest)
 - [ ] Project's declared conventions read before any conformance finding was formed
 - [ ] `/pb-review-code` run, producing a **per-commit finding list** (empty if clean) -- not an impression of the diff
-- [ ] Diff grepped for the security signal list; `/pb-security` run if any hit
+- [ ] Diff grepped for the security signal list; `/pb-security` run if any hit. In release mode, the **narrowed** list -- not "a version moved"
 - [ ] Register quoted from where the project declares it, and compared against extracted messages
 - [ ] Conformance checked, with hand-checked items distinguished from automatically-checked ones
 - [ ] One verdict per commit, each resolving to a concrete action; publish state checked before offering REVERT
 - [ ] Every hand-checked mechanical item either installed as a check or recorded with a reason it cannot be
 - [ ] Project's own gates green before push
+
+**Release mode also:**
+
+- [ ] Delta resolved against **what this project consumes**, not only what was published; any divergence stated in the printed scope
+- [ ] Release notes verified against the code for every claim touching the consumed surface, disagreements cited with both sides quoted
+- [ ] One verdict per unit of the delta; every PIN carries a version, a date and a reason
+- [ ] **Digest emitted as a named block.** Concerns surviving adoption is present and non-empty -- "nothing worries me" is written as a sentence with what was checked, never as an omission
 
 ---
 
@@ -249,6 +332,12 @@ Two things this cannot do, stated plainly:
 | End at a verdict and move on | Install the check, or record why it cannot be |
 | Treat the producing repo's register as this one's | Registers are per-project; the producing repo's was the loaded one |
 | Pile contributions up for a periodic sweep | Ratify on arrival, while the evidence is still attached |
+| Take the release notes as the record of what changed | They are a claim about the code; extract, compare, cite. The code is what you are running |
+| Read the delta without resolving what you actually consume | A SHA pin, fork, vendored patch or pre-release means published ≠ consumed |
+| Let the dependency-bump signal fire on every release intake | A rule that always fires carries no information -- use the narrowed list |
+| Restate the changelog as the digest | Highlights are a projection onto your consumed surface; the rest is noted as not applicable |
+| End a release intake at adopt/pin/skip | The digest is the output; a verdict alone throws away everything the run learned |
+| Record a pin without a date and a reason | That is a deferral wearing a decision's clothes, and nobody can undo it later |
 
 ---
 
@@ -262,4 +351,4 @@ Two things this cannot do, stated plainly:
 
 ---
 
-*The author had the evidence. You have the conventions. Neither of you had both. | v1.1.0*
+*The author had the evidence. You have the conventions. Neither of you had both. A release has neither -- it has a contract, and claims you verify. | v1.2.0*
