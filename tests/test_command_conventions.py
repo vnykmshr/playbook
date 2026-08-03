@@ -269,6 +269,30 @@ class TestRelatedCommands:
                 over_limit.append(f"{path.name} ({count}/{limit})")
         assert not over_limit, f"Over Related Commands limit: {over_limit}"
 
+    def test_front_matter_related_commands_within_limits(self):
+        """The limit applies to both lists; until now only one was counted.
+
+        get_related_commands_count parses the `## Related Commands` body
+        section, so the front-matter field could grow past the ceiling with
+        every gate green -- which it did, reaching 7 against a limit of 5.
+        """
+        over_limit = []
+        for path in get_command_files():
+            match = re.search(
+                r"^related_commands:\s*\[(.*?)\]", path.read_text(), re.MULTILINE | re.DOTALL
+            )
+            if not match:
+                continue
+            count = len(re.findall(r"'([^']*)'", match.group(1)))
+            limit = HUB_RELATED_LIMIT if path.name in HUB_COMMANDS else RELATED_LIMIT
+            if count > limit:
+                over_limit.append(f"{path.name} ({count}/{limit})")
+        assert not over_limit, (
+            "Over front-matter related_commands limit: "
+            + ", ".join(over_limit)
+            + "\nThe body section is counted separately; both lists share the limit."
+        )
+
 
 class TestMetadataConsistency:
     """Verify metadata front-matter matches body Resource Hint.
