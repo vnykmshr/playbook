@@ -5,11 +5,11 @@ category: "core"
 difficulty: "beginner"
 model_hint: "sonnet"
 execution_pattern: "reference"
-related_commands: ['pb-preamble', 'pb-design-rules', 'pb-calm-design', 'pb-guide', 'pb-testing']
-last_reviewed: "2026-02-09"
-last_evolved: ""
-version: "1.1.0"
-version_notes: "v2.12.0 Phase 3: Added Calm Quality Bar to MLP criteria"
+related_commands: ['pb-preamble', 'pb-design-rules', 'pb-handcraft', 'pb-voice', 'pb-testing']
+last_reviewed: "2026-08-03"
+last_evolved: "2026-08-03"
+version: "1.2.0"
+version_notes: "v1.2.0: Add the Register section -- how authored output reads (minimal sufficient, humble-best, peer-to-peer), covering code, comments and prose, deferring to a project register where one exists, with a falsifiable delete-and-ask test. Fix two defects: the [Country] placeholder shipped as a standard, and an unpunctuated docs rule that could not be parsed. v1.1.0: Added Calm Quality Bar to MLP criteria (playbook v2.12.0)."
 breaking_changes: []
 ---
 # Project Guidelines & Working Principles
@@ -52,11 +52,11 @@ breaking_changes: []
 * **Anti-Bloat Principle (YAGNI):** Focus on real value. Do not implement features or abstract solutions for problems that do not exist yet. **Over-engineering is technical debt.**
 
 ### Target Market & Localization
-* The **primary userbase and workflow is [Country]-centric**. All design decisions must prioritize the local ecosystem requirements.
+* **Name the primary userbase and ecosystem explicitly, then design for it.** A project serving one region, regulatory regime, or device class has different defaults than a global one. Record the choice where scope lives; unstated assumptions about the user are the ones that survive longest unchallenged.
 
 ### Working Memory & Development Control
 * **Todos are Dev-Only:** The `todos/` folder is for development notes only and must be `.git-ignored`. Never commit temporary files.
-* **Never add new docs** Anything published to docs/ must be confirmed, status report, working docs, ADR can be saved to todos/ for local reviews.
+* **Do not add published docs unprompted.** Anything landing in `docs/` is a tracked artifact and needs confirmation. Status reports, working notes and draft ADRs belong in `todos/` until they are asked for.
 * **Time-Boxed Prototyping:** Use temporary branches for experiments.
 * **Task Output:** Each task or todo must result in demonstrably working, testable code.
 
@@ -69,6 +69,24 @@ breaking_changes: []
 * **DRY Principle:** Strictly adhere to **Don't Repeat Yourself** to minimize knowledge duplication.
 * **Test Incrementally:** Write automated tests (Unit, Integration) concurrently with the code. No significant feature is complete without passing tests.
 * **Commit Hygiene:** Commit small, logical units frequently. Use **Conventional Commit** format (e.g., `feat:`, `fix:`, `refactor:`) for clear history.
+
+### Register: How Output Reads
+
+Standards above govern *what* you produce. This governs *how it reads*, and it applies to everything you author: code, comments, commit messages, PRs, issues, docs, and user-facing prose.
+
+**If the project maintains its own register, that register wins.** This is the default for projects that do not.
+
+Three properties, in priority order:
+
+* **Minimal sufficient.** Say what fully serves the reader, then stop. **Sufficiency is the floor, minimality is the ceiling, and the order matters:** omitting a load-bearing constraint is not minimal, it is wrong. Cutting a passenger word is minimal. When both are satisfied, stop writing.
+* **Humble-best.** Do the best work you can without performing it. No self-congratulation, no hedging, no defensive over-explanation, no salesmanship. Confidence without display. The work carries itself or it does not.
+* **Peer-to-peer.** The reader is a competent colleague who is short on time. Do not re-explain what the artifact already shows, do not condescend, do not sell.
+
+**In code**, register is naming, function length, and structure. A codebase that reads like it is showing off fails this standard exactly as a comment that does.
+
+**The test, so this is falsifiable rather than admirable:** delete any sentence, comment, or line and ask whether a competent reader now makes a worse decision. If not, it was a passenger and it goes. Apply it to your own output before shipping, not only in review.
+
+**Failure modes, by name:** narration ("I examined...", "After analysis..."), restating the diff, severity adjectives standing in for evidence, closing summaries that repeat the opening, comments that argue a decision instead of naming a constraint, and prose that sells rather than states.
 
 ### Test Quality Standards
 Tests should catch bugs, not chase coverage numbers.

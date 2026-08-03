@@ -8,8 +8,8 @@ execution_pattern: "sequential"
 related_commands: ['pb-claude-project', 'pb-claude-orchestration', 'pb-preamble', 'pb-design-rules', 'pb-standards']
 last_reviewed: "2026-08-03"
 last_evolved: "2026-08-03"
-version: "2.6.0"
-version_notes: "v2.6.0: Add the comments-carry-constraints directive to the Code Quality BEACON, and its checklist entry. Written after a session where comments justified a word choice and reproduced panel arguments already recorded in the decision doc -- 67 comment lines cut to 29 across four files with no loss of meaning. v2.5.0: Sync template to the live global file -- add the LLM Coding Guardrails BEACON (shipped v2.25.0 but missing here) and /pb-threat-hunt (deep audit) to the Quick Reference security row. v2.4.1: Align the CLAUDE.md quality-checklist dash item to voice v2.3.0 (single hyphen the default; `--` earned, not simply the em-dash replacement). v2.4.0: Q2 2026 capability refresh -- model-selection guidance to Opus 4.8 GA; /fast keeps Opus with faster output (no Sonnet downgrade); [1m] opts into 1M context (200K default); brief Fable 5 forward note (Opus stays default). v2.3.0: Replace 'Commits' section with 'GitHub Artifact Register' covering commits, PRs, issues, and PR/review/inline comments; numeric length ceilings; strip + never-write lists."
+version: "2.7.0"
+version_notes: "v2.7.0: Add the Register BEACON -- minimal sufficient, humble-best, peer-to-peer -- governing code, comments and prose, deferring to a project register where one exists, with a delete-and-ask test. The GitHub Artifact Register becomes its named specialization rather than an orphan. v2.6.0: Add the comments-carry-constraints directive to the Code Quality BEACON, and its checklist entry. Written after a session where comments justified a word choice and reproduced panel arguments already recorded in the decision doc -- 67 comment lines cut to 29 across four files with no loss of meaning. v2.5.0: Sync template to the live global file -- add the LLM Coding Guardrails BEACON (shipped v2.25.0 but missing here) and /pb-threat-hunt (deep audit) to the Quick Reference security row. v2.4.1: Align the CLAUDE.md quality-checklist dash item to voice v2.3.0 (single hyphen the default; `--` earned, not simply the em-dash replacement). v2.4.0: Q2 2026 capability refresh -- model-selection guidance to Opus 4.8 GA; /fast keeps Opus with faster output (no Sonnet downgrade); [1m] opts into 1M context (200K default); brief Fable 5 forward note (Opus stays default). v2.3.0: Replace 'Commits' section with 'GitHub Artifact Register' covering commits, PRs, issues, and PR/review/inline comments; numeric length ceilings; strip + never-write lists."
 breaking_changes: ['Template output restructured -- BEACON headers, standalone Non-Negotiables, Session Ritual added', 'Personas list removed from global (project-specific)', 'Context Efficiency section removed (generic)', 'Project-Specific Overrides section removed (obvious)']
 ---
 # Generate Global CLAUDE.md
@@ -99,9 +99,25 @@ For all 18 rules: `/pb-design-rules`
 - Security awareness -- no hardcoded secrets, validate inputs at boundaries
 - LLM output trust -- treat LLM-generated code as untrusted input at security boundaries
 - Never ship flaky tests -- test reliability matters as much as code reliability
-- Comments carry constraints, not rationale -- an invariant, a gotcha, why the obvious approach fails. Decisions, justifications and restatements of the code belong in the commit message or the decision doc. If a comment reads like an essay, it is one, and it lives elsewhere
+- Comments carry constraints, not rationale -- an invariant, a gotcha, why the obvious approach fails. Decisions and justifications belong in the commit message or the decision doc
 
 For detailed standards: `/pb-standards`
+
+---
+
+## BEACON: Register (how output reads)
+
+Governs everything you author: code, comments, commits, PRs, issues, docs, prose. **Where a project maintains its own register, that register wins; this is the default for projects without one.**
+
+- Minimal sufficient -- sufficiency is the floor, minimality the ceiling, in that order. Omitting a load-bearing constraint is not minimal, it is wrong; cutting a passenger word is
+- Humble-best -- do your best work without performing it. No self-congratulation, no hedging, no salesmanship
+- Peer-to-peer -- the reader is a competent colleague, short on time. Do not re-explain what the artifact already shows
+
+**The test:** delete a line and ask whether a competent reader now decides worse. If not, it was a passenger. Applies to your own output before shipping, not only in review.
+
+For depth: `/pb-standards`
+
+---
 
 ## BEACON: LLM Coding Guardrails
 
@@ -179,7 +195,7 @@ For strategy: `/pb-claude-orchestration`
 
 ## GitHub Artifact Register (commits, PRs, issues, comments)
 
-Minimum-sufficient dev-to-dev. The reader is a peer; do not re-explain the diff.
+The Register BEACON applied to GitHub, with ceilings. The reader is a peer; do not re-explain the diff.
 
 **Length ceilings (default; exceed only when the WHY is genuinely non-obvious):**
 - Commit: subject line. Body = 0-2 short lines max.
@@ -248,12 +264,13 @@ After generation, verify:
 
 - [ ] File exists at `~/.claude/CLAUDE.md`
 - [ ] Version and date are current in header
-- [ ] All BEACON sections present (Preamble, Design Rules, Code Quality, **LLM Coding Guardrails**, Non-Negotiables, Quality Bar, **Read-Regroup-Decide**, Model Selection)
+- [ ] All BEACON sections present (Preamble, Design Rules, Code Quality, **Register**, **LLM Coding Guardrails**, Non-Negotiables, Quality Bar, **Read-Regroup-Decide**, Model Selection)
 - [ ] Read, Regroup, Decide BEACON present with ritual (curl -> disk -> Read), frictionless-question trap (what is 2+2?), and eagerness root-cause line
 - [ ] External action gate present in Operational Guardrails (cross-references Read-Regroup-Decide, does not duplicate)
 - [ ] Skill invocation discipline bullet present in Operational Guardrails
 - [ ] LLM output trust bullet present in Code Quality
 - [ ] Comments-carry-constraints bullet present in Code Quality
+- [ ] Register BEACON present, and it defers to a project register where one exists
 - [ ] Session Ritual section present
 - [ ] Playbook references are correct (`/pb-*` commands)
 - [ ] **File is under 180 lines / 2.5K tokens** (context efficiency -- slight bump for Read-Regroup-Decide BEACON)
