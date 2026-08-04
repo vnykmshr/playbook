@@ -37,6 +37,28 @@ echo ""
 installed=0
 replaced=0
 failed=0
+pruned=0
+
+# Remove links we own whose source is gone. Installing only ever walks the repo,
+# so a renamed or retired command orphans its link forever without this.
+# Ours = resolves into $COMMANDS_DIR. A dangling link pointing anywhere else
+# belongs to someone else and stays; a real file is never touched.
+prune_orphans() {
+    local dir="$1" owner="$2" label="$3" link
+    [ -d "$dir" ] || return 0
+    while IFS= read -r link; do
+        if [ -e "$link" ]; then
+            continue
+        fi
+        case "$(readlink "$link")" in
+            "$owner"/*) ;;
+            *) continue ;;
+        esac
+        rm -rf "$link"
+        echo "  ✗ Pruned: $(basename "$link") ($label removed upstream)"
+        pruned=$((pruned + 1))
+    done < <(find "$dir" -maxdepth 1 -type l)
+}
 
 # Find all .md files in commands/ and symlink them
 while IFS= read -r file; do
@@ -66,10 +88,13 @@ while IFS= read -r file; do
     fi
 done < <(find "$COMMANDS_DIR" -name "*.md" -type f | sort)
 
+prune_orphans "$TARGET_DIR" "$COMMANDS_DIR" "command"
+
 echo ""
 echo "Installation Summary:"
 echo "  Installed: $installed"
 echo "  Replaced:  $replaced"
+echo "  Pruned:    $pruned"
 echo "  Failed:    $failed"
 echo ""
 echo "Commands available in: $TARGET_DIR"
@@ -96,6 +121,8 @@ if [ -d "$SKILLS_DIR" ]; then
         ln -sfn "$(dirname "$skill_md")" "$target_dir"
         echo "  ✓ Installed: ~/.claude/skills/$skill_name"
     done < <(find "$SKILLS_DIR" -name "SKILL.md" -type f | sort)
+
+    prune_orphans "$SKILLS_TARGET" "$SKILLS_DIR" "skill"
 
     # Create project-local symlink if running inside the playbook repo
     local_link="$REPO_DIR/.claude/skills"
