@@ -6,10 +6,10 @@ difficulty: "beginner"
 model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-claude-global', 'pb-claude-project', 'pb-learn', 'pb-review-playbook', 'pb-new-playbook']
-last_reviewed: "2026-07-27"
-last_evolved: "2026-07-27"
-version: "1.4.0"
-version_notes: "v1.4.0: Size the Pass, Not the Agent — inline the evidence and narrow the question; the whole-repo-reading subagent is the one that dies late. v1.3.0: Q2 2026 capability refresh -- Harness Reality to Opus 4.8 GA; corrected /fast (keeps Opus with faster output, no Sonnet downgrade); [1m] 1M-context framing; brief Fable 5 note (Opus stays default). v1.2.0: add Output Discipline subsection to Task Delegation Patterns -- accept subagent summaries as context, do not pipe raw tool output back into main conversation."
+last_reviewed: "2026-08-04"
+last_evolved: "2026-08-04"
+version: "1.4.1"
+version_notes: "v1.4.1: Sync the context budget table to the generating commands (global <200, project <180); it had drifted to <150 for both. v1.4.0: Size the Pass, Not the Agent — inline the evidence and narrow the question; the whole-repo-reading subagent is the one that dies late. v1.3.0: Q2 2026 capability refresh -- Harness Reality to Opus 4.8 GA; corrected /fast (keeps Opus with faster output, no Sonnet downgrade); [1m] 1M-context framing; brief Fable 5 note (Opus stays default). v1.2.0: add Output Discipline subsection to Task Delegation Patterns -- accept subagent summaries as context, do not pipe raw tool output back into main conversation."
 breaking_changes: []
 ---
 # Claude Code Orchestration
@@ -137,8 +137,8 @@ model: "sonnet"  → Code writing, analysis, standard reviews
 
 | Context Load | Budget | Frequency |
 |-------------|--------|-----------|
-| Global CLAUDE.md | <150 lines | Every turn, every session |
-| Project CLAUDE.md | <150 lines | Every turn, every session |
+| Global CLAUDE.md | <200 lines | Every turn, every session |
+| Project CLAUDE.md | <180 lines | Every turn, every session |
 | Auto-memory MEMORY.md | <200 lines | Every turn, every session |
 | Session context | Finite, compaction is lossy | Fills during session |
 

@@ -6,10 +6,10 @@ difficulty: "advanced"
 model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-resume', 'pb-start', 'pb-standup', 'pb-handoff']
-last_reviewed: "2026-08-03"
-last_evolved: "2026-08-03"
-version: "1.9.0"
-version_notes: "v1.9.0: Step 1 gates the push. The commit stays automatic -- preserving work state is what the command was invoked for -- but publishing is a separate decision, and pause runs at the moment a bad one is least likely to be caught: end of session, on whatever branch is checked out. Unpushed is now a complete pause rather than a failed one. v1.8.0: Step 4 archives to the project's existing recap archive rather than a fixed path; `todos/done/lessons.md` is the default for a project that has none. Matches /pb-resume v1.8.0. v1.7.0: Deep Step 7 runs any handoff the session wrote, from the receiver's directory. A document verified only from inside the repo that produced it passes every runnable claim it makes. v1.6.2: Deep Step 6 no longer routes around the generator -- pb-claude-project v1.2.0 preserves `## Custom (Manual)` blocks, so regenerate-then-diff replaces the hand-edit caveat. v1.6.1: An existing memory/lessons.md stays put and is linked from the new archive -- the path move must not fork a project's history silently. v1.6.0: Step 0 bootstraps the todos/ tree — a first pause no longer assumes todos/done/ and the working context already exist. Recap archive path moves to todos/done/lessons.md. v1.5.1: Deep-mode Step 6 caveat — diff before regenerating a hand-evolved project CLAUDE.md."
+last_reviewed: "2026-08-04"
+last_evolved: "2026-08-04"
+version: "1.9.1"
+version_notes: "v1.9.1: Health-check global CLAUDE.md target ~160 -> ~200, tracking the raised gate in /pb-claude-global. v1.9.0: Step 1 gates the push. The commit stays automatic -- preserving work state is what the command was invoked for -- but publishing is a separate decision, and pause runs at the moment a bad one is least likely to be caught: end of session, on whatever branch is checked out. Unpushed is now a complete pause rather than a failed one. v1.8.0: Step 4 archives to the project's existing recap archive rather than a fixed path; `todos/done/lessons.md` is the default for a project that has none. Matches /pb-resume v1.8.0. v1.7.0: Deep Step 7 runs any handoff the session wrote, from the receiver's directory. A document verified only from inside the repo that produced it passes every runnable claim it makes. v1.6.2: Deep Step 6 no longer routes around the generator -- pb-claude-project v1.2.0 preserves `## Custom (Manual)` blocks, so regenerate-then-diff replaces the hand-edit caveat. v1.6.1: An existing memory/lessons.md stays put and is linked from the new archive -- the path move must not fork a project's history silently. v1.6.0: Step 0 bootstraps the todos/ tree — a first pause no longer assumes todos/done/ and the working context already exist. Recap archive path moves to todos/done/lessons.md. v1.5.1: Deep-mode Step 6 caveat — diff before regenerating a hand-evolved project CLAUDE.md."
 breaking_changes: []
 ---
 # Pause Development Work
@@ -155,7 +155,7 @@ Target: ~30-40 lines. Be specific about what's next. Skip sections that don't ap
 **3c. Context health check:**
 
 ```bash
-wc -l ~/.claude/CLAUDE.md            # Global (target: ~160)
+wc -l ~/.claude/CLAUDE.md            # Global (target: ~200)
 wc -l .claude/CLAUDE.md              # Project (target: ~180)
 # memory/MEMORY.md                   # Auto-loaded (target: ~100)
 wc -l todos/1-working-context.md     # Working context (target: ~50)

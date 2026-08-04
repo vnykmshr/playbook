@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- **`/pb-claude-global` v2.8.0 drops the Development Ritual block.** Its four commands are the Quick Reference table's first four rows in the same order, and the only thing it added was `[you code]`. Applying the Register's own delete-and-ask test to the file the Register ships in: a reader holding the table does not decide worse without it. Generated output 183 -> 169 lines.
+- **The CLAUDE.md size gates are raised, and every command restating them now agrees.** `/pb-claude-global` v2.8.0 goes to 200 lines / 3K tokens and `/pb-claude-project` v1.3.0 to 180 / 3K, on the premise that context is cheaper than it was when the numbers were set. The old pairs were also internally incoherent: at each file's real density the *token* half bound first -- ~190 lines against a 180-line cap, ~145 against a 150-line one -- so the line figure, the one a generation checklist can actually check, was decorative. Both halves move, sized so **lines bind first**. Four more commands restate the gate without tracking it: `/pb-claude-orchestration` v1.4.1's budget table read `<150` for both files, stale on the global figure through the last two raises, and `/pb-context-review` v2.2.0, `/pb-pause` v1.9.1 and `/pb-resume` v1.9.1 each carried ~160. **The first sync pass missed half of them.** A grep written around the phrasing of the statements it had already seen found four; the health check in an unrelated `/pb-resume` turned up four more, two of them *inside* `/pb-context-review`, which that same pass had edited and left contradicting itself -- the file states the global target in four separate places and the grep matched two. The global figure alone has eight statements across five commands. One number with no owner is the standing defect; syncing them is the fix this change owes, not the fix for that.
+
 ## [v2.27.0] - 2026-08-03
 
 ### Added

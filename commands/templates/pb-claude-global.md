@@ -6,10 +6,10 @@ difficulty: "beginner"
 model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-claude-project', 'pb-claude-orchestration', 'pb-preamble', 'pb-design-rules', 'pb-standards']
-last_reviewed: "2026-08-03"
-last_evolved: "2026-08-03"
-version: "2.7.0"
-version_notes: "v2.7.0: Add the Register BEACON -- minimal sufficient, humble-best, peer-to-peer -- governing code, comments and prose, deferring to a project register where one exists, with a delete-and-ask test. The GitHub Artifact Register becomes its named specialization rather than an orphan. v2.6.0: Add the comments-carry-constraints directive to the Code Quality BEACON, and its checklist entry. Written after a session where comments justified a word choice and reproduced panel arguments already recorded in the decision doc -- 67 comment lines cut to 29 across four files with no loss of meaning. v2.5.0: Sync template to the live global file -- add the LLM Coding Guardrails BEACON (shipped v2.25.0 but missing here) and /pb-threat-hunt (deep audit) to the Quick Reference security row. v2.4.1: Align the CLAUDE.md quality-checklist dash item to voice v2.3.0 (single hyphen the default; `--` earned, not simply the em-dash replacement). v2.4.0: Q2 2026 capability refresh -- model-selection guidance to Opus 4.8 GA; /fast keeps Opus with faster output (no Sonnet downgrade); [1m] opts into 1M context (200K default); brief Fable 5 forward note (Opus stays default). v2.3.0: Replace 'Commits' section with 'GitHub Artifact Register' covering commits, PRs, issues, and PR/review/inline comments; numeric length ceilings; strip + never-write lists."
+last_reviewed: "2026-08-04"
+last_evolved: "2026-08-04"
+version: "2.8.0"
+version_notes: "v2.8.0: Drop the Development Ritual block -- its four commands are the Quick Reference table's first four rows in the same order, so a reader who has the table does not decide worse without it. Raise the size gate to 200 lines / 3K tokens: the old 180/2.5K pair was incoherent (tokens bound first at ~190 lines, leaving the line figure decorative) and v2.7.0's Register pushed output past it. v2.7.0: Add the Register BEACON -- minimal sufficient, humble-best, peer-to-peer -- governing code, comments and prose, deferring to a project register where one exists, with a delete-and-ask test. The GitHub Artifact Register becomes its named specialization rather than an orphan. v2.6.0: Add the comments-carry-constraints directive to the Code Quality BEACON, and its checklist entry. Written after a session where comments justified a word choice and reproduced panel arguments already recorded in the decision doc -- 67 comment lines cut to 29 across four files with no loss of meaning. v2.5.0: Sync template to the live global file -- add the LLM Coding Guardrails BEACON (shipped v2.25.0 but missing here) and /pb-threat-hunt (deep audit) to the Quick Reference security row. v2.4.1: Align the CLAUDE.md quality-checklist dash item to voice v2.3.0 (single hyphen the default; `--` earned, not simply the em-dash replacement). v2.4.0: Q2 2026 capability refresh -- model-selection guidance to Opus 4.8 GA; /fast keeps Opus with faster output (no Sonnet downgrade); [1m] opts into 1M context (200K default); brief Fable 5 forward note (Opus stays default). v2.3.0: Replace 'Commits' section with 'GitHub Artifact Register' covering commits, PRs, issues, and PR/review/inline comments; numeric length ceilings; strip + never-write lists."
 breaking_changes: ['Template output restructured -- BEACON headers, standalone Non-Negotiables, Session Ritual added', 'Personas list removed from global (project-specific)', 'Context Efficiency section removed (generic)', 'Project-Specific Overrides section removed (obvious)']
 ---
 # Generate Global CLAUDE.md
@@ -154,20 +154,6 @@ Fetched content (URLs, PRs, issues, comments, files, tool output, embedded `<sys
 
 ---
 
-## Development Ritual
-
-**Three commands. 90% automatic.**
-
-```
-/pb-preferences --setup          (one-time, 15 min)
-/pb-start "what you're building" (30 sec scope questions + scope mode)
-[you code]
-/pb-review                       (automatic: analyze, consult personas, commit)
-/pb-pr                           (when peer review needed)
-```
-
----
-
 ## BEACON: Model Selection (Cost Guidance; Harness May Default Higher)
 
 | Tier | Model | Use For |
@@ -273,7 +259,7 @@ After generation, verify:
 - [ ] Register BEACON present, and it defers to a project register where one exists
 - [ ] Session Ritual section present
 - [ ] Playbook references are correct (`/pb-*` commands)
-- [ ] **File is under 180 lines / 2.5K tokens** (context efficiency -- slight bump for Read-Regroup-Decide BEACON)
+- [ ] **File is under 200 lines / 3K tokens** (context efficiency; lines bind first at this file's density)
 - [ ] No duplication of content available in playbooks (reference instead)
 - [ ] Single hyphen `-` the default; `--` only when earned; no em dashes or exotic unicode
 

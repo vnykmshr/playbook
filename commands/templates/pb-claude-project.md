@@ -6,10 +6,10 @@ difficulty: "beginner"
 model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-claude-global', 'pb-claude-orchestration', 'pb-context', 'pb-onboarding', 'pb-greenfield']
-last_reviewed: "2026-07-28"
-last_evolved: "2026-07-28"
-version: "1.2.0"
-version_notes: "v1.2.0: wire the preservation contract that was only ever described. Step 0 reads the file being replaced and inventories `## Custom (Manual)` blocks; the generated structure carries that section; the checklist verifies the blocks survived. Regeneration is now the default path rather than a hazard. v2.10.0 baseline; v1.1.0 collapse duplicate Guardrails, add BEACON marker alignment"
+last_reviewed: "2026-08-04"
+last_evolved: "2026-08-04"
+version: "1.3.0"
+version_notes: "v1.3.0: raise the size gate to 180 lines / 3K tokens (was 150/2K, stated in three places that now agree). The token half bound first at ~145 lines, so the line figure was decorative; both halves now carry weight. v1.2.0: wire the preservation contract that was only ever described. Step 0 reads the file being replaced and inventories `## Custom (Manual)` blocks; the generated structure carries that section; the checklist verifies the blocks survived. Regeneration is now the default path rather than a hazard. v2.10.0 baseline; v1.1.0 collapse duplicate Guardrails, add BEACON marker alignment"
 breaking_changes: []
 ---
 # Generate Project CLAUDE.md
@@ -20,7 +20,7 @@ Generate a project-specific `.claude/CLAUDE.md` by analyzing the current project
 
 **Philosophy:** Project CLAUDE.md should capture what's unique about this project (tech stack, structure, commands, patterns) so Claude Code understands the project context across sessions.
 
-**Context efficiency:** This file is loaded every conversation turn. Keep it **under 2K tokens** (~150 lines). Move detailed documentation to `docs/` and reference it.
+**Context efficiency:** This file is loaded every conversation turn. Keep it **under 3K tokens** (~180 lines). Move detailed documentation to `docs/` and reference it.
 
 **Mindset:** Design Rules emphasize "clarity over cleverness" - generated context should be immediately useful, not comprehensive.
 
@@ -363,7 +363,7 @@ git status
 
 ## Conciseness Guidelines
 
-**Target: Under 2K tokens (~150 lines)**
+**Target: Under 3K tokens (~180 lines)**
 
 Project CLAUDE.md is loaded every turn. Large files consume context that could be used for actual work.
 
@@ -430,7 +430,7 @@ output. Delete the backup once the diff is clean.
 After generation, verify:
 
 - [ ] `.claude/CLAUDE.md` exists in project root
-- [ ] **File is under 150 lines / 2K tokens** (critical for context efficiency)
+- [ ] **File is under 180 lines / 3K tokens** (critical for context efficiency)
 - [ ] Tech stack is correctly identified
 - [ ] Key commands are accurate and work
 - [ ] Directory structure matches reality (high-level only)
