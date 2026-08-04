@@ -20,15 +20,49 @@ if str(SCRIPTS_DIR) not in sys.path:
 
 def _load_script(filename):
     path = SCRIPTS_DIR / filename
-    spec = importlib.util.spec_from_file_location(path.stem.replace("-", "_"), path)
+    name = path.stem.replace("-", "_")
+    cached = sys.modules.get(name)
+    if cached is not None:
+        # The key is the normalized stem, so foo-bar.py and foo_bar.py collide.
+        # Returning whichever loaded first would be a silent wrong answer.
+        if getattr(cached, "__file__", None) != str(path):
+            raise ImportError(
+                f"{name} is already loaded from {getattr(cached, '__file__', '?')}; "
+                f"refusing to shadow it with {path}"
+            )
+        return cached
+    spec = importlib.util.spec_from_file_location(name, path)
     module = importlib.util.module_from_spec(spec)
-    spec.loader.exec_module(module)
+    # Register before exec: mock.patch("<name>.attr") resolves through
+    # importlib.import_module, which reads sys.modules and never sees a
+    # hyphenated file on disk.
+    # Consequence: callers now share one module instance instead of getting a
+    # freshly executed one. Mutate module-level state through monkeypatch (which
+    # unwinds) rather than by assignment, or it leaks into later tests.
+    sys.modules[name] = module
+    try:
+        spec.loader.exec_module(module)
+    except BaseException:
+        del sys.modules[name]
+        raise
     return module
 
 
-@pytest.fixture
+# Two test modules import these by name at import time rather than calling
+# functions by path, and patch attributes on them by string. Registering here
+# is what makes that resolve; it replaces the scripts/*_*.py symlinks that
+# used to exist purely to give these two an importable spelling.
+_load_script("git-signals.py")
+_load_script("analyze-playbook-context.py")
+
+
+@pytest.fixture(scope="session")
 def load_script():
-    """Load a scripts/ file (hyphenated names allowed) as a module."""
+    """Load a scripts/ file (hyphenated names allowed) as a module.
+
+    Session-scoped so module-scoped fixtures can consume it; it only hands back
+    a stateless loader, so the scope is invisible to callers.
+    """
     return _load_script
 
 
