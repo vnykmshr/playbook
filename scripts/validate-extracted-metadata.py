@@ -18,7 +18,7 @@ from pathlib import Path
 from typing import Any, Dict, List, Optional, Set
 import logging
 
-from playbook_utils import setup_logger
+from playbook_utils import VALID_CATEGORIES, setup_logger
 
 
 class MetadataValidator:
@@ -94,17 +94,13 @@ class MetadataValidator:
             )
 
         # Category validation
-        valid_categories = {
-            "core", "development", "planning", "reviews",
-            "release", "deployment", "repo", "people", "templates"
-        }
-        if metadata.get("category") not in valid_categories:
+        if metadata.get("category") not in VALID_CATEGORIES:
             self.errors.append(
                 {
                     "command": command,
                     "type": "invalid_category",
                     "category": metadata.get("category"),
-                    "valid_categories": list(valid_categories),
+                    "valid_categories": sorted(VALID_CATEGORIES),
                     "severity": "critical",
                 }
             )

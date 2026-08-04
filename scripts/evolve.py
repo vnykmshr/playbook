@@ -25,6 +25,8 @@ from datetime import datetime
 from collections import defaultdict
 from typing import Dict, List, Optional, Tuple
 
+from playbook_utils import VALID_CATEGORIES
+
 try:
     import yaml
 except ImportError:
@@ -124,9 +126,7 @@ class PlaybookEvolutionEngine:
                     )
 
             if "category" in meta:
-                valid_categories = ["core", "planning", "development", "deployment",
-                                   "reviews", "repo", "people", "templates", "utilities"]
-                if meta["category"] not in valid_categories:
+                if meta["category"] not in VALID_CATEGORIES:
                     issues[filename].append(f"INVALID: category='{meta['category']}'")
 
             if "difficulty" in meta:

@@ -21,6 +21,8 @@ from pathlib import Path
 
 import pytest
 
+from playbook_utils import VALID_CATEGORIES
+
 COMMANDS_DIR = Path(__file__).parent.parent / "commands"
 
 
@@ -163,17 +165,13 @@ class TestEvolutionStructuralImpact:
 
     def test_categories_are_valid(self):
         """All commands must have valid categories."""
-        valid_categories = {
-            "core", "planning", "development", "deployment",
-            "reviews", "repo", "people", "templates", "utilities"
-        }
         files = get_all_command_files()
         invalid = []
 
         for filepath in files:
             content = filepath.read_text()
             category = extract_metadata_field(content, "category")
-            if category and category not in valid_categories:
+            if category and category not in VALID_CATEGORIES:
                 invalid.append(f"{filepath.name}: invalid category '{category}'")
 
         assert not invalid, f"Invalid categories:\n" + "\n".join(f"  {i}" for i in invalid)

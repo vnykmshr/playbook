@@ -120,16 +120,18 @@ VALID_FREQUENCIES = {
     "one-time",
     "as-needed",
 }
+# Must match the directory names under commands/ exactly.
+# test_valid_categories_matches_directories enforces that; do not edit one without the other.
 VALID_CATEGORIES = {
     "core",
     "development",
     "planning",
     "reviews",
-    "release",
     "deployment",
     "repo",
     "people",
     "templates",
+    "utilities",
 }
 
 TIER_PRIORITY = {"XS": 5, "S": 4, "M": 3, "L": 2}
