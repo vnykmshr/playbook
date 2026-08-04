@@ -6,10 +6,10 @@ difficulty: "advanced"
 model_hint: "opus"
 execution_pattern: "interactive"
 related_commands: ['pb-what-next', 'pb-review', 'pb-huddle', 'pb-preflight', 'pb-ship']
-last_reviewed: "2026-07-27"
-last_evolved: "2026-07-27"
-version: "1.2.0"
-version_notes: "v1.2.0: Slice escape added — the front arc now carries an iteration tally, and forge stops at three to propose the smallest executable slice. Acceptance gates must state a falsifier before their first run. Cursor records the tally and the falsifier."
+last_reviewed: "2026-08-04"
+last_evolved: "2026-08-04"
+version: "1.2.1"
+version_notes: "v1.2.1: Sub-stage 5's trigger says why Always is honest now that /pb-preflight scopes itself in Step 0. Forge had been describing preflight as a wiring check in wording preflight did not carry; preflight v1.1.0 now owns that framing. v1.2.0: Slice escape added — the front arc now carries an iteration tally, and forge stops at three to propose the smallest executable slice. Acceptance gates must state a falsifier before their first run. Cursor records the tally and the falsifier."
 breaking_changes: []
 ---
 # Lifecycle Step-Runner
@@ -66,7 +66,7 @@ Self-gate is a compound stage of ordered sub-stages. Each catches what the prior
 | 2 | `/code-review` at high effort | Bugs, correctness, efficiency: independent adversarial pass | `>3 files` or `>50 LOC` or new command or security/auth/regex in diff |
 | 3 | `/pb-handcraft` | Prose quality, voice, clarity: form, not function | Content/docs changes (markdown commands, prose in any file) |
 | 4 | Huddle signoff | Design coherence across the whole diff: intent, not content | `/code-review` or handcraft reports ≥1 finding where the fix isn't obvious from the diff |
-| 5 | `/pb-preflight` | Ship-readiness wiring check: gaps, not issues | Always (last gate before Peer) |
+| 5 | `/pb-preflight` | Ship-readiness wiring check: gaps, not issues | Always -- its Step 0 scopes the gate to your surface, which is what makes Always honest on a non-service project |
 
 **Order matters.** Run cheap automated gates first (review, code-review), then form gates (handcraft), then judgment gates (huddle), then the final wiring check (preflight). The compound chain reduces the surface area each huddle needs to cover: by the time you reach sub-stage 4, the obvious bugs and prose issues are already fixed.
 

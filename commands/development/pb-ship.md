@@ -6,10 +6,10 @@ difficulty: "advanced"
 model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-cycle', 'pb-pr', 'pb-release', 'pb-review-hygiene', 'pb-deployment']
-last_reviewed: "2026-04-26"
-last_evolved: "2026-04-26"
-version: "1.2.0"
-version_notes: "v1.2.0: Reference global GitHub Artifact Register rule for PR body and feedback-iteration commits; replace bloated 5-header PR template with delegation to /pb-pr; fix git add -A violation."
+last_reviewed: "2026-08-04"
+last_evolved: "2026-08-04"
+version: "1.2.1"
+version_notes: "v1.2.1: Phase 3 names /pb-preflight, closing a one-way link -- preflight called this 'the ship workflow this gate slots into' and nothing here said where. v1.2.0: Reference global GitHub Artifact Register rule for PR body and feedback-iteration commits; replace bloated 5-header PR template with delegation to /pb-pr; fix git add -A violation."
 breaking_changes: []
 ---
 # Ship Focus Area to Production
@@ -273,6 +273,8 @@ Create or update `todos/ship-review-YYYY-MM-DD.md`:
 ---
 
 ## Phase 3: Final Gate
+
+Run `/pb-preflight` first. It is the wiring check -- rollback, secrets, whether the real URL serves -- and its Step 0 scopes the gate to your surface, so a static site is not graded against a service checklist. Then the readiness review below.
 
 ### Step 3.1: Release Readiness Review
 
