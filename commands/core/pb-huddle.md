@@ -100,6 +100,8 @@ The question must have genuine tension -- if there's an obvious answer, skip the
 
 Read relevant state files. The huddle is only as good as the context loaded. Personas can't argue well without knowing the situation.
 
+A sketch or brief is a claim about the work, not a record of it. Treat files that *describe* the work (sketches, briefs, summaries) as claims -- open the artifacts a claim rests on, and check what a status claim ('sketch complete since X') belongs to, before briefing the panel.
+
 If no relevant context exists for this question, spend five minutes writing it first. A context-free huddle is worse than no huddle.
 
 ### Step 3: Assign Roles and Select the Panel
