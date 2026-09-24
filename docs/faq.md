@@ -373,7 +373,7 @@ git pull origin main
 ```
 
 ### Q: Will updates break my existing workflows?
-**A:** No. The playbook maintains backward compatibility within major versions. If breaking changes are needed, they happen in major version releases with clear migration paths.
+**A:** Not silently. Commands are versioned independently, and a change that alters a command's contract is recorded in its `breaking_changes` field and listed under **Breaking** at the top of the release notes, whatever the release number.
 
 ---
 

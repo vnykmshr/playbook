@@ -117,7 +117,6 @@ One idea per sentence. Specific examples. Concrete thresholds. Active voice. Dir
 ## Related
 
 - **Global guidelines:** Developers working on the playbook use `/pb-voice` and internal voice guidelines to maintain consistency
-- **Each command:** Documents its own communication style in the command description
 - **Your workflow:** Commands adapt this voice to your preferences via `/pb-preferences`
 
 ---
