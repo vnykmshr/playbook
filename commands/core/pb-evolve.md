@@ -234,7 +234,7 @@ It constrains when it:
 | Measure | Q3 2026 baseline |
 |---------|------------------|
 | Global CLAUDE.md, generated lines | 158 |
-| Project CLAUDE.md (this repo), lines | 86 |
+| Project CLAUDE.md (the playbook's own), lines | 86 |
 | Verify-instructions in auto-loaded files | 0 (was 4) |
 | Model-version strings in generator templates | 0 (`TestTemplateCurrency`) |
 | Structure added / cut | 1 / ~12 |

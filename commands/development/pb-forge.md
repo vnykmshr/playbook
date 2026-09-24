@@ -58,7 +58,7 @@ The arc is the default for new, non-trivial work. Triage decides how much of the
 
 ## Self-Gate Chain
 
-Self-gate is a compound stage of ordered sub-stages. Each catches what the prior missed -- they compound, they don't overlap. Forge auto-advances through clean sub-stages and stops when a finding needs a decision.
+Self-gate is a compound stage of ordered sub-stages. Each catches what the prior missed -- they compound, they don't overlap. Forge auto-advances through clean sub-stages and stops when a finding needs a decision -- and at sub-stage 2, which it offers rather than runs.
 
 | # | Sub-stage | What it catches | Trigger |
 |---|-----------|----------------|---------|
@@ -68,11 +68,11 @@ Self-gate is a compound stage of ordered sub-stages. Each catches what the prior
 | 4 | Huddle signoff | Design coherence across the whole diff: intent, not content | `/code-review` or handcraft reports ≥1 finding where the fix isn't obvious from the diff |
 | 5 | `/pb-preflight` | Ship-readiness wiring check: gaps, not issues | Always -- its Step 0 scopes the gate to your surface, which is what makes Always honest on a non-service project |
 
-**Order matters.** Run cheap automated gates first (review, code-review), then form gates (handcraft), then judgment gates (huddle), then the final wiring check (preflight). The compound chain reduces the surface area each huddle needs to cover: by the time you reach sub-stage 4, the obvious bugs and prose issues are already fixed.
+**Order matters.** Run the cheap gates first (review, then the code-review offer), then form gates (handcraft), then judgment gates (huddle), then the final wiring check (preflight). The compound chain reduces the surface area each huddle needs to cover: by the time you reach sub-stage 4, the obvious bugs and prose issues are already fixed.
 
 **Sub-stage 2 is an offer, not a run.** `/code-review` has been assistant-invocable since Claude Code v2.1.246, so stopping here is no longer forced -- it is chosen. Current Opus verifies its own output, and a separate pass on every diff that trips a broad trigger is the over-verification its prompting guidance says to remove. When the trigger fires, forge stops, names the command and effort level, and runs it on the user's yes. No forge run has reached this sub-stage yet; the choice is unexercised.
 
-**Sub-stage triggers are concrete OR gates, not judgment calls.** "My diff is 3 files and 40 lines" → skip code-review. "I added a new command" → run code-review. No "should I?" hand-wringing.
+**Sub-stage triggers are concrete OR gates, not judgment calls.** "My diff is 3 files and 40 lines" → no code-review offer. "I added a new command" → offer code-review. No "should I?" hand-wringing.
 
 **Belt-and-suspenders exit.** If the user stops at any sub-stage ("fix the code-review findings first"), forge records the sub-stage as done in the cursor and the next as pending. Re-invoking forge resumes at the pending sub-stage, not the start of Self-gate.
 

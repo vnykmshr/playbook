@@ -47,7 +47,7 @@ Opus reasons. Sonnet builds. Haiku runs.
 The table above is cost guidance, not a description of what the harness runs: which model a session starts on depends on plan and configuration, and `/model` shows it. Current at this date, from Anthropic's docs:
 
 - **Opus 5.5** is the default Opus model and Anthropic's recommended starting point; **Fable 5.1** is the default Fable model, for demanding long-horizon work. Both, and Sonnet 5, carry a 1M context window.
-- Fable 5.1 lists at 2.5x Opus 5.5 ($10/$50 vs $4/$20 per Mtok). This repo's June head-to-head found the union of two models caught the most real bugs and neither alone did, so Fable is a second lens in deliberate deep audits, not a default.
+- Fable 5.1 lists at 2.5x Opus 5.5 ($10/$50 vs $4/$20 per Mtok). The playbook's own June head-to-head found the union of two models caught the most real bugs and neither alone did, so Fable is a second lens in deliberate deep audits, not a default.
 - `/fast` speeds output on models that support it; it does not switch to a smaller model.
 
 When cost discipline matters (routine dev loop, CI, automation), switch to Sonnet explicitly rather than relying on the harness default. Haiku remains subagent-only.
