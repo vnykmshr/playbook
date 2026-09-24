@@ -6,10 +6,10 @@ difficulty: "intermediate"
 model_hint: "opus"
 execution_pattern: "interactive"
 related_commands: ['pb-zero-stack', 'pb-claude-project', 'pb-context', 'pb-plan', 'pb-start']
-last_reviewed: "2026-07-14"
+last_reviewed: "2026-09-24"
 last_evolved: "2026-07-14"
-version: "2.0.0"
-version_notes: "v2.0.0: Renamed from pb-repo-init and rewritten. Idea in, working repo out: five questions, one routing decision, playbook-layer install. Emits files, not a plan. Capped at ~150 lines -- the line budget is the guardrail against regrowing into a second /pb-zero-stack."
+version: "2.0.1"
+version_notes: "v2.0.1: Step 3's reason tracks /pb-claude-project v1.4.0, which links the working context instead of copying state from it. v2.0.0: Renamed from pb-repo-init and rewritten. Idea in, working repo out: five questions, one routing decision, playbook-layer install. Emits files, not a plan. Capped at ~150 lines -- the line budget is the guardrail against regrowing into a second /pb-zero-stack."
 breaking_changes: ['Renamed from pb-repo-init - the old name no longer resolves', 'No longer emits a phase plan; that content moved to /pb-plan -> /pb-spec', 'Language directory trees removed - the ecosystem initializers own them']
 ---
 # New Project, End to End (Idea → Working Repo)
@@ -87,7 +87,7 @@ This is what makes it a playbook project instead of a directory:
 
 1. **`git init`** - if it isn't a repo, nothing below survives
 2. **Hand to `/pb-context`** for `todos/1-working-context.md` - `todos/` is the working-material root; pause notes land beside it later
-3. **Hand to `/pb-claude-project`** for the project `.claude/CLAUDE.md`. Do this *after* step 2, not before: it reads the working context to populate its Tech Stack and Active Development sections, so an empty `todos/` gives you a hollow CLAUDE.md
+3. **Hand to `/pb-claude-project`** for the project `.claude/CLAUDE.md`. Do this *after* step 2, not before: the generated file links the working context for current state rather than copying it, so the link needs a target
 4. **One CI workflow:** lint + test. That's it.
 5. **First commit:** `git add -A && git commit -m "chore: initial scaffold"`. Then `/pb-start` for the first real feature.
 

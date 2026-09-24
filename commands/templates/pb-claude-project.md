@@ -6,10 +6,10 @@ difficulty: "beginner"
 model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-claude-global', 'pb-claude-orchestration', 'pb-context', 'pb-onboarding', 'pb-greenfield']
-last_reviewed: "2026-08-04"
-last_evolved: "2026-08-04"
-version: "1.3.0"
-version_notes: "v1.3.0: raise the size gate to 180 lines / 3K tokens (was 150/2K, stated in three places that now agree). The token half bound first at ~145 lines, so the line figure was decorative; both halves now carry weight. v1.2.0: wire the preservation contract that was only ever described. Step 0 reads the file being replaced and inventories `## Custom (Manual)` blocks; the generated structure carries that section; the checklist verifies the blocks survived. Regeneration is now the default path rather than a hazard. v2.10.0 baseline; v1.1.0 collapse duplicate Guardrails, add BEACON marker alignment"
+last_reviewed: "2026-09-24"
+last_evolved: "2026-09-24"
+version: "1.4.0"
+version_notes: "v1.4.0: Q3 2026 -- the template stops asking for what the rules forbid. It listed Current version and status under Keep and carried a Status placeholder, so generated files pinned a commit and went stale; per-commit state is now banned and the working context is linked, not copied. The stack-detection tables collapse to one step: record only what a reader would not find in one pass. The skeleton drops Testing, Environment and Session Quick Start (duplicates of Commands) and makes Tech Stack and Structure optional. The BEACON compression claim is deleted -- the root file is re-read after compaction regardless. Maintenance no longer contradicts Step 0. The example shows Custom (Manual), Generated Artifacts and Guardrails, the sections the contract protects. Size gate: under 200 lines, Anthropic's figure. v1.3.0: raise the size gate to 180 lines / 3K tokens (was 150/2K, stated in three places that now agree). The token half bound first at ~145 lines, so the line figure was decorative; both halves now carry weight. v1.2.0: wire the preservation contract that was only ever described. Step 0 reads the file being replaced and inventories `## Custom (Manual)` blocks; the generated structure carries that section; the checklist verifies the blocks survived. Regeneration is now the default path rather than a hazard. v2.10.0 baseline; v1.1.0 collapse duplicate Guardrails, add BEACON marker alignment"
 breaking_changes: []
 ---
 # Generate Project CLAUDE.md
@@ -20,7 +20,7 @@ Generate a project-specific `.claude/CLAUDE.md` by analyzing the current project
 
 **Philosophy:** Project CLAUDE.md should capture what's unique about this project (tech stack, structure, commands, patterns) so Claude Code understands the project context across sessions.
 
-**Context efficiency:** This file is loaded every conversation turn. Keep it **under 3K tokens** (~180 lines). Move detailed documentation to `docs/` and reference it.
+**Context efficiency:** This file is loaded into every session. Keep it **under 200 lines** -- Anthropic's published target; longer files consume more context and reduce adherence. Move reference material to `docs/` and link it.
 
 **Mindset:** Design Rules emphasize "clarity over cleverness" - generated context should be immediately useful, not comprehensive.
 
@@ -59,267 +59,70 @@ Copy each `## Custom (Manual)` block out before you write, and paste it back int
 
 A file that cannot survive its own generator is a defect in one of them. Resolve which, rather than hand-editing forever.
 
-### Step 1: Detect Tech Stack
+### Step 1: Read the Project
 
-Check for these files to identify language and framework:
+Read the manifests, build files, CI config, README and CONTRIBUTING. The model generating this file can find the stack and the layout in one pass, and so can the model that will read it -- so record only what that reader would **not** find in one pass or would get wrong:
 
-| File | Indicates |
-|------|-----------|
-| `package.json` | Node.js/JavaScript/TypeScript |
-| `pyproject.toml` or `requirements.txt` | Python |
-| `go.mod` | Go |
-| `Cargo.toml` | Rust |
-| `pom.xml` or `build.gradle` | Java |
-| `Gemfile` | Ruby |
-| `composer.json` | PHP |
+- The commands that actually work (build, test, lint, run), verified by running them
+- Paths that are generated output and must never be edited or committed
+- Conventions, couplings and gotchas: files that change together, ordering rules, what a green CI run does *not* prove
+- Guardrails: what needs the owner's approval before it is touched
 
-**Read the file** to extract:
-- Project name
-- Version
-- Key dependencies (framework, testing, etc.)
-- Scripts/commands
+Stack and structure earn a line only where the manifests mislead -- a vendored fork, a monorepo whose root manifest is not the build, a directory whose name lies about its contents.
 
-### Step 2: Identify Framework
+### Step 2: Point at State, Do Not Copy It
 
-From dependencies, identify the framework:
-
-| Dependency | Framework |
-|------------|-----------|
-| `fastapi`, `flask`, `django` | Python web |
-| `express`, `fastify`, `nestjs` | Node.js web |
-| `gin`, `echo`, `fiber` | Go web |
-| `react`, `vue`, `angular` | Frontend |
-| `sqlalchemy`, `prisma`, `gorm` | ORM |
-
-### Step 3: Map Directory Structure
-
-List top-level directories and identify patterns:
-
-```bash
-ls -la
-```
-
-Common patterns to recognize:
-- `src/` or `lib/` - Source code
-- `tests/` or `test/` or `__tests__/` - Tests
-- `docs/` - Documentation
-- `scripts/` - Automation scripts
-- `config/` or `conf/` - Configuration
-- `api/` or `routes/` - API endpoints
-- `models/` - Data models
-- `services/` - Business logic
-- `utils/` or `helpers/` - Utilities
-
-### Step 4: Analyze Testing Patterns
-
-Find test files and understand patterns:
-
-```bash
-find . -name "*test*" -o -name "*spec*" | head -20
-```
-
-Read one representative test file to understand:
-- Test framework (pytest, jest, go test, etc.)
-- Test structure (describe/it, test functions, table-driven)
-- Mocking patterns
-- Assertion style
-
-### Step 5: Identify Build/Run Commands
-
-Check these sources for commands:
-
-| Source | Commands |
-|--------|----------|
-| `Makefile` | `make <target>` |
-| `package.json` scripts | `npm run <script>` |
-| `pyproject.toml` scripts | `poetry run <script>` |
-| `docker-compose.yml` | `docker-compose up` |
-| `README.md` | Setup/run instructions |
-
-### Step 6: Check for Existing Context
-
-Look for existing documentation:
-- `README.md` - Project overview
-- `CONTRIBUTING.md` - Contribution guidelines
-- `docs/` - Additional documentation
-- `.env.example` - Environment variables needed
-
-**Working Context Discovery:**
-Check for working context documents that provide rich project state:
-
-```bash
-ls todos/*working-context*.md 2>/dev/null
-```
-
-Common locations: `todos/working-context.md`, `todos/1-working-context.md`
-
-If a working context exists:
-1. **Read it first** - It contains current version, active development context, and session checklists
-2. **Check currency** - Compare version/date with git tags and recent commits
-3. **Update if stale** - If working context is outdated, update it as part of generation
-4. **Extract key info** - Use it to populate Tech Stack, Commands, and Active Development sections
-
-### Step 7: Identify Generated Artifacts
-
-Ask: "Are there generated files in this project that should never be committed or treated as source?"
-
-If yes, list them explicitly so future agents can skip them. Common generated paths:
-
-| Type | Examples |
-|------|----------|
-| Build output | `dist/`, `build/`, `out/`, `target/` |
-| Generated code | `*.pb.go`, `*.generated.*`, `__generated__/` |
-| Package locks | `package-lock.json`, `yarn.lock` (auto-generated) |
-| Asset bundles | `public/build/`, `static/dist/` |
-| Migration diffs | auto-generated migration files (check tooling) |
-
-Add to the generated CLAUDE.md under a "Generated Artifacts (do not commit)" section.
-
-### Step 8: Detect CI/CD
-
-Check for CI configuration:
-- `.github/workflows/` - GitHub Actions
-- `.gitlab-ci.yml` - GitLab CI
-- `Jenkinsfile` - Jenkins
-- `.circleci/` - CircleCI
+If a working context exists (`todos/*working-context*.md`), link it from the generated file. Do not copy its version, commit, counts or status into this file: state changes every commit, this file is loaded every session, and a stale claim here is read as fact until someone regenerates. The working context is refreshed by `/pb-context`; this command does not touch it.
 
 ---
 
 ## Generate CLAUDE.md
 
-Create `.claude/CLAUDE.md` with this structure.
-
-**BEACON alignment:** Global CLAUDE.md marks load-bearing sections with a `BEACON:` prefix so they survive context compression. Do the same for this project's non-negotiable sections (guardrails, critical conventions) — prefix the heading (e.g. `## BEACON: Project Guardrails`).
+Create `.claude/CLAUDE.md` with this structure. Every section is optional except Commands; delete what the project does not need.
 
 ```markdown
 # [Project Name] Development Context
 
-> Generated: YYYY-MM-DD
-> Tech Stack: [Language] + [Framework]
->
-> This file provides project-specific context for Claude Code.
-> Global guidelines: ~/.claude/CLAUDE.md
+> Generated: YYYY-MM-DD · Global guidelines: ~/.claude/CLAUDE.md
+> Current state: `todos/1-working-context.md` (if the project keeps one)
 
----
-
-## Project Overview
-
-[One-line description from README or package.json]
-
-**Repository:** [URL if available]
-**Status:** [Active development / Maintenance / etc.]
-
----
-
-## Tech Stack
-
-| Layer | Technology |
-|-------|------------|
-| Language | [e.g., Python 3.11] |
-| Framework | [e.g., FastAPI] |
-| Database | [e.g., PostgreSQL] |
-| ORM | [e.g., SQLAlchemy] |
-| Testing | [e.g., pytest] |
-| CI/CD | [e.g., GitHub Actions] |
-
----
-
-## Project Structure
-
-```
-[project-name]/
-├── [dir]/          # [Description]
-├── [dir]/          # [Description]
-├── [dir]/          # [Description]
-└── [file]          # [Description]
-```
-
-**Key locations:**
-- Source code: `[path]`
-- Tests: `[path]`
-- Configuration: `[path]`
-- Documentation: `[path]`
-
----
-
-## Generated Artifacts (do not commit)
-
-[If any from Step 7 — list paths that are generated output, never source]
-[Delete this section if none]
+[One or two lines: what this project is, and anything about it a reader would get wrong from the README.]
 
 ---
 
 ## Commands
 
-**Development:**
 ```bash
-[command]           # Start development server
 [command]           # Run tests
-[command]           # Lint/format code
+[command]           # Lint/format
+[command]           # Build / run
 ```
 
-**Build & Deploy:**
-```bash
-[command]           # Build for production
-[command]           # Deploy
-```
+[Only non-obvious notes: a command that must run before another, one that is slow, one whose green result proves less than it looks.]
 
 ---
 
-## Testing
+## Generated Artifacts (do not commit)
 
-**Framework:** [pytest/jest/go test/etc.]
-
-**Run tests:**
-```bash
-[command]
-```
-
-**Test patterns:**
-- [Describe test organization]
-- [Describe mocking approach]
-- [Coverage expectations]
-
----
-
-## Environment
-
-**Required variables:**
-```bash
-[VAR_NAME]          # [Description]
-[VAR_NAME]          # [Description]
-```
-
-**Setup:**
-```bash
-cp .env.example .env
-# Edit .env with your values
-```
+[Paths that are build or generated output, never source. Delete this section if none.]
 
 ---
 
 ## Relevant Playbooks
 
-Based on this project's tech stack:
-
 | Command | Relevance |
 |---------|-----------|
 | `/pb-guide-[lang]` | Language-specific SDLC |
 | `/pb-patterns-[type]` | Applicable patterns |
-| `/pb-testing` | Testing guidance |
-| `/pb-security` | Security checklist |
 
 ---
 
 ## BEACON: Project Guardrails
 
-Project-specific safety constraints (supplement global guardrails). Customize; remove irrelevant constraints.
-
-- **Infrastructure lock** - No Docker/DB/environment changes without approval
 - **Dependency lock** - No new dependencies without approval
-- **Port lock** - Backend: [port], Frontend: [port] - do not change
-- **Design system** - Follow existing UI patterns in [path]
+- **Infrastructure lock** - No Docker/DB/environment changes without approval
 - **Data safety** - No database deletions without explicit approval
+[Customize; remove what does not apply.]
 
 ---
 
@@ -329,74 +132,39 @@ Project-specific safety constraints (supplement global guardrails). Customize; r
 project conventions, known gotchas, files that must be touched together, decisions whose
 rationale lives nowhere else. Carried across from Step 0 -- never rewritten.]
 
-[Delete this section only if the project genuinely has none.]
-
 ---
 
 ## Overrides from Global
 
-[Document any intentional deviations from global CLAUDE.md]
-
-Example:
+[Each intentional deviation from ~/.claude/CLAUDE.md, named. Delete if none.]
 - **Commit scope:** This project uses `module:` prefix instead of `feat:`
-- **Test coverage:** This project requires 90% coverage (vs global 80%)
-
----
-
-## Session Quick Start
-
-```bash
-# Get oriented
-git status
-[command to run tests]
-
-# Start development
-[command to start dev server]
-```
 
 ---
 
 *Regenerate with `/pb-claude-project` when project structure changes significantly.*
 ```
 
+The `BEACON:` prefix is a reader's marker for load-bearing sections, matching the global file. It has no mechanical effect: the root CLAUDE.md is re-read from disk after compaction whatever its headings say.
+
 ---
 
 ## Conciseness Guidelines
 
-**Target: Under 3K tokens (~180 lines)**
+**Target: under 200 lines.** The test for every line is the global file's derive-or-decide test: would the model reading this file find it in the repo in one pass, or do it by default? Then it is a passenger.
 
-Project CLAUDE.md is loaded every turn. Large files consume context that could be used for actual work.
+**Keep:** commands that work, generated paths, guardrails, conventions and couplings, overrides.
 
-**Keep in CLAUDE.md:**
-- Tech stack table (essential)
-- Key commands (daily use)
-- Project structure (high-level only)
-- Current version and status
-- Critical patterns unique to this project
+**Never:** anything that changes per commit -- version, SHA, test count, status. It goes stale in a file loaded every session, and a stale fact here is read as current. Link the working context instead.
 
-**Move to docs/:**
-- Full API reference
-- Detailed architecture explanations
-- All environment variables (keep only critical ones)
-- Extended examples
-- Historical context
+**Move to `docs/`:** API reference, architecture explanations, full environment variable lists, extended examples, history.
 
-**Trim aggressively:**
-- Remove sections that duplicate global CLAUDE.md
-- Collapse verbose explanations to one-liners
-- Use tables over prose
-- Reference playbooks instead of repeating their content
-
-**Example trimming:**
 ```markdown
-# Before (verbose)
+# Before
 ## Environment Variables
 The following environment variables are required for the application to function...
-DATABASE_URL - The PostgreSQL connection string...
-[20 more lines]
+[20 lines]
 
-# After (concise)
-## Environment
+# After
 See `.env.example`. Critical: `DATABASE_URL`, `API_KEY`, `JWT_SECRET`
 ```
 
@@ -427,17 +195,10 @@ output. Delete the backup once the diff is clean.
 
 ## Verification Checklist
 
-After generation, verify:
-
-- [ ] `.claude/CLAUDE.md` exists in project root
-- [ ] **File is under 180 lines / 3K tokens** (critical for context efficiency)
-- [ ] Tech stack is correctly identified
-- [ ] Key commands are accurate and work
-- [ ] Directory structure matches reality (high-level only)
-- [ ] Test commands run successfully
-- [ ] Relevant playbooks are appropriate for this stack
-- [ ] Working context (if exists) is current and referenced
-- [ ] Detailed docs moved to `docs/`, not duplicated in CLAUDE.md
+- [ ] **Under 200 lines**
+- [ ] Every command listed was run and works
+- [ ] No per-commit state (version, SHA, counts, status) in the file
+- [ ] Every line passes derive-or-decide
 - [ ] **Every `## Custom (Manual)` block from Step 0 is present, verbatim** -- diff against the backup and confirm nothing vanished
 - [ ] No hand-written content survives *outside* that marker; if any does, it was resolved via Step 0's three outcomes rather than left to erode
 
@@ -465,20 +226,7 @@ every turn -- that goes to `docs/` and gets linked.
 
 ## Maintenance
 
-**When to regenerate:**
-- After major refactoring
-- When adding new major dependencies
-- When changing build/test tooling
-- Quarterly refresh
-
-**Working context maintenance:**
-If the project has a working context document (typically in `todos/`):
-- Check if it's current before regenerating CLAUDE.md
-- Update working context if version/date is stale
-- Use `/pb-context` command to refresh working context
-
-**Partial updates:**
-For minor changes, edit the file directly rather than full regeneration.
+**Regenerate** after a structural change: new tooling, a moved build, a new generated path. Minor changes go under `## Custom (Manual)` or wait for the next regeneration -- a hand edit outside that marker is overwritten by the next run.
 
 ---
 
@@ -515,42 +263,12 @@ Project CLAUDE.md complements global:
 
 ## Example: Python FastAPI Project
 
-After analyzing a Python FastAPI project, generated CLAUDE.md might look like:
-
 ```markdown
 # UserService Development Context
 
-> Generated: 2026-01-13
-> Tech Stack: Python 3.11 + FastAPI
+> Generated: 2026-01-13 · Global guidelines: ~/.claude/CLAUDE.md
 
----
-
-## Tech Stack
-
-| Layer | Technology |
-|-------|------------|
-| Language | Python 3.11 |
-| Framework | FastAPI 0.109 |
-| Database | PostgreSQL 15 |
-| ORM | SQLAlchemy 2.0 |
-| Testing | pytest + httpx |
-| CI/CD | GitHub Actions |
-
----
-
-## Project Structure
-
-```
-userservice/
-├── app/
-│   ├── api/        # Route handlers
-│   ├── models/     # SQLAlchemy models
-│   ├── services/   # Business logic
-│   └── main.py     # Application entry
-├── tests/          # pytest tests
-├── alembic/        # Database migrations
-└── docker-compose.yml
-```
+FastAPI service for user accounts. Async throughout; the sync SQLAlchemy session in `app/legacy/` is the exception, not a pattern.
 
 ---
 
@@ -558,10 +276,31 @@ userservice/
 
 ```bash
 make dev            # Start with hot reload
-make test           # Run pytest
-make lint           # Run ruff + mypy
-make migrate        # Run alembic migrations
+make test           # pytest -- needs `docker compose up db` first
+make lint           # ruff + mypy
+make migrate        # alembic upgrade head
 ```
+
+---
+
+## Generated Artifacts (do not commit)
+
+- `alembic/versions/*_autogen.py` -- review, rename, then commit; never commit raw
+- `openapi.json` -- built by `make docs`
+
+---
+
+## BEACON: Project Guardrails
+
+- **Migration lock** - No schema change without a reviewed migration
+- **Dependency lock** - No new dependencies without approval
+
+---
+
+## Custom (Manual)
+
+- `app/models/` and `alembic/versions/` change together; a model edit without a migration passes tests and fails deploy
+- Rate limits live in `config/limits.toml`, not in code
 
 ---
 
@@ -571,9 +310,6 @@ make migrate        # Run alembic migrations
 |---------|-----------|
 | `/pb-guide-python` | Python SDLC patterns |
 | `/pb-patterns-db` | Database patterns |
-| `/pb-patterns-async` | Async patterns (FastAPI is async) |
-
----
 ```
 
 ---
