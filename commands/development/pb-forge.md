@@ -6,10 +6,10 @@ difficulty: "advanced"
 model_hint: "opus"
 execution_pattern: "interactive"
 related_commands: ['pb-what-next', 'pb-review', 'pb-huddle', 'pb-preflight', 'pb-ship']
-last_reviewed: "2026-08-04"
-last_evolved: "2026-08-04"
-version: "1.2.1"
-version_notes: "v1.2.1: Sub-stage 5's trigger says why Always is honest now that /pb-preflight scopes itself in Step 0. Forge had been describing preflight as a wiring check in wording preflight did not carry; preflight v1.1.0 now owns that framing. v1.2.0: Slice escape added — the front arc now carries an iteration tally, and forge stops at three to propose the smallest executable slice. Acceptance gates must state a falsifier before their first run. Cursor records the tally and the falsifier."
+last_reviewed: "2026-09-24"
+last_evolved: "2026-09-24"
+version: "1.3.0"
+version_notes: "v1.3.0: Sub-stage 2 is an offer, not a run. /code-review became assistant-invocable (Claude Code v2.1.246), which closes the gap that forced forge to stop there -- and the huddle declined to replace a forced stop with an automatic pass, because a model that already verifies its own work does not need a fifth self-check on every broad-trigger diff. Unexercised: no run has reached it. v1.2.1: Sub-stage 5's trigger says why Always is honest now that /pb-preflight scopes itself in Step 0. Forge had been describing preflight as a wiring check in wording preflight did not carry; preflight v1.1.0 now owns that framing. v1.2.0: Slice escape added — the front arc now carries an iteration tally, and forge stops at three to propose the smallest executable slice. Acceptance gates must state a falsifier before their first run. Cursor records the tally and the falsifier."
 breaking_changes: []
 ---
 # Lifecycle Step-Runner
@@ -69,6 +69,8 @@ Self-gate is a compound stage of ordered sub-stages. Each catches what the prior
 | 5 | `/pb-preflight` | Ship-readiness wiring check: gaps, not issues | Always -- its Step 0 scopes the gate to your surface, which is what makes Always honest on a non-service project |
 
 **Order matters.** Run cheap automated gates first (review, code-review), then form gates (handcraft), then judgment gates (huddle), then the final wiring check (preflight). The compound chain reduces the surface area each huddle needs to cover: by the time you reach sub-stage 4, the obvious bugs and prose issues are already fixed.
+
+**Sub-stage 2 is an offer, not a run.** `/code-review` has been assistant-invocable since Claude Code v2.1.246, so stopping here is no longer forced -- it is chosen. Current Opus verifies its own output, and a separate pass on every diff that trips a broad trigger is the over-verification its prompting guidance says to remove. When the trigger fires, forge stops, names the command and effort level, and runs it on the user's yes. No forge run has reached this sub-stage yet; the choice is unexercised.
 
 **Sub-stage triggers are concrete OR gates, not judgment calls.** "My diff is 3 files and 40 lines" → skip code-review. "I added a new command" → run code-review. No "should I?" hand-wringing.
 
