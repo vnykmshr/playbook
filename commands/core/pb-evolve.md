@@ -6,10 +6,10 @@ difficulty: "beginner"
 model_hint: "opus"
 execution_pattern: "sequential"
 related_commands: ['pb-claude-global', 'pb-claude-project', 'pb-standards', 'pb-preamble', 'pb-design-rules']
-last_reviewed: "2026-06-10"
-last_evolved: "2026-06-10"
-version: "1.3.0"
-version_notes: "v1.3.0: Q2 2026 -- refresh currency markers to Opus 4.8 GA (footer version); running examples left illustrative. v2.20.0 -- Refresh running examples to Opus 4.7 + 1M [1m] scenario; bring evolution-log, opportunity, release-notes, and Scenario B templates into alignment with current capability trigger."
+last_reviewed: "2026-09-24"
+last_evolved: "2026-09-24"
+version: "1.4.0"
+version_notes: "v1.4.0: Step 3.5 makes help-or-constrain a standing question every cycle -- does each surface structure and check the model, or hold a stronger model back. Ground truth from fetched vendor docs, auto-loaded surfaces first, two-sided by rule (name where the model needs more structure before cutting), and deletion on documentation or observed sessions, never the model's self-report. Changes command content only; retirement stays a human call. Trend row seeded from Q3 2026. v1.3.0: Q2 2026 -- refresh currency markers to Opus 4.8 GA (footer version); running examples left illustrative. v2.20.0 -- Refresh running examples to Opus 4.7 + 1M [1m] scenario; bring evolution-log, opportunity, release-notes, and Scenario B templates into alignment with current capability trigger."
 breaking_changes: []
 ---
 
@@ -200,6 +200,44 @@ Document findings in `todos/evolution-log.md`:
 - Sonnet stays the right hint for cost-sensitive paths (CI, automation, routine dev loop)
 - 1M is headroom for specific long-horizon tasks; default context hygiene still applies
 ```
+
+### Step 3.5: Help or Constrain (Standing, Every Cycle)
+
+**The question:** does each playbook surface still structure and check the model's work, or has it become a constraint that keeps a stronger model from its best work? It runs every cycle, including cycles with no model release -- a harness change or a session's evidence moves the line as much as a new model does.
+
+**Ground truth first.** Fetch the vendor's current prompting guidance and harness docs to disk and extract a ground-truth file. The model under review is not a reliable witness to its own capabilities: the 2026-06 Fable trial and a 2026-09 research subagent both asserted capability facts the docs contradicted. A capability claim that is not in the ground-truth file does not enter the review.
+
+**The line.** A surface earns its place when it carries what the model cannot derive from the repo or would not do by default:
+
+- Decisions and consent boundaries the owner made
+- This project's conventions, couplings and gotchas
+- Behaviours the vendor documents as needing instruction (response length and scope, as of 2026-09)
+- Checks that execute -- a test, a guard, a hook
+
+It constrains when it:
+
+- Re-teaches what the model does natively or what the harness already does
+- Instructs re-verification of work the model already verifies
+- Prescribes reasoning steps where stating the outcome would do
+- States facts that rot -- model versions, SHAs, counts -- in a file loaded every session
+
+**Where to look, by cost.** Auto-loaded surfaces first (generated global and project CLAUDE.md, the memory index): every line is paid every session and cannot be corrected mid-session. Then commands that chain or stack checks. On-demand reference commands last -- they cost nothing until invoked, so review them only when a finding points there.
+
+**Two-sided, by rule.** Before proposing any cut, name at least one place where the model needs *more* structure, with evidence -- or state that you looked and found none. A review that only deletes is a prune machine run one line at a time. The 2026-09 panel of four argued deletion and nobody argued addition, while the one addition that cycle (a scope rule) answered a documented weakness.
+
+**Deletion needs evidence, not self-report.** The model judging the rules is the model the rules govern, and "I would do that anyway" is the one claim it cannot make about itself. Cut a behavioural rule on vendor documentation or on observed sessions, never on the model's account of its own defaults. The 2026-09 session that argued verification is native also repeated the cheapest-surface mistake its own memory warned about.
+
+**Scope:** this review changes what commands say. It does not retire commands; retirement stays a single human decision.
+
+**Run it as a huddle** (`/pb-huddle`): same brief to every panelist, ground-truth file attached, this question alongside the cycle's own. Record a trend row in the cycle record so the next cycle compares rather than re-derives:
+
+| Measure | Q3 2026 baseline |
+|---------|------------------|
+| Global CLAUDE.md, generated lines | 158 |
+| Project CLAUDE.md (this repo), lines | 86 |
+| Verify-instructions in auto-loaded files | 0 (was 4) |
+| Model-version strings in generator templates | 0 (`TestTemplateCurrency`) |
+| Structure added / cut | 1 / ~12 |
 
 ### Step 4: Audit Playbooks Against New Capabilities
 
@@ -680,6 +718,7 @@ Before publishing an evolution cycle, define and verify success metrics:
 - [ ] CHANGELOG updated
 - [ ] MEMORY.md updated with lessons
 - [ ] Evolution log entry written
+- [ ] Help-or-constrain review run (Step 3.5): ground-truth-backed, two-sided, trend row recorded
 - [ ] Tests pass
 - [ ] Tested on 2-3 real tasks
 
@@ -978,6 +1017,7 @@ This is self-healing DNA in action.
 - Model routing decisions (when to use Haiku vs Sonnet vs Opus)
 - Execution patterns (when to parallelize, when to serialize)
 - Context loading strategy (what to load in main, what to defer)
+- Instruction style: what the model is told versus left to do (Step 3.5)
 - Best practices (patterns that work in practice)
 - Examples (keep them current)
 
