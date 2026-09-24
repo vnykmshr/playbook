@@ -210,22 +210,12 @@ class TestChangelogLandsWithChange:
     other checker and make bisect lie. See /pb-review-incoming Step 0.
     """
 
-    # Commits that split the paperwork, found by the first /pb-review-incoming
-    # run and already pushed. Recorded rather than rewritten -- the gap is
-    # evidence about the intake path.
-    GRANDFATHERED = {
-        "5912757": "pb-llm-guidelines v1.2.0 -- changelog line landed one commit late",
-        "b20e99c": "pb-review-hygiene v2.2.0 -- changelog line landed one commit early",
-        "fa6ac59": "personas Boundary & Authority, 6 files -- covered by the persona-team entry in a later commit",
-        "03a9fbf": "pb-claude-global template sync -- covered by the LLM Guardrails entry in a later commit",
-    }
-
     def test_version_bumps_carry_their_changelog_line(self):
         last_tag = git("describe", "--tags", "--abbrev=0").strip()
         offenders = []
         for line in git("log", "--format=%H", f"{last_tag}..HEAD").strip().splitlines():
             sha = line.strip()
-            if not sha or sha[:7] in self.GRANDFATHERED:
+            if not sha:
                 continue
             touched = git("show", "--stat", "--format=", "--name-only", sha).split()
             bumped = [
