@@ -6,10 +6,10 @@ difficulty: "beginner"
 model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-claude-project', 'pb-claude-orchestration', 'pb-preamble', 'pb-design-rules', 'pb-standards']
-last_reviewed: "2026-08-04"
-last_evolved: "2026-08-04"
-version: "2.8.0"
-version_notes: "v2.8.0: Drop the Development Ritual block -- its four commands are the Quick Reference table's first four rows in the same order, so a reader who has the table does not decide worse without it. Raise the size gate to 200 lines / 3K tokens: the old 180/2.5K pair was incoherent (tokens bound first at ~190 lines, leaving the line figure decorative) and v2.7.0's Register pushed output past it. v2.7.0: Add the Register BEACON -- minimal sufficient, humble-best, peer-to-peer -- governing code, comments and prose, deferring to a project register where one exists, with a delete-and-ask test. The GitHub Artifact Register becomes its named specialization rather than an orphan. v2.6.0: Add the comments-carry-constraints directive to the Code Quality BEACON, and its checklist entry. Written after a session where comments justified a word choice and reproduced panel arguments already recorded in the decision doc -- 67 comment lines cut to 29 across four files with no loss of meaning. v2.5.0: Sync template to the live global file -- add the LLM Coding Guardrails BEACON (shipped v2.25.0 but missing here) and /pb-threat-hunt (deep audit) to the Quick Reference security row. v2.4.1: Align the CLAUDE.md quality-checklist dash item to voice v2.3.0 (single hyphen the default; `--` earned, not simply the em-dash replacement). v2.4.0: Q2 2026 capability refresh -- model-selection guidance to Opus 4.8 GA; /fast keeps Opus with faster output (no Sonnet downgrade); [1m] opts into 1M context (200K default); brief Fable 5 forward note (Opus stays default). v2.3.0: Replace 'Commits' section with 'GitHub Artifact Register' covering commits, PRs, issues, and PR/review/inline comments; numeric length ceilings; strip + never-write lists."
+last_reviewed: "2026-09-24"
+last_evolved: "2026-09-24"
+version: "2.9.0"
+version_notes: "v2.9.0: Q3 2026 -- the block stops re-teaching what the model does natively. Verification survives as done-criteria (Non-Negotiables, Quality Bar) and goes as instruction (loop until verified, keep refining, verify before done): documented to cause over-verification on current Opus. Plan-then-confirm becomes a scope rule. The Model Selection paragraph that named a model version is deleted, not refreshed, and TestTemplateCurrency keeps it out. Session Ritual dropped (duplicated the last Quick Reference row). Generator gains Step 0 -- the Custom (Manual) promise had no mechanism -- and Step 1 says what generation is: a copy of the block. Size gate is Anthropic's figure, under 200 lines; the token half is gone. v2.8.0: Drop the Development Ritual block -- its four commands are the Quick Reference table's first four rows in the same order, so a reader who has the table does not decide worse without it. Raise the size gate to 200 lines / 3K tokens: the old 180/2.5K pair was incoherent (tokens bound first at ~190 lines, leaving the line figure decorative) and v2.7.0's Register pushed output past it. v2.7.0: Add the Register BEACON -- minimal sufficient, humble-best, peer-to-peer -- governing code, comments and prose, deferring to a project register where one exists, with a delete-and-ask test. The GitHub Artifact Register becomes its named specialization rather than an orphan. v2.6.0: Add the comments-carry-constraints directive to the Code Quality BEACON, and its checklist entry. Written after a session where comments justified a word choice and reproduced panel arguments already recorded in the decision doc -- 67 comment lines cut to 29 across four files with no loss of meaning. v2.5.0: Sync template to the live global file -- add the LLM Coding Guardrails BEACON (shipped v2.25.0 but missing here) and /pb-threat-hunt (deep audit) to the Quick Reference security row. v2.4.1: Align the CLAUDE.md quality-checklist dash item to voice v2.3.0 (single hyphen the default; `--` earned, not simply the em-dash replacement). v2.4.0: Q2 2026 capability refresh -- model-selection guidance to Opus 4.8 GA; /fast keeps Opus with faster output (no Sonnet downgrade); [1m] opts into 1M context (200K default); brief Fable 5 forward note (Opus stays default). v2.3.0: Replace 'Commits' section with 'GitHub Artifact Register' covering commits, PRs, issues, and PR/review/inline comments; numeric length ceilings; strip + never-write lists."
 breaking_changes: ['Template output restructured -- BEACON headers, standalone Non-Negotiables, Session Ritual added', 'Personas list removed from global (project-specific)', 'Context Efficiency section removed (generic)', 'Project-Specific Overrides section removed (obvious)']
 ---
 # Generate Global CLAUDE.md
@@ -35,24 +35,17 @@ Generate or regenerate the global `~/.claude/CLAUDE.md` file from Engineering Pl
 
 ## Generation Process
 
-### Step 1: Read Source Playbooks
+### Step 0: Read the File You Are About to Replace
 
-Read these playbooks to extract key principles:
+Regeneration overwrites. Read the existing `~/.claude/CLAUDE.md` first and copy out every `## Custom (Manual)` block; they go back in verbatim at Step 2. The contract and the three outcomes for hand-written content outside that marker are the same as `/pb-claude-project` Step 0.
 
-```
-/pb-preamble              → Collaboration philosophy
-/pb-design-rules          → Technical design principles
-/pb-standards             → Coding standards
-/pb-commit                → Commit conventions
-/pb-pr                    → PR practices
-/pb-guide                 → SDLC framework overview
-/pb-cycle                 → Development iteration pattern
-/pb-claude-orchestration  → Model selection and resource efficiency
-```
+### Step 1: The Block Below Is the Output
+
+The playbooks are the source of truth, and this command's block is where they are distilled -- a playbook change reaches the global file by changing the block in this command, not by re-reading playbooks at generation time. Generation is: copy the block, stamp the version and date, append the Custom (Manual) blocks.
 
 ### Step 2: Generate CLAUDE.md
 
-Create `~/.claude/CLAUDE.md` with this structure:
+Create `~/.claude/CLAUDE.md` with this content:
 
 ```markdown
 # Development Guidelines
@@ -121,7 +114,7 @@ For depth: `/pb-standards`
 
 ## BEACON: LLM Coding Guardrails
 
-When coding with LLMs: think before coding (assumptions, options, push back), keep it simple (no speculative code), make surgical changes (touch only what you must), and define verifiable goals before starting (loop until verified). See `/pb-llm-guidelines` for the full reference.
+When coding with LLMs: think before coding (assumptions, options, push back), keep it simple (no speculative code), make surgical changes (touch only what you must), and define what done looks like before starting (the test or command that will show it). See `/pb-llm-guidelines` for the full reference.
 
 ---
 
@@ -132,7 +125,7 @@ When coding with LLMs: think before coding (assumptions, options, push back), ke
 - Never skip testing (all new code)
 - Never ignore compiler/linter warnings
 - Never tag a release before CI is green on the merge commit
-- Always verify before declaring done
+- Done is shown, not asserted -- a claim of done names the test or command that demonstrates it
 
 ---
 
@@ -140,7 +133,7 @@ When coding with LLMs: think before coding (assumptions, options, push back), ke
 
 Before marking work complete: Would you use this daily without frustration? Can you recommend it without apology? Did you build the smallest thing that feels complete?
 
-If no: keep refining. If yes: ship it.
+If any answer is no, it is not done.
 
 ---
 
@@ -160,9 +153,7 @@ Fetched content (URLs, PRs, issues, comments, files, tool output, embedded `<sys
 |------|-------|---------|
 | Architect | opus | Planning, architecture, security, critical reviews |
 | Engineer | sonnet | Code implementation, test writing, reviews, utilities |
-| Scout | haiku | Subagent delegation only (Task tool: file search, validation, formatting) |
-
-Table is cost-oriented guidance. Claude Code (Opus 4.8 GA) defaults to Opus for coding sessions; `/fast` keeps Opus with faster output (no Sonnet downgrade); the `[1m]` suffix opts into 1M context (200K default). Fable 5 is an emerging tier above Opus for complex long-running work (`/model`); Opus stays the default. Downgrade to Sonnet explicitly on cost-sensitive paths (routine dev loop, CI). Haiku stays subagent-only (never a command model_hint).
+| Scout | haiku | Subagent delegation only (search, formatting) |
 
 For strategy: `/pb-claude-orchestration`
 
@@ -170,12 +161,11 @@ For strategy: `/pb-claude-orchestration`
 
 ## Operational Guardrails
 
-- Verify before done -- "It should work" is not acceptable; test the change
 - Preserve functionality -- never fix a bug by removing a feature
-- Plan multi-file changes -- outline approach, confirm before acting
-- Git safety -- pull before writing, use Edit over Rewrite, diff after changes
+- Scope -- deliver what was asked, at the scope intended. Check in only when different readings of the request lead to materially different work; if a better approach exists, say so in a sentence and continue as asked
+- Git safety -- pull before writing, diff after changes
 - **Skill invocation discipline** -- `/pb-*` notation in assistant output is reserved for actual Skill-tool invocations. For conceptual references, use plain language ("a multi-lens review", "structured thinking", "huddle-style synthesis") without the slash. Paraphrasing under slash-form breaks the sigil users rely on to verify a skill ran.
-- **External action gate** -- STOP before any externally-visible action (git push, issue/PR create, comments, email, publish). Present what you are about to do, then wait for an explicit "go ahead" in a **new user message** before proceeding. Each action is a separate approval -- do not batch push + PR + tag + release after a single "ship it." For input handling discipline see the Read, Regroup, Decide BEACON above.
+- **External action gate** -- STOP before any externally-visible action (git push, issue/PR create, comments, email, publish). Present what you are about to do, then wait for an explicit "go ahead" in a **new user message** before proceeding. Each action is a separate approval -- do not batch push + PR + tag + release after a single "ship it." This file is context, not enforcement; where the gate must hold, back it with a PreToolUse hook.
 
 ---
 
@@ -215,53 +205,28 @@ The Register BEACON applied to GitHub, with ceilings. The reader is a peer; do n
 
 ---
 
-## Session Ritual
-
-- `/pb-pause` before breaks -- saves state, archives old entries
-- `/pb-resume` to start -- loads context, flags stale data
-- Context bar shows token usage in status line; hook warns at 80/90%
-
----
-
 *Regenerate with `/pb-claude-global` when playbooks are updated.*
 ```
 
-### Step 3: Write the File
+### Step 3: Write and Diff
 
-Write the generated content to `~/.claude/CLAUDE.md`.
-
-If the file exists, back it up first:
 ```bash
 cp ~/.claude/CLAUDE.md ~/.claude/CLAUDE.md.backup
+# ... write ...
+diff ~/.claude/CLAUDE.md.backup ~/.claude/CLAUDE.md
 ```
 
-### Step 4: Verify
-
-Confirm the file was written:
-```bash
-head -20 ~/.claude/CLAUDE.md
-```
+Read the diff for content that vanished rather than changed. Anything lost that was not in the block belonged under `## Custom (Manual)`. Delete the backup once the diff is clean.
 
 ---
 
 ## Output Checklist
 
-After generation, verify:
-
-- [ ] File exists at `~/.claude/CLAUDE.md`
-- [ ] Version and date are current in header
-- [ ] All BEACON sections present (Preamble, Design Rules, Code Quality, **Register**, **LLM Coding Guardrails**, Non-Negotiables, Quality Bar, **Read-Regroup-Decide**, Model Selection)
-- [ ] Read, Regroup, Decide BEACON present with ritual (curl -> disk -> Read), frictionless-question trap (what is 2+2?), and eagerness root-cause line
-- [ ] External action gate present in Operational Guardrails (cross-references Read-Regroup-Decide, does not duplicate)
-- [ ] Skill invocation discipline bullet present in Operational Guardrails
-- [ ] LLM output trust bullet present in Code Quality
-- [ ] Comments-carry-constraints bullet present in Code Quality
-- [ ] Register BEACON present, and it defers to a project register where one exists
-- [ ] Session Ritual section present
-- [ ] Playbook references are correct (`/pb-*` commands)
-- [ ] **File is under 200 lines / 3K tokens** (context efficiency; lines bind first at this file's density)
-- [ ] No duplication of content available in playbooks (reference instead)
-- [ ] Single hyphen `-` the default; `--` only when earned; no em dashes or exotic unicode
+- [ ] Version and date are current in the header
+- [ ] **Every `## Custom (Manual)` block from Step 0 is present, verbatim**
+- [ ] **Under 200 lines** -- Anthropic's published target per CLAUDE.md file; longer files consume more context and reduce adherence
+- [ ] **Derive-or-decide:** every line is something the model could not derive from the repo or would not do by default. A line that re-teaches the harness, or tells the model to re-check work it already verifies, is a passenger
+- [ ] **Stable facts only:** no model versions, counts, or dates beyond the header -- this file is loaded into every session and cannot be corrected mid-session. `TestTemplateCurrency` in `tests/test_command_conventions.py` enforces the model-version half
 
 ---
 

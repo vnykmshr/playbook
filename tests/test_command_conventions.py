@@ -232,6 +232,29 @@ class TestChangelogLandsWithChange:
         )
 
 
+class TestTemplateCurrency:
+    """The CLAUDE.md generator templates carry no model version strings.
+
+    Their output is loaded into every session and cannot be corrected
+    mid-session; a stale model name there tells the running model it is a
+    different model. Front-matter version_notes are history and are exempt.
+    """
+
+    TEMPLATES = ["templates/pb-claude-global.md", "templates/pb-claude-project.md"]
+    MODEL_VERSION = re.compile(r"\b(?:Opus|Sonnet|Haiku|Fable|Claude)[ -]?\d")
+
+    @pytest.mark.parametrize("rel", TEMPLATES)
+    def test_template_body_names_no_model_version(self, rel):
+        text = (COMMANDS_DIR / rel).read_text()
+        body = text.split("\n---\n", 1)[1]  # past the front-matter close
+        hits = [
+            f"{rel}:{n}: {line.strip()}"
+            for n, line in enumerate(body.splitlines(), start=text[: len(text) - len(body)].count("\n") + 1)
+            if self.MODEL_VERSION.search(line)
+        ]
+        assert not hits, "Model version in a generator template:\n  " + "\n  ".join(hits)
+
+
 class TestResourceHint:
     @pytest.fixture(autouse=True)
     def setup(self):
