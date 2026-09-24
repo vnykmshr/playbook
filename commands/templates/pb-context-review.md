@@ -6,10 +6,10 @@ difficulty: "intermediate"
 model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-pause', 'pb-resume', 'pb-context', 'pb-claude-global', 'pb-evolve']
-last_reviewed: "2026-08-04"
-last_evolved: "2026-08-04"
-version: "2.2.0"
-version_notes: "v2.2.0: Re-baseline the global CLAUDE.md target ~160->~200 and the auto-loaded total ~440->~480, tracking the raised gate in /pb-claude-global. The file stated the global target in four places -- architecture diagram, audit command block, action threshold, report table -- and a first pass caught only two, leaving it contradicting itself; all four now agree. Project stays ~180, which now matches /pb-claude-project rather than exceeding it. v2.1.0: Q2 2026 -- re-baseline CLAUDE.md targets (global ~140->~160, project ~160->~180, auto-loaded total ~400->~440); global accepts confirmed load-bearing growth, project adds headroom. Consolidated: merged automated conversation audit into single command with structural and behavioral modes."
+last_reviewed: "2026-09-24"
+last_evolved: "2026-09-24"
+version: "2.3.0"
+version_notes: "v2.3.0: Q3 2026 -- both CLAUDE.md targets are Anthropic's single figure, under 200 lines, and the auto-loaded totals are deleted: a sum restated in two places had already drifted apart (~480 in the diagram, ~440 in the report table). BEACON counts go -- the prefix is a reader's marker with no mechanical effect, so counting it checked nothing, and the file disagreed with itself (6 vs 9). Should-contain lists track the v2.9.0/v1.4.0 templates: no per-commit state, no model versions, no re-verify instructions. The project-structure grep assumed this repo's layout. v2.2.0: Re-baseline the global CLAUDE.md target ~160->~200 and the auto-loaded total ~440->~480, tracking the raised gate in /pb-claude-global. The file stated the global target in four places -- architecture diagram, audit command block, action threshold, report table -- and a first pass caught only two, leaving it contradicting itself; all four now agree. Project stays ~180, which now matches /pb-claude-project rather than exceeding it. v2.1.0: Q2 2026 -- re-baseline CLAUDE.md targets (global ~140->~160, project ~160->~180, auto-loaded total ~400->~440); global accepts confirmed load-bearing growth, project adds headroom. Consolidated: merged automated conversation audit into single command with structural and behavioral modes."
 breaking_changes: ["pb-review-context merged into this command; use `--violations` mode instead"]
 ---
 # Context Layer Review & Hygiene
@@ -59,10 +59,9 @@ Analyze recent conversations for CLAUDE.md violations, missing patterns, and sta
 
 ```
 AUTO-LOADED (every session - budget matters most here):
-  ~/.claude/CLAUDE.md              Global principles, BEACONs       ~200 lines
-  .claude/CLAUDE.md                Project guardrails, tech stack    ~180 lines
+  ~/.claude/CLAUDE.md              Global principles, BEACONs       <200 lines
+  .claude/CLAUDE.md                Project guardrails, commands      <200 lines
   memory/MEMORY.md                 Index + active patterns           ~100 lines
-                                                          Target: ~480 total
 
 LOADED VIA /pb-resume (small, focused):
   todos/*working-context*          Project snapshot                   ~50 lines
@@ -71,7 +70,7 @@ LOADED VIA /pb-resume (small, focused):
 
 ON-DEMAND (not auto-loaded - no budget pressure):
   memory/release-history.md        Ship logs by version
-  memory/beacon-reference.md       Full 9-BEACON reference
+  memory/beacon-reference.md       Full BEACON reference
   memory/session-templates.md      Templates for working-context + pause-notes
   memory/project-patterns.md       MkDocs anchors, conventions, verification
   memory/orchestration-lessons.md  Model selection, subagent patterns
@@ -89,8 +88,8 @@ Report current sizes against targets.
 ```bash
 # Auto-loaded layers
 echo "=== Auto-loaded Context ==="
-wc -l ~/.claude/CLAUDE.md                        # Target: ~200
-wc -l .claude/CLAUDE.md                          # Target: ~180
+wc -l ~/.claude/CLAUDE.md                        # Target: <200
+wc -l .claude/CLAUDE.md                          # Target: <200
 wc -l <memory-path>/MEMORY.md                    # Target: ~100
 
 # Session state (working-context filename varies by project)
@@ -183,17 +182,17 @@ For each auto-loaded file over its soft target, review content:
 
 ### Global CLAUDE.md (~/.claude/CLAUDE.md)
 
-**Should contain:** BEACONs (6), operational guardrails, workflow commands, session ritual
-**Should NOT contain:** Version-specific details, session management explanations, release promo
+**Should contain:** BEACONs, operational guardrails, the GitHub register, quick reference
+**Should NOT contain:** Model versions or other facts that go stale, instructions to re-verify work, restatements of harness behaviour
 
-**Action:** If over ~200 lines, review and trim or regenerate via `/pb-claude-global`. If at target, no action needed.
+**Action:** If over 200 lines, review and trim or regenerate via `/pb-claude-global`. If at target, no action needed.
 
 ### Project CLAUDE.md (.claude/CLAUDE.md)
 
-**Should contain:** Tech stack, project structure, BEACONs (3), verification commands, relevant playbooks
-**Should NOT contain:** Detailed phase descriptions, session management explanations, capability promo
+**Should contain:** Commands that work, generated artifacts, guardrails, conventions and couplings, relevant playbooks
+**Should NOT contain:** Per-commit state (version, SHA, counts, status), anything the repo shows in one pass, capability promo
 
-**Action:** If over ~180 lines, review and trim or regenerate via `/pb-claude-project`. If at target, no action needed.
+**Action:** If over 200 lines, review and trim or regenerate via `/pb-claude-project`. If at target, no action needed.
 
 ### Memory Index (memory/MEMORY.md)
 
@@ -209,21 +208,14 @@ For each auto-loaded file over its soft target, review content:
 After trimming, verify:
 
 ```bash
-# BEACONs still present in auto-loaded files
-grep -c "BEACON" ~/.claude/CLAUDE.md              # Should be 6+
-grep -c "BEACON" .claude/CLAUDE.md                 # Should be 3+
-
 # Key commands still referenced
 grep -c "/pb-" ~/.claude/CLAUDE.md                 # Should be 10+
-
-# Project structure still documented
-grep -c "commands/" .claude/CLAUDE.md              # Should be 1+
 
 # Working context has current version (locate file for your project)
 head -5 todos/*working-context* 2>/dev/null
 
-# Memory index has architecture diagram
-grep -c "AUTO-LOADED" <memory-path>/MEMORY.md      # Should be 1+
+# Memory index still names the auto-loaded layers
+grep -ci "auto-loaded" <memory-path>/MEMORY.md     # Should be 1+
 ```
 
 **If something critical was removed:** Check topic files (memory/*.md) and archives (todos/done/) - content was moved, not deleted.
@@ -240,12 +232,11 @@ Summarize the review. Use this template:
 ### Layer Sizes (Before → After)
 | Layer | Before | After | Target | Status |
 |-------|--------|-------|--------|--------|
-| Global CLAUDE.md | X | Y | ~200 | OK/OVER |
-| Project CLAUDE.md | X | Y | ~180 | OK/OVER |
+| Global CLAUDE.md | X | Y | <200 | OK/OVER |
+| Project CLAUDE.md | X | Y | <200 | OK/OVER |
 | Memory index | X | Y | ~100 | OK/OVER |
 | Working context | X | Y | ~50 | OK/OVER |
 | Pause notes | X | Y | ~30 | OK/OVER |
-| **Auto-loaded total** | **X** | **Y** | **~440** | |
 
 ### Actions Taken
 - [Action 1]
