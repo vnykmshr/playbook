@@ -6,10 +6,10 @@ difficulty: "intermediate"
 model_hint: "sonnet"
 execution_pattern: "interactive"
 related_commands: ['pb-preamble', 'pb-review', 'pb-commit', 'pb-pause', 'pb-plan']
-last_reviewed: "2026-06-29"
+last_reviewed: "2026-09-24"
 last_evolved: "2026-06-29"
-version: "2.3.0"
-version_notes: "v2.3.0: Added verifiable success criteria question (how will you know it's done?). v2.2.0: Added scope mode question (expand/hold/reduce) to clarify intent before coding."
+version: "2.3.1"
+version_notes: "v2.3.1: Voice block removed -- the convention stopped at 3 of 118 commands, and this one described default behaviour. v2.3.0: Added verifiable success criteria question (how will you know it's done?). v2.2.0: Added scope mode question (expand/hold/reduce) to clarify intent before coding."
 breaking_changes: ["Replaced detailed pre-start checklist with 3-4 adaptive scope questions. Old commands pb-cycle/pb-review-code merged into /pb-review. See MIGRATION section."]
 ---
 # Start Development Work
@@ -21,8 +21,6 @@ Begin work on a feature, bug fix, or enhancement. Establishes scope through adap
 **Mindset:** Apply `/pb-preamble` thinking (challenge assumptions) and `/pb-design-rules` thinking (verify clarity, simplicity, robustness). This command ensures you know *what* success looks like before writing code.
 
 **Resource Hint:** sonnet - Scope detection and branch setup
-
-**Voice:** Conversational. System asks clarifying questions naturally, like a peer reviewing your plan. See `/docs/voice.md` for how commands communicate.
 
 **Tool-agnostic:** This command works with any development tool or agentic assistant. Claude Code users invoke as `/pb-start`. Using another tool? Read this file as Markdown and work through the phases with your tool. See [`/docs/using-with-other-tools.md`](/docs/using-with-other-tools.md) for adaptation examples.
 

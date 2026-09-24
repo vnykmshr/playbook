@@ -63,7 +63,6 @@ REVIEW_DATE_BASELINE = {
     "pb-performance.md",
     "pb-preamble.md",
     "pb-release.md",
-    "pb-review.md",
     "pb-threat-hunt.md",
 }
 

@@ -6,10 +6,10 @@ difficulty: "beginner"
 model_hint: "sonnet"
 execution_pattern: "automatic"
 related_commands: ['pb-start', 'pb-commit', 'pb-review-code', 'pb-review-comprehensive']
-last_reviewed: "2026-04-26"
+last_reviewed: "2026-09-24"
 last_evolved: "2026-06-07"
-version: "2.7.0"
-version_notes: "v2.7.0: Add validation gate (re-read self-check before code-mutating auto-fix) and recommend an independent second pass (/code-review or ocr) for true verification; coverage honesty folded into flow-mapping, full coverage ledger lives in /pb-review-comprehensive. Patterns from alibaba/open-code-review + Claude /code-review."
+version: "2.7.1"
+version_notes: "v2.7.1: The Voice block becomes a plain line -- the voice-block convention stopped at 3 of 118 commands; the output decision it carried stays. v2.7.0: Add validation gate (re-read self-check before code-mutating auto-fix) and recommend an independent second pass (/code-review or ocr) for true verification; coverage honesty folded into flow-mapping, full coverage ledger lives in /pb-review-comprehensive. Patterns from alibaba/open-code-review + Claude /code-review."
 breaking_changes: []
 ---
 # Automated Quality Gate
@@ -22,7 +22,7 @@ Run this after you finish coding. System analyzes what you built, applies your e
 
 **Part of the ritual:** `/pb-start` → code → `/pb-review` → done
 
-**Voice:** Prose-driven feedback. Specific reasoning (what matters + why), not diagnostic checklists. See `/docs/voice.md` for how commands communicate.
+Feedback is prose: what matters and why, not a diagnostic checklist.
 
 **Tool-agnostic:** The quality gate principles (verify outcomes, check code quality, run tests, address feedback) work with any development tool. Claude Code users invoke as `/pb-review`. Using another tool? Read this file as Markdown for the checklist and process. Adapt the execution to your tool. See [`/docs/using-with-other-tools.md`](/docs/using-with-other-tools.md) for examples.
 
