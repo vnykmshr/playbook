@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v2.28.0] - 2026-09-24
+
 The Q3 2026 evolve: the auto-loaded CLAUDE.md files stop re-teaching the model and record only what it cannot derive, and whether the playbook helps or constrains the model becomes a standing question every cycle. Also a `/pb-preflight` rewrite and a tooling cleanup.
 
 **After upgrading:** re-run `scripts/install.sh`, which now removes command and skill links whose source is gone. Regenerate `~/.claude/CLAUDE.md` with `/pb-claude-global` and `.claude/CLAUDE.md` with `/pb-claude-project`: both templates changed, and generated files do not update through the command symlinks.
@@ -1857,6 +1859,7 @@ When releasing a new version:
 
 ---
 
+[v2.28.0]: https://github.com/vnykmshr/playbook/releases/tag/v2.28.0
 [v2.27.0]: https://github.com/vnykmshr/playbook/releases/tag/v2.27.0
 [v2.26.0]: https://github.com/vnykmshr/playbook/releases/tag/v2.26.0
 [v2.25.0]: https://github.com/vnykmshr/playbook/releases/tag/v2.25.0
