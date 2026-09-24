@@ -6,10 +6,10 @@ difficulty: "intermediate"
 model_hint: "opus"
 execution_pattern: "parallel-then-sequential"
 related_commands: ['pb-think', 'pb-preamble', 'pb-clara-curator', 'pb-maya-product', 'pb-adr']
-last_reviewed: "2026-07-28"
-last_evolved: "2026-07-28"
-version: "1.4.0"
-version_notes: "v1.4.0: 'what should be deleted rather than maintained' is a standing brief question and a Step 4 tension, whoever leads — it is Clara's lens, but she synthesizes rather than argues, so it never entered a technical huddle. v1.3.0: Bring a proposal to break, not a blank page — the panel is adversarially sharp and generatively weak, so Step 1 requires a concrete candidate. v1.2.0: Four-role model (process + curatorial orchestrators, topic-selected lead, panel); register the 9-persona roster with a Lead column; Clara holds the synthesis seat."
+last_reviewed: "2026-09-24"
+last_evolved: "2026-09-22"
+version: "1.5.0"
+version_notes: "v1.5.0: Step 2 separates claims from state -- a sketch, brief or summary describes the work and is not a record of it. Open what a claim rests on, and check what a status claim belongs to, before briefing the panel. v1.4.0: 'what should be deleted rather than maintained' is a standing brief question and a Step 4 tension, whoever leads — it is Clara's lens, but she synthesizes rather than argues, so it never entered a technical huddle. v1.3.0: Bring a proposal to break, not a blank page — the panel is adversarially sharp and generatively weak, so Step 1 requires a concrete candidate. v1.2.0: Four-role model (process + curatorial orchestrators, topic-selected lead, panel); register the 9-persona roster with a Lead column; Clara holds the synthesis seat."
 breaking_changes: []
 ---
 # Multi-Perspective Decision Session
