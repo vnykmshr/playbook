@@ -54,7 +54,7 @@ done < <(find "$COMMANDS_DIR" -name "*.md" -type f | sort)
 echo ""
 echo "Uninstall Summary:"
 echo "  Removed: $removed"
-echo "  Skipped: $skipped (same-named, not ours -- still installed)"
+echo "  Skipped: $skipped (same-named, not ours; still installed)"
 echo "  Not found: $not_found"
 echo ""
 echo "Uninstall complete!"

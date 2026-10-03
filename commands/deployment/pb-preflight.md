@@ -65,7 +65,7 @@ Nine you own, twelve delegated, nine out of surface. Referenced by number agains
 - **Delegated (name the provider and the date you last verified):** 1.2 · 3.2 · 3.3 · 3.4 · 4.1 · 4.2 · 4.4 · 5.1-5.5
 - **Out of surface (no database, no sessions, no uploads):** 1.3 · 1.4 · 1.5 · 2.1 · 2.2 · 2.4 · 2.5 · 6.3 · 6.4
 
-**Delegated is not a pass and it is not a skip.** A managed host terminating TLS is a different fact from TLS not applying: one has an owner you can name and a date you can check, the other stops the thinking. The day a provider changes a default is the day that distinction is the only thing standing between you and an outage nobody owns. A delegated bullet with **no named provider** is a FAIL. A host, zone or proxy change you made resets every delegated date it touches -- re-verify them, 1.2 first.
+**Delegated is not a pass and it is not a skip.** A managed host terminating TLS is a different fact from TLS not applying: one has an owner you can name and a date you can check, the other stops the thinking. The day a provider changes a default is the day that distinction is the only thing standing between you and an outage nobody owns. A delegated bullet with **no named provider** is a FAIL. A host, zone or proxy change you made resets every delegated date it touches; re-verify them, 1.2 first.
 
 ---
 

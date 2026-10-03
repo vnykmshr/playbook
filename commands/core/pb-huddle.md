@@ -92,7 +92,7 @@ State the question clearly. Not "what should we do?" but the specific tension:
 - "How do we communicate this breaking API change to existing clients?"
 - "Do we optimize for developer experience or runtime performance in the SDK?"
 
-The question must have genuine tension -- if there's an obvious answer, skip the huddle. A check already in the repo that fails the proposal -- a test, a CI assertion, a lint rule -- is an obvious answer.
+The question must have genuine tension -- if there's an obvious answer, skip the huddle. A check already in the repo that fails the proposal (a test, a CI assertion, a lint rule) is an obvious answer.
 
 **Bring a proposal to break, not a blank page.** A panel is sharpest when it is adversarial against something concrete -- a specific resolution, a written rule, a chosen default -- and weakest when asked to generate options from nothing. If you have no candidate answer yet, write the worst defensible one and hand the panel that; being wrong in a specific direction gives every lens something to push on.
 
@@ -104,7 +104,7 @@ A sketch or brief is a claim about the work, not a record of it. Treat files tha
 
 If the user overrode a standing rule this session, the brief states the rule and the override. The panel can read the rule; it cannot read the session.
 
-The brief you write is a claim too. Each fact in it names how it was checked -- the command run or the file opened. A fact with no check is labelled unverified.
+The brief you write is a claim too. Each fact in it names how it was checked: the command run or the file opened. A fact with no check is labelled unverified.
 
 **Measure before you brief.** If the question turns on a number one command can produce (how often a rule fires, how many cases pass), run it and put the result in the brief. A panel handed an opinion a measurement would settle spends its round arguing the opinion.
 
@@ -141,7 +141,7 @@ Name the lead by the decision's center of gravity and record it ("Lead: Travis -
 
 Each persona gets the SAME brief; disagreement is expected and valuable. Run the panel in parallel so the first response doesn't anchor the others. The lead rebuts and closes in its lane; the orchestrators synthesize.
 
-**Fact-check before the lead.** When the panel returns, the process orchestrator checks the load-bearing claims that name no check -- in the brief or in a panelist's argument -- before the lead sees them. A wrong fact inside one lens reads as a position, and the other lenses argue with it instead of checking it. Evidence that lands after the panel ran goes to the lead and synthesis labelled *the panel did not see this*.
+**Fact-check before the lead.** When the panel returns, the process orchestrator checks the load-bearing claims that name no check, in the brief or in a panelist's argument, before the lead sees them. A wrong fact inside one lens reads as a position, and the other lenses argue with it instead of checking it. Evidence that lands after the panel ran goes to the lead and synthesis labelled *the panel did not see this*.
 
 **One question is standing, whoever leads: what should be deleted rather than maintained?** Put it in every brief. It is Clara's lens, but Clara synthesizes rather than argues, so on a technical or infrastructure huddle it never enters the room -- and a panel asked only what to build will answer only what to build. The candidate proposed in Step 1 is not the only thing on the table; the code already carrying the problem is too.
 

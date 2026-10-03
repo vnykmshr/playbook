@@ -33,7 +33,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - **`/pb-forge` v1.4.0: sub-stage 2 is no longer described as unexercised.** The first forge run to reach the `/code-review` offer, in another project, took it, got real findings, and reported the offer-not-run default as right. n=1; the record lives in `version_notes`, not the command body.
 
-- **`/pb-huddle` v1.6.0: re-huddle continues the same persona agents.** Re-huddle said to reuse the personas but not how. Messaging the agents that ran the first round keeps their brief and prior argument in context; in one project that held for four rounds at four agents total, where fresh huddles had been running about three agents each, ten times in a session.
+- **`/pb-huddle` v1.6.0: re-huddle continues the same persona agents.** Re-huddle said to reuse the personas but not how. Messaging the agents that ran the first round keeps their brief and prior argument in context; in one project four agents carried four rounds, against an estimated ten fresh huddles of three agents each in an earlier session.
 
 - **`/pb-huddle` v1.6.0: state a deviation from an agreed list before acting on it.** A huddle correctly reordered housekeeping the user had agreed item by item, and the reorder was reported after the work had followed it. In this repo, a huddle decision was silently not landed and a CHANGELOG line defended the substitute. The ruling can be right; the order of telling was not.
 
@@ -43,7 +43,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - **`/pb-huddle` v1.6.0: facts in the brief name their check, and unchecked ones are fact-checked before the lead.** In the run that prompted it, a panel claim about when a commit landed was wrong and only a timestamp check caught it; in another, the brief's own fact list carried an unchecked claim a panelist built a verdict on. Late evidence reaches the lead labelled as unseen by the panel, and the output records the lead after the fact-check. The lead rebuts and closes rather than framing the question, matching the role row; `/pb-clara-curator` v1.0.1 carries the same fix.
 
-- **`uninstall.sh` removed any symlink named like a playbook command**, including one pointing at someone else's file. It now removes only links whose target resolves into this repo's `commands/`, through a symlinked repo path or into a renamed category. `install.sh`'s orphan prune uses the same test, from one shared `scripts/lib/link-owner.sh`. Links it leaves in place are counted as skipped, not as not found.
+- **`uninstall.sh` removed any symlink named like a playbook command**, including one pointing at someone else's file. It now removes only links whose target resolves into this repo's `commands/`, through a symlinked repo path or into a renamed category. `install.sh`'s orphan prune uses the same test, from one shared `scripts/lib/link-owner.sh`. Links it leaves in place now show as skipped instead of not found.
 
 - **One version bump per command per release.** The first commit to touch a command after a tag sets the version it ships at; later commits amend that version's `version_notes`. A new test fails a second bump in the window, and the changelog guard now also fires on a `version_notes` change. Stated in `docs/command-versioning.md`.
 
