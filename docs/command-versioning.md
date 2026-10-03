@@ -174,6 +174,8 @@ Commands are versioned:
 
 Commands are NOT versioned on every single edit. Only meaningful changes (additions, removals, significant rewrites) warrant version bumps.
 
+**One bump per release.** A command's version moves at most once between two playbook tags. The first commit to touch a command after a tag sets the version it ships at; later commits before the next tag amend that version's `version_notes` and carry their own CHANGELOG line instead of minting another number. Plan the level at the first bump: a later change that needs a higher level waits for the next tag. `test_one_version_bump_per_command_per_window` enforces the count, and the changelog guard fires on a `version_notes` change as well as a bump.
+
 ---
 
 ## Playbook Version vs Command Versions

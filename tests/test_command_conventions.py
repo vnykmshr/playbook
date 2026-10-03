@@ -207,20 +207,23 @@ class TestChangelogLandsWithChange:
     Splitting them produces a commit documenting work its own tree does not
     contain, or shipping work its changelog does not mention. Both survive every
     other checker and make bisect lie. See /pb-review-incoming Step 0.
+
+    A release window allows one bump per command (docs/command-versioning.md),
+    so later commits amend version_notes instead -- those count as a change too.
     """
 
-    def test_version_bumps_carry_their_changelog_line(self):
+    def _window(self) -> list[str]:
         last_tag = git("describe", "--tags", "--abbrev=0").strip()
-        offenders = []
-        for line in git("log", "--format=%H", f"{last_tag}..HEAD").strip().splitlines():
-            sha = line.strip()
-            if not sha:
-                continue
+        return [s for s in git("log", "--format=%H", f"{last_tag}..HEAD").split() if s]
+
+    def test_version_bumps_carry_their_changelog_line(self):
+        offenders: list[str] = []
+        for sha in self._window():
             touched = git("show", "--stat", "--format=", "--name-only", sha).split()
             bumped = [
                 f for f in touched
                 if f.startswith("commands/") and f.endswith(".md")
-                and re.search(r"^\+version:", git("show", sha, "--", f), re.MULTILINE)
+                and re.search(r"^\+version(_notes)?:", git("show", sha, "--", f), re.MULTILINE)
             ]
             if bumped and "CHANGELOG.md" not in touched:
                 offenders.append(f"{sha[:7]}: bumped {', '.join(bumped)} without a CHANGELOG line")
@@ -228,6 +231,20 @@ class TestChangelogLandsWithChange:
             "Version bumps missing their changelog entry:\n  "
             + "\n  ".join(offenders)
             + "\nThe changelog line belongs in the same commit as the change."
+        )
+
+    def test_one_version_bump_per_command_per_window(self):
+        bumps: dict[str, list[str]] = {}
+        for sha in self._window():
+            for f in git("show", "--stat", "--format=", "--name-only", sha).split():
+                if (f.startswith("commands/") and f.endswith(".md")
+                        and re.search(r"^\+version:", git("show", sha, "--", f), re.MULTILINE)):
+                    bumps.setdefault(f, []).append(sha[:7])
+        repeated = {f: shas for f, shas in bumps.items() if len(shas) > 1}
+        assert not repeated, (
+            "Commands bumped more than once since the last tag:\n  "
+            + "\n  ".join(f"{f}: {', '.join(s)}" for f, s in sorted(repeated.items()))
+            + "\nAmend the unreleased version's version_notes instead of minting another."
         )
 
 

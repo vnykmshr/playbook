@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- **One version bump per command per release.** The first commit to touch a command after a tag sets the version it ships at; later commits amend that version's `version_notes`. A new test fails a second bump in the window, and the changelog guard now also fires on a `version_notes` change. Stated in `docs/command-versioning.md`.
+
 ## [v2.28.0] - 2026-09-24
 
 The Q3 2026 evolve: the auto-loaded CLAUDE.md files stop re-teaching the model and record only what it cannot derive, and whether the playbook helps or constrains the model becomes a standing question every cycle. Also a `/pb-preflight` rewrite and a tooling cleanup.
