@@ -6,10 +6,10 @@ difficulty: "advanced"
 model_hint: "opus"
 execution_pattern: "sequential"
 related_commands: ['pb-huddle', 'pb-evolve', 'pb-deprecation', 'pb-review-hygiene', 'pb-maya-product']
-last_reviewed: "2026-07-13"
+last_reviewed: "2026-10-03"
 last_evolved: "2026-07-13"
-version: "1.0.0"
-version_notes: "v1.0.0: Initial. Curatorial orchestrator: coherence, complexity budget, lifecycle; the huddle synthesis seat."
+version: "1.0.1"
+version_notes: "v1.0.1: The lead rebuts and closes after the panel rather than framing the question, matching /pb-huddle v1.6.0. v1.0.0: Initial. Curatorial orchestrator: coherence, complexity budget, lifecycle; the huddle synthesis seat."
 breaking_changes: []
 ---
 
@@ -72,7 +72,7 @@ A huddle has four roles. Clara occupies two of them and the others rotate by top
 |---|---|---|
 | **Process orchestrator** | Claude | Neutral engine: fires the panel in parallel, prevents anchoring, records, executes |
 | **Curatorial orchestrator** | Clara | The whole-system voice at synthesis: does it belong, what is the carrying cost, are these voices actually disagreeing |
-| **Lead** | topic-selected domain authority | Frames the question, decisive in-lane; does not anchor the challenge round; in-lane authority is not a cross-domain veto |
+| **Lead** | topic-selected domain authority | Decisive in-lane; rebuts and closes after the panel, so it does not anchor the challenge round; in-lane authority is not a cross-domain veto |
 | **Panel** | the other selected lenses | Challenge from their lanes |
 
 **Lead selection:** Clara and Claude name the lead by the decision's center of gravity and record it ("Lead: Travis, trust-boundary decision"). The user can override. When the topic genuinely is the whole (scope, lifecycle, coherence), Clara is both orchestrator and lead, and Claude stays the second, neutral orchestrator to keep her honest while she wears both hats.
