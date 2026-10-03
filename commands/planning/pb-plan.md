@@ -6,10 +6,10 @@ difficulty: "advanced"
 model_hint: "opus"
 execution_pattern: "interactive"
 related_commands: ['pb-sketch', 'pb-spec', 'pb-adr', 'pb-start', 'pb-todo-implement']
-last_reviewed: "2026-07-13"
+last_reviewed: "2026-10-03"
 last_evolved: "2026-07-13"
-version: "2.1.0"
-version_notes: "v2.21.0: Rewrite as orchestrator. Delegates to /pb-sketch (decision forks) + /pb-spec (detailed plan). Typing /pb-plan still produces an end-to-end plan, but the flow now includes a mid-step interactive decision prompt -- users confirm or override recommended picks before the spec is written. New behavior, not invisible preservation. v2.1.0: sketch/spec output paths moved under todos/ (working-material root); file side-effect note updated."
+version: "2.2.0"
+version_notes: "v2.2.0: Step 3: a requested huddle runs on the forks before the decision prompt and its picks become the recommendations; the user still resolves them, and unanswered forks stay decisions pending, stopping before /pb-spec. v2.21.0: Rewrite as orchestrator. Delegates to /pb-sketch (decision forks) + /pb-spec (detailed plan). Typing /pb-plan still produces an end-to-end plan, but the flow now includes a mid-step interactive decision prompt -- users confirm or override recommended picks before the spec is written. New behavior, not invisible preservation. v2.1.0: sketch/spec output paths moved under todos/ (working-material root); file side-effect note updated."
 breaking_changes:
   - "Content moved out of this file. /pb-plan no longer contains Phase 1-4 framework; it orchestrates /pb-sketch and /pb-spec. Direct readers looking for the discovery/analysis framework: see /pb-sketch. Direct readers looking for scope-lock/release-doc templates: see /pb-spec."
 ---
@@ -68,6 +68,8 @@ Print the Decision Forks block. Ask:
 > Confirm recommended picks `{label-list}`, or override with specific labels. Type the labels (e.g., `1-a, 2-b`) or `default` to accept recommendations.
 
 Wait for user response. Update the sketch's `Recommended Picks` line with the resolved labels. Mark sketch status: `decisions resolved`.
+
+**Huddle-reviewed plans.** When the request asks for a huddle, run it on the forks before this prompt and present its picks as the recommendations; the user still resolves them. Forks left unanswered keep the sketch at `decisions pending` with the picks written in, and the plan stops before `/pb-spec`.
 
 ### Step 4: Run `/pb-spec`
 
