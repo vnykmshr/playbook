@@ -9,6 +9,8 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 REPO_DIR="$(dirname "$SCRIPT_DIR")"
 COMMANDS_DIR="$REPO_DIR/commands"
 TARGET_DIR="$HOME/.claude/commands"
+# shellcheck source-path=SCRIPTDIR source=lib/link-owner.sh
+source "$SCRIPT_DIR/lib/link-owner.sh"
 
 echo "Engineering Playbook Installer"
 echo "=============================="
@@ -41,19 +43,17 @@ pruned=0
 
 # Remove links we own whose source is gone. Installing only ever walks the repo,
 # so a renamed or retired command orphans its link forever without this.
-# Ours = resolves into $COMMANDS_DIR. A dangling link pointing anywhere else
-# belongs to someone else and stays; a real file is never touched.
+# Ours = link_owned_by (lib/link-owner.sh). A dangling link pointing anywhere
+# else belongs to someone else and stays; a real file is never touched.
 prune_orphans() {
-    local dir="$1" owner="$2" label="$3" link
+    local dir="$1" owner="$2" label="$3" depth="$4" owner_phys link
     [ -d "$dir" ] || return 0
+    owner_phys=$(cd "$owner" && pwd -P)
     while IFS= read -r link; do
         if [ -e "$link" ]; then
             continue
         fi
-        case "$(readlink "$link")" in
-            "$owner"/*) ;;
-            *) continue ;;
-        esac
+        link_owned_by "$link" "$owner_phys" "$depth" || continue
         rm -rf "$link"
         echo "  ✗ Pruned: $(basename "$link") ($label removed upstream)"
         pruned=$((pruned + 1))
@@ -88,7 +88,7 @@ while IFS= read -r file; do
     fi
 done < <(find "$COMMANDS_DIR" -name "*.md" -type f | sort)
 
-prune_orphans "$TARGET_DIR" "$COMMANDS_DIR" "command"
+prune_orphans "$TARGET_DIR" "$COMMANDS_DIR" "command" 2
 
 echo ""
 echo "Installation Summary:"
@@ -122,7 +122,7 @@ if [ -d "$SKILLS_DIR" ]; then
         echo "  ✓ Installed: ~/.claude/skills/$skill_name"
     done < <(find "$SKILLS_DIR" -name "SKILL.md" -type f | sort)
 
-    prune_orphans "$SKILLS_TARGET" "$SKILLS_DIR" "skill"
+    prune_orphans "$SKILLS_TARGET" "$SKILLS_DIR" "skill" 1
 
     # Create project-local symlink if running inside the playbook repo
     local_link="$REPO_DIR/.claude/skills"

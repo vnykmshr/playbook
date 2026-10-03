@@ -75,3 +75,56 @@ def test_uninstall_survives_a_dangling_same_named_link(tmp_path: Path):
 
     assert result.returncode == 0, result.stderr
     assert dangling.is_symlink(), "a dangling link pointing elsewhere is not ours"
+
+
+def test_uninstall_removes_a_link_into_a_moved_category(tmp_path: Path):
+    target = tmp_path / ".claude" / "commands"
+    target.mkdir(parents=True)
+    link = target / "pb-commit.md"
+    link.symlink_to(REPO / "commands" / "oldcat" / "pb-commit.md")
+
+    result = run_uninstall(tmp_path)
+
+    assert result.returncode == 0, result.stderr
+    assert not link.is_symlink(), "a dangling link into this repo's commands/ is still ours"
+
+
+def test_uninstall_removes_an_alias_link_into_a_moved_category(tmp_path: Path):
+    alias = tmp_path / "alias"
+    alias.symlink_to(REPO)
+    target = tmp_path / ".claude" / "commands"
+    target.mkdir(parents=True)
+    link = target / "pb-commit.md"
+    link.symlink_to(alias / "commands" / "oldcat" / "pb-commit.md")
+
+    result = run_uninstall(tmp_path)
+
+    assert result.returncode == 0, result.stderr
+    assert not link.is_symlink(), "via an alias, a dangling link into commands/ is still ours"
+
+
+def owned(link: Path, owner: Path, depth: int) -> bool:
+    lib = REPO / "scripts" / "lib" / "link-owner.sh"
+    script = 'source "$1"; link_owned_by "$2" "$(cd "$3" && pwd -P)" "$4"'
+    return subprocess.run(
+        ["bash", "-c", script, "_", str(lib), str(link), str(owner), str(depth)],
+        capture_output=True,
+    ).returncode == 0
+
+
+def test_link_owner_predicate(tmp_path: Path):
+    skills = REPO / "skills"
+    cases = {
+        "skill": (skills / "pb-threat-hunt", skills, 1, True),
+        "retired skill": (skills / "pb-gone", skills, 1, True),
+        "command": (REPO / "commands" / "development" / "pb-commit.md", REPO / "commands", 2, True),
+        "foreign skill": (tmp_path / "pb-threat-hunt", skills, 1, False),
+        "dangling elsewhere": (tmp_path / "gone" / "pb-commit.md", REPO / "commands", 2, False),
+    }
+    wrong = []
+    for name, (dest, owner, depth, want) in cases.items():
+        link = tmp_path / f"link-{name.replace(' ', '-')}"
+        link.symlink_to(dest)
+        if owned(link, owner, depth) is not want:
+            wrong.append(name)
+    assert not wrong, f"link_owned_by misjudged: {wrong}"

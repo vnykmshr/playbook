@@ -9,6 +9,8 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 REPO_DIR="$(dirname "$SCRIPT_DIR")"
 COMMANDS_DIR="$REPO_DIR/commands"
 TARGET_DIR="$HOME/.claude/commands"
+# shellcheck source-path=SCRIPTDIR source=lib/link-owner.sh
+source "$SCRIPT_DIR/lib/link-owner.sh"
 
 echo "Engineering Playbook Uninstaller"
 echo "================================"
@@ -20,7 +22,6 @@ if [ ! -d "$COMMANDS_DIR" ]; then
     exit 1
 fi
 
-# Physical path, so links made through a symlinked repo path still match.
 COMMANDS_PHYS="$(cd "$COMMANDS_DIR" && pwd -P)"
 
 # Track uninstall stats
@@ -34,17 +35,11 @@ while IFS= read -r file; do
     target="$TARGET_DIR/$filename"
 
     if [ -L "$target" ]; then
-        # Ours = the link's directory resolves into the repo. realpath is avoided: older
-        # macOS lacks it, and a failing substitution aborts the loop under set -e.
-        link_dir=$(cd "$TARGET_DIR" && cd "$(dirname "$(readlink "$target")")" 2>/dev/null && pwd -P) || link_dir=""
-        case "$link_dir/" in
-            "$COMMANDS_PHYS"/*) ;;
-            *)
-                echo "  ⚠ Skipped: $filename (symlink not owned by this repo)"
-                skipped=$((skipped + 1))
-                continue
-                ;;
-        esac
+        if ! link_owned_by "$target" "$COMMANDS_PHYS" 2; then
+            echo "  ⚠ Skipped: $filename (symlink not owned by this repo)"
+            skipped=$((skipped + 1))
+            continue
+        fi
         rm -f "$target"
         echo "  ✓ Removed: $filename"
         removed=$((removed + 1))
