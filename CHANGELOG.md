@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- **`/pb-huddle` v1.6.0: answer what can be looked up before convening.** Step 1 searches the current plan, not only prior decisions: in the run that prompted it, the plan already said what to do and the huddle nearly re-decided it. A check in the repo that already fails the proposal skips the huddle; in another project a build assertion settled a question more firmly than the panel did, and was found mid-huddle. Step 2 runs any one-command measurement before briefing.
+
 - **`/pb-huddle` v1.6.0: facts in the brief name their check, and unchecked ones are fact-checked before the lead.** In the run that prompted it, a panel claim about when a commit landed was wrong and only a timestamp check caught it; in another, the brief's own fact list carried an unchecked claim a panelist built a verdict on. Late evidence reaches the lead labelled as unseen by the panel. The lead rebuts and closes rather than framing the question, matching the role row; `/pb-clara-curator` v1.0.1 carries the same fix.
 
 - **`uninstall.sh` removed any symlink named like a playbook command**, including one pointing at someone else's file. It now removes only links into this repo, the same ownership test `install.sh` prunes by.

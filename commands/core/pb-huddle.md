@@ -9,7 +9,7 @@ related_commands: ['pb-think', 'pb-preamble', 'pb-clara-curator', 'pb-maya-produ
 last_reviewed: "2026-10-03"
 last_evolved: "2026-09-22"
 version: "1.6.0"
-version_notes: "v1.6.0: Every fact in the brief names how it was checked; the process orchestrator fact-checks load-bearing claims that name none before the lead rebuts, and late evidence is labelled as unseen by the panel. Output gains a Fact-check section. The lead no longer frames the question -- it rebuts and closes after the panel, which is what the role row already said. v1.5.0: Step 2 separates claims from state -- a sketch, brief or summary describes the work and is not a record of it. Open what a claim rests on, and check what a status claim belongs to, before briefing the panel. v1.4.0: 'what should be deleted rather than maintained' is a standing brief question and a Step 4 tension, whoever leads — it is Clara's lens, but she synthesizes rather than argues, so it never entered a technical huddle. v1.3.0: Bring a proposal to break, not a blank page — the panel is adversarially sharp and generatively weak, so Step 1 requires a concrete candidate. v1.2.0: Four-role model (process + curatorial orchestrators, topic-selected lead, panel); register the 9-persona roster with a Lead column; Clara holds the synthesis seat."
+version_notes: "v1.6.0: Every fact in the brief names how it was checked; the process orchestrator fact-checks load-bearing claims that name none before the lead rebuts, and late evidence is labelled as unseen by the panel. Output gains a Fact-check section. The lead no longer frames the question -- it rebuts and closes after the panel, which is what the role row already said. Step 1 searches the current plan as well as prior decisions, and a check in the repo that already fails the proposal skips the huddle; Step 2 runs any one-command measurement the question turns on before briefing. v1.5.0: Step 2 separates claims from state -- a sketch, brief or summary describes the work and is not a record of it. Open what a claim rests on, and check what a status claim belongs to, before briefing the panel. v1.4.0: 'what should be deleted rather than maintained' is a standing brief question and a Step 4 tension, whoever leads — it is Clara's lens, but she synthesizes rather than argues, so it never entered a technical huddle. v1.3.0: Bring a proposal to break, not a blank page — the panel is adversarially sharp and generatively weak, so Step 1 requires a concrete candidate. v1.2.0: Four-role model (process + curatorial orchestrators, topic-selected lead, panel); register the 9-persona roster with a Lead column; Clara holds the synthesis seat."
 breaking_changes: []
 ---
 # Multi-Perspective Decision Session
@@ -85,14 +85,14 @@ When a huddle's synthesis identifies a refined follow-up question, run a re-hudd
 
 ### Step 1: Frame the Question
 
-Before framing, search previous decisions for this topic. Don't re-derive what was already decided -- build on it.
+Before framing, search previous decisions and the current plan for this topic; a plan often already says what to do once its condition is met. Don't re-derive what was already decided -- build on it.
 
 State the question clearly. Not "what should we do?" but the specific tension:
 - "Should we refactor the auth module before adding OAuth support?"
 - "How do we communicate this breaking API change to existing clients?"
 - "Do we optimize for developer experience or runtime performance in the SDK?"
 
-The question must have genuine tension -- if there's an obvious answer, skip the huddle.
+The question must have genuine tension -- if there's an obvious answer, skip the huddle. A check already in the repo that fails the proposal -- a test, a CI assertion, a lint rule -- is an obvious answer.
 
 **Bring a proposal to break, not a blank page.** A panel is sharpest when it is adversarial against something concrete -- a specific resolution, a written rule, a chosen default -- and weakest when asked to generate options from nothing. If you have no candidate answer yet, write the worst defensible one and hand the panel that; being wrong in a specific direction gives every lens something to push on.
 
@@ -103,6 +103,8 @@ Read relevant state files. The huddle is only as good as the context loaded. Per
 A sketch or brief is a claim about the work, not a record of it. Treat files that *describe* the work (sketches, briefs, summaries) as claims -- open the artifacts a claim rests on, and check what a status claim ('sketch complete since X') belongs to, before briefing the panel.
 
 The brief you write is a claim too. Each fact in it names how it was checked -- the command run or the file opened. A fact with no check is labelled unverified.
+
+**Measure before you brief.** If the question turns on a number one command can produce (how often a rule fires, how many cases pass), run it and put the result in the brief. A panel handed an opinion a measurement would settle spends its round arguing the opinion.
 
 If no relevant context exists for this question, spend five minutes writing it first. A context-free huddle is worse than no huddle.
 
