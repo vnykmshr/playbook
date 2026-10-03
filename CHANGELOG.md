@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- **`/pb-repo-readme` v1.1.0: the README carries the caveats that change an adoption decision.** A sign-off in another project held on the README alone: the design docs said what the project did not yet do, and the README, the one page outsiders read, did not.
+
 - **`/pb-handoff` v1.1.1: do not edit a handoff the receiver has started on.** The rule assumed the receiver might already have acted. A handoff nobody had opened was extended the same day, because a second file would have split six findings from the six that qualify them.
 
 - **`/pb-spec` v1.2.1: verify a no-effect claim by diffing the output.** A refactor in another project was ruled a no-op and gated on byte-identical build output; one page changed, because it had been reaching the "unreachable" fallback all along. The reasoning was sound and wrong; the diff was right.

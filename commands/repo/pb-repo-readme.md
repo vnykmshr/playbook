@@ -6,10 +6,10 @@ difficulty: "advanced"
 model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-repo-about', 'pb-repo-blog', 'pb-repo-enhance', 'pb-documentation']
-last_reviewed: "2026-02-09"
+last_reviewed: "2026-10-03"
 last_evolved: ""
-version: "1.0.0"
-version_notes: "v2.10.0 baseline"
+version: "1.1.0"
+version_notes: "v1.1.0: Guidelines: the README states every limitation in the design docs that would change a reader's decision to adopt. v2.10.0 baseline"
 breaking_changes: []
 ---
 # Generate Project README
@@ -160,6 +160,7 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
 - Link to detailed API docs if available
 - Use syntax-highlighted code blocks
 - Keep under ~200 lines for libraries
+- State every limitation in the design docs that would change a reader's decision to adopt; a caveat kept only in the design docs never reaches that reader
 
 **Don't:**
 - Explain obvious things
