@@ -6,10 +6,10 @@ difficulty: "beginner"
 model_hint: "sonnet"
 execution_pattern: "automatic"
 related_commands: ['pb-review', 'pb-start', 'pb-pr']
-last_reviewed: "2026-04-26"
+last_reviewed: "2026-10-03"
 last_evolved: "2026-04-26"
-version: "2.3.0"
-version_notes: "v2.3.0: Reference global GitHub Artifact Register rule via single-line pointer; drop local restatement and implicit 4-bullet template."
+version: "2.3.1"
+version_notes: "v2.3.1: The Usual Flow: gate the commit on the proving command's exit code; a pipe to grep or tail gates on the last command instead. v2.3.0: Reference global GitHub Artifact Register rule via single-line pointer; drop local restatement and implicit 4-bullet template."
 breaking_changes: []
 ---
 # Commit (Usually Automatic)
@@ -43,6 +43,8 @@ You: Keep working or run /pb-start on next feature
 **Your involvement:** 0%
 
 **What happened:** Commit message auto-drafted per the global register rule (see `~/.claude/CLAUDE.md` § GitHub Artifact Register). Subject line only by default; body added only when the WHY is non-obvious.
+
+**Gate the commit on the command that proves it.** `npm test | tail -5 && git commit ...` gates on `tail`, which succeeds whatever the tests did. Run the check on its own, or under `set -o pipefail`, and commit on its exit code.
 
 ---
 

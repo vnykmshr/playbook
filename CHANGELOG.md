@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- **`/pb-commit` v2.3.1: gate the commit on the command that proves it.** A `verify | grep ... && git commit` chain committed a failing test in another project, because it gated on grep's exit code, not verify's. The rule sits in the automatic flow, where the chain gets written.
+
 - **`/pb-plan` v2.2.0: unanswered forks stay pending.** A request for a huddle-reviewed plan met the fork prompt with no rule for which comes first, and the session ended with the forks unresolved. The huddle now runs on the forks before the prompt and supplies the recommended picks; forks the user has not answered stay `decisions pending` and never reach `/pb-spec`.
 
 - **`/pb-todo-implement` v1.3.0: approved-plan mode.** A STOP per checkpoint re-asks an approval the owner already gave. One explicit "y" now covers the plan, checkpoint and commit stops; the stops a plan cannot pre-answer remain: deviations, failed validation, manual verification.
