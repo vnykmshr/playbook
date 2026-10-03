@@ -673,6 +673,15 @@ class TestRecapArchiveCoherence:
             "archive yet needs both to start it in the same place."
         )
 
+    def test_pause_and_resume_find_the_working_context_by_glob(self):
+        """/pb-context names two common filenames; a hardcoded one reports the other as missing."""
+        glob, fixed = "todos/*working-context*.md", "todos/1-working-context.md"
+        wrong = [
+            name for name in self.PAIR
+            if glob not in (text := (COMMANDS_DIR / "development" / name).read_text()) or fixed in text
+        ]
+        assert not wrong, f"These commands do not find the working context by {glob!r}: {wrong}"
+
     def test_forge_and_resume_share_shipped_stage(self):
         """Resume flags finished arcs by the stage name forge writes; a rename on one side orphans cursors."""
         missing = [
