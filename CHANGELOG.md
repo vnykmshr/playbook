@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- **`/pb-pause` v1.9.4: check tracker items against the code before trimming.** Four backlog items stayed open under a "steps 1-5 done" summary until a later session checked them one by one.
+
 - **`/pb-pause` v1.9.4 and `/pb-resume` v1.10.0: the working context is found by glob.** Both hardcoded `todos/1-working-context.md`, while `/pb-context` names `working-context.md` as the other common filename and `/pb-context-review` already globbed `todos/*working-context*`. A project using the other name got a missing-file health check from both commands, three session recaps running.
 
 - **`/pb-forge` v1.4.0 and `/pb-resume` v1.10.0: the arc cursor gets closed.** Forge had no terminal stage and no step owned deleting the cursor, and resume, which forge called the cursor's hook, never read it. In another project the delete was denied twice and the cursor sat stale for a week. Land now sets `SHIPPED` then deletes; resume lists `todos/forge/*.md` and offers the delete for any `SHIPPED` cursor. Forge's "cursor outlived the deliverable" Red Flag is gone.
