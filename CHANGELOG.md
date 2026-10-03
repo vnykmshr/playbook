@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- **`uninstall.sh` removed any symlink named like a playbook command**, including one pointing at someone else's file. It now removes only links into this repo, the same ownership test `install.sh` prunes by.
+
 - **One version bump per command per release.** The first commit to touch a command after a tag sets the version it ships at; later commits amend that version's `version_notes`. A new test fails a second bump in the window, and the changelog guard now also fires on a `version_notes` change. Stated in `docs/command-versioning.md`.
 
 ## [v2.28.0] - 2026-09-24

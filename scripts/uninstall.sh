@@ -30,6 +30,15 @@ while IFS= read -r file; do
     target="$TARGET_DIR/$filename"
 
     if [ -L "$target" ]; then
+        # Ours = resolves into $COMMANDS_DIR, the same test install.sh prunes by.
+        case "$(readlink "$target")" in
+            "$COMMANDS_DIR"/*) ;;
+            *)
+                echo "  ⚠ Skipped: $filename (symlink not owned by this repo)"
+                not_found=$((not_found + 1))
+                continue
+                ;;
+        esac
         rm -f "$target"
         echo "  ✓ Removed: $filename"
         removed=$((removed + 1))
