@@ -35,6 +35,7 @@ def test_uninstall_keeps_foreign_symlinks(tmp_path: Path):
     assert result.returncode == 0, result.stderr
     assert not ours.is_symlink(), "a link into this repo should be removed"
     assert foreign.is_symlink(), "a same-named link pointing elsewhere must survive"
+    assert "Skipped: 1" in result.stdout, "a link left installed must not be reported as not found"
 
 
 def test_uninstall_owns_links_made_through_a_symlinked_repo_path(tmp_path: Path):
