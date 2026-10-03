@@ -6,10 +6,10 @@ difficulty: "intermediate"
 model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-ship', 'pb-security', 'pb-hardening', 'pb-deployment', 'pb-release']
-last_reviewed: "2026-08-04"
+last_reviewed: "2026-10-03"
 last_evolved: "2026-08-04"
-version: "1.1.0"
-version_notes: "v1.1.0: Step 0 Surface Assessment, and a third state. The 30 bullets describe a service you operate, which the command never said -- run against a static site or a docs corpus, 22 of 30 do not land, and a gate showing 22 irrelevant items is not filtered, it is abandoned. Step 0 picks a profile (Service = all 30; Static/Managed = a 9/12/9 partition of owned, delegated and out-of-surface) with a declare-and-justify escape hatch so the profile list never has to be exhaustive. Two profiles, not five orthogonal axes and not a 30-row tag matrix: the failure mode of a wrong tag is a gate that silently renders fewer items. The Static profile is transcribed from the v2.27.0 ship rather than invented. Binary becomes PASS / FAIL / DELEGATED(provider, verified-date), because a managed host terminating TLS is not the same fact as TLS not applying -- one has an owner you can name and a date you can check, the other stops the thinking. N/A is deleted as a writable outcome. Initial v1.0.0: 30-item gate for solo devs and small teams, distinct from /pb-security (depth audit) and /pb-ship (workflow orchestrator)."
+version: "1.1.1"
+version_notes: "v1.1.1: Static/Managed 4.3 checks the served bytes against the build output, not only that the new content arrived; a host, zone or proxy change you made resets the delegated dates it touches. v1.1.0: Step 0 Surface Assessment, and a third state. The 30 bullets describe a service you operate, which the command never said -- run against a static site or a docs corpus, 22 of 30 do not land, and a gate showing 22 irrelevant items is not filtered, it is abandoned. Step 0 picks a profile (Service = all 30; Static/Managed = a 9/12/9 partition of owned, delegated and out-of-surface) with a declare-and-justify escape hatch so the profile list never has to be exhaustive. Two profiles, not five orthogonal axes and not a 30-row tag matrix: the failure mode of a wrong tag is a gate that silently renders fewer items. The Static profile is transcribed from the v2.27.0 ship rather than invented. Binary becomes PASS / FAIL / DELEGATED(provider, verified-date), because a managed host terminating TLS is not the same fact as TLS not applying -- one has an owner you can name and a date you can check, the other stops the thinking. N/A is deleted as a writable outcome. Initial v1.0.0: 30-item gate for solo devs and small teams, distinct from /pb-security (depth audit) and /pb-ship (workflow orchestrator)."
 breaking_changes: ['Bullets are numbered N.M and referenced by number', 'N/A is no longer a valid outcome -- a bullet is in your profile or it is not rendered']
 ---
 # Pre-Ship Readiness Gate
@@ -61,11 +61,11 @@ One question, asked once per project: **what are you shipping?**
 
 Nine you own, twelve delegated, nine out of surface. Referenced by number against The Gate below, which is always printed in full.
 
-- **You own (execute these):** 1.1 secrets in history · 2.3 a clean checkout rebuilds and redeploys the live site (this is the restore test) · 3.1 build and CI config match the expected schema · 3.5 rollback rehearsed · 4.3 the real public URL serves the new content · 4.5 dependency audit · 6.1 smoke test on a real page and a real link · 6.2 watched after the flip · 6.5 read like an attacker -- for a published corpus, what did you publish that you did not mean to
+- **You own (execute these):** 1.1 secrets in history · 2.3 a clean checkout rebuilds and redeploys the live site (this is the restore test) · 3.1 build and CI config match the expected schema · 3.5 rollback rehearsed · 4.3 the real public URL serves the new content and nothing else: served bytes diff clean against the build output (a CDN, proxy or zone can inject and rewrite) · 4.5 dependency audit · 6.1 smoke test on a real page and a real link · 6.2 watched after the flip · 6.5 read like an attacker -- for a published corpus, what did you publish that you did not mean to
 - **Delegated (name the provider and the date you last verified):** 1.2 · 3.2 · 3.3 · 3.4 · 4.1 · 4.2 · 4.4 · 5.1-5.5
 - **Out of surface (no database, no sessions, no uploads):** 1.3 · 1.4 · 1.5 · 2.1 · 2.2 · 2.4 · 2.5 · 6.3 · 6.4
 
-**Delegated is not a pass and it is not a skip.** A managed host terminating TLS is a different fact from TLS not applying: one has an owner you can name and a date you can check, the other stops the thinking. The day a provider changes a default is the day that distinction is the only thing standing between you and an outage nobody owns. A delegated bullet with **no named provider** is a FAIL.
+**Delegated is not a pass and it is not a skip.** A managed host terminating TLS is a different fact from TLS not applying: one has an owner you can name and a date you can check, the other stops the thinking. The day a provider changes a default is the day that distinction is the only thing standing between you and an outage nobody owns. A delegated bullet with **no named provider** is a FAIL. A host, zone or proxy change you made resets every delegated date it touches -- re-verify them, 1.2 first.
 
 ---
 
