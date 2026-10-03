@@ -6,10 +6,10 @@ difficulty: "advanced"
 model_hint: "opus"
 execution_pattern: "interactive"
 related_commands: ['pb-plan', 'pb-sketch', 'pb-adr', 'pb-todo-implement', 'pb-start']
-last_reviewed: "2026-07-13"
+last_reviewed: "2026-10-03"
 last_evolved: "2026-07-13"
-version: "1.2.0"
-version_notes: "v1.1.0: Add Implementation Notes File section (running deviation log written during implementation). Rename Path A template's static 'Notes' section to 'Design Notes' to disambiguate. v1.2.0: Path A output moves to todos/plan/ (working-material root) instead of git-visible plan/ at repo root; sketch input path aligned to todos/sketch/."
+version: "1.2.1"
+version_notes: "v1.2.1: Verification signals: a no-effect claim is verified by diffing produced output, not by re-reading the code. v1.1.0: Add Implementation Notes File section (running deviation log written during implementation). Rename Path A template's static 'Notes' section to 'Design Notes' to disambiguate. v1.2.0: Path A output moves to todos/plan/ (working-material root) instead of git-visible plan/ at repo root; sketch input path aligned to todos/sketch/."
 breaking_changes:
   - "Path A template renamed '## Notes' to '## Design Notes'. Existing plan/{name}.md files keep working; only new specs use the new heading."
   - "Path A output path changed from plan/{name}.md to todos/plan/{name}.md. Existing plan/{name}.md files keep working; new specs write under todos/."
@@ -303,6 +303,7 @@ Each phase (or step in Path A) needs a verification signal. Weak → Strong:
 | "It works" | "`curl /api/v1/users/1` returns 200 with expected fields" |
 | "No regressions" | "Full suite runs green; manually verified flows: login, signup, password reset" |
 | "Code reviewed" | "Self-reviewed; run `/pb-review`; no open issues" |
+| "No behaviour change" | "Produced output (build, rendered pages, CLI output) diffs empty before and after" |
 
 **Rule:** If verification is a sentence, it's not verification. Name the test, the command, or the signal.
 
