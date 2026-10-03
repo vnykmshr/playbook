@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- **`/pb-huddle` v1.6.0: state a deviation from an agreed list before acting on it.** A huddle correctly reordered housekeeping the user had agreed item by item, and the reorder was reported after the work had followed it. Here, a huddle decision was silently not landed and a CHANGELOG line defended the substitute. The ruling can be right; the order of telling was not.
+
 - **`/pb-huddle` v1.6.0: in-session overrides go in the brief.** A project's standing rule said audio stays off unless the author says otherwise; the author did, in session, and two reviewers spawned without that fact flagged it as a ship blocker. Three huddles in the same session had the same gap.
 
 - **`/pb-huddle` v1.6.0: answer what can be looked up before convening.** Step 1 searches the current plan, not only prior decisions: in the run that prompted it, the plan already said what to do and the huddle nearly re-decided it. A check in the repo that already fails the proposal skips the huddle; in another project a build assertion settled a question more firmly than the panel did, and was found mid-huddle. Step 2 runs any one-command measurement before briefing.
