@@ -25,7 +25,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - **`/pb-pause` v1.9.4 and `/pb-resume` v1.10.0: the working context is found by glob.** Both hardcoded `todos/1-working-context.md`, while `/pb-context` names `working-context.md` as the other common filename and `/pb-context-review` already globbed `todos/*working-context*`. A project using the other name got a missing-file health check from both commands, three session recaps running.
 
-- **`/pb-forge` v1.4.0 and `/pb-resume` v1.10.0: the arc cursor gets closed.** Forge had no terminal stage and no step owned deleting the cursor, and resume, which forge called the cursor's hook, never read it. In another project the delete was denied twice and the cursor sat stale for a week. Land now sets `SHIPPED` then deletes; resume lists `todos/forge/*.md` and offers the delete for any `SHIPPED` cursor. Forge's "cursor outlived the deliverable" Red Flag is gone.
+- **`/pb-forge` v1.4.0 and `/pb-resume` v1.10.0: the arc cursor gets closed.** Forge had no terminal stage and no step owned deleting the cursor, and resume, which forge called the cursor's hook, never read it. In another project the delete was denied twice and the cursor sat stale for a week. After the last Land stop the deliverable needs, forge sets `SHIPPED` then deletes; resume lists `todos/forge/*.md` and offers the delete for any `SHIPPED` cursor. Forge's "cursor outlived the deliverable" Red Flag is gone.
 
 - **`/pb-forge` v1.4.0: a project with no remote skips Peer.** The arc table assumed a PR; on a local-only project Land is the local merge, plus a tag if the project tags.
 
