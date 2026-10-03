@@ -6,10 +6,10 @@ difficulty: "intermediate"
 model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-start', 'pb-pause', 'pb-plan', 'pb-preamble', 'pb-voice']
-last_reviewed: "2026-07-31"
+last_reviewed: "2026-10-03"
 last_evolved: ""
-version: "1.1.0"
-version_notes: "v1.1.0: Step 6 runs the handoff from the receiver's directory. \"File paths must make sense from the target project\" was a rule with no mechanism, and the producing repo is the one place every instruction resolves. v1.0.1: Align the /pb-voice writing note to voice v2.3.0 dash rule (single hyphen the default; `--` earned, not a blanket em-dash substitute). Initial: universal handoff pattern with acceptance criteria and constraints"
+version: "1.1.1"
+version_notes: "v1.1.1: Dated, not versioned narrows to: do not edit a handoff the receiver has started on. One nobody has opened can be extended in place. v1.1.0: Step 6 runs the handoff from the receiver's directory. \"File paths must make sense from the target project\" was a rule with no mechanism, and the producing repo is the one place every instruction resolves. v1.0.1: Align the /pb-voice writing note to voice v2.3.0 dash rule (single hyphen the default; `--` earned, not a blanket em-dash substitute). Initial: universal handoff pattern with acceptance criteria and constraints"
 breaking_changes: []
 ---
 
@@ -138,7 +138,7 @@ new dependencies", "Timeline: this week."
 
 **One handoff, one concern.** Don't bundle unrelated work. Two handoffs to the same project is fine.
 
-**Dated, not versioned.** Handoffs are point-in-time artifacts. If the work evolves, write a new handoff, don't update the old one.
+**Dated; don't edit one the receiver has started on.** Handoffs are point-in-time artifacts. Once the receiver may have acted on one, write a new handoff rather than updating it. One nobody has opened can be extended in place, which keeps new findings next to the ones they qualify.
 
 **Apply `/pb-voice`.** Organic prose (single hyphen `-` the default; `--` only when earned, never em dashes), free-flowing reasoning.
 
@@ -198,7 +198,7 @@ Fix what breaks in the handoff, then re-run. A blocker found here costs a minute
 1. **Handoff initiates, receiver decides.** The handoff starts work, it doesn't prescribe every step. The receiver has context the source doesn't. Trust them to make execution decisions.
 2. **Self-contained over complete.** Better to link to a 500-line analysis than inline it. The receiver can read files.
 3. **Reasoning is the payload.** Code is easy to re-derive. The reasoning behind decisions is what's hard to reconstruct and easy to lose.
-4. **Dated, not versioned.** Handoffs are point-in-time artifacts. If the work evolves, write a new handoff.
+4. **Dated; don't edit one the receiver has started on.** Handoffs are point-in-time artifacts. Once the receiver may have acted on one, write a new handoff.
 5. **One handoff, one concern.** Don't bundle unrelated work.
 6. **Two speeds.** Detailed when the source has done the thinking, exploratory when the idea needs context to develop. Both are valid.
 7. **Written here, run there.** A handoff is instructions for a directory you are not in. Until it has been executed from that directory, its runnable claims are untested -- and the producing repo will pass every one of them.

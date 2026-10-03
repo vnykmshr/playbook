@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- **`/pb-handoff` v1.1.1: do not edit a handoff the receiver has started on.** The rule assumed the receiver might already have acted. A handoff nobody had opened was extended the same day, because a second file would have split six findings from the six that qualify them.
+
 - **`/pb-spec` v1.2.1: verify a no-effect claim by diffing the output.** A refactor in another project was ruled a no-op and gated on byte-identical build output; one page changed, because it had been reaching the "unreachable" fallback all along. The reasoning was sound and wrong; the diff was right.
 
 - **`/pb-preflight` v1.1.1: verify a host or zone change on the served bytes.** In another project every gate passed and the live pages still differed from the build: the new CDN zone injected a script, rewrote an email address and mangled a code block. Static/Managed 4.3 passed, because the content was there. It now diffs served bytes against the build output, and a host, zone or proxy change resets the delegated dates it touches.
