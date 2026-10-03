@@ -9,7 +9,7 @@ related_commands: ['pb-what-next', 'pb-review', 'pb-huddle', 'pb-preflight', 'pb
 last_reviewed: "2026-10-03"
 last_evolved: "2026-09-24"
 version: "1.4.0"
-version_notes: "v1.4.0: Sub-stage 2 no longer claims to be unexercised: the first run to reach it, in another project, took the offer, got real findings, and the offer-not-run default held (n=1). v1.3.0: Sub-stage 2 is an offer, not a run. /code-review became assistant-invocable (Claude Code v2.1.246), which closes the gap that forced forge to stop there -- and the huddle declined to replace a forced stop with an automatic pass, because a model that already verifies its own work does not need a fifth self-check on every broad-trigger diff. Unexercised: no run has reached it. v1.2.1: Sub-stage 5's trigger says why Always is honest now that /pb-preflight scopes itself in Step 0. Forge had been describing preflight as a wiring check in wording preflight did not carry; preflight v1.1.0 now owns that framing. v1.2.0: Slice escape added — the front arc now carries an iteration tally, and forge stops at three to propose the smallest executable slice. Acceptance gates must state a falsifier before their first run. Cursor records the tally and the falsifier."
+version_notes: "v1.4.0: Sub-stage 2 no longer claims to be unexercised: the first run to reach it, in another project, took the offer, got real findings, and the offer-not-run default held (n=1). Peer row: a project with no remote skips Peer, and Land is the local merge. v1.3.0: Sub-stage 2 is an offer, not a run. /code-review became assistant-invocable (Claude Code v2.1.246), which closes the gap that forced forge to stop there -- and the huddle declined to replace a forced stop with an automatic pass, because a model that already verifies its own work does not need a fifth self-check on every broad-trigger diff. Unexercised: no run has reached it. v1.2.1: Sub-stage 5's trigger says why Always is honest now that /pb-preflight scopes itself in Step 0. Forge had been describing preflight as a wiring check in wording preflight did not carry; preflight v1.1.0 now owns that framing. v1.2.0: Slice escape added — the front arc now carries an iteration tally, and forge stops at three to propose the smallest executable slice. Acceptance gates must state a falsifier before their first run. Cursor records the tally and the falsifier."
 breaking_changes: []
 ---
 # Lifecycle Step-Runner
@@ -49,7 +49,7 @@ Forge walks these stages. It auto-runs the mechanical ones, hands off during exe
 | Plan | `/pb-plan` (sketch + spec) | confirm picks |
 | Execute | hands off to `/pb-start` or `/pb-todo-implement`; releases control | inner loop owns it |
 | Self-gate | Compound verify (see "Self-Gate Chain" below) | accept/reject findings |
-| Peer | `/pb-pr` opens the PR | external -- approve |
+| Peer | `/pb-pr` opens the PR. No remote: skipped, and Land is the local merge | external -- approve |
 | Land | merge, then sync, then release | external -- each separate |
 
 The arc is the default for new, non-trivial work. Triage decides how much of the front you actually run.
