@@ -25,6 +25,7 @@ COMMANDS_PHYS="$(cd "$COMMANDS_DIR" && pwd -P)"
 
 # Track uninstall stats
 removed=0
+skipped=0
 not_found=0
 
 # Find all .md files in commands/ and remove their symlinks
@@ -40,7 +41,7 @@ while IFS= read -r file; do
             "$COMMANDS_PHYS"/*) ;;
             *)
                 echo "  ⚠ Skipped: $filename (symlink not owned by this repo)"
-                not_found=$((not_found + 1))
+                skipped=$((skipped + 1))
                 continue
                 ;;
         esac
@@ -49,7 +50,7 @@ while IFS= read -r file; do
         removed=$((removed + 1))
     elif [ -e "$target" ]; then
         echo "  ⚠ Skipped: $filename (existing file, not symlink)"
-        not_found=$((not_found + 1))
+        skipped=$((skipped + 1))
     else
         not_found=$((not_found + 1))
     fi
@@ -58,6 +59,7 @@ done < <(find "$COMMANDS_DIR" -name "*.md" -type f | sort)
 echo ""
 echo "Uninstall Summary:"
 echo "  Removed: $removed"
+echo "  Skipped: $skipped (same-named, not ours -- still installed)"
 echo "  Not found: $not_found"
 echo ""
 echo "Uninstall complete!"

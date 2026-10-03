@@ -43,7 +43,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - **`/pb-huddle` v1.6.0: facts in the brief name their check, and unchecked ones are fact-checked before the lead.** In the run that prompted it, a panel claim about when a commit landed was wrong and only a timestamp check caught it; in another, the brief's own fact list carried an unchecked claim a panelist built a verdict on. Late evidence reaches the lead labelled as unseen by the panel, and the output records the lead after the fact-check. The lead rebuts and closes rather than framing the question, matching the role row; `/pb-clara-curator` v1.0.1 carries the same fix.
 
-- **`uninstall.sh` removed any symlink named like a playbook command**, including one pointing at someone else's file. It now removes only links whose directory resolves into this repo, so a link made or removed through a symlinked repo path is still recognised as its own.
+- **`uninstall.sh` removed any symlink named like a playbook command**, including one pointing at someone else's file. It now removes only links whose directory resolves into this repo, so a link made or removed through a symlinked repo path is still recognised as its own. Links it leaves in place are counted as skipped, not as not found.
 
 - **One version bump per command per release.** The first commit to touch a command after a tag sets the version it ships at; later commits amend that version's `version_notes`. A new test fails a second bump in the window, and the changelog guard now also fires on a `version_notes` change. Stated in `docs/command-versioning.md`.
 
