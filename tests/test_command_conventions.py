@@ -127,6 +127,30 @@ def last_substantive_version_bump(rel_path: str) -> str | None:
     return None
 
 
+@functools.lru_cache(maxsize=None)
+def window_version_changes() -> tuple[tuple[str, frozenset[str], frozenset[str], frozenset[str]], ...]:
+    """Per commit since the last tag: (sha, files touched, commands adding `version:`,
+    commands adding `version_notes:`).
+
+    One walk, shared by both release-window guards, so their detection cannot drift.
+    """
+    last_tag = git("describe", "--tags", "--abbrev=0").strip()
+    changes = []
+    for sha in git("log", "--format=%H", f"{last_tag}..HEAD").split():
+        touched = frozenset(git("show", "--stat", "--format=", "--name-only", sha).split())
+        bumped: set[str] = set()
+        noted: set[str] = set()
+        for f in touched:
+            if f.startswith("commands/") and f.endswith(".md"):
+                diff = git("show", sha, "--", f)
+                if re.search(r"^\+version:", diff, re.MULTILINE):
+                    bumped.add(f)
+                if re.search(r"^\+version_notes:", diff, re.MULTILINE):
+                    noted.add(f)
+        changes.append((sha[:7], touched, frozenset(bumped), frozenset(noted)))
+    return tuple(changes)
+
+
 def get_related_commands_count(content: str) -> int:
     """Count Related Commands links in standard section.
 
@@ -212,21 +236,12 @@ class TestChangelogLandsWithChange:
     so later commits amend version_notes instead -- those count as a change too.
     """
 
-    def _window(self) -> list[str]:
-        last_tag = git("describe", "--tags", "--abbrev=0").strip()
-        return [s for s in git("log", "--format=%H", f"{last_tag}..HEAD").split() if s]
-
     def test_version_bumps_carry_their_changelog_line(self):
         offenders: list[str] = []
-        for sha in self._window():
-            touched = git("show", "--stat", "--format=", "--name-only", sha).split()
-            bumped = [
-                f for f in touched
-                if f.startswith("commands/") and f.endswith(".md")
-                and re.search(r"^\+version(_notes)?:", git("show", sha, "--", f), re.MULTILINE)
-            ]
-            if bumped and "CHANGELOG.md" not in touched:
-                offenders.append(f"{sha[:7]}: bumped {', '.join(bumped)} without a CHANGELOG line")
+        for sha, touched, bumped, noted in window_version_changes():
+            changed = sorted(bumped | noted)
+            if changed and "CHANGELOG.md" not in touched:
+                offenders.append(f"{sha}: bumped {', '.join(changed)} without a CHANGELOG line")
         assert not offenders, (
             "Version bumps missing their changelog entry:\n  "
             + "\n  ".join(offenders)
@@ -235,11 +250,9 @@ class TestChangelogLandsWithChange:
 
     def test_one_version_bump_per_command_per_window(self):
         bumps: dict[str, list[str]] = {}
-        for sha in self._window():
-            for f in git("show", "--stat", "--format=", "--name-only", sha).split():
-                if (f.startswith("commands/") and f.endswith(".md")
-                        and re.search(r"^\+version:", git("show", sha, "--", f), re.MULTILINE)):
-                    bumps.setdefault(f, []).append(sha[:7])
+        for sha, _touched, bumped, _noted in window_version_changes():
+            for f in bumped:
+                bumps.setdefault(f, []).append(sha)
         repeated = {f: shas for f, shas in bumps.items() if len(shas) > 1}
         assert not repeated, (
             "Commands bumped more than once since the last tag:\n  "
