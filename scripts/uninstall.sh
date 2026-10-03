@@ -20,6 +20,9 @@ if [ ! -d "$COMMANDS_DIR" ]; then
     exit 1
 fi
 
+# Physical path, so links made through a symlinked repo path still match.
+COMMANDS_PHYS="$(cd "$COMMANDS_DIR" && pwd -P)"
+
 # Track uninstall stats
 removed=0
 not_found=0
@@ -30,9 +33,11 @@ while IFS= read -r file; do
     target="$TARGET_DIR/$filename"
 
     if [ -L "$target" ]; then
-        # Ours = resolves into $COMMANDS_DIR, the same test install.sh prunes by.
-        case "$(readlink "$target")" in
-            "$COMMANDS_DIR"/*) ;;
+        # Ours = the link's directory resolves into the repo. realpath is avoided: older
+        # macOS lacks it, and a failing substitution aborts the loop under set -e.
+        link_dir=$(cd "$TARGET_DIR" && cd "$(dirname "$(readlink "$target")")" 2>/dev/null && pwd -P) || link_dir=""
+        case "$link_dir/" in
+            "$COMMANDS_PHYS"/*) ;;
             *)
                 echo "  ⚠ Skipped: $filename (symlink not owned by this repo)"
                 not_found=$((not_found + 1))
