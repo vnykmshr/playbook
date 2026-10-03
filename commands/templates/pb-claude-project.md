@@ -6,10 +6,10 @@ difficulty: "beginner"
 model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-claude-global', 'pb-claude-orchestration', 'pb-context', 'pb-onboarding', 'pb-greenfield']
-last_reviewed: "2026-09-24"
+last_reviewed: "2026-10-03"
 last_evolved: "2026-09-24"
-version: "1.4.0"
-version_notes: "v1.4.0: Q3 2026 -- the template stops asking for what the rules forbid. It listed Current version and status under Keep and carried a Status placeholder, so generated files pinned a commit and went stale; per-commit state is now banned and the working context is linked, not copied. The stack-detection tables collapse to one step: record only what a reader would not find in one pass. The skeleton drops Testing, Environment and Session Quick Start (duplicates of Commands) and makes Tech Stack and Structure optional. The BEACON compression claim is deleted -- the root file is re-read after compaction regardless. Maintenance no longer contradicts Step 0. The example shows Custom (Manual), Generated Artifacts and Guardrails, the sections the contract protects. Size gate: under 200 lines, Anthropic's figure. v1.3.0: raise the size gate to 180 lines / 3K tokens (was 150/2K, stated in three places that now agree). The token half bound first at ~145 lines, so the line figure was decorative; both halves now carry weight. v1.2.0: wire the preservation contract that was only ever described. Step 0 reads the file being replaced and inventories `## Custom (Manual)` blocks; the generated structure carries that section; the checklist verifies the blocks survived. Regeneration is now the default path rather than a hazard. v2.10.0 baseline; v1.1.0 collapse duplicate Guardrails, add BEACON marker alignment"
+version: "1.4.1"
+version_notes: "v1.4.1: The template's current-state pointer names the project's working-context file instead of hardcoding `1-working-context.md`, matching the glob the same file already prescribes. v1.4.0: Q3 2026 -- the template stops asking for what the rules forbid. It listed Current version and status under Keep and carried a Status placeholder, so generated files pinned a commit and went stale; per-commit state is now banned and the working context is linked, not copied. The stack-detection tables collapse to one step: record only what a reader would not find in one pass. The skeleton drops Testing, Environment and Session Quick Start (duplicates of Commands) and makes Tech Stack and Structure optional. The BEACON compression claim is deleted -- the root file is re-read after compaction regardless. Maintenance no longer contradicts Step 0. The example shows Custom (Manual), Generated Artifacts and Guardrails, the sections the contract protects. Size gate: under 200 lines, Anthropic's figure. v1.3.0: raise the size gate to 180 lines / 3K tokens (was 150/2K, stated in three places that now agree). The token half bound first at ~145 lines, so the line figure was decorative; both halves now carry weight. v1.2.0: wire the preservation contract that was only ever described. Step 0 reads the file being replaced and inventories `## Custom (Manual)` blocks; the generated structure carries that section; the checklist verifies the blocks survived. Regeneration is now the default path rather than a hazard. v2.10.0 baseline; v1.1.0 collapse duplicate Guardrails, add BEACON marker alignment"
 breaking_changes: ['Generated skeleton drops Testing, Environment and Session Quick Start (restated Commands); Tech Stack and Structure become optional', 'No per-commit state in the generated file -- the Status line and Current version are gone; the working context is linked instead']
 ---
 # Generate Project CLAUDE.md
@@ -84,7 +84,7 @@ Create `.claude/CLAUDE.md` with this structure. Every section is optional except
 # [Project Name] Development Context
 
 > Generated: YYYY-MM-DD · Global guidelines: ~/.claude/CLAUDE.md
-> Current state: `todos/1-working-context.md` (if the project keeps one)
+> Current state: `todos/<working-context file>` (if the project keeps one)
 
 [One or two lines: what this project is, and anything about it a reader would get wrong from the README.]
 

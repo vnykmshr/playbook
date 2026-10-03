@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- **`/pb-claude-project` v1.4.1: the template points at the project's working-context file.** It told the generator to link `todos/*working-context*.md`, then hardcoded `todos/1-working-context.md` in the template, so a project using `working-context.md` got a CLAUDE.md pointing at a file that does not exist.
+
 - **`/pb-repo-readme` v1.1.0: the README carries the caveats that change an adoption decision.** A sign-off in another project held on the README alone: the design docs said what the project did not yet do, and the README, the one page outsiders read, did not.
 
 - **`/pb-handoff` v1.1.1: do not edit a handoff the receiver has started on.** The rule assumed the receiver might already have acted. A handoff nobody had opened was extended the same day, because a second file would have split six findings from the six that qualify them.
