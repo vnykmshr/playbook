@@ -19,7 +19,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - **`/pb-plan` v2.2.0: unanswered forks stay pending.** A request for a huddle-reviewed plan met the fork prompt with no rule for which comes first, and the session ended with the forks unresolved. The huddle now runs on the forks before the prompt and supplies the recommended picks; forks the user has not answered stay `decisions pending` and never reach `/pb-spec`.
 
-- **`/pb-todo-implement` v1.3.0: approved-plan mode.** A STOP per checkpoint re-asks an approval the owner already gave. One explicit "y" now covers the plan, checkpoint and commit stops; the stops a plan cannot pre-answer remain: deviations, failed validation, manual verification.
+- **`/pb-todo-implement` v1.3.0: approved-plan mode.** A STOP per checkpoint re-asks an approval the owner already gave. One explicit "y" now covers the plan stops and each checkpoint's change approval for one todo; the commit stop shows the whole todo's diff, so the written code is still reviewed once before commit. Deviations, failed validation, manual verification and the next todo still stop.
 
 - **`/pb-pause` v1.9.4: check tracker items against the code before trimming.** Four backlog items stayed open under a "steps 1-5 done" summary until a later session checked them one by one.
 
