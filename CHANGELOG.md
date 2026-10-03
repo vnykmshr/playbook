@@ -7,45 +7,31 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-- **`/pb-claude-project` v1.4.1: the template points at the project's working-context file.** It told the generator to link `todos/*working-context*.md`, then hardcoded `todos/1-working-context.md` in the template, so a project using `working-context.md` got a CLAUDE.md pointing at a file that does not exist.
+`uninstall.sh` no longer removes same-named symlinks in `~/.claude/commands/` that point outside this repo.
 
-- **`/pb-repo-readme` v1.1.0: the README carries the caveats that change an adoption decision.** A sign-off in another project held on the README alone: the design docs said what the project did not yet do, and the README, the one page outsiders read, did not.
+**After upgrading:** `git pull` is enough; installs are symlinks into the clone, and no command or skill was added, renamed or removed. If your `.claude/CLAUDE.md` came from `/pb-claude-project` and your working context is not `todos/1-working-context.md`, regenerate it. If you ran `uninstall.sh` before this release and keep your own `pb-*` links in `~/.claude/commands/`, check they still exist.
 
-- **`/pb-handoff` v1.1.1: do not edit a handoff the receiver has started on.** The rule assumed the receiver might already have acted. A handoff nobody had opened was extended the same day, because a second file would have split six findings from the six that qualify them.
+### Added
 
-- **`/pb-spec` v1.2.1: verify a no-effect claim by diffing the output.** A refactor in another project was ruled a no-op and gated on byte-identical build output; one page changed, because it had been reaching the "unreachable" fallback all along. The reasoning was sound and wrong; the diff was right.
+- **`/pb-todo-implement` v1.3.0: approved-plan mode.** For a plan the owner already approved, one explicit "y" covers every approval stop up to the commit, for one todo. The commit stop shows the whole staged diff (`git diff --cached`); deviations, failed validation, manual verification and the next todo still stop.
+- **`/pb-forge` v1.4.0 and `/pb-resume` v1.10.0: forge cleans up its progress file.** Once the work merges, or releases if it ships one, forge marks `todos/forge/<slug>.md` as `SHIPPED` and deletes it; if the delete is denied, resume lists the file and offers to remove it. With no remote, forge skips the PR step.
 
-- **`/pb-preflight` v1.1.1: verify a host or zone change on the served bytes.** In another project every gate passed and the live pages still differed from the build: the new CDN zone injected a script, rewrote an email address and mangled a code block. Static/Managed 4.3 passed, because the content was there. It now fetches every file of the deployed build from its public URL and requires a byte-for-byte match, and a host, zone or proxy change resets the delegated dates it touches. The reference has to be the deployed build or a rebuild with the deploy's pinned toolchain: a local rebuild with a newer mdbook gave 151 false mismatches out of 184 files from asset hashes alone.
+### Changed
 
-- **`/pb-commit` v2.3.1: gate the commit on the command that proves it.** A `verify | grep ... && git commit` chain committed a failing test in another project, because it gated on grep's exit code, not verify's. The rule sits in the automatic flow, where the chain gets written.
+- **`/pb-huddle` v1.6.0.** Looks things up before convening (the current plan, a one-command measurement), and skips the huddle when a check in the repo already fails the proposal. Every fact in the brief names its check or is labelled unverified; unchecked claims are fact-checked before the lead responds (`/pb-clara-curator` v1.0.1). In-session overrides go in the brief, deviations from an agreed list are stated before acting, and a follow-up re-huddle messages the same agents.
+- **`/pb-plan` v2.2.0.** A requested huddle runs on the decision forks before the prompt. Forks the user has not answered stay `decisions pending` and never reach `/pb-spec`.
+- **`/pb-preflight` v1.1.1.** For a static site, check 4.3 fetches every file of the deployed build from its public URL and requires a byte-for-byte match, against the deployed build or a rebuild with its pinned toolchain; host control files such as `.nojekyll` are not served. A host, zone or proxy change you made means re-verifying what the provider handles for you.
+- **`/pb-spec` v1.2.1.** Verifies a no-behaviour-change claim by diffing the produced output, not by re-reading the code.
+- **`/pb-commit` v2.3.1.** Gates the commit on the proving command's exit code, not a pipe's: `test | tail && git commit` gates on `tail`.
+- **`/pb-handoff` v1.1.1.** Leaves a handoff alone once the receiver has started on it; one nobody has opened can be extended.
+- **`/pb-repo-readme` v1.1.0.** Has the README state every design-doc limitation that would change an adoption decision.
+- **Versioning** (`docs/command-versioning.md`): a command bumps its version once per release; later changes amend the unreleased notes. A test enforces it.
 
-- **`/pb-plan` v2.2.0: unanswered forks stay pending.** A request for a huddle-reviewed plan met the fork prompt with no rule for which comes first, and the session ended with the forks unresolved. The huddle now runs on the forks before the prompt and supplies the recommended picks; forks the user has not answered stay `decisions pending` and never reach `/pb-spec`.
+### Fixed
 
-- **`/pb-todo-implement` v1.3.0: approved-plan mode.** A STOP per checkpoint re-asks an approval the owner already gave. One explicit "y" now covers the description, plan and ready prompts and each checkpoint's change approval, named exactly, for one todo; the commit stop shows the whole todo's staged diff (`git diff --cached`), so the written code is still reviewed once before commit. Deviations, failed validation, manual verification and the next todo still stop.
-
-- **`/pb-pause` v1.9.4: check tracker items against the code before trimming.** Four backlog items stayed open under a "steps 1-5 done" summary until a later session checked them one by one.
-
-- **`/pb-pause` v1.9.4 and `/pb-resume` v1.10.0: the working context is found by glob.** Both hardcoded `todos/1-working-context.md`, while `/pb-context` names `working-context.md` as the other common filename and `/pb-context-review` already globbed `todos/*working-context*`. A project using the other name got a missing-file health check from both commands, three session recaps running.
-
-- **`/pb-forge` v1.4.0 and `/pb-resume` v1.10.0: the arc cursor gets closed.** Forge had no terminal stage and no step owned deleting the cursor, and resume, which forge called the cursor's hook, never read it. In another project the delete was denied twice and the cursor sat stale for a week. After the last Land stop the deliverable needs, forge sets `SHIPPED` then deletes; resume lists `todos/forge/` and offers the delete for any `SHIPPED` cursor. Forge's "cursor outlived the deliverable" Red Flag is gone.
-
-- **`/pb-forge` v1.4.0: a project with no remote skips Peer.** The arc table assumed a PR; on a local-only project Land is the local merge, plus a tag if the project tags.
-
-- **`/pb-forge` v1.4.0: sub-stage 2 is no longer described as unexercised.** The first forge run to reach the `/code-review` offer, in another project, took it, got real findings, and reported the offer-not-run default as right. n=1; the record lives in `version_notes`, not the command body.
-
-- **`/pb-huddle` v1.6.0: re-huddle continues the same persona agents.** Re-huddle said to reuse the personas but not how. Messaging the agents that ran the first round keeps their brief and prior argument in context; in one project four agents carried four rounds, against an estimated ten fresh huddles of three agents each in an earlier session.
-
-- **`/pb-huddle` v1.6.0: state a deviation from an agreed list before acting on it.** A huddle correctly reordered housekeeping the user had agreed item by item, and the reorder was reported after the work had followed it. In this repo, a huddle decision was silently not landed and a CHANGELOG line defended the substitute. The ruling can be right; the order of telling was not.
-
-- **`/pb-huddle` v1.6.0: in-session overrides go in the brief.** A project's standing rule said audio stays off unless the author says otherwise; the author did, in session, and two reviewers spawned without that fact flagged it as a ship blocker. Three huddles in the same session had the same gap.
-
-- **`/pb-huddle` v1.6.0: answer what can be looked up before convening.** Step 1 searches the current plan, not only prior decisions: in the run that prompted it, the plan already said what to do and the huddle nearly re-decided it. A check in the repo that already fails the proposal skips the huddle; in another project a build assertion settled a question more firmly than the panel did, and was found mid-huddle. Step 2 runs any one-command measurement before briefing.
-
-- **`/pb-huddle` v1.6.0: facts in the brief name their check, and unchecked ones are fact-checked before the lead.** In the run that prompted it, a panel claim about when a commit landed was wrong and only a timestamp check caught it; in another, the brief's own fact list carried an unchecked claim a panelist built a verdict on. Late evidence reaches the lead labelled as unseen by the panel, and the output records the lead after the fact-check. The lead rebuts and closes rather than framing the question, matching the role row; `/pb-clara-curator` v1.0.1 carries the same fix.
-
-- **`uninstall.sh` removed any symlink named like a playbook command**, including one pointing at someone else's file. It now removes only links whose target resolves into this repo's `commands/`, through a symlinked repo path or into a renamed category. `install.sh`'s orphan prune uses the same test, from one shared `scripts/lib/link-owner.sh`. Links it leaves in place now show as skipped instead of not found.
-
-- **One version bump per command per release.** The first commit to touch a command after a tag sets the version it ships at; later commits amend that version's `version_notes`. A new test fails a second bump in the window, and the changelog guard now also fires on a `version_notes` change. Stated in `docs/command-versioning.md`.
+- **`uninstall.sh` removed any symlink named like a playbook command**, including same-named links pointing outside this repo. It now removes only links that resolve into this repo's `commands/`, including through a symlinked repo path or into a renamed category, and `install.sh`'s orphan prune uses the same test. Links it leaves in place are reported as skipped.
+- **`/pb-pause` v1.9.4 and `/pb-resume` find the working context by glob** (`todos/*working-context*.md`), so a project using `working-context.md` no longer fails the health check. Pause also checks tracker items against the code before trimming them.
+- **`/pb-claude-project` v1.4.1:** the template pointed at `todos/1-working-context.md` while telling the generator to link the glob.
 
 ## [v2.28.0] - 2026-09-24
 
