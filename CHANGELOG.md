@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v2.29.0] - 2026-10-03
+
 `uninstall.sh` no longer removes same-named symlinks in `~/.claude/commands/` that point outside this repo.
 
 **After upgrading:** `git pull` is enough; installs are symlinks into the clone, and no command or skill was added, renamed or removed. If your `.claude/CLAUDE.md` came from `/pb-claude-project` and your working context is not `todos/1-working-context.md`, regenerate it. If you ran `uninstall.sh` before this release and keep your own `pb-*` links in `~/.claude/commands/`, check they still exist.
@@ -1885,6 +1887,7 @@ When releasing a new version:
 
 ---
 
+[v2.29.0]: https://github.com/vnykmshr/playbook/releases/tag/v2.29.0
 [v2.28.0]: https://github.com/vnykmshr/playbook/releases/tag/v2.28.0
 [v2.27.0]: https://github.com/vnykmshr/playbook/releases/tag/v2.27.0
 [v2.26.0]: https://github.com/vnykmshr/playbook/releases/tag/v2.26.0
