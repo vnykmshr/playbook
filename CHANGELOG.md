@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- **`/pb-huddle` v1.6.0: re-huddle continues the same persona agents.** Re-huddle said to reuse the personas but not how. Messaging the agents that ran the first round keeps their brief and prior argument in context; in one project that held for four rounds at four agents total, where fresh huddles had been running about three agents each, ten times in a session.
+
 - **`/pb-huddle` v1.6.0: state a deviation from an agreed list before acting on it.** A huddle correctly reordered housekeeping the user had agreed item by item, and the reorder was reported after the work had followed it. Here, a huddle decision was silently not landed and a CHANGELOG line defended the substitute. The ruling can be right; the order of telling was not.
 
 - **`/pb-huddle` v1.6.0: in-session overrides go in the brief.** A project's standing rule said audio stays off unless the author says otherwise; the author did, in session, and two reviewers spawned without that fact flagged it as a ship blocker. Three huddles in the same session had the same gap.
