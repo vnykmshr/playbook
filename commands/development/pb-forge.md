@@ -9,7 +9,7 @@ related_commands: ['pb-what-next', 'pb-review', 'pb-huddle', 'pb-preflight', 'pb
 last_reviewed: "2026-10-03"
 last_evolved: "2026-09-24"
 version: "1.4.0"
-version_notes: "v1.4.0: Sub-stage 2 no longer claims to be unexercised: the first run to reach it, in another project, took the offer, got real findings, and the offer-not-run default held (n=1). Peer row: a project with no remote skips Peer, and Land is the local merge. v1.3.0: Sub-stage 2 is an offer, not a run. /code-review became assistant-invocable (Claude Code v2.1.246), which closes the gap that forced forge to stop there -- and the huddle declined to replace a forced stop with an automatic pass, because a model that already verifies its own work does not need a fifth self-check on every broad-trigger diff. Unexercised: no run has reached it. v1.2.1: Sub-stage 5's trigger says why Always is honest now that /pb-preflight scopes itself in Step 0. Forge had been describing preflight as a wiring check in wording preflight did not carry; preflight v1.1.0 now owns that framing. v1.2.0: Slice escape added — the front arc now carries an iteration tally, and forge stops at three to propose the smallest executable slice. Acceptance gates must state a falsifier before their first run. Cursor records the tally and the falsifier."
+version_notes: "v1.4.0: Sub-stage 2 no longer claims to be unexercised: the first run to reach it, in another project, took the offer, got real findings, and the offer-not-run default held (n=1). Peer row: a project with no remote skips Peer, and Land is the local merge. The cursor gets a terminal stage: Land sets SHIPPED, then deletes the file; a denied delete leaves the SHIPPED cursor for /pb-resume to offer. The Red Flag that owned no deletion is gone. v1.3.0: Sub-stage 2 is an offer, not a run. /code-review became assistant-invocable (Claude Code v2.1.246), which closes the gap that forced forge to stop there -- and the huddle declined to replace a forced stop with an automatic pass, because a model that already verifies its own work does not need a fifth self-check on every broad-trigger diff. Unexercised: no run has reached it. v1.2.1: Sub-stage 5's trigger says why Always is honest now that /pb-preflight scopes itself in Step 0. Forge had been describing preflight as a wiring check in wording preflight did not carry; preflight v1.1.0 now owns that framing. v1.2.0: Slice escape added — the front arc now carries an iteration tally, and forge stops at three to propose the smallest executable slice. Acceptance gates must state a falsifier before their first run. Cursor records the tally and the falsifier."
 breaking_changes: []
 ---
 # Lifecycle Step-Runner
@@ -127,7 +127,7 @@ Forge treats execute as complete when you say so. Hints it offers but never acts
 
 Forge keeps one file per deliverable at `todos/forge/{slug}.md` -- under the dev-only `todos/` tree, gitignored, not a tracked artifact. It holds:
 
-- current stage
+- current stage, ending at `SHIPPED`
 - front-arc tally (see "The Slice Escape") -- reset to 0 on reaching Execute
 - sub-stage progress within Self-gate (which sub-stages completed, which is pending)
 - deliverable paths as they appear: sketch -> plan -> branch -> PR
@@ -136,6 +136,8 @@ Forge keeps one file per deliverable at `todos/forge/{slug}.md` -- under the dev
 - one log line per stage transition
 
 This file is the `/pb-resume` hook for the arc. Where `/pb-resume` tells you the session state (branch, uncommitted work), the cursor tells you the arc state (which stage, what's next) -- one command to resume a deliverable you left days ago, no reconstruction.
+
+**Closing the cursor.** Land's last act sets the stage to `SHIPPED`, then deletes the file. If the delete is denied, leave the `SHIPPED` cursor as it is: `/pb-resume` lists it and offers the delete. `SHIPPED` is the stage resume keys on, so do not mark a finished arc any other way.
 
 ---
 
@@ -174,7 +176,6 @@ Re-invoking `/pb-forge` on a deliverable with an existing cursor resumes at the 
 
 - **Forge auto-advanced a seam.** It picked a fork, accepted a review finding, or pushed without asking. That's a bug, not a convenience -- the seam stops are the whole contract.
 - **Triage always lands on tail.** Most of your work skips the front arc, so forge wraps the review chain + PR + release. The compound self-gate is the meat of the tail, not thin ceremony. Still, if you never need think/huddle/plan, the front arc may not earn its place for this project.
-- **Cursor outlived the deliverable.** A stale `todos/forge/*.md` for shipped work is a position, not an archive -- delete it.
 - **The front-arc tally is climbing.** Plan is iterating on itself. The spec is growing and nothing has run. Take the slice escape; the thing that has never executed is where the defects are.
 - **An acceptance gate has returned the same verdict twice.** Check whether it can return the other one. A gate with no falsifier is not a finding generator, it is a loop.
 

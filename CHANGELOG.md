@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- **`/pb-forge` v1.4.0 and `/pb-resume` v1.10.0: the arc cursor gets closed.** Forge had no terminal stage and no step owned deleting the cursor, and resume, which forge called the cursor's hook, never read it. In another project the delete was denied twice and the cursor sat stale for a week. Land now sets `SHIPPED` then deletes; resume lists `todos/forge/*.md` and offers the delete for any `SHIPPED` cursor. Forge's "cursor outlived the deliverable" Red Flag is gone.
+
 - **`/pb-forge` v1.4.0: a project with no remote skips Peer.** The arc table assumed a PR; on a local-only project Land is the local merge, plus a tag if the project tags.
 
 - **`/pb-forge` v1.4.0: sub-stage 2 is no longer described as unexercised.** The first forge run to reach the `/code-review` offer, in another project, took it, got real findings, and reported the offer-not-run default as right. n=1; the record lives in `version_notes`, not the command body.

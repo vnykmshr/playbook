@@ -672,3 +672,11 @@ class TestRecapArchiveCoherence:
             "pb-pause writes the recap and pb-resume re-reads it; a project with no "
             "archive yet needs both to start it in the same place."
         )
+
+    def test_forge_and_resume_share_shipped_stage(self):
+        """Resume flags finished arcs by the stage name forge writes; a rename on one side orphans cursors."""
+        missing = [
+            name for name in ("pb-forge.md", "pb-resume.md")
+            if "`SHIPPED`" not in (COMMANDS_DIR / "development" / name).read_text()
+        ]
+        assert not missing, f"Forge's terminal cursor stage `SHIPPED` is not named in: {missing}"
