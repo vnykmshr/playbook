@@ -9,7 +9,7 @@ related_commands: ['pb-spec', 'pb-start', 'pb-review', 'pb-cycle', 'pb-commit']
 last_reviewed: "2026-10-03"
 last_evolved: "2026-07-13"
 version: "1.3.0"
-version_notes: "v1.3.0: Approved-plan mode: for a plan the owner already approved, one explicit y covers the description, plan and ready STOPs and each checkpoint's change approval, for one todo. The commit STOP stays and shows the whole todo's diff, so every written line is reviewed once before commit; deviation, failed-validation, manual-verification, description-update and next-todo STOPs remain. v1.2.0: Phase 4 Step 2 wires plan-notes deviation log (`plan/{name}-notes.md`) into the STOP gate -- append bullet before proceeding. Format and discipline live in /pb-spec § Implementation Notes File. v1.2.1: plan-notes path aligned to todos/plan/{name}-notes.md."
+version_notes: "v1.3.0: Approved-plan mode: for a plan the owner already approved, one explicit y covers the \"Use this description?\", \"Use this implementation plan?\", \"Ready to implement?\" and per-checkpoint \"Approve these changes?\" STOPs, for one todo. The commit STOP stays and shows the whole todo's staged diff (git diff --cached), so every written line is reviewed once before commit; deviation, failed-validation, manual-verification, description-update and next-todo STOPs remain. v1.2.0: Phase 4 Step 2 wires plan-notes deviation log (`plan/{name}-notes.md`) into the STOP gate -- append bullet before proceeding. Format and discipline live in /pb-spec § Implementation Notes File. v1.2.1: plan-notes path aligned to todos/plan/{name}-notes.md."
 breaking_changes: []
 ---
 # Todo-Based Implementation Workflow
@@ -50,7 +50,7 @@ You MUST follow these phases in order: **INIT → SELECT → REFINE → IMPLEMEN
 
 At each STOP, you MUST get user confirmation or input before proceeding.
 
-**Approved-plan mode.** When the owner has already approved the plan (a `/pb-spec` plan, a huddle-reviewed one), the REFINE STOPs re-ask an approval already given, and a change-approval STOP per checkpoint repeats one review N times. Say so, and ask for one explicit "y" for this todo that covers the description, plan and ready STOPs and each checkpoint's "Approve these changes?". The commit STOP stays and shows the whole todo's diff: the written code is what a plan cannot answer, so it is reviewed once, in full, before commit. Deviation, failed validation, manual verification, the description update and the next todo still stop. Without that "y", every STOP applies.
+**Approved-plan mode.** When the owner has already approved the plan (a `/pb-spec` plan, a huddle-reviewed one), the REFINE STOPs re-ask an approval already given, and a change-approval STOP per checkpoint repeats one review N times. Say so, and ask for one explicit "y" for this todo that covers exactly these STOPs: "Use this description?", "Use this implementation plan?", "Ready to implement?", and each checkpoint's "Approve these changes?". The commit STOP stays and shows the whole todo's diff with `git diff --cached` (each checkpoint has already staged its files): the written code is what a plan cannot answer, so it is reviewed once, in full, before commit. Deviation, failed validation, manual verification, the description update and the next todo still stop. Without that "y", every STOP applies.
 
 ---
 
@@ -410,7 +410,7 @@ Tests Added:
 - [test case 2]
 ```
 
-**STOP → "Ready to commit all changes? (y/n)"** In approved-plan mode, show the whole todo's diff here, not only the summary.
+**STOP → "Ready to commit all changes? (y/n)"** In approved-plan mode, show the whole todo's diff here with `git diff --cached`, not only the summary.
 
 **2. Finalize Task Document**
 
