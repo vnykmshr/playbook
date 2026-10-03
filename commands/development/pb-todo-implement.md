@@ -6,10 +6,10 @@ difficulty: "advanced"
 model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-spec', 'pb-start', 'pb-review', 'pb-cycle', 'pb-commit']
-last_reviewed: "2026-07-13"
+last_reviewed: "2026-10-03"
 last_evolved: "2026-07-13"
-version: "1.2.1"
-version_notes: "v1.2.0: Phase 4 Step 2 wires plan-notes deviation log (`plan/{name}-notes.md`) into the STOP gate -- append bullet before proceeding. Format and discipline live in /pb-spec § Implementation Notes File. v1.2.1: plan-notes path aligned to todos/plan/{name}-notes.md."
+version: "1.3.0"
+version_notes: "v1.3.0: Approved-plan mode: for a plan the owner already approved, one explicit y covers the plan, per-checkpoint and commit STOPs; deviation, failed-validation and manual-verification STOPs remain. v1.2.0: Phase 4 Step 2 wires plan-notes deviation log (`plan/{name}-notes.md`) into the STOP gate -- append bullet before proceeding. Format and discipline live in /pb-spec § Implementation Notes File. v1.2.1: plan-notes path aligned to todos/plan/{name}-notes.md."
 breaking_changes: []
 ---
 # Todo-Based Implementation Workflow
@@ -49,6 +49,8 @@ Structured implementation of individual todos with checkpoint-based approval. Tr
 You MUST follow these phases in order: **INIT → SELECT → REFINE → IMPLEMENT → COMMIT**
 
 At each STOP, you MUST get user confirmation or input before proceeding.
+
+**Approved-plan mode.** When the owner has already approved the plan (a `/pb-spec` plan, a huddle-reviewed one), the REFINE and per-checkpoint STOPs re-ask an approval already given. Say so, and ask for one explicit "y" that covers the plan, each checkpoint's approval and the commit. The STOPs that remain are the ones a plan cannot answer: a deviation (Phase 4 Step 2), a failed validation, manual verification. Without that "y", every STOP applies.
 
 ---
 

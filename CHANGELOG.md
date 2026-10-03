@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- **`/pb-todo-implement` v1.3.0: approved-plan mode.** A STOP per checkpoint re-asks an approval the owner already gave. One explicit "y" now covers the plan, checkpoint and commit stops; the stops a plan cannot pre-answer remain: deviations, failed validation, manual verification.
+
 - **`/pb-pause` v1.9.4: check tracker items against the code before trimming.** Four backlog items stayed open under a "steps 1-5 done" summary until a later session checked them one by one.
 
 - **`/pb-pause` v1.9.4 and `/pb-resume` v1.10.0: the working context is found by glob.** Both hardcoded `todos/1-working-context.md`, while `/pb-context` names `working-context.md` as the other common filename and `/pb-context-review` already globbed `todos/*working-context*`. A project using the other name got a missing-file health check from both commands, three session recaps running.
