@@ -13,7 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - **`/pb-spec` v1.2.1: verify a no-effect claim by diffing the output.** A refactor in another project was ruled a no-op and gated on byte-identical build output; one page changed, because it had been reaching the "unreachable" fallback all along. The reasoning was sound and wrong; the diff was right.
 
-- **`/pb-preflight` v1.1.1: verify a host or zone change on the served bytes.** In another project every gate passed and the live pages still differed from the build: the new CDN zone injected a script, rewrote an email address and mangled a code block. Static/Managed 4.3 passed, because the content was there. It now diffs served bytes against the build output, and a host, zone or proxy change resets the delegated dates it touches.
+- **`/pb-preflight` v1.1.1: verify a host or zone change on the served bytes.** In another project every gate passed and the live pages still differed from the build: the new CDN zone injected a script, rewrote an email address and mangled a code block. Static/Managed 4.3 passed, because the content was there. It now diffs one real page's served bytes against the build output or an unproxied copy, and a host, zone or proxy change resets the delegated dates it touches.
 
 - **`/pb-commit` v2.3.1: gate the commit on the command that proves it.** A `verify | grep ... && git commit` chain committed a failing test in another project, because it gated on grep's exit code, not verify's. The rule sits in the automatic flow, where the chain gets written.
 
