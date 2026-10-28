@@ -63,7 +63,7 @@ Self-gate is a compound stage of ordered sub-stages. Each catches what the prior
 | # | Sub-stage | What it catches | Trigger |
 |---|-----------|----------------|---------|
 | 1 | `/pb-review` | Lint, tests, conventions: the quick mechanical gate | Always |
-| 2 | `/code-review` at high effort | Bugs, correctness, efficiency: independent adversarial pass | `>3 files` or `>50 LOC` or new command or security/auth/regex in diff |
+| 2 | `/code-review` at high effort | Bugs, correctness, efficiency: independent adversarial pass | `>3 files` or `>50 LOC` or new command or security/auth/regex in diff, or docs that record rulings, decisions or quotations (a misplaced quote is a correctness bug that prose gates read past) |
 | 3 | `/pb-handcraft` | Prose quality, voice, clarity: form, not function | Content/docs changes (markdown commands, prose in any file) |
 | 4 | Huddle signoff | Design coherence across the whole diff: intent, not content | `/code-review` or handcraft reports ≥1 finding where the fix isn't obvious from the diff |
 | 5 | `/pb-preflight` | Ship-readiness wiring check: gaps, not issues | Always -- its Step 0 scopes the gate to your surface, which is what makes Always honest on a non-service project |
