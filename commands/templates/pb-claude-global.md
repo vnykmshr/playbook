@@ -169,7 +169,7 @@ For strategy: `/pb-claude-orchestration`
 
 ---
 
-## GitHub Artifact Register (commits, PRs, issues, comments)
+## GitHub Artifact Register (commits, PRs, issues, comments, releases)
 
 The Register BEACON applied to GitHub, with ceilings. The reader is a peer; do not re-explain the diff.
 
@@ -178,10 +178,11 @@ The Register BEACON applied to GitHub, with ceilings. The reader is a peer; do n
 - PR body: 1 paragraph, ~3-5 sentences. No `## Summary` / `## Test plan` headers unless >3 files or >1 concern.
 - Issue: 1 paragraph + repro steps if applicable. No template scaffolding.
 - Review/PR comments: state the issue, cite the line, stop. One sentence per finding.
+- Release: title `vX.Y.Z - <pet name>`, never a change summary. Notes: what upgraders must do, security lines, changelog and compare links. No generated PR list, no "New Contributors".
 
 **Format:** `<type>(<scope>): <subject>` -- `feat:`, `fix:`, `refactor:`, `docs:`, `test:`, `chore:`, `perf:`. Present tense. Atomic. Auto-drafted by `/pb-review`.
 
-**Always strip** (on every GitHub artifact -- commits, issues, PR descriptions, PR/review/inline comments -- even when a skill template includes them by default): `Co-Authored-By`, `Generated-With`, `🤖 Generated with [Claude Code]`, thumbs-up/down feedback prompts, any assistant-attribution or engagement-bait footers.
+**Always strip** (on every GitHub artifact -- commits, issues, PR descriptions, PR/review/inline comments, release notes -- even when a skill template includes them by default): `Co-Authored-By`, `Generated-With`, `🤖 Generated with [Claude Code]`, thumbs-up/down feedback prompts, any assistant-attribution or engagement-bait footers.
 
 **Never write:** narration ("I examined...", "After analysis..."), scope reminders, severity adjectives ("critical", "important to note"), closing summaries, restatements of what the diff already shows.
 
