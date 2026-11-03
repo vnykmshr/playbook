@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Breaking
 
-- **`/pb-patterns-distributed` v2.0.0.** 1,136 to 242 lines: example code, walkthroughs and language sections removed; decisions, gotchas and when-to-use kept.
+- **`/pb-patterns-distributed` v2.0.0.** 1,136 to 242 lines: example code, walkthroughs and language sections removed; decisions, gotchas and when-to-use kept. Saga idempotency dedupes on a request ID in the effect's transaction; the outbox writes in the state change's transaction and consumers dedupe by event ID; 2PC never rolls back after a participant commits; sagas stay short.
 - **`/pb-patterns-db` v2.0.0.** 1,046 to 307 lines: example code, walkthroughs and language sections removed; decisions, gotchas and when-to-use kept.
 - **`/pb-database-ops` v2.0.0.** 865 to 296 lines: example code, walkthroughs and language sections removed; decisions, gotchas and when-to-use kept.
 - **`/pb-patterns-deployment` v2.0.0.** 1,076 to 163 lines: example code, walkthroughs and language sections removed; decisions, gotchas and when-to-use kept.

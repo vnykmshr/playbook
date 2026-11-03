@@ -9,7 +9,7 @@ related_commands: ['pb-patterns-core', 'pb-patterns-async', 'pb-patterns-securit
 last_reviewed: "2026-11-04"
 last_evolved: ""
 version: "2.0.0"
-version_notes: "v2.0.0: Cut from 1136 to 242 lines: example code, walkthroughs and language sections removed; decisions, gotchas and when-to-use kept."
+version_notes: "v2.0.0: Cut from 1136 to 242 lines: example code, walkthroughs and language sections removed; decisions, gotchas and when-to-use kept. Saga idempotency dedupes on a request ID in the effect's transaction; the outbox writes in the state change's transaction and consumers dedupe by event ID; 2PC never rolls back after a participant commits; sagas stay short."
 breaking_changes: ['Example code, walkthroughs and language sections removed; decisions and gotchas kept, constraints from removed code restated; deploy checklists live in /pb-preflight and /pb-deployment.']
 ---
 # Distributed Patterns
@@ -87,6 +87,10 @@ One service orchestrates the saga steps.
 3. "Cascading failures"
    Bad: One service down brings whole saga down
    Good: Timeouts and fallbacks
+
+4. "Long sagas"
+   Bad: Ten steps, each a failure point with its own compensation
+   Good: Keep a saga to a few steps; split a long one at a business boundary so each part is tested alone
 ```
 
 ### Saga Idempotency Pattern
@@ -94,6 +98,8 @@ One service orchestrates the saga steps.
 **Problem:** Saga step retries. Payment charged twice. Inventory decremented twice.
 
 **Solution:** Ensure each step is idempotent. Running same operation twice = running it once.
+
+Dedupe on a caller-supplied request ID, recorded in the same transaction as the effect. A lookup-then-write outside that transaction races, and `count = count - 10` is not idempotent without the ID guard.
 
 **When to implement:**
 - All saga steps (payment, inventory, shipping)
@@ -130,7 +136,7 @@ Phase 4: Remove v1 support
 
 **Problem:** Publishing event fails after database commit. Event lost. Inconsistency.
 
-**Solution:** Write event to database first, then publish from database.
+**Solution:** Insert the event into an outbox table in the same transaction as the state change; a relay publishes it after commit.
 
 **Gotchas:**
 ```
@@ -144,7 +150,7 @@ Phase 4: Remove v1 support
 
 3. "Duplicate publishing"
    Bad: Network hiccup, publish twice
-   Good: Message broker deduplicates by requestId
+   Good: Consumers dedupe by event ID; the relay is at-least-once
 ```
 
 ---
@@ -226,6 +232,10 @@ Phase 4: Remove v1 support
 3. "Deadlock"
    Bad: Multiple concurrent transactions, resources locked in different order
    Good: Consistent lock ordering, or use MVCC
+
+4. "Rollback after commit"
+   Bad: A participant fails during commit, so the coordinator rolls the rest back
+   Good: Once the coordinator logs commit, it drives every participant to commit, retrying; it never rolls back after any participant has committed
 ```
 
 **When to use:**
