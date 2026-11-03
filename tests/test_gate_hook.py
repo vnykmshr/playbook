@@ -157,8 +157,9 @@ def test_jq_missing_asks_on_everything(tmp_path: Path):
     assert got is not None and "jq missing" in got
 
 
-def test_unparsable_input_asks():
-    got = reason(run_hook("", payload="not json"))
+@pytest.mark.parametrize("payload", ["not json", "", '{"tool_input": {"cmd": "git push"}}'])
+def test_unreadable_input_asks(payload: str):
+    got = reason(run_hook("", payload=payload))
     assert got is not None and "input not parsed" in got
 
 

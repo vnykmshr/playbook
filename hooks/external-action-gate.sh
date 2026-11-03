@@ -14,7 +14,7 @@ uninspected() {
 }
 
 command -v jq >/dev/null || uninspected "jq missing"
-COMMAND=$(jq -r '.tool_input.command // empty' 2>/dev/null) || uninspected "input not parsed"
+COMMAND=$(jq -er '.tool_input.command' 2>/dev/null) || uninspected "input not parsed"
 [ -z "$COMMAND" ] && exit 0
 
 S='[[:space:]]'
