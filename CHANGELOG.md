@@ -12,7 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **`/pb-huddle` v1.7.0.** Checks whether work already exists by its thesis, not a keyword grep, and a fact-check must name an instrument that can answer the claim.
 - **`/pb-forge` v1.5.0.** Sub-stage 2 (`/code-review`) is also offered for docs that record rulings, decisions or quotations.
 - **`/pb-claude-global` v2.10.0.** The GitHub Artifact Register covers releases: a `vX.Y.Z - <pet name>` title (`vX.Y.Z` when unnamed), upgrader-facing notes, no generated PR list, and the same attribution strip as other artifacts.
-- **`/pb-forge` v1.5.0 and `/pb-resume` v1.11.0.** A finished arc's progress file moves to `todos/done/forge-<slug>.md` instead of being deleted, since delete commands are commonly denied.
+- **`/pb-forge` v1.5.0 and `/pb-resume` v1.11.0.** A finished arc's progress file moves to `todos/done/forge-<slug>.md` instead of being deleted, since delete commands are commonly denied. A name already taken gets a date-and-time suffix; an archive is never overwritten.
 - **`/pb-forge` v1.5.0: leg boundaries.** At Plan→Execute, forge writes everything the next stage needs into its progress file, says the context can be compacted (or the session ended), and stops; `/pb-start` runs when forge is re-invoked. The Execute hand-off says the same for when execute is done.
 
 ## [v2.29.0] - 2026-10-03
