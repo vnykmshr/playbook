@@ -5,18 +5,18 @@ category: "planning"
 difficulty: "advanced"
 model_hint: "sonnet"
 execution_pattern: "sequential"
-related_commands: ['pb-deployment', 'pb-release', 'pb-dr']
+related_commands: ['pb-deployment', 'pb-preflight', 'pb-release', 'pb-database-ops', 'pb-dr']
 last_reviewed: "2026-11-04"
 last_evolved: ""
 version: "2.0.0"
-version_notes: "v2.0.0: Cut from 1076 to 163 lines: example code, walkthroughs and language sections removed; decisions, gotchas and when-to-use kept."
+version_notes: "v2.0.0: Cut from 1076 to 163 lines: example code, walkthroughs and language sections removed; decisions, gotchas and when-to-use kept. /pb-preflight and /pb-deployment own the checklists; /pb-database-ops owns expand/contract; a feature flag is removed with its dead branch once the rollout is stable."
 breaking_changes: ['Example code, walkthroughs and language sections removed; decisions and gotchas kept, constraints from removed code restated; deploy checklists live in /pb-preflight and /pb-deployment.']
 ---
 # Deployment Patterns & Strategies
 
 Reference guide for deployment strategies, patterns, and best practices. Use this to learn about and plan deployment approaches.
 
-**For executing deployments**, use `/pb-deployment` (actionable deployment workflow).
+**For executing deployments**, use `/pb-deployment` (actionable deployment workflow). `/pb-preflight` is the pre-deploy gate; it and `/pb-deployment` own the checklists.
 
 **Principle:** Every deployment strategy involves trade-offs.
 
@@ -101,9 +101,7 @@ Choose strategy based on risk and scope.
 
 ## Feature Flags: Deploy Without Releasing
 
-**Problem:** New code deployed but not visible to users (until enabled).
-
-**Solution:** Feature flags to toggle features on/off without redeploying.
+**Solution:** Deploy code dark behind a flag, then toggle it on or off without redeploying. Remove the flag and its dead branch once the rollout is stable.
 
 ---
 
@@ -111,7 +109,7 @@ Choose strategy based on risk and scope.
 
 **Problem:** Schema changes can break running code.
 
-**Solution:** Gradual migrations, test thoroughly, rollback plan.
+**Solution:** Expand, migrate, contract: old and new code both run against every intermediate schema. See `/pb-database-ops` Expand/Contract Pattern.
 
 ---
 
@@ -155,7 +153,9 @@ Choose strategy based on risk and scope.
 ## Related Commands
 
 - `/pb-deployment` - Execute deployment workflows
+- `/pb-preflight` - Pre-deploy readiness gate
 - `/pb-release` - Release orchestration and version management
+- `/pb-database-ops` - Expand/contract migrations
 - `/pb-dr` - Disaster recovery planning for deployment failures
 
 ---
