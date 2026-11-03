@@ -6,7 +6,7 @@
 # Patterns are EREs, matched anywhere in the command line, so a mention
 # after a space, slash or separator asks even inside quotes. A quote or backslash right
 # before the command word does not (sh -c "git push"). tests/test_gate_hook.py lists the
-# shapes it misses.
+# shapes it misses and the ones it asks on wrongly.
 
 uninspected() {
   printf '{"hookSpecificOutput":{"hookEventName":"PreToolUse","permissionDecision":"ask","permissionDecisionReason":"external-action-gate: %s, command not inspected"}}\n' "$1"

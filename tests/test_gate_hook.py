@@ -3,7 +3,8 @@
 Each case pipes the PreToolUse JSON Claude Code sends and asserts the matched
 label, so a hook that asks for another reason (jq missing) cannot pass a case.
 KNOWN_MISSES is the hook's gap list: each asserts "ask" under xfail(strict=True),
-so closing a gap fails until its entry is deleted. The list only shrinks.
+so closing a gap fails until its entry is deleted. KNOWN_FALSE_POSITIVES is the
+reverse, asserting silence. Both lists only shrink.
 """
 import json
 import subprocess
@@ -151,6 +152,13 @@ KNOWN_MISSES = [
     'rm "-rf" build',
     "git restore --worktree .",
     "git checkout HEAD -- .",
+    "GH pr merge 3",
+    "RM -rf build",
+    "NPM publish",
+    "rm \\\n  -rf build",
+    "rm $(echo x) -rf build",
+    "git --attr-source HEAD push",
+    "gh api -X post repos/x/y",
 ]
 
 
@@ -158,6 +166,19 @@ KNOWN_MISSES = [
 @pytest.mark.parametrize("command", KNOWN_MISSES)
 def test_known_miss(command: str):
     assert reason(run_hook(command)) is not None
+
+
+KNOWN_FALSE_POSITIVES = [
+    "git clean -n && ls -lf",
+    "git reset --soft HEAD~1 && grep --hard x",
+    "git rm -r --cached build",
+]
+
+
+@pytest.mark.xfail(strict=True, reason="known false positive: delete the entry when the hook stays silent")
+@pytest.mark.parametrize("command", KNOWN_FALSE_POSITIVES)
+def test_known_false_positive(command: str):
+    assert reason(run_hook(command)) is None
 
 
 def test_jq_missing_asks_on_everything(tmp_path: Path):
