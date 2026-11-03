@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- **`/pb-review` v2.8.0: `--report-only`.** Reports every finding, including fixes it would otherwise apply, and changes nothing, so a caller can vet findings before any edit.
+- **`/pb-review` v2.8.0: `--report-only`.** Reports every finding, including fixes it would otherwise apply, and changes nothing: no prompts, no remembered preferences, criticals listed first. The validation recheck still drops false positives. A caller can vet the findings before any edit.
 
 ### Changed
 
