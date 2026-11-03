@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v2.31.0] - 2026-11-04
+
 The external action gate ships as a tested hook, and the gate text lets one message approve a numbered list of exact commands.
 
 **After upgrading:** `git pull`, then re-run `scripts/install.sh` to copy the hook to `~/.claude/hooks/` and add its `settings.json` entry (`hooks/README.md`); an existing copy that differs is skipped, so move it aside first. Regenerate `~/.claude/CLAUDE.md` with `/pb-claude-global` for the new gate text.
@@ -1925,6 +1927,7 @@ When releasing a new version:
 
 ---
 
+[v2.31.0]: https://github.com/vnykmshr/playbook/releases/tag/v2.31.0
 [v2.30.0]: https://github.com/vnykmshr/playbook/releases/tag/v2.30.0
 [v2.29.0]: https://github.com/vnykmshr/playbook/releases/tag/v2.29.0
 [v2.28.0]: https://github.com/vnykmshr/playbook/releases/tag/v2.28.0
