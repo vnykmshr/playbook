@@ -9,7 +9,7 @@ related_commands: ['pb-preamble', 'pb-design-rules', 'pb-handcraft', 'pb-voice',
 last_reviewed: "2026-11-04"
 last_evolved: "2026-08-03"
 version: "1.3.1"
-version_notes: "v1.3.1: Technology-Specific Standards points Go and Python at /pb-guide Appendix C; the language guides are retired."
+version_notes: "v1.3.1: Technology-Specific Standards points Go and Python at /pb-guide Appendix C; the language guides are retired. Commit discipline drops its spaced double hyphen."
 breaking_changes: []
 ---
 # Project Guidelines & Working Principles
@@ -239,7 +239,7 @@ The cycle itself lives in `/pb-cycle` (develop, self-review, test, peer review, 
 
 **Quality gates.** Lint, typecheck and tests all pass before the work proceeds, every iteration, regardless of size. Wire them to one command the project already has; the runner is a project choice, the gate is not.
 
-**Commit discipline.** One concern per commit, every commit deployable, conventional prefix, and **never `git add .`** -- stage the specific files that belong together. Commit after each meaningful unit of work, not at end of session.
+**Commit discipline.** One concern per commit, every commit deployable, conventional prefix, and **never `git add .`**: stage the specific files that belong together. Commit after each meaningful unit of work, not at end of session.
 
 **Command quality.** Every multi-step command carries a Definition of Done checklist. Execution gates on the boxes, not on a judgment that it feels done.
 
