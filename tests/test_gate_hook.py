@@ -86,6 +86,9 @@ ASKS = [
     ("rm -fR build", "rm -r"),
     ("rm --recursive --force build", "rm -r"),
     ("rm -r build", "rm -r"),
+    ("rm --rec build", "rm -r"),
+    ('rm -rf"" build', "rm -r"),
+    (r"rm -r\f build", "rm -r"),
 ]
 
 
@@ -139,6 +142,7 @@ KNOWN_MISSES = [
     "gh repo sync",
     "gh gist create f",
     "gh api repos/x/y/issues -ftitle=t",
+    'rm "-rf" build',
 ]
 
 
