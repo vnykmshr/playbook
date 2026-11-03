@@ -9,7 +9,7 @@ related_commands: ['pb-deployment', 'pb-patterns-core', 'pb-observability', 'pb-
 last_reviewed: "2026-11-04"
 last_evolved: ""
 version: "2.0.0"
-version_notes: "v2.0.0: Cut from 872 to 222 lines: example code, walkthroughs and language sections removed; decisions, gotchas and when-to-use kept."
+version_notes: "v2.0.0: Cut from 872 to 222 lines: example code, walkthroughs and language sections removed; decisions, gotchas and when-to-use kept. Cloud Run deploys from Artifact Registry; the unsourced cold-start figure is gone."
 breaking_changes: ['Example code, walkthroughs and language sections removed; decisions and gotchas kept, constraints from removed code restated; deploy checklists live in /pb-preflight and /pb-deployment.']
 ---
 # Cloud Deployment Patterns (AWS, GCP, Azure)
@@ -83,7 +83,7 @@ Question your actual constraints before choosing. Challenge vendor recommendatio
 - ✅ No infrastructure management
 - ✅ Cost-effective for bursty load
 - ✅ Automatic scaling
-- ❌ Cold start latency (500ms+)
+- ❌ Cold start latency
 - ❌ Limited execution time (15 minutes)
 - ❌ Harder to debug and test
 
@@ -96,7 +96,7 @@ Question your actual constraints before choosing. Challenge vendor recommendatio
 **When to use**: Containerized services, stateless workloads, simple to manage
 
 **How it works**:
-1. Push container to Container Registry
+1. Push container to Artifact Registry
 2. Cloud Run deploys and manages
 3. Auto-scales based on requests
 4. Traffic split for canary deployments
