@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+The external action gate ships as a tested hook, and the gate text lets one message approve a numbered list of exact commands.
+
+**After upgrading:** `git pull`, then re-run `scripts/install.sh` to copy the hook to `~/.claude/hooks/` and add its `settings.json` entry (`hooks/README.md`); an existing copy that differs is skipped, so move it aside first. Regenerate `~/.claude/CLAUDE.md` with `/pb-claude-global` for the new gate text.
+
 ### Added
 
 - **External action gate hook** (`hooks/external-action-gate.sh`). A PreToolUse hook on Bash that makes Claude Code show a permission prompt before a push, merge, release, publish, deploy, recursive delete or discard of uncommitted work, and names every rule a command matched. If it cannot read its input, it asks. `scripts/install.sh` copies it to `~/.claude/hooks/` and skips an existing copy that differs (your edit or an older install); you add the `settings.json` entry (`hooks/README.md`). `tests/test_gate_hook.py` checks each rule's label and lists the shapes it misses.
