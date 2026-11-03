@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Breaking
+
+- **`/pb-patterns-distributed` v2.0.0.** 1,136 to 242 lines: example code, walkthroughs and language sections removed; decisions, gotchas and when-to-use kept.
+
 ### Changed
 
 - **`/pb-forge` v1.6.0.** Every stop where you rule carries forge's leans, vetted first: the lane lead rules on each lean against what it rests on, gaps it finds are fixed before the stop, and the stop names what changed. A check derived from the same rule as the work does not count as the vet.
