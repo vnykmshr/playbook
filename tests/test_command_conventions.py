@@ -297,6 +297,38 @@ HOSTILE_FIXTURE = [
     ("unquoted-version-1.10", FM.format(v="1.1", n="a").replace('version: "1.1"', "version: 1.1") + "A\n",
      FM.format(v="1.10", n="a").replace('version: "1.10"', "version: 1.10") + "A\n", False, True, False),
     ("added-file", None, FM.format(v="1.0.0", n="a") + "A\n", None, True, True),
+    ("notes-folded-block", FM.format(v="1.0.0", n="a") + "A\n",
+     '---\nname: "pb-x"\nversion: "1.1.0"\nversion_notes: >-\n  v1.1.0: one\n  line\n---\nA\n', False, True, True),
+    ("notes-literal-block", FM.format(v="1.0.0", n="a") + "A\n",
+     '---\nname: "pb-x"\nversion: "1.1.0"\nversion_notes: |\n  v1.1.0: one\n---\nA\n', False, True, True),
+]
+
+VERSION_MARKER = re.compile(r"(?<![\w.])v\d+\.\d+\.\d+:")
+
+
+def notes_problem(text: str) -> str | None:
+    """Why a bumped command's version_notes break the one-version rule, or None.
+
+    The notes start with `v{version}:` and name no other version's marker:
+    history lives in git and the CHANGELOG, not in a front-matter field that
+    grows at every bump.
+    """
+    version, notes = front_matter_field(text, "version"), front_matter_field(text, "version_notes") or ""
+    if not notes.startswith(f"v{version}: "):
+        return f"does not start with 'v{version}: '"
+    if len(VERSION_MARKER.findall(notes)) > 1:
+        return f"names more than one version: {VERSION_MARKER.findall(notes)}"
+    return None
+
+
+NOTES_FIXTURE = [
+    ("single-line", FM.format(v="1.1.0", n="v1.1.0: a"), None),
+    ("cumulative", FM.format(v="1.1.0", n="v1.1.0: a. v1.0.0: b"), "more than one"),
+    ("wrong-version", FM.format(v="1.1.0", n="v1.0.0: a"), "does not start"),
+    ("no-marker", FM.format(v="1.1.0", n="v2.10.0 baseline"), "does not start"),
+    ("prose-mentioning-a-playbook-tag", FM.format(v="2.0.0", n="v2.0.0: since playbook v2.31.0 ships"), None),
+    ("folded-block-single", '---\nversion: "1.1.0"\nversion_notes: >-\n  v1.1.0: one\n  line\n---\n', None),
+    ("literal-block-two-markers", '---\nversion: "1.1.0"\nversion_notes: |\n  v1.1.0: one\n  v1.0.0: two\n---\n', "more than one"),
 ]
 
 
@@ -587,6 +619,30 @@ class TestLineBudget:
         assert not stale, (
             f"LINE_BUDGET_BASELINE entries that no longer match (baseline, now): {stale}. "
             f"Lower the entry to the new length; remove it at or under {LINE_BUDGET} or when the command is gone."
+        )
+
+
+class TestVersionNotesOneVersion:
+    """A command bumped since the last tag carries notes for that version only.
+
+    Resets at every tag, so commands not bumped since keep their old notes
+    until their next bump rewrites them.
+    """
+
+    @pytest.mark.parametrize("text, problem", [row[1:] for row in NOTES_FIXTURE], ids=[row[0] for row in NOTES_FIXTURE])
+    def test_detector(self, text, problem):
+        found = notes_problem(text)
+        assert (found is None) if problem is None else (found and problem in found), found
+
+    def test_bumped_commands_name_one_version(self):
+        bad = {
+            path: problem for path, before, after in commands_changed_since_tag()
+            if (before is None or front_matter_field(before, "version") != front_matter_field(after, "version"))
+            and (problem := notes_problem(after))
+        }
+        assert not bad, (
+            f"version_notes of commands bumped since {last_tag()}: {bad}. "
+            "Rewrite them as one line starting 'v{version}: ' for the version being shipped."
         )
 
 

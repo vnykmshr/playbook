@@ -68,7 +68,7 @@ Each command has version metadata in its YAML front-matter:
 ---
 name: "pb-command"
 version: "1.1.0"              # Current command version
-version_notes: "Initial v2.11.0 (Phase 1-4 enhancements)"
+version_notes: "v1.1.0: Added Outcome Clarification"
 breaking_changes: []           # List of breaking changes (if any)
 ---
 ```
@@ -77,10 +77,7 @@ breaking_changes: []           # List of breaking changes (if any)
 Current semantic version of this command.
 
 ### `version_notes`
-Human-readable note about what version changed:
-- First release: "v2.10.0 baseline" or "Initial v2.11.0"
-- Enhancement: "Phase 3: Added Outcome Clarification"
-- Fix: "Fixed typo in Step 2"
+One line for the version being shipped, starting `v{version}:` and a space: what changed, and why where it is not obvious. A bump replaces the notes; earlier versions live in git and the CHANGELOG. `test_bumped_commands_name_one_version` checks every command bumped since the last tag, so notes written before the rule change at the command's next bump.
 
 ### `breaking_changes`
 List of breaking changes (if MAJOR version):
