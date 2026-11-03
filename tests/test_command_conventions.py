@@ -16,6 +16,7 @@ import subprocess
 from pathlib import Path
 
 import pytest
+import yaml
 
 COMMANDS_DIR = Path(__file__).parent.parent / "commands"
 EXPECTED_COUNT = 118  # 117 + pb-review-incoming
@@ -96,10 +97,21 @@ def body_lines(text: str) -> list[str]:
     return [line for line in split_front_matter(text)[1].splitlines() if line.strip()]
 
 
+@functools.lru_cache(maxsize=None)
+def parse_front_matter(text: str) -> dict:
+    """The front matter as YAML. Raises on malformed YAML: a guard that cannot read metadata must not pass.
+
+    A real parser, not a regex: a hand-written reader of quoted scalars stopped
+    at the first escaped quote and truncated two commands' version_notes.
+    """
+    data = yaml.safe_load(split_front_matter(text)[0])
+    return data if isinstance(data, dict) else {}
+
+
 def front_matter_field(text: str, field: str) -> str | None:
-    """A quoted scalar from the front matter only, never from a body example."""
-    match = re.search(rf'^{re.escape(field)}:\s*"([^"]*)"', split_front_matter(text)[0], re.MULTILINE)
-    return match.group(1) if match else None
+    """One front-matter value as text, from the YAML parse, never from a body example."""
+    value = parse_front_matter(text).get(field)
+    return None if value is None else str(value)
 
 
 def read_front_matter_field(path: Path, field: str) -> str | None:
@@ -113,6 +125,7 @@ def last_tag() -> str:
     return git("describe", "--tags", "--abbrev=0").strip()
 
 
+@functools.lru_cache(maxsize=None)
 def show_or_none(rev_path: str) -> str | None:
     """File text at `<rev>:<path>`, or None where it does not exist (added, deleted, renamed, root)."""
     try:
@@ -231,6 +244,8 @@ HOSTILE_FIXTURE = [
      FM.format(v="1.1.0", n="b").replace("\n---\n", "\n---  \n") + "A\n----\nB\n", False, True, True),
     ("blank-lines-only", FM.format(v="1.0.0", n="a") + "A\nB\n", FM.format(v="1.0.0", n="a") + "A\n\nB\n\n", False, False, False),
     ("notes-amend-only", FM.format(v="1.1.0", n="a") + "A\n", FM.format(v="1.1.0", n="a b") + "A\n", False, False, True),
+    ("notes-escaped-quote", FM.format(v="1.1.0", n='one \\"y\\" covers it') + "A\n",
+     FM.format(v="1.1.0", n='one \\"y\\" covers it, amended') + "A\n", False, False, True),
     ("added-file", None, FM.format(v="1.0.0", n="a") + "A\n", None, True, True),
 ]
 
@@ -268,16 +283,20 @@ class TestBodyChangeCarriesVersion:
             + "\nBump version (PATCH for a fix or clarification) with version_notes and a CHANGELOG line, in the same commit."
         )
 
-    def test_detectors_pass_the_hostile_fixture(self):
+    @pytest.mark.parametrize(
+        "before, after, body_changed, version_moved, notes_moved",
+        [row[1:] for row in HOSTILE_FIXTURE],
+        ids=[row[0] for row in HOSTILE_FIXTURE],
+    )
+    def test_detectors_pass_the_hostile_fixture(self, before, after, body_changed, version_moved, notes_moved):
         """Every metadata and body detector, against inputs that fooled an earlier shape of them.
 
         No detector reads diff lines any more, so a diff header form (noprefix,
         custom src/dst prefixes) has nothing to fool.
         """
-        for name, before, after, body_changed, version_moved, notes_moved in HOSTILE_FIXTURE:
-            if body_changed is not None:
-                assert (body_lines(before) != body_lines(after)) is body_changed, name
-            assert metadata_changes(before, after) == (version_moved, notes_moved), name
+        if body_changed is not None:
+            assert (body_lines(before) != body_lines(after)) is body_changed
+        assert metadata_changes(before, after) == (version_moved, notes_moved)
 
     def test_every_command_splits_cleanly(self):
         """A split that landed in the body, an empty body or an unreadable version would make the guards pass by default."""
@@ -285,9 +304,28 @@ class TestBodyChangeCarriesVersion:
         for path in get_command_files():
             front, _body = split_front_matter(text := path.read_text())
             stray = [line for line in front.splitlines() if line.strip() and not re.match(r"[a-z_]+:|\s", line)]  # keys and indented YAML continuations
-            if stray or not body_lines(text) or not front_matter_field(text, "name") or not front_matter_field(text, "version"):
-                broken.append(f"{path.name}: {stray[:1] or 'no body, name or version'}")
-        assert not broken, f"Front matter does not split cleanly:\n  " + "\n  ".join(broken)
+            try:
+                readable = all(front_matter_field(text, key) for key in ("name", "version", "version_notes"))
+            except yaml.YAMLError as error:
+                broken.append(f"{path.name}: front matter is not YAML ({error.problem})")
+                continue
+            if stray or not body_lines(text) or not readable:
+                broken.append(f"{path.name}: {stray[:1] or 'no body, name, version or notes'}")
+        assert not broken, "Front matter does not split cleanly:\n  " + "\n  ".join(broken)
+
+
+class TestForgeFinderModes:
+    def test_every_mode_forge_claims_for_a_finder_exists(self):
+        """Forge's Find table names a finder's mode; a mode the finder's own file never defines is a promise nobody keeps."""
+        forge = (COMMANDS_DIR / "development" / "pb-forge.md").read_text()
+        find = forge.split("**Find.**", 1)[1].split("**Vet and fix.**", 1)[0]
+        claims = re.findall(r"`/(pb-[a-z-]+) (--[a-z-]+)`", find)
+        assert claims, "Forge's Find table names no finder mode -- did the table move?"
+        missing = [
+            f"/{cmd} {flag}" for cmd, flag in claims
+            if flag not in next(COMMANDS_DIR.rglob(f"{cmd}.md")).read_text()
+        ]
+        assert not missing, f"Forge claims finder modes their commands do not define: {missing}"
 
 
 class TestCommandCount:
