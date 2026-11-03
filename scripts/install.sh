@@ -145,6 +145,21 @@ for script in context-bar.sh check-context.sh; do
     fi
 done
 
+# --- External action gate hook: copied, not linked, so a checkout or a moved repo cannot
+# change or remove the live gate. Wired in settings.json by hand (hooks/README.md).
+hook_src="$REPO_DIR/hooks/external-action-gate.sh"
+hook_dest="$CLAUDE_HOME/hooks/external-action-gate.sh"
+if [ -f "$hook_src" ]; then
+    mkdir -p "$CLAUDE_HOME/hooks"
+    if [ -f "$hook_dest" ] && [ ! -L "$hook_dest" ] && ! cmp -s "$hook_src" "$hook_dest"; then
+        echo "  ⚠ Skipped: ~/.claude/hooks/external-action-gate.sh differs from hooks/ (diff it, move it aside, re-run)"
+    else
+        rm -f "$hook_dest"
+        cp "$hook_src" "$hook_dest"
+        echo "  ✓ Copied: ~/.claude/hooks/external-action-gate.sh"
+    fi
+fi
+
 echo ""
 echo "Quick start:"
 echo "  /pb-start    - Begin development work"

@@ -126,6 +126,21 @@ Hooks are **not auto-installed** by the playbook install script. They require ma
 
 **Why manual?** Hooks interact with your shell environment and may need project-specific paths. Copy-and-adapt is safer than auto-install.
 
+### External action gate
+
+`external-action-gate.sh` is the one hook shipped ready to use. On a Bash command that pushes, merges, releases, publishes, deploys or deletes, it asks for a permission prompt (auto mode included). `scripts/install.sh` copies it to `~/.claude/hooks/` (a copy, so checking out an old tag cannot remove the live gate) and skips a copy you have changed; you wire it yourself:
+
+```json
+{
+  "PreToolUse": [{
+    "matcher": "Bash",
+    "hooks": [{ "type": "command", "command": "bash ~/.claude/hooks/external-action-gate.sh" }]
+  }]
+}
+```
+
+It needs `jq`; without it, every Bash command asks. It catches known command shapes, not intent: quoting, `sh -c`, wrapper scripts, raw HTTP and non-Bash tools pass it. `tests/test_gate_hook.py` lists each known miss.
+
 ---
 
 ## Best Practices

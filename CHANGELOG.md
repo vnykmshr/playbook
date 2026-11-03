@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- **External action gate hook** (`hooks/external-action-gate.sh`). A PreToolUse hook on Bash that asks for a permission prompt before a push, merge, release, publish, deploy or recursive delete, and names every rule a command matched. `scripts/install.sh` copies it to `~/.claude/hooks/` and leaves a changed copy alone; you add the `settings.json` entry (`hooks/README.md`). `tests/test_gate_hook.py` checks each rule's label and lists the shapes it misses.
+
 ## [v2.30.0] - 2026-11-03
 
 `/pb-forge`'s Self-gate becomes a review ritual: finders report without editing, a lead vets every finding, fixes are re-reviewed on their own, and signoff checks the rulings landed.
