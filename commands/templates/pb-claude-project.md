@@ -191,7 +191,7 @@ Read the diff for content that vanished rather than changed. Anything lost that 
 derivable belonged under `## Custom (Manual)` and did not get there -- fix that, not the
 output. Delete the backup once the diff is clean. If the file is untracked
 (`git ls-files --error-unmatch .claude/CLAUDE.md` fails), the backup is its only history:
-copy it to `~/.claude/backups/<project>/CLAUDE.md.YYYYMMDD-HHMM` and keep it.
+copy it with `cp -n` to `~/.claude/backups/<project>/CLAUDE.md.YYYYMMDD-HHMM` and keep it.
 
 ---
 
