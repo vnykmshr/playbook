@@ -13,7 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-- **`/pb-claude-global` v2.11.0.** The external action gate accepts one approval for a numbered list of exact commands, covering only what it names; merge, tag, release, publish, deploy and pushes to the default branch or with tag flags are never batched. Each approved item runs as its own Bash call. The gate hook is described as a speed bump on known Bash shapes, not a boundary.
+- **`/pb-claude-global` v2.11.0.** The external action gate accepts one approval for a numbered list of exact commands, covering only what it names; merge, tag, release, publish, deploy and pushes to the default branch or with tag flags are never batched. Each approved item runs as its own Bash call. The gate hook is described as a speed bump on known Bash shapes, not a boundary. The commit ceiling reads as one: subject only, and a body, if any, at most 2 short lines.
 - **`/pb-forge` v1.5.1.** External Actions Stop Hard points to the global gate instead of restating it.
 - **`/pb-claude-project` v1.4.2.** When the project CLAUDE.md is untracked, the regeneration backup is its only history: it is copied to `~/.claude/backups/<project>/` and kept, not deleted.
 - **`/pb-pause` v1.9.5.** Step 6 points to `/pb-claude-project` for regenerate-then-diff instead of restating it.
