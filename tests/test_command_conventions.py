@@ -79,11 +79,15 @@ def split_front_matter(text: str) -> tuple[str, str]:
     """(front matter, body), split at the closing `---` by position.
 
     Position, not key shape: command bodies carry lines like `name: node1` inside
-    YAML examples, and a key-prefix filter reads those as metadata.
+    YAML examples, and a key-prefix filter reads those as metadata. The closer
+    may carry trailing whitespace (MD009 allows two spaces and skips front
+    matter); matching it exactly would move the split to a body rule.
     """
-    if text.startswith("---\n") and "\n---\n" in text:
-        front, body = text[4:].split("\n---\n", 1)
-        return front, body
+    lines = text.split("\n")
+    if lines and lines[0].rstrip() == "---":
+        for i, line in enumerate(lines[1:], start=1):
+            if re.fullmatch(r"---[ \t\r]*", line):
+                return "\n".join(lines[1:i]), "\n".join(lines[i + 1:])
     return "", text
 
 
@@ -109,6 +113,30 @@ def last_tag() -> str:
     return git("describe", "--tags", "--abbrev=0").strip()
 
 
+def show_or_none(rev_path: str) -> str | None:
+    """File text at `<rev>:<path>`, or None where it does not exist (added, deleted, renamed, root)."""
+    try:
+        return git("show", rev_path)
+    except subprocess.CalledProcessError:
+        return None
+
+
+def metadata_changes(before: str | None, after: str | None) -> tuple[bool, bool]:
+    """(version changed, version_notes changed) between two texts of one command, read from front matter only."""
+    if after is None:
+        return False, False
+    if before is None:
+        return True, True
+    return tuple(
+        front_matter_field(before, key) != front_matter_field(after, key) for key in ("version", "version_notes")
+    )
+
+
+@functools.lru_cache(maxsize=None)
+def commit_metadata_changes(sha: str, rel_path: str) -> tuple[bool, bool]:
+    return metadata_changes(show_or_none(f"{sha}^:{rel_path}"), show_or_none(f"{sha}:{rel_path}"))
+
+
 @functools.lru_cache(maxsize=None)
 def commit_changed_body(sha: str, rel_path: str) -> bool:
     """True if the commit changed this file's body (front matter and blank lines excluded).
@@ -118,11 +146,8 @@ def commit_changed_body(sha: str, rel_path: str) -> bool:
     also claims a version owes a review date. A file absent from the parent
     (added, renamed in, root commit) counts as changed.
     """
-    try:
-        before = git("show", f"{sha}^:{rel_path}")
-    except subprocess.CalledProcessError:
-        return True
-    return body_lines(before) != body_lines(git("show", f"{sha}:{rel_path}"))
+    before = show_or_none(f"{sha}^:{rel_path}")
+    return before is None or body_lines(before) != body_lines(git("show", f"{sha}:{rel_path}"))
 
 
 @functools.lru_cache(maxsize=None)
@@ -137,7 +162,7 @@ def last_substantive_version_bump(rel_path: str) -> str | None:
         if not line.strip():
             continue
         sha, date = line.split()
-        if re.search(r"^\+version:", git("show", sha, "--", rel_path), re.MULTILINE):
+        if commit_metadata_changes(sha, rel_path)[0]:
             return date if commit_changed_body(sha, rel_path) else None
     return None
 
@@ -156,10 +181,10 @@ def window_version_changes() -> tuple[tuple[str, frozenset[str], frozenset[str],
         noted: set[str] = set()
         for f in touched:
             if f.startswith("commands/") and f.endswith(".md"):
-                diff = git("show", sha, "--", f)
-                if re.search(r"^\+version:", diff, re.MULTILINE):
+                version_moved, notes_moved = commit_metadata_changes(sha, f)
+                if version_moved:
                     bumped.add(f)
-                if re.search(r"^\+version_notes:", diff, re.MULTILINE):
+                if notes_moved:
                     noted.add(f)
         changes.append((sha[:7], touched, frozenset(bumped), frozenset(noted)))
     return tuple(changes)
@@ -196,6 +221,20 @@ def get_related_commands_count(content: str) -> int:
     return count
 
 
+FM = '---\nname: "pb-x"\nversion: "{v}"\nversion_notes: "{n}"\n---\n'
+# (name, before, after, body changed, version moved, notes moved)
+HOSTILE_FIXTURE = [
+    ("removed-rule", FM.format(v="1.0.0", n="a") + "A\n\n----\nB\n", FM.format(v="1.0.0", n="a") + "A\n\nB\n", True, False, False),
+    ("key-shaped-body-line", FM.format(v="1.0.0", n="a") + "name: node1\n", FM.format(v="1.0.0", n="a") + "name: node2\n", True, False, False),
+    ("body-version-line", FM.format(v="1.0.0", n="a") + "x\n", FM.format(v="1.0.0", n="a") + 'x\nversion: "3.8"\n', True, False, False),
+    ("closer-trailing-spaces", FM.format(v="1.0.0", n="a").replace("\n---\n", "\n---  \n") + "A\n----\nB\n",
+     FM.format(v="1.1.0", n="b").replace("\n---\n", "\n---  \n") + "A\n----\nB\n", False, True, True),
+    ("blank-lines-only", FM.format(v="1.0.0", n="a") + "A\nB\n", FM.format(v="1.0.0", n="a") + "A\n\nB\n\n", False, False, False),
+    ("notes-amend-only", FM.format(v="1.1.0", n="a") + "A\n", FM.format(v="1.1.0", n="a b") + "A\n", False, False, True),
+    ("added-file", None, FM.format(v="1.0.0", n="a") + "A\n", None, True, True),
+]
+
+
 class TestBodyChangeCarriesVersion:
     """A command whose body changed since the last tag must ship a new version.
 
@@ -229,25 +268,26 @@ class TestBodyChangeCarriesVersion:
             + "\nBump version (PATCH for a fix or clarification) with version_notes and a CHANGELOG line, in the same commit."
         )
 
-    @pytest.mark.parametrize("before, after, changed", [
-        ("---\nversion: \"1.0.0\"\n---\nA\n\n----\nB\n", "---\nversion: \"1.0.0\"\n---\nA\n\nB\n", True),
-        ("---\nname: \"pb-x\"\n---\nname: node1\n", "---\nname: \"pb-x\"\n---\nname: node2\n", True),
-        ("---\nversion: \"1.0.0\"\n---\nA\nB\n", "---\nversion: \"1.0.0\"\n---\nA\n\nB\n\n", False),
-        ("---\nversion: \"1.0.0\"\n---\nA\n", "---\nversion: \"1.1.0\"\nlast_reviewed: \"2026-11-03\"\n---\nA\n", False),
-    ], ids=["removed-rule", "key-shaped-body-line", "blank-lines-only", "front-matter-only"])
-    def test_body_comparison(self, before, after, changed):
-        assert (body_lines(before) != body_lines(after)) is changed
+    def test_detectors_pass_the_hostile_fixture(self):
+        """Every metadata and body detector, against inputs that fooled an earlier shape of them.
 
-    def test_version_read_from_front_matter_not_body(self):
-        assert front_matter_field('---\nversion: "1.2.0"\n---\nversion: "9.9.9"\n', "version") == "1.2.0"
+        No detector reads diff lines any more, so a diff header form (noprefix,
+        custom src/dst prefixes) has nothing to fool.
+        """
+        for name, before, after, body_changed, version_moved, notes_moved in HOSTILE_FIXTURE:
+            if body_changed is not None:
+                assert (body_lines(before) != body_lines(after)) is body_changed, name
+            assert metadata_changes(before, after) == (version_moved, notes_moved), name
 
-    def test_every_command_has_a_body_and_a_readable_version(self):
-        """An unparseable version or an empty body would make the guard above pass by default."""
-        broken = [
-            path.name for path in get_command_files()
-            if not body_lines(text := path.read_text()) or not front_matter_field(text, "version")
-        ]
-        assert not broken, f"No body or no quoted version in: {broken}"
+    def test_every_command_splits_cleanly(self):
+        """A split that landed in the body, an empty body or an unreadable version would make the guards pass by default."""
+        broken = []
+        for path in get_command_files():
+            front, _body = split_front_matter(text := path.read_text())
+            stray = [line for line in front.splitlines() if line.strip() and not re.match(r"[a-z_]+:|\s", line)]  # keys and indented YAML continuations
+            if stray or not body_lines(text) or not front_matter_field(text, "name") or not front_matter_field(text, "version"):
+                broken.append(f"{path.name}: {stray[:1] or 'no body, name or version'}")
+        assert not broken, f"Front matter does not split cleanly:\n  " + "\n  ".join(broken)
 
 
 class TestCommandCount:
