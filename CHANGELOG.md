@@ -14,7 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **`/pb-database-ops` v2.0.0.** 865 to 296 lines: example code, walkthroughs and language sections removed; decisions, gotchas and when-to-use kept. Failover fences the old primary first and promotes the replica that received the most WAL; a backup counts once restored, with alerts on age and size; transaction pooling breaks session state; runbook fences render.
 - **`/pb-patterns-deployment` v2.0.0.** 1,076 to 163 lines: example code, walkthroughs and language sections removed; decisions, gotchas and when-to-use kept.
 - **`/pb-patterns-cloud` v2.0.0.** 872 to 222 lines: example code, walkthroughs and language sections removed; decisions, gotchas and when-to-use kept. Cloud Run deploys from Artifact Registry; the unsourced cold-start figure is gone.
-- **`/pb-patterns-security` v2.0.0.** 785 to 212 lines: example code, walkthroughs and language sections removed; decisions, gotchas and when-to-use kept.
+- **`/pb-patterns-security` v2.0.0.** 785 to 212 lines: example code, walkthroughs and language sections removed; decisions, gotchas and when-to-use kept. OAuth code flow uses PKCE with S256 (RFC 9700); JWT verification pins the algorithm and rejects none (RFC 8725).
 - **`/pb-patterns-frontend` v2.0.0.** 943 to 264 lines: example code, walkthroughs and language sections removed; decisions, gotchas and when-to-use kept.
 - **`/pb-patterns-api` v2.0.0.** 865 to 332 lines: example code, walkthroughs and language sections removed; decisions, gotchas and when-to-use kept.
 - **`/pb-patterns-async` v2.0.0.** 715 to 222 lines: example code, walkthroughs and language sections removed; decisions, gotchas and when-to-use kept.

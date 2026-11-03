@@ -9,7 +9,7 @@ related_commands: ['pb-security', 'pb-hardening', 'pb-patterns-core', 'pb-patter
 last_reviewed: "2026-11-04"
 last_evolved: "2026-02-18"
 version: "2.0.0"
-version_notes: "v2.0.0: Cut from 785 to 212 lines: example code, walkthroughs and language sections removed; decisions, gotchas and when-to-use kept."
+version_notes: "v2.0.0: Cut from 785 to 212 lines: example code, walkthroughs and language sections removed; decisions, gotchas and when-to-use kept. OAuth code flow uses PKCE with S256 (RFC 9700); JWT verification pins the algorithm and rejects none (RFC 8725)."
 breaking_changes: ['Example code, walkthroughs and language sections removed; decisions and gotchas kept, constraints from removed code restated; deploy checklists live in /pb-preflight and /pb-deployment.']
 ---
 # Security Patterns & Microservice Security
@@ -38,11 +38,13 @@ Authentication answers: "Are you who you claim to be?"
 
 **How it works**:
 1. User requests access to their data
-2. App redirects to authorization server
+2. App redirects to authorization server with a PKCE code challenge (S256)
 3. User grants permission
 4. Authorization server returns authorization code
-5. App exchanges code for access token (backend-to-backend)
+5. App exchanges code and PKCE code verifier for access token (backend-to-backend)
 6. App uses access token to call APIs
+
+PKCE with S256 is MUST for public clients (SPAs, mobile, CLI) and RECOMMENDED for confidential clients (RFC 9700).
 
 **Trade-offs**:
 - ✅ Industry standard, well-supported
@@ -55,6 +57,7 @@ Authentication answers: "Are you who you claim to be?"
 - ❌ Storing authorization codes indefinitely
 - ❌ Sending access tokens through unsecured channels
 - ❌ Not validating state parameter (CSRF vulnerability)
+- ❌ Skipping PKCE: an intercepted authorization code becomes a token
 - ❌ Storing user password instead of using OAuth
 
 ---
@@ -80,6 +83,7 @@ Authentication answers: "Are you who you claim to be?"
 - ❌ Storing sensitive data in JWT (it's base64-encoded, not encrypted)
 - ❌ Using weak secret keys
 - ❌ Not validating expiration
+- ❌ Taking `alg` from the token header: pin the algorithm on verify and reject `none` (RFC 8725)
 - ❌ Storing JWT in local storage (use httpOnly cookies for web apps)
 
 ---
