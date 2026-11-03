@@ -6,11 +6,11 @@ difficulty: "advanced"
 model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-patterns-frontend', 'pb-security', 'pb-patterns-resilience', 'pb-patterns-async', 'pb-testing']
-last_reviewed: "2026-02-09"
+last_reviewed: "2026-11-04"
 last_evolved: ""
-version: "1.0.0"
-version_notes: "v2.10.0 baseline"
-breaking_changes: []
+version: "2.0.0"
+version_notes: "v2.0.0: Cut from 865 to 332 lines: example code, walkthroughs and language sections removed; decisions, gotchas and when-to-use kept."
+breaking_changes: ['Example code, walkthroughs and language sections removed; decisions and gotchas kept, constraints from removed code restated; deploy checklists live in /pb-preflight and /pb-deployment.']
 ---
 # API Design Patterns
 
@@ -50,47 +50,6 @@ Is this a public API consumed by third parties?
 
 ## REST Patterns
 
-### Resource Naming
-
-Resources are nouns, not verbs:
-
-```
-# [YES] Nouns
-GET    /users
-GET    /users/{id}
-POST   /users
-PUT    /users/{id}
-DELETE /users/{id}
-
-# [NO] Verbs
-GET    /getUsers
-POST   /createUser
-POST   /deleteUser/{id}
-```
-
-**Plurals for collections:**
-
-```
-# [YES] Plural
-/users
-/users/{id}/orders
-
-# [NO] Singular (inconsistent)
-/user
-/user/{id}/order
-```
-
-**Hierarchical relationships:**
-
-```
-# [YES] Nested resources
-GET /users/{userId}/orders
-GET /users/{userId}/orders/{orderId}
-
-# [NO] Flat with query params for relationships
-GET /orders?userId=123  (OK for filtering, not for hierarchy)
-```
-
 ### HTTP Methods
 
 | Method | Purpose | Idempotent | Safe |
@@ -104,14 +63,6 @@ GET /orders?userId=123  (OK for filtering, not for hierarchy)
 *PATCH is idempotent if the same patch produces the same result.
 
 **Idempotent means:** Calling multiple times produces the same result as calling once.
-
-```
-# Idempotent (safe to retry)
-PUT /users/123 { "name": "Alice" }  # Always results in name = Alice
-
-# Not idempotent (retry creates duplicates)
-POST /users { "name": "Alice" }  # Creates new user each time
-```
 
 ### Status Codes
 
@@ -129,54 +80,6 @@ POST /users { "name": "Alice" }  # Creates new user each time
 | 429 | Too Many Requests | Rate limit exceeded |
 | 500 | Internal Server Error | Server-side failure |
 | 503 | Service Unavailable | Temporary outage, maintenance |
-
-### Request/Response Format
-
-**Consistent envelope:**
-
-```json
-// Success response
-{
-  "data": { /* resource or array */ },
-  "meta": {
-    "page": 1,
-    "totalPages": 10,
-    "totalCount": 100
-  }
-}
-
-// Error response
-{
-  "error": {
-    "code": "VALIDATION_ERROR",
-    "message": "Invalid email address",
-    "details": [
-      {
-        "field": "email",
-        "message": "Must be a valid email"
-      }
-    ]
-  }
-}
-```
-
-**Alternatively, no envelope (simpler):**
-
-```json
-// Success: Just the data
-{ "id": 1, "name": "Alice" }
-
-// Success: Array
-[{ "id": 1 }, { "id": 2 }]
-
-// Error: Standard error object
-{
-  "error": "VALIDATION_ERROR",
-  "message": "Invalid email address"
-}
-```
-
-Pick one style and be consistent.
 
 ### Response Design
 
@@ -197,75 +100,6 @@ API responses are contracts. What you return defines what consumers depend on. R
 
 Never serialize your data model directly. Define explicit response shapes per consumer need.
 
-```python
-# [NO] Data layer leaking through API
-@app.get("/api/tracks/{id}")
-def get_track(id):
-    track = db.query(Track).get(id)
-    return jsonify(track.to_dict())  # Everything: embeddings, prompts, workflow_state
-
-# [YES] Explicit response shape
-@app.get("/api/tracks/{id}")
-def get_track(id):
-    track = db.query(Track).get(id)
-    return jsonify({
-        "id": track.id,
-        "title": track.title,
-        "artist": track.artist,
-        "duration": track.duration,
-        "coverUrl": track.cover_url,
-    })
-```
-
-```typescript
-// [NO] Returning the database entity
-app.get("/api/tracks/:id", async (req, res) => {
-  const track = await db.track.findUnique({ where: { id: req.params.id } });
-  res.json(track);  // Includes embeddingVector, generationPrompt, workflowState
-});
-
-// [YES] Explicit response type
-interface TrackResponse {
-  id: string;
-  title: string;
-  artist: string;
-  duration: number;
-  coverUrl: string;
-}
-
-app.get("/api/tracks/:id", async (req, res) => {
-  const track = await db.track.findUnique({ where: { id: req.params.id } });
-  const response: TrackResponse = {
-    id: track.id,
-    title: track.title,
-    artist: track.artist,
-    duration: track.duration,
-    coverUrl: track.coverUrl,
-  };
-  res.json(response);
-});
-```
-
-```go
-// [NO] Struct tags expose everything
-type Track struct {
-    ID                 string `json:"id"`
-    Title              string `json:"title"`
-    EmbeddingVector    []float64 `json:"embedding_vector"`    // Internal
-    GenerationPrompt   string    `json:"generation_prompt"`   // Internal
-    WorkflowState      string    `json:"workflow_state"`      // Internal
-}
-
-// [YES] Separate response type
-type TrackResponse struct {
-    ID       string `json:"id"`
-    Title    string `json:"title"`
-    Artist   string `json:"artist"`
-    Duration int    `json:"duration"`
-    CoverURL string `json:"coverUrl"`
-}
-```
-
 #### Field Selection Guidance
 
 Ask these questions for every field in a response:
@@ -278,11 +112,6 @@ Ask these questions for every field in a response:
 #### List vs. Detail Responses
 
 A common and effective pattern: return lean summaries in lists, full detail on individual fetch.
-
-```
-GET /api/tracks          → id, title, artist, duration, coverUrl
-GET /api/tracks/{id}     → id, title, artist, duration, coverUrl, description, lyrics
-```
 
 Don't return `description` and `lyrics` for 50 tracks in a list response when the UI shows titles and cover art.
 
@@ -316,27 +145,6 @@ The question isn't "always optimize" - it's "know what you're sending and why."
 
 The inbound counterpart to Response Design: don't bind request bodies directly into your data model.
 
-**The problem:**
-
-```python
-# [NO] Mass assignment - attacker sends {"role": "admin", "name": "Alice"}
-@app.put("/api/users/{id}")
-def update_user(id):
-    user = db.query(User).get(id)
-    user.update(**request.json)  # Binds ALL fields, including role
-    db.commit()
-
-# [YES] Allowlisted fields per operation
-UPDATABLE_FIELDS = {'name', 'email', 'bio'}
-
-@app.put("/api/users/{id}")
-def update_user(id):
-    user = db.query(User).get(id)
-    data = {k: v for k, v in request.json.items() if k in UPDATABLE_FIELDS}
-    user.update(**data)
-    db.commit()
-```
-
 **Discipline:**
 - **Allowlist writable fields per operation** - Create and update may accept different fields
 - **Readonly fields are never writable** - `id`, `createdAt`, `role`, `internalScore` cannot be set via API
@@ -350,83 +158,12 @@ This is the mirror of Response Design: be explicit about what goes in, not just 
 
 ### Error Response Standard
 
-```json
-{
-  "error": {
-    "code": "RESOURCE_NOT_FOUND",
-    "message": "User not found",
-    "details": {
-      "resourceType": "user",
-      "resourceId": "123"
-    },
-    "requestId": "req_abc123",
-    "documentation": "https://api.example.com/docs/errors#RESOURCE_NOT_FOUND"
-  }
-}
-```
-
 **Components:**
 - `code` - Machine-readable error type (for client logic)
 - `message` - Human-readable description (for debugging/display)
 - `details` - Additional context (varies by error type)
 - `requestId` - For support/debugging correlation
 - `documentation` - Link to error documentation (optional)
-
-### Error Codes
-
-Define a consistent error taxonomy:
-
-```
-# Authentication/Authorization
-UNAUTHORIZED           # Not authenticated
-FORBIDDEN              # Authenticated but not allowed
-TOKEN_EXPIRED          # Auth token needs refresh
-
-# Validation
-VALIDATION_ERROR       # Input validation failed
-MISSING_FIELD          # Required field not provided
-INVALID_FORMAT         # Field format wrong
-
-# Resources
-RESOURCE_NOT_FOUND     # Requested resource doesn't exist
-RESOURCE_CONFLICT      # Duplicate or version conflict
-RESOURCE_GONE          # Resource was deleted
-
-# Rate Limiting
-RATE_LIMITED           # Too many requests
-QUOTA_EXCEEDED         # Usage quota exceeded
-
-# Server Errors
-INTERNAL_ERROR         # Generic server error
-SERVICE_UNAVAILABLE    # Temporary outage
-```
-
-### Client Error Handling
-
-```typescript
-async function fetchUser(id: string): Promise<User> {
-  const response = await fetch(`/api/users/${id}`);
-
-  if (!response.ok) {
-    const error = await response.json();
-
-    switch (error.error.code) {
-      case 'RESOURCE_NOT_FOUND':
-        throw new UserNotFoundError(id);
-      case 'UNAUTHORIZED':
-        throw new AuthenticationError();
-      case 'RATE_LIMITED':
-        // Retry after delay
-        await sleep(error.error.details.retryAfter);
-        return fetchUser(id);
-      default:
-        throw new ApiError(error.error.message);
-    }
-  }
-
-  return response.json();
-}
-```
 
 ---
 
@@ -436,59 +173,17 @@ async function fetchUser(id: string): Promise<User> {
 
 Best for real-time data, no "page drift" when items are added/removed:
 
-```
-GET /users?cursor=abc123&limit=20
-
-Response:
-{
-  "data": [ ... ],
-  "pagination": {
-    "nextCursor": "def456",
-    "prevCursor": "xyz789",
-    "hasMore": true
-  }
-}
-```
-
 **Cursor is opaque:** Client doesn't decode it, just passes it back.
 
 ### Offset-Based (Simple)
 
 Easier to implement, allows jumping to pages:
 
-```
-GET /users?page=2&limit=20
-GET /users?offset=20&limit=20
-
-Response:
-{
-  "data": [ ... ],
-  "pagination": {
-    "page": 2,
-    "limit": 20,
-    "totalPages": 10,
-    "totalCount": 200
-  }
-}
-```
-
 **Problem:** "Page drift" when items added/removed during pagination.
 
 ### Keyset-Based
 
 For sorted data with unique keys:
-
-```
-GET /users?after_id=123&limit=20
-
-Response:
-{
-  "data": [ ... ],
-  "pagination": {
-    "lastId": 143
-  }
-}
-```
 
 **Most efficient** for large datasets (uses index).
 
@@ -498,29 +193,15 @@ Response:
 
 ### URL Versioning (Recommended for REST)
 
-```
-/v1/users
-/v2/users
-```
-
 **Pros:** Explicit, easy to route, cacheable
 **Cons:** URL pollution, can't version individual endpoints
 
 ### Header Versioning
 
-```
-GET /users
-Accept: application/vnd.api+json; version=2
-```
-
 **Pros:** Clean URLs, per-request versioning
 **Cons:** Hidden, harder to test, caching complexity
 
 ### Query Parameter
-
-```
-GET /users?version=2
-```
 
 **Pros:** Explicit, easy to test
 **Cons:** Pollutes query string, caching issues
@@ -531,67 +212,14 @@ GET /users?version=2
 2. **Deprecation period** - Warn before removing (6-12 months)
 3. **Version when necessary** - Not every release needs a version bump
 
-```
-# Non-breaking (no version needed)
-- Adding new optional field
-- Adding new endpoint
-- Adding new optional query param
-
-# Breaking (needs version)
-- Removing field
-- Renaming field
-- Changing field type
-- Changing error format
-- Removing endpoint
-```
-
 ---
 
 ## Authentication
 
 ### API Key (Simple)
 
-```
-GET /api/users
-Authorization: Bearer api_key_abc123
-
-# Or header
-X-API-Key: api_key_abc123
-```
-
 **Use for:** Server-to-server, simple integrations
 **Don't use for:** User authentication, browser apps
-
-### JWT (Token-based)
-
-```
-POST /auth/login
-{ "email": "...", "password": "..." }
-
-Response:
-{
-  "accessToken": "eyJ...",
-  "refreshToken": "...",
-  "expiresIn": 3600
-}
-
-# Subsequent requests
-GET /api/users
-Authorization: Bearer eyJ...
-```
-
-**Token refresh:**
-
-```
-POST /auth/refresh
-{ "refreshToken": "..." }
-
-Response:
-{
-  "accessToken": "eyJ...(new)...",
-  "expiresIn": 3600
-}
-```
 
 ### OAuth 2.0 (Third-party)
 
@@ -600,34 +228,6 @@ For "Login with Google" etc. See OAuth 2.0 spec for flows.
 ---
 
 ## Rate Limiting
-
-### Response Headers
-
-```
-HTTP/1.1 200 OK
-X-RateLimit-Limit: 100
-X-RateLimit-Remaining: 95
-X-RateLimit-Reset: 1640000000
-```
-
-### Rate Limited Response
-
-```
-HTTP/1.1 429 Too Many Requests
-Retry-After: 60
-
-{
-  "error": {
-    "code": "RATE_LIMITED",
-    "message": "Rate limit exceeded",
-    "details": {
-      "limit": 100,
-      "window": "1 minute",
-      "retryAfter": 60
-    }
-  }
-}
-```
 
 ### Rate Limit Strategies
 
@@ -641,95 +241,7 @@ Retry-After: 60
 
 ## GraphQL Patterns
 
-### Schema Design
-
-```graphql
-type User {
-  id: ID!
-  email: String!
-  name: String!
-  orders(first: Int, after: String): OrderConnection!
-}
-
-type Order {
-  id: ID!
-  total: Money!
-  status: OrderStatus!
-  items: [OrderItem!]!
-}
-
-type OrderConnection {
-  edges: [OrderEdge!]!
-  pageInfo: PageInfo!
-}
-
-type OrderEdge {
-  node: Order!
-  cursor: String!
-}
-
-type PageInfo {
-  hasNextPage: Boolean!
-  endCursor: String
-}
-```
-
-### Query Patterns
-
-```graphql
-# Good: Specific fields
-query GetUserOrders($userId: ID!) {
-  user(id: $userId) {
-    name
-    orders(first: 10) {
-      edges {
-        node {
-          id
-          total
-        }
-      }
-    }
-  }
-}
-
-# Bad: Over-fetching
-query GetEverything($userId: ID!) {
-  user(id: $userId) {
-    ...AllUserFields
-    orders {
-      ...AllOrderFields
-      items {
-        ...AllItemFields
-      }
-    }
-  }
-}
-```
-
 ### Mutation Patterns
-
-```graphql
-type Mutation {
-  createOrder(input: CreateOrderInput!): CreateOrderPayload!
-  updateOrder(input: UpdateOrderInput!): UpdateOrderPayload!
-  deleteOrder(id: ID!): DeleteOrderPayload!
-}
-
-input CreateOrderInput {
-  userId: ID!
-  items: [OrderItemInput!]!
-}
-
-type CreateOrderPayload {
-  order: Order
-  errors: [UserError!]!
-}
-
-type UserError {
-  field: String
-  message: String!
-}
-```
 
 **Pattern:** Return both success data AND errors in payload.
 
@@ -750,54 +262,9 @@ Common issues to avoid:
 - **Batching limits** - GraphQL allows multiple operations per request. Without limits, an attacker sends thousands of mutations in one HTTP call, bypassing per-request rate limiting.
 - **Field-level authorization** - In REST you protect endpoints; in GraphQL you must protect individual fields and nested resolvers. Authorization middleware must run per-field, not just per-query.
 
-**Future consideration:** For comprehensive GraphQL guidance (subscriptions, federation, caching, tooling), see `/pb-patterns-graphql` when available.
-
 ---
 
 ## Documentation
-
-### OpenAPI (REST)
-
-```yaml
-openapi: 3.0.0
-info:
-  title: User API
-  version: 1.0.0
-
-paths:
-  /users:
-    get:
-      summary: List users
-      parameters:
-        - name: page
-          in: query
-          schema:
-            type: integer
-            default: 1
-      responses:
-        '200':
-          description: Success
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UserList'
-
-components:
-  schemas:
-    User:
-      type: object
-      properties:
-        id:
-          type: string
-        email:
-          type: string
-          format: email
-        name:
-          type: string
-      required:
-        - id
-        - email
-```
 
 ### Documentation Checklist
 
