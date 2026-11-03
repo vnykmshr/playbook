@@ -50,8 +50,19 @@ ASKS = [
     ("echo 'then git push'", "git push"),
     ("git send-pack remote", "git send-pack"),
     ("git reset --hard HEAD~1", "git reset --hard"),
-    ("git checkout -- .", "git checkout -- ."),
+    ("git checkout -- .", "git checkout/restore ."),
+    ("git checkout .", "git checkout/restore ."),
+    ("git restore .", "git checkout/restore ."),
     ("git clean -fd", "git clean -f"),
+    ("git clean --force", "git clean -f"),
+    ("/usr/bin/git push", "git push"),
+    ("GIT push", "git push"),
+    ("git -P push", "git push"),
+    ("git --git-dir .git push", "git push"),
+    ("gh -R x/y pr merge 3", "gh pr/issue write"),
+    ("gh --repo x/y release create v1", "gh release write"),
+    ("gh issue delete 5", "gh pr/issue write"),
+    ("gh issue transfer 5 x/z", "gh pr/issue write"),
     ("gh pr create --fill", "gh pr/issue write"),
     ("gh pr merge 3", "gh pr/issue write"),
     ("gh issue comment 4 -b x", "gh pr/issue write"),
@@ -62,6 +73,8 @@ ASKS = [
     ("gh api -X DELETE repos/x/y", "gh api write method"),
     ("gh api repos/x/y/issues -f title=t", "gh api with fields (defaults to POST)"),
     ("npm publish", "publish"),
+    ("pnpm publish", "publish"),
+    ("yarn publish", "publish"),
     ("docker push img", "publish"),
     ("twine upload dist/*", "publish"),
     ("npx wrangler deploy", "worker deploy"),
@@ -98,6 +111,8 @@ SILENT = [
     "rm one-file && ls -R",
     "rm -f old-report",
     "grep -n push notes.md",
+    "git --no-pager log --oneline",
+    "git restore --staged .",
 ]
 
 
@@ -123,12 +138,7 @@ KNOWN_MISSES = [
     "gh pr ready 3",
     "gh repo sync",
     "gh gist create f",
-    "/usr/bin/git push",
-    "GIT push",
-    "git -P push",
-    "git --git-dir .git push",
-    "gh -R x/y pr merge 3",
-    "gh --repo x/y release create v1",
+    "gh api repos/x/y/issues -ftitle=t",
 ]
 
 
