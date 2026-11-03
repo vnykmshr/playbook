@@ -46,13 +46,6 @@ def get_command_files():
 
 REPO_ROOT = COMMANDS_DIR.parent
 
-# Front-matter keys. A commit touching only these edited metadata, not content.
-META_KEYS = (
-    "name|title|category|difficulty|model_hint|execution_pattern|related_commands"
-    "|last_reviewed|last_evolved|version|version_notes|breaking_changes|tags"
-)
-META_LINE = re.compile(rf"^[+-]({META_KEYS}):")
-
 # Substantive edits that predate this guard and never bumped their review date.
 # These are real debt, not exemptions: the list must only ever shrink. Bumping a
 # file's last_reviewed removes it here, and test_baseline_only_shrinks fails if
@@ -82,37 +75,54 @@ def git(*args: str) -> str:
     ).stdout
 
 
+def split_front_matter(text: str) -> tuple[str, str]:
+    """(front matter, body), split at the closing `---` by position.
+
+    Position, not key shape: command bodies carry lines like `name: node1` inside
+    YAML examples, and a key-prefix filter reads those as metadata.
+    """
+    if text.startswith("---\n") and "\n---\n" in text:
+        front, body = text[4:].split("\n---\n", 1)
+        return front, body
+    return "", text
+
+
+def body_lines(text: str) -> list[str]:
+    """Non-blank body lines: what a substantive edit changes. A blank-line fix is not one."""
+    return [line for line in split_front_matter(text)[1].splitlines() if line.strip()]
+
+
+def front_matter_field(text: str, field: str) -> str | None:
+    """A quoted scalar from the front matter only, never from a body example."""
+    match = re.search(rf'^{re.escape(field)}:\s*"([^"]*)"', split_front_matter(text)[0], re.MULTILINE)
+    return match.group(1) if match else None
+
+
 def read_front_matter_field(path: Path, field: str) -> str | None:
     """Read a quoted scalar from a command's YAML front matter."""
-    match = re.search(
-        rf'^{re.escape(field)}:\s*"([^"]*)"',
-        path.read_text(),
-        re.MULTILINE,
-    )
-    return match.group(1) if match else None
+    return front_matter_field(path.read_text(), field)
+
+
+@functools.lru_cache(maxsize=None)
+def last_tag() -> str:
+    """Newest tag reachable from HEAD. Raises with none: a release-window guard that cannot find its window must not pass."""
+    return git("describe", "--tags", "--abbrev=0").strip()
 
 
 @functools.lru_cache(maxsize=None)
 def commit_changed_body(sha: str, rel_path: str) -> bool:
-    """True if the commit changed lines outside this file's front matter.
+    """True if the commit changed this file's body (front matter and blank lines excluded).
 
     A bulk pass that only sets `version:` across the corpus is not a review, so
     its `last_reviewed` is correctly left alone. Only a substantive edit that
-    also claims a version owes a review date.
+    also claims a version owes a review date. A file absent from the parent
+    (added, renamed in, root commit) counts as changed.
     """
-    return diff_changes_body(git("show", "--format=", "-U0", sha, "--", rel_path))
-
-
-def diff_changes_body(diff: str) -> bool:
-    """True if a unified diff adds or removes a line that is neither a front-matter key nor blank."""
-    for line in diff.splitlines():
-        # Exact header prefixes: a bare "---" prefix also swallows a removed horizontal rule ("----").
-        if line.startswith(("+++ b/", "--- a/", "+++ /dev/null", "--- /dev/null")):
-            continue
-        if line.startswith(("+", "-")):
-            if not META_LINE.match(line) and line.strip() not in ("+", "-"):
-                return True
-    return False
+    try:
+        before = git("show", f"{sha}^:{rel_path}")
+    except subprocess.CalledProcessError:
+        return True
+    return body_lines(before) != body_lines(git("show", f"{sha}:{rel_path}"))
 
 
 @functools.lru_cache(maxsize=None)
@@ -139,9 +149,8 @@ def window_version_changes() -> tuple[tuple[str, frozenset[str], frozenset[str],
 
     One walk, shared by both release-window guards, so their detection cannot drift.
     """
-    last_tag = git("describe", "--tags", "--abbrev=0").strip()
     changes = []
-    for sha in git("log", "--format=%H", f"{last_tag}..HEAD").split():
+    for sha in git("log", "--format=%H", f"{last_tag()}..HEAD").split():
         touched = frozenset(git("show", "--stat", "--format=", "--name-only", sha).split())
         bumped: set[str] = set()
         noted: set[str] = set()
@@ -190,45 +199,55 @@ def get_related_commands_count(content: str) -> int:
 class TestBodyChangeCarriesVersion:
     """A command whose body changed since the last tag must ship a new version.
 
-    Compares the last tag with HEAD, so it resets at every tag and needs no
-    baseline. Front-matter keys and blank lines are not body (diff_changes_body,
-    shared with the review-date guard). Renames compare old path to new; added
-    commands have nothing to compare. Gap: a second edit to a command already
-    bumped in this window passes here -- its notes amendment is the changelog
-    guard's job, and only when version_notes changes.
+    Compares the last tag with the working tree, so a pre-commit run catches the
+    edit and CI (tree == HEAD) sees the same result. Resets at every tag; no
+    baseline. Renames compare old path to new; added commands have nothing to
+    compare. Gap: a second edit to a command already bumped in this window
+    passes here -- its notes amendment is the changelog guard's job, and only
+    when version_notes changes.
     """
 
     def test_body_change_carries_version_bump(self):
-        try:
-            last_tag = git("describe", "--tags", "--abbrev=0").strip()
-        except subprocess.CalledProcessError:
-            pytest.skip("No tags reachable (shallow clone?): body-change guard did not run")
-        version = re.compile(r'^version:\s*"([^"]*)"', re.MULTILINE)
+        tag = last_tag()
         offenders = []
-        for row in git("diff", "-M", "--name-status", last_tag, "HEAD", "--", "commands/").splitlines():
+        for row in git("diff", "-M", "--name-status", tag, "--", "commands/").splitlines():
             status, *paths = row.split("\t")
             if status[0] not in "MR" or not paths[-1].endswith(".md"):
                 continue
             old, new = paths[0], paths[-1]
-            if not diff_changes_body(git("diff", "-M", "-U0", last_tag, "HEAD", "--", old, new)):
+            before_text, after_text = git("show", f"{tag}:{old}"), (REPO_ROOT / new).read_text()
+            if body_lines(before_text) == body_lines(after_text):
                 continue
-            before = version.search(git("show", f"{last_tag}:{old}"))
-            after = version.search(git("show", f"HEAD:{new}"))
-            if before and after and before.group(1) == after.group(1):
-                offenders.append(f"{new}: body changed since {last_tag}, still {after.group(1)}")
+            before, after = front_matter_field(before_text, "version"), front_matter_field(after_text, "version")
+            if not (before and after):
+                offenders.append(f"{new}: body changed since {tag}, version unreadable ({before!r} -> {after!r})")
+            elif before == after:
+                offenders.append(f"{new}: body changed since {tag}, still {after}")
         assert not offenders, (
             "Commands whose body changed without a version bump:\n  "
             + "\n  ".join(offenders)
             + "\nBump version (PATCH for a fix or clarification) with version_notes and a CHANGELOG line, in the same commit."
         )
 
-    def test_body_filter_sees_every_command_body(self):
-        """A filter that read every line as front matter would pass every change."""
-        blind = [
+    @pytest.mark.parametrize("before, after, changed", [
+        ("---\nversion: \"1.0.0\"\n---\nA\n\n----\nB\n", "---\nversion: \"1.0.0\"\n---\nA\n\nB\n", True),
+        ("---\nname: \"pb-x\"\n---\nname: node1\n", "---\nname: \"pb-x\"\n---\nname: node2\n", True),
+        ("---\nversion: \"1.0.0\"\n---\nA\nB\n", "---\nversion: \"1.0.0\"\n---\nA\n\nB\n\n", False),
+        ("---\nversion: \"1.0.0\"\n---\nA\n", "---\nversion: \"1.1.0\"\nlast_reviewed: \"2026-11-03\"\n---\nA\n", False),
+    ], ids=["removed-rule", "key-shaped-body-line", "blank-lines-only", "front-matter-only"])
+    def test_body_comparison(self, before, after, changed):
+        assert (body_lines(before) != body_lines(after)) is changed
+
+    def test_version_read_from_front_matter_not_body(self):
+        assert front_matter_field('---\nversion: "1.2.0"\n---\nversion: "9.9.9"\n', "version") == "1.2.0"
+
+    def test_every_command_has_a_body_and_a_readable_version(self):
+        """An unparseable version or an empty body would make the guard above pass by default."""
+        broken = [
             path.name for path in get_command_files()
-            if not diff_changes_body("\n".join("+" + line for line in path.read_text().splitlines()))
+            if not body_lines(text := path.read_text()) or not front_matter_field(text, "version")
         ]
-        assert not blind, f"diff_changes_body finds no body in: {blind}"
+        assert not broken, f"No body or no quoted version in: {broken}"
 
 
 class TestCommandCount:
