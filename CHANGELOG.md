@@ -16,7 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **`/pb-patterns-cloud` v2.0.0.** 872 to 222 lines: example code, walkthroughs and language sections removed; decisions, gotchas and when-to-use kept. Cloud Run deploys from Artifact Registry; the unsourced cold-start figure is gone.
 - **`/pb-patterns-security` v2.0.0.** 785 to 212 lines: example code, walkthroughs and language sections removed; decisions, gotchas and when-to-use kept. OAuth code flow uses PKCE with S256 (RFC 9700); JWT verification pins the algorithm and rejects none (RFC 8725).
 - **`/pb-patterns-frontend` v2.0.0.** 943 to 264 lines: example code, walkthroughs and language sections removed; decisions, gotchas and when-to-use kept.
-- **`/pb-patterns-api` v2.0.0.** 865 to 332 lines: example code, walkthroughs and language sections removed; decisions, gotchas and when-to-use kept.
+- **`/pb-patterns-api` v2.0.0.** 865 to 332 lines: example code, walkthroughs and language sections removed; decisions, gotchas and when-to-use kept. PATCH is not idempotent in general (RFC 5789); the breaking-change list names type, error-format and endpoint removals.
 - **`/pb-patterns-async` v2.0.0.** 715 to 222 lines: example code, walkthroughs and language sections removed; decisions, gotchas and when-to-use kept.
 - **`/pb-patterns-core` v2.0.0.** 658 to 189 lines: example code, walkthroughs and language sections removed; decisions, gotchas and when-to-use kept.
 - **`/pb-patterns-resilience` v2.0.0.** 572 to 188 lines: example code, walkthroughs and language sections removed; decisions, gotchas and when-to-use kept.

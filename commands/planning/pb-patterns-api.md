@@ -9,7 +9,7 @@ related_commands: ['pb-patterns-frontend', 'pb-security', 'pb-patterns-resilienc
 last_reviewed: "2026-11-04"
 last_evolved: ""
 version: "2.0.0"
-version_notes: "v2.0.0: Cut from 865 to 332 lines: example code, walkthroughs and language sections removed; decisions, gotchas and when-to-use kept."
+version_notes: "v2.0.0: Cut from 865 to 332 lines: example code, walkthroughs and language sections removed; decisions, gotchas and when-to-use kept. PATCH is not idempotent in general (RFC 5789); the breaking-change list names type, error-format and endpoint removals."
 breaking_changes: ['Example code, walkthroughs and language sections removed; decisions and gotchas kept, constraints from removed code restated; deploy checklists live in /pb-preflight and /pb-deployment.']
 ---
 # API Design Patterns
@@ -57,10 +57,10 @@ Is this a public API consumed by third parties?
 | GET | Read resource(s) | Yes | Yes |
 | POST | Create resource | No | No |
 | PUT | Replace resource | Yes | No |
-| PATCH | Partial update | Yes* | No |
+| PATCH | Partial update | No* | No |
 | DELETE | Remove resource | Yes | No |
 
-*PATCH is idempotent if the same patch produces the same result.
+*PATCH is not idempotent in general (RFC 5789); it is only when the patch document is (set a field, not increment one).
 
 **Idempotent means:** Calling multiple times produces the same result as calling once.
 
@@ -208,7 +208,7 @@ For sorted data with unique keys:
 
 ### Versioning Strategy
 
-1. **Avoid breaking changes** - Add fields, don't remove or rename
+1. **Avoid breaking changes** - Add fields. Breaking: removing or renaming a field, changing a field's type, changing the error format, removing an endpoint
 2. **Deprecation period** - Warn before removing (6-12 months)
 3. **Version when necessary** - Not every release needs a version bump
 
