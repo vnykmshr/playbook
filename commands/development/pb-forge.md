@@ -158,7 +158,7 @@ This file is the `/pb-resume` hook for the arc. Where `/pb-resume` tells you the
 
 ## External Actions Stop Hard
 
-Opening a PR, merging, syncing to remote, and releasing are stops under the global External Action Gate in `~/.claude/CLAUDE.md`, which also holds the GitHub Artifact Register. Forge states each one and waits, so you never tag a release on a reflex.
+Opening a PR, merging, syncing to remote, and releasing are stops under the global External Action Gate in `~/.claude/CLAUDE.md`, which also holds the GitHub Artifact Register. Forge states each and waits for the approval that gate requires, so you never tag a release on a reflex.
 
 ---
 
