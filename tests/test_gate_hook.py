@@ -15,8 +15,9 @@ import pytest
 HOOK = Path(__file__).resolve().parent.parent / "hooks" / "external-action-gate.sh"
 
 
-def run_hook(command: str, env: dict[str, str] | None = None) -> subprocess.CompletedProcess[str]:
-    payload = json.dumps({"tool_name": "Bash", "tool_input": {"command": command}})
+def run_hook(command: str, env: dict[str, str] | None = None, payload: str | None = None) -> subprocess.CompletedProcess[str]:
+    if payload is None:
+        payload = json.dumps({"tool_name": "Bash", "tool_input": {"command": command}})
     return subprocess.run(
         ["/bin/bash", str(HOOK)], input=payload, capture_output=True, text=True, env=env
     )
@@ -136,6 +137,11 @@ def test_known_miss(command: str):
 def test_jq_missing_asks_on_everything(tmp_path: Path):
     got = reason(run_hook("git status", env={"PATH": str(tmp_path)}))
     assert got is not None and "jq missing" in got
+
+
+def test_unparsable_input_asks():
+    got = reason(run_hook("", payload="not json"))
+    assert got is not None and "input not parsed" in got
 
 
 def run_install(home: Path) -> subprocess.CompletedProcess[str]:

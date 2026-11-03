@@ -7,12 +7,13 @@
 # separator asks even inside quotes. A quote or backslash right before the command word
 # does not (sh -c "git push"). tests/test_gate_hook.py lists the shapes it misses.
 
-command -v jq >/dev/null || {
-  printf '%s\n' '{"hookSpecificOutput":{"hookEventName":"PreToolUse","permissionDecision":"ask","permissionDecisionReason":"external-action-gate: jq missing, command not inspected"}}'
+uninspected() {
+  printf '{"hookSpecificOutput":{"hookEventName":"PreToolUse","permissionDecision":"ask","permissionDecisionReason":"external-action-gate: %s, command not inspected"}}\n' "$1"
   exit 0
 }
 
-COMMAND=$(jq -r '.tool_input.command // empty')
+command -v jq >/dev/null || uninspected "jq missing"
+COMMAND=$(jq -r '.tool_input.command // empty' 2>/dev/null) || uninspected "input not parsed"
 [ -z "$COMMAND" ] && exit 0
 
 S='[[:space:]]'
