@@ -115,6 +115,15 @@ KNOWN_MISSES = [
     "gh pr ready 3",
     "gh repo sync",
     "gh gist create f",
+    "/usr/bin/git push",
+    "GIT push",
+    "git -P push",
+    "git --git-dir .git push",
+    "gh -R x/y pr merge 3",
+    "gh --repo x/y release create v1",
+    "rm -Rf build",
+    "rm -fR build",
+    "rm --recursive --force build",
 ]
 
 
