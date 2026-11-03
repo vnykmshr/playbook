@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **`/pb-database-ops` v2.0.0.** 865 to 296 lines: example code, walkthroughs and language sections removed; decisions, gotchas and when-to-use kept.
 - **`/pb-patterns-deployment` v2.0.0.** 1,076 to 163 lines: example code, walkthroughs and language sections removed; decisions, gotchas and when-to-use kept.
 - **`/pb-patterns-cloud` v2.0.0.** 872 to 222 lines: example code, walkthroughs and language sections removed; decisions, gotchas and when-to-use kept.
+- **`/pb-patterns-security` v2.0.0.** 785 to 212 lines: example code, walkthroughs and language sections removed; decisions, gotchas and when-to-use kept.
 
 ### Changed
 
