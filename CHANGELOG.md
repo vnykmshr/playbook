@@ -7,18 +7,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+`/pb-forge`'s Self-gate becomes a review ritual: finders report without editing, a lead vets every finding, fixes are re-reviewed on their own, and signoff checks the rulings landed.
+
+**After upgrading:** `git pull` is enough; no command or skill was added, renamed or removed. Regenerate `~/.claude/CLAUDE.md` with `/pb-claude-global` to pick up the release-title rule. A forge progress file from an earlier version records Self-gate sub-stages by number; forge runs the full chain for it.
+
 ### Added
 
 - **`/pb-review` v2.8.0: `--report-only`.** Reports every finding, including fixes it would otherwise apply, and changes nothing: no prompts, no remembered preferences, criticals listed first. The validation recheck still drops false positives. A caller can vet the findings before any edit.
+- **Versioning** (`docs/command-versioning.md`): a command whose body changed since the last release must ship under a new version. A test checks every command against the last tag, working tree included, and the convention tests read front matter with a YAML parser.
 
 ### Changed
 
-- **`/pb-huddle` v1.7.0.** Checks whether work already exists by its thesis, not a keyword grep, and a fact-check must name an instrument that can answer the claim. It also vets review findings at a `/pb-forge` Self-gate.
-- **`/pb-forge` v1.5.0.** `/code-review` also triggers on docs that record rulings, decisions or quotations.
+- **`/pb-forge` v1.5.0.**
+  - **Self-gate:** findings from self-review, `/code-review`, handcraft and preflight, all run report-only, go to a lead, who rules take, reject or defer. The lead convenes a panel only for disputed or cross-lane findings, and you confirm. Fixes start from a clean tree, must pass the tests, and get an independent pass scoped to the fixes. The loop stops when a vet takes nothing, or after two rounds with a proposed guard. Preflight runs again on the final tree before signoff. `/code-review` runs, rather than being offered, when the arc ends in a release, and also triggers on docs that record rulings, decisions or quotations. Sub-stages are named.
+  - **Leg boundaries:** at Plan→Execute, forge writes everything the next stage needs into its progress file, says the context can be compacted (or the session ended), and stops. The Execute hand-off says the same for when execute is done.
+  - **Finished arcs:** the progress file moves to `todos/done/forge-<slug>.md` instead of being deleted, since delete commands are commonly denied. A taken name gets a date-and-time suffix, and an archive is never overwritten.
+- **`/pb-resume` v1.11.0.** Proposes archiving a finished forge progress file by forge's rule, not deleting it.
+- **`/pb-huddle` v1.7.0.** Checks whether work already exists by its thesis, not a keyword grep, and a fact-check must name an instrument that can answer the claim. It also vets disputed review findings at a `/pb-forge` Self-gate.
 - **`/pb-claude-global` v2.10.0.** The GitHub Artifact Register covers releases: a `vX.Y.Z - <pet name>` title (`vX.Y.Z` when unnamed), upgrader-facing notes, no generated PR list, and the same attribution strip as other artifacts.
-- **`/pb-forge` v1.5.0 and `/pb-resume` v1.11.0.** A finished arc's progress file moves to `todos/done/forge-<slug>.md` instead of being deleted, since delete commands are commonly denied. A name already taken gets a date-and-time suffix; an archive is never overwritten. Resume proposes the same move by forge's rule.
-- **`/pb-forge` v1.5.0: leg boundaries.** At Plan→Execute, forge writes everything the next stage needs into its progress file, says the context can be compacted (or the session ended), and stops; `/pb-start` runs when forge is re-invoked. The Execute hand-off says the same for when execute is done.
-- **`/pb-forge` v1.5.0: Self-gate vets and re-reviews.** Findings from self-review, `/code-review` and handcraft go to a lead, who rules take, reject or defer, convenes a panel only for disputed or cross-lane findings, and you confirm. Fixes must pass the tests and get an independent pass scoped to the fixes; the loop stops when a vet takes nothing, or after two rounds with a proposed guard. Every finder, preflight included, reports without editing (`/pb-review --report-only`). Fixes start from a clean tree, preflight runs again on the final tree, and signoff checks the rulings landed. `/code-review` runs, rather than being offered, when the arc ends in a release. Sub-stages are named.
 
 ## [v2.29.0] - 2026-10-03
 
