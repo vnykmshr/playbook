@@ -9,7 +9,7 @@ related_commands: ['pb-patterns-core', 'pb-patterns-distributed', 'pb-database-o
 last_reviewed: "2026-11-04"
 last_evolved: ""
 version: "2.0.0"
-version_notes: "v2.0.0: Cut from 1046 to 307 lines: example code, walkthroughs and language sections removed; decisions, gotchas and when-to-use kept."
+version_notes: "v2.0.0: Cut from 1046 to 307 lines: example code, walkthroughs and language sections removed; decisions, gotchas and when-to-use kept. Pool max times instances stays under max_connections less reserved slots; a materialized-view refresh recomputes the whole view, CONCURRENTLY needs a unique index, and refreshes run on a schedule, not per write."
 breaking_changes: ['Example code, walkthroughs and language sections removed; decisions and gotchas kept, constraints from removed code restated; deploy checklists live in /pb-preflight and /pb-deployment.']
 ---
 # Database Patterns
@@ -53,7 +53,7 @@ Challenge the assumption that the database is the bottleneck. Question whether y
 
 2. "Pool exhaustion"
    Bad: All connections in use, new requests blocked
-   Good: Monitor pool usage, increase max connections if needed
+   Good: Monitor pool usage; raise the pool max only within the server limit below
 
 3. "Timeout on borrow"
    Bad: Application waits forever for available connection
@@ -61,7 +61,7 @@ Challenge the assumption that the database is the bottleneck. Question whether y
 ```
 
 **Configuration Tips:**
-- `max_connections`: Set based on database max connections
+- Pool size: pool max × app instances stays under the server's `max_connections`, less its reserved slots
 - Monitor: Pool usage, connection creation rate, slow queries
 
 **Pros:**
@@ -268,7 +268,7 @@ Store copied data in a denormalized table. Application keeps it in sync.
 
 **2. Materialized Views (Database-Managed)**
 
-Database creates and maintains denormalized view.
+The database stores a query's result. A refresh recomputes the whole view, and `REFRESH MATERIALIZED VIEW CONCURRENTLY` (reads stay unblocked) needs a unique index. Schedule refreshes; don't run one per write.
 
 **When to use:**
 
@@ -281,7 +281,7 @@ Database creates and maintains denormalized view.
 ```
 1. "Stale data"
    Bad: Materialized view not refreshed, shows old data
-   Good: Schedule refreshes, or refresh on data change
+   Good: Schedule refreshes as often as reads can tolerate stale data
 
 2. "Storage bloat"
    Bad: Denormalized tables duplicate all data
@@ -289,7 +289,7 @@ Database creates and maintains denormalized view.
 
 3. "Consistency nightmare"
    Bad: Denormalized data out of sync with source
-   Good: Automate refresh, use database triggers
+   Good: Keep a denormalized table in sync in the writing transaction or a trigger; refresh a materialized view on a schedule
 
 4. "Complex updates"
    Bad: Update one table, must update denormalized copies
