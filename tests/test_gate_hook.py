@@ -66,8 +66,13 @@ ASKS = [
     ("twine upload dist/*", "publish"),
     ("npx wrangler deploy", "worker deploy"),
     ("npm run worker:deploy", "worker deploy"),
-    ("rm -rf build", "rm -rf"),
-    ("rm -r -f build", "rm -r -f"),
+    ("rm -rf build", "rm -r"),
+    ("rm -r -f build", "rm -r"),
+    ("rm -f -r build", "rm -r"),
+    ("rm -Rf build", "rm -r"),
+    ("rm -fR build", "rm -r"),
+    ("rm --recursive --force build", "rm -r"),
+    ("rm -r build", "rm -r"),
 ]
 
 
@@ -90,6 +95,8 @@ SILENT = [
     "gh pr view 3",
     "gh release list",
     "rm -f one-file",
+    "rm one-file && ls -R",
+    "rm -f old-report",
     "grep -n push notes.md",
 ]
 
@@ -122,9 +129,6 @@ KNOWN_MISSES = [
     "git --git-dir .git push",
     "gh -R x/y pr merge 3",
     "gh --repo x/y release create v1",
-    "rm -Rf build",
-    "rm -fR build",
-    "rm --recursive --force build",
 ]
 
 

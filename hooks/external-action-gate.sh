@@ -35,8 +35,7 @@ RULES=(
   "gh api with fields (defaults to POST)|${B}gh${S}+api${S}.*${S}(-f|-F|--field|--raw-field|--input)(${S}|=|$)"
   "publish|${B}(npm${S}+publish|docker${S}+push|cargo${S}+publish|twine${S}+upload)"
   "worker deploy|worker:deploy|${B}wrangler(@[^[:space:]]+)?${S}(.*${S})?(deploy|publish)(${S}|$)"
-  "rm -rf|${B}rm${S}+(-[[:alpha:]]+${S}+)*-[[:alpha:]]*(r[[:alpha:]]*f|f[[:alpha:]]*r)"
-  "rm -r -f|${B}rm${S}+(-[[:alpha:]]+${S}+)*-[rR]${S}+(-[[:alpha:]]+${S}+)*-f"
+  "rm -r|${B}rm(${S}+[^;&|[:space:]]+)*${S}+(-[[:alpha:]]*[rR][[:alpha:]]*|--recursive)(${S}|$)"
 )
 
 matched=()
