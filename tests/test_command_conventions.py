@@ -106,7 +106,8 @@ def commit_changed_body(sha: str, rel_path: str) -> bool:
 def diff_changes_body(diff: str) -> bool:
     """True if a unified diff adds or removes a line that is neither a front-matter key nor blank."""
     for line in diff.splitlines():
-        if line.startswith(("+++", "---", "@@", "diff ", "index ", "similarity ", "rename ")):
+        # Exact header prefixes: a bare "---" prefix also swallows a removed horizontal rule ("----").
+        if line.startswith(("+++ b/", "--- a/", "+++ /dev/null", "--- /dev/null")):
             continue
         if line.startswith(("+", "-")):
             if not META_LINE.match(line) and line.strip() not in ("+", "-"):
@@ -212,7 +213,7 @@ class TestBodyChangeCarriesVersion:
             if not diff_changes_body(git("diff", "-M", "-U0", last_tag, "HEAD", "--", old, new)):
                 continue
             before = version.search(git("show", f"{last_tag}:{old}"))
-            after = version.search((REPO_ROOT / new).read_text())
+            after = version.search(git("show", f"HEAD:{new}"))
             if before and after and before.group(1) == after.group(1):
                 offenders.append(f"{new}: body changed since {last_tag}, still {after.group(1)}")
         assert not offenders, (
