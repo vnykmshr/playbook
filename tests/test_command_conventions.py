@@ -205,6 +205,52 @@ def window_version_changes() -> tuple[tuple[str, frozenset[str], frozenset[str],
     return tuple(changes)
 
 
+def commands_changed_since_tag() -> list[tuple[str, str | None, str]]:
+    """(path, text at the last tag or None if added, working-tree text) per command changed since the tag.
+
+    Compares the tag with the working tree, so a pre-commit run sees the edit.
+    Renames compare old path to new; deleted commands are skipped.
+    """
+    tag = last_tag()
+    changed = []
+    for row in git("diff", "-M", "--name-status", tag, "--", "commands/").splitlines():
+        status, *paths = row.split("\t")
+        if status[0] not in "AMR" or not paths[-1].endswith(".md"):
+            continue
+        old, new = paths[0], paths[-1]
+        before = None if status[0] == "A" else git("show", f"{tag}:{old}")
+        changed.append((new, before, (REPO_ROOT / new).read_text()))
+    return changed
+
+
+FENCE_OPEN = re.compile(r" {0,3}(`{3,}|~{3,})")
+
+
+def prose_lines(text: str) -> list[str]:
+    """Body lines outside fenced blocks.
+
+    A fence closes only on a bare run of its own character at least as long as
+    the opener, as CommonMark renders it: a 4-backtick sample holding a
+    ```bash block stays one fence. A plain open/close toggle reads the inner
+    block's close as the end of the sample and counts the rest as prose.
+    """
+    prose, fence = [], None
+    for line in split_front_matter(text)[1].split("\n"):
+        if fence is None:
+            if match := FENCE_OPEN.match(line):
+                fence = match.group(1)
+            else:
+                prose.append(line)
+        elif re.fullmatch(r" {0,3}" + re.escape(fence[0]) + "{%d,}[ \t]*" % len(fence), line):
+            fence = None
+    return prose
+
+
+def dash_count(text: str) -> int:
+    """Spaced double hyphens (` -- `) in prose; fenced samples are exempt."""
+    return sum(line.count(" -- ") for line in prose_lines(text))
+
+
 def get_related_commands_count(content: str) -> int:
     """Count Related Commands links in standard section.
 
@@ -268,13 +314,8 @@ class TestBodyChangeCarriesVersion:
     def test_body_change_carries_version_bump(self):
         tag = last_tag()
         offenders = []
-        for row in git("diff", "-M", "--name-status", tag, "--", "commands/").splitlines():
-            status, *paths = row.split("\t")
-            if status[0] not in "MR" or not paths[-1].endswith(".md"):
-                continue
-            old, new = paths[0], paths[-1]
-            before_text, after_text = git("show", f"{tag}:{old}"), (REPO_ROOT / new).read_text()
-            if body_lines(before_text) == body_lines(after_text):
+        for new, before_text, after_text in commands_changed_since_tag():
+            if before_text is None or body_lines(before_text) == body_lines(after_text):
                 continue
             before, after = front_matter_field(before_text, "version"), front_matter_field(after_text, "version")
             if not (before and after):
@@ -408,6 +449,85 @@ class TestChangelogLandsWithChange:
             "Commands bumped more than once since the last tag:\n  "
             + "\n  ".join(f"{f}: {', '.join(s)}" for f, s in sorted(repeated.items()))
             + "\nAmend the unreleased version's version_notes instead of minting another."
+        )
+
+
+# Spaced double hyphens in prose, per command. Debt, not exemptions: an entry
+# only ever goes down, and a command whose body changes since the last tag
+# leaves it at 0. Each file's fix is its own commit; there is no sweep.
+DASH_BASELINE = {
+    "pb-alex-infra.md": 1,
+    "pb-caveman.md": 17,
+    "pb-claude-global.md": 3,
+    "pb-claude-orchestration.md": 3,
+    "pb-evolve.md": 7,
+    "pb-greenfield.md": 15,
+    "pb-handcraft.md": 34,
+    "pb-handoff.md": 20,
+    "pb-huddle.md": 22,
+    "pb-kai-reach.md": 3,
+    "pb-linus-agent.md": 2,
+    "pb-llm-guidelines.md": 3,
+    "pb-new-playbook.md": 11,
+    "pb-pause.md": 7,
+    "pb-plan.md": 1,
+    "pb-preflight.md": 12,
+    "pb-resume.md": 3,
+    "pb-review-code.md": 1,
+    "pb-review-hygiene.md": 3,
+    "pb-review-incoming.md": 55,
+    "pb-ship.md": 2,
+    "pb-sketch.md": 11,
+    "pb-spec.md": 5,
+    "pb-storage.md": 19,
+    "pb-threat-hunt.md": 1,
+    "pb-todo-implement.md": 2,
+    "pb-usability.md": 1,
+    "pb-voice.md": 4,
+}
+
+PROSE_FIXTURE = [
+    ("plain", "a -- b\n", 1),
+    ("fenced", "```\na -- b\n```\n", 0),
+    ("nested-sample", "````markdown\n```bash\nx -- y\n```\nz -- w\n````\nafter -- this\n", 1),
+    ("info-string-does-not-close", "```bash\na -- b\n```text\nc -- d\n```\n", 0),
+    ("shorter-run-does-not-close", "````\n```\na -- b\n````\n", 0),
+    ("tilde", "~~~\na -- b\n~~~\nc -- d\n", 1),
+    ("front-matter-exempt", '---\nname: "x -- y"\n---\nbody\n', 0),
+]
+
+
+class TestDashRatchet:
+    @pytest.mark.parametrize("text, count", [row[1:] for row in PROSE_FIXTURE], ids=[row[0] for row in PROSE_FIXTURE])
+    def test_counter_reads_fences_as_rendered(self, text, count):
+        assert dash_count(text) == count
+
+    def test_no_command_adds_dashes(self):
+        over = {
+            p.name: n for p in get_command_files()
+            if (n := dash_count(p.read_text())) > DASH_BASELINE.get(p.name, 0)
+        }
+        assert not over, (
+            f"Spaced double hyphens above baseline: {over}. "
+            "Use a colon, comma, semicolon or parentheses."
+        )
+
+    def test_changed_command_reaches_zero(self):
+        left = {
+            Path(path).name: n for path, before, after in commands_changed_since_tag()
+            if (before is None or body_lines(before) != body_lines(after)) and (n := dash_count(after))
+        }
+        assert not left, (
+            f"Body changed since {last_tag()} with spaced double hyphens left: {left}. "
+            "Fix them in their own commit, before or after the change."
+        )
+
+    def test_baseline_only_shrinks(self):
+        current = {p.name: dash_count(p.read_text()) for p in get_command_files()}
+        stale = {k: (v, current.get(k)) for k, v in DASH_BASELINE.items() if current.get(k) != v}
+        assert not stale, (
+            f"DASH_BASELINE entries that no longer match (baseline, now): {stale}. "
+            "Lower the entry to the new count; remove it at 0 or when the command is gone."
         )
 
 

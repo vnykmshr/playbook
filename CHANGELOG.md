@@ -23,6 +23,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **`/pb-patterns` v2.0.0.** 388 to 99 lines: example code, walkthroughs and language sections removed; decisions, gotchas and when-to-use kept. The selection tree and Related list name every pattern family, pinned by a test; scaling points at /pb-patterns-deployment.
 - **`/pb-guide` v3.0.0.** Appendix C, Language Gates: Go and Python commands for each gate, with ruff, govulncheck and pip-audit. /pb-guide-go and /pb-guide-python are retired into it.
 
+### Added
+
+- **Dash ratchet** (`TestDashRatchet`). Spaced double hyphens in command prose are counted per file against a shrink-only baseline (28 files, 268); a command whose body changes reaches 0. Fences count as CommonMark renders them, so a 4-backtick sample holding a nested block stays one fence.
+
 ### Changed
 
 - **`/pb-forge` v1.6.0.** Every stop where you rule carries forge's leans, vetted first: the lane lead rules on each lean against what it rests on, gaps it finds are fixed before the stop, and the stop names what changed. A check derived from the same rule as the work does not count as the vet. Body prose uses colons, commas and parentheses in place of spaced double hyphens.
