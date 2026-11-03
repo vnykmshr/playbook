@@ -100,9 +100,13 @@ def commit_changed_body(sha: str, rel_path: str) -> bool:
     its `last_reviewed` is correctly left alone. Only a substantive edit that
     also claims a version owes a review date.
     """
-    diff = git("show", "--format=", "-U0", sha, "--", rel_path)
+    return diff_changes_body(git("show", "--format=", "-U0", sha, "--", rel_path))
+
+
+def diff_changes_body(diff: str) -> bool:
+    """True if a unified diff adds or removes a line that is neither a front-matter key nor blank."""
     for line in diff.splitlines():
-        if line.startswith(("+++", "---", "@@", "diff ", "index ")):
+        if line.startswith(("+++", "---", "@@", "diff ", "index ", "similarity ", "rename ")):
             continue
         if line.startswith(("+", "-")):
             if not META_LINE.match(line) and line.strip() not in ("+", "-"):
@@ -180,6 +184,50 @@ def get_related_commands_count(content: str) -> int:
             if stripped.startswith("- `/pb-"):
                 count += 1
     return count
+
+
+class TestBodyChangeCarriesVersion:
+    """A command whose body changed since the last tag must ship a new version.
+
+    Compares the last tag with HEAD, so it resets at every tag and needs no
+    baseline. Front-matter keys and blank lines are not body (diff_changes_body,
+    shared with the review-date guard). Renames compare old path to new; added
+    commands have nothing to compare. Gap: a second edit to a command already
+    bumped in this window passes here -- its notes amendment is the changelog
+    guard's job, and only when version_notes changes.
+    """
+
+    def test_body_change_carries_version_bump(self):
+        try:
+            last_tag = git("describe", "--tags", "--abbrev=0").strip()
+        except subprocess.CalledProcessError:
+            pytest.skip("No tags reachable (shallow clone?): body-change guard did not run")
+        version = re.compile(r'^version:\s*"([^"]*)"', re.MULTILINE)
+        offenders = []
+        for row in git("diff", "-M", "--name-status", last_tag, "HEAD", "--", "commands/").splitlines():
+            status, *paths = row.split("\t")
+            if status[0] not in "MR" or not paths[-1].endswith(".md"):
+                continue
+            old, new = paths[0], paths[-1]
+            if not diff_changes_body(git("diff", "-M", "-U0", last_tag, "HEAD", "--", old, new)):
+                continue
+            before = version.search(git("show", f"{last_tag}:{old}"))
+            after = version.search((REPO_ROOT / new).read_text())
+            if before and after and before.group(1) == after.group(1):
+                offenders.append(f"{new}: body changed since {last_tag}, still {after.group(1)}")
+        assert not offenders, (
+            "Commands whose body changed without a version bump:\n  "
+            + "\n  ".join(offenders)
+            + "\nBump version (PATCH for a fix or clarification) with version_notes and a CHANGELOG line, in the same commit."
+        )
+
+    def test_body_filter_sees_every_command_body(self):
+        """A filter that read every line as front matter would pass every change."""
+        blind = [
+            path.name for path in get_command_files()
+            if not diff_changes_body("\n".join("+" + line for line in path.read_text().splitlines()))
+        ]
+        assert not blind, f"diff_changes_body finds no body in: {blind}"
 
 
 class TestCommandCount:
