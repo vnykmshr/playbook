@@ -103,8 +103,10 @@ def parse_front_matter(text: str) -> dict:
 
     A real parser, not a regex: a hand-written reader of quoted scalars stopped
     at the first escaped quote and truncated two commands' version_notes.
+    BaseLoader keeps every scalar a string, so an unquoted `version: 1.10` is
+    not read as the float 1.1.
     """
-    data = yaml.safe_load(split_front_matter(text)[0])
+    data = yaml.load(split_front_matter(text)[0], Loader=yaml.BaseLoader)
     return data if isinstance(data, dict) else {}
 
 
@@ -115,7 +117,7 @@ def front_matter_field(text: str, field: str) -> str | None:
 
 
 def read_front_matter_field(path: Path, field: str) -> str | None:
-    """Read a quoted scalar from a command's YAML front matter."""
+    """One front-matter value of a command file, as text."""
     return front_matter_field(path.read_text(), field)
 
 
@@ -246,6 +248,8 @@ HOSTILE_FIXTURE = [
     ("notes-amend-only", FM.format(v="1.1.0", n="a") + "A\n", FM.format(v="1.1.0", n="a b") + "A\n", False, False, True),
     ("notes-escaped-quote", FM.format(v="1.1.0", n='one \\"y\\" covers it') + "A\n",
      FM.format(v="1.1.0", n='one \\"y\\" covers it, amended') + "A\n", False, False, True),
+    ("unquoted-version-1.10", FM.format(v="1.1", n="a").replace('version: "1.1"', "version: 1.1") + "A\n",
+     FM.format(v="1.10", n="a").replace('version: "1.10"', "version: 1.10") + "A\n", False, True, False),
     ("added-file", None, FM.format(v="1.0.0", n="a") + "A\n", None, True, True),
 ]
 
@@ -307,7 +311,7 @@ class TestBodyChangeCarriesVersion:
             try:
                 readable = all(front_matter_field(text, key) for key in ("name", "version", "version_notes"))
             except yaml.YAMLError as error:
-                broken.append(f"{path.name}: front matter is not YAML ({error.problem})")
+                broken.append(f"{path.name}: front matter is not YAML ({getattr(error, 'problem', None) or error})")
                 continue
             if stray or not body_lines(text) or not readable:
                 broken.append(f"{path.name}: {stray[:1] or 'no body, name, version or notes'}")
