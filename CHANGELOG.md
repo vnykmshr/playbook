@@ -21,6 +21,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **`/pb-patterns-core` v2.0.0.** 658 to 189 lines: example code, walkthroughs and language sections removed; decisions, gotchas and when-to-use kept. Repository says when not to use it.
 - **`/pb-patterns-resilience` v2.0.0.** 572 to 188 lines: example code, walkthroughs and language sections removed; decisions, gotchas and when-to-use kept. Retry only idempotent or keyed calls, inside the breaker; token bucket is the default rate limiter.
 - **`/pb-patterns` v2.0.0.** 388 to 99 lines: example code, walkthroughs and language sections removed; decisions, gotchas and when-to-use kept. The selection tree and Related list name every pattern family, pinned by a test; scaling points at /pb-patterns-deployment.
+- **`/pb-guide` v3.0.0.** Appendix C, Language Gates: Go and Python commands for each gate, with ruff, govulncheck and pip-audit.
 
 ### Changed
 

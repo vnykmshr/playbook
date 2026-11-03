@@ -6,10 +6,10 @@ difficulty: "beginner"
 model_hint: "sonnet"
 execution_pattern: "reference"
 related_commands: ['pb-guide-python', 'pb-guide-go', 'pb-preamble', 'pb-design-rules', 'pb-standards']
-last_reviewed: "2026-02-18"
+last_reviewed: "2026-11-04"
 last_evolved: "2026-02-18"
-version: "2.0.0"
-version_notes: "v2.13.1: Clarified as language-agnostic core framework. Added cross-references to language-specific guides."
+version: "3.0.0"
+version_notes: "v3.0.0: Appendix C, Language Gates: one table of Go and Python commands per gate (lint, types, tests, race and async, coverage, dependencies, review gotchas), with ruff, govulncheck and pip-audit. Async and distributed pattern pointers name sections, not numbers."
 breaking_changes: []
 ---
 # Core Engineering SDLC Framework (Language-Agnostic)
@@ -43,7 +43,7 @@ Determine tier FIRST, then follow only required sections.
 | **M** | New endpoint, feature enhancement, multi-file change | 1-6, 7.1, 8, 10, 11 | Tech lead |
 | **L** | New service, architectural change, breaking changes | All sections | Tech lead + Product |
 
-**Default to one tier higher if uncertain.**
+**Default to one tier higher if uncertain.** Go and Python commands for each gate: Appendix C.
 
 ---
 
@@ -217,10 +217,10 @@ Include:
 **Pattern selection:**
 | Need | Pattern | Reference |
 |------|---------|-----------|
-| Non-blocking I/O | async/await | `/pb-patterns-async` §1 |
-| Background jobs | Job queues (Celery, Bull) | `/pb-patterns-async` §3 |
-| Multi-service transactions | Saga pattern | `/pb-patterns-distributed` §1 |
-| Service decoupling | Event-driven architecture | `/pb-patterns-distributed` §3 |
+| Non-blocking I/O | async/await | `/pb-patterns-async` Async/Await Pattern |
+| Background jobs | Job queues (Celery, Bull) | `/pb-patterns-async` Job Queue Pattern |
+| Multi-service transactions | Saga pattern | `/pb-patterns-distributed` Saga Pattern |
+| Service decoupling | Event-driven architecture | `/pb-patterns-core` Event-Driven Architecture |
 
 **4.2 Data Model Design**
 * Schema updates
@@ -619,6 +619,22 @@ This covers:
 - **Container crash loops** - Check container logs to identify startup failures.
 - **Provisioning errors** - Often caused by invalid YAML syntax or missing required fields. Check for proper indentation and required settings.
 - **Environment variable issues** - Shell sourcing may fail with special characters. Use `grep` + `cut` instead of `source` for robust extraction.
+
+---
+
+## **Appendix C: Language Gates**
+
+The commands behind each gate for Go and Python. Tiers are the Change Tiers above.
+
+| Gate | Go | Python |
+|------|----|--------|
+| Format and lint | `gofmt -l .` prints nothing; `go vet ./...` | `ruff format --check .`; `ruff check .` |
+| Types | the compiler | `mypy src/`; type hints on public functions |
+| Tests | S: one package (`go test ./handler`); M and L: `go test ./...` | S: one module (`pytest tests/test_handler.py`); M and L: `pytest` |
+| Race and async | M and L: `go test -race ./...`; every goroutine can be stopped, and `context` carries cancellation | async functions tested under an event loop (`pytest-asyncio`) |
+| Coverage | S >50%, M >70%, L >80%: `go test -race -coverprofile=coverage.out ./...` | S >50%, M >70%, L >80%: `pytest --cov=src --cov-fail-under=70` (80 at L) |
+| Dependencies | `go mod tidy && go mod verify`; `govulncheck ./...` | `pip-audit`; dependencies pinned in `pyproject.toml` with a lock file |
+| Review gotchas | no ignored errors; `context` for cancellation, not timeout parameters; no goroutine leaks; channels deadlock-free | no `import *`; no silent `except`; no hardcoded secrets |
 
 ---
 
