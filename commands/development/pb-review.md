@@ -6,10 +6,10 @@ difficulty: "beginner"
 model_hint: "sonnet"
 execution_pattern: "automatic"
 related_commands: ['pb-start', 'pb-commit', 'pb-review-code', 'pb-review-comprehensive']
-last_reviewed: "2026-09-24"
+last_reviewed: "2026-11-03"
 last_evolved: "2026-06-07"
-version: "2.7.1"
-version_notes: "v2.7.1: The Voice block becomes a plain line -- the voice-block convention stopped at 3 of 118 commands; the output decision it carried stays. v2.7.0: Add validation gate (re-read self-check before code-mutating auto-fix) and recommend an independent second pass (/code-review or ocr) for true verification; coverage honesty folded into flow-mapping, full coverage ledger lives in /pb-review-comprehensive. Patterns from alibaba/open-code-review + Claude /code-review."
+version: "2.8.0"
+version_notes: "v2.8.0: --report-only runs the checks and reports every finding, including fixes it would auto-apply, and changes nothing -- for a caller that vets findings before any edit (/pb-forge Self-gate). v2.7.1: The Voice block becomes a plain line -- the voice-block convention stopped at 3 of 118 commands; the output decision it carried stays. v2.7.0: Add validation gate (re-read self-check before code-mutating auto-fix) and recommend an independent second pass (/code-review or ocr) for true verification; coverage honesty folded into flow-mapping, full coverage ledger lives in /pb-review-comprehensive. Patterns from alibaba/open-code-review + Claude /code-review."
 breaking_changes: []
 ---
 # Automated Quality Gate
@@ -49,6 +49,8 @@ System analyzes your change (LOC, files, domains, complexity, criticality), dete
 4. **Loop detected** - Same issue flagged 3+ times across fix-review cycles. Stop auto-fixing. Surface to user: "This issue has come back 3 times. It may be a design problem, not a code problem. [describe the recurring issue]. Continuing to auto-fix risks masking the root cause." Escalate as a design question, not a code fix.
 
 Most reviews hit outcome 1 or 2. You only get involved for genuinely ambiguous cases or loop detection.
+
+**Report-only (`--report-only`).** Run the same checks and report every finding, including the fixes outcome 2 would apply, but apply nothing and commit nothing. For a caller that rules on findings before any edit: `/pb-forge`'s Self-gate vet.
 
 **Validation gate (before auto-fix).** Before auto-applying a code-mutating fix, re-read the cited code as a deliberate second look and confirm the issue actually holds. A false positive that reaches the auto-fix branch becomes an auto-committed wrong change; findings that fail the recheck are dropped, not fixed. This is a self-check, not independent verification - same context, so treat it as a first filter. Auto-defer and auto-accept need no gate; only code-mutating fixes do.
 
@@ -146,6 +148,7 @@ During `/pb-review`, system matches each issue to your preference and decides. O
 - **After coding:** `/pb-review` - primary use case
 - **After fixing feedback:** `/pb-review` again to re-verify
 - **Manual commit control:** `pb-review --no-auto-commit` to review the message first
+- **Findings for a vet:** `pb-review --report-only` changes nothing
 
 ---
 

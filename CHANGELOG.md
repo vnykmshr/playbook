@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- **`/pb-review` v2.8.0: `--report-only`.** Reports every finding, including fixes it would otherwise apply, and changes nothing, so a caller can vet findings before any edit.
+
 ### Changed
 
 - **`/pb-huddle` v1.7.0.** Checks whether work already exists by its thesis, not a keyword grep, and a fact-check must name an instrument that can answer the claim. It also vets review findings at a `/pb-forge` Self-gate.
