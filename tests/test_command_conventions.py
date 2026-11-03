@@ -545,6 +545,22 @@ class TestRelatedCommands:
             + "\nThe body section is counted separately; both lists share the limit."
         )
 
+    def test_patterns_hub_names_every_family(self):
+        """The hub's selection tree and Related list each name every pb-patterns-* child.
+
+        A child missing from either is unreachable from the hub; one named but
+        gone is a dead link.
+        """
+        family = {p.stem for p in (COMMANDS_DIR / "planning").glob("pb-patterns-*.md")}
+        sections = {
+            s.split("\n", 1)[0]: s
+            for s in (COMMANDS_DIR / "planning" / "pb-patterns.md").read_text().split("\n## ")
+        }
+        tree = set(re.findall(r"→ /(pb-patterns-[a-z]+)", sections["Pattern Selection Workflow"]))
+        related = set(re.findall(r"^- `/(pb-patterns-[a-z]+)`", sections["Related Commands"], re.M))
+        assert tree == family, f"selection tree: missing {family - tree}, extra {tree - family}"
+        assert related == family, f"Related: missing {family - related}, extra {related - family}"
+
 
 class TestMetadataConsistency:
     """Verify metadata front-matter matches body Resource Hint.

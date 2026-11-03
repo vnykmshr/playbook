@@ -9,7 +9,7 @@ related_commands: ['pb-patterns-core', 'pb-patterns-resilience', 'pb-patterns-as
 last_reviewed: "2026-11-04"
 last_evolved: "2026-02-18"
 version: "2.0.0"
-version_notes: "v2.0.0: Cut from 388 to 99 lines: example code, walkthroughs and language sections removed; decisions, gotchas and when-to-use kept."
+version_notes: "v2.0.0: Cut from 388 to 99 lines: example code, walkthroughs and language sections removed; decisions, gotchas and when-to-use kept. The selection tree and Related list name every pattern family, pinned by a test; scaling points at /pb-patterns-deployment."
 breaking_changes: ['Example code, walkthroughs and language sections removed; decisions and gotchas kept, constraints from removed code restated; deploy checklists live in /pb-preflight and /pb-deployment.']
 ---
 # Architecture & Design Patterns
@@ -37,6 +37,7 @@ DESIGN PROBLEM
 │
 ├─ Service boundaries?     → /pb-patterns-core (SOA)
 ├─ Service communication?  → /pb-patterns-core (Event-Driven)
+├─ API design?             → /pb-patterns-api (REST, GraphQL, gRPC)
 ├─ Service failing?        → /pb-patterns-resilience (Circuit Breaker)
 ├─ Rate limit API?         → /pb-patterns-resilience (Rate Limiting)
 ├─ Database operations?    → /pb-patterns-db (Pooling, Optimization)
@@ -82,7 +83,7 @@ THEN: Read pattern family, understand trade-offs, implement with knowledge
 1. Read `/pb-patterns-db` (Replication, Sharding)
 2. Read `/pb-patterns-resilience` (Cache-Aside)
 3. Read `/pb-patterns-async` (Job Queues)
-4. Read `/pb-deployment` (deployment strategies)
+4. Read `/pb-patterns-deployment` (deployment strategies)
 
 ---
 
@@ -97,3 +98,4 @@ THEN: Read pattern family, understand trade-offs, implement with knowledge
 - `/pb-patterns-api` - API design patterns (REST, GraphQL, gRPC)
 - `/pb-patterns-deployment` - Deployment strategies and patterns
 - `/pb-patterns-cloud` - Cloud deployment patterns (AWS, GCP, Azure)
+- `/pb-patterns-security` - Security patterns (authn, authz, secrets, data protection)

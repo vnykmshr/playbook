@@ -20,7 +20,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **`/pb-patterns-async` v2.0.0.** 715 to 222 lines: example code, walkthroughs and language sections removed; decisions, gotchas and when-to-use kept.
 - **`/pb-patterns-core` v2.0.0.** 658 to 189 lines: example code, walkthroughs and language sections removed; decisions, gotchas and when-to-use kept.
 - **`/pb-patterns-resilience` v2.0.0.** 572 to 188 lines: example code, walkthroughs and language sections removed; decisions, gotchas and when-to-use kept.
-- **`/pb-patterns` v2.0.0.** 388 to 99 lines: example code, walkthroughs and language sections removed; decisions, gotchas and when-to-use kept.
+- **`/pb-patterns` v2.0.0.** 388 to 99 lines: example code, walkthroughs and language sections removed; decisions, gotchas and when-to-use kept. The selection tree and Related list name every pattern family, pinned by a test; scaling points at /pb-patterns-deployment.
 
 ### Changed
 
