@@ -9,7 +9,7 @@ related_commands: ['pb-patterns-db', 'pb-dr', 'pb-deployment']
 last_reviewed: "2026-11-04"
 last_evolved: ""
 version: "2.0.0"
-version_notes: "v2.0.0: Cut from 865 to 296 lines: example code, walkthroughs and language sections removed; decisions, gotchas and when-to-use kept."
+version_notes: "v2.0.0: Cut from 865 to 296 lines: example code, walkthroughs and language sections removed; decisions, gotchas and when-to-use kept. Failover fences the old primary first and promotes the replica that received the most WAL; a backup counts once restored, with alerts on age and size; transaction pooling breaks session state; runbook fences render."
 breaking_changes: ['Example code, walkthroughs and language sections removed; decisions and gotchas kept, constraints from removed code restated; deploy checklists live in /pb-preflight and /pb-deployment.']
 ---
 # Database Operations
@@ -105,11 +105,16 @@ Every migration should be backward compatible with the previous code version.
 
 For backup strategy (3-2-1 rule, retention), see `/pb-dr`. This section covers implementation.
 
+A backup counts once it has been restored and queried (`/pb-preflight` 2.3). Alert on backup age against the schedule and on a size drop, not only on the job's exit status: `pg_dump | gzip` without `pipefail` reports gzip's status.
+
 ---
 
 ## Failover Patterns
 
 For DR-level failover planning, see `/pb-dr`. This section covers database-specific patterns.
+
+- **Fence the old primary first**, per `/pb-dr` Database Failover Runbook step 2. Unreachable is not down; a primary that comes back still taking writes is split brain.
+- **Promote the replica furthest ahead.** Data loss is WAL a replica never *received*: compare `pg_last_wal_receive_lsn()` across replicas and against the primary's last known LSN. Replay backlog only delays promotion.
 
 ---
 
@@ -126,6 +131,8 @@ For DR-level failover planning, see `/pb-dr`. This section covers database-speci
 ```
 100 app instances → PgBouncer → 100 DB connections
 ```
+
+**Pool mode:** transaction mode breaks session state (`SET`, advisory locks, `LISTEN`, temp tables). Use session mode for clients that rely on it.
 
 ---
 
@@ -148,7 +155,7 @@ For DR-level failover planning, see `/pb-dr`. This section covers database-speci
 
 ### Slow Query Diagnosis
 
-```markdown
+````markdown
 ## Runbook: Slow Query Investigation
 
 ### Symptoms
@@ -191,11 +198,11 @@ For DR-level failover planning, see `/pb-dr`. This section covers database-speci
 
 ### Escalation
 If not resolved in 30 minutes, escalate to database team.
-```
+````
 
 ### Connection Exhaustion
 
-```markdown
+````markdown
 ## Runbook: Connection Exhaustion
 
 ### Symptoms
@@ -238,11 +245,11 @@ If not resolved in 30 minutes, escalate to database team.
 - Use connection pooling (PgBouncer)
 - Set statement_timeout
 - Set idle_in_transaction_session_timeout
-```
+````
 
 ### Replication Lag
 
-```markdown
+````markdown
 ## Runbook: Replication Lag
 
 ### Symptoms
@@ -266,6 +273,7 @@ If not resolved in 30 minutes, escalate to database team.
    SELECT
      now() - pg_last_xact_replay_timestamp() as lag_seconds;
    ```
+   On an idle primary this grows with no real lag: check receive LSN = replay LSN first.
 
 3. **Check replica I/O**
    Is replica disk saturated? Check iowait.
@@ -281,7 +289,7 @@ If not resolved in 30 minutes, escalate to database team.
 
 ### Escalation
 If lag > 5 minutes and not recovering, escalate.
-```
+````
 
 ---
 
