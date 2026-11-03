@@ -9,7 +9,7 @@ related_commands: ['pb-claude-global', 'pb-claude-orchestration', 'pb-context', 
 last_reviewed: "2026-11-04"
 last_evolved: "2026-09-24"
 version: "1.4.3"
-version_notes: "v1.4.3: The Relevant Playbooks sample names /pb-guide in place of the retired /pb-guide-python. Both template samples use a 4-backtick outer fence, so their nested bash block no longer ends the sample early."
+version_notes: "v1.4.3: The Relevant Playbooks sample names /pb-guide in place of the retired /pb-guide-python. Both template samples use a 4-backtick outer fence, so their nested bash block no longer ends the sample early. Body prose drops spaced double hyphens."
 breaking_changes: ['Generated skeleton drops Testing, Environment and Session Quick Start (restated Commands); Tech Stack and Structure become optional', 'No per-commit state in the generated file -- the Status line and Current version are gone; the working context is linked instead']
 ---
 # Generate Project CLAUDE.md
@@ -20,7 +20,7 @@ Generate a project-specific `.claude/CLAUDE.md` by analyzing the current project
 
 **Philosophy:** Project CLAUDE.md should capture what's unique about this project (tech stack, structure, commands, patterns) so Claude Code understands the project context across sessions.
 
-**Context efficiency:** This file is loaded into every session. Keep it **under 200 lines** -- Anthropic's published target; longer files consume more context and reduce adherence. Move reference material to `docs/` and link it.
+**Context efficiency:** This file is loaded into every session. Keep it **under 200 lines**, Anthropic's published target; longer files consume more context and reduce adherence. Move reference material to `docs/` and link it.
 
 **Mindset:** Design Rules emphasize "clarity over cleverness" - generated context should be immediately useful, not comprehensive.
 
@@ -49,26 +49,26 @@ grep -n '^## ' .claude/CLAUDE.md 2>/dev/null
 
 **The contract, in one line:** this command owns the structural sections; the author owns every `## Custom (Manual)` block, and those are carried across verbatim.
 
-Copy each `## Custom (Manual)` block out before you write, and paste it back into the generated file unchanged. Do not paraphrase, reorder, or "improve" it -- it is there because analysis could not derive it.
+Copy each `## Custom (Manual)` block out before you write, and paste it back into the generated file unchanged. Do not paraphrase, reorder, or "improve" it: it is there because analysis could not derive it.
 
 **If the existing file has hand-written content that is *not* under that marker**, stop and resolve it before regenerating. Three outcomes, in order of preference:
 
-1. It is derivable from the project -- let generation reproduce it, and drop the hand-written copy.
-2. It is knowledge analysis cannot reach (tribal conventions, gotchas, a rule that lives in someone's head) -- move it under `## Custom (Manual)` first, then regenerate.
-3. It is reference material rather than per-turn context -- move it to `docs/` and link it. The line budget below is the forcing function.
+1. It is derivable from the project: let generation reproduce it, and drop the hand-written copy.
+2. It is knowledge analysis cannot reach (tribal conventions, gotchas, a rule that lives in someone's head): move it under `## Custom (Manual)` first, then regenerate.
+3. It is reference material rather than per-turn context: move it to `docs/` and link it. The line budget below is the forcing function.
 
 A file that cannot survive its own generator is a defect in one of them. Resolve which, rather than hand-editing forever.
 
 ### Step 1: Read the Project
 
-Read the manifests, build files, CI config, README and CONTRIBUTING. The model generating this file can find the stack and the layout in one pass, and so can the model that will read it -- so record only what that reader would **not** find in one pass or would get wrong:
+Read the manifests, build files, CI config, README and CONTRIBUTING. The model generating this file can find the stack and the layout in one pass, and so can the model that will read it, so record only what that reader would **not** find in one pass or would get wrong:
 
 - The commands that actually work (build, test, lint, run), verified by running them
 - Paths that are generated output and must never be edited or committed
 - Conventions, couplings and gotchas: files that change together, ordering rules, what a green CI run does *not* prove
 - Guardrails: what needs the owner's approval before it is touched
 
-Stack and structure earn a line only where the manifests mislead -- a vendored fork, a monorepo whose root manifest is not the build, a directory whose name lies about its contents.
+Stack and structure earn a line only where the manifests mislead: a vendored fork, a monorepo whose root manifest is not the build, a directory whose name lies about its contents.
 
 ### Step 2: Point at State, Do Not Copy It
 
@@ -154,7 +154,7 @@ The `BEACON:` prefix is a reader's marker for load-bearing sections, matching th
 
 **Keep:** commands that work, generated paths, guardrails, conventions and couplings, overrides.
 
-**Never:** anything that changes per commit -- version, SHA, test count, status. It goes stale in a file loaded every session, and a stale fact here is read as current. Link the working context instead.
+**Never:** anything that changes per commit (version, SHA, test count, status). It goes stale in a file loaded every session, and a stale fact here is read as current. Link the working context instead.
 
 **Move to `docs/`:** API reference, architecture explanations, full environment variable lists, extended examples, history.
 
@@ -179,7 +179,7 @@ mkdir -p .claude
 # Write generated content to .claude/CLAUDE.md
 ```
 
-If file exists, back it up and diff afterwards -- the backup is worthless if nobody compares:
+If file exists, back it up and diff afterwards; the backup is worthless if nobody compares:
 
 ```bash
 cp .claude/CLAUDE.md .claude/CLAUDE.md.backup
@@ -188,7 +188,7 @@ diff .claude/CLAUDE.md.backup .claude/CLAUDE.md
 ```
 
 Read the diff for content that vanished rather than changed. Anything lost that was not
-derivable belonged under `## Custom (Manual)` and did not get there -- fix that, not the
+derivable belonged under `## Custom (Manual)` and did not get there: fix that, not the
 output. Delete the backup once the diff is clean. If the file is untracked
 (`git ls-files --error-unmatch .claude/CLAUDE.md` fails), the backup is its only history:
 copy it to `~/.claude/backups/<project>/CLAUDE.md.YYYYMMDD-HHMMSS` (`mkdir -p` the directory
@@ -202,14 +202,14 @@ first) and keep it.
 - [ ] Every command listed was run and works
 - [ ] No per-commit state (version, SHA, counts, status) in the file
 - [ ] Every line passes derive-or-decide
-- [ ] **Every `## Custom (Manual)` block from Step 0 is present, verbatim** -- diff against the backup and confirm nothing vanished
+- [ ] **Every `## Custom (Manual)` block from Step 0 is present, verbatim**: diff against the backup and confirm nothing vanished
 - [ ] No hand-written content survives *outside* that marker; if any does, it was resolved via Step 0's three outcomes rather than left to erode
 
 ---
 
 ## Customization
 
-Hand-written content goes under `## Custom (Manual)` -- the section in the generated
+Hand-written content goes under `## Custom (Manual)`, the section in the generated
 structure above, inventoried by Step 0 and verified by the checklist. That is the whole
 mechanism; there is nowhere else that survives a regeneration.
 
@@ -221,15 +221,15 @@ What belongs there:
 - **Architecture decisions** not captured elsewhere
 - **Integration details** (external services, APIs)
 
-What does not: anything analysis can derive (stack, structure, commands, CI) -- let
+What does not: anything analysis can derive (stack, structure, commands, CI): let
 generation own it, so it updates itself. And anything a reader consults rather than needs
-every turn -- that goes to `docs/` and gets linked.
+every turn: that goes to `docs/` and gets linked.
 
 ---
 
 ## Maintenance
 
-**Regenerate** after a structural change: new tooling, a moved build, a new generated path. Minor changes go under `## Custom (Manual)` or wait for the next regeneration -- a hand edit outside that marker is overwritten by the next run.
+**Regenerate** after a structural change: new tooling, a moved build, a new generated path. Minor changes go under `## Custom (Manual)` or wait for the next regeneration; a hand edit outside that marker is overwritten by the next run.
 
 ---
 
