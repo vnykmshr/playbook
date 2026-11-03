@@ -152,7 +152,7 @@ hook_dest="$CLAUDE_HOME/hooks/external-action-gate.sh"
 if [ -f "$hook_src" ]; then
     mkdir -p "$CLAUDE_HOME/hooks"
     if [ -f "$hook_dest" ] && [ ! -L "$hook_dest" ] && ! cmp -s "$hook_src" "$hook_dest"; then
-        echo "  ⚠ Skipped: ~/.claude/hooks/external-action-gate.sh differs from hooks/ (diff it, move it aside, re-run)"
+        echo "  ⚠ Skipped: ~/.claude/hooks/external-action-gate.sh differs from hooks/ (your edit or an older install: diff it, move it aside, re-run)"
     else
         rm -f "$hook_dest"
         cp "$hook_src" "$hook_dest"

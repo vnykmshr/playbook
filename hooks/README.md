@@ -117,7 +117,7 @@ Save context before compaction:
 
 ## Installation
 
-Hooks are **not auto-installed** by the playbook install script. They require manual setup:
+The install script does not wire hooks into `settings.json`. They require manual setup:
 
 1. Review patterns in `examples/patterns.json`
 2. Adapt to your workflow and environment
@@ -128,14 +128,16 @@ Hooks are **not auto-installed** by the playbook install script. They require ma
 
 ### External action gate
 
-`external-action-gate.sh` is the one hook shipped ready to use. On a Bash command that pushes, merges, releases, publishes, deploys or deletes, it asks for a permission prompt (auto mode included). `scripts/install.sh` copies it to `~/.claude/hooks/` (a copy, so checking out an old tag cannot remove the live gate) and skips a copy you have changed; you wire it yourself:
+`external-action-gate.sh` is the one hook shipped ready to use. On a Bash command that pushes, merges, releases, publishes, deploys or deletes, it makes Claude Code show a permission prompt (auto mode included). `scripts/install.sh` copies it to `~/.claude/hooks/` (a copy, so checking out an old tag cannot remove the live gate). An existing copy that differs, whether your edit or an older install, is skipped: diff it, move it aside, re-run. You wire it yourself:
 
 ```json
 {
-  "PreToolUse": [{
-    "matcher": "Bash",
-    "hooks": [{ "type": "command", "command": "bash ~/.claude/hooks/external-action-gate.sh" }]
-  }]
+  "hooks": {
+    "PreToolUse": [{
+      "matcher": "Bash",
+      "hooks": [{ "type": "command", "command": "bash ~/.claude/hooks/external-action-gate.sh" }]
+    }]
+  }
 }
 ```
 
