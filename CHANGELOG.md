@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- **`/pb-huddle` v1.7.0.** Checks whether work already exists by its thesis, not a keyword grep, and a fact-check must name an instrument that can answer the claim.
+- **`/pb-forge` v1.5.0.** Sub-stage 2 (`/code-review`) is also offered for docs that record rulings, decisions or quotations.
+- **`/pb-claude-global` v2.10.0.** The GitHub Artifact Register covers releases: a `vX.Y.Z - <pet name>` title, upgrader-facing notes, no generated PR list, and the same attribution strip as other artifacts.
+
 ## [v2.29.0] - 2026-10-03
 
 `uninstall.sh` no longer removes same-named symlinks in `~/.claude/commands/` that point outside this repo.
