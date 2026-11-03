@@ -9,7 +9,7 @@ related_commands: ['pb-patterns-core', 'pb-patterns-distributed', 'pb-patterns-a
 last_reviewed: "2026-11-04"
 last_evolved: ""
 version: "2.0.0"
-version_notes: "v2.0.0: Cut from 572 to 188 lines: example code, walkthroughs and language sections removed; decisions, gotchas and when-to-use kept."
+version_notes: "v2.0.0: Cut from 572 to 188 lines: example code, walkthroughs and language sections removed; decisions, gotchas and when-to-use kept. Retry only idempotent or keyed calls, inside the breaker; token bucket is the default rate limiter."
 breaking_changes: ['Example code, walkthroughs and language sections removed; decisions and gotchas kept, constraints from removed code restated; deploy checklists live in /pb-preflight and /pb-deployment.']
 ---
 # Resilience & Protection Patterns
@@ -42,6 +42,7 @@ Patterns for making systems reliable under failure. These are defensive patterns
 **When to use:**
 - Calling external APIs (network timeouts happen)
 - Database operations (short temporary outages)
+- Only idempotent calls, or calls that send an idempotency key
 - NOT for validation errors (retrying won't help)
 - NOT for authorization failures (retrying won't help)
 
@@ -68,6 +69,8 @@ Patterns for making systems reliable under failure. These are defensive patterns
 
 **Solution:** After N failures, stop calling for a while. Check periodically.
 
+Retries run inside the breaker: an open breaker fails the call without retrying.
+
 **When to use:**
 - Calling external APIs (prevent cascading failures)
 - Database connection pooling
@@ -80,7 +83,7 @@ Patterns for making systems reliable under failure. These are defensive patterns
 
 **Problem:** API being abused. Too many requests from one client. Resources exhausted (CPU, memory, database).
 
-**Solution:** Limit requests per time window. Too many requests? Reject or delay.
+**Solution:** Limit requests per time window. Too many requests? Reject or delay. Token bucket is the default; the alternatives are in `/pb-patterns-api` Rate Limiting.
 
 **Where to implement:**
 
