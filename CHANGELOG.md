@@ -17,6 +17,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **`/pb-forge` v1.5.1.** External Actions Stop Hard points to the global gate instead of restating it.
 - **`/pb-claude-project` v1.4.2.** When the project CLAUDE.md is untracked, the regeneration backup is its only history: it is copied to `~/.claude/backups/<project>/` and kept, not deleted.
 - **`/pb-pause` v1.9.5.** Step 6 points to `/pb-claude-project` for regenerate-then-diff instead of restating it.
+- **`/pb-claude-orchestration` v1.5.1.** In a long or failure-prone run, each pass writes its result to disk and returns the path, so a crash, refusal or API error loses one item, not the run.
 
 ## [v2.30.0] - 2026-11-03
 

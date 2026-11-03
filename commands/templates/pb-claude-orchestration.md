@@ -6,10 +6,10 @@ difficulty: "beginner"
 model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-claude-global', 'pb-claude-project', 'pb-learn', 'pb-review-playbook', 'pb-new-playbook']
-last_reviewed: "2026-09-24"
+last_reviewed: "2026-11-04"
 last_evolved: "2026-09-24"
-version: "1.5.0"
-version_notes: "v1.5.0: Q3 2026 -- Harness Reality is dated rather than named after a model, and states only what the docs support: the default a session runs depends on plan, not a flat Opus claim. Delegation gains a cap -- current Opus over-delegates, and a subagent that checks your own work is documented to add cost without quality -- so validation leaves the Scout tier and the delegate list. Project budget <200 to match the single CLAUDE.md figure. Task tool naming retired. v1.4.1: Sync the context budget table to the generating commands (global <200, project <180); it had drifted to <150 for both. v1.4.0: Size the Pass, Not the Agent — inline the evidence and narrow the question; the whole-repo-reading subagent is the one that dies late. v1.3.0: Q2 2026 capability refresh -- Harness Reality to Opus 4.8 GA; corrected /fast (keeps Opus with faster output, no Sonnet downgrade); [1m] 1M-context framing; brief Fable 5 note (Opus stays default). v1.2.0: add Output Discipline subsection to Task Delegation Patterns -- accept subagent summaries as context, do not pipe raw tool output back into main conversation."
+version: "1.5.1"
+version_notes: "v1.5.1: Size the Pass: long or failure-prone runs write each pass result to disk and return the path. v1.5.0: Q3 2026 -- Harness Reality is dated rather than named after a model, and states only what the docs support: the default a session runs depends on plan, not a flat Opus claim. Delegation gains a cap -- current Opus over-delegates, and a subagent that checks your own work is documented to add cost without quality -- so validation leaves the Scout tier and the delegate list. Project budget <200 to match the single CLAUDE.md figure. Task tool naming retired. v1.4.1: Sync the context budget table to the generating commands (global <200, project <180); it had drifted to <150 for both. v1.4.0: Size the Pass, Not the Agent — inline the evidence and narrow the question; the whole-repo-reading subagent is the one that dies late. v1.3.0: Q2 2026 capability refresh -- Harness Reality to Opus 4.8 GA; corrected /fast (keeps Opus with faster output, no Sonnet downgrade); [1m] 1M-context framing; brief Fable 5 note (Opus stays default). v1.2.0: add Output Discipline subsection to Task Delegation Patterns -- accept subagent summaries as context, do not pipe raw tool output back into main conversation."
 breaking_changes: []
 ---
 # Claude Code Orchestration
@@ -113,6 +113,8 @@ The subagent that has to read a whole repo before it can answer is the one that 
 **Inline the evidence, narrow the question.** Paste the file excerpt, the failing output, the rule text you already have, and ask one specific thing. Several lean passes beat one heavy pass that reconstructs context from disk: they finish, they are cheap to retry, and a failure costs one narrow answer instead of the whole analysis.
 
 Reserve broad exploratory delegation for when you genuinely do not know where to look. Once you know, stop delegating the search and delegate the judgment.
+
+For long or failure-prone runs, each pass writes its result to disk and returns the path, so a crash, refusal or API error costs one item, not the run.
 
 ### Parallel vs Sequential
 
