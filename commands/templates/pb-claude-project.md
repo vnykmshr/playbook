@@ -9,7 +9,7 @@ related_commands: ['pb-claude-global', 'pb-claude-orchestration', 'pb-context', 
 last_reviewed: "2026-11-04"
 last_evolved: "2026-09-24"
 version: "1.4.3"
-version_notes: "v1.4.3: The Relevant Playbooks sample names /pb-guide in place of the retired /pb-guide-python."
+version_notes: "v1.4.3: The Relevant Playbooks sample names /pb-guide in place of the retired /pb-guide-python. Both template samples use a 4-backtick outer fence, so their nested bash block no longer ends the sample early."
 breaking_changes: ['Generated skeleton drops Testing, Environment and Session Quick Start (restated Commands); Tech Stack and Structure become optional', 'No per-commit state in the generated file -- the Status line and Current version are gone; the working context is linked instead']
 ---
 # Generate Project CLAUDE.md
@@ -80,7 +80,7 @@ If a working context exists (`todos/*working-context*.md`), link it from the gen
 
 Create `.claude/CLAUDE.md` with this structure. Every section is optional except Commands; delete what the project does not need.
 
-```markdown
+````markdown
 # [Project Name] Development Context
 
 > Generated: YYYY-MM-DD · Global guidelines: ~/.claude/CLAUDE.md
@@ -142,7 +142,7 @@ rationale lives nowhere else. Carried across from Step 0 -- never rewritten.]
 ---
 
 *Regenerate with `/pb-claude-project` when project structure changes significantly.*
-```
+````
 
 The `BEACON:` prefix is a reader's marker for load-bearing sections, matching the global file. It has no mechanical effect: the root CLAUDE.md is re-read from disk after compaction whatever its headings say.
 
@@ -266,7 +266,7 @@ Project CLAUDE.md complements global:
 
 ## Example: Python FastAPI Project
 
-```markdown
+````markdown
 # UserService Development Context
 
 > Generated: 2026-01-13 · Global guidelines: ~/.claude/CLAUDE.md
@@ -313,7 +313,7 @@ make migrate        # alembic upgrade head
 |---------|-----------|
 | `/pb-guide` | SDLC tiers; Python gates in Appendix C |
 | `/pb-patterns-db` | Database patterns |
-```
+````
 
 ---
 

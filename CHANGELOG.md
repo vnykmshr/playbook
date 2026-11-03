@@ -27,7 +27,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - **`/pb-forge` v1.6.0.** Every stop where you rule carries forge's leans, vetted first: the lane lead rules on each lean against what it rests on, gaps it finds are fixed before the stop, and the stop names what changed. A check derived from the same rule as the work does not count as the vet. Body prose uses colons, commas and parentheses in place of spaced double hyphens.
 - **`/pb-standards` v1.3.1.** Technology-Specific Standards points Go and Python at `/pb-guide` Appendix C.
-- **`/pb-claude-project` v1.4.3.** The Relevant Playbooks sample names `/pb-guide` in place of the retired `/pb-guide-python`.
+- **`/pb-claude-project` v1.4.3.** The Relevant Playbooks sample names `/pb-guide` in place of the retired `/pb-guide-python`. Both template samples use a 4-backtick outer fence, so their nested bash block no longer ends the sample early.
 
 ### Removed
 
