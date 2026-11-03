@@ -9,7 +9,7 @@ related_commands: ['pb-what-next', 'pb-review', 'pb-huddle', 'pb-preflight', 'pb
 last_reviewed: "2026-11-03"
 last_evolved: "2026-09-24"
 version: "1.5.0"
-version_notes: "v1.5.0: Self-gate is find, vet and fix, judge. Self-review, code-review and handcraft report without editing; one panel vet rules on every finding and the user confirms; fixes pass the tests, then an independent re-review scoped to the fixes, stopping when a vet takes nothing or after two rounds, when forge proposes a guard; signoff checks the rulings landed. Code-review runs when Land includes a release. Sub-stages are named, and old numbered cursor records run the full chain. Code-review's trigger adds docs that record rulings, decisions or quotations: a misplaced quote is a correctness bug that prose gates read past. A SHIPPED cursor is archived to `todos/done/forge-<slug>.md` rather than deleted: delete commands are commonly denied; a taken name gets a date-and-time suffix, since a plain `mv` overwrites silently. Leg boundaries: Plan→Execute and Execute→Self-gate end a leg. At Plan→Execute forge writes the cursor -- next action, decisions, paths of everything the next leg needs -- says the context can be compacted or the session ended, and stops before /pb-start; the Execute hand-off says the same for Execute→Self-gate, where forge is not running; at Peer, only the stopping half. Mid-stage compaction loses the conversation the stage is still using. v1.4.0: Sub-stage 2 no longer claims to be unexercised: the first run to reach it, in another project, took the offer, got real findings, and the offer-not-run default held (n=1). Peer row: a project with no remote skips Peer, and Land is the local merge. The cursor gets a terminal stage: SHIPPED, set after the last Land stop the deliverable needs, then the file is deleted; a denied delete leaves the SHIPPED cursor for /pb-resume to offer. The Red Flag that owned no deletion is gone. v1.3.0: Sub-stage 2 is an offer, not a run. /code-review became assistant-invocable (Claude Code v2.1.246), which closes the gap that forced forge to stop there -- and the huddle declined to replace a forced stop with an automatic pass, because a model that already verifies its own work does not need a fifth self-check on every broad-trigger diff. Unexercised: no run has reached it. v1.2.1: Sub-stage 5's trigger says why Always is honest now that /pb-preflight scopes itself in Step 0. Forge had been describing preflight as a wiring check in wording preflight did not carry; preflight v1.1.0 now owns that framing. v1.2.0: Slice escape added — the front arc now carries an iteration tally, and forge stops at three to propose the smallest executable slice. Acceptance gates must state a falsifier before their first run. Cursor records the tally and the falsifier."
+version_notes: "v1.5.0: Self-gate is find, vet and fix, judge. Self-review, code-review and handcraft report without editing; one panel vet rules on every finding and the user confirms; fixes pass the tests, then an independent re-review scoped to the fixes, stopping when a vet takes nothing or after two rounds, when forge proposes a guard; signoff checks the rulings landed. Every finder runs report-only (self-review via /pb-review --report-only) and preflight is a finder, so signoff is the only judge; re-review covers the pre-fix SHA to the working tree. Code-review runs when the cursor records a release. Sub-stages are named, and old numbered cursor records run the full chain. Code-review's trigger adds docs that record rulings, decisions or quotations: a misplaced quote is a correctness bug that prose gates read past. A SHIPPED cursor is archived to `todos/done/forge-<slug>.md` rather than deleted: delete commands are commonly denied; a taken name gets a date-and-time suffix, since a plain `mv` overwrites silently. Leg boundaries: Plan→Execute and Execute→Self-gate end a leg. At Plan→Execute forge writes the cursor -- next action, decisions, paths of everything the next leg needs -- says the context can be compacted or the session ended, and stops before /pb-start; the Execute hand-off says the same for Execute→Self-gate, where forge is not running; at Peer, only the stopping half. Mid-stage compaction loses the conversation the stage is still using. v1.4.0: Sub-stage 2 no longer claims to be unexercised: the first run to reach it, in another project, took the offer, got real findings, and the offer-not-run default held (n=1). Peer row: a project with no remote skips Peer, and Land is the local merge. The cursor gets a terminal stage: SHIPPED, set after the last Land stop the deliverable needs, then the file is deleted; a denied delete leaves the SHIPPED cursor for /pb-resume to offer. The Red Flag that owned no deletion is gone. v1.3.0: Sub-stage 2 is an offer, not a run. /code-review became assistant-invocable (Claude Code v2.1.246), which closes the gap that forced forge to stop there -- and the huddle declined to replace a forced stop with an automatic pass, because a model that already verifies its own work does not need a fifth self-check on every broad-trigger diff. Unexercised: no run has reached it. v1.2.1: Sub-stage 5's trigger says why Always is honest now that /pb-preflight scopes itself in Step 0. Forge had been describing preflight as a wiring check in wording preflight did not carry; preflight v1.1.0 now owns that framing. v1.2.0: Slice escape added — the front arc now carries an iteration tally, and forge stops at three to propose the smallest executable slice. Acceptance gates must state a falsifier before their first run. Cursor records the tally and the falsifier."
 breaking_changes: []
 ---
 # Lifecycle Step-Runner
@@ -60,34 +60,34 @@ The arc is the default for new, non-trivial work. Triage decides how much of the
 
 Self-gate runs in three phases: find, then vet and fix, then judge. Every gate that edits runs before the last gate that judges. Sub-stages are named, and the cursor records them by name.
 
-**Find.** Each finder reports; none edits.
+**Find.** Inside forge, every finder runs report-only: it reports what it would fix and edits nothing.
 
 | Sub-stage | What it catches | Trigger |
 |-----------|----------------|---------|
-| self-review (`/pb-review`) | Lint, tests, conventions | Always. Inside forge it reports code-changing fixes instead of applying them |
-| code-review (`/code-review` at high effort) | Bugs and correctness: an independent pass | `>3 files` or `>50 LOC` or new command or security/auth/regex in diff, or docs that record rulings, decisions or quotations (a misplaced quote is a correctness bug that prose gates read past). Runs when the cursor's Land includes a release; otherwise forge offers it and runs it on the user's yes |
+| self-review (`/pb-review --report-only`) | Lint, tests, conventions | Always |
+| code-review (`/code-review` at high effort) | Bugs and correctness: an independent pass | `>3 files` or `>50 LOC` or new command or security/auth/regex in diff, or docs that record rulings, decisions or quotations (a misplaced quote is a correctness bug that prose gates read past). Runs when the cursor records that Land includes a release; otherwise, or when that is not yet recorded, forge offers it and runs it on the user's yes |
 | handcraft (`/pb-handcraft`) | Prose quality, voice, clarity | Content/docs changes (markdown commands, prose in any file) |
+| preflight (`/pb-preflight`) | Ship-readiness wiring: gaps, not issues | Always -- its Step 0 scopes the gate to your surface, which is what makes Always honest on a non-service project |
 
 **Vet and fix.** When the finders report at least one finding:
 
-1. **Vet.** A panel rules on every finding, run as `/pb-huddle` runs one (a lead from the finding's lane, two or three lenses): TAKE with the fix, REJECT with why, or DEFER with where it goes. Forge stops once with the rulings; the user confirms or overrides them.
+1. **Vet.** A panel, convened as in `/pb-huddle` (a lead from the finding's lane, two or three lenses), rules on every finding: TAKE with the fix, REJECT with why, or DEFER with where it goes. Forge stops once with the rulings; the user confirms or overrides them.
 2. **Fix.** Record the pre-fix SHA in the cursor, land the TAKEs, and count the fix done only when the project's tests pass on their exit code (`/pb-review --no-auto-commit` holds the commit if the user wants signoff first).
-3. **Re-review.** An independent pass on `<pre-fix SHA>..HEAD` only: the fixes are a new surface. Its findings go back to the vet.
+3. **Re-review.** An independent pass on the diff from the pre-fix SHA to the working tree, committed or not: the fixes are a new surface. If a fix touched preflight's Step 0 surface, preflight runs again in the same round. Findings go back to the vet.
 
-Stop when a vet takes nothing. At most two re-review rounds: if a third is needed, forge stops and proposes a guard or test for that defect class, and the user decides -- the escalation `/pb-review`'s loop detection makes.
+Stop when a vet takes nothing. At most two re-review rounds: if a third is needed, forge stops and proposes a guard or test for that defect class, and the user decides, as `/pb-review`'s loop detection escalates.
 
 **Judge.**
 
 | Sub-stage | What it checks | Trigger |
 |-----------|----------------|---------|
 | signoff | The vet's lead reads the diff against the vet record: every TAKE landed and nothing outside the rulings changed. Go, or reopen a named finding | A fix landed. If the vet took nothing, its record is the signoff |
-| preflight (`/pb-preflight`) | Ship-readiness wiring: gaps, not issues | Always -- its Step 0 scopes the gate to your surface, which is what makes Always honest on a non-service project |
 
 **Triggers are concrete OR gates, not judgment calls.** "My diff is 3 files and 40 lines" → no code-review. "I added a new command" → code-review. No "should I?" hand-wringing.
 
 **Belt-and-suspenders exit.** If the user stops at any sub-stage ("fix the code-review findings first"), forge records it as done in the cursor and the next as pending, by name. Re-invoking forge resumes at the pending sub-stage, not the start of Self-gate.
 
-**Tail mode.** `--arc tail` on already-completed work skips sub-stages recorded as done in the cursor. A cursor with no sub-stage records, or one that records them by the old numbers, runs the full chain -- the user can skip explicitly.
+**Tail mode.** `--arc tail` on already-completed work skips sub-stages recorded as done in the cursor. A cursor with no sub-stage records, or a pre-1.5.0 cursor (numbered sub-stages), runs the full chain -- the user can skip explicitly.
 
 ---
 
@@ -140,7 +140,7 @@ Forge keeps one file per deliverable at `todos/forge/{slug}.md` -- under the dev
 
 - current stage, ending at `SHIPPED`
 - front-arc tally (see "The Slice Escape") -- reset to 0 on reaching Execute
-- whether Land includes a release (set at Plan; it decides whether code-review runs or is offered)
+- whether Land includes a release, recorded when forge first writes the cursor, at whatever stage the arc starts (it decides whether code-review runs or is offered)
 - Self-gate progress by sub-stage name, the pre-fix SHA, and each vet round's rulings
 - deliverable paths as they appear: sketch -> plan -> branch -> PR
 - the falsifier stated for any acceptance gate the front arc runs
@@ -201,7 +201,7 @@ Re-invoking `/pb-forge` on a deliverable with an existing cursor resumes at the 
 - `/pb-what-next` - The recommending twin; suggests the next command without running it.
 - `/pb-review` - Self-review, the first finder in Self-gate.
 - `/pb-huddle` - How Self-gate's vet panel runs (a lead plus lenses).
-- `/pb-preflight` - Ship-readiness, Self-gate's last gate before Peer.
+- `/pb-preflight` - Ship-readiness wiring, a Self-gate finder.
 - `/pb-ship` - The ship workflow (PR -> merge -> release) forge's tail stages map to.
 
 ---
