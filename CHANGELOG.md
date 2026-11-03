@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **`/pb-forge` v1.5.0.** Sub-stage 2 (`/code-review`) is also offered for docs that record rulings, decisions or quotations.
 - **`/pb-claude-global` v2.10.0.** The GitHub Artifact Register covers releases: a `vX.Y.Z - <pet name>` title, upgrader-facing notes, no generated PR list, and the same attribution strip as other artifacts.
 - **`/pb-forge` v1.5.0 and `/pb-resume` v1.11.0.** A finished arc's progress file moves to `todos/done/forge-<slug>.md` instead of being deleted, since delete commands are commonly denied.
+- **`/pb-forge` v1.5.0: leg boundaries.** At Plan→Execute and Execute→Self-gate, forge writes everything the next stage needs into its progress file, then says the context can be compacted (or the session ended) and forge re-invoked to continue.
 
 ## [v2.29.0] - 2026-10-03
 
