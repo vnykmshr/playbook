@@ -6,10 +6,10 @@ difficulty: "beginner"
 model_hint: "sonnet"
 execution_pattern: "reference"
 related_commands: ['pb-preamble', 'pb-design-rules', 'pb-handcraft', 'pb-voice', 'pb-testing']
-last_reviewed: "2026-08-03"
+last_reviewed: "2026-11-04"
 last_evolved: "2026-08-03"
-version: "1.3.0"
-version_notes: "v1.3.0: Trim IV and VIII. Stack guidance now points at the playbooks that own it (Node keeps its three rules, having no guide yet); VIII keeps only what /pb-cycle and the Non-Negotiables BEACON do not already carry. Removes a duplicated non-negotiables list, an ASCII cycle diagram, a Make-specific gate block and a redundant quick-reference table. 303 -> 257 lines. v1.2.0: Add the Register section -- how authored output reads (minimal sufficient, humble-best, peer-to-peer), covering code, comments and prose, deferring to a project register where one exists, with a falsifiable delete-and-ask test. Fix two defects: the [Country] placeholder shipped as a standard, and an unpunctuated docs rule that could not be parsed. v1.1.0: Added Calm Quality Bar to MLP criteria (playbook v2.12.0)."
+version: "1.3.1"
+version_notes: "v1.3.1: Technology-Specific Standards points Go and Python at /pb-guide Appendix C; the language guides are retired."
 breaking_changes: []
 ---
 # Project Guidelines & Working Principles
@@ -123,8 +123,7 @@ Stack-level guidance lives in its own playbook, so it can go deep without drifti
 
 | Stack | Playbook |
 |-------|----------|
-| Go | `/pb-guide-go` |
-| Python | `/pb-guide-python` |
+| Go, Python | `/pb-guide` Appendix C (Language Gates) |
 | Frontend | `/pb-patterns-frontend` |
 | APIs, async, data, resilience | `/pb-patterns-api`, `/pb-patterns-async`, `/pb-patterns-db`, `/pb-patterns-resilience` |
 

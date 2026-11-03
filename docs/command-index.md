@@ -150,9 +150,7 @@ Self-sufficient thinking partner methodology for expert-quality collaboration.
 
 | Command | Purpose |
 |---------|---------|
-| `/pb-guide` | Full SDLC guide with tiers, gates, checklists |
-| `/pb-guide-go` | Go-specific SDLC guide with concurrency patterns and tooling |
-| `/pb-guide-python` | Python-specific SDLC guide with async/await and testing |
+| `/pb-guide` | Full SDLC guide with tiers, gates, checklists; Go and Python gates in Appendix C |
 | `/pb-templates` | Templates for commits, phases, reviews |
 | `/pb-standards` | Coding standards, quality principles |
 | `/pb-documentation` | Writing technical docs at 5 levels |

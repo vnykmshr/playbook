@@ -5,12 +5,12 @@ category: "core"
 difficulty: "beginner"
 model_hint: "sonnet"
 execution_pattern: "reference"
-related_commands: ['pb-guide-python', 'pb-guide-go', 'pb-preamble', 'pb-design-rules', 'pb-standards']
+related_commands: ['pb-preamble', 'pb-design-rules', 'pb-standards']
 last_reviewed: "2026-11-04"
 last_evolved: "2026-02-18"
 version: "3.0.0"
-version_notes: "v3.0.0: Appendix C, Language Gates: one table of Go and Python commands per gate (lint, types, tests, race and async, coverage, dependencies, review gotchas), with ruff, govulncheck and pip-audit. Async and distributed pattern pointers name sections, not numbers."
-breaking_changes: []
+version_notes: "v3.0.0: Appendix C, Language Gates: one table of Go and Python commands per gate (lint, types, tests, race and async, coverage, dependencies, review gotchas), with ruff, govulncheck and pip-audit. Async and distributed pattern pointers name sections, not numbers. /pb-guide-go and /pb-guide-python are retired into it."
+breaking_changes: ['/pb-guide-go and /pb-guide-python are retired; their gates are Appendix C, Language Gates. Re-run scripts/install.sh to prune the two links.']
 ---
 # Core Engineering SDLC Framework (Language-Agnostic)
 

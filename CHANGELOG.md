@@ -21,11 +21,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **`/pb-patterns-core` v2.0.0.** 658 to 189 lines: example code, walkthroughs and language sections removed; decisions, gotchas and when-to-use kept. Repository says when not to use it.
 - **`/pb-patterns-resilience` v2.0.0.** 572 to 188 lines: example code, walkthroughs and language sections removed; decisions, gotchas and when-to-use kept. Retry only idempotent or keyed calls, inside the breaker; token bucket is the default rate limiter.
 - **`/pb-patterns` v2.0.0.** 388 to 99 lines: example code, walkthroughs and language sections removed; decisions, gotchas and when-to-use kept. The selection tree and Related list name every pattern family, pinned by a test; scaling points at /pb-patterns-deployment.
-- **`/pb-guide` v3.0.0.** Appendix C, Language Gates: Go and Python commands for each gate, with ruff, govulncheck and pip-audit.
+- **`/pb-guide` v3.0.0.** Appendix C, Language Gates: Go and Python commands for each gate, with ruff, govulncheck and pip-audit. /pb-guide-go and /pb-guide-python are retired into it.
 
 ### Changed
 
 - **`/pb-forge` v1.6.0.** Every stop where you rule carries forge's leans, vetted first: the lane lead rules on each lean against what it rests on, gaps it finds are fixed before the stop, and the stop names what changed. A check derived from the same rule as the work does not count as the vet.
+- **`/pb-standards` v1.3.1.** Technology-Specific Standards points Go and Python at `/pb-guide` Appendix C.
+- **`/pb-claude-project` v1.4.3.** The Relevant Playbooks sample names `/pb-guide` in place of the retired `/pb-guide-python`.
+
+### Removed
+
+- **`/pb-guide-go` and `/pb-guide-python`.** Their gates are `/pb-guide` Appendix C, Language Gates. Re-run `scripts/install.sh` to prune the two links. Commands 118 to 116.
 
 ## [v2.31.0] - 2026-11-04
 

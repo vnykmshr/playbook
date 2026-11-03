@@ -28,8 +28,6 @@
 - [Design Rules](commands/core/pb-design-rules.md)
 - [Standards](commands/core/pb-standards.md)
 - [SDLC Guide](commands/core/pb-guide.md)
-- [Guide: Go](commands/core/pb-guide-go.md)
-- [Guide: Python](commands/core/pb-guide-python.md)
 - [Templates](commands/core/pb-templates.md)
 - [Documentation](commands/core/pb-documentation.md)
 - [Sam: Documentation Agent](commands/core/pb-sam-documentation.md)
