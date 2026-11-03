@@ -696,9 +696,10 @@ class TestRecapArchiveCoherence:
         assert not wrong, f"These commands do not find the working context by {glob!r}: {wrong}"
 
     def test_forge_and_resume_share_shipped_stage(self):
-        """Resume flags finished arcs by the stage name forge writes; a rename on one side orphans cursors."""
-        missing = [
-            name for name in ("pb-forge.md", "pb-resume.md")
-            if "`SHIPPED`" not in (COMMANDS_DIR / "development" / name).read_text()
-        ]
-        assert not missing, f"Forge's terminal cursor stage `SHIPPED` is not named in: {missing}"
+        """Resume flags finished arcs by the stage name forge writes, and both archive to one path; a rename on one side orphans cursors."""
+        for needle in ("`SHIPPED`", "`todos/done/forge-<slug>.md`"):
+            missing = [
+                name for name in ("pb-forge.md", "pb-resume.md")
+                if needle not in (COMMANDS_DIR / "development" / name).read_text()
+            ]
+            assert not missing, f"{needle} is not named in: {missing}"
