@@ -531,6 +531,65 @@ class TestDashRatchet:
         )
 
 
+LINE_BUDGET = 600
+# Commands over LINE_BUDGET, at their current length, fence lines included.
+# Debt, not exemptions: an entry only goes down, and is removed at or under 600.
+LINE_BUDGET_BASELINE = {
+    "pb-a11y.md": 933,
+    "pb-adr.md": 692,
+    "pb-alex-infra.md": 684,
+    "pb-design-rules.md": 692,
+    "pb-documentation.md": 829,
+    "pb-dr.md": 729,
+    "pb-evolve.md": 1034,
+    "pb-git-signals.md": 911,
+    "pb-guide.md": 667,
+    "pb-hardening.md": 699,
+    "pb-incident.md": 691,
+    "pb-jordan-testing.md": 817,
+    "pb-knowledge-transfer.md": 751,
+    "pb-linus-agent.md": 615,
+    "pb-observability.md": 838,
+    "pb-performance.md": 654,
+    "pb-preamble-decisions.md": 684,
+    "pb-repo-docsite.md": 880,
+    "pb-review-microservice.md": 842,
+    "pb-sam-documentation.md": 712,
+    "pb-secrets.md": 613,
+    "pb-security.md": 740,
+    "pb-ship.md": 731,
+    "pb-sre-practices.md": 662,
+    "pb-team.md": 664,
+    "pb-testing.md": 717,
+    "pb-think.md": 750,
+    "pb-todo-implement.md": 617,
+    "pb-zero-stack.md": 621,
+}
+
+
+class TestLineBudget:
+    def test_no_command_over_its_budget(self):
+        over = {
+            p.name: (n, LINE_BUDGET_BASELINE.get(p.name, LINE_BUDGET)) for p in get_command_files()
+            if (n := len(p.read_text().splitlines())) > LINE_BUDGET_BASELINE.get(p.name, LINE_BUDGET)
+        }
+        assert not over, (
+            f"Commands over their line budget (lines, budget): {over}. "
+            "Cut or move reference material out; the budget does not rise."
+        )
+
+    def test_baseline_only_shrinks(self):
+        current = {p.name: len(p.read_text().splitlines()) for p in get_command_files()}
+        stale = {
+            k: (v, current.get(k)) for k, v in LINE_BUDGET_BASELINE.items()
+            if v <= LINE_BUDGET or current.get(k) != v
+        }
+        assert not stale, (
+            f"LINE_BUDGET_BASELINE entries that no longer match (baseline, now): {stale}. "
+            f"Lower the entry to the new length; remove it at or under {LINE_BUDGET} or when the command is gone."
+        )
+
+
 class TestTemplateCurrency:
     """The CLAUDE.md generator templates carry no model version strings.
 
