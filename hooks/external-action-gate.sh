@@ -3,7 +3,7 @@
 # A match prints permissionDecision "ask" and exits 0: Claude Code shows a permission
 # prompt, in auto mode too. Exit 2 would mean deny (hard block), and exit 0 with only
 # stderr does nothing -- see code.claude.com/docs/en/hooks, PreToolUse decision control.
-# Patterns are EREs, matched case-insensitively anywhere in the command line, so a mention
+# Patterns are EREs, matched anywhere in the command line, so a mention
 # after a space, slash or separator asks even inside quotes. A quote or backslash right
 # before the command word does not (sh -c "git push"). tests/test_gate_hook.py lists the
 # shapes it misses.
@@ -19,16 +19,16 @@ COMMAND=$(jq -er '.tool_input.command' 2>/dev/null) || uninspected "input not pa
 
 S='[[:space:]]'
 B='(^|[;&|(`$[:space:]/])'                                       # command boundary; / catches /usr/bin/git
-GIT="${B}git(${S}+(-[Cc]${S}+[^[:space:]]+|-[[:alpha:]]|--[a-z-]+(=[^[:space:]]+|${S}+[^-[:space:]][^[:space:]]*)?))*${S}+"  # git + global opts
-GH="${B}gh(${S}+(-R|--repo)(${S}+|=)[^[:space:]]+)*${S}+"        # gh + -R/--repo
-shopt -s nocasematch                                             # GIT runs git on a case-insensitive filesystem
+VALOPT='--(git-dir|work-tree|namespace|config-env)'               # git long opts that take a separate value
+GIT="${B}[gG][iI][tT](${S}+(-[Cc]${S}+[^[:space:]]+|-[[:alpha:]]|--[a-z-]+(=[^[:space:]]+)?|${VALOPT}${S}+[^[:space:]]+))*${S}+"  # GIT: git on a case-insensitive filesystem
+GH="${B}gh(${S}+(-R${S}*|--repo(${S}+|=))[^[:space:]]+)*${S}+"   # gh + -R/--repo
 
 # label|regex -- every matching label is reported.
 RULES=(
   "git push|${GIT}push([^[:alnum:]_-]|$)"
   "git send-pack|${GIT}send-pack([^[:alnum:]_-]|$)"
   "git reset --hard|${GIT}reset${S}(.*${S})?--hard"
-  "git checkout/restore .|${GIT}(checkout(${S}+--)?|restore)${S}+\."
+  "git checkout/restore .|${GIT}(checkout|restore)(${S}+--)?${S}+\."
   "git clean -f|${GIT}clean${S}(.*${S})?(-[[:alpha:]]*f|--force)"
   "gh pr/issue write|${GH}(pr|issue)${S}+(create|merge|close|reopen|comment|review|edit|delete|transfer)"
   "gh release write|${GH}release${S}+(create|edit|delete|upload)"
@@ -38,7 +38,7 @@ RULES=(
   "gh api with fields (defaults to POST)|${GH}api${S}.*${S}(-f|-F|--field|--raw-field|--input)(${S}|=|$)"
   "publish|${B}((p?npm|yarn)${S}+publish|docker${S}+push|cargo${S}+publish|twine${S}+upload)"
   "worker deploy|worker:deploy|${B}wrangler(@[^[:space:]]+)?${S}(.*${S})?(deploy|publish)(${S}|$)"
-  "rm -r|${B}rm(${S}+[^;&|[:space:]]+)*${S}+(-[[:alpha:]]*r|--r)"  # --r: GNU takes any prefix of --recursive
+  "rm -r|${B}rm([[:blank:]]+[^;&|()\`[:space:]]+)*[[:blank:]]+(-[[:alpha:]]*[rR]|--r)"  # --r: GNU takes any prefix of --recursive
 )
 
 matched=()

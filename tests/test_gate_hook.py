@@ -53,6 +53,7 @@ ASKS = [
     ("git checkout -- .", "git checkout/restore ."),
     ("git checkout .", "git checkout/restore ."),
     ("git restore .", "git checkout/restore ."),
+    ("git restore -- .", "git checkout/restore ."),
     ("git clean -fd", "git clean -f"),
     ("git clean --force", "git clean -f"),
     ("/usr/bin/git push", "git push"),
@@ -60,6 +61,7 @@ ASKS = [
     ("git -P push", "git push"),
     ("git --git-dir .git push", "git push"),
     ("gh -R x/y pr merge 3", "gh pr/issue write"),
+    ("gh -Rx/y pr merge 3", "gh pr/issue write"),
     ("gh --repo x/y release create v1", "gh release write"),
     ("gh issue delete 5", "gh pr/issue write"),
     ("gh issue transfer 5 x/z", "gh pr/issue write"),
@@ -116,6 +118,10 @@ SILENT = [
     "grep -n push notes.md",
     "git --no-pager log --oneline",
     "git restore --staged .",
+    "rm -f out.txt\ngrep -rn foo .",
+    "git clean -n && ls -lF",
+    "git --no-pager grep -n push",
+    "rm -f $(find . -name '*.pyc' -print)",
 ]
 
 
@@ -143,6 +149,8 @@ KNOWN_MISSES = [
     "gh gist create f",
     "gh api repos/x/y/issues -ftitle=t",
     'rm "-rf" build',
+    "git restore --worktree .",
+    "git checkout HEAD -- .",
 ]
 
 
