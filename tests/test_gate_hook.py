@@ -109,6 +109,7 @@ ASKS = [
     ("echo C:\\\\\nrm -rf build", "rm -r"),
     # SEG cannot read these, so the rule's later words ask anywhere in the line (fail closed)
     (r'git reset \" --hard', "git reset --hard (segment not inspectable)"),
+    ('git reset "x --hard', "git reset --hard (segment not inspectable)"),
     (r"git clean -e $'it\'s' -f", "git clean -f (segment not inspectable)"),
     (r"git clean -e 'a'\''b' -f", "git clean -f (segment not inspectable)"),
     (r"git reset a\;b --hard", "git reset --hard (segment not inspectable)"),
