@@ -232,8 +232,9 @@ def fence_walk(body: str):
     A fence closes only on a bare run of its own character at least as long as
     the opener, as CommonMark renders it: a 4-backtick sample holding a
     ```bash block stays one fence. A plain open/close toggle reads the inner
-    block's close as the end of the sample and counts the rest as prose. This
-    is the one close rule; every fence reader here goes through it.
+    block's close as the end of the sample and counts the rest as prose. The
+    prose and nesting guards read fences through this; the Related Commands
+    counters still toggle (v2.34.0).
     """
     fence = None
     for line in body.split("\n"):
@@ -296,7 +297,8 @@ CODE_SPAN = re.compile(r"(?<![`\\])(`+)(?!`)(.+?)(?<!`)\1(?!`)")
 def dash_count(text: str) -> int:
     """Spaced double hyphens (` -- `) in prose; fenced samples and code spans are exempt.
 
-    Spans are matched per line, so one that crosses a line break is counted.
+    Spans are matched per line, so one that crosses a line break is counted,
+    and backslash escapes are not modelled beyond a lone escaped backtick.
     """
     return sum(CODE_SPAN.sub("", line).count(" -- ") for line in prose_lines(text))
 
