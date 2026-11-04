@@ -292,9 +292,12 @@ def fence_problems(text: str) -> list[str]:
     return problems
 
 
+CODE_SPAN = re.compile(r"(?<!`)(`+)(?!`)(.+?)(?<!`)\1(?!`)")
+
+
 def dash_count(text: str) -> int:
-    """Spaced double hyphens (` -- `) in prose; fenced samples are exempt."""
-    return sum(line.count(" -- ") for line in prose_lines(text))
+    """Spaced double hyphens (` -- `) in prose; fenced samples and code spans are exempt."""
+    return sum(CODE_SPAN.sub("", line).count(" -- ") for line in prose_lines(text))
 
 
 def get_related_commands_count(content: str) -> int:
@@ -571,6 +574,8 @@ PROSE_FIXTURE = [
     ("shorter-run-does-not-close", "````\n```\na -- b\n````\n", 0),
     ("tilde", "~~~\na -- b\n~~~\nc -- d\n", 1),
     ("front-matter-exempt", '---\nname: "x -- y"\n---\nbody\n', 0),
+    ("inline-code", "run `git checkout -- f` -- now\n", 1),
+    ("double-backtick-span", "``a ` -- b`` -- c\n", 1),
 ]
 
 
