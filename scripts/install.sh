@@ -112,9 +112,12 @@ if [ -d "$SKILLS_DIR" ]; then
         skill_name=$(basename "$(dirname "$skill_md")")
         target_dir="$SKILLS_TARGET/$skill_name"
 
-        # Remove old symlink or directory
-        if [ -L "$target_dir" ] || [ -d "$target_dir" ]; then
-            rm -rf "$target_dir"
+        # Replace a link; a real directory is the user's own, never removed
+        if [ -L "$target_dir" ]; then
+            rm -f "$target_dir"
+        elif [ -e "$target_dir" ]; then
+            echo "  ⚠ Skipped: ~/.claude/skills/$skill_name (existing directory, not a link; move it aside to install)"
+            continue
         fi
 
         mkdir -p "$(dirname "$target_dir")"
@@ -140,6 +143,10 @@ for script in context-bar.sh check-context.sh; do
     src="$SCRIPTS_DIR/$script"
     dest="$CLAUDE_HOME/$script"
     if [ -f "$src" ]; then
+        if [ -e "$dest" ] && [ ! -L "$dest" ]; then
+            echo "  ⚠ Skipped: ~/.claude/$script (existing file, not a link; move it aside to install)"
+            continue
+        fi
         ln -sf "$src" "$dest"
         echo "  ✓ Linked: ~/.claude/$script"
     fi

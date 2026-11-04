@@ -129,3 +129,28 @@ def test_link_owner_predicate(tmp_path: Path):
         if owned(link, owner, depth) is not want:
             wrong.append(name)
     assert not wrong, f"link_owned_by misjudged: {wrong}"
+
+
+def run_install(home: Path) -> subprocess.CompletedProcess[str]:
+    return subprocess.run(
+        ["bash", str(REPO / "scripts" / "install.sh")],
+        env={**os.environ, "HOME": str(home)},
+        capture_output=True,
+        text=True,
+    )
+
+
+def test_install_never_removes_a_users_real_skill_dir_or_script(tmp_path: Path):
+    skill = tmp_path / ".claude" / "skills" / "pb-threat-hunt"
+    skill.mkdir(parents=True)
+    _ = (skill / "mine.txt").write_text("the user's own\n")
+    bar = tmp_path / ".claude" / "context-bar.sh"
+    _ = bar.write_text("#!/bin/sh\necho mine\n")
+
+    result = run_install(tmp_path)
+
+    assert result.returncode == 0, result.stderr
+    assert (skill / "mine.txt").read_text() == "the user's own\n", "a real skill dir must survive install"
+    assert not bar.is_symlink() and "echo mine" in bar.read_text(), "a real script must survive install"
+    assert result.stdout.count("Skipped: ~/.claude/") == 2, result.stdout
+
