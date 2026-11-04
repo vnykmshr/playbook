@@ -7,8 +7,8 @@ model_hint: "opus"
 execution_pattern: "interactive"
 related_commands: ['pb-plan', 'pb-spec', 'pb-think', 'pb-adr']
 last_reviewed: "2026-07-13"
-version: "1.1.0"
-version_notes: "v2.21.0: New skill. Extracted from pb-plan Phases 1-2, plus Decision Forks pattern. Pairs with pb-spec via pb-plan wrapper. v1.1.0: sketch output moves to todos/sketch/ (working-material root) instead of git-visible sketch/ at repo root."
+version: "1.1.1"
+version_notes: "v1.1.1: Spaced double hyphens replaced."
 breaking_changes:
   - "Sketch output path changed from sketch/{name}.md to todos/sketch/{name}.md. Existing sketch/{name}.md files keep working; new sketches write under todos/."
 ---
@@ -155,7 +155,7 @@ Options:
 ### Fork Quality Bar
 
 - **2-4 options per fork.** More than 4 usually means the fork isn't real (collapse similar options) or you need sub-forks (split them).
-- **Options must be mutually exclusive.** If two options can coexist, they're not forks -- they're independent choices.
+- **Options must be mutually exclusive.** If two options can coexist, they're not forks; they're independent choices.
 - **Reasoning must name the trade-off.** "Option A is simpler" is weak. "Option A is simpler; Option B scales to N=10k but we only need N=100" is the trade-off.
 - **Recommendation is advisory, not mandatory.** The user overrides freely.
 
@@ -175,7 +175,7 @@ Proceed to sketch output with no forks to resolve.
 
 ## Sketch Output
 
-Write the sketch to `todos/sketch/{generated-kebab-case-name}.md` (create `todos/sketch/` if it doesn't exist). This lands under `todos/`, the working-material root -- gitignore `todos/` to keep planning artifacts out of the repo.
+Write the sketch to `todos/sketch/{generated-kebab-case-name}.md` (create `todos/sketch/` if it doesn't exist). This lands under `todos/`, the working-material root; gitignore `todos/` to keep planning artifacts out of the repo.
 
 ### Sketch File Structure
 
@@ -242,11 +242,11 @@ When run non-interactively (via a wrapper that auto-picks recommendations), extr
 **Why this fork exists:** The endpoint reads from Postgres and CPU-renders a response. Cache can live at multiple layers.
 
 Options:
-- 1-a) In-process LRU (Go `sync.Map` + TTL) -- zero infra, lost on restart.
+- 1-a) In-process LRU (Go `sync.Map` + TTL): zero infra, lost on restart.
     - Recommended if request volume fits single process and stale-on-restart is acceptable. Reasoning: simplest, fastest, no new deps.
-- 1-b) Redis -- shared across replicas, survives restarts, adds a dep.
+- 1-b) Redis: shared across replicas, survives restarts, adds a dep.
     - Recommended if we already run Redis or expect multi-replica. Reasoning: shared cache earns its place only at multi-replica.
-- 1-c) CDN edge cache -- zero backend involvement, coarse invalidation.
+- 1-c) CDN edge cache: zero backend involvement, coarse invalidation.
     - Recommended if responses are truly static per URL. Reasoning: free scale but weak invalidation.
 
 **Recommended:** 1-a (default). Reasoning: single replica, stale-on-restart is fine for this endpoint.
@@ -256,8 +256,8 @@ Options:
 **Why this fork exists:** Underlying data can change; stale cache must eventually clear.
 
 Options:
-- 2-a) TTL only (e.g., 60s) -- simple, slightly stale data.
-- 2-b) Event-driven (invalidate on write) -- fresh, requires write-path hook.
+- 2-a) TTL only (e.g., 60s): simple, slightly stale data.
+- 2-b) Event-driven (invalidate on write): fresh, requires write-path hook.
 
 **Recommended:** 2-a. Reasoning: stale-by-60s is acceptable; write-path hook is out of scope.
 
@@ -271,18 +271,18 @@ Options:
 
 ### False Forks
 
-- "Should we use Option A or Option A with a slightly different config?" -- not a fork; it's a parameter.
-- "Should we use TypeScript or JavaScript?" -- not a fork if the project is already TypeScript; it's noise.
+- "Should we use Option A or Option A with a slightly different config?" Not a fork; it's a parameter.
+- "Should we use TypeScript or JavaScript?" Not a fork if the project is already TypeScript; it's noise.
 
 **Response:** Collapse. The fork wasn't real.
 
 ### Premature Commitment
 
-- "I already know we're using X, so forks don't matter." -- if X is settled, say so explicitly in Approach Summary and move on. But be honest: is X settled, or are you avoiding the work of enumerating alternatives?
+- "I already know we're using X, so forks don't matter." If X is settled, say so explicitly in Approach Summary and move on. But be honest: is X settled, or are you avoiding the work of enumerating alternatives?
 
 ### Analysis Paralysis
 
-- "We need to research every possible option." -- bounded research. Stop when the trade-offs are nameable.
+- "We need to research every possible option." Bounded research. Stop when the trade-offs are nameable.
 
 ### Sketch Bloat
 

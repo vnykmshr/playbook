@@ -7,8 +7,8 @@ model_hint: "opus"
 execution_pattern: "interactive"
 related_commands: ['pb-plan', 'pb-sketch', 'pb-adr', 'pb-todo-implement', 'pb-start']
 last_reviewed: "2026-10-03"
-version: "1.2.1"
-version_notes: "v1.2.1: Verification signals: a no-effect claim is verified by diffing produced output, not by re-reading the code. v1.1.0: Add Implementation Notes File section (running deviation log written during implementation). Rename Path A template's static 'Notes' section to 'Design Notes' to disambiguate. v1.2.0: Path A output moves to todos/plan/ (working-material root) instead of git-visible plan/ at repo root; sketch input path aligned to todos/sketch/."
+version: "1.2.2"
+version_notes: "v1.2.2: Spaced double hyphens replaced."
 breaking_changes:
   - "Path A template renamed '## Notes' to '## Design Notes'. Existing plan/{name}.md files keep working; only new specs use the new heading."
   - "Path A output path changed from plan/{name}.md to todos/plan/{name}.md. Existing plan/{name}.md files keep working; new specs write under todos/."
@@ -38,13 +38,13 @@ Produces the committed, numbered implementation plan. Input: a sketch with resol
 
 ## Philosophy
 
-**Foundation:** Assumes sketch-level clarity. The spec is the committed plan -- each phase should be independently shippable, verifiable, and rollback-safe.
+**Foundation:** Assumes sketch-level clarity. The spec is the committed plan: each phase should be independently shippable, verifiable, and rollback-safe.
 
 ### Core Principles
 
 1. **Lock scope before specifying** - Scope lock comes first. Without it, the spec drifts.
 2. **Atomic phases** - Each phase is one concern. One commit's worth of work or a tight sequence of related commits.
-3. **Verification per phase** - Each phase says how to know it worked. "Passes tests" is not enough -- name the tests, or the manual check, or the output signal.
+3. **Verification per phase** - Each phase says how to know it worked. "Passes tests" is not enough; name the tests, or the manual check, or the output signal.
 4. **Rollback per phase** - Each phase says how to undo. Most rollbacks are `git revert <sha>`; some need data migrations or config reverts.
 5. **Size-gate the output** - A 2-file bugfix doesn't need a release tracker. Match the spec artifact to the work.
 
@@ -99,7 +99,7 @@ Match the spec artifact to the work. Two paths:
 
 **When:** single concern, 1-3 files, one or two commits, no release cycle
 
-**Output:** single file at `todos/plan/{generated-kebab-case-name}.md` using the **Single-Plan Template** below. Lands under `todos/` (the working-material root) -- gitignore `todos/` to keep plans out of the repo.
+**Output:** single file at `todos/plan/{generated-kebab-case-name}.md` using the **Single-Plan Template** below. Lands under `todos/` (the working-material root); gitignore `todos/` to keep plans out of the repo.
 
 ### Path B: Release Cycle / Multi-Phase Work
 
@@ -275,7 +275,7 @@ No prefixes, no slots. One bullet per concern. One date header per session.
 
 - Append at the moment of decision. `/pb-todo-implement` Phase 4 Step 2 enforces this at its STOP gate: bullet first, then proceed.
 - One bullet per concern. If it needs paragraphs, it's two entries.
-- Terse dev-to-dev register. Skip "decided:" / "changed:" prefixes -- content speaks for itself.
+- Terse dev-to-dev register. Skip "decided:" / "changed:" prefixes; content speaks for itself.
 
 ### Anti-pattern (journal, not log)
 
@@ -314,7 +314,7 @@ Every phase (or step in Path A) needs a rollback path.
 
 **Common rollbacks (cheap):**
 - `git revert <sha>` for code-only changes
-- `git reset --hard <sha>` before push (destructive -- requires explicit approval)
+- `git reset --hard <sha>` before push (destructive; requires explicit approval)
 - Config revert: restore previous `.env` or settings value
 
 **Expensive rollbacks (require explicit plan):**

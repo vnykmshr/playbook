@@ -19,6 +19,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- **`/pb-spec` v1.2.2.** Spaced double hyphens replaced.
+- **`/pb-sketch` v1.1.1.** Spaced double hyphens replaced.
 - **`/pb-review-tests` v2.2.0.** A Common Problems row: a new check that fails on most of the codebase narrows its rule first, then baselines what is left as shrink-only debt, never as exemptions.
 - **`/pb-documentation` v1.1.2.** Keep It Updated says a reference doc's claims are each definitionally stable or machine-checked, never in between: a claim nothing checks, a checklist included, outlives what it described.
 - **`/pb-what-next` v2.0.2, `/pb-git-signals` v1.0.1.** Both run a script from `scripts/` that `install.sh` does not link, so an installed user without a clone could not run them; each now says it needs a playbook clone.

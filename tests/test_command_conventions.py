@@ -544,8 +544,6 @@ DASH_BASELINE = {
     "pb-review-code.md": 1,
     "pb-review-hygiene.md": 3,
     "pb-review-incoming.md": 55,
-    "pb-sketch.md": 11,
-    "pb-spec.md": 5,
     "pb-storage.md": 19,
     "pb-threat-hunt.md": 1,
     "pb-todo-implement.md": 2,
