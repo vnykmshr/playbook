@@ -92,6 +92,13 @@ ASKS = [
     ("rm --rec build", "rm -r"),
     ('rm -rf"" build', "rm -r"),
     (r"rm -r\f build", "rm -r"),
+    # a quoted ; & or | stays inside its segment
+    ("gh api repos/o/r/issues --jq '.number | tostring' -f title=t", "gh api with fields (defaults to POST)"),
+    ("gh api graphql --jq '.data | .x' -f query=q", "gh api with fields (defaults to POST)"),
+    ("gh api 'repos/o/r/issues?a=1&b=2' -X POST", "gh api write method"),
+    ("gh api repos/o/r --jq '.[] | .x' --method POST", "gh api write method"),
+    ("wrangler --config 'a|b' deploy", "worker deploy"),
+    ("git clean -d -n -- 'x;y' -f", "git clean -f"),
 ]
 
 
@@ -123,6 +130,8 @@ SILENT = [
     "git clean -n && ls -lF",
     "git --no-pager grep -n push",
     "rm -f $(find . -name '*.pyc' -print)",
+    "git clean -n && ls -lf",
+    "git reset --soft HEAD~1 && grep --hard x",
 ]
 
 
@@ -169,8 +178,6 @@ def test_known_miss(command: str):
 
 
 KNOWN_FALSE_POSITIVES = [
-    "git clean -n && ls -lf",
-    "git reset --soft HEAD~1 && grep --hard x",
     "git rm -r --cached build",
 ]
 
