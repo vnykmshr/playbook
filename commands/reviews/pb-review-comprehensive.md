@@ -6,9 +6,9 @@ difficulty: "advanced"
 model_hint: "opus"
 execution_pattern: "reference"
 related_commands: ['pb-review', 'pb-review-code', 'pb-review-hygiene', 'pb-review-tests', 'pb-security']
-last_reviewed: "2026-11-04"
+last_reviewed: "2026-11-05"
 version: "3.0.0"
-version_notes: "v3.0.0: Multi-Perspective Reviews names each lens pair and its tie-break; the three wrapper reviews are retired into it."
+version_notes: "v3.0.0: Multi-Perspective Reviews names each lens pair and its tie-break; the three wrapper reviews are retired into it; security-critical code goes to /pb-travis-security."
 breaking_changes: ['/pb-review-backend, /pb-review-frontend and /pb-review-infrastructure are retired; the Multi-Perspective Reviews table names their lens pairs. Re-run scripts/install.sh to prune the three links.']
 ---
 # Comprehensive Project Review
@@ -44,7 +44,7 @@ For deeper reviews, run two complementary personas in parallel, then synthesize;
 | Infrastructure, deployments, hardening | `/pb-alex-infra` then `/pb-linus-agent` | Default to secure; profile before trading security for latency |
 
 **Persona Deep Dives:**
-- `/pb-linus-agent` - Security pragmatism and threat modeling
+- `/pb-linus-agent` - Correctness, assumptions, good taste
 - `/pb-alex-infra` - Systems thinking and resilience design
 - `/pb-maya-product` - User impact and scope discipline
 - `/pb-sam-documentation` - Clarity and knowledge transfer
@@ -86,7 +86,7 @@ See `/pb-preamble` for the team thinking philosophy that enables these perspecti
 
 | Change Type | Use This Persona | Rationale |
 |-------------|-----------------|-----------|
-| Security-critical code | `/pb-linus-agent` | Security assumes no other concerns override safety |
+| Security-critical code | `/pb-travis-security` | Security assumes no other concerns override safety |
 | Infrastructure change | `/pb-alex-infra` | Infrastructure failures cascade; need resilience depth |
 | Test coverage review | `/pb-jordan-testing` | Testing is isolated; doesn't require other perspectives |
 | Documentation only | `/pb-sam-documentation` | Documentation doesn't require code review |
