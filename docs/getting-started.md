@@ -13,7 +13,7 @@ cd playbook
 ./scripts/install.sh
 ```
 
-With Claude Code: Commands available as skills (e.g., `/pb-start`)
+With Claude Code: Commands available as skills (e.g., `/pb-start`). Run `/pb-preferences --setup` once first: it sets the decision rules `/pb-review` applies.
 Without Claude Code: Read command files as Markdown (see [Using Playbooks with Other Tools](using-with-other-tools.md))
 
 ---
