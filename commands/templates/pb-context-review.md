@@ -6,9 +6,9 @@ difficulty: "intermediate"
 model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-pause', 'pb-resume', 'pb-context', 'pb-claude-global', 'pb-evolve']
-last_reviewed: "2026-09-24"
-version: "2.3.0"
-version_notes: "v2.3.0: Q3 2026 -- both CLAUDE.md targets are Anthropic's single figure, under 200 lines, and the auto-loaded totals are deleted: a sum restated in two places had already drifted apart (~480 in the diagram, ~440 in the report table). BEACON counts go -- the prefix is a reader's marker with no mechanical effect, so counting it checked nothing, and the file disagreed with itself (6 vs 9). Should-contain lists track the v2.9.0/v1.4.0 templates: no per-commit state, no model versions, no re-verify instructions. The project-structure grep assumed this repo's layout. v2.2.0: Re-baseline the global CLAUDE.md target ~160->~200 and the auto-loaded total ~440->~480, tracking the raised gate in /pb-claude-global. The file stated the global target in four places -- architecture diagram, audit command block, action threshold, report table -- and a first pass caught only two, leaving it contradicting itself; all four now agree. Project stays ~180, which now matches /pb-claude-project rather than exceeding it. v2.1.0: Q2 2026 -- re-baseline CLAUDE.md targets (global ~140->~160, project ~160->~180, auto-loaded total ~400->~440); global accepts confirmed load-bearing growth, project adds headroom. Consolidated: merged automated conversation audit into single command with structural and behavioral modes."
+last_reviewed: "2026-11-04"
+version: "2.4.0"
+version_notes: "v2.4.0: Step 4 consolidates rather than trims: the growth is usually earned rules, so delete what is closed, move durable lessons to their own file, keep one index line each; trimming the longest paragraph never asks whether an item still belongs."
 breaking_changes: ["pb-review-context merged into this command; use `--violations` mode instead"]
 ---
 # Context Layer Review & Hygiene
@@ -175,36 +175,36 @@ ls -lt todos/*.md | tail -20
 
 ---
 
-## Step 4: Trim Auto-loaded Layers
+## Step 4: Consolidate Auto-loaded Layers
 
-For each auto-loaded file over its soft target, review content:
+For each auto-loaded file over its soft target, review content. Consolidate, don't trim: trimming shortens the longest paragraph and never asks whether an item still belongs. The growth is usually earned rules, the part worth keeping, so delete what is closed, move durable lessons to their own file, and keep one index line each.
 
 ### Global CLAUDE.md (~/.claude/CLAUDE.md)
 
 **Should contain:** BEACONs, operational guardrails, the GitHub register, quick reference
 **Should NOT contain:** Model versions or other facts that go stale, instructions to re-verify work, restatements of harness behaviour
 
-**Action:** If over 200 lines, review and trim or regenerate via `/pb-claude-global`. If at target, no action needed.
+**Action:** If over 200 lines, consolidate or regenerate via `/pb-claude-global`. If at target, no action needed.
 
 ### Project CLAUDE.md (.claude/CLAUDE.md)
 
 **Should contain:** Commands that work, generated artifacts, guardrails, conventions and couplings, relevant playbooks
 **Should NOT contain:** Per-commit state (version, SHA, counts, status), anything the repo shows in one pass, capability promo
 
-**Action:** If over 200 lines, review and trim or regenerate via `/pb-claude-project`. If at target, no action needed.
+**Action:** If over 200 lines, consolidate or regenerate via `/pb-claude-project`. If at target, no action needed.
 
 ### Memory Index (memory/MEMORY.md)
 
 **Should contain:** Current state (4 lines), active patterns, context architecture diagram, verification sequence, workflow lessons, context hygiene reminders, next evolution
 **Should NOT contain:** Release histories (move to release-history.md), BEACON full reference (move to beacon-reference.md), templates (move to session-templates.md)
 
-**Managed by:** Claude auto-memory (trim manually when over ~100 lines)
+**Managed by:** Claude auto-memory (consolidate when over ~100 lines)
 
 ---
 
 ## Step 5: Verify Nothing Critical Was Lost
 
-After trimming, verify:
+After consolidating, verify:
 
 ```bash
 # Key commands still referenced
