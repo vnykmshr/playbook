@@ -296,7 +296,7 @@ postgresql:
   listen: 0.0.0.0:5432
   data_dir: /var/lib/postgresql/data
   parameters:
-    synchronous_commit: "on"  # zero loss also needs synchronous_mode: true in dcs
+    synchronous_commit: "on"  # still async: failover can lose up to maximum_lag_on_failover; zero loss needs synchronous_mode: true in dcs
 ```
 
 **Automated failover considerations:**
