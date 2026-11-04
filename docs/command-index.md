@@ -17,6 +17,10 @@ Quick reference for all playbook commands.
 | Command | When to Use |
 |---------|-------------|
 | `/pb-start` | Starting work on a feature branch |
+| `/pb-preferences` | One-time setup of the decision rules `/pb-review` applies |
+| `/pb-forge` | Drive one deliverable through its stages (frame, plan, execute, self-gate, land), stopping where you decide |
+| `/pb-llm-guidelines` | Guardrails for coding with an LLM: think first, stay simple and surgical, verify the referent |
+| `/pb-caveman` | Ultra-minimal output for internal work |
 | `/pb-todo-implement` | Structured implementation of individual todos with checkpoint-based review |
 | `/pb-cycle` | Each iteration (develop → review → commit) |
 | `/pb-commit` | Crafting atomic, meaningful commits |
@@ -27,7 +31,7 @@ Quick reference for all playbook commands.
 | `/pb-testing` | Testing philosophy (unit, integration, E2E strategies) |
 | `/pb-jordan-testing` | Testing & reliability review (gap detection, edge case coverage, failure mode analysis) |
 | `/pb-handoff` | Structured work handoff between contexts (agents, sessions, teammates) |
-| `/pb-handcraft` | AI output quality gate -- 6-lens pass for making AI-assisted work indistinguishable from hand-written |
+| `/pb-handcraft` | AI output quality gate: a 7-lens pass for making AI-assisted work indistinguishable from hand-written |
 | `/pb-standup` | Daily async status updates for distributed teams |
 | `/pb-knowledge-transfer` | Preparing KT session for new developer or team handoff |
 | `/pb-what-next` | Context-aware command recommendations based on git state |
@@ -55,6 +59,9 @@ Quick reference for all playbook commands.
 | Command | When to Use |
 |---------|-------------|
 | `/pb-plan` | Planning a new feature/release |
+| `/pb-sketch` | Surface unknowns and decision forks, with recommended picks, before a plan |
+| `/pb-spec` | Detailed implementation plan from a resolved sketch |
+| `/pb-git-signals` | Extract adoption, churn and pain signals from git history (needs a playbook clone) |
 | `/pb-adr` | Documenting architectural decisions |
 | `/pb-maya-product` | Product & user strategy review (features as expenses, scope discipline) |
 | `/pb-kai-reach` | Distribution & reach review (findability, clarity of ask, format fit, shareability) |
@@ -67,6 +74,7 @@ Quick reference for all playbook commands.
 | Command | When to Use |
 |---------|-------------|
 | `/pb-release` | Release orchestrator: readiness gate, version/tag, trigger deployment |
+| `/pb-preflight` | Pre-ship readiness gate: is the deploy path actually wired |
 | `/pb-deployment` | Execute deployment: discovery, pre-flight, execute, verify, rollback |
 | `/pb-alex-infra` | Infrastructure & resilience review (systems thinking, failure modes, recovery) |
 | `/pb-incident` | P0/P1 production incidents |
@@ -81,6 +89,7 @@ Quick reference for all playbook commands.
 | Command | When to Use |
 |---------|-------------|
 | `/pb-security` | Application security review |
+| `/pb-threat-hunt` | Deep security audit: sweep, search, audit, adversarial verify |
 | `/pb-hardening` | Server, container, and network security hardening |
 | `/pb-secrets` | Secrets management (SOPS, Vault, rotation, incident response) |
 
@@ -104,6 +113,9 @@ Quick reference for all playbook commands.
 |---------|-------------|-----------|
 | `/pb-review` | Orchestrate multi-perspective review | Monthly or pre-release |
 | `/pb-review-code` | Dedicated code review for reviewers (peer review checklist) | Every PR review |
+| `/pb-review-comprehensive` | Full project review with persona lens pairs and a coverage ledger | Pre-release, large changesets |
+| `/pb-calm-design` | Attention-respecting design review (interruptions, defaults, calm technology) | New features and surfaces |
+| `/pb-usability` | Post-deploy usability audit of the live product | After a deploy, before launch |
 | `/pb-review-incoming` | Ratify changes authored in another project's session against this project's conventions | When a sibling-authored batch arrives |
 | `/pb-linus-agent` | Direct, unfiltered technical feedback grounded in pragmatism | Security-critical code, architecture decisions |
 | `/pb-elena-design` | Design craft review: usability, visual hierarchy, design-system/brand | Frontend/design PRs, new surfaces |

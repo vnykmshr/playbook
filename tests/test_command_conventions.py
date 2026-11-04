@@ -1002,6 +1002,13 @@ class TestWhenToUse:
         assert not missing, f"Missing When to Use: {missing}"
 
 
+def test_command_index_names_every_command():
+    """docs/command-index.md is the public catalog: a command missing from it is unfindable."""
+    index = (REPO_ROOT / "docs" / "command-index.md").read_text()
+    missing = [p.stem for p in get_command_files() if f"`/{p.stem}`" not in index]
+    assert not missing, f"commands missing from docs/command-index.md: {missing}"
+
+
 class TestRelatedCommands:
     def test_related_commands_within_limits(self):
         over_limit = []
