@@ -10,6 +10,7 @@ Verifies all command files follow audit conventions established in v2.8.0:
 - Metadata model_hint matches body Resource Hint (consistency)
 """
 
+import datetime
 import functools
 import re
 import subprocess
@@ -174,21 +175,38 @@ def commit_changed_body(sha: str, rel_path: str) -> bool:
     return before is None or body_words(before) != body_words(git("show", f"{sha}:{rel_path}"))
 
 
+def review_owed(changes) -> str | None:
+    """Date a review is owed from, reading (date, version moved, notes moved, words changed)
+    newest first: the first change that moves version or notes and changes words, stopping at
+    the version bump. A word edit that amends an already-bumped version's notes owes its date."""
+    for date, version, notes, words in changes:
+        if (version or notes) and words:
+            return date
+        if version:
+            return None
+    return None
+
+
 @functools.lru_cache(maxsize=None)
 def last_substantive_version_bump(rel_path: str) -> str | None:
-    """Date of the newest commit that bumped `version:` and changed the body.
+    """review_owed over the working tree (dated today, so the gate sees an edit before it is
+    committed) and then the file's commits.
 
-    Cached: two tests call this across all 118 commands, and each call walks the
-    file's history one `git show` at a time -- 537 subprocesses and ~10s per
-    uncached pass. Git state does not change during a run.
+    Cached: two tests call this across all commands, and each call walks the file's history
+    one `git show` at a time. Git state does not change during a run.
     """
-    for line in git("log", "--format=%H %cs", "--", rel_path).strip().splitlines():
-        if not line.strip():
-            continue
-        sha, date = line.split()
-        if commit_metadata_changes(sha, rel_path)[0]:
-            return date if commit_changed_body(sha, rel_path) else None
-    return None
+    def changes():
+        head, tree = show_or_none(f"HEAD:{rel_path}"), (REPO_ROOT / rel_path).read_text()
+        if head != tree:
+            version, notes = metadata_changes(head, tree)
+            yield datetime.date.today().isoformat(), version, notes, head is None or body_words(head) != body_words(tree)
+        for line in git("log", "--format=%H %cs", "--", rel_path).strip().splitlines():
+            if line.strip():
+                sha, date = line.split()
+                version, notes = commit_metadata_changes(sha, rel_path)
+                yield date, version, notes, (version or notes) and commit_changed_body(sha, rel_path)
+
+    return review_owed(changes())
 
 
 @functools.lru_cache(maxsize=None)
@@ -413,12 +431,32 @@ class TestCommandCount:
     ("```\nx\n```\n", "````\nx\n````\n", False),
     ("a *b* c\n", "a b c\n", False),
     ("x -- if y\n", "x. If y\n", False),
+    ("a != b\n", "a == b\n", False),  # accepted: a symbol-only change reads as markup
     ("rm -rf x\n", "rm -r x\n", True),
     ("keep it\n", "keep it not\n", True),
     ("A\n", "B\n", True),
 ])
 def test_only_a_word_change_owes_a_review_date(before, after, review_owed):
     assert (body_words(FM.format(v="1", n="a") + before) != body_words(FM.format(v="1", n="a") + after)) is review_owed
+
+
+@pytest.mark.parametrize("changes, owed", [
+    ([("d1", True, True, True)], "d1"),
+    ([("d1", True, True, False)], None),
+    ([("d2", False, True, True), ("d1", True, True, False)], "d2"),  # markup bump, then a content amend
+    ([("d2", False, True, False), ("d1", True, True, True)], "d1"),
+    ([("d2", False, False, True), ("d1", True, False, True)], "d1"),  # unbumped hygiene is not a review
+    ([], None),
+])
+def test_review_owed_reads_amends_up_to_the_bump(changes, owed):
+    assert review_owed(changes) == owed
+
+
+def test_an_added_file_counts_as_a_body_change(monkeypatch):
+    import test_command_conventions as mod
+    monkeypatch.setattr(mod, "show_or_none", lambda spec: None)
+    monkeypatch.setattr(mod, "git", lambda *a: "x\n")
+    assert mod.commit_changed_body("abc", "commands/core/pb-new.md")
 
 
 class TestReviewDateFreshness:

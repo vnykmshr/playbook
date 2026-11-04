@@ -29,7 +29,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
-- **A punctuation- or markup-only edit no longer moves a review date.** The review-date guard compares a body's words, so a dash or fence-marker fix owes a version bump but not a `last_reviewed` move. Ten commands stamped by such fixes in v2.32.0 carry their real review dates again: pb-design-language, pb-observability and pb-repo-blog (2026-02-09), pb-documentation, pb-templates and pb-dr (2026-06-10), pb-sam-documentation and pb-new-playbook (2026-07-13), pb-learn (2026-08-03), pb-repo-readme (2026-10-03).
+- **A punctuation- or markup-only edit no longer moves a review date.** The review-date guard compares a body's words, so a dash or fence-marker fix owes a version bump but not a `last_reviewed` move; a word edit that amends an already-bumped version's notes still owes one, and an uncommitted edit is checked before the commit. Nine commands stamped by such fixes in v2.32.0 carry their real review dates again: pb-design-language, pb-observability and pb-repo-blog (2026-02-09), pb-documentation and pb-templates (2026-06-10), pb-sam-documentation and pb-new-playbook (2026-07-13), pb-learn (2026-08-03), pb-repo-readme (2026-10-03).
 - **The changed-command guards see a new command before `git add`.** An untracked file under `commands/` counts as added, so the dash, version-notes and body-change checks run on it pre-commit.
 
 ## [v2.33.0] - 2026-11-04
