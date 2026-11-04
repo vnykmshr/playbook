@@ -7,7 +7,7 @@ Five chapters on engineering culture, design principles, and development workflo
 ## Chapters
 
 - [The Preamble](https://playbook.1mb.dev/preamble): How we think together. Five principles for collaboration where the best ideas win regardless of source.
-- [Design Rules](https://playbook.1mb.dev/design-rules): What we build toward. Eighteen rules across four clusters: clarity, simplicity, resilience, extensibility.
+- [Design Rules](https://playbook.1mb.dev/design-rules): What we build toward. Eighteen rules: seventeen in four clusters (clarity, simplicity, resilience, extensibility), plus attention.
 - [The Ritual](https://playbook.1mb.dev/ritual): How we work. The daily cycle of scoping, building, and shipping with confidence.
 - [The Review](https://playbook.1mb.dev/review): How we maintain quality. A review culture built on specialized perspectives and honest feedback.
 - [Adoption](https://playbook.1mb.dev/adoption): How to start. Practical steps for individuals, teams, and organizations.
