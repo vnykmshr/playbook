@@ -7,15 +7,15 @@ model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-voice', 'pb-review', 'pb-linus-agent', 'pb-commit', 'pb-llm-guidelines']
 last_reviewed: "2026-07-10"
-version: "1.5.0"
-version_notes: "v1.5.0: Voice pass is now a required lens (was conditional 'if configured'). /pb-voice fires on every prose-bearing artifact. Prose/structure/typography tell blocks removed from Lens 2, delegated to pb-voice's canonical Categories 1-12 (kills the duplicate). Lens 2 keeps code/comment tells plus new code-specific tells (comments explain what-not-why, commit body re-narrates diff, over-descriptive identifiers). Lens 6 defers register calibration to the voice pass. Shapes-over-words meta-principle echoed."
+version: "1.6.0"
+version_notes: "v1.6.0: Spaced double hyphens replaced."
 breaking_changes: []
 ---
 # AI Output Quality Gate
 
-Computer surgeon pass. Everything we produce -- code, messages, reports, PoCs, commit messages -- must read as hand-written by a developer. Surgical precision, minimal sufficient output, zero AI tells.
+Computer surgeon pass. Everything we produce (code, messages, reports, PoCs, commit messages) must read as hand-written by a developer. Surgical precision, minimal sufficient output, zero AI tells.
 
-**Resource Hint:** sonnet -- Sequential quality pass, convention matching, AI tell detection.
+**Resource Hint:** sonnet - Sequential quality pass, convention matching, AI tell detection.
 
 ---
 
@@ -53,20 +53,20 @@ Minimal sufficient. No bloat. No clipping.
 
 ## The Badge Test
 
-One question stands behind all seven lenses: **would you defend every line of this as your own in review -- without "the AI wrote that part"?** If any line fails, it is not done.
+One question stands behind all seven lenses: **would you defend every line of this as your own in review, without "the AI wrote that part"?** If any line fails, it is not done.
 
-This is ambient, not a step you invoke. It holds for every artifact -- code, commit, PR, comment, report -- whether or not the project asks for it. The lenses are how you make it true; the question is the bar. Beyond clean prose, work that carries your name is:
+This is ambient, not a step you invoke. It holds for every artifact (code, commit, PR, comment, report) whether or not the project asks for it. The lenses are how you make it true; the question is the bar. Beyond clean prose, work that carries your name is:
 
-- **Self-evidencing** -- claims backed by a test, a repro, or a measurement, not "should work."
-- **Scope-honest** -- name what you did not do; no silent truncation.
-- **One voice** -- code, commit, and PR read as one hand wrote them.
-- **Ceremony-free** -- the absence of scaffolding and attribution footers is the signature.
+- **Self-evidencing**: claims backed by a test, a repro, or a measurement, not "should work."
+- **Scope-honest**: name what you did not do; no silent truncation.
+- **One voice**: code, commit, and PR read as one hand wrote them.
+- **Ceremony-free**: the absence of scaffolding and attribution footers is the signature.
 
 ---
 
 ## No AI Policy
 
-Treat ALL output as subject to manual quality review -- not just projects that explicitly require it. This is deliberate practice: consistent application builds the muscle that prevents AI tells from creeping in. If we only handcraft when forced to, the muscle atrophies and the tells creep back.
+Treat ALL output as subject to manual quality review, not just projects that explicitly require it. This is deliberate practice: consistent application builds the muscle that prevents AI tells from creeping in. If we only handcraft when forced to, the muscle atrophies and the tells creep back.
 
 Some projects enforce this explicitly. Most don't but will judge it. The standard is the same either way.
 
@@ -111,7 +111,7 @@ The work must be indistinguishable from what the target maintainer would write t
 - Error wrapping style (project's error package or stdlib?)
 - Import grouping (stdlib / external / internal?)
 
-**Exit:** Did you read the target codebase, or match from memory? (Fails when you match from memory -- you'll miss convention drift.)
+**Exit:** Did you read the target codebase, or match from memory? (Fails when you match from memory: you'll miss convention drift.)
 
 ### Lens 2: AI Tell Scan
 
@@ -120,12 +120,12 @@ Read every line looking for machine patterns. If a line makes you think "a human
 **Prose, structure, typography, and register tells: run the voice pass.** `/pb-voice` owns the canonical list (Categories 1-12): dead-giveaway vocabulary, copula avoidance, antithesis, participial clauses, hedging density, stock transitions, metronomic rhythm, abstraction, inline-header lists, em-dashes, title case, summary endings, register mismatch. It runs on **every** prose-bearing artifact: commit, PR, report, doc, issue, comment prose. Not optional. Do not re-list or re-fix prose tells here; that duplicates voice and drifts. Handcraft owns only what voice can't see, in code and comments:
 
 **Comment tells:**
-- "Split on X to separate Y from Z" -- the code says that
-- "Parse challenge types from the first part" -- obvious narration
-- "This is the auth bypass guard" -- dramatic labeling
+- "Split on X to separate Y from Z": the code says that
+- "Parse challenge types from the first part": obvious narration
+- "This is the auth bypass guard": dramatic labeling
 - Comments that explain *what* the code does, never *why*; the mechanism is visible, the rationale and the edge case are not
 - Multi-line docstrings on internal functions that need 1-2 lines; ceremonial Args/Returns blocks on trivial helpers
-- "Example directives:" as a label -- just show the directives
+- "Example directives:" as a label; just show the directives
 
 **Code tells:**
 - Exhaustive test permutations (3 cases cover it, don't write 12)
@@ -152,7 +152,7 @@ Remove anything that doesn't earn its place.
 - Preamble before the actual content
 - "Let me know if you need more" closers
 - Multiple ways of saying the same thing
-- PoC code that explains instead of demonstrates -- strip to minimum viable reproduction
+- PoC code that explains instead of demonstrates: strip to minimum viable reproduction
 
 **The test:** cover each line with your hand. Does removing it lose information? If no, cut it.
 
@@ -188,7 +188,7 @@ The reader built the system. Don't explain their code, their spec, their domain,
 
 **The test:** remove the sentence. Can the reader still reproduce, understand, and fix the issue? If yes, cut.
 
-**Why it matters:** Reviewer text that explains a maintainer's own system back reads as outsider, AI-assisted, or condescending -- even when factually correct. The strongest review comments show the bug, the proof, and the fix without restating what the reader built.
+**Why it matters:** Reviewer text that explains a maintainer's own system back reads as outsider, AI-assisted, or condescending, even when factually correct. The strongest review comments show the bug, the proof, and the fix without restating what the reader built.
 
 **Exit:** Did you cut anything that explained the reader's domain back to them? (Fails when you assume the reader needs context you'd find condescending if roles were reversed.)
 
@@ -206,7 +206,7 @@ General dev-to-dev register:
 
 **For GitHub artifacts** (commits, PRs, issues, PR/review/inline comments): `~/.claude/CLAUDE.md` § GitHub Artifact Register sets the ceilings, strip list, and never-write list.
 
-**Conversational check:** read the output aloud as if saying it to a colleague over a drink. Mouth the words -- silent reading skips what the tongue catches.
+**Conversational check:** read the output aloud as if saying it to a colleague over a drink. Mouth the words; silent reading skips what the tongue catches.
 
 - Would you actually say this sentence to another human in conversation?
 - Would they check their phone midway through?
@@ -214,11 +214,11 @@ General dev-to-dev register:
 
 If the conversational check flags something your eye skipped, the problem is register, not cadence. Fix it here.
 
-**Exit:** Would you say every sentence aloud to a colleague without hedging or apologizing? (Fails when you read silently -- your eye skips what your tongue would catch.)
+**Exit:** Would you say every sentence aloud to a colleague without hedging or apologizing? (Fails when you read silently: your eye skips what your tongue would catch.)
 
 ### Lens 7: Read-Aloud Check
 
-This is a detection method, not a problem category. Your eyes skip what your tongue catches -- reading aloud surfaces issues the other lenses miss, regardless of what kind of issue it is.
+This is a detection method, not a problem category. Your eyes skip what your tongue catches; reading aloud surfaces issues the other lenses miss, regardless of what kind of issue it is.
 
 Read the output as if speaking it to the maintainer over a call.
 
@@ -228,26 +228,26 @@ Read the output as if speaking it to the maintainer over a call.
 
 If it sounds like a press release, rewrite until it sounds like a person.
 
-**For conversational artifacts (PR/issue comments, emails, Slack):** beyond spoken rhythm, check the shape. Does it read like someone typed this live, or like a generated review artifact with section headers and bullet padding? Scene-setter up front, specific pointers, flowing prose. Structured submissions (GHSA fields, VRP forms) skip this sub-check -- required sections drive their shape.
+**For conversational artifacts (PR/issue comments, emails, Slack):** beyond spoken rhythm, check the shape. Does it read like someone typed this live, or like a generated review artifact with section headers and bullet padding? Scene-setter up front, specific pointers, flowing prose. Structured submissions (GHSA fields, VRP forms) skip this sub-check: required sections drive their shape.
 
-**Exit:** Did reading aloud catch something silent reading skipped? (Fails when you mutter instead of reading aloud -- whispering is still silent reading.)
+**Exit:** Did reading aloud catch something silent reading skipped? (Fails when you mutter instead of reading aloud: whispering is still silent reading.)
 
 ### Final Re-Read
 
-Not an eighth lens -- a closing sweep. After all seven lenses, re-read the final output once from top to bottom. You changed things. Confirm the fixes didn't introduce new tells. If you find one, fix it and re-read; one clean pass is enough. Don't restart the lens pass.
+Not an eighth lens: a closing sweep. After all seven lenses, re-read the final output once from top to bottom. You changed things. Confirm the fixes didn't introduce new tells. If you find one, fix it and re-read; one clean pass is enough. Don't restart the lens pass.
 
 ---
 
 ## Submission Quality Gate (Security Reports)
 
-Before any security submission -- GHSA, bounty platform, email -- verify these in addition to the seven lenses:
+Before any security submission (GHSA, bounty platform, email), verify these in addition to the seven lenses:
 
 - **PoC or traced input path.** "I tested this" or "I traced input from annotation to fmt.Sprintf with no sanitization." Code analysis is silver; observable output is gold. Prefer gold.
 - **Realistic scenario.** What does the attacker do, what breaks. State preconditions (RBAC, auth, config).
 - **Not a false positive.** Check for sanitization you missed, config flags that disable the path, unreachable preconditions.
 - **Timing judgment.** Don't submit known-class bugs in pre-release code the maintainer will likely catch. Hold and watch the release. Submit if it ships unfixed.
 - **Impact field isolation.** Platform triagers read Impact separately from Description. Read the Impact field with zero other context. Two tests: (a) does a triager who reads ONLY this field understand the attack? (b) can they dismiss it without reading Description? If yes to (b), rewrite until the answer is no. Name the actor, the action, the blast radius, and the preconditions in the Impact field itself.
-- **PoC code as evidence.** Run Lens 2 (AI Tell Scan) separately on all PoC code. Docstrings, argparse, class hierarchies, try/except with helpful messages, unused imports, and trailing summaries are the most common AI tells in PoC scripts. The PoC is what the triager scrutinizes most -- a clean report with an over-engineered PoC gets flagged.
+- **PoC code as evidence.** Run Lens 2 (AI Tell Scan) separately on all PoC code. Docstrings, argparse, class hierarchies, try/except with helpful messages, unused imports, and trailing summaries are the most common AI tells in PoC scripts. The PoC is what the triager scrutinizes most: a clean report with an over-engineered PoC gets flagged.
 - **Comparison case.** Show what the code DOES handle correctly next to what it misses. Vulnerable line vs safe alternative. Blocked path vs bypassed path. This demonstrates manual code reading and is the strongest signal that you understand the codebase.
 
 ---
@@ -263,7 +263,7 @@ Before posting any review comment on a PR, issue, or thread, check:
 - **One load-bearing observation per comment, not a list.** If three concerns arise, pick the most load-bearing and raise the others only after the first is resolved.
 - **No performative hedge.** "Just wanted to flag..." or "This might be wrong, but..." weakens signal without softening tone. Either state the observation or don't raise it.
 - **Opinion flagged as opinion.** "I'd be tempted to X" or "My lean would be X" signals personal preference and leaves the maintainer room to disagree. Better than either a flat demand or a hedged question.
-- **No closing ceremony.** "Happy to pair", "Let me know if...", "Hope this helps" -- strip unless the offer is concrete and specific to this thread.
+- **No closing ceremony.** "Happy to pair", "Let me know if...", "Hope this helps": strip unless the offer is concrete and specific to this thread.
 - **Paired options or single opinionated lean.** Not a multi-section review with headers. A PR comment should read like a typed message, not a consulting deliverable.
 - **Scene-setter up front.** Open with evidence or a specific file/function pointer, not a preamble. "Pulled locally; suite runs green" beats "Thanks for the contribution! I took a look at..."
 
@@ -295,7 +295,7 @@ All work stays local until explicitly approved for external action. No auto-push
 - Delete pre-existing dead code (mention it, don't delete unless asked)
 - Execute any external action
 
-If the handcraft pass reveals a real issue (missing test case, logic bug), fix it -- but don't use it as an excuse to expand scope.
+If the handcraft pass reveals a real issue (missing test case, logic bug), fix it, but don't use it as an excuse to expand scope.
 
 ---
 
@@ -308,11 +308,11 @@ Run after work is functionally complete, before presenting externally. Integrate
 
 ## Related Commands
 
-- `/pb-voice` -- Canonical prose-tell engine; handcraft fires it as a required lens (Lens 2)
-- `/pb-review` -- Code review (bugs, logic, tests)
-- `/pb-linus-agent` -- Peer review persona
-- `/pb-commit` -- Commit message quality
-- `/pb-llm-guidelines` -- LLM coding guardrails referenced in Scope Guard
+- `/pb-voice` - Canonical prose-tell engine; handcraft fires it as a required lens (Lens 2)
+- `/pb-review` - Code review (bugs, logic, tests)
+- `/pb-linus-agent` - Peer review persona
+- `/pb-commit` - Commit message quality
+- `/pb-llm-guidelines` - LLM coding guardrails referenced in Scope Guard
 
 ---
 

@@ -155,8 +155,9 @@ def commit_metadata_changes(sha: str, rel_path: str) -> tuple[bool, bool]:
 
 @functools.lru_cache(maxsize=None)
 def body_words(text: str) -> list[str]:
-    """The body's words in order: what a review reads. Punctuation and markup are not words."""
-    return re.findall(r"[^\W_]+", split_front_matter(text)[1])
+    """The body's words in order, case folded: what a review reads. Punctuation, markup and
+    the capital a punctuation swap brings ("x -- if" to "x. If") are not words."""
+    return re.findall(r"[^\W_]+", split_front_matter(text)[1].lower())
 
 
 def commit_changed_body(sha: str, rel_path: str) -> bool:
@@ -411,6 +412,7 @@ class TestCommandCount:
     ("a -- b\n", "a, b\n", False),
     ("```\nx\n```\n", "````\nx\n````\n", False),
     ("a *b* c\n", "a b c\n", False),
+    ("x -- if y\n", "x. If y\n", False),
     ("rm -rf x\n", "rm -r x\n", True),
     ("keep it\n", "keep it not\n", True),
     ("A\n", "B\n", True),
@@ -499,7 +501,6 @@ DASH_BASELINE = {
     "pb-claude-global.md": 3,
     "pb-claude-orchestration.md": 3,
     "pb-greenfield.md": 15,
-    "pb-handcraft.md": 34,
     "pb-handoff.md": 20,
     "pb-kai-reach.md": 3,
     "pb-linus-agent.md": 2,
