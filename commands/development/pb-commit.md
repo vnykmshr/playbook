@@ -6,9 +6,9 @@ difficulty: "beginner"
 model_hint: "sonnet"
 execution_pattern: "automatic"
 related_commands: ['pb-review', 'pb-start', 'pb-pr']
-last_reviewed: "2026-10-03"
-version: "2.3.1"
-version_notes: "v2.3.1: The Usual Flow: gate the commit on the proving command's exit code; a pipe to grep or tail gates on the last command instead. v2.3.0: Reference global GitHub Artifact Register rule via single-line pointer; drop local restatement and implicit 4-bullet template."
+last_reviewed: "2026-11-04"
+version: "2.3.2"
+version_notes: "v2.3.2: The message register states its default inline; the full register is named as /pb-claude-global's, so it reads without the user's global file."
 breaking_changes: []
 ---
 # Commit (Usually Automatic)
@@ -89,7 +89,7 @@ For changes touching >3 files across >1 concern, consider splitting into bisecta
 
 ## Message Register
 
-Follow `~/.claude/CLAUDE.md` § GitHub Artifact Register for format, length ceilings, strip list, and never-write list. Subject-only by default. When body includes test results: name the exact command run, or state "not run" with reason. No silent validation gaps.
+Default: `<type>(<scope>): <subject>`, present tense, subject only; a body, if any, is at most 2 short lines of why. No attribution trailers. The full register (length ceilings, strip list, never-write list) is the GitHub Artifact Register that `/pb-claude-global` writes into `~/.claude/CLAUDE.md`. When body includes test results: name the exact command run, or state "not run" with reason. No silent validation gaps.
 
 ---
 

@@ -19,6 +19,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- **`/pb-commit` v2.3.2.** The message register only pointed at a section of the user's `~/.claude/CLAUDE.md`, which exists only if they ran `/pb-claude-global`; it now states the default inline and names where the full register comes from.
 - **`/pb-new-playbook` v2.1.2.** The Review command type suggested "opus + haiku", against the rule that haiku is never a command hint; it is opus.
 - **`/pb-ship` v1.2.2.** Step 5.2 tagged and deployed inline, skipping the CI-green-on-this-commit gate `/pb-release` now checks; it runs `/pb-release` Phase 2-3 instead. The diagram listed `/pb-review-hygiene` twice, and `/code-review` is named as it is invoked. 730 to 695 lines.
 - **`/pb-secrets` v1.0.1.** The leak response led with `git filter-branch`, which git itself now warns against, and prevention named `git secrets` while the rest of the playbook and this repo's CI use gitleaks. Both point to `/pb-git-hygiene` (filter-repo) and gitleaks; a rewrite comes after rotation, never instead of it. 612 to 591 lines.
