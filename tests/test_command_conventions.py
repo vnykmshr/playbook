@@ -257,36 +257,39 @@ def prose_lines(text: str) -> list[str]:
     return [line for line, state in zip(body.split("\n"), rendered_fences(body)) if state is False]
 
 
-def intended_fences(body: str) -> tuple[list[bool | None], int]:
-    """Per body line, the nesting the author wrote, and fences left open at EOF.
+def fence_problems(text: str) -> list[str]:
+    """Nested samples whose outer fence is too short, as far as syntax can prove.
 
-    A marker with an info string opens; a bare marker closes the innermost
-    open block, or opens one at top level. Run length is ignored: this is the
-    reading the length has to agree with.
+    Inside a block, a fence line of the same character, at least the opener's
+    length and carrying an info string, is content; the bare close of that
+    inner block then ends the outer one. So such a line is always a defect, as
+    is a block still open at end of file.
+
+    Gaps, by design:
+    1. A bare inner opener reads as the outer's close; nothing in the syntax
+       says which was meant. Every remaining defect in v2.32.0 took this shape.
+       Requiring an info string on every opener closes the gap.
+    2. Fences in blockquotes, or in list items indented 4+ spaces, are not
+       modelled.
+    3. A backtick fence whose info string holds a backtick is not an opener in
+       CommonMark; FENCE_OPEN reads it as one.
     """
-    states: list[bool | None] = []
-    depth = 0
-    for line in body.split("\n"):
-        if match := FENCE_OPEN.match(line):
-            depth += 1 if line[match.end():].strip() or not depth else -1
-            states.append(None)
-        else:
-            states.append(depth > 0)
-    return states, depth
-
-
-def fence_render_problems(text: str) -> list[str]:
-    """Where rendering and nesting disagree: a sample closed early by an inner block."""
     body = split_front_matter(text)[1]
     first = text.count("\n") - body.count("\n") + 1
-    intended, left_open = intended_fences(body)
-    if left_open:
-        return [f"{left_open} fence(s) open at EOF by nesting"]
-    return [
-        f"line {i}: rendered as {'code' if r else 'prose'}"
-        for i, (r, n) in enumerate(zip(rendered_fences(body), intended), first)
-        if r is not None and n is not None and r != n
-    ]
+    problems, fence, opened = [], None, 0
+    for i, line in enumerate(body.split("\n"), first):
+        match = FENCE_OPEN.match(line)
+        if fence is None:
+            if match:
+                fence, opened = match.group(1), i
+        elif match and match.group(1)[0] == fence[0] and len(match.group(1)) >= len(fence):
+            if line[match.end():].strip():
+                problems.append(f"line {i}: fence with an info string inside the block opened at line {opened}")
+            else:
+                fence = None
+    if fence is not None:
+        problems.append(f"line {opened}: block never closed")
+    return problems
 
 
 def dash_count(text: str) -> int:
@@ -608,31 +611,35 @@ class TestDashRatchet:
 # (name, text, problem substring or None)
 FENCE_FIXTURE = [
     ("flat", "```bash\nx\n```\nprose\n", None),
-    ("bare-opener", "```\nx\n```\n", None),
-    ("four-backtick-sample", "````markdown\n# T\n```bash\nx\n```\nback in sample\n````\nprose\n", None),
-    ("three-backtick-sample", "```markdown\n# T\n```bash\nx\n```\nback in sample\n```\nprose\n", "line 6: rendered as prose"),
-    ("sample-left-open", "```markdown\n```bash\nx\n```\n", "open at EOF"),
-    ("front-matter-offset", '---\nname: "x"\n---\n```markdown\n```bash\nx\n```\ny\n```\n', "line 8: rendered as prose"),
+    ("four-backtick-outer-info-inner", "````markdown\n# T\n```bash\nx\n```\nback\n````\n", None),
+    ("four-backtick-outer-bare-inner", "````markdown\n```\nx\n```\nback\n````\n", None),
+    ("three-backtick-outer-info-inner", "```markdown\n# T\n```bash\nx\n```\nback\n```\n", "line 3: fence with an info string"),
+    ("gap-three-backtick-outer-bare-inner", "```markdown\n```\nx\n```\nback\n```\n", None),
+    ("tilde-outer-backtick-inner", "~~~markdown\n```bash\nx\n```\n~~~\n", None),
+    ("tilde-inside-tilde", "~~~markdown\n~~~bash\nx\n~~~\n~~~\n", "line 2: fence with an info string"),
+    ("open-at-eof", "```\nx\n", "line 1: block never closed"),
+    ("front-matter-offset", '---\nname: "x"\n---\n```markdown\n```bash\nx\n```\n```\n', "line 5: fence with an info string"),
 ]
 
 
-class TestFencesRenderAsNested:
-    """A sample holding a code block renders as one block.
+class TestNestedSampleFences:
+    """A sample holding a code block needs an outer fence longer than the inner.
 
-    A 3-backtick outer fence closes at the inner block's close, and everything
-    after it flips between prose and code: headings and Related Commands
-    render as code on the site, and the rest of the guards misread the file.
+    A 3-backtick outer fence closes at the inner block's close, and the rest of
+    the page flips between prose and code: headings and Related Commands render
+    as code on the site, and the other guards misread the file. See
+    fence_problems for what syntax cannot prove.
     """
 
     @pytest.mark.parametrize("text, problem", [row[1:] for row in FENCE_FIXTURE], ids=[row[0] for row in FENCE_FIXTURE])
     def test_detector(self, text, problem):
-        found = fence_render_problems(text)
+        found = fence_problems(text)
         assert (not found) if problem is None else any(problem in f for f in found), found
 
-    def test_every_command_renders_its_nesting(self):
-        bad = {p.name: probs[:3] for p in get_command_files() if (probs := fence_render_problems(p.read_text()))}
+    def test_every_command_closes_its_samples(self):
+        bad = {p.name: probs[:3] for p in get_command_files() if (probs := fence_problems(p.read_text()))}
         assert not bad, (
-            f"Fences that render differently from their nesting: {bad}. "
+            f"Fences a nested sample cannot close: {bad}. "
             "Give the outer fence more backticks than any fence inside it."
         )
 
