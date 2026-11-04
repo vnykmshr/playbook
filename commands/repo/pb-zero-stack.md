@@ -8,7 +8,7 @@ execution_pattern: "interactive"
 related_commands: ['pb-greenfield', 'pb-start', 'pb-design-language', 'pb-calm-design']
 last_reviewed: "2026-11-04"
 version: "3.2.1"
-version_notes: "v3.2.1: Related Commands drop the retired /pb-patterns-cloud."
+version_notes: "v3.2.1: Related Commands drop the retired /pb-patterns-cloud. CSP ships as a _headers response header: <meta> cannot carry frame-ancestors and HSTS is header-only. Deploy from the workflow, not Pages git integration, since a free private repo has no required checks; add the deploy secrets before merging the workflow, or gate it on a repo variable."
 breaking_changes: []
 ---
 # Zero-Stack App Initiation ($0/month Architecture)
@@ -284,7 +284,7 @@ Show the default stack with rationale. The default adapts to the complexity tier
 | CSS | Vanilla CSS with custom properties | Design tokens in `:root`, responsive, dark mode via `prefers-color-scheme` |
 | JS | Vanilla TypeScript (or JS) | No framework overhead for simple interactions |
 | Host | CF Pages | Free, atomic deploys, edge network |
-| CI | GitHub Actions | Lint + deploy on push |
+| CI | GitHub Actions | Lint + deploy on push. Deploy from the workflow, not Pages' git integration, or nothing gates a push: a free private repo has no required checks |
 
 > **Minimal means minimal.** No frameworks, no build tools. If you're reaching for a framework, you're probably standard tier.
 
@@ -317,7 +317,7 @@ Confirm or adjust, then proceed.
 
 ### Step 6: Content Security Policy
 
-Generate a CSP tailored to the data source and stack. Delivered via `<meta>` tag in HTML `<head>` (not Worker header - decouples security from Worker availability).
+Generate a CSP tailored to the data source and stack. Deliver it as a response header from a Pages `_headers` file, not a Worker (that couples security to Worker availability) and not a `<meta>` tag: `<meta>` cannot carry `frame-ancestors`, and HSTS is header-only.
 
 **CSP per variant:**
 
@@ -535,7 +535,7 @@ Generate `docs/setup.md` with paste-able commands. Each step is one command with
 
 ### 4. GitHub Actions
 - Enable Actions in repo Settings
-- Add secrets: `CF_API_TOKEN`, `CF_ACCOUNT_ID`
+- Add secrets `CF_API_TOKEN` and `CF_ACCOUNT_ID` before merging the deploy workflow, or gate its job on a repo variable: a run without them turns main red
 
 ### 5. DNS (optional - skip for *.pages.dev)
 - Custom domain: Pages → Custom domains → Add
