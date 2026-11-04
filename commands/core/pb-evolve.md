@@ -8,67 +8,74 @@ execution_pattern: "sequential"
 related_commands: ['pb-claude-global', 'pb-claude-project', 'pb-standards', 'pb-preamble', 'pb-design-rules']
 last_reviewed: "2026-11-04"
 version: "2.0.0"
-version_notes: "v2.0.0: Team machinery cut: calendar, Evolution Manager, snapshot/log/diff steps, report and dashboard templates, mkdocs and pbai."
-breaking_changes: []
+version_notes: "v2.0.0: Rewritten for one owner and many repos. Step 0 takes in harvested feedback until the harvester exits 0; each release runs as one /pb-forge arc; push, tag and release are separately gated; rollback redeploys the previous tag. Team machinery, the snapshot, log and diff steps, mkdocs and pbai are gone."
+breaking_changes: ['Quarterly calendar dates, Evolution Manager, review meeting and pre-evolution checklist removed', 'Steps 1.5 and 4-11 replaced: no evolution-snapshot.py, evolution-log.py or evolution-diff.py step; rollback is a redeploy of the previous tag', 'Report, dashboard, log-structure and rollback-report templates removed', 'Step 0 Intake added: the cycle closes only when scripts/feedback-harvest.py exits 0']
 ---
 
 # Evolve Playbooks to Match Claude Capabilities
 
-**Purpose:** Quarterly (or on-demand) review of Claude capability updates and playbook regeneration to maintain alignment and maximize efficiency.
+**Purpose:** Once a quarter, or when a model or harness release lands, take in the feedback every repo has written about the playbook, check each surface against what the model can now do, and ship the changes. One owner, many repos.
 
-**Mindset:** Self-healing, self-improving system. Playbooks exist to serve users. As Claude improves, playbooks should improve automatically. Apply `/pb-preamble` thinking (challenge assumptions about what's still true) and `/pb-design-rules` thinking (does every playbook still embody Clarity, Simplicity, Resilience?).
+**Mindset:** Apply `/pb-preamble` thinking (challenge what is still true, past rulings included) and `/pb-design-rules` thinking (does each command still earn its clarity and simplicity?). The evidence is the sessions' feedback and the vendor's docs, never the model's account of itself.
 
-**Resource Hint:** opus - Strategic evolution; capability assessment and design decisions.
+**Resource Hint:** opus - capability assessment, disposition calls and design decisions.
 
 ---
 
 ## When to Use
 
-- **Quarterly schedule** - Feb, May, Aug, Nov (fixed calendar)
-- **Major Claude version release** - When Claude 4.6 → 4.7 drops
-- **Context limit stress** - If hitting session limits regularly
-- **Latency complaints** - If playbooks feel slow
-- **User feedback** - When patterns don't work in practice
+- **Quarterly:** Feb, May, Aug, Nov
+- **A model or harness release** that changes defaults, context, tools or pricing
+- **A harvested backlog** large enough to be a cycle of its own
 
 ---
 
-## Quick Start: Run Evolution Cycle
-
-### Step 1: Prepare Environment
+## Step 0: Intake
 
 ```bash
-# Ensure clean state
-git status                                    # Must be clean
-git checkout main && git pull origin main     # On latest main
+python3 scripts/feedback-harvest.py; echo "exit $?"
 ```
-### Step 2: Run Analysis
+
+The harvester reads every `~/workspace/github/*/*/todos/` and the Claude memory `feedback_*.md` files, keys each item on its normalised text, and writes `todos/evolve/digest-YYYY-MM-DD.md`. It never writes the ledger.
+
+| Exit | Meaning | Do |
+|------|---------|----|
+| 0 | Every key dispositioned | Go to Step 1 |
+| 1 | Undisposed keys | Disposition them |
+| 2 | Nothing found, or a malformed ledger | Fix the root or the ledger; the digest is not evidence |
+
+Keys seen in more repos rank first; memory items come last. Cluster near-duplicates by hand, then give every key one row in `todos/evolve/harvest-ledger.tsv`, tab-separated `key disposition version date`:
+
+- `taken`: a release this cycle carries it; version names that release
+- `rejected`: the reason goes in the cycle record
+- `deferred`: names where it goes (a later release, a single decision)
+- `dup-of:<key>`: the cluster's representative carries the disposition
+
+`may be fixed` means the named command changed its body and version after the note, and shows that version's notes. Any body edit forces a bump, dash and fence fixes included, so the flag is a hint to check, never a reason to close a key. `private` marks a source from an org listed in `todos/evolve/private-orgs` (untracked, one per line). A `taken` key listed under "seen again" means the fix did not reach the sessions that wrote it.
+
+**The cycle does not close until the harvester exits 0.**
+
+## Step 1: Prepare
 
 ```bash
-# Analyze current state
-python3 scripts/evolve.py --analyze
-
-# View detailed report
-cat todos/evolution-analysis.json | jq '.'
-
-# Check validation
+git status                                    # clean
+git checkout main && git pull origin main
+python3 scripts/evolve.py --analyze           # writes todos/evolution-analysis.json
 python3 scripts/evolve.py --validate
+python3 scripts/git-signals.py                # adoption, churn, pain points: todos/git-signals/latest/
 ```
 
-### Step 3: Review Capability Changes
+Open the cycle record, `todos/evolve-YYYY-qN/`: `inputs.md` (taken and deferred keys, git signals), `ground-truth.md` (Step 2), `huddle.md` and `plan.md` (Steps 3-4).
 
-Since last evolution, what has changed?
+## Step 2: Capability Ground Truth
 
-- **Speed improvements:** Sonnet faster? Opus cost-effective for more tasks?
-- **Context windows:** Larger windows change what you can keep in main context
-- **Latency profile:** Different models, different speeds
-- **Reasoning depth:** Better reasoning changes what model to use for what task
+What changed since the last cycle: tiers and their speed or cost, context windows, tools, harness features and defaults.
 
+Fetch the vendor's current prompting guidance and harness docs to disk and extract `ground-truth.md`. The model under review is not a reliable witness to its own capabilities: the 2026-06 Fable trial and a 2026-09 research subagent both asserted capability facts the docs contradicted. A capability claim that is not in the ground-truth file does not enter the review.
 
-### Step 3.5: Help or Constrain (Standing, Every Cycle)
+## Step 3: Help or Constrain
 
 **The question:** does each playbook surface still structure and check the model's work, or has it become a constraint that keeps a stronger model from its best work? It runs every cycle, including cycles with no model release: a harness change or a session's evidence moves the line as much as a new model does.
-
-**Ground truth first.** Fetch the vendor's current prompting guidance and harness docs to disk and extract a ground-truth file. The model under review is not a reliable witness to its own capabilities: the 2026-06 Fable trial and a 2026-09 research subagent both asserted capability facts the docs contradicted. A capability claim that is not in the ground-truth file does not enter the review.
 
 **The line.** A surface earns its place when it carries what the model cannot derive from the repo or would not do by default:
 
@@ -102,108 +109,63 @@ It constrains when it:
 | Model-version strings in generator templates | 0 (`TestTemplateCurrency`) |
 | Structure added / cut | 1 / ~12 |
 
-### Step 9: Regenerate Auto-Generated Files
+## Step 4: Propose and Run
+
+Group the taken keys and the Step 3 findings into releases, one deliverable each, and write them to `plan.md` with the keys each release carries. Run each release as one `/pb-forge` arc: a huddle only where a fork exists, Self-gate as forge defines it, Land through Step 6.
+
+## Step 5: Regenerate and Verify
 
 ```bash
-# Regenerate all auto-generated indices
-python3 scripts/evolve.py --generate
-
-# Regenerate project CLAUDE.md
-/pb-claude-project
-
-# Regenerate global CLAUDE.md
-/pb-claude-global
-
+python3 scripts/evolve.py --generate          # indices
+./scripts/build-mdbook.sh                     # build first: check-links reads the built site
+python3 scripts/check-links.py
+python3 -m pytest tests/ -q
 ```
----
-### What Doesn't Change?
 
-- **Preamble thinking** (challenge assumptions, peer collaboration) - timeless
-- **Design rules** (clarity, simplicity, robustness) - timeless
-- **Atomic commits, quality gates** - foundational, not outdated by capability
-- **Test-first discipline** - still best practice
+Then regenerate with `/pb-claude-project` and `/pb-claude-global` and diff before keeping; both preserve `## Custom (Manual)`.
 
----
-## Common Evolution Scenarios
+## Step 6: Release and Rollback
 
-### Scenario A: Speed Improvement (e.g., Sonnet 4.5 → 4.6)
+Release each version with `/pb-release`. The push, the tag and the GitHub release are three separately approved actions under the external action gate; never push a tag in the same command as a branch.
 
-**Signal:** "New Sonnet is 30% faster, same cost"
+If a deploy breaks a site, redeploy the previous tag (rehearsed 2026-09-24, about a minute for both), then fix forward on main:
 
-**Analysis:**
-- What was Sonnet+Opus before might be Sonnet-only now
-- Parallelization becomes more viable
-- Session times drop
-
-**Action:**
-- Revisit model routing decisions
-- Test parallelization patterns
-- Update execution time estimates
-- Document efficiency gains
-
-### Scenario B: Context Window Expansion
-
-**Signal:** "Opus 4.7 offers a 1M-context variant (`[1m]` tier) alongside the 200K default"
-
-**Analysis:**
-- Default window unchanged (200K); 1M is opt-in, not automatic
-- Compression and subagent delegation still correct for the default
-- Cost scales with context size: 1M is not free headroom
-
-**Action:**
-- Reframe context-budget guidance to acknowledge the tier without softening hygiene
-- Document which workflows justify opting into `[1m]` (deep-repo audits, long-horizon synthesis)
-- Status-line tooling must recognize the new model identifiers
-- Leave compression patterns in place; treat 1M as reserved headroom
-
-### Scenario C: User Feedback (Patterns Don't Work)
-
-**Signal:** "This playbook guidance is confusing, I did it differently"
-
-**Analysis:**
-- Reality doesn't match documentation
-- Users are finding better way
-- Playbook is stale or unclear
-
-**Action:**
-- Interview users on what worked
-- Update playbook with real pattern
-- Validate on 3+ users
-- Simplify if new pattern is simpler
-
-### Scenario D: New Capability (e.g., Tool Use, Custom Models)
-
-**Signal:** "Claude now supports X"
-
-**Analysis:**
-- This changes what's possible
-- May enable new playbooks or patterns
-- May make old patterns obsolete
-
-**Action:**
-- Research capability thoroughly
-- Design playbooks for new capability
-- Test extensively before releasing
-- Document when this capability became available
+```bash
+gh workflow run deploy-docs.yml --ref <prev-tag>
+gh workflow run deploy-book.yml --ref <prev-tag>
+```
 
 ---
-## Checklist: Before Publishing Evolution
 
-- [ ] Success criteria defined (see section above)
-- [ ] Success criteria verified
-- [ ] All playbooks validated (python3 scripts/evolve.py --validate)
-- [ ] No circular cross-references
-- [ ] Metadata coverage > 95%
-- [ ] mkdocs build --strict passes
-- [ ] markdownlint passes
-- [ ] CHANGELOG updated
-- [ ] MEMORY.md updated with lessons
-- [ ] Evolution log entry written
-- [ ] Help-or-constrain review run (Step 3.5): ground-truth-backed, two-sided, trend row recorded
-- [ ] Tests pass
-- [ ] Tested on 2-3 real tasks
+## Scenarios
+
+| Signal | Action |
+|--------|--------|
+| A faster or cheaper tier | Revisit `model_hint` and the tier table; measure on real tasks before moving a hint |
+| A larger context window or a new tier | Keep context hygiene for the default; name the workflows that justify the larger tier |
+| A key recurs across repos | Read the sources, not only the digest line; fix the step sessions keep working around; mark it `taken` with the release |
+| A new capability or harness feature | Ground-truth it first; add or cut structure on documentation or observed sessions |
+
+## What Doesn't Change
+
+- **Preamble thinking** (challenge assumptions, peer collaboration)
+- **Design rules** (clarity, simplicity, robustness)
+- **Atomic commits and quality gates**
+- **Test-first discipline**
 
 ---
+
+## Definition of Done
+
+- [ ] `scripts/feedback-harvest.py` exits 0: every key has a ledger row
+- [ ] Help-or-constrain review run (Step 3): ground-truth-backed, two-sided, trend row recorded
+- [ ] All playbooks validated (`python3 scripts/evolve.py --validate`); no circular cross-references
+- [ ] `python3 -m pytest tests/ -q` and markdownlint pass
+- [ ] Fresh `./scripts/build-mdbook.sh`, then `python3 scripts/check-links.py` passes
+- [ ] CHANGELOG updated, one entry per shipped version
+- [ ] Cycle record complete in `todos/evolve-YYYY-qN/`
+- [ ] Each tag pushed only after CI is green on its commit; both sites verified
+
 ---
 
 ## Related Commands
@@ -216,4 +178,4 @@ python3 scripts/evolve.py --generate
 
 ---
 
-*Self-improvement is how we stay relevant. When Claude evolves, we evolve. When users teach us better patterns, we implement them. This playbook is never "done"-it's always improving.*
+*Evidence in, dispositions out. The cycle closes when the harvester exits 0.*
