@@ -167,7 +167,7 @@ def extract(text: str) -> tuple[list[tuple[int, str]], list[int]]:
             i += 1
         if cur:
             found.append(" ".join(cur))
-        found = [f for f in found if not PLACEHOLDER.match(f)]
+        found = [f for f in found if not PLACEHOLDER.match(f) and normalise(f)]
         items += [(h + 1, f) for f in found]
         if not found:
             empty.append(h + 1)
@@ -361,7 +361,7 @@ def harvest_memory(root: Path, h: Harvest) -> tuple[list[Item], list[str]]:
             h.unread.append(str(path))
             continue
         m = re.search(r"^description:[ \t]*(.+)$", text, re.MULTILINE)
-        if not m:
+        if not m or not normalise(m.group(1).strip().strip("\"'")):
             skipped.append(str(path))
             continue
         desc = m.group(1).strip().strip("\"'")

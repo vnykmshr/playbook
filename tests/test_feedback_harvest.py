@@ -115,6 +115,14 @@ def test_fenced_heading_and_template_placeholder_are_skipped():
     assert items == [] and empty == [5]
 
 
+def test_an_item_that_normalises_to_nothing_is_no_item():
+    """Its key would be sha256("")[:12], which no ledger row can carry: exit 1 for good."""
+    items, empty = fh.extract("Playbook feedback:\n- ...\n- \u2014\n- 2026-11-04\n")
+    assert items == [] and empty == [1]
+    items, _ = fh.extract("Playbook feedback:\n- ...\n- real\n")
+    assert [t for _, t in items] == ["real"]
+
+
 @pytest.mark.parametrize("prose", [
     "The pause asks for playbook feedback: see pb-pause.",
     "Playbook feedback harvesting runs before Step 1.",
@@ -511,11 +519,13 @@ def test_memory_items_key_on_description_and_list_files_without_one(tmp_path: Pa
     write(tmp_path / "mem" / "q" / "memory", "a file, not a dir\n")
     write(tmp_path / "mem" / "p" / "memory" / "feedback_x.md", "---\nname: x\ndescription: Say the no first\n---\nbody\n")
     write(tmp_path / "mem" / "p" / "memory" / "feedback_y.md", "no front matter\n")
+    write(tmp_path / "mem" / "p" / "memory" / "feedback_z.md", "---\nname: z\ndescription: \"...\"\n---\nbody\n")
     assert run(tmp_path) == 1
     md = digest(tmp_path)
     memory = md.split("## Undisposed: memory")[1].split("##")[0]
     assert f"`{fh.item_key('Say the no first')}` 1 source(s), newest ~" in memory
-    assert "feedback_y.md" in md.split("## Memory files with no description")[1]
+    no_desc = md.split("## Memory files with no description")[1]
+    assert "feedback_y.md" in no_desc and "feedback_z.md" in no_desc
 
 
 def git(repo: Path, *args: str, when: str = "2026-10-01T12:00:00") -> None:
@@ -587,6 +597,18 @@ def test_pb_pause_template_heading_feeds_the_harvester():
     n = hits[0]
     assert lines[n] == "Patterns / playbook feedback:"
     assert fh.PLACEHOLDER.match(fh.BULLET.match(lines[n + 1]).group("text")), "the template's placeholder bullet follows it"
+
+
+@pytest.mark.parametrize("q, first", [("1", "01"), ("2", "04"), ("3", "07"), ("4", "10")])
+def test_quarter_start_is_the_quarters_first_day(q: str, first: str):
+    assert fh.quarter_start(f"2027-q{q}") == f"2027-{first}-01"
+
+
+@pytest.mark.parametrize("today, code", [("2027-03-31", 0), ("2027-04-01", 1)])
+def test_a_q2_deferral_comes_due_on_april_first(tmp_path: Path, today: str, code: int):
+    repo_note(tmp_path, "o/r", "## 2026-10-01\nPlaybook feedback:\n- one\n")
+    write(tmp_path / "ledger.tsv", ledger(row("one", "deferred", "2027-q2")))
+    assert run(tmp_path, "--today", today) == code
 
 
 @pytest.mark.parametrize("today, code", [("2026-12-31", 0), ("2027-01-01", 1), ("2027-03-31", 1)])
