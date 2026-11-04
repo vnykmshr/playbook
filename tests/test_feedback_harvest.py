@@ -83,8 +83,19 @@ def test_fenced_heading_and_template_placeholder_are_skipped():
     assert items == [] and empty == [5]
 
 
-def test_a_mention_in_prose_is_not_a_heading():
-    assert fh.extract("The pause asks for playbook feedback: see pb-pause.\n") == ([], [])
+@pytest.mark.parametrize("prose", [
+    "The pause asks for playbook feedback: see pb-pause.",
+    "Playbook feedback harvesting runs before Step 1.",
+    "playbook feedbackish",
+    "## Playbook feedback loop",
+])
+def test_a_mention_in_prose_is_not_a_heading(prose: str):
+    assert fh.extract(f"{prose}\n- not an item\n") == ([], [])
+
+
+@pytest.mark.parametrize("heading", ["## Playbook Feedback (v2.1)", "**Playbook feedback**: inline"])
+def test_heading_variants_still_match(heading: str):
+    assert texts(f"{heading}\n- one\n")[-1] == "one"
 
 
 def test_heading_date_skips_future_mentions():

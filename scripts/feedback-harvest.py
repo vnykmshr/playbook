@@ -31,11 +31,12 @@ import yaml
 PLAYBOOK = Path(__file__).resolve().parent.parent
 
 # Optional `#`s or `**`, optional `<word> / ` prefix, "playbook feedback", optional
-# "(...)", then `:` or `.` and a closing `**` in either order. The rest of the line
-# is an inline item.
+# "(...)", then `:` or `.` with a closing `**` on either side; the rest of the line is
+# an inline item. A `#` heading may instead end there. Prose starting with the words
+# ("Playbook feedback harvesting runs...") has neither, so it is not a heading.
 HEADING = re.compile(
-    r"^(?:#{1,6}[ \t]+)?(?:\*\*)?(?:[a-z]+[ \t]*/[ \t]*)?playbook feedback(?:[ \t]*\([^)]*\))?"
-    r"[ \t]*[:.]?[ \t]*(?:\*\*)?[ \t]*[:.]?[ \t]*(?P<rest>.*)$",
+    r"^(?:(?P<h>#{1,6})[ \t]+)?(?:\*\*)?(?:[a-z]+[ \t]*/[ \t]*)?playbook feedback\b(?:[ \t]*\([^)]*\))?"
+    r"(?:[ \t]*(?:\*\*[ \t]*)?[:.][ \t]*(?:\*\*)?[ \t]*(?P<rest>.*)|(?(h)[ \t]*(?:\*\*)?[ \t]*|(?!)))$",
     re.IGNORECASE,
 )
 BULLET = re.compile(r"^(?P<indent>[ \t]*)(?:[-*+]|\d+[.)])[ \t]+(?P<text>.*)$")
@@ -109,7 +110,7 @@ def extract(text: str) -> tuple[list[tuple[int, str]], list[int]]:
             i += 1
             continue
         h, found = i, []
-        rest = m.group("rest").strip()
+        rest = (m.group("rest") or "").strip()
         if rest and not PLACEHOLDER.match(rest):
             found.append(rest)
         cur, base, i = None, None, i + 1
