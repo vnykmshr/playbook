@@ -6,9 +6,9 @@ difficulty: "beginner"
 model_hint: "opus"
 execution_pattern: "sequential"
 related_commands: ['pb-claude-global', 'pb-claude-project', 'pb-standards', 'pb-preamble', 'pb-design-rules']
-last_reviewed: "2026-09-24"
-version: "1.4.0"
-version_notes: "v1.4.0: Step 3.5 makes help-or-constrain a standing question every cycle -- does each surface structure and check the model, or hold a stronger model back. Ground truth from fetched vendor docs, auto-loaded surfaces first, two-sided by rule (name where the model needs more structure before cutting), and deletion on documentation or observed sessions, never the model's self-report. Changes command content only; retirement stays a human call. Trend row seeded from Q3 2026. v1.3.0: Q2 2026 -- refresh currency markers to Opus 4.8 GA (footer version); running examples left illustrative. v2.20.0 -- Refresh running examples to Opus 4.7 + 1M [1m] scenario; bring evolution-log, opportunity, release-notes, and Scenario B templates into alignment with current capability trigger."
+last_reviewed: "2026-11-04"
+version: "2.0.0"
+version_notes: "v2.0.0: Prose dashes replaced."
 breaking_changes: []
 ---
 
@@ -202,7 +202,7 @@ Document findings in `todos/evolution-log.md`:
 
 ### Step 3.5: Help or Constrain (Standing, Every Cycle)
 
-**The question:** does each playbook surface still structure and check the model's work, or has it become a constraint that keeps a stronger model from its best work? It runs every cycle, including cycles with no model release -- a harness change or a session's evidence moves the line as much as a new model does.
+**The question:** does each playbook surface still structure and check the model's work, or has it become a constraint that keeps a stronger model from its best work? It runs every cycle, including cycles with no model release: a harness change or a session's evidence moves the line as much as a new model does.
 
 **Ground truth first.** Fetch the vendor's current prompting guidance and harness docs to disk and extract a ground-truth file. The model under review is not a reliable witness to its own capabilities: the 2026-06 Fable trial and a 2026-09 research subagent both asserted capability facts the docs contradicted. A capability claim that is not in the ground-truth file does not enter the review.
 
@@ -211,18 +211,18 @@ Document findings in `todos/evolution-log.md`:
 - Decisions and consent boundaries the owner made
 - This project's conventions, couplings and gotchas
 - Behaviours the vendor documents as needing instruction (response length and scope, as of 2026-09)
-- Checks that execute -- a test, a guard, a hook
+- Checks that execute: a test, a guard, a hook
 
 It constrains when it:
 
 - Re-teaches what the model does natively or what the harness already does
 - Instructs re-verification of work the model already verifies
 - Prescribes reasoning steps where stating the outcome would do
-- States facts that rot -- model versions, SHAs, counts -- in a file loaded every session
+- States facts that rot (model versions, SHAs, counts) in a file loaded every session
 
-**Where to look, by cost.** Auto-loaded surfaces first (generated global and project CLAUDE.md, the memory index): every line is paid every session and cannot be corrected mid-session. Then commands that chain or stack checks. On-demand reference commands last -- they cost nothing until invoked, so review them only when a finding points there.
+**Where to look, by cost.** Auto-loaded surfaces first (generated global and project CLAUDE.md, the memory index): every line is paid every session and cannot be corrected mid-session. Then commands that chain or stack checks. On-demand reference commands last: they cost nothing until invoked, so review them only when a finding points there.
 
-**Two-sided, by rule.** Before proposing any cut, name at least one place where the model needs *more* structure, with evidence -- or state that you looked and found none. A review that only deletes is a prune machine run one line at a time. The 2026-09 panel of four argued deletion and nobody argued addition, while the one addition that cycle (a scope rule) answered a documented weakness.
+**Two-sided, by rule.** Before proposing any cut, name at least one place where the model needs *more* structure, with evidence, or state that you looked and found none. A review that only deletes is a prune machine run one line at a time. The 2026-09 panel of four argued deletion and nobody argued addition, while the one addition that cycle (a scope rule) answered a documented weakness.
 
 **Deletion needs evidence, not self-report.** The model judging the rules is the model the rules govern, and "I would do that anyway" is the one claim it cannot make about itself. Cut a behavioural rule on vendor documentation or on observed sessions, never on the model's account of its own defaults. The 2026-09 session that argued verification is native also repeated the cheapest-surface mistake its own memory warned about.
 
@@ -598,7 +598,7 @@ Human-readable summary for each release:
 **Analysis:**
 - Default window unchanged (200K); 1M is opt-in, not automatic
 - Compression and subagent delegation still correct for the default
-- Cost scales with context size -- 1M is not free headroom
+- Cost scales with context size: 1M is not free headroom
 
 **Action:**
 - Reframe context-budget guidance to acknowledge the tier without softening hygiene

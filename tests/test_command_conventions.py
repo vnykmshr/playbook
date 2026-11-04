@@ -544,7 +544,6 @@ DASH_BASELINE = {
     "pb-caveman.md": 17,
     "pb-claude-global.md": 3,
     "pb-claude-orchestration.md": 3,
-    "pb-evolve.md": 7,
     "pb-greenfield.md": 15,
     "pb-handcraft.md": 34,
     "pb-handoff.md": 20,

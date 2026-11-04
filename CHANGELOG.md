@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Breaking
+
+- **`/pb-evolve` v2.0.0.** Prose dashes replaced.
+
 ### Security
 
 - **Gate hook: case and line continuation no longer bypass it.** The command is lowercased and backslash-newline joined with a space before matching, so `GH pr merge`, `RM -rf`, `NPM publish`, `gh api -X post` and `rm \` + newline + `-rf` ask. If lowercasing fails, the hook asks.
