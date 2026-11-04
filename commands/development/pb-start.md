@@ -6,9 +6,9 @@ difficulty: "intermediate"
 model_hint: "sonnet"
 execution_pattern: "interactive"
 related_commands: ['pb-preamble', 'pb-review', 'pb-commit', 'pb-pause', 'pb-plan']
-last_reviewed: "2026-09-24"
+last_reviewed: "2026-11-05"
 version: "2.3.2"
-version_notes: "v2.3.2: The tool-agnostic link resolves on the published site."
+version_notes: "v2.3.2: The tool-agnostic link resolves on the published site; the questions are a few, not 3-4; no background watcher is claimed; the migration table keeps /pb-cycle and /pb-review-code, which ship."
 breaking_changes: ["Replaced detailed pre-start checklist with 3-4 adaptive scope questions. Old commands pb-cycle/pb-review-code merged into /pb-review. See MIGRATION section."]
 ---
 # Start Development Work
@@ -33,11 +33,11 @@ Begin work on a feature, bug fix, or enhancement. Establishes scope through adap
 
 ---
 
-## The Quick Start: 5 Minutes
+## The Quick Start: 2 Minutes
 
 ```
 /pb-start "feature name"
-  ↓ System asks 3-4 adaptive questions
+  ↓ System asks a few adaptive questions
   ↓ You answer (1-2 min)
   ↓ Branch created, scope detected
   ↓ You code
@@ -77,7 +77,7 @@ The system asks clarifying questions naturally, like a peer reviewing your appro
 
 ## After You Answer
 
-System detects complexity level, criticality, and affected domains. Creates a feature branch with conventional naming, saves your scope and success criteria for `/pb-review` later, then gets out of your way. You code. No more decisions, no ceremony. System watches in the background, tracking change complexity as you work.
+System detects complexity level, criticality, and affected domains. Creates a feature branch with conventional naming, saves your scope and success criteria for `/pb-review` later, then gets out of your way. You code. No more decisions, no ceremony.
 
 See `/pb-llm-guidelines` §4 for the goal-driven execution pattern: strong success criteria let you loop independently; weak criteria require constant clarification.
 
@@ -89,7 +89,7 @@ This command is part of a 3-command ritual:
 
 ```
 /pb-start [what you're building]
-  ↓ Answer 3-4 questions
+  ↓ Answer a few questions
   ↓ Branch created, scope recorded
 
 [You code here-no interruptions]
@@ -118,7 +118,6 @@ This command is part of a 3-command ritual:
 
 **After branch is created:**
 - Just code. Don't think about the ritual yet.
-- System is watching (tracking your changes)
 - When done, run `/pb-review`
 
 ---
@@ -140,9 +139,9 @@ You don't need to think about this.
 
 | Old | New |
 |-----|-----|
-| `/pb-start` (long ceremony) | `/pb-start` (3-4 questions, 2 min) |
-| `/pb-cycle` (self-review) | `/pb-review` (auto-detects depth) |
-| `/pb-review-code` (peer review) | Built into `/pb-review` |
+| `/pb-start` (long ceremony) | `/pb-start` (a few questions, 2 min) |
+| `/pb-cycle` before every commit | `/pb-review`; `/pb-cycle` stays for guided self-review |
+| `/pb-review-code` on every change | `/pb-review`; `/pb-review-code` for a deep PR review |
 | `/pb-security`, `/pb-performance` | Consulted automatically by `/pb-review` |
 | Manual persona selection | Automatic (system decides who to consult) |
 
