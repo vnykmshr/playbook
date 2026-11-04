@@ -9,7 +9,7 @@ related_commands: ['pb-incident', 'pb-sre-practices', 'pb-database-ops', 'pb-dep
 last_reviewed: "2026-11-04"
 last_evolved: ""
 version: "1.0.1"
-version_notes: "v1.0.1: Nested samples use a 4-backtick outer fence, so the inner block no longer ends the sample and the page after it renders as prose, not code."
+version_notes: "v1.0.1: The failover runbook fences the old primary before promotion and measures loss by WAL the replica received, not replay lag. Nested samples use a 4-backtick outer fence, so the inner block no longer ends the sample and the page after it renders as prose, not code."
 breaking_changes: []
 ---
 # Disaster Recovery
@@ -230,19 +230,19 @@ When automated failover isn't possible or appropriate:
 
 ### Pre-Conditions
 - Primary database is unresponsive or corrupted
-- Replica has current data (check replication lag)
+- Replica has received the WAL you need (its `pg_last_wal_receive_lsn()` against the primary's last known LSN)
 - You have authority to initiate failover
 
 ### Steps
 
 1. **Verify the problem (2 min)**
    - Is primary truly down? (not network issue)
-   - What is replica lag? (acceptable data loss?)
+   - How much WAL is missing? (replica receive LSN against the primary's last known LSN; replay lag is not loss)
    - Notify team in #incidents
 
-2. **Stop writes to primary (1 min)**
-   - Update application config to reject writes
-   - Or: Block primary at network level
+2. **Fence the old primary (1 min)**
+   - Stop it, or power off its host if it won't respond
+   - Or block it at the network level; an app-config write block misses clients that still reach it
 
 3. **Promote replica (5 min)**
    ```bash
@@ -296,7 +296,7 @@ postgresql:
   listen: 0.0.0.0:5432
   data_dir: /var/lib/postgresql/data
   parameters:
-    synchronous_commit: "on"  # For zero data loss
+    synchronous_commit: "on"  # zero loss also needs synchronous_mode: true in dcs
 ```
 
 **Automated failover considerations:**

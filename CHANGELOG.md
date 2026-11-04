@@ -40,7 +40,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **`/pb-documentation` v1.1.1.** Nested samples use a 4-backtick outer fence, so the inner block no longer ends the sample and the page after it renders as prose, not code.
 - **`/pb-sam-documentation` v1.4.1.** Nested samples use a 4-backtick outer fence, so the inner block no longer ends the sample and the page after it renders as prose, not code.
 - **`/pb-templates` v1.0.1.** Nested samples use a 4-backtick outer fence, so the inner block no longer ends the sample and the page after it renders as prose, not code.
-- **`/pb-dr` v1.0.1.** Nested samples use a 4-backtick outer fence, so the inner block no longer ends the sample and the page after it renders as prose, not code.
+- **`/pb-dr` v1.0.1.** The failover runbook fences the old primary before promotion and measures loss by WAL the replica received, not replay lag. Nested samples use a 4-backtick outer fence, so the inner block no longer ends the sample and the page after it renders as prose, not code.
 - **`/pb-design-language` v1.0.1.** Nested samples use a 4-backtick outer fence, so the inner block no longer ends the sample and the page after it renders as prose, not code.
 - **`/pb-observability` v1.0.1.** Nested samples use a 4-backtick outer fence, so the inner block no longer ends the sample and the page after it renders as prose, not code.
 - **`/pb-repo-blog` v1.0.1.** Nested samples use a 4-backtick outer fence, so the inner block no longer ends the sample and the page after it renders as prose, not code.
