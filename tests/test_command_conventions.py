@@ -1066,6 +1066,8 @@ class TestRelatedCommands:
         assert get_related_commands_count(empty_first) == 1
         empty_last = "## Related Commands\n\n- `/pb-a` - one\n-\n"
         assert get_related_commands_count(empty_last) == 1
+        empty_parent = "## Related Commands\n\n-\n  - `/pb-a` - one\n"
+        assert get_related_commands_count(empty_parent) == 1
 
     def test_front_matter_related_commands_within_limits(self):
         """The limit applies to both lists; until now only one was counted.

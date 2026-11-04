@@ -80,10 +80,6 @@ def related_commands_count(text: str) -> int:
         elif t.type == "hr":
             inside = False
         elif inside and t.type == "list_item_open" and t.markup == "-":
-            for x in toks[i + 1:]:
-                if x.type == "list_item_close" and x.level == t.level:
-                    break
-                if x.type == "inline":
-                    count += x.content.startswith("`/pb-")
-                    break
+            own = toks[i + 1].type == "paragraph_open" and toks[i + 2].content.startswith("`/pb-")
+            count += own
     return count
