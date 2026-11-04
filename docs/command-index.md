@@ -200,6 +200,7 @@ Developer machine health and maintenance.
 | `/pb-claude-project` | Generate project .claude/CLAUDE.md by analyzing codebase |
 | `/pb-claude-orchestration` | Model selection, task delegation, and resource efficiency guide |
 | `/pb-context-review` | Audit and maintain all context layers - quarterly or after releases |
+| `/pb-evolve` | Quarterly evolution cycle: harvest feedback notes, rule each one, ship the changes |
 
 ## Typical Workflows
 

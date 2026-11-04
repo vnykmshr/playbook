@@ -1001,7 +1001,11 @@ class TestWhenToUse:
 def test_command_index_names_every_command():
     """docs/command-index.md is the public catalog: a command missing from it is unfindable."""
     index = (REPO_ROOT / "docs" / "command-index.md").read_text()
-    missing = [p.stem for p in get_command_files() if f"`/{p.stem}`" not in index]
+    lines = index.split("\n")
+    missing = [
+        p.stem for p in get_command_files()
+        if not any(line.startswith((f"| `/{p.stem}` |", f"**→ `/{p.stem}`**")) for line in lines)
+    ]
     assert not missing, f"commands missing from docs/command-index.md: {missing}"
 
 
@@ -1314,7 +1318,7 @@ class TestRegisterRuleReference:
         "pb-review-comprehensive.md",
         "pb-review-hygiene.md",
         "pb-review-tests.md",
-                    "pb-review-microservice.md",
+        "pb-review-microservice.md",
         "pb-review-product.md",
         "pb-review-docs.md",
         "pb-review-playbook.md",
