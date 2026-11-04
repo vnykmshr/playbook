@@ -6,9 +6,9 @@ difficulty: "intermediate"
 model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-ship', 'pb-security', 'pb-hardening', 'pb-deployment', 'pb-release']
-last_reviewed: "2026-10-03"
+last_reviewed: "2026-11-04"
 version: "1.2.0"
-version_notes: "v1.2.0: Spaced double hyphens replaced."
+version_notes: "v1.2.0: 4.3 (static) captures the deploy artifact during the run and strips a known host injection before comparing, or compares a non-HTML asset; 4.5 names govulncheck, not go list -m -u, which lists outdated modules rather than vulnerable ones."
 breaking_changes: ['Bullets are numbered N.M and referenced by number', 'N/A is no longer a valid outcome -- a bullet is in your profile or it is not rendered']
 ---
 # Pre-Ship Readiness Gate
@@ -60,7 +60,7 @@ One question, asked once per project: **what are you shipping?**
 
 Nine you own, twelve delegated, nine out of surface. Referenced by number against The Gate below, which is always printed in full.
 
-- **You own (execute these):** 1.1 secrets in history · 2.3 a clean checkout rebuilds and redeploys the live site (this is the restore test) · 3.1 build and CI config match the expected schema · 3.5 rollback rehearsed · 4.3 every file in the deployed build (or a rebuild with the deploy's pinned toolchain), fetched from its public URL with redirects followed, matches byte for byte; host control files such as `.nojekyll` are not served · 4.5 dependency audit · 6.1 smoke test on a real page and a real link · 6.2 watched after the flip · 6.5 read like an attacker: for a published corpus, what did you publish that you did not mean to
+- **You own (execute these):** 1.1 secrets in history · 2.3 a clean checkout rebuilds and redeploys the live site (this is the restore test) · 3.1 build and CI config match the expected schema · 3.5 rollback rehearsed · 4.3 every file in the deployed build (or a rebuild with the deploy's pinned toolchain), fetched from its public URL with redirects followed, matches byte for byte; host control files such as `.nojekyll` are not served. Capture the deploy's artifact during the run (it is deleted after). Where the host edits responses (an injected bot-detection script), strip the known injection before comparing, or compare a non-HTML asset · 4.5 dependency audit · 6.1 smoke test on a real page and a real link · 6.2 watched after the flip · 6.5 read like an attacker: for a published corpus, what did you publish that you did not mean to
 - **Delegated (name the provider and the date you last verified):** 1.2 · 3.2 · 3.3 · 3.4 · 4.1 · 4.2 · 4.4 · 5.1-5.5
 - **Out of surface (no database, no sessions, no uploads):** 1.3 · 1.4 · 1.5 · 2.1 · 2.2 · 2.4 · 2.5 · 6.3 · 6.4
 
@@ -110,7 +110,7 @@ Nine you own, twelve delegated, nine out of surface. Referenced by number agains
 - [ ] **4.2 Structured, searchable logs.** Log level at info or below in prod (no debug flood, no stdout garbage). Can query by request ID end-to-end.
 - [ ] **4.3 Health endpoint returns 200 from public DNS.** Not localhost. Not the internal network. The address a real user hits. Include one dependency check, not just `return "ok"`.
 - [ ] **4.4 Alerts wired for real failure modes.** Error rate spike, p99 latency, downtime, disk/memory threshold. At least one reachable human on the receiving end right now. Test-fire one alert.
-- [ ] **4.5 Dependency audit clean on criticals.** `npm audit` / `pip-audit` / `go list -m -u all` / equivalent run within the last 7 days. No critical or high vulns unacknowledged.
+- [ ] **4.5 Dependency audit clean on criticals.** `npm audit` / `pip-audit` / `govulncheck ./...` / equivalent run within the last 7 days; `go list -m -u all` lists outdated modules, not vulnerable ones. A scanner that checks the toolchain catches what no code change fixes (a vulnerable Go release). No critical or high vulns unacknowledged.
 
 ### [5] Resilience & Limits
 
