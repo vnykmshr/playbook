@@ -209,7 +209,8 @@ def window_version_changes() -> tuple[tuple[str, frozenset[str], frozenset[str],
 def commands_changed_since_tag() -> list[tuple[str, str | None, str]]:
     """(path, text at the last tag or None if added, working-tree text) per command changed since the tag.
 
-    Compares the tag with the working tree, so a pre-commit run sees the edit.
+    Compares the tag with the working tree, so a pre-commit run sees the edit; an
+    untracked new command counts as added, so it is seen before `git add`.
     Renames compare old path to new; deleted commands are skipped.
     """
     tag = last_tag()
@@ -221,6 +222,9 @@ def commands_changed_since_tag() -> list[tuple[str, str | None, str]]:
         old, new = paths[0], paths[-1]
         before = None if status[0] == "A" else git("show", f"{tag}:{old}")
         changed.append((new, before, (REPO_ROOT / new).read_text()))
+    for new in git("ls-files", "--others", "--exclude-standard", "--", "commands/").splitlines():
+        if new.endswith(".md"):
+            changed.append((new, None, (REPO_ROOT / new).read_text()))
     return changed
 
 
@@ -305,6 +309,26 @@ class TestBodyChangeCarriesVersion:
     passes here -- its notes amendment is the changelog guard's job, and only
     when version_notes changes.
     """
+
+    def test_an_untracked_command_is_seen_as_added(self, monkeypatch, tmp_path):
+        import test_command_conventions as mod
+        write = tmp_path / "commands" / "core"
+        write.mkdir(parents=True)
+        (write / "pb-new.md").write_text("new\n")
+        (write / "pb-old.md").write_text("after\n")
+        out = {
+            "describe": "v9.9.9\n",
+            "diff": "M\tcommands/core/pb-old.md\n",
+            "show": "before\n",
+            "ls-files": "commands/core/pb-new.md\ncommands/core/notes.txt\n",
+        }
+        monkeypatch.setattr(mod, "git", lambda *a: out[a[0]])
+        monkeypatch.setattr(mod, "REPO_ROOT", tmp_path)
+        monkeypatch.setattr(mod, "last_tag", lambda: "v9.9.9")
+        assert mod.commands_changed_since_tag() == [
+            ("commands/core/pb-old.md", "before\n", "after\n"),
+            ("commands/core/pb-new.md", None, "new\n"),
+        ]
 
     def test_body_change_carries_version_bump(self):
         tag = last_tag()

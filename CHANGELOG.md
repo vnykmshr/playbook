@@ -22,6 +22,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **The convention guards and the validator read markdown with a parser.** Fences, code spans and the Related Commands section come from markdown-it-py (pinned 4.0.0 in CI), replacing the fence walker, the code-span regex and two open/close toggles. Same counts on all 116 commands and the same `<pre>` blocks as the built site; fences in block quotes, indented code, and a backtick fence whose info string holds a backtick now read as CommonMark renders them. Running the tests needs `pip install markdown-it-py==4.0.0`.
 - **`/pb-evolve` v2.1.0.** Step 0 documents the text column, the quarter a deferral comes due, and the deferred backlog.
 
+### Fixed
+
+- **The changed-command guards see a new command before `git add`.** An untracked file under `commands/` counts as added, so the dash, version-notes and body-change checks run on it pre-commit.
+
 ## [v2.33.0] - 2026-11-04
 
 The evolve cycle gets its intake: a feedback harvester reads every repo's notes into one digest, and `/pb-evolve` 2.0.0 closes a cycle only when every key has a ruling. The gate hook now matches a normalised command, and install updates a hook copy you have not edited.
