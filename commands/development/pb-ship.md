@@ -6,9 +6,9 @@ difficulty: "advanced"
 model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-cycle', 'pb-pr', 'pb-release', 'pb-review-hygiene', 'pb-deployment']
-last_reviewed: "2026-11-04"
+last_reviewed: "2026-11-05"
 version: "1.2.2"
-version_notes: "v1.2.2: Step 5.2 runs /pb-release Phase 2-3, which tags only after CI is green on the merge commit, instead of an inline tag and deploy that skipped that gate; the diagram lists /pb-review-hygiene once; /code-review is named as invoked; steps renumbered. 730 to 695 lines."
+version_notes: "v1.2.2: Step 5.2 runs /pb-release Phase 2-3, which tags only after CI is green on the merge commit, instead of an inline tag and deploy that skipped that gate; the diagram lists /pb-review-hygiene once; /code-review is named as invoked; steps renumbered; the Escape Hatch reads this commit's CI run, not the latest. 730 to 695 lines."
 breaking_changes: []
 ---
 # Ship Focus Area to Production
@@ -515,7 +515,7 @@ For genuinely trivial changes (typo fix, comment update, README tweak):
 ```bash
 # Phase 1: Foundation (still required)
 make lint && make test
-gh run list --limit 1  # Verify CI passes (if configured)
+gh run list --commit "$(git rev-parse HEAD)"  # this commit's run is listed and passed (if configured)
 
 # Phase 2: Pick ONE relevant review
 # /pb-review-hygiene (if code touched)
