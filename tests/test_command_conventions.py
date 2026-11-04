@@ -501,7 +501,6 @@ DASH_BASELINE = {
     "pb-greenfield.md": 15,
     "pb-handcraft.md": 34,
     "pb-handoff.md": 20,
-    "pb-huddle.md": 22,
     "pb-kai-reach.md": 3,
     "pb-linus-agent.md": 2,
     "pb-llm-guidelines.md": 3,

@@ -7,23 +7,23 @@ model_hint: "opus"
 execution_pattern: "parallel-then-sequential"
 related_commands: ['pb-think', 'pb-preamble', 'pb-clara-curator', 'pb-maya-product', 'pb-adr']
 last_reviewed: "2026-11-03"
-version: "1.7.0"
-version_notes: "v1.7.0: When the question is whether the work already exists, measure by thesis, not topic: a keyword grep passes the collision it cannot see. A fact-check names its instrument, and the instrument must answer the claim -- `git log -S` counts occurrences and cannot show when a line was last edited (`-G` can). Vetting disputed review findings at a /pb-forge Self-gate is a huddle use: the panel rules take, reject or defer. v1.6.0: Every fact in the brief names how it was checked; the process orchestrator fact-checks load-bearing claims that name none before the lead rebuts, and late evidence is labelled as unseen by the panel. Output gains a Fact-check section, followed by the lead's section. The lead no longer frames the question -- it rebuts and closes after the panel, which is what the role row already said. Step 1 searches the current plan as well as prior decisions, and a check in the repo that already fails the proposal skips the huddle; Step 2 runs any one-command measurement the question turns on before briefing, and states any standing rule the user overrode this session. Step 6: a decision that overrides an order, list or scope the user agreed is stated as a deviation before anyone acts on it. Re-huddle names its mechanism: message the same persona agents rather than spawning fresh ones. v1.5.0: Step 2 separates claims from state -- a sketch, brief or summary describes the work and is not a record of it. Open what a claim rests on, and check what a status claim belongs to, before briefing the panel. v1.4.0: 'what should be deleted rather than maintained' is a standing brief question and a Step 4 tension, whoever leads — it is Clara's lens, but she synthesizes rather than argues, so it never entered a technical huddle. v1.3.0: Bring a proposal to break, not a blank page — the panel is adversarially sharp and generatively weak, so Step 1 requires a concrete candidate. v1.2.0: Four-role model (process + curatorial orchestrators, topic-selected lead, panel); register the 9-persona roster with a Lead column; Clara holds the synthesis seat."
+version: "1.8.0"
+version_notes: "v1.8.0: Spaced double hyphens replaced."
 breaking_changes: []
 ---
 # Multi-Perspective Decision Session
 
-Multi-persona thinking session for strategic decisions. Not a review gate -- a collaborative exploration where personas argue, disagree, and find the approach that survives scrutiny.
+Multi-persona thinking session for strategic decisions. Not a review gate: a collaborative exploration where personas argue, disagree, and find the approach that survives scrutiny.
 
 Use `/pb-think` for structured problem decomposition. Huddle is for decisions where relationships, timing, and perception matter as much as correctness.
 
-**Resource Hint:** opus -- Complex multi-persona reasoning, tension synthesis, strategic judgment.
+**Resource Hint:** opus - Complex multi-persona reasoning, tension synthesis, strategic judgment.
 
 ---
 
 ## Mindset
 
-Apply `/pb-preamble` thinking: best ideas win regardless of source. Personas should genuinely disagree -- forced consensus defeats the purpose. Apply `/pb-design-rules` thinking: distrust "one true way" (that's why we run multiple lenses), fail noisily (surface irreconcilable tensions, don't paper over them).
+Apply `/pb-preamble` thinking: best ideas win regardless of source. Personas should genuinely disagree; forced consensus defeats the purpose. Apply `/pb-design-rules` thinking: distrust "one true way" (that's why we run multiple lenses), fail noisily (surface irreconcilable tensions, don't paper over them).
 
 ---
 
@@ -59,16 +59,16 @@ When a huddle's synthesis identifies a refined follow-up question, run a re-hudd
 - The context hasn't changed (same session, same files)
 
 **What changes:**
-- **Skip context loading** (Step 2) -- personas already have the background from the prior huddle
-- **Shorter persona prompts** -- reference the prior huddle output instead of re-loading raw context
-- **Keep framing** (Step 1) -- the refined question still needs clear framing; it's a different question from the original
+- **Skip context loading** (Step 2): personas already have the background from the prior huddle
+- **Shorter persona prompts**: reference the prior huddle output instead of re-loading raw context
+- **Keep framing** (Step 1): the refined question still needs clear framing; it's a different question from the original
 
 **What stays the same:**
 - Full huddle output format (persona arguments, tensions, synthesis, decision, recording)
 - Steps 3-6 run identically to standard mode
 
 **Guardrails:**
-- **Same-conversation only** -- re-huddle depends on the personas having the prior huddle's context in memory. Across sessions, run a full huddle.
+- **Same-conversation only**: re-huddle depends on the personas having the prior huddle's context in memory. Across sessions, run a full huddle.
 - **Fall back to full huddle** if the prior huddle output can't be found or persona names can't be extracted. If in doubt, ask which personas to use.
 
 **How it works:**
@@ -84,22 +84,22 @@ When a huddle's synthesis identifies a refined follow-up question, run a re-hudd
 
 ### Step 1: Frame the Question
 
-Before framing, search previous decisions and the current plan for this topic; a plan often already says what to do once its condition is met. Don't re-derive what was already decided -- build on it.
+Before framing, search previous decisions and the current plan for this topic; a plan often already says what to do once its condition is met. Don't re-derive what was already decided; build on it.
 
 State the question clearly. Not "what should we do?" but the specific tension:
 - "Should we refactor the auth module before adding OAuth support?"
 - "How do we communicate this breaking API change to existing clients?"
 - "Do we optimize for developer experience or runtime performance in the SDK?"
 
-The question must have genuine tension -- if there's an obvious answer, skip the huddle. A check already in the repo that fails the proposal (a test, a CI assertion, a lint rule) is an obvious answer.
+The question must have genuine tension. If there's an obvious answer, skip the huddle. A check already in the repo that fails the proposal (a test, a CI assertion, a lint rule) is an obvious answer.
 
-**Bring a proposal to break, not a blank page.** A panel is sharpest when it is adversarial against something concrete -- a specific resolution, a written rule, a chosen default -- and weakest when asked to generate options from nothing. If you have no candidate answer yet, write the worst defensible one and hand the panel that; being wrong in a specific direction gives every lens something to push on.
+**Bring a proposal to break, not a blank page.** A panel is sharpest when it is adversarial against something concrete (a specific resolution, a written rule, a chosen default) and weakest when asked to generate options from nothing. If you have no candidate answer yet, write the worst defensible one and hand the panel that; being wrong in a specific direction gives every lens something to push on.
 
 ### Step 2: Load Context
 
 Read relevant state files. The huddle is only as good as the context loaded. Personas can't argue well without knowing the situation.
 
-A sketch or brief is a claim about the work, not a record of it. Treat files that *describe* the work (sketches, briefs, summaries) as claims -- open the artifacts a claim rests on, and check what a status claim ('sketch complete since X') belongs to, before briefing the panel.
+A sketch or brief is a claim about the work, not a record of it. Treat files that *describe* the work (sketches, briefs, summaries) as claims: open the artifacts a claim rests on, and check what a status claim ('sketch complete since X') belongs to, before briefing the panel.
 
 If the user overrode a standing rule this session, the brief states the rule and the override. The panel can read the rule; it cannot read the session.
 
@@ -120,7 +120,7 @@ A huddle has four roles. Two are fixed; two are chosen per decision.
 | **Lead** | topic-selected domain authority | Decisive in-lane. Not first-and-loudest: the panel challenges in parallel before the lead rebuts and closes. In-lane authority, not a cross-domain veto |
 | **Panel** | 2-4 other lenses | Challenge from their lanes |
 
-Name the lead by the decision's center of gravity and record it ("Lead: Travis -- trust-boundary decision"). The user can override. When the topic genuinely is the whole (scope, lifecycle, coherence), Clara is both orchestrator and lead, and Claude stays the second, neutral orchestrator to keep her honest.
+Name the lead by the decision's center of gravity and record it ("Lead: Travis, trust-boundary decision"). The user can override. When the topic genuinely is the whole (scope, lifecycle, coherence), Clara is both orchestrator and lead, and Claude stays the second, neutral orchestrator to keep her honest.
 
 **Lead and panel by decision type:**
 
@@ -142,7 +142,7 @@ Each persona gets the SAME brief; disagreement is expected and valuable. Run the
 
 **Fact-check before the lead.** When the panel returns, the process orchestrator checks the load-bearing claims that name no check, in the brief or in a panelist's argument, before the lead sees them. A wrong fact inside one lens reads as a position, and the other lenses argue with it instead of checking it. A check names its instrument, and the instrument must answer the claim: `git log -S` counts occurrences, so it cannot show when a line was last edited (`-G` can). Evidence that lands after the panel ran goes to the lead and synthesis labelled *the panel did not see this*.
 
-**One question is standing, whoever leads: what should be deleted rather than maintained?** Put it in every brief. It is Clara's lens, but Clara synthesizes rather than argues, so on a technical or infrastructure huddle it never enters the room -- and a panel asked only what to build will answer only what to build. The candidate proposed in Step 1 is not the only thing on the table; the code already carrying the problem is too.
+**One question is standing, whoever leads: what should be deleted rather than maintained?** Put it in every brief. It is Clara's lens, but Clara synthesizes rather than argues, so on a technical or infrastructure huddle it never enters the room, and a panel asked only what to build will answer only what to build. The candidate proposed in Step 1 is not the only thing on the table; the code already carrying the problem is too.
 
 ### Step 4: Find the Tensions
 
@@ -150,11 +150,11 @@ After personas argue, identify:
 - Where do they agree? (high-confidence signals)
 - Where do they disagree? (genuine trade-offs)
 - What are the irreconcilable tensions? (requires a decision, not more analysis)
-- What did they name for deletion? (a deletion is a decision -- record it, or it gets re-proposed as new work next quarter)
+- What did they name for deletion? (a deletion is a decision: record it, or it gets re-proposed as new work next quarter)
 
 ### Step 5: Synthesize
 
-Clara (curatorial orchestrator) synthesizes; Claude records. Don't average the opinions. Find the approach that survives all selected lenses. If no single approach satisfies all, surface the dissent and the irreconcilable trade-off explicitly, and recommend which lens to prioritize for THIS decision -- the domain owner's call is decisive in-lane. Synthesis that smooths disagreement into consensus is the failure mode; a huddle that agreed too easily did not huddle.
+Clara (curatorial orchestrator) synthesizes; Claude records. Don't average the opinions. Find the approach that survives all selected lenses. If no single approach satisfies all, surface the dissent and the irreconcilable trade-off explicitly, and recommend which lens to prioritize for THIS decision; the domain owner's call is decisive in-lane. Synthesis that smooths disagreement into consensus is the failure mode; a huddle that agreed too easily did not huddle.
 
 ### Step 6: Record
 
@@ -219,7 +219,7 @@ Lead: [persona] -- [why this lane leads]. Orchestrators: Clara (curatorial) + Cl
 | Ask the panel to generate from a blank page | Hand it a concrete proposal to break |
 | Skip recording the decision | Write it to the project doc immediately |
 | Re-huddle the same question unchanged | Read the previous decision and build on it |
-| Run full huddle for a refined follow-up question | Use re-huddle mode (`--re-huddle`) -- reuse personas, skip context reloading |
+| Run full huddle for a refined follow-up question | Use re-huddle mode (`--re-huddle`): reuse personas, skip context reloading |
 | Use huddle as a delay tactic | If you're stalling, just do the work |
 
 ---
@@ -238,11 +238,11 @@ Lead: [persona] -- [why this lane leads]. Orchestrators: Clara (curatorial) + Cl
 
 ## Related Commands
 
-- `/pb-think` -- Structured problem decomposition (solo reasoning)
-- `/pb-preamble` -- Collaboration philosophy (challenge assumptions)
-- `/pb-clara-curator` -- Curator and huddle orchestrator (the synthesis seat)
-- `/pb-maya-product` -- Product and user strategy persona
-- `/pb-adr` -- Architecture Decision Records (for recording decisions)
+- `/pb-think` - Structured problem decomposition (solo reasoning)
+- `/pb-preamble` - Collaboration philosophy (challenge assumptions)
+- `/pb-clara-curator` - Curator and huddle orchestrator (the synthesis seat)
+- `/pb-maya-product` - Product and user strategy persona
+- `/pb-adr` - Architecture Decision Records (for recording decisions)
 
 ---
 
