@@ -1,6 +1,6 @@
 # Design Rules Quick Reference
 
-**One-page guide to 17 design rules. For detailed guidance, see `/pb-design-rules`.**
+**One-page guide to 18 design rules. For detailed guidance, see `/pb-design-rules`.**
 
 ---
 
@@ -12,10 +12,11 @@
 | **SIMPLICITY** | Simplicity, Parsimony, Separation, Composition | Design Discipline | Architecture, scope, features |
 | **RESILIENCE** | Robustness, Repair, Diversity, Optimization | Reliability & Evolution | Error handling, failures, learning |
 | **EXTENSIBILITY** | Modularity, Economy, Generation, Extensibility | Long-term Growth | Architecture, future features |
+| **ATTENTION** | Attention | Focus as a resource | Alerts, notifications, defaults |
 
 ---
 
-## All 17 Rules at a Glance
+## All 18 Rules at a Glance
 
 | # | Rule | Principle | Anti-Pattern |
 |---|------|-----------|--------------|
@@ -36,6 +37,7 @@
 | 15 | **Generation** | Avoid hand-hacking; write programs to write programs | Repetitive, error-prone manual code |
 | 16 | **Extensibility** | Design for the future, because it will be here sooner than you think | Brittle designs that break with small changes |
 | 17 | **Transparency** | Design for visibility to make inspection and debugging easier | Opaque systems that require debuggers to understand |
+| 18 | **Attention** | Respect attention as a finite resource | Alerts and prompts that train people to ignore them |
 
 ---
 

@@ -6,9 +6,9 @@ difficulty: "beginner"
 model_hint: "opus"
 execution_pattern: "reference"
 related_commands: ['pb-calm-design', 'pb-design-rules', 'pb-preamble-async', 'pb-preamble-power', 'pb-think']
-last_reviewed: "2026-02-09"
-version: "1.1.0"
-version_notes: "v2.12.0 Phase 3: Added Principle E (Attention Respect) for Calm Tech integration"
+last_reviewed: "2026-11-04"
+version: "1.1.1"
+version_notes: "v1.1.1: Points to the 18 design rules, not 17."
 breaking_changes: []
 ---
 # Collaboration Preamble: Thinking Like Peers
@@ -67,7 +67,7 @@ This doesn't mean ignoring experience or authority. It means authority is earned
 - Use transparent reasoning
 
 **Design rules answer: WHAT do we build?**
-- See `/pb-design-rules` for the 17 technical principles
+- See `/pb-design-rules` for the 18 technical principles
 - Organized into 4 clusters: Clarity, Simplicity, Resilience, Extensibility
 - Guide every architectural and technical decision
 - Ensure systems that are clear, simple, reliable, and adaptable

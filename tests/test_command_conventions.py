@@ -55,9 +55,7 @@ REPO_ROOT = COMMANDS_DIR.parent
 # an entry is fixed but left behind.
 REVIEW_DATE_BASELINE = {
     "pb-adr.md",
-    "pb-design-rules.md",
     "pb-performance.md",
-    "pb-preamble.md",
     "pb-threat-hunt.md",
 }
 

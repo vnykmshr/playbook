@@ -19,6 +19,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- **`/pb-design-rules` v1.3.1, `/pb-preamble` v1.1.1.** Both said 17 rules where the corpus has 18 (Rule 18, Attention, joined as a fifth theme); the quick reference gains the Attention row. "17 classical principles in four clusters" stays, since it is true.
 - **`/pb-guide` v3.0.1.** The Integration section labelled phases by numbers that did not match the guide (§3 Architecture is §4, §9 Post-Release is §10, §5 Code Review matched no section). Each row now names a real section; §3 Requirements and §9 Documentation gain rows, CI/CD points to `/pb-gha`.
 - **`/pb-onboarding` v1.1.0.** When Someone Leaves points to `/pb-knowledge-transfer`'s For the Departing Engineer, which supersedes its two checklists; the title drops "& Knowledge Transfer". The new-hire ramp stays: a fold into `/pb-knowledge-transfer` was read and rejected (about 400 of 493 lines are a ramp that command does not carry).
 - **`/pb-review` v2.8.1.** After fixing feedback, the independent pass runs again on the fixes alone, from the commit before them, since a same-context recheck misses what the fix introduced. The footer's stale `v2.7.0` is gone.
