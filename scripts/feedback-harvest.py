@@ -347,6 +347,18 @@ def memory_files(root: Path, h: Harvest):
                 yield Path(e.path)
 
 
+def front_matter(text: str) -> str:
+    """The lines between a leading `---` and the next `---`; read as `key: value` text, not YAML
+    (memory files carry unquoted ": " and " #" that a YAML parser rejects or cuts)."""
+    lines = text.split("\n")
+    if not lines or lines[0].strip() != "---":
+        return ""
+    for i in range(1, len(lines)):
+        if lines[i].strip() == "---":
+            return "\n".join(lines[1:i])
+    return ""
+
+
 BLOCK_SCALAR = re.compile(r"[>|][1-9+-]*(\s+#.*)?$")  # a YAML block header, not the text
 
 
@@ -363,7 +375,7 @@ def harvest_memory(root: Path, h: Harvest) -> tuple[list[Item], list[str]]:
         except OSError:
             h.unread.append(str(path))
             continue
-        m = re.search(r"^description:[ \t]*(.+)$", text, re.MULTILINE)
+        m = re.search(r"^description:[ \t]*(.+)$", front_matter(text), re.MULTILINE)
         desc = m.group(1).strip().strip("\"'") if m else ""
         if not normalise(desc) or BLOCK_SCALAR.match(desc):
             skipped.append(str(path))
