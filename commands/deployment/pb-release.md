@@ -8,7 +8,7 @@ execution_pattern: "sequential"
 related_commands: ['pb-preamble', 'pb-deployment', 'pb-ship', 'pb-pr', 'pb-cycle']
 last_reviewed: "2026-11-05"
 version: "1.3.0"
-version_notes: "v1.3.0: Tag only after CI is green on this exact commit (full SHA), with no output or an unfinished run read as wait, not as green; the release step publishes an existing draft rather than duplicating it, and may prune old releases without --cleanup-tag; notes follow the GitHub Artifact Register; the hotfix CI check reads this commit's run, not the latest; the title placeholder is a name, and the register is named as /pb-claude-global's."
+version_notes: "v1.3.0: Tag only after CI is green on this exact commit (full SHA), reading each workflow's newest run, with no output or an unfinished run read as wait, not as green; the release step publishes an existing draft rather than duplicating it, and may prune old releases without --cleanup-tag; notes follow the GitHub Artifact Register; the hotfix step runs Step 2.3's CI check, which reads each workflow's newest run for this commit; the title placeholder is a name, and the register is named as /pb-claude-global's."
 breaking_changes: []
 ---
 # Release to Production
@@ -207,8 +207,8 @@ git pull origin main
 # Verify clean state
 git status  # Should be clean
 
-# Tag only after CI is green on this exact commit (full SHA: a short one lists nothing)
-gh run list --commit "$(git rev-parse HEAD)" --json conclusion -q '.[].conclusion'  # at least one line, every line success; an empty line is a run still going, no output a run not registered: wait; no CI configured: skip
+# CI check: tag only after CI is green on this exact commit (full SHA: a short one lists nothing)
+gh run list --commit "$(git rev-parse HEAD)" --json workflowName,createdAt,conclusion -q 'group_by(.workflowName) | map(max_by(.createdAt)) | .[].conclusion'
 
 # Create annotated tag
 git tag -a vX.Y.Z -m "vX.Y.Z - Brief description"
@@ -216,6 +216,8 @@ git tag -a vX.Y.Z -m "vX.Y.Z - Brief description"
 # Push tag
 git push origin vX.Y.Z
 ```
+
+The CI check reads each workflow's newest run for this commit, so a cancelled run that a re-run replaced does not block. It passes when it prints at least one line and every line is `success`. An empty line is a run still going and no output is a run not registered yet: wait. Skip it only when no workflow runs on a push to this branch.
 
 ### Step 2.4: Create GitHub Release
 
@@ -321,8 +323,7 @@ For urgent fixes that don't warrant full ceremony:
 # 1. Quick quality check
 make lint && make test
 
-# 2. A run for this commit is listed and passed; none listed means wait (--limit 1 reads the latest run, not this one)
-gh run list --commit "$(git rev-parse HEAD)"
+# 2. CI green on this commit: Step 2.3's CI check
 
 # 3. Fast version bump
 git tag -a vX.Y.Z -m "Hotfix: [description]"
