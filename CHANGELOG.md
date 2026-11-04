@@ -40,6 +40,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - **`/pb-review-backend`, `/pb-review-frontend` and `/pb-review-infrastructure`.** `/pb-review-comprehensive` names their lens pairs and how each pair breaks a tie. Re-run `scripts/install.sh` to prune the three links. Commands 116 to 113.
 - **`/pb-patterns-cloud`.** A vendor service catalog (AWS, GCP, Azure) with no playbook-specific decision, and its execution limits drift. Re-run `scripts/install.sh` to prune the link. Commands 113 to 112.
+- **The evolution snapshot, log, diff and trigger-detector scripts, their tests, and `docs/evolution-operational-guide.md`.** `/pb-evolve` 2.0.0 stopped calling them; `scripts/evolve.py` stays.
 
 ## [v2.33.0] - 2026-11-04
 

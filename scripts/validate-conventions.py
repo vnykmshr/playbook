@@ -169,7 +169,7 @@ class ConventionValidator:
 
     def run(self) -> bool:
         """Run all convention checks. Returns True if all pass."""
-        # Match command files only (pb-*.md), like evolve.py / trigger-detector.
+        # Match command files only (pb-*.md), like evolve.py.
         # A plain *.md glob would sweep in any stray non-command markdown under
         # commands/, inflating the count and emitting spurious per-file FAILs.
         files = sorted(COMMANDS_DIR.glob("**/pb-*.md"))

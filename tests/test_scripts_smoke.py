@@ -3,7 +3,7 @@
 Catches the crash-on-fresh-checkout / missing-dependency class of bug that
 pure-function unit tests miss, by invoking the real entry points via subprocess.
 Read-only entry points only -- nothing here writes under todos/. As path-bug
-fixes land (e.g. evolution-snapshot --list), their entry points join this list.
+fixes land, their entry points join this list.
 """
 import subprocess
 import sys

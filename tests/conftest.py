@@ -1,6 +1,6 @@
 """Shared helpers for the scripts/ tooling tests.
 
-Most tooling lives in scripts/ as hyphenated files (e.g. evolution-snapshot.py)
+Most tooling lives in scripts/ as hyphenated files (e.g. feedback-harvest.py)
 that Python can't import by name. `load_script` loads one by path so a test can
 call its functions directly. `make_command` writes a throwaway but schema-valid
 pb-*.md (mirroring a real command) so the metadata/convention tools get realistic
