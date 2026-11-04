@@ -226,24 +226,67 @@ def commands_changed_since_tag() -> list[tuple[str, str | None, str]]:
 FENCE_OPEN = re.compile(r" {0,3}(`{3,}|~{3,})")
 
 
-def prose_lines(text: str) -> list[str]:
-    """Body lines outside fenced blocks.
+def rendered_fences(body: str) -> list[bool | None]:
+    """Per body line: False prose, True inside a fence, None a fence marker.
 
     A fence closes only on a bare run of its own character at least as long as
     the opener, as CommonMark renders it: a 4-backtick sample holding a
     ```bash block stays one fence. A plain open/close toggle reads the inner
     block's close as the end of the sample and counts the rest as prose.
     """
-    prose, fence = [], None
-    for line in split_front_matter(text)[1].split("\n"):
+    states: list[bool | None] = []
+    fence = None
+    for line in body.split("\n"):
         if fence is None:
             if match := FENCE_OPEN.match(line):
                 fence = match.group(1)
+                states.append(None)
             else:
-                prose.append(line)
+                states.append(False)
         elif re.fullmatch(r" {0,3}" + re.escape(fence[0]) + "{%d,}[ \t]*" % len(fence), line):
             fence = None
-    return prose
+            states.append(None)
+        else:
+            states.append(True)
+    return states
+
+
+def prose_lines(text: str) -> list[str]:
+    """Body lines outside fenced blocks, as rendered."""
+    body = split_front_matter(text)[1]
+    return [line for line, state in zip(body.split("\n"), rendered_fences(body)) if state is False]
+
+
+def intended_fences(body: str) -> tuple[list[bool | None], int]:
+    """Per body line, the nesting the author wrote, and fences left open at EOF.
+
+    A marker with an info string opens; a bare marker closes the innermost
+    open block, or opens one at top level. Run length is ignored: this is the
+    reading the length has to agree with.
+    """
+    states: list[bool | None] = []
+    depth = 0
+    for line in body.split("\n"):
+        if match := FENCE_OPEN.match(line):
+            depth += 1 if line[match.end():].strip() or not depth else -1
+            states.append(None)
+        else:
+            states.append(depth > 0)
+    return states, depth
+
+
+def fence_render_problems(text: str) -> list[str]:
+    """Where rendering and nesting disagree: a sample closed early by an inner block."""
+    body = split_front_matter(text)[1]
+    first = text.count("\n") - body.count("\n") + 1
+    intended, left_open = intended_fences(body)
+    if left_open:
+        return [f"{left_open} fence(s) open at EOF by nesting"]
+    return [
+        f"line {i}: rendered as {'code' if r else 'prose'}"
+        for i, (r, n) in enumerate(zip(rendered_fences(body), intended), first)
+        if r is not None and n is not None and r != n
+    ]
 
 
 def dash_count(text: str) -> int:
@@ -559,6 +602,38 @@ class TestDashRatchet:
         assert not stale, (
             f"DASH_BASELINE entries that no longer match (baseline, now): {stale}. "
             "Lower the entry to the new count; remove it at 0 or when the command is gone."
+        )
+
+
+# (name, text, problem substring or None)
+FENCE_FIXTURE = [
+    ("flat", "```bash\nx\n```\nprose\n", None),
+    ("bare-opener", "```\nx\n```\n", None),
+    ("four-backtick-sample", "````markdown\n# T\n```bash\nx\n```\nback in sample\n````\nprose\n", None),
+    ("three-backtick-sample", "```markdown\n# T\n```bash\nx\n```\nback in sample\n```\nprose\n", "line 6: rendered as prose"),
+    ("sample-left-open", "```markdown\n```bash\nx\n```\n", "open at EOF"),
+    ("front-matter-offset", '---\nname: "x"\n---\n```markdown\n```bash\nx\n```\ny\n```\n', "line 8: rendered as prose"),
+]
+
+
+class TestFencesRenderAsNested:
+    """A sample holding a code block renders as one block.
+
+    A 3-backtick outer fence closes at the inner block's close, and everything
+    after it flips between prose and code: headings and Related Commands
+    render as code on the site, and the rest of the guards misread the file.
+    """
+
+    @pytest.mark.parametrize("text, problem", [row[1:] for row in FENCE_FIXTURE], ids=[row[0] for row in FENCE_FIXTURE])
+    def test_detector(self, text, problem):
+        found = fence_render_problems(text)
+        assert (not found) if problem is None else any(problem in f for f in found), found
+
+    def test_every_command_renders_its_nesting(self):
+        bad = {p.name: probs[:3] for p in get_command_files() if (probs := fence_render_problems(p.read_text()))}
+        assert not bad, (
+            f"Fences that render differently from their nesting: {bad}. "
+            "Give the outer fence more backticks than any fence inside it."
         )
 
 
