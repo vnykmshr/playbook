@@ -7,7 +7,7 @@ keys each item on its normalised text, and writes a digest of the keys the
 ledger has not dispositioned. Only intake (`/pb-evolve` Step 0) writes the ledger.
 
 Exit: 0 every key dispositioned, 1 undisposed keys, 2 instrument fault
-(no feedback found at all, or a malformed ledger).
+(no feedback found at all, a malformed ledger, or any error).
 
 Usage:
     python3 scripts/feedback-harvest.py
@@ -25,8 +25,6 @@ from collections import defaultdict
 from dataclasses import dataclass
 from datetime import date
 from pathlib import Path
-
-import yaml
 
 PLAYBOOK = Path(__file__).resolve().parent.parent
 
@@ -165,12 +163,18 @@ def is_scratchpad(name: str) -> bool:
     return "scratchpad" in name.lower()
 
 
-def tracked_todos(repo: Path) -> set[str]:
-    """Paths git tracks under todos/: they came from upstream, so they are untrusted input."""
+def tracked_todos(repo: Path) -> set[str] | None:
+    """Paths git tracks under todos/: they came from upstream, so they are untrusted input.
+
+    None when the repo has a .git that git cannot list (dubious ownership, a broken checkout):
+    its tracked files cannot be told apart, so the repo is skipped. No .git: nothing is tracked.
+    """
+    if not (repo / ".git").exists():
+        return set()
     r = subprocess.run(
         ["git", "-C", str(repo), "ls-files", "-z", "--", "todos"], capture_output=True, text=True
     )
-    return set(r.stdout.split("\0")) - {""} if r.returncode == 0 else set()
+    return set(r.stdout.split("\0")) - {""} if r.returncode == 0 else None
 
 
 def todo_files(todos: Path, tracked: set[str]):
@@ -190,15 +194,19 @@ def todo_files(todos: Path, tracked: set[str]):
                     yield path
 
 
-def harvest_repos(root: Path) -> tuple[list[Item], list[str], int]:
-    """(items, headings with no item as path:line, files carrying a heading)."""
-    items, empty, files = [], [], 0
+def harvest_repos(root: Path) -> tuple[list[Item], list[str], int, list[str]]:
+    """(items, headings with no item as path:line, files carrying a heading, repos git could not list)."""
+    items, empty, files, unlisted = [], [], 0, []
     for todos in sorted(root.glob("*/*/todos")):
         repo = todos.parent
         if is_scratchpad(str(todos)) or not todos.is_dir():
             continue
         source = f"{repo.parent.name}/{repo.name}"
-        for path in todo_files(todos, tracked_todos(repo)):
+        tracked = tracked_todos(repo)
+        if tracked is None:
+            unlisted.append(str(repo))
+            continue
+        for path in todo_files(todos, tracked):
             try:
                 text = path.read_text(errors="replace")
             except OSError:
@@ -212,7 +220,7 @@ def harvest_repos(root: Path) -> tuple[list[Item], list[str], int]:
             for n, t in found:
                 when = heading_date(lines, n - 1, date.today().isoformat()) or mtime_date(path)
                 items.append(Item(item_key(t), t, source, f"{path}:{n}", when, False))
-    return items, empty, files
+    return items, empty, files, unlisted
 
 
 def harvest_memory(root: Path) -> tuple[list[Item], list[str]]:
@@ -257,6 +265,7 @@ def read_ledger(path: Path) -> dict[str, tuple[str, str, str]]:
     if rows[0].split("\t") != LEDGER_HEADER:
         raise InstrumentFault(f"{path}:1: header must be {' '.join(LEDGER_HEADER)} (tab-separated)")
     ledger: dict[str, tuple[str, str, str]] = {}
+    seen: dict[str, int] = {}
     for n, row in enumerate(rows[1:], start=2):
         if not row.strip():
             continue
@@ -270,7 +279,13 @@ def read_ledger(path: Path) -> dict[str, tuple[str, str, str]]:
             raise InstrumentFault(f"{path}:{n}: disposition {disp!r}: want {', '.join(DISPOSITIONS)} or dup-of:<key>")
         if not re.fullmatch(r"\d{4}-\d{2}-\d{2}", when):
             raise InstrumentFault(f"{path}:{n}: date {when!r} is not YYYY-MM-DD")
+        if key in seen:
+            raise InstrumentFault(f"{path}:{n}: key {key} repeats line {seen[key]}; edit that row instead")
+        seen[key] = n
         ledger[key] = (disp, version, when)
+    for key, (disp, _, _) in ledger.items():
+        if disp.startswith("dup-of:") and ledger.get(disp[7:], ("dup-of:",))[0].startswith("dup-of:"):
+            raise InstrumentFault(f"{path}:{seen[key]}: {disp} names no key with its own disposition")
     return ledger
 
 
@@ -284,6 +299,7 @@ def _split(text: str) -> tuple[dict[str, object], list[str]]:
     if lines and lines[0].rstrip() == "---":
         for i, line in enumerate(lines[1:], start=1):
             if re.fullmatch(r"---[ \t\r]*", line):
+                import yaml  # here, so a missing PyYAML is a fault (exit 2), not an import crash (exit 1)
                 fm = yaml.load("\n".join(lines[1:i]), Loader=yaml.BaseLoader)
                 return (fm if isinstance(fm, dict) else {}), [x for x in lines[i + 1:] if x.strip()]
     return {}, [x for x in lines if x.strip()]
@@ -330,7 +346,7 @@ def may_be_fixed(playbook: Path, text: str, newest: str) -> str | None:
 
 def render(
     items: list[Item], ledger: dict[str, tuple[str, str, str]], empty: list[str], skipped: list[str],
-    playbook: Path, files: int, orgs: frozenset[str],
+    playbook: Path, files: int, orgs: frozenset[str], unlisted: list[str],
 ) -> tuple[str, int]:
     """(digest markdown, count of undisposed keys)."""
     by_key: dict[str, list[Item]] = defaultdict(list)
@@ -390,6 +406,10 @@ def render(
         "",
         *[f"- `{s}`" for s in skipped],
         "",
+        "## Repos skipped: git could not list their tracked files",
+        "",
+        *[f"- `{u}`" for u in unlisted],
+        "",
     ]
     return "\n".join(md), len(undisposed)
 
@@ -408,19 +428,22 @@ def main(argv: list[str] | None = None) -> int:
     out = args.out or args.playbook / "todos" / "evolve"
     try:
         ledger = read_ledger(ledger_path)
-        items, empty, files = harvest_repos(args.repos)
+        items, empty, files, unlisted = harvest_repos(args.repos)
         memory, skipped = harvest_memory(args.memory)
         items += memory
         orgs = private_orgs(args.playbook)
         if not items and not empty:
             raise InstrumentFault(f"no feedback found under {args.repos} or {args.memory}: is the root right?")
+        md, undisposed = render(items, ledger, empty, skipped, args.playbook, files, orgs, unlisted)
+        out.mkdir(parents=True, exist_ok=True)
+        digest = out / f"digest-{date.today().isoformat()}.md"
+        digest.write_text(md)
     except InstrumentFault as e:
         print(f"feedback-harvest: {e}", file=sys.stderr)
         return 2
-    md, undisposed = render(items, ledger, empty, skipped, args.playbook, files, orgs)
-    out.mkdir(parents=True, exist_ok=True)
-    digest = out / f"digest-{date.today().isoformat()}.md"
-    digest.write_text(md)
+    except Exception as e:  # exit 1 means "undisposed keys": a crash must not read as that
+        print(f"feedback-harvest: {type(e).__name__}: {e}", file=sys.stderr)
+        return 2
     print(f"{undisposed} undisposed of {len({i.key for i in items})} keys; digest {digest}")
     return 1 if undisposed else 0
 

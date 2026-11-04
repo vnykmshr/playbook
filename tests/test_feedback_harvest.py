@@ -119,11 +119,32 @@ def test_exit_2_when_nothing_is_found(tmp_path: Path):
     "key\tdisposition\tversion\tdate\n0123456789ab\ttaken\tv1\n",
     "key\tdisposition\tversion\tdate\n0123456789ab\tdup-of:xyz\tv1\t2026-11-04\n",
     "key\tdisposition\tversion\tdate\n0123456789ab\ttaken\tv1\tsoon\n",
+    "key\tdisposition\tversion\tdate\n0123456789ab\ttaken\tv1\t2026-11-04\n0123456789ab\trejected\t\t2026-11-05\n",
+    "key\tdisposition\tversion\tdate\n0123456789ab\tdup-of:deadbeef0000\t\t2026-11-04\n",
+    "key\tdisposition\tversion\tdate\n0123456789ab\tdup-of:deadbeef0000\t\t2026-11-04\n"
+    "deadbeef0000\tdup-of:0123456789ab\t\t2026-11-04\n",
 ])
 def test_exit_2_on_a_malformed_ledger(tmp_path: Path, ledger: str):
     repo_note(tmp_path, "o/r", "## 2026-10-01\nPlaybook feedback:\n- one\n")
     write(tmp_path / "ledger.tsv", ledger)
     assert run(tmp_path) == 2
+
+
+def test_any_error_exits_2_not_1(tmp_path: Path, monkeypatch: pytest.MonkeyPatch):
+    repo_note(tmp_path, "o/r", "## 2026-10-01\nPlaybook feedback:\n- one\n")
+    monkeypatch.setenv("PATH", str(tmp_path / "no-bin"))
+    write(tmp_path / "repos" / "o" / "r" / ".git" / "HEAD", "ref: refs/heads/main\n")
+    assert run(tmp_path) == 2, "git missing"
+
+
+def test_a_repo_git_cannot_list_is_skipped_and_named(tmp_path: Path):
+    repo_note(tmp_path, "o/broken", "## 2026-10-01\nPlaybook feedback:\n- unvetted\n")
+    write(tmp_path / "repos" / "o" / "broken" / ".git", "gitdir: /nowhere\n")
+    repo_note(tmp_path, "o/plain", "## 2026-10-01\nPlaybook feedback:\n- kept\n")
+    assert run(tmp_path) == 1
+    md = digest(tmp_path)
+    assert "kept" in md and "unvetted" not in md
+    assert "o/broken`" in md.split("## Repos skipped")[1]
 
 
 def test_exit_1_then_0_once_every_key_is_dispositioned(tmp_path: Path):
