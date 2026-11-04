@@ -6,9 +6,9 @@ difficulty: "beginner"
 model_hint: "sonnet"
 execution_pattern: "interactive-once"
 related_commands: ['pb-review', 'pb-start', 'pb-linus-agent']
-last_reviewed: "2026-02-17"
-version: "1.0.0"
-version_notes: "NEW: Enables 90/10 automation. You set rules once, system applies them forever."
+last_reviewed: "2026-11-05"
+version: "1.0.1"
+version_notes: "v1.0.1: The setup time reads ~15 min, as the rest of the page and the README say."
 breaking_changes: []
 ---
 # Set Your Decision Rules (One-Time Setup)
@@ -36,7 +36,7 @@ Run this once (or annually) to establish how you want `/pb-review` to auto-decid
 
 ```
 /pb-preferences --setup
-  ↓ System asks 15 questions (takes ~10 min)
+  ↓ System asks 15 questions (takes ~15 min)
   ↓ You answer based on your values
   ↓ Preferences saved
   ↓ /pb-review uses them forever

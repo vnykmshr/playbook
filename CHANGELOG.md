@@ -19,6 +19,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- **`/pb-preferences` v1.0.1.** The setup time reads ~15 min, as the rest of the page and the README say.
 - **`/pb-cycle` v1.2.2.** The tool-agnostic link resolves on the published site.
 - **`/pb-start` v2.3.2.** The tool-agnostic link resolves on the published site. The scope questions are "a few" (the page lists six), the background watcher it claimed is gone, and the migration table keeps `/pb-cycle` and `/pb-review-code`, which still ship.
 - **`/pb-spec` v1.2.2.** Spaced double hyphens replaced. The tool-agnostic link resolves on the published site.
