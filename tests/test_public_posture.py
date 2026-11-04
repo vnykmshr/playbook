@@ -46,12 +46,20 @@ def test_no_private_org_or_root_from_the_local_config_in_tracked_files():
 # path names a machine.
 # Built from parts so this line is not a hit itself.
 HOME_PATH_FIXTURES = {("tests/test_feedback_harvest.py", "/".join(["", "home", "a.b", ""]))}
+HOME_PATH = r"/(Users|home)/[A-Za-z0-9._-]+"
+
+
+def test_home_path_pattern_needs_no_trailing_slash():
+    import re
+    user = "/".join(["", "Users", "alice"])
+    for line in (f"cd {user}", f'"{user}"', f"{user} x", f"{user}/src"):
+        assert re.search(HOME_PATH, line), line
 
 
 def test_no_users_home_path_in_tracked_files():
     """Any user's home, not only this runner's: CI's HOME is not the author's."""
     r = subprocess.run(
-        ["git", "-C", str(REPO), "grep", "-n", "-I", "-E", r"/(Users|home)/[A-Za-z0-9._-]+/", "--", "."],
+        ["git", "-C", str(REPO), "grep", "-n", "-I", "-E", HOME_PATH, "--", "."],
         capture_output=True, text=True,
     )
     assert r.returncode in (0, 1), r.stderr
