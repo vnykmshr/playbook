@@ -9,7 +9,7 @@ related_commands: ['pb-patterns-db', 'pb-dr', 'pb-deployment']
 last_reviewed: "2026-11-04"
 last_evolved: ""
 version: "2.0.0"
-version_notes: "v2.0.0: Cut from 865 to 296 lines: example code, walkthroughs and language sections removed; decisions, gotchas and when-to-use kept. Failover fences the old primary first and promotes the replica that received the most WAL; a backup counts once restored, with alerts on age and size; transaction pooling breaks session state; runbook fences render."
+version_notes: "v2.0.0: Cut from 865 to 296 lines: example code, walkthroughs and language sections removed; decisions, gotchas and when-to-use kept. Failover fences the old primary first and promotes the replica that received the most WAL; a backup counts once restored, with alerts on age and size; transaction pooling breaks session state; runbook fences render. Lag checks measure from the primary's current LSN, so unsent WAL counts."
 breaking_changes: ['Example code, walkthroughs and language sections removed; decisions and gotchas kept, constraints from removed code restated; deploy checklists live in /pb-preflight and /pb-deployment.']
 ---
 # Database Operations
@@ -264,7 +264,7 @@ If not resolved in 30 minutes, escalate to database team.
    SELECT
      client_addr,
      state,
-     pg_wal_lsn_diff(sent_lsn, replay_lsn) as byte_lag
+     pg_wal_lsn_diff(pg_current_wal_lsn(), replay_lsn) as byte_lag
    FROM pg_stat_replication;
    ```
 
@@ -273,7 +273,7 @@ If not resolved in 30 minutes, escalate to database team.
    SELECT
      now() - pg_last_xact_replay_timestamp() as lag_seconds;
    ```
-   On an idle primary this grows with no real lag: check receive LSN = replay LSN first.
+   On an idle primary this grows with no real lag: compare the primary's `pg_current_wal_lsn()` with this replica's `pg_last_wal_replay_lsn()` first.
 
 3. **Check replica I/O**
    Is replica disk saturated? Check iowait.
