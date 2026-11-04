@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v2.32.0] - 2026-11-04
+
 The twelve pattern and ops commands are cut to decisions and gotchas, `/pb-guide` absorbs the Go and Python guides, and four new guards keep command prose and fences from drifting back.
 
 **After upgrading:** `git pull`, then re-run `scripts/install.sh` to prune the retired `/pb-guide-go` and `/pb-guide-python` links.
@@ -1974,6 +1976,7 @@ When releasing a new version:
 
 ---
 
+[v2.32.0]: https://github.com/vnykmshr/playbook/releases/tag/v2.32.0
 [v2.31.0]: https://github.com/vnykmshr/playbook/releases/tag/v2.31.0
 [v2.30.0]: https://github.com/vnykmshr/playbook/releases/tag/v2.30.0
 [v2.29.0]: https://github.com/vnykmshr/playbook/releases/tag/v2.29.0
