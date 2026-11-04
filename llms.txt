@@ -26,7 +26,7 @@ Two foundational commands anchor all others: `/pb-preamble` for how to collabora
 
 - [pb-plan](https://github.com/vnykmshr/playbook/blob/main/commands/planning/pb-plan.md): scope-locking and multi-perspective analysis
 - [pb-adr](https://github.com/vnykmshr/playbook/blob/main/commands/planning/pb-adr.md): architecture decision records
-- [pb-patterns](https://github.com/vnykmshr/playbook/blob/main/commands/planning/pb-patterns.md): pattern family hub -- async, core, database, distributed, resilience, security, cloud, deployment, frontend, API
+- [pb-patterns](https://github.com/vnykmshr/playbook/blob/main/commands/planning/pb-patterns.md): pattern family hub -- async, core, database, distributed, resilience, security, deployment, frontend, API
 - [pb-huddle](https://github.com/vnykmshr/playbook/blob/main/commands/core/pb-huddle.md): multi-perspective decision session
 
 ## Review and quality

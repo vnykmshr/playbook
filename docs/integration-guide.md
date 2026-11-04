@@ -228,7 +228,7 @@ READY FOR IMPLEMENTATION
   ↓
 /pb-todo-implement (implement individual todos)
   ↓
-/pb-development workflow (pb-start → pb-cycle → pb-commit → pb-pr)
+Development workflow (pb-start → pb-cycle → pb-commit → pb-pr)
 ```
 
 **Pattern selection guide**:

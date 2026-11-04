@@ -468,7 +468,7 @@ The playbook provides the framework. You adjust the rigor based on context.
 - Collaboration norms and quality standards
 - Reusable templates for commits, PRs, decisions
 
-**Planning** - `/pb-plan`, `/pb-adr`, `/pb-patterns*` (multiple families: async, core, database, distributed, security, cloud), `/pb-performance`, `/pb-observability`, `/pb-deprecation`
+**Planning** - `/pb-plan`, `/pb-adr`, `/pb-patterns*` (core, API, async, database, distributed, frontend, resilience, security, deployment), `/pb-performance`, `/pb-observability`, `/pb-deprecation`
 - Scope planning and architectural decisions
 - Pattern library with trade-offs
 - Design considerations before implementation
@@ -487,11 +487,11 @@ The playbook provides the framework. You adjust the rigor based on context.
 **Release** - `/pb-release`
 - Pre-release checklists and production sign-off
 
-**Review** - `/pb-review*` (comprehensive, code, product, tests, docs, hygiene, microservice, prerelease), `/pb-security`, `/pb-logging`
+**Review** - `/pb-review*` (code, incoming, tests, docs, product, hygiene, microservice, comprehensive, playbook), `/pb-security`, `/pb-logging`
 - Multi-perspective code review with design rules as shared language
 - Specialized audits (security, logging, architecture)
 
-**Repository** - `/pb-repo*` (init, organize, readme, about, blog, enhance)
+**Repository** - `/pb-repo*` (organize, readme, about, blog, docsite, enhance, polish)
 - Greenfield project initialization
 - Repository structure and documentation
 
