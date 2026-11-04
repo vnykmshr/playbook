@@ -6,9 +6,9 @@ difficulty: "intermediate"
 model_hint: "opus"
 execution_pattern: "parallel-then-sequential"
 related_commands: ['pb-think', 'pb-preamble', 'pb-clara-curator', 'pb-maya-product', 'pb-adr']
-last_reviewed: "2026-11-04"
+last_reviewed: "2026-11-05"
 version: "1.8.0"
-version_notes: "v1.8.0: Quick mode; agents gone re-brief from the brief and findings file on disk; late evidence reopens by re-huddle. The brief marks measured vs inferred, states purpose, provenance, hard constraints, callers and suspected misses, and asks coverage. Opposition and fresh-eyes seats replace the agree-too-easily row; the close is fact-checked; findings land in counted buckets; a deletion owes concrete evidence; overrides of approved copy or reachable URLs are held for the user."
+version_notes: "v1.8.0: Quick mode; agents gone re-brief from the brief and findings file on disk, and a re-huddle reads and writes that file; late evidence reopens by re-huddle. The brief marks measured vs inferred, states purpose, provenance, hard constraints, callers and suspected misses, and asks coverage. Opposition and fresh-eyes seats replace the agree-too-easily row, and easy agreement seats the opposition after the fact; the close is fact-checked; findings land in counted buckets; a deletion owes concrete evidence; overrides of approved copy or reachable URLs are held for the user."
 breaking_changes: []
 ---
 # Multi-Perspective Decision Session
@@ -62,7 +62,7 @@ When a huddle's synthesis identifies a refined follow-up question, run a re-hudd
 - The context hasn't changed (same files)
 
 **What changes:**
-- **Skip context loading** (Step 2): personas already have the background from the prior huddle
+- **Skip context loading** (Step 2), but still write this round's findings file: personas already have the background from the prior huddle
 - **Shorter persona prompts**: reference the prior huddle output instead of re-loading raw context
 - **Keep framing** (Step 1): the refined question still needs clear framing; it's a different question from the original
 
