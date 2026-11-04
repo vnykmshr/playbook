@@ -19,13 +19,13 @@ Usage:
     python3 scripts/feedback-harvest.py --repos ~/src --out /tmp/digest
 """
 
-import json
-
 import argparse
 import functools
 import hashlib
+import json
 import os
 import re
+import stat
 import subprocess
 import sys
 from collections import defaultdict
@@ -86,6 +86,7 @@ class Harvest:
     unlisted: list[str]  # repos git could not list
     files: int           # files carrying a heading or a near miss
     unread: list[str] = field(default_factory=list)  # files and dirs that raised on read
+    links: list[str] = field(default_factory=list)   # symlinks met and not followed
 
 
 def normalise(text: str) -> str:
@@ -211,91 +212,142 @@ def tracked_todos(repo: Path) -> set[str] | None:
     return set(r.stdout.split("\0")) - {""} if r.returncode == 0 else None
 
 
-def todo_files(todos: Path, tracked: set[str], unread: list[str]):
-    """(path, inside a nested repo) per markdown file under todos/.
+def listing(path: Path, h: Harvest) -> list[os.DirEntry]:
+    """The one way this script lists a dir: sorted entries, scratchpad names dropped first.
 
-    Scratchpad and .git dirs are pruned before they are listed. A dir holding .git starts a
-    nested repo; the parent tracks none of its files, so none are filtered out as tracked.
-    Symlinked files are skipped: the scratchpad rule can only see a link's own name.
+    A link is recorded and never followed: the scratchpad rule can only see a link's own name.
+    A missing path or a file lists nothing; any other OSError is recorded as unread.
     """
-    inside: dict[Path, bool] = {}
-    for dirpath, dirnames, filenames in os.walk(todos, onerror=lambda e: unread.append(str(e.filename))):
-        here = Path(dirpath)
-        rel = here.relative_to(todos)
-        inside[here] = inside.get(here.parent, False) or ".git" in dirnames or ".git" in filenames
-        dirnames[:] = sorted(
-            d for d in dirnames
-            if d != ".git"
-            and not is_scratchpad(d)
-            and not (rel == Path(".") and d == "evolve")
-            and not (rel == Path("inbox") and d.startswith("harvest-"))
-        )
-        for f in sorted(filenames):
-            if f.endswith(".md") and not is_scratchpad(f) and not (here / f).is_symlink():
-                if str(Path("todos") / rel / f) not in tracked:
-                    yield here / f, inside[here]
+    try:
+        if path.is_symlink():
+            h.links.append(str(path))
+            return []
+        with os.scandir(path) as it:
+            entries = [e for e in it if not is_scratchpad(e.name)]
+    except (FileNotFoundError, NotADirectoryError):
+        return []
+    except OSError:
+        h.unread.append(str(path))
+        return []
+    return sorted(entries, key=lambda e: e.name)
 
 
-def harvest_repos(roots: tuple[Path, ...]) -> Harvest:
-    h = Harvest([], [], [], [], 0)
-    for todos in (t for root in roots for t in sorted(root.glob("*/*/todos"))):
-        repo = todos.parent
-        if is_scratchpad(str(todos)) or not todos.is_dir():
-            continue
-        source = f"{repo.parent.name}/{repo.name}"
-        tracked = tracked_todos(repo)
-        if tracked is None:
-            h.unlisted.append(str(repo))
-            continue
-        for path, nested in todo_files(todos, tracked, h.unread):
-            try:
-                text = path.read_text(errors="replace")
-            except OSError:
-                h.unread.append(str(path))
-                continue
-            found, none = extract(text)
-            near = near_misses(text)
-            if not found and not none and not near:
-                continue
-            h.files += 1
-            lines = text.split("\n")
-            h.empty += [f"{path}:{n}" for n in none]
-            h.near += [f"{path}:{n}" for n in near]
-            for n, t in found:
-                when = heading_date(lines, n - 1, date.today().isoformat()) or mtime_date(path)
-                h.items.append(Item(item_key(t), t, source, f"{path}:{n}", when, False, nested))
-    return h
+def subdirs(path: Path, h: Harvest) -> list[os.DirEntry]:
+    """Real (non-link) subdirs; links among them are recorded."""
+    out = []
+    for e in listing(path, h):
+        if e.is_symlink():
+            h.links.append(e.path)
+        elif e.is_dir(follow_symlinks=False):
+            out.append(e)
+    return out
 
 
-def memory_files(root: Path, unread: list[str]):
-    """feedback_*.md per project memory dir; scratchpad names and symlinks skipped, unreadable dirs recorded."""
-    projects = sorted(p for p in root.iterdir() if not is_scratchpad(p.name) and p.is_dir()) if root.is_dir() else []
-    for p in projects:
-        try:
-            entries = sorted(os.scandir(p / "memory"), key=lambda e: e.name)
-        except (FileNotFoundError, NotADirectoryError):
-            continue
-        except OSError:
-            unread.append(str(p / "memory"))
-            continue
+def todo_files(todos: Path, tracked: set[str], h: Harvest):
+    """(path, inside a nested repo) per markdown file under todos/, files before subdirs.
+
+    A dir holding .git starts a nested repo; the parent tracks none of its files, so none are
+    filtered out as tracked.
+    """
+    def walk(d: Path, rel: Path, nested: bool):
+        entries = listing(d, h)
+        nested = nested or any(e.name == ".git" for e in entries)
         for e in entries:
-            if e.name.startswith("feedback_") and e.name.endswith(".md") and not is_scratchpad(e.name) \
-                    and not e.is_symlink():
+            if e.is_symlink():
+                h.links.append(e.path)
+            elif e.name.endswith(".md") and e.is_file(follow_symlinks=False):
+                if str(Path("todos") / rel / e.name) not in tracked:
+                    yield Path(e.path), nested
+        for e in entries:
+            if e.is_symlink() or not e.is_dir(follow_symlinks=False) or e.name == ".git":
+                continue
+            if (rel == Path(".") and e.name == "evolve") or (rel == Path("inbox") and e.name.startswith("harvest-")):
+                continue
+            yield from walk(Path(e.path), rel / e.name, nested)
+
+    yield from walk(todos, Path("."), False)
+
+
+def todos_dir(repo: Path, h: Harvest) -> Path | None:
+    """<repo>/todos when it is a real dir; a link is recorded, an unreadable repo is unread."""
+    todos = repo / "todos"
+    try:
+        mode = todos.lstat().st_mode
+    except (FileNotFoundError, NotADirectoryError):
+        return None
+    except OSError:
+        h.unread.append(str(todos))
+        return None
+    if stat.S_ISLNK(mode):
+        h.links.append(str(todos))
+        return None
+    return todos if stat.S_ISDIR(mode) else None
+
+
+def harvest_repos(roots: tuple[Path, ...], h: Harvest) -> None:
+    for root in (r.resolve() for r in roots):
+        if is_scratchpad(str(root)):
+            continue
+        for org in subdirs(root, h):
+            for repo_entry in subdirs(Path(org.path), h):
+                repo = Path(repo_entry.path)
+                if (todos := todos_dir(repo, h)) is None:
+                    continue
+                harvest_todos(todos, f"{org.name}/{repo.name}", h)
+
+
+def harvest_todos(todos: Path, source: str, h: Harvest) -> None:
+    repo = todos.parent
+    tracked = tracked_todos(repo)
+    if tracked is None:
+        h.unlisted.append(str(repo))
+        return
+    for path, nested in todo_files(todos, tracked, h):
+        try:
+            text = path.read_text(errors="replace")
+        except OSError:
+            h.unread.append(str(path))
+            continue
+        found, none = extract(text)
+        near = near_misses(text)
+        if not found and not none and not near:
+            continue
+        h.files += 1
+        lines = text.split("\n")
+        h.empty += [f"{path}:{n}" for n in none]
+        h.near += [f"{path}:{n}" for n in near]
+        for n, t in found:
+            when = heading_date(lines, n - 1, date.today().isoformat()) or mtime_date(path)
+            h.items.append(Item(item_key(t), t, source, f"{path}:{n}", when, False, nested))
+
+
+def memory_files(root: Path, h: Harvest):
+    """feedback_*.md per project memory dir, through listing(): links recorded, never followed."""
+    root = root.resolve()
+    if is_scratchpad(str(root)):
+        return
+    for p in subdirs(root, h):
+        for e in listing(Path(p.path) / "memory", h):
+            if not (e.name.startswith("feedback_") and e.name.endswith(".md")):
+                continue
+            if e.is_symlink():
+                h.links.append(e.path)
+            elif e.is_file(follow_symlinks=False):
                 yield Path(e.path)
 
 
-def harvest_memory(root: Path, unread: list[str]) -> tuple[list[Item], list[str]]:
+def harvest_memory(root: Path, h: Harvest) -> tuple[list[Item], list[str]]:
     """(one item per feedback_*.md keyed on its description, files with no description).
 
     The description, not the body: bodies get edited, descriptions rarely. A project dir for a
     path under a todos/ (name has -todos- or ends -todos) is the owner's private companion.
     """
     items, skipped = [], []
-    for path in memory_files(root, unread):
+    for path in memory_files(root, h):
         try:
             text = path.read_text(errors="replace")
         except OSError:
-            unread.append(str(path))
+            h.unread.append(str(path))
             continue
         m = re.search(r"^description:[ \t]*(.+)$", text, re.MULTILINE)
         if not m:
@@ -315,6 +367,13 @@ class Config:
     private: frozenset[str]  # lowercased org names
     note: str                # the digest says where private orgs came from, or that nothing was read
 
+    @functools.cached_property
+    def prefixes(self) -> tuple[str, ...]:
+        """Memory dir prefixes for <root>/<org>, from both the absolute and the resolved root:
+        Claude Code may record either, and an extra prefix can only add a private flag."""
+        forms = {f for r in self.repos for f in (r.absolute(), r.resolve())}
+        return tuple(sorted({project_dir(f / o).lower() for f in forms for o in self.private}))
+
 
 def _strings(cfg: dict, key: str, path: Path) -> list[str]:
     v = cfg.get(key, [])
@@ -329,7 +388,7 @@ def load_config(path: Path, repos: list[Path] | None, memory: Path | None) -> Co
     if path.exists():
         import tomllib
         try:
-            cfg = tomllib.loads(path.read_text())
+            cfg = tomllib.loads(path.read_text(encoding="utf-8"))
         except tomllib.TOMLDecodeError as e:
             raise InstrumentFault(f"{path}: {e}") from e
     if path.exists() and "private" not in cfg:
@@ -355,8 +414,15 @@ def init_config(path: Path, playbook: Path) -> str:
         'memory = "~/.claude/projects"   # Claude Code\'s default\n'
         "private = []                    # orgs whose notes are flagged private\n"
     )
+    import tomllib
+    try:
+        ok = tomllib.loads(text)["repos"] == [shown]
+    except tomllib.TOMLDecodeError:
+        ok = False
+    if not ok:
+        raise InstrumentFault(f"the root {shown!r} does not survive TOML quoting; write {path} by hand")
     path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(text)
+    path.write_text(text, encoding="utf-8")
     return text
 
 
@@ -371,8 +437,7 @@ def is_private(source: str, cfg: Config) -> bool:
     if not source.startswith("memory:"):
         return source.split("/", 1)[0].lower() in cfg.private
     d = source[len("memory:"):].lower()
-    prefixes = [project_dir(r / o).lower() for r in cfg.repos for o in cfg.private]
-    return any(d == p or d.startswith(p + "-") for p in prefixes)
+    return any(d == p or d.startswith(p + "-") for p in cfg.prefixes)
 
 
 Ledger = dict[str, tuple[str, str, str, int]]
@@ -510,7 +575,8 @@ def render(
         "",
         f"{headings} headings in {h.files} files; {len(h.items)} items, {len(by_key)} keys, "
         f"{len(undisposed)} undisposed, {len(recurred)} seen again, {len({o.source for o in h.items})} sources; "
-        f"{len(h.near)} near misses, {len(h.unlisted)} repos unread, {len(h.unread)} paths unread. {cfg.note}.",
+        f"{len(h.near)} near misses, {len(h.unlisted)} repos unread, {len(h.unread)} paths unread, "
+        f"{len(h.links)} links not followed. {cfg.note}.",
         "",
         "## Undisposed: repo notes",
         "",
@@ -544,6 +610,10 @@ def render(
         "",
         *[f"- `{u}`" for u in h.unread],
         "",
+        "## Links not followed (no exit)",
+        "",
+        *[f"- `{x}`" for x in h.links],
+        "",
     ]
     return "\n".join(md), len(undisposed), len(recurred)
 
@@ -571,10 +641,13 @@ def main(argv: list[str] | None = None) -> int:
     ledger_path = args.ledger or args.playbook / "todos" / "evolve" / "harvest-ledger.tsv"
     out = args.out or args.playbook / "todos" / "evolve"
     try:
+        if args.config is not None and not config.exists():
+            raise InstrumentFault(f"{config}: --config names no file; a typo here would flag nothing")
         cfg = load_config(config, args.repos, args.memory)
         ledger = read_ledger(ledger_path)
-        h = harvest_repos(cfg.repos)
-        memory, skipped = harvest_memory(cfg.memory, h.unread)
+        h = Harvest([], [], [], [], 0)
+        harvest_repos(cfg.repos, h)
+        memory, skipped = harvest_memory(cfg.memory, h)
         h.items += memory
         md, undisposed, again = render(h, skipped, ledger, args.playbook, cfg)
         out.mkdir(parents=True, exist_ok=True)

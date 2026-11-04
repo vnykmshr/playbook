@@ -51,7 +51,7 @@ def _load_script(filename):
 # Four test modules import these by name at import time rather than calling
 # functions by path, and patch attributes on them by string. Registering here
 # is what makes that resolve; it replaces the scripts/*_*.py symlinks that
-# used to exist purely to give these two an importable spelling.
+# used to exist purely to give the first two an importable spelling.
 _load_script("git-signals.py")
 _load_script("analyze-playbook-context.py")
 _load_script("feedback-harvest.py")

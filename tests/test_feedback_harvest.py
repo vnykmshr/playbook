@@ -248,6 +248,62 @@ def test_a_symlinked_note_is_not_followed(tmp_path: Path):
     assert "linked in" not in md and "Linked mem" not in md
 
 
+def every_level(tmp_path: Path) -> None:
+    repo_note(tmp_path, "o/r", "## 2026-10-01\nPlaybook feedback:\n- one\n")
+    repo_note(tmp_path, "o/r", "## 2026-10-01\nPlaybook feedback:\n- in sub\n", "sub/a.md")
+    write(tmp_path / "mem" / "p" / "memory" / "feedback_x.md", "---\ndescription: Mem\n---\n")
+
+
+@pytest.mark.parametrize("suffix", ["repos/o", "repos/o/r/todos", "todos/sub", "repos/o/r/todos/sub/a.md", "mem", "p/memory"])
+def test_an_unreadable_dir_or_file_at_any_level_exits_2(tmp_path: Path, monkeypatch: pytest.MonkeyPatch, suffix: str):
+    every_level(tmp_path)
+    unreadable(monkeypatch, suffix)
+    assert run(tmp_path) == 2
+    assert any(x.endswith(suffix + "`") for x in digest(tmp_path).split("## Paths unread")[1].split("##")[0].splitlines())
+
+
+@pytest.mark.parametrize("link, target", [
+    ("repos/l", "repos/o"),
+    ("repos/o/l", "repos/o/r"),
+    ("repos/o/s/todos", "elsewhere/scratchpad"),
+    ("repos/o/r/todos/linked", "elsewhere/scratchpad"),
+    ("mem/l", "mem/p"),
+    ("mem/q/memory", "mem/p/memory"),
+])
+def test_a_link_at_any_level_is_listed_and_never_followed(tmp_path: Path, link: str, target: str):
+    every_level(tmp_path)
+    write(tmp_path / "elsewhere" / "scratchpad" / "notes.md", "## 2026-10-01\nPlaybook feedback:\n- secret scratch\n")
+    (tmp_path / link).parent.mkdir(parents=True, exist_ok=True)
+    (tmp_path / link).symlink_to(tmp_path / target, target_is_directory=True)
+    assert run(tmp_path) == 1, "a link is listed, not an exit"
+    md = digest(tmp_path)
+    assert "secret scratch" not in md and md.count("Mem\n") <= 1
+    assert f"{tmp_path / link}`" in md.split("## Links not followed")[1]
+
+
+def test_a_symlinked_root_is_resolved_and_harvested(tmp_path: Path):
+    repo_note(tmp_path, "o/r", "## 2026-10-01\nPlaybook feedback:\n- via link\n")
+    (tmp_path / "rootlink").symlink_to(tmp_path / "repos", target_is_directory=True)
+    args = ["--repos", str(tmp_path / "rootlink"), "--memory", str(tmp_path / "mem"), "--playbook", str(tmp_path / "pb"),
+            "--ledger", str(tmp_path / "ledger.tsv"), "--out", str(tmp_path / "out")]
+    assert fh.main(args) == 1
+    assert "via link" in digest(tmp_path)
+
+
+def test_a_repo_whose_todos_cannot_be_stat_exits_2(tmp_path: Path, monkeypatch: pytest.MonkeyPatch):
+    every_level(tmp_path)
+    real = Path.lstat
+
+    def lstat(self, *a, **k):
+        if str(self).endswith("repos/o/r/todos"):
+            raise PermissionError(13, "denied", str(self))
+        return real(self, *a, **k)
+
+    monkeypatch.setattr(Path, "lstat", lstat)
+    assert run(tmp_path) == 2
+    assert "repos/o/r/todos`" in digest(tmp_path).split("## Paths unread")[1]
+
+
 def test_exit_1_then_0_once_every_key_is_dispositioned(tmp_path: Path):
     repo_note(tmp_path, "o/r", "## 2026-10-01\nPlaybook feedback:\n- one\n- two\n")
     assert run(tmp_path) == 1, "a missing ledger reads as empty"
@@ -298,6 +354,28 @@ def test_config_supplies_roots_and_its_absence_is_a_fault(tmp_path: Path):
     assert fh.main(base) == 2
 
 
+def test_an_explicit_config_that_does_not_exist_is_a_fault(tmp_path: Path):
+    repo_note(tmp_path, "o/r", "## 2026-10-01\nPlaybook feedback:\n- one\n")
+    assert run(tmp_path, "--config", str(tmp_path / "typo.toml")) == 2
+
+
+def test_a_relative_or_linked_root_still_flags_private_memory(tmp_path: Path, monkeypatch: pytest.MonkeyPatch):
+    (tmp_path / "real" / "acme").mkdir(parents=True)
+    (tmp_path / "link").symlink_to(tmp_path / "real", target_is_directory=True)
+    monkeypatch.chdir(tmp_path)
+    for root in (Path("real"), Path("link")):
+        cfg = fh.Config((root,), Path("/m"), frozenset({"acme"}), "")
+        for form in (tmp_path / "real", tmp_path / root):
+            assert fh.is_private(f"memory:{fh.project_dir(form / 'acme')}-x", cfg), (root, form)
+
+
+def test_init_refuses_a_root_toml_cannot_carry(tmp_path: Path):
+    pb = tmp_path / "w\U0001F600" / "org" / "playbook"
+    pb.mkdir(parents=True)
+    assert fh.main(["--init", "--playbook", str(pb)]) == 2, "json quoting gives surrogates, which TOML rejects"
+    assert not (pb / "todos" / "evolve" / "harvest.toml").exists()
+
+
 def test_init_derives_the_root_and_never_overwrites(tmp_path: Path):
     pb = tmp_path / "root" / "org" / "playbook"
     pb.mkdir(parents=True)
@@ -318,7 +396,7 @@ def test_project_dir_matches_claude_codes_encoding(root: str, org: str, project:
     assert fh.is_private(f"memory:{project}", cfg)
 
 
-def test_digest_says_whether_the_private_orgs_file_was_read(tmp_path: Path):
+def test_digest_says_whether_the_config_was_read(tmp_path: Path):
     repo_note(tmp_path, "o/r", "## 2026-10-01\nPlaybook feedback:\n- one\n")
     assert run(tmp_path) == 1
     assert "config missing" in digest(tmp_path)

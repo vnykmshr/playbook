@@ -24,7 +24,9 @@ def tracked_hits(needle: str, *flags: str) -> list[str]:
 
 
 def test_no_home_path_in_tracked_files():
-    assert not tracked_hits(str(Path.home())), "a home path in a tracked file names this machine"
+    home = Path.home()
+    assert not tracked_hits(str(home)), "a home path in a tracked file names this machine"
+    assert not tracked_hits(fh.project_dir(home) + "-"), "the same, in Claude Code's project-dir form"
 
 
 def test_no_private_org_or_root_from_the_local_config_in_tracked_files():
@@ -34,5 +36,7 @@ def test_no_private_org_or_root_from_the_local_config_in_tracked_files():
     home = Path.home()
     roots = {str(r) for r in cfg.repos} | {f"~/{r.relative_to(home)}" for r in cfg.repos if r.is_relative_to(home)}
     hits = {o: tracked_hits(o, "-i", "-w") for o in cfg.private}
+    if cfg.memory != home / ".claude" / "projects":
+        roots.add(str(cfg.memory))
     hits |= {r: tracked_hits(r) for r in roots}
     assert not {k: v for k, v in hits.items() if v}
