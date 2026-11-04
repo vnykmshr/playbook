@@ -6,9 +6,9 @@ difficulty: "beginner"
 model_hint: "sonnet"
 execution_pattern: "reference"
 related_commands: ['pb-preamble', 'pb-design-rules', 'pb-handcraft', 'pb-start', 'pb-forge']
-last_reviewed: "2026-07-31"
+last_reviewed: "2026-11-04"
 version: "1.4.0"
-version_notes: "v1.4.0: Spaced double hyphens replaced."
+version_notes: "v1.4.0: Verify the referent, not a proxy (second probe for absence, origin after a seen fetch, sample size, pipes, background tail, stalled watches); prove the instrument can fail (known answer, re-break, invariant, red on main, isolated evals); mutating commands check where and how often they run. The Integration table, which repeated each section's coverage line, is gone."
 breaking_changes: []
 ---
 # LLM Coding Guidelines
@@ -76,6 +76,8 @@ When your changes create orphans:
 
 The test: Every changed line should trace directly to the user's request.
 
+Before a mutating command, check where and how often it runs: an unchecked `cd` once ran a git command in the wrong repo; re-running a command to see its output again repeats its side effect (a paid call), so keep the first result; importing a repo's script writes `__pycache__` into it, so run Python with `-B`.
+
 **A deliberate mutation is cleanup you have not done yet.** Editing source to prove something (a harness checking that a test can actually fail, a guard disabled to force a branch) is the one case where residue is the default outcome rather than a slip: the restore runs last, so it is exactly what a timeout, a `Ctrl-C`, or a raised exception kills. Put the restore in a `finally` or outside whatever bounds the experiment, then confirm the tree with `git diff --stat` instead of trusting the script's own cleanup. A killed harness once left a *disabled production guard* in a tree another session was committing from; the mutation was intentional and reviewed, and the residue still nearly shipped.
 
 **Playbook coverage:** `/pb-handcraft` Surgeon Rule, Convention Match, Scope Guard (do NOT refactor adjacent code). The "mention dead code, don't delete it" convention is explicitly in Scope Guard.
@@ -99,26 +101,19 @@ For multi-step tasks, state a brief plan:
 3. [Step] → verify: [check]
 ```
 
-**Verify the thing, not the signal that reports it.** A verification step is only as good as what carries its result. A build piped through `tail` exits with `tail`'s status, so it reports success on a failure one second in. A `gh run watch` whose connection drops reports failure on a green run. When an outcome arrives as a notification rather than as something you observed, check the underlying state independently before acting on it: the notification is a hint, not a verdict. When you write the wrapper, carry the exit code through, because a pipeline discards it silently.
+**Verify the referent, not a proxy.** A proxy (an HTTP 200, a flag, "0 failures" beside zero runs, a grep miss, a README, a stale checkout) does not answer a state question. The test: could the signal come back the same if the answer were no?
+- A claim that something does not exist takes a second probe (a synonym, the owning file) before it drives action.
+- An upstream claim reads `origin/<default>` after a fetch you saw land.
+- A conclusion states its sample size and how faithful its setup was: 3 runs hid a cause that 8 found, and local limits flipped a result.
+- A pipeline exits with its last command's status, so `build | tail` reports success on a failure: carry the exit code through. A dropped `gh run watch` reports failure on a green run; a notification is a hint, not a verdict.
+- `| tail` on a background job shows nothing until it ends: `tee` to a file and read the file.
+- A watch that matches only progress is silent on a stall: match the failure signatures too (timeout, retry, traceback, empty output), or give it a deadline.
 
-**A watch that matches only progress is silent on a stall.** The same discipline applies to filters. A monitor keyed to `^  chunk` and a completion line reports nothing when the run hangs for 25 minutes, and nothing is exactly what a healthy quiet run also produces, so silence carries no information. Match the failure signatures too (timeout, retry, traceback, the empty-output case), or give the watch a deadline, so that "no news" cannot mean both states at once.
+**Prove the instrument can fail.** Run a new measurement on a case with a known answer before trusting it, and re-break a fix to watch its new assertion fail. Mutation-check every new guard, aim the mutants at seams, and assert the invariant, not a symptom: a "content differs" check passes anything idempotent. A new gate goes red on main once before it is trusted. Agent evals run isolated, with the transcript read before scoring.
 
 Strong success criteria let you loop independently. Weak criteria ("make it work") require constant clarification.
 
 **Playbook coverage:** `/pb-start` asks "how will you know it's done?" to establish verifiable success criteria before coding. `/pb-forge` step-runner enforces verify-per-step. `/pb-testing` covers test-after-reproduce patterns. `/pb-debug` uses repro-first methodology.
-
----
-
-## Integration
-
-These guidelines are ambient. They apply every time you code with an LLM, regardless of which command you're running. They don't add ceremony; they're a lens.
-
-| Principle | Primary commands |
-|-----------|-----------------|
-| Think before coding | `/pb-preamble`, `/pb-think`, `/pb-sketch`, `/pb-start` |
-| Simplicity first | `/pb-design-rules`, `/pb-standards`, `/pb-handcraft`, `/pb-caveman` |
-| Surgical changes | `/pb-handcraft` (Surgeon Rule + Scope Guard) |
-| Goal-driven execution | `/pb-start` (success criteria), `/pb-forge` (verify-per-step) |
 
 ---
 
