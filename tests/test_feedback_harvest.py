@@ -192,6 +192,8 @@ def test_never_opens_a_private_notes_path(tmp_path: Path, monkeypatch: pytest.Mo
     for rel in ("scratchpad/a.md", ".scratchpad.md", "Old-Scratchpad/b.md", "notes/scratchpad-2/c.md"):
         repo_note(tmp_path, "o/r", "## 2026-10-01\nPlaybook feedback:\n- hidden-item\n", rel)
     repo_note(tmp_path, "o/r", "## 2026-10-01\nPlaybook feedback:\n- visible-item\n")
+    for rel in ("-x-scratchpad-y/memory/feedback_a.md", "p/memory/feedback_scratchpad.md"):
+        write(tmp_path / "mem" / rel, "---\ndescription: hidden-memory\n---\n")
     touched: list[str] = []
     real_open, real_scandir, real_read = builtins.open, os.scandir, Path.read_text
 
@@ -217,7 +219,7 @@ def test_never_opens_a_private_notes_path(tmp_path: Path, monkeypatch: pytest.Mo
     assert run(tmp_path) == 1
     assert touched == []
     md = digest(tmp_path)
-    assert "visible-item" in md and "hidden-item" not in md
+    assert "visible-item" in md and "hidden-item" not in md and "hidden-memory" not in md
 
 
 def test_memory_items_key_on_description_and_list_files_without_one(tmp_path: Path):

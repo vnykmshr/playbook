@@ -229,7 +229,10 @@ def harvest_memory(root: Path) -> tuple[list[Item], list[str]]:
     The description, not the body: bodies get edited, descriptions rarely.
     """
     items, skipped = [], []
-    for path in sorted(root.glob("*/memory/feedback_*.md")):
+    projects = sorted(p for p in root.iterdir() if not is_scratchpad(p.name)) if root.is_dir() else []
+    for path in (f for p in projects for f in sorted((p / "memory").glob("feedback_*.md"))):
+        if is_scratchpad(path.name):
+            continue
         try:
             text = path.read_text(errors="replace")
         except OSError:
@@ -307,11 +310,7 @@ def _split(text: str) -> tuple[dict[str, object], list[str]]:
 
 @functools.lru_cache(maxsize=None)
 def last_bump(playbook: Path, command: str) -> tuple[str, str, str] | None:
-    """(date, version, version_notes) of the newest commit that changed `version:` and the body.
-
-    Any body edit forces a bump, dash and fence fixes included, so the notes travel with the
-    flag: the reader checks them, the flag never closes a key.
-    """
+    """(date, version, version_notes) of the newest commit that changed `version:` and the body."""
     found = None
     paths = sorted((playbook / "commands").glob(f"*/{command}.md"))
     if paths:
