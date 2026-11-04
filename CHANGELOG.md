@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Breaking
 
-- **`/pb-evolve` v2.0.0.** Prose dashes replaced.
+- **`/pb-evolve` v2.0.0.** 1,033 to 219 lines: the team machinery is cut (quarterly calendar, Evolution Manager, snapshot, log and diff steps, report and dashboard templates, mkdocs, `pbai`). Prose dashes replaced.
 
 ### Security
 

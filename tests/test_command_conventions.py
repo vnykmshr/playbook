@@ -662,7 +662,6 @@ LINE_BUDGET_BASELINE = {
     "pb-design-rules.md": 691,
     "pb-documentation.md": 828,
     "pb-dr.md": 728,
-    "pb-evolve.md": 1033,
     "pb-git-signals.md": 910,
     "pb-guide.md": 666,
     "pb-hardening.md": 698,
