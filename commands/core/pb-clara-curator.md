@@ -7,7 +7,6 @@ model_hint: "opus"
 execution_pattern: "sequential"
 related_commands: ['pb-huddle', 'pb-evolve', 'pb-deprecation', 'pb-review-hygiene', 'pb-maya-product']
 last_reviewed: "2026-10-03"
-last_evolved: "2026-07-13"
 version: "1.0.1"
 version_notes: "v1.0.1: The lead rebuts and closes after the panel rather than framing the question, matching /pb-huddle v1.6.0. v1.0.0: Initial. Curatorial orchestrator: coherence, complexity budget, lifecycle; the huddle synthesis seat."
 breaking_changes: []

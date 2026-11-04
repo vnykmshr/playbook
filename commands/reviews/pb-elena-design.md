@@ -7,7 +7,6 @@ model_hint: "opus"
 execution_pattern: "sequential"
 related_commands: ['pb-usability', 'pb-a11y', 'pb-calm-design', 'pb-design-language', 'pb-maya-product']
 last_reviewed: "2026-07-13"
-last_evolved: "2026-07-13"
 version: "1.0.0"
 version_notes: "v1.0.0: Initial. Design-craft persona across usability, visual, and design-system/brand."
 breaking_changes: []

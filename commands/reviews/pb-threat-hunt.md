@@ -7,7 +7,6 @@ model_hint: "opus"
 execution_pattern: "sequential"
 related_commands: ['pb-security', 'pb-secrets', 'pb-hardening', 'pb-incident', 'pb-debug']
 last_reviewed: "2026-07-02"
-last_evolved: "2026-07-02"
 version: "1.1.0"
 version_notes: "v1.1.0: Pre-Hunt Sweeps (govulncheck, config drift, supply-chain). 3-vote adversarial verify with diverse skeptic prompts + Scope Sweep gate. CSP contextual audit (3 questions, not binary). DNS rebinding payload (nip.io). WebSocket/SSE search pass. Progressive disclosure: .claude/skills/pb-threat-hunt/ for Claude Code executable workflow."
 breaking_changes: []

@@ -7,7 +7,6 @@ model_hint: "opus"
 execution_pattern: "sequential"
 related_commands: ['pb-review', 'pb-review-hygiene', 'pb-hardening', 'pb-secrets', 'pb-threat-hunt']
 last_reviewed: "2026-04-26"
-last_evolved: "2026-04-26"
 version: "1.3.0"
 version_notes: "v1.3.0: Reference global GitHub Artifact Register rule for review-comment register."
 breaking_changes: []

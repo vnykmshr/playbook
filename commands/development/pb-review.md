@@ -7,7 +7,6 @@ model_hint: "sonnet"
 execution_pattern: "automatic"
 related_commands: ['pb-start', 'pb-commit', 'pb-review-code', 'pb-review-comprehensive']
 last_reviewed: "2026-11-03"
-last_evolved: "2026-06-07"
 version: "2.8.0"
 version_notes: "v2.8.0: --report-only runs the checks and reports every finding, including fixes it would auto-apply, and changes nothing: it asks nothing, remembers nothing, lists criticals first instead of blocking, and still drops findings that fail the validation gate -- for a caller that vets findings before any edit (/pb-forge Self-gate). v2.7.1: The Voice block becomes a plain line -- the voice-block convention stopped at 3 of 118 commands; the output decision it carried stays. v2.7.0: Add validation gate (re-read self-check before code-mutating auto-fix) and recommend an independent second pass (/code-review or ocr) for true verification; coverage honesty folded into flow-mapping, full coverage ledger lives in /pb-review-comprehensive. Patterns from alibaba/open-code-review + Claude /code-review."
 breaking_changes: []

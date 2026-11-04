@@ -7,7 +7,6 @@ model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-commit', 'pb-cycle', 'pb-review-code', 'pb-ship']
 last_reviewed: "2026-04-26"
-last_evolved: "2026-04-26"
 version: "1.1.0"
 version_notes: "v1.1.0: Size-tiered templates (small/large by file count + concern count), drop Screenshots section, reference global GitHub Artifact Register rule via single-line pointer."
 breaking_changes: []

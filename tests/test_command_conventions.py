@@ -657,35 +657,35 @@ LINE_BUDGET = 600
 # Commands over LINE_BUDGET, at their current length, fence lines included.
 # Debt, not exemptions: an entry only goes down, and is removed at or under 600.
 LINE_BUDGET_BASELINE = {
-    "pb-a11y.md": 933,
-    "pb-adr.md": 692,
-    "pb-alex-infra.md": 684,
-    "pb-design-rules.md": 692,
-    "pb-documentation.md": 829,
-    "pb-dr.md": 729,
-    "pb-evolve.md": 1034,
-    "pb-git-signals.md": 911,
-    "pb-guide.md": 667,
-    "pb-hardening.md": 699,
-    "pb-incident.md": 691,
-    "pb-jordan-testing.md": 817,
-    "pb-knowledge-transfer.md": 751,
-    "pb-linus-agent.md": 615,
-    "pb-observability.md": 838,
-    "pb-performance.md": 654,
-    "pb-preamble-decisions.md": 684,
-    "pb-repo-docsite.md": 880,
-    "pb-review-microservice.md": 842,
-    "pb-sam-documentation.md": 712,
-    "pb-secrets.md": 613,
-    "pb-security.md": 740,
-    "pb-ship.md": 731,
-    "pb-sre-practices.md": 662,
-    "pb-team.md": 664,
-    "pb-testing.md": 717,
-    "pb-think.md": 750,
-    "pb-todo-implement.md": 617,
-    "pb-zero-stack.md": 621,
+    "pb-a11y.md": 932,
+    "pb-adr.md": 691,
+    "pb-alex-infra.md": 683,
+    "pb-design-rules.md": 691,
+    "pb-documentation.md": 828,
+    "pb-dr.md": 728,
+    "pb-evolve.md": 1033,
+    "pb-git-signals.md": 910,
+    "pb-guide.md": 666,
+    "pb-hardening.md": 698,
+    "pb-incident.md": 690,
+    "pb-jordan-testing.md": 816,
+    "pb-knowledge-transfer.md": 750,
+    "pb-linus-agent.md": 614,
+    "pb-observability.md": 837,
+    "pb-performance.md": 653,
+    "pb-preamble-decisions.md": 683,
+    "pb-repo-docsite.md": 879,
+    "pb-review-microservice.md": 841,
+    "pb-sam-documentation.md": 711,
+    "pb-secrets.md": 612,
+    "pb-security.md": 739,
+    "pb-ship.md": 730,
+    "pb-sre-practices.md": 661,
+    "pb-team.md": 663,
+    "pb-testing.md": 716,
+    "pb-think.md": 749,
+    "pb-todo-implement.md": 616,
+    "pb-zero-stack.md": 620,
 }
 
 
@@ -885,6 +885,29 @@ class TestRelatedCommands:
         related = set(re.findall(r"^- `/(pb-patterns-[a-z]+)`", sections["Related Commands"], re.M))
         assert tree == family, f"selection tree: missing {family - tree}, extra {tree - family}"
         assert related == family, f"Related: missing {family - related}, extra {related - family}"
+
+
+SCHEMA_FIELDS = frozenset(
+    yaml.safe_load((REPO_ROOT / ".playbook-metadata-schema.yaml").read_text())["fields"]
+)
+
+
+def unknown_front_matter_keys(text: str) -> set[str]:
+    return set(parse_front_matter(text)) - SCHEMA_FIELDS
+
+
+class TestFrontMatterKeys:
+    """Every front-matter key is a field in .playbook-metadata-schema.yaml: a retired or misspelt key fails."""
+
+    def test_every_key_is_a_schema_field(self):
+        unknown = {p.name: sorted(k) for p in get_command_files() if (k := unknown_front_matter_keys(p.read_text()))}
+        assert not unknown, f"Front-matter keys not in the schema's fields: {unknown}"
+
+    def test_a_retired_key_fails(self, tmp_path, make_command):
+        good = make_command(tmp_path, "pb-good").read_text()
+        bad = make_command(tmp_path, "pb-bad", last_evolved='"2026-06-10"').read_text()
+        assert unknown_front_matter_keys(good) == set()
+        assert unknown_front_matter_keys(bad) == {"last_evolved"}
 
 
 class TestMetadataConsistency:

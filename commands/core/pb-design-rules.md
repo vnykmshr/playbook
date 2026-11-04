@@ -7,7 +7,6 @@ model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-preamble', 'pb-calm-design', 'pb-standards', 'pb-adr', 'pb-patterns']
 last_reviewed: "2026-02-09"
-last_evolved: ""
 version: "1.3.0"
 version_notes: "v1.3.0: Extended Rule 10 (Repair) with recovery-oriented errors for human and AI consumers."
 breaking_changes: []

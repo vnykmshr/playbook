@@ -7,7 +7,6 @@ model_hint: "opus"
 execution_pattern: "reference"
 related_commands: ['pb-review', 'pb-review-code', 'pb-review-hygiene', 'pb-review-tests', 'pb-security']
 last_reviewed: "2026-06-07"
-last_evolved: "2026-06-07"
 version: "2.2.0"
 version_notes: "v2.2.0: Add coverage ledger to consolidation (changed-file -> covering-review map; OCR --preview honesty for the large-changeset case) and recommend an independent automated second pass (/code-review or ocr). Patterns from alibaba/open-code-review + Claude /code-review."
 breaking_changes: []

@@ -103,13 +103,24 @@ fields:
     example: "2026-02-09"
     required: true
 
-  # EVOLUTION (optional but tracked)
-  # When was this last evolved?
-  last_evolved:
-    type: iso-8601-date
-    description: "Date this command was last evolved by pb-evolve (YYYY-MM-DD)"
-    example: "2026-02-09"
-    required: false
+  # VERSIONING (required; docs/command-versioning.md)
+  version:
+    type: semver
+    description: "The command's own version, bumped when its body changes"
+    example: "1.2.0"
+    required: true
+
+  version_notes:
+    type: string
+    description: "Notes for the current version only, starting v{version}: and a space"
+    example: "v1.2.0: Step 0 reads the harvester's exit code."
+    required: true
+
+  breaking_changes:
+    type: array[string]
+    description: "Receipt for a major bump: what was removed or renamed. [] otherwise"
+    example: "[]"
+    required: true
 
   # DESCRIPTORS (optional for automated summaries)
   # Brief summary for indices and decision trees
@@ -168,7 +179,6 @@ validation:
     - "tags must not exceed 5 items"
     - "no circular cross-references in related_commands"
     - "last_reviewed must be within 90 days (for active commands)"
-    - "last_evolved must be <= last_reviewed (cannot evolve before review)"
 
 # EXAMPLES
 

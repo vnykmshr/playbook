@@ -7,7 +7,6 @@ model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-evolve', 'pb-context', 'pb-learn', 'pb-cycle']
 last_reviewed: "2026-02-14"
-last_evolved: "2026-02-14"
 version: "1.0.0"
 version_notes: "v2.12.0 Phase 3: Complete workflow integration with quarterly evolution planning, pain score response framework, and real-world examples"
 breaking_changes: []

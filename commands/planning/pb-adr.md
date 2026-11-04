@@ -7,7 +7,6 @@ model_hint: "opus"
 execution_pattern: "sequential"
 related_commands: ['pb-plan', 'pb-sketch', 'pb-think', 'pb-design-rules', 'pb-patterns-core']
 last_reviewed: "2026-02-09"
-last_evolved: ""
 version: "1.1.0"
 version_notes: "v1.1.0: Added 'What's Intentionally Not Here' section to ADR template."
 breaking_changes: []

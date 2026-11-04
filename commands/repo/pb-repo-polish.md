@@ -7,7 +7,6 @@ model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-repo-enhance', 'pb-repo-about', 'pb-repo-readme', 'pb-repo-organize']
 last_reviewed: "2026-03-01"
-last_evolved: "2026-03-01"
 version: "1.0.0"
 version_notes: "Initial release"
 breaking_changes: []

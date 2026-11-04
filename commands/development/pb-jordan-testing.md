@@ -7,7 +7,6 @@ model_hint: "opus"
 execution_pattern: "sequential"
 related_commands: ['pb-testing', 'pb-preamble', 'pb-design-rules', 'pb-review-tests', 'pb-standards']
 last_reviewed: "2026-07-13"
-last_evolved: "2026-07-13"
 version: "1.4.0"
 version_notes: "v1.4.0: Add Boundary & Authority section (lane, routes, collision-pair callout, domain authority); drop legacy footer."
 breaking_changes: []

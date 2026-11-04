@@ -7,7 +7,6 @@ model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-team', 'pb-documentation', 'pb-cycle', 'pb-knowledge-transfer']
 last_reviewed: "2026-02-09"
-last_evolved: ""
 version: "1.0.0"
 version_notes: "v2.10.0 baseline"
 breaking_changes: []

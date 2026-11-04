@@ -19,6 +19,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - **Gate hook: one command segment per rule.** A rule's later words must sit in the same segment as its command word, so `git clean -n && ls -lF` and `git reset --soft HEAD~1 && grep --hard x` no longer ask. A quoted `;`, `&` or `|` stays inside its segment.
 
+### Removed
+
+- **`last_evolved` front-matter field.** No tool read it. The schema lists `version`, `version_notes` and `breaking_changes` instead, and a test fails on any front-matter key the schema does not list.
+
 ## [v2.32.0] - 2026-11-04
 
 The twelve pattern and ops commands are cut to decisions and gotchas, `/pb-guide` absorbs the Go and Python guides, and four new guards keep command prose and fences from drifting back.

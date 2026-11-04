@@ -7,7 +7,6 @@ model_hint: "opus"
 execution_pattern: "parallel"
 related_commands: ['pb-review-code', 'pb-review-product', 'pb-maya-product', 'pb-a11y']
 last_reviewed: "2026-04-26"
-last_evolved: "2026-04-26"
 version: "1.2.0"
 version_notes: "v1.2.0: Reference global GitHub Artifact Register rule for review-comment register."
 breaking_changes: []

@@ -7,7 +7,6 @@ model_hint: "sonnet"
 execution_pattern: "checklist"
 related_commands: ['pb-design-rules', 'pb-standards', 'pb-security', 'pb-review-product', 'pb-review-frontend']
 last_reviewed: "2026-04-26"
-last_evolved: "2026-04-26"
 version: "1.3.0"
 version_notes: "v1.3.0: Reference global GitHub Artifact Register rule for review-comment register."
 breaking_changes: []

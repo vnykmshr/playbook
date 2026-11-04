@@ -7,7 +7,6 @@ model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-debug', 'pb-start']
 last_reviewed: "2026-07-28"
-last_evolved: "2026-07-28"
 version: "2.0.0"
 version_notes: "v2.0.0: tiers re-cut on time to recover -- SECONDS / A BUILD / A DOWNLOAD / NEVER -- replacing SAFE / MODERATE / AGGRESSIVE. The old scale described how a deletion felt; recovery time describes what it costs, and it exposes the offline question the old names could not ask: Tier 3 needs a network, so do not clear it before a flight. Tier 4 is not a tier you run. v1.2.0: dry run before every tier, and a tier audit against the membership test ~/.cache failed -- can this be deleted without a human deciding anything? Five more rows failed it. v1.1.0: ~/.cache out of the always-reversible tier and enumerated, never globbed. Measure the APFS Data volume, not `/`. One zsh-safe deletion idiom throughout. Full Disk Access documented for ~/.Trash."
 breaking_changes: ['Tier names and membership changed: SAFE/MODERATE/AGGRESSIVE -> SECONDS/A BUILD/A DOWNLOAD/NEVER. A script or habit that ran "Tier 1" now sweeps less (~/.Trash left it) and "Tier 3" now means network-recoverable rather than most-destructive. Re-read the tier tables before reusing any saved invocation.']

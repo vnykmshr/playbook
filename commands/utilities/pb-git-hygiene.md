@@ -7,7 +7,6 @@ model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-review-hygiene', 'pb-security', 'pb-repo-organize', 'pb-repo-enhance', 'pb-doctor']
 last_reviewed: "2026-04-26"
-last_evolved: "2026-04-26"
 version: "1.0.1"
 version_notes: "v1.0.1: Document fresh-init exception to the 'never git add .' rule inline."
 breaking_changes: []

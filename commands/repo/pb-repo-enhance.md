@@ -7,7 +7,6 @@ model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-greenfield', 'pb-repo-organize', 'pb-repo-docsite', 'pb-repo-polish']
 last_reviewed: "2026-02-18"
-last_evolved: "2026-02-18"
 version: "1.1.0"
 version_notes: "v2.13.1: Added visual workflow diagram for Audit → Organize → Document → Present phases"
 breaking_changes: []

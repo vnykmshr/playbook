@@ -7,7 +7,6 @@ model_hint: "opus"
 execution_pattern: "sequential"
 related_commands: ['pb-claude-global', 'pb-claude-project', 'pb-standards', 'pb-preamble', 'pb-design-rules']
 last_reviewed: "2026-09-24"
-last_evolved: "2026-09-24"
 version: "1.4.0"
 version_notes: "v1.4.0: Step 3.5 makes help-or-constrain a standing question every cycle -- does each surface structure and check the model, or hold a stronger model back. Ground truth from fetched vendor docs, auto-loaded surfaces first, two-sided by rule (name where the model needs more structure before cutting), and deletion on documentation or observed sessions, never the model's self-report. Changes command content only; retirement stays a human call. Trend row seeded from Q3 2026. v1.3.0: Q2 2026 -- refresh currency markers to Opus 4.8 GA (footer version); running examples left illustrative. v2.20.0 -- Refresh running examples to Opus 4.7 + 1M [1m] scenario; bring evolution-log, opportunity, release-notes, and Scenario B templates into alignment with current capability trigger."
 breaking_changes: []

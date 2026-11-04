@@ -7,7 +7,6 @@ model_hint: "sonnet"
 execution_pattern: "reference"
 related_commands: ['pb-patterns-core', 'pb-patterns-resilience', 'pb-patterns-async', 'pb-patterns-db', 'pb-patterns-distributed']
 last_reviewed: "2026-11-04"
-last_evolved: "2026-02-18"
 version: "2.0.0"
 version_notes: "v2.0.0: Cut from 388 to 101 lines: example code, walkthroughs and language sections removed; decisions, gotchas and when-to-use kept. The selection tree and Related list name every pattern family, pinned by a test; scaling points at /pb-patterns-deployment."
 breaking_changes: ['Example code, walkthroughs and language sections removed; decisions and gotchas kept, constraints from removed code restated; deploy checklists live in /pb-preflight and /pb-deployment.']

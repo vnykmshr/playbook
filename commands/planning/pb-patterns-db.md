@@ -7,7 +7,6 @@ model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-patterns-core', 'pb-patterns-distributed', 'pb-database-ops', 'pb-performance', 'pb-patterns']
 last_reviewed: "2026-11-04"
-last_evolved: ""
 version: "2.0.0"
 version_notes: "v2.0.0: Cut from 1046 to 307 lines: example code, walkthroughs and language sections removed; decisions, gotchas and when-to-use kept. Pool max times instances stays under max_connections less reserved slots; a PostgreSQL materialized-view refresh recomputes the whole view, CONCURRENTLY needs a unique index and a populated view, and refreshes run on a schedule, not per write."
 breaking_changes: ['Example code, walkthroughs and language sections removed; decisions and gotchas kept, constraints from removed code restated; deploy checklists live in /pb-preflight and /pb-deployment.']

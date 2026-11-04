@@ -7,7 +7,6 @@ model_hint: "opus"
 execution_pattern: "reference"
 related_commands: ['pb-calm-design', 'pb-design-rules', 'pb-preamble-async', 'pb-preamble-power', 'pb-think']
 last_reviewed: "2026-02-09"
-last_evolved: ""
 version: "1.1.0"
 version_notes: "v2.12.0 Phase 3: Added Principle E (Attention Respect) for Calm Tech integration"
 breaking_changes: []

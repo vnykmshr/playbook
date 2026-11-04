@@ -7,7 +7,6 @@ model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-onboarding', 'pb-guide', 'pb-security', 'pb-adr', 'pb-incident']
 last_reviewed: "2026-04-23"
-last_evolved: "2026-04-23"
 version: "1.3.0"
 version_notes: "v2.21.1 (v1.3.0): Post-enrichment review pass. New top-level For the Departing Engineer: Do These Before Friday section (irreversibility-ordered priority list). New Adversarial / disengaged departure sub-tier. Standard budget 1-2d → 2-3d with who-writes-what split. Portable Python co-change recipe (replaces GNU-awk pipeline). Batched git-blame for bus-factor. Mechanical/tribal split extended to Sections 3 and 9. Numbers (80%, 3/6/12mo, 90d) reframed as overridable defaults. Doc-hygiene reviews land as calendar invites during the session. New week-1 exit criterion: receiver explains a marker unprompted. Contradiction fixes (Sections 1-12 → 1-13, footer drop, version_notes count). Dropped repowise references. Merged When-to-Use + When-to-Conduct. v1.2.0: Added How to Use workflow block, Tiered KT Modes, Section 13 Access & Authority, Shadow Mode, Doc Hygiene. v1.1.0: Pruned Payment Service stubs (-352 lines). Pre-KT risk map, mechanical/tribal on five Core Sections, WHY/DECISION/TRADEOFF markers, week-1 exit criteria, per-section audience."
 breaking_changes: []

@@ -7,7 +7,6 @@ model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-voice', 'pb-review', 'pb-linus-agent', 'pb-commit', 'pb-llm-guidelines']
 last_reviewed: "2026-07-10"
-last_evolved: "2026-07-10"
 version: "1.5.0"
 version_notes: "v1.5.0: Voice pass is now a required lens (was conditional 'if configured'). /pb-voice fires on every prose-bearing artifact. Prose/structure/typography tell blocks removed from Lens 2, delegated to pb-voice's canonical Categories 1-12 (kills the duplicate). Lens 2 keeps code/comment tells plus new code-specific tells (comments explain what-not-why, commit body re-narrates diff, over-descriptive identifiers). Lens 6 defers register calibration to the voice pass. Shapes-over-words meta-principle echoed."
 breaking_changes: []

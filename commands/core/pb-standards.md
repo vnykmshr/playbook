@@ -7,7 +7,6 @@ model_hint: "sonnet"
 execution_pattern: "reference"
 related_commands: ['pb-preamble', 'pb-design-rules', 'pb-handcraft', 'pb-voice', 'pb-testing']
 last_reviewed: "2026-11-04"
-last_evolved: "2026-08-03"
 version: "1.3.1"
 version_notes: "v1.3.1: Technology-Specific Standards points Go and Python at /pb-guide Appendix C; the language guides are retired. Commit discipline drops its spaced double hyphen."
 breaking_changes: []

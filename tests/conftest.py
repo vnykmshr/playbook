@@ -77,7 +77,6 @@ def _default_fields(name):
         "execution_pattern": '"sequential"',
         "related_commands": "['pb-start']",
         "last_reviewed": '"2026-06-10"',
-        "last_evolved": '"2026-06-10"',
         "version": '"1.0.0"',
         "version_notes": '"v1.0.0: initial."',
         "breaking_changes": "[]",

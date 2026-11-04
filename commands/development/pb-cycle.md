@@ -7,7 +7,6 @@ model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-start', 'pb-commit', 'pb-pr', 'pb-review-code', 'pb-testing']
 last_reviewed: "2026-11-04"
-last_evolved: "2026-04-26"
 version: "1.2.1"
 version_notes: "v1.2.1: The commit body ceiling matches the global Register: at most 2 short lines. v1.2.0: Reference global GitHub Artifact Register rule via single-line pointer; subject-only as default in HEREDOC template, body optional only when WHY is non-obvious."
 breaking_changes: []

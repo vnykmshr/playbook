@@ -7,7 +7,6 @@ model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-repo-about', 'pb-repo-blog', 'pb-repo-enhance', 'pb-documentation']
 last_reviewed: "2026-11-04"
-last_evolved: ""
 version: "1.1.1"
 version_notes: "v1.1.1: Nested samples use a 4-backtick outer fence, so they render as written."
 breaking_changes: []

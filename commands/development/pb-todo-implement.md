@@ -7,7 +7,6 @@ model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-spec', 'pb-start', 'pb-review', 'pb-cycle', 'pb-commit']
 last_reviewed: "2026-10-03"
-last_evolved: "2026-07-13"
 version: "1.3.0"
 version_notes: "v1.3.0: Approved-plan mode: for a plan the owner already approved, one explicit y covers the \"Use this description?\", \"Use this implementation plan?\", \"Ready to implement?\" and per-checkpoint \"Approve these changes?\" STOPs, for one todo. The commit STOP stays and shows the whole todo's staged diff (git diff --cached), so every written line is reviewed once before commit; deviation, failed-validation, manual-verification, description-update and next-todo STOPs remain. v1.2.0: Phase 4 Step 2 wires plan-notes deviation log (`plan/{name}-notes.md`) into the STOP gate -- append bullet before proceeding. Format and discipline live in /pb-spec § Implementation Notes File. v1.2.1: plan-notes path aligned to todos/plan/{name}-notes.md."
 breaking_changes: []

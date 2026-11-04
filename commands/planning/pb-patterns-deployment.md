@@ -7,7 +7,6 @@ model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-deployment', 'pb-preflight', 'pb-release', 'pb-database-ops', 'pb-dr']
 last_reviewed: "2026-11-04"
-last_evolved: ""
 version: "2.0.0"
 version_notes: "v2.0.0: Cut from 1076 to 163 lines: example code, walkthroughs and language sections removed; decisions, gotchas and when-to-use kept. /pb-preflight and /pb-deployment own the checklists; /pb-database-ops owns expand/contract; a feature flag is removed with its dead branch once the rollout is stable."
 breaking_changes: ['Example code, walkthroughs and language sections removed; decisions and gotchas kept, constraints from removed code restated; deploy checklists live in /pb-preflight and /pb-deployment.']

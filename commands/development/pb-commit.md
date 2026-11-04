@@ -7,7 +7,6 @@ model_hint: "sonnet"
 execution_pattern: "automatic"
 related_commands: ['pb-review', 'pb-start', 'pb-pr']
 last_reviewed: "2026-10-03"
-last_evolved: "2026-04-26"
 version: "2.3.1"
 version_notes: "v2.3.1: The Usual Flow: gate the commit on the proving command's exit code; a pipe to grep or tail gates on the last command instead. v2.3.0: Reference global GitHub Artifact Register rule via single-line pointer; drop local restatement and implicit 4-bullet template."
 breaking_changes: []

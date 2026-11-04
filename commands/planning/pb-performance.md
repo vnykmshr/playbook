@@ -7,7 +7,6 @@ model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-observability', 'pb-review-hygiene', 'pb-patterns-core']
 last_reviewed: "2026-02-09"
-last_evolved: ""
 version: "1.1.0"
 version_notes: "v1.1.0: Added SEO & LLM Discoverability section"
 breaking_changes: []

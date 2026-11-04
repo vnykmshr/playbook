@@ -7,7 +7,6 @@ model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-patterns-resilience', 'pb-patterns-async', 'pb-patterns-db', 'pb-patterns-distributed', 'pb-adr']
 last_reviewed: "2026-11-04"
-last_evolved: ""
 version: "2.0.0"
 version_notes: "v2.0.0: Cut from 658 to 191 lines: example code, walkthroughs and language sections removed; decisions, gotchas and when-to-use kept. Repository says when not to use it."
 breaking_changes: ['Example code, walkthroughs and language sections removed; decisions and gotchas kept, constraints from removed code restated; deploy checklists live in /pb-preflight and /pb-deployment.']

@@ -7,7 +7,6 @@ model_hint: "opus"
 execution_pattern: "interactive"
 related_commands: ['pb-plan', 'pb-spec', 'pb-think', 'pb-adr']
 last_reviewed: "2026-07-13"
-last_evolved: "2026-07-13"
 version: "1.1.0"
 version_notes: "v2.21.0: New skill. Extracted from pb-plan Phases 1-2, plus Decision Forks pattern. Pairs with pb-spec via pb-plan wrapper. v1.1.0: sketch output moves to todos/sketch/ (working-material root) instead of git-visible sketch/ at repo root."
 breaking_changes:

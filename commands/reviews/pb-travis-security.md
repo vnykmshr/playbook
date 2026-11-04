@@ -7,7 +7,6 @@ model_hint: "opus"
 execution_pattern: "sequential"
 related_commands: ['pb-security', 'pb-threat-hunt', 'pb-hardening', 'pb-linus-agent', 'pb-secrets']
 last_reviewed: "2026-07-13"
-last_evolved: "2026-07-13"
 version: "1.0.0"
 version_notes: "v1.0.0: Initial. Adversarial security persona; PoC-driven, attacker-mind review."
 breaking_changes: []

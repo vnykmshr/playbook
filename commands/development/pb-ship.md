@@ -7,7 +7,6 @@ model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-cycle', 'pb-pr', 'pb-release', 'pb-review-hygiene', 'pb-deployment']
 last_reviewed: "2026-08-04"
-last_evolved: "2026-08-04"
 version: "1.2.1"
 version_notes: "v1.2.1: Phase 3 names /pb-preflight, closing a one-way link -- preflight called this 'the ship workflow this gate slots into' and nothing here said where. v1.2.0: Reference global GitHub Artifact Register rule for PR body and feedback-iteration commits; replace bloated 5-header PR template with delegation to /pb-pr; fix git add -A violation."
 breaking_changes: []

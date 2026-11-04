@@ -7,7 +7,6 @@ model_hint: "sonnet"
 execution_pattern: "reference"
 related_commands: ['pb-preamble', 'pb-design-rules', 'pb-handcraft', 'pb-start', 'pb-forge']
 last_reviewed: "2026-07-31"
-last_evolved: ""
 version: "1.3.0"
 version_notes: "v1.3.0: a deliberate mutation is cleanup you have not done yet -- the restore runs last, so a timeout or a Ctrl-C kills exactly the step that undoes the experiment; put it in a finally or outside the bound, and verify the tree rather than the script's cleanup. v1.2.0: a watch that matches only progress is silent on a stall -- silence and health are indistinguishable unless the filter also matches failure signatures or the watch carries a deadline. v1.1.0: verify the thing, not the signal that reports it -- a piped build exits with the pipe's status and a dropped watch reports failure on a green run, so a completion notification is a hint rather than a verdict. Initial: 4 behavioral guidelines for reducing LLM coding mistakes, sourced from Karpathy's observations, cross-referenced with existing playbook commands."
 breaking_changes: []

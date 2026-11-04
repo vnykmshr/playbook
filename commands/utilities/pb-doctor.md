@@ -7,7 +7,6 @@ model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-storage', 'pb-ports', 'pb-update', 'pb-debug', 'pb-git-hygiene']
 last_reviewed: "2026-07-28"
-last_evolved: "2026-07-28"
 version: "1.1.0"
 version_notes: "v1.1.0: measure the APFS Data volume (`/` is the read-only system volume and its capacity never moves); BSD `ps` throughout -- macOS rejects GNU --sort= outright."
 breaking_changes: []

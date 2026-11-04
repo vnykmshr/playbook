@@ -7,7 +7,6 @@ model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-preamble', 'pb-deployment', 'pb-ship', 'pb-pr', 'pb-cycle']
 last_reviewed: "2026-02-18"
-last_evolved: "2026-02-18"
 version: "1.2.0"
 version_notes: "v2.13.1: Added pb-preamble backward reference (Mindset alignment)"
 breaking_changes: []

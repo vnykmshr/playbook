@@ -7,7 +7,6 @@ model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-handcraft', 'pb-voice', 'pb-review', 'pb-commit']
 last_reviewed: "2026-04-15"
-last_evolved: "2026-04-15"
 version: "1.1.0"
 version_notes: "1.1.0: Carve-out for short-form public 1-liners (X/Bluesky replies, single-line social posts) -- lite mode is the default for public, but both directions of user override are now explicit: (a) full opt-in -- user can request full mode for public when they want the broken/caveman vibe on purpose, (b) lite lock -- user can forbid upshift to full for the session. User sovereignty beats the rule. 1.0.0: Initial, two modes, counterweight to /pb-handcraft."
 breaking_changes: []

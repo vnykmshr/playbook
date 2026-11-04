@@ -7,7 +7,6 @@ model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-doctor', 'pb-debug', 'pb-review-hygiene', 'pb-release']
 last_reviewed: "2026-02-18"
-last_evolved: ""
 version: "1.0.0"
 version_notes: "Initial release - structured CI failure investigation"
 breaking_changes: []

@@ -7,7 +7,6 @@ model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-debug', 'pb-review-incoming', 'pb-resume', 'pb-documentation', 'pb-standards']
 last_reviewed: "2026-11-04"
-last_evolved: "2026-08-03"
 version: "1.1.1"
 version_notes: "v1.1.1: Body prose drops spaced double hyphens. Nested samples use a 4-backtick outer fence, so they render as written."
 breaking_changes: []

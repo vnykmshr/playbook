@@ -7,7 +7,6 @@ model_hint: "opus"
 execution_pattern: "interactive"
 related_commands: ['pb-sketch', 'pb-spec', 'pb-adr', 'pb-start', 'pb-todo-implement']
 last_reviewed: "2026-10-03"
-last_evolved: "2026-07-13"
 version: "2.2.0"
 version_notes: "v2.2.0: Step 3: a requested huddle runs on the forks before the decision prompt and its picks become the recommendations; the user still resolves them, and unanswered forks stay decisions pending, stopping before /pb-spec. v2.21.0: Rewrite as orchestrator. Delegates to /pb-sketch (decision forks) + /pb-spec (detailed plan). Typing /pb-plan still produces an end-to-end plan, but the flow now includes a mid-step interactive decision prompt -- users confirm or override recommended picks before the spec is written. New behavior, not invisible preservation. v2.1.0: sketch/spec output paths moved under todos/ (working-material root); file side-effect note updated."
 breaking_changes:

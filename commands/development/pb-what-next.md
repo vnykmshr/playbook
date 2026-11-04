@@ -7,7 +7,6 @@ model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-start', 'pb-forge', 'pb-commit', 'pb-pr', 'pb-release']
 last_reviewed: "2026-02-18"
-last_evolved: "2026-02-18"
 version: "2.0.1"
 version_notes: "v2.0.1: Related-link swap -- drops pb-cycle, adds pb-forge (the executing twin)."
 breaking_changes: []

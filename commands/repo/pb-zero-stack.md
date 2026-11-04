@@ -7,7 +7,6 @@ model_hint: "opus"
 execution_pattern: "interactive"
 related_commands: ['pb-greenfield', 'pb-start', 'pb-patterns-cloud', 'pb-design-language', 'pb-calm-design']
 last_reviewed: "2026-02-25"
-last_evolved: "2026-02-25"
 version: "3.2.0"
 version_notes: "Friction reduction pass: cut bloat from Step 4 (creative assets, web identity table, content decisions table), removed substitutions table, moved active window to Budget Math. Added missing dev-phase decisions: data transformation prompt, error copy prompt, loading skeleton nudge, responsive/dark-mode/animation/URL questions, validation rules, testing strategy, retry default."
 breaking_changes: []

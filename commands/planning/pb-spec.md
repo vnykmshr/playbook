@@ -7,7 +7,6 @@ model_hint: "opus"
 execution_pattern: "interactive"
 related_commands: ['pb-plan', 'pb-sketch', 'pb-adr', 'pb-todo-implement', 'pb-start']
 last_reviewed: "2026-10-03"
-last_evolved: "2026-07-13"
 version: "1.2.1"
 version_notes: "v1.2.1: Verification signals: a no-effect claim is verified by diffing produced output, not by re-reading the code. v1.1.0: Add Implementation Notes File section (running deviation log written during implementation). Rename Path A template's static 'Notes' section to 'Design Notes' to disambiguate. v1.2.0: Path A output moves to todos/plan/ (working-material root) instead of git-visible plan/ at repo root; sketch input path aligned to todos/sketch/."
 breaking_changes:

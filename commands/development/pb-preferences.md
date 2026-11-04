@@ -7,7 +7,6 @@ model_hint: "sonnet"
 execution_pattern: "interactive-once"
 related_commands: ['pb-review', 'pb-start', 'pb-linus-agent']
 last_reviewed: "2026-02-17"
-last_evolved: "2026-02-17"
 version: "1.0.0"
 version_notes: "NEW: Enables 90/10 automation. You set rules once, system applies them forever."
 breaking_changes: []

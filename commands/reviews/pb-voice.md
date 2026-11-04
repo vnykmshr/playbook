@@ -7,7 +7,6 @@ model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-handcraft', 'pb-review-docs', 'pb-documentation', 'pb-design-rules', 'pb-preamble']
 last_reviewed: "2026-07-10"
-last_evolved: "2026-07-10"
 version: "2.3.0"
 version_notes: "v2.3.0: Shapes-over-words meta-principle (the vocabulary rotates each model generation; weight structural tells over any single word). New tells: markup-leak artifacts (Cat 9), vague-authority attribution (Cat 8). Positive-craft tests wired into existing categories: name-the-dog + verifiable-detail-per-paragraph (Cat 8), earned-vs-named transition delete-test (Cat 5), 5-word-band burstiness test (Cat 7). Antithesis elevated to the strongest current syntactic tell (Cat 3). Canonical prose engine that /pb-handcraft fires as a required lens."
 breaking_changes: []

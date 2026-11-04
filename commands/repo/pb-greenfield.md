@@ -7,7 +7,6 @@ model_hint: "opus"
 execution_pattern: "interactive"
 related_commands: ['pb-zero-stack', 'pb-claude-project', 'pb-context', 'pb-plan', 'pb-start']
 last_reviewed: "2026-09-24"
-last_evolved: "2026-07-14"
 version: "2.0.1"
 version_notes: "v2.0.1: Step 3's reason tracks /pb-claude-project v1.4.0, which links the working context instead of copying state from it. v2.0.0: Renamed from pb-repo-init and rewritten. Idea in, working repo out: five questions, one routing decision, playbook-layer install. Emits files, not a plan. Capped at ~150 lines -- the line budget is the guardrail against regrowing into a second /pb-zero-stack."
 breaking_changes: ['Renamed from pb-repo-init - the old name no longer resolves', 'No longer emits a phase plan; that content moved to /pb-plan -> /pb-spec', 'Language directory trees removed - the ecosystem initializers own them']

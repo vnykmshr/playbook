@@ -7,7 +7,6 @@ model_hint: "opus"
 execution_pattern: "sequential"
 related_commands: ['pb-review', 'pb-review-hygiene', 'pb-review-tests', 'pb-security', 'pb-cycle']
 last_reviewed: "2026-07-31"
-last_evolved: "2026-07-31"
 version: "2.3.0"
 version_notes: "v2.3.0: Family decision tree forks on whether the author is reachable -- an unreachable author routes to /pb-review-incoming, since this command's feedback loop assumes someone to hand findings back to. v2.2.0: Reference global GitHub Artifact Register rule for review-comment register via single-line pointer."
 breaking_changes: []
