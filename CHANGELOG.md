@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v2.34.0] - 2026-11-05
+
 v2.34.0 rules every harvested feedback note, retires four commands into the hubs that cover them (116 to 112), and moves the convention guards onto a markdown parser. The gate hook asks where it cannot read a command segment, install no longer deletes a user's own skill directory or script, and the CI-green check before a tag lives in one place.
 
 **After upgrading:** `git pull`, then re-run `scripts/install.sh`: it prunes the four retired command links and replaces an unedited hook copy, which carries the security fix below. Regenerate `~/.claude/CLAUDE.md` with `/pb-claude-global` (v2.12.0). Running the tests: `python3 -m pip install pytest pyyaml markdown-it-py==4.0.0`.
@@ -2083,6 +2085,7 @@ When releasing a new version:
 
 ---
 
+[v2.34.0]: https://github.com/vnykmshr/playbook/releases/tag/v2.34.0
 [v2.33.0]: https://github.com/vnykmshr/playbook/releases/tag/v2.33.0
 [v2.32.0]: https://github.com/vnykmshr/playbook/releases/tag/v2.32.0
 [v2.31.0]: https://github.com/vnykmshr/playbook/releases/tag/v2.31.0
