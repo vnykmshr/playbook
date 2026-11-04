@@ -1056,6 +1056,13 @@ class TestRelatedCommands:
             "A fenced sample appearing before the real section must not consume it"
         )
 
+    def test_empty_items_count_nothing(self):
+        """An empty `-` item has no inline of its own: it must not read the next item's."""
+        empty_first = "## Related Commands\n\n-\n- `/pb-a` - one\n"
+        assert get_related_commands_count(empty_first) == 1
+        empty_last = "## Related Commands\n\n- `/pb-a` - one\n-\n"
+        assert get_related_commands_count(empty_last) == 1
+
     def test_front_matter_related_commands_within_limits(self):
         """The limit applies to both lists; until now only one was counted.
 
