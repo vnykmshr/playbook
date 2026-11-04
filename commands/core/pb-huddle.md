@@ -6,9 +6,9 @@ difficulty: "intermediate"
 model_hint: "opus"
 execution_pattern: "parallel-then-sequential"
 related_commands: ['pb-think', 'pb-preamble', 'pb-clara-curator', 'pb-maya-product', 'pb-adr']
-last_reviewed: "2026-11-03"
+last_reviewed: "2026-11-04"
 version: "1.8.0"
-version_notes: "v1.8.0: Spaced double hyphens replaced."
+version_notes: "v1.8.0: Quick mode; agents gone re-brief from the brief and findings file on disk; late evidence reopens by re-huddle. The brief marks measured vs inferred, states purpose, provenance, hard constraints, callers and suspected misses, and asks coverage. Opposition and fresh-eyes seats replace the agree-too-easily row; the close is fact-checked; findings land in counted buckets; a deletion owes concrete evidence; overrides of approved copy or reachable URLs are held for the user."
 breaking_changes: []
 ---
 # Multi-Perspective Decision Session
@@ -43,7 +43,10 @@ Apply `/pb-preamble` thinking: best ideas win regardless of source. Personas sho
 ```
 /pb-huddle "question"             → Standard (default): full huddle with context loading
 /pb-huddle --re-huddle "question" → Re-huddle: refined follow-up, same personas, lighter context
+/pb-huddle --quick "question"     → Quick: inline, the lead plus two lenses, same steps and output
 ```
+
+**Quick** fits a question one lane owns with one cross-lane risk. It skips the agents, not the steps: the brief, the fact-check and the record still run.
 
 **Natural-language trigger:** `"re-huddle: new focus question"` also invokes re-huddle mode. The flag and the prefix are equivalent; use whichever reads more naturally.
 
@@ -68,8 +71,10 @@ When a huddle's synthesis identifies a refined follow-up question, run a re-hudd
 - Steps 3-6 run identically to standard mode
 
 **Guardrails:**
-- **Same-conversation only**: re-huddle depends on the personas having the prior huddle's context in memory. Across sessions, run a full huddle.
+- **Agents gone** (a new session, `/clear`, a usage limit): spawn fresh agents with the brief and the prior round's findings file, both on disk (Step 2). Re-run only the voices whose results are missing.
 - **Fall back to full huddle** if the prior huddle output can't be found or persona names can't be extracted. If in doubt, ask which personas to use.
+
+**Late evidence against a closed ruling** reopens it by re-huddle, with the evidence as the new question. It is never folded into the record quietly.
 
 **How it works:**
 1. Read the most recent huddle output from the conversation
@@ -103,7 +108,14 @@ A sketch or brief is a claim about the work, not a record of it. Treat files tha
 
 If the user overrode a standing rule this session, the brief states the rule and the override. The panel can read the rule; it cannot read the session.
 
-The brief you write is a claim too. Each fact in it names how it was checked: the command run or the file opened. A fact with no check is labelled unverified.
+The brief you write is a claim too. Each fact in it names how it was checked: the command run or the file opened, marked measured or inferred. A fact with no check is labelled unverified, and every "unverified" is resolved or carried into the decision before the close. Ask panelists to mark the same; "stated from reading, not run" gets them to run things. The brief also states:
+- what the artifact under review is for, and where anything distilled from elsewhere came from;
+- the hard constraints (visibility, host, budget), gathered from the user before any option: constraints that arrive one at a time void the options built before them;
+- for a change to an interface, its callers (one grep);
+- your own list of what you suspect you missed;
+- the question as coverage ("does it handle all N things it was built for?"), not go/no-go; and that the answer may sit outside the options offered.
+
+Write the brief to disk, and each round's findings to a file beside it, so the panel can be re-briefed from files rather than memory.
 
 **Measure before you brief.** If the question turns on a number one command can produce (how often a rule fires, how many cases pass), run it and put the result in the brief. A panel handed an opinion a measurement would settle spends its round arguing the opinion. When the question is whether the work already exists (a corpus, a codebase, a prior decision), measure by thesis, not topic: a keyword grep is a measurement, and it passes the collision it cannot see.
 
@@ -138,18 +150,24 @@ Name the lead by the decision's center of gravity and record it ("Lead: Travis, 
 
 **Roster (9):** `/pb-linus-agent`, `/pb-travis-security`, `/pb-jordan-testing`, `/pb-alex-infra`, `/pb-maya-product`, `/pb-elena-design`, `/pb-kai-reach`, `/pb-sam-documentation`, `/pb-clara-curator`.
 
-Each persona gets the SAME brief; disagreement is expected and valuable. Run the panel in parallel so the first response doesn't anchor the others. The lead rebuts and closes in its lane; the orchestrators synthesize.
+Each persona gets the SAME brief; disagreement is expected and valuable. Run the panel in parallel so the first response doesn't anchor the others, as separate agents when the ruling binds. Panelists can run on sonnet; the lead and synthesis need opus. The lead rebuts and closes in its lane; the orchestrators synthesize.
 
-**Fact-check before the lead.** When the panel returns, the process orchestrator checks the load-bearing claims that name no check, in the brief or in a panelist's argument, before the lead sees them. A wrong fact inside one lens reads as a position, and the other lenses argue with it instead of checking it. A check names its instrument, and the instrument must answer the claim: `git log -S` counts occurrences, so it cannot show when a line was last edited (`-G` can). Evidence that lands after the panel ran goes to the lead and synthesis labelled *the panel did not see this*.
+**Seats:**
+- **Opposition.** When the proposal has an obvious overreach (a cut, a rewrite, minimalism winning unopposed), one lens is assigned the opposite position. Easy agreement is the signal it was needed.
+- **Fresh eyes.** A huddle reviewing work seats at least one panelist who did not plan it.
 
-**One question is standing, whoever leads: what should be deleted rather than maintained?** Put it in every brief. It is Clara's lens, but Clara synthesizes rather than argues, so on a technical or infrastructure huddle it never enters the room, and a panel asked only what to build will answer only what to build. The candidate proposed in Step 1 is not the only thing on the table; the code already carrying the problem is too.
+**Fact-check before the lead.** When the panel returns, the process orchestrator checks the load-bearing claims that name no check, in the brief or in a panelist's argument, before the lead sees them. A wrong fact inside one lens reads as a position, and the other lenses argue with it instead of checking it. A check names its instrument, and the instrument must answer the claim: `git log -S` counts occurrences, so it cannot show when a line was last edited (`-G` can). Evidence that lands after the panel ran goes to the lead and synthesis labelled *the panel did not see this*. A panelist who finds a live defect reports it as a finding; argued as rhetoric, the best-argued room walks past the bug. The lead gets the panelists' verbatim text, not a paraphrase.
+
+**Fact-check the close too.** Agents see the state as of their spawn, so re-read disk first, then check the lead's close for its claims and for what it leaves out.
+
+**One question is standing, whoever leads: what should be deleted rather than maintained?** Put it in every brief. A deletion owes the same evidence as any other finding: the concrete failure it removes. It is Clara's lens, but Clara synthesizes rather than argues, so on a technical or infrastructure huddle it never enters the room, and a panel asked only what to build will answer only what to build. The candidate proposed in Step 1 is not the only thing on the table; the code already carrying the problem is too.
 
 ### Step 4: Find the Tensions
 
-After personas argue, identify:
+After personas argue, put every finding in one counted bucket (agreed, disputed, deleted, dropped) and report the counts. Then identify:
 - Where do they agree? (high-confidence signals)
 - Where do they disagree? (genuine trade-offs)
-- What are the irreconcilable tensions? (requires a decision, not more analysis)
+- What are the irreconcilable tensions? (requires a decision, not more analysis; "key off X, not Y" often resolves as both)
 - What did they name for deletion? (a deletion is a decision: record it, or it gets re-proposed as new work next quarter)
 
 ### Step 5: Synthesize
@@ -158,9 +176,9 @@ Clara (curatorial orchestrator) synthesizes; Claude records. Don't average the o
 
 ### Step 6: Record
 
-Save the decision and rationale to the relevant project doc. Future sessions should find this decision, not re-derive it. Consider `/pb-adr` for architecture-level decisions.
+After the close, never before it, save the decision and rationale to the relevant project doc. Future sessions should find this decision, not re-derive it. Consider `/pb-adr` for architecture-level decisions.
 
-**If the decision overrides something the user explicitly agreed** (an order, a list, a scope), state the deviation to the user before acting on it. The panel's ruling can be right and still not be the user's agreement.
+**If the decision overrides something the user explicitly agreed** (an order, a list, a scope, approved copy), or removes something reachable (a URL, a command) because nothing shows it is used, hold it for the user and state the deviation before acting on it. The panel's ruling can be right and still not be the user's agreement.
 
 ---
 
@@ -213,7 +231,6 @@ Lead: [persona] -- [why this lane leads]. Orchestrators: Clara (curatorial) + Cl
 |-------|------------|
 | Run huddle on routine decisions | Use direct review (Linus, voice pass) |
 | Lead anchors the round or overrules cross-lane | Lead rebuts and closes in-lane; panel challenges in parallel; Clara arbitrates across lanes |
-| All personas agree too easily | Generate the best counterargument before synthesizing |
 | Average the opinions | Find the approach that survives all lenses |
 | Huddle without loaded context | Read all relevant state files first |
 | Ask the panel to generate from a blank page | Hand it a concrete proposal to break |
