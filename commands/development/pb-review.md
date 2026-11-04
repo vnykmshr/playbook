@@ -6,9 +6,9 @@ difficulty: "beginner"
 model_hint: "sonnet"
 execution_pattern: "automatic"
 related_commands: ['pb-start', 'pb-commit', 'pb-review-code', 'pb-review-comprehensive']
-last_reviewed: "2026-11-03"
-version: "2.8.0"
-version_notes: "v2.8.0: --report-only runs the checks and reports every finding, including fixes it would auto-apply, and changes nothing: it asks nothing, remembers nothing, lists criticals first instead of blocking, and still drops findings that fail the validation gate -- for a caller that vets findings before any edit (/pb-forge Self-gate). v2.7.1: The Voice block becomes a plain line -- the voice-block convention stopped at 3 of 118 commands; the output decision it carried stays. v2.7.0: Add validation gate (re-read self-check before code-mutating auto-fix) and recommend an independent second pass (/code-review or ocr) for true verification; coverage honesty folded into flow-mapping, full coverage ledger lives in /pb-review-comprehensive. Patterns from alibaba/open-code-review + Claude /code-review."
+last_reviewed: "2026-11-04"
+version: "2.8.1"
+version_notes: "v2.8.1: After fixing feedback, the independent pass re-runs on the fixes alone, from the commit before them; the footer drops its stale version."
 breaking_changes: []
 ---
 # Automated Quality Gate
@@ -145,7 +145,7 @@ During `/pb-review`, system matches each issue to your preference and decides. O
 ## When to Use
 
 - **After coding:** `/pb-review` - primary use case
-- **After fixing feedback:** `/pb-review` again to re-verify
+- **After fixing feedback:** `/pb-review` again, then the independent pass again on the fixes alone, from the commit before them: a same-context recheck misses what the fix introduced (`/pb-forge` Self-gate, Re-review)
 - **Manual commit control:** `pb-review --no-auto-commit` to review the message first
 - **Findings for a vet:** `pb-review --report-only` changes nothing
 
@@ -160,4 +160,4 @@ During `/pb-review`, system matches each issue to your preference and decides. O
 
 ---
 
-*Fast quality gate. Preferences decide. You handle the edge cases. | v2.7.0*
+*Fast quality gate. Preferences decide. You handle the edge cases.*
