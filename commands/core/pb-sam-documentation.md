@@ -6,7 +6,7 @@ difficulty: "intermediate"
 model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-documentation', 'pb-preamble', 'pb-design-rules', 'pb-standards', 'pb-review-docs']
-last_reviewed: "2026-11-04"
+last_reviewed: "2026-07-13"
 version: "1.4.1"
 version_notes: "v1.4.1: Nested samples use a 4-backtick outer fence, so they render as written."
 breaking_changes: []

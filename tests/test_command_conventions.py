@@ -154,16 +154,23 @@ def commit_metadata_changes(sha: str, rel_path: str) -> tuple[bool, bool]:
 
 
 @functools.lru_cache(maxsize=None)
-def commit_changed_body(sha: str, rel_path: str) -> bool:
-    """True if the commit changed this file's body (front matter and blank lines excluded).
+def body_words(text: str) -> list[str]:
+    """The body's words in order: what a review reads. Punctuation and markup are not words."""
+    return re.findall(r"[^\W_]+", split_front_matter(text)[1])
 
-    A bulk pass that only sets `version:` across the corpus is not a review, so
-    its `last_reviewed` is correctly left alone. Only a substantive edit that
-    also claims a version owes a review date. A file absent from the parent
-    (added, renamed in, root commit) counts as changed.
+
+def commit_changed_body(sha: str, rel_path: str) -> bool:
+    """True if the commit changed a word of this file's body (front matter excluded).
+
+    A bulk pass that only sets `version:` across the corpus is not a review, and
+    neither is a change to punctuation and markup alone (dashes, fence markers):
+    its `last_reviewed` is correctly left alone. Only an edit that changes words
+    and claims a version owes a review date; a symbol-only change (`<` to `>`)
+    reads as markup. A file absent from the parent (added, renamed in, root
+    commit) counts as changed.
     """
     before = show_or_none(f"{sha}^:{rel_path}")
-    return before is None or body_lines(before) != body_lines(git("show", f"{sha}:{rel_path}"))
+    return before is None or body_words(before) != body_words(git("show", f"{sha}:{rel_path}"))
 
 
 @functools.lru_cache(maxsize=None)
@@ -398,6 +405,18 @@ class TestCommandCount:
         assert len(files) == EXPECTED_COUNT, (
             f"Expected {EXPECTED_COUNT} commands, found {len(files)}"
         )
+
+
+@pytest.mark.parametrize("before, after, review_owed", [
+    ("a -- b\n", "a, b\n", False),
+    ("```\nx\n```\n", "````\nx\n````\n", False),
+    ("a *b* c\n", "a b c\n", False),
+    ("rm -rf x\n", "rm -r x\n", True),
+    ("keep it\n", "keep it not\n", True),
+    ("A\n", "B\n", True),
+])
+def test_only_a_word_change_owes_a_review_date(before, after, review_owed):
+    assert (body_words(FM.format(v="1", n="a") + before) != body_words(FM.format(v="1", n="a") + after)) is review_owed
 
 
 class TestReviewDateFreshness:

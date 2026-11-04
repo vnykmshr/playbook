@@ -6,7 +6,7 @@ difficulty: "advanced"
 model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-patterns-frontend', 'pb-a11y', 'pb-adr', 'pb-greenfield', 'pb-documentation']
-last_reviewed: "2026-11-04"
+last_reviewed: "2026-02-09"
 version: "1.0.1"
 version_notes: "v1.0.1: Nested samples use a 4-backtick outer fence, so they render as written."
 breaking_changes: []

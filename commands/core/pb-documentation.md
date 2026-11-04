@@ -6,7 +6,7 @@ difficulty: "beginner"
 model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-adr', 'pb-review-docs', 'pb-repo-readme', 'pb-repo-blog', 'pb-onboarding']
-last_reviewed: "2026-11-04"
+last_reviewed: "2026-06-10"
 version: "1.1.1"
 version_notes: "v1.1.1: Nested samples use a 4-backtick outer fence, so they render as written."
 breaking_changes: []
