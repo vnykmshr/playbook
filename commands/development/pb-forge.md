@@ -7,8 +7,8 @@ model_hint: "opus"
 execution_pattern: "interactive"
 related_commands: ['pb-what-next', 'pb-review', 'pb-huddle', 'pb-preflight', 'pb-ship']
 last_reviewed: "2026-11-04"
-version: "1.6.0"
-version_notes: "v1.6.0: Every stop where the user rules carries forge's leans, vetted before the stop: the lane lead rules on each lean and reads what it rests on, gaps go back into the work first, and the stop names what changed and any dissent left open. A check derived from the same rule as the work is not the vet. An open menu at a stop is a Red Flag. Body prose drops spaced double hyphens."
+version: "1.7.0"
+version_notes: "v1.7.0: Code-review takes explicit commit ranges; a counterexample to an approximating fix proposes the instrument change at round 1; a plan with falsifiers is Execute's scope; Land reads the previous ship log and release docs follow the final commit; a tracked cursor closes after the tag. The what-next comparison, When NOT to Use and Red Flags sections, which restated rules stated above them, are gone: 211 to 182 lines."
 breaking_changes: []
 ---
 # Lifecycle Step-Runner
@@ -66,7 +66,7 @@ Self-gate runs in three phases: find, then vet and fix, then judge. Every gate t
 | Sub-stage | What it catches | Trigger |
 |-----------|----------------|---------|
 | self-review (`/pb-review --report-only`) | Lint, tests, conventions | Always |
-| code-review (`/code-review` at high effort) | Bugs and correctness: an independent pass | `>3 files` or `>50 LOC` or new command or security/auth/regex in diff, or docs that record rulings, decisions or quotations (a misplaced quote is a correctness bug that prose gates read past). Runs when the cursor records that Land includes a release; otherwise, or when that is not yet recorded, forge offers it and runs it on the user's yes |
+| code-review (`/code-review` at high effort) | Bugs and correctness: an independent pass | `>3 files` or `>50 LOC` or new command or security/auth/regex in diff, or docs that record rulings, decisions or quotations (a misplaced quote is a correctness bug that prose gates read past). Runs when the cursor records that Land includes a release; otherwise, or when that is not yet recorded, forge offers it and runs it on the user's yes. It forks and cannot make worktrees, so pass explicit commit ranges: a branch name reviews only commits ahead of its base |
 | handcraft (`/pb-handcraft`) | Prose quality, voice, clarity | Content/docs changes (markdown commands, prose in any file) |
 | preflight (`/pb-preflight`) | Ship-readiness wiring: gaps, not issues | Always: its Step 0 scopes the gate to your surface, which is what makes Always honest on a non-service project |
 
@@ -74,7 +74,7 @@ Self-gate runs in three phases: find, then vet and fix, then judge. Every gate t
 
 1. **Vet.** The lead from the findings' lane rules on each one: TAKE with the fix, REJECT with why, or DEFER with where it goes. The lead convenes two or three more lenses, as in `/pb-huddle`, only for findings it cannot settle alone (disputed, cross-lane, or reversing a prior ruling) and briefs them with those findings only. Forge stops once with the rulings; the user confirms or overrides them.
 2. **Fix.** Start from a clean tree (`git status --porcelain` prints nothing) and record HEAD in the cursor as the pre-fix SHA. Land the TAKEs, `git add -N` any new file so the re-review diff sees it, and count the fix done only when the project's tests pass on their exit code (`/pb-review --no-auto-commit` holds the commit if the user wants signoff first).
-3. **Re-review.** An independent pass on the diff from the pre-fix SHA to the working tree, committed or not: the fixes are a new surface. Findings go back to the vet.
+3. **Re-review.** An independent pass on the diff from the pre-fix SHA to the working tree, committed or not: the fixes are a new surface. Findings go back to the vet. When they are counterexamples to a fix that approximates a spec (a regex standing in for a parser), propose the instrument change at round 1, not at the cap.
 
 Stop when a vet takes nothing. At most two re-review rounds: if a third is needed, forge stops and proposes a guard or test for that defect class, and the user decides, as `/pb-review`'s loop detection escalates.
 
@@ -131,7 +131,7 @@ A front-arc gate that returns a verdict of *not ready* moves the tally regardles
 
 Execute is where forge gets out of the way. It invokes `/pb-start` (or `/pb-todo-implement` when a plan exists), records the branch and plan path in the arc cursor, and releases control. From there the inner loop and `/pb-pause` / `/pb-resume` own session continuity exactly as they do today; forge does not wrap or micromanage your coding.
 
-Forge treats execute as complete when you say so. Hints it offers but never acts on alone: the plan's tasks are all checked, or the tree is clean and ahead of main. When execute is done, put anything the commits do not show (deviations, open findings) in the cursor, compact the context or start fresh, then re-invoke `/pb-forge` to pick the arc back up at the next stage.
+A plan whose steps carry falsifiers is Execute's scope: `/pb-start` takes it as given. Forge treats execute as complete when you say so. Hints it offers but never acts on alone: the plan's tasks are all checked, or the tree is clean and ahead of main. When execute is done, put anything the commits do not show (deviations, open findings) in the cursor, compact the context or start fresh, then re-invoke `/pb-forge` to pick the arc back up at the next stage.
 
 ---
 
@@ -153,48 +153,19 @@ This file is the `/pb-resume` hook for the arc. Where `/pb-resume` tells you the
 
 **Leg boundaries.** Plan→Execute and Execute→Self-gate end a leg: the next stage needs nothing from the conversation that the cursor does not hold. At Plan→Execute, forge writes the cursor, says one line, and stops: "Leg done, cursor current. Continuing now: compact the context, then re-invoke `/pb-forge <slug>`. Stopping: start fresh later and re-invoke it." `/pb-start` runs on the re-invoke. Forge is not running when Execute ends, so the Execute hand-off carries that boundary. At Peer, which can wait days on approval, forge says the stopping half. Never mid-stage.
 
-**Closing the cursor.** After the last Land stop the deliverable needs (the release if it ships one, the merge if not), set the stage to `SHIPPED`, then move the file to `todos/done/forge-<slug>.md`, running `mkdir -p todos/done` first; if that name is taken, suffix the date and time (`-YYYYMMDD-HHMM`); never overwrite an archive. Move, never delete: delete commands are commonly denied. A deferred release is still needed, so the cursor stays at Land. If the move fails, leave the `SHIPPED` cursor: `/pb-resume` lists it and offers the move. `SHIPPED` is the stage resume keys on, so do not mark a finished arc any other way.
+**Closing the cursor.** After the last Land stop the deliverable needs (the release if it ships one, the merge if not), set the stage to `SHIPPED`, then move the file to `todos/done/forge-<slug>.md`, running `mkdir -p todos/done` first; if that name is taken, suffix the date and time (`-YYYYMMDD-HHMM`); never overwrite an archive. Move, never delete: delete commands are commonly denied. A deferred release is still needed, so the cursor stays at Land. If the move fails, leave the `SHIPPED` cursor: `/pb-resume` lists it and offers the move. `SHIPPED` is the stage resume keys on, so do not mark a finished arc any other way. A repo that tracks its cursor gets the close commit after the tag.
 
 ---
 
 ## External Actions Stop Hard
 
-Opening a PR, merging, syncing to remote, and releasing are stops under the global External Action Gate in `~/.claude/CLAUDE.md`, which also holds the GitHub Artifact Register. Forge states each and waits for the approval that gate requires, so you never tag a release on a reflex.
-
----
-
-## `/pb-forge` vs `/pb-what-next`
-
-| | recommends | drives | holds state |
-|-|:-:|:-:|:-:|
-| `/pb-what-next` | yes | no | no: reads git each run |
-| `/pb-forge` | no | yes | yes: the arc cursor |
-
-what-next answers "what command next?" from git state, statelessly. forge runs the next stage and remembers the arc across stages and sessions. Reach for what-next when you want a suggestion; reach for forge when you want the arc driven.
-
----
-
-## When NOT to Use Forge
-
-- One-liner or single-stage work: run that stage directly (`/pb-review`, `/pb-pr`, ...).
-- You want a recommendation, not execution: use `/pb-what-next`.
-- You're deep in execute: stay in the inner loop; forge is waiting and resumes when you call it.
+Opening a PR, merging, syncing to remote, and releasing are stops under the global External Action Gate in `~/.claude/CLAUDE.md`, which also holds the GitHub Artifact Register. Forge states each and waits for the approval that gate requires, so you never tag a release on a reflex. Before Land, read the previous release's ship log; release docs (the CHANGELOG cut, the notes) follow the final code commit.
 
 ---
 
 ## Resumption
 
 Re-invoking `/pb-forge` on a deliverable with an existing cursor resumes at the recorded stage. Forge reads the cursor, confirms the stage with you, and continues. It does not re-run completed stages. A `SHIPPED` cursor has no next stage: forge offers to archive it.
-
----
-
-## Red Flags
-
-- **Forge auto-advanced a seam.** It picked a fork, accepted a review finding, or pushed without asking. That's a bug, not a convenience; the seam stops are the whole contract.
-- **A stop showed an open menu.** Options with no lean, or leans no lane vetted. You are the last reviewer at a stop, not the first.
-- **Triage always lands on tail.** Most of your work skips the front arc, so forge wraps the review chain + PR + release. The compound self-gate is the meat of the tail, not thin ceremony. Still, if you never need think/huddle/plan, the front arc may not earn its place for this project.
-- **The front-arc tally is climbing.** Plan is iterating on itself. The spec is growing and nothing has run. Take the slice escape; the thing that has never executed is where the defects are.
-- **An acceptance gate has returned the same verdict twice.** Check whether it can return the other one. A gate with no falsifier is not a finding generator, it is a loop.
 
 ---
 
