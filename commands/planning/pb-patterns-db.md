@@ -268,7 +268,7 @@ Store copied data in a denormalized table. Application keeps it in sync.
 
 **2. Materialized Views (Database-Managed)**
 
-The database stores a query's result. In PostgreSQL a refresh recomputes the whole view; `REFRESH MATERIALIZED VIEW CONCURRENTLY` keeps reads unblocked but needs a unique index (plain columns, no WHERE clause) and a populated view: one created WITH NO DATA needs a plain refresh first. Engines with incremental maintenance apply only the changed rows and charge that to writes. Schedule PostgreSQL refreshes; don't run one per write.
+The database stores a query's result. In PostgreSQL a refresh recomputes the whole view; `REFRESH MATERIALIZED VIEW CONCURRENTLY` keeps reads unblocked but needs a unique index (plain columns, no WHERE clause) and a populated view: one created or refreshed WITH NO DATA needs a plain refresh first. Engines with incremental maintenance apply only the changed rows and charge that to writes. Schedule PostgreSQL refreshes; don't run one per write.
 
 **When to use:**
 
