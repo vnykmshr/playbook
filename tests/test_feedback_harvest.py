@@ -129,7 +129,7 @@ def test_every_line_is_a_heading_a_near_miss_or_silent(line: str, outcome: str):
 def test_near_misses_skip_fences_and_never_change_the_exit(tmp_path: Path):
     assert fh.near_misses("```\nPlaybook feedback\n```\nPlaybook feedback\n---\n") == [4]
     repo_note(tmp_path, "o/r", "## 2026-10-01\n**Playbook feedback**\n- lost\n")
-    assert run(tmp_path) == 0, "a near miss proves the root; it is listed, not keyed"
+    assert run(tmp_path) == 2, "no repo heading at all: a regression or a wrong root, never a close"
     assert "pause-notes.md:2`" in digest(tmp_path).split("## Near-miss headings")[1]
     repo_note(tmp_path, "o/r", "## 2026-10-01\nPlaybook feedback:\n- one\n\n**Playbook feedback**\n- lost\n")
     write(tmp_path / "ledger.tsv", f"key\tdisposition\tversion\tdate\n{fh.item_key('one')}\ttaken\tv1\t2026-11-04\n")
@@ -197,6 +197,57 @@ def test_a_crlf_note_is_harvested_with_its_date(tmp_path: Path):
     assert f"`{fh.item_key('one')}` 1 source(s), newest 2026-10-01" in md and "two" in md
 
 
+def test_memory_cannot_mask_a_harvest_with_no_repo_heading(tmp_path: Path):
+    write(tmp_path / "mem" / "p" / "memory" / "feedback_x.md", "---\ndescription: Kept\n---\n")
+    write(tmp_path / "ledger.tsv", f"key\tdisposition\tversion\tdate\n{fh.item_key('Kept')}\ttaken\tv1\t2026-11-04\n")
+    (tmp_path / "repos").mkdir()
+    assert run(tmp_path) == 2
+    assert digest(tmp_path), "the digest is still written"
+
+
+def unreadable(monkeypatch: pytest.MonkeyPatch, suffix: str) -> None:
+    """Make reads of paths ending in suffix raise, as chmod 000 would for a non-root user."""
+    real_read, real_scandir = Path.read_text, os.scandir
+
+    def read(self, *a, **k):
+        if str(self).endswith(suffix):
+            raise PermissionError(13, "denied", str(self))
+        return real_read(self, *a, **k)
+
+    def scandir(path=".", *a, **k):
+        if str(path).endswith(suffix):
+            raise PermissionError(13, "denied", str(path))
+        return real_scandir(path, *a, **k)
+
+    monkeypatch.setattr(Path, "read_text", read)
+    monkeypatch.setattr(os, "scandir", scandir)
+
+
+@pytest.mark.parametrize("suffix, where", [
+    ("locked.md", "todos/locked.md"), ("archive", "todos/archive"), ("memory", "p/memory"),
+])
+def test_an_unreadable_path_exits_2_and_is_listed(tmp_path: Path, monkeypatch: pytest.MonkeyPatch, suffix: str, where: str):
+    repo_note(tmp_path, "o/r", "## 2026-10-01\nPlaybook feedback:\n- one\n")
+    repo_note(tmp_path, "o/r", "## 2026-10-01\nPlaybook feedback:\n- hidden\n", "locked.md")
+    repo_note(tmp_path, "o/r", "## 2026-10-01\nPlaybook feedback:\n- hidden\n", "archive/a.md")
+    write(tmp_path / "mem" / "p" / "memory" / "feedback_x.md", "---\ndescription: Mem\n---\n")
+    unreadable(monkeypatch, suffix)
+    assert run(tmp_path) == 2
+    assert where in digest(tmp_path).split("## Paths unread")[1]
+
+
+def test_a_symlinked_note_is_not_followed(tmp_path: Path):
+    outside = write(tmp_path / "elsewhere" / "notes.md", "## 2026-10-01\nPlaybook feedback:\n- linked in\n")
+    repo_note(tmp_path, "o/r", "## 2026-10-01\nPlaybook feedback:\n- one\n")
+    (tmp_path / "repos" / "o" / "r" / "todos" / "link.md").symlink_to(outside)
+    (tmp_path / "mem" / "p" / "memory").mkdir(parents=True)
+    (tmp_path / "mem" / "p" / "memory" / "feedback_l.md").symlink_to(
+        write(tmp_path / "elsewhere" / "m.md", "---\ndescription: Linked mem\n---\n"))
+    assert run(tmp_path) == 1
+    md = digest(tmp_path)
+    assert "linked in" not in md and "Linked mem" not in md
+
+
 def test_exit_1_then_0_once_every_key_is_dispositioned(tmp_path: Path):
     repo_note(tmp_path, "o/r", "## 2026-10-01\nPlaybook feedback:\n- one\n- two\n")
     assert run(tmp_path) == 1, "a missing ledger reads as empty"
@@ -250,6 +301,14 @@ def test_a_note_in_a_repo_nested_under_todos_is_private(tmp_path: Path):
     assert "git internals" not in md
 
 
+@pytest.mark.parametrize("project", ["-u-o-r-todos", "-u-o-r-todos-desk"])
+def test_memory_for_a_path_under_todos_is_private(tmp_path: Path, project: str):
+    repo_note(tmp_path, "o/r", "## 2026-10-01\nPlaybook feedback:\n- one\n")
+    write(tmp_path / "mem" / project / "memory" / "feedback_x.md", "---\ndescription: Desk mem\n---\n")
+    assert run(tmp_path) == 1
+    assert "[private]: Desk mem" in digest(tmp_path)
+
+
 def test_skips_tracked_files_and_its_own_output(tmp_path: Path):
     repo = tmp_path / "repos" / "o" / "r"
     repo_note(tmp_path, "o/r", "## 2026-10-01\nPlaybook feedback:\n- from upstream\n", "tracked.md")
@@ -300,6 +359,9 @@ def test_never_opens_a_private_notes_path(tmp_path: Path, monkeypatch: pytest.Mo
 
 
 def test_memory_items_key_on_description_and_list_files_without_one(tmp_path: Path):
+    repo_note(tmp_path, "o/r", "## 2026-10-01\nPlaybook feedback:\n- one\n")
+    write(tmp_path / "mem" / ".DS_Store", "not a project\n")
+    write(tmp_path / "mem" / "q" / "memory", "a file, not a dir\n")
     write(tmp_path / "mem" / "p" / "memory" / "feedback_x.md", "---\nname: x\ndescription: Say the no first\n---\nbody\n")
     write(tmp_path / "mem" / "p" / "memory" / "feedback_y.md", "no front matter\n")
     assert run(tmp_path) == 1
@@ -364,8 +426,12 @@ def test_a_dup_of_member_seen_again_reads_its_representatives_ruling(tmp_path: P
 
 
 def test_an_mtime_dated_item_never_recurs(tmp_path: Path):
+    repo_note(tmp_path, "o/r", "## 2026-10-01\nPlaybook feedback:\n- one\n")
     write(tmp_path / "mem" / "p" / "memory" / "feedback_x.md", "---\ndescription: Edited later\n---\n")
-    write(tmp_path / "ledger.tsv", f"key\tdisposition\tversion\tdate\n{fh.item_key('Edited later')}\ttaken\tv1\t2026-01-01\n")
+    write(tmp_path / "ledger.tsv", (
+        f"key\tdisposition\tversion\tdate\n{fh.item_key('Edited later')}\ttaken\tv1\t2026-01-01\n"
+        f"{fh.item_key('one')}\ttaken\tv1\t2026-11-04\n"
+    ))
     assert run(tmp_path) == 0
     assert "Edited later" not in digest(tmp_path).split("## Taken, then seen again")[1].split("##")[0]
 

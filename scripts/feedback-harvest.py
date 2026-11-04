@@ -7,7 +7,8 @@ keys each item on its normalised text, and writes a digest of the keys the
 ledger has not dispositioned. Only intake (`/pb-evolve` Step 0) writes the ledger.
 
 Exit: 0 every key dispositioned, 1 undisposed keys or a taken key seen again, 2 instrument fault
-(no feedback found at all, a malformed ledger, a repo git cannot list, or any error).
+(no repo heading found, a malformed ledger, a repo git cannot list, a path that cannot be read,
+or any error). An incomplete harvest still writes its digest, so the paths to fix are in it.
 
 Usage:
     python3 scripts/feedback-harvest.py
@@ -22,7 +23,7 @@ import re
 import subprocess
 import sys
 from collections import defaultdict
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from datetime import date
 from pathlib import Path
 
@@ -78,6 +79,7 @@ class Harvest:
     near: list[str]      # near-miss headings, path:line
     unlisted: list[str]  # repos git could not list
     files: int           # files carrying a heading or a near miss
+    unread: list[str] = field(default_factory=list)  # files and dirs that raised on read
 
 
 def normalise(text: str) -> str:
@@ -203,14 +205,15 @@ def tracked_todos(repo: Path) -> set[str] | None:
     return set(r.stdout.split("\0")) - {""} if r.returncode == 0 else None
 
 
-def todo_files(todos: Path, tracked: set[str]):
+def todo_files(todos: Path, tracked: set[str], unread: list[str]):
     """(path, inside a nested repo) per markdown file under todos/.
 
     Scratchpad and .git dirs are pruned before they are listed. A dir holding .git starts a
     nested repo; the parent tracks none of its files, so none are filtered out as tracked.
+    Symlinked files are skipped: the scratchpad rule can only see a link's own name.
     """
     inside: dict[Path, bool] = {}
-    for dirpath, dirnames, filenames in os.walk(todos):
+    for dirpath, dirnames, filenames in os.walk(todos, onerror=lambda e: unread.append(str(e.filename))):
         here = Path(dirpath)
         rel = here.relative_to(todos)
         inside[here] = inside.get(here.parent, False) or ".git" in dirnames or ".git" in filenames
@@ -222,7 +225,7 @@ def todo_files(todos: Path, tracked: set[str]):
             and not (rel == Path("inbox") and d.startswith("harvest-"))
         )
         for f in sorted(filenames):
-            if f.endswith(".md") and not is_scratchpad(f):
+            if f.endswith(".md") and not is_scratchpad(f) and not (here / f).is_symlink():
                 if str(Path("todos") / rel / f) not in tracked:
                     yield here / f, inside[here]
 
@@ -238,10 +241,11 @@ def harvest_repos(root: Path) -> Harvest:
         if tracked is None:
             h.unlisted.append(str(repo))
             continue
-        for path, nested in todo_files(todos, tracked):
+        for path, nested in todo_files(todos, tracked, h.unread):
             try:
                 text = path.read_text(errors="replace")
             except OSError:
+                h.unread.append(str(path))
                 continue
             found, none = extract(text)
             near = near_misses(text)
@@ -257,27 +261,44 @@ def harvest_repos(root: Path) -> Harvest:
     return h
 
 
-def harvest_memory(root: Path) -> tuple[list[Item], list[str]]:
+def memory_files(root: Path, unread: list[str]):
+    """feedback_*.md per project memory dir; scratchpad names and symlinks skipped, unreadable dirs recorded."""
+    projects = sorted(p for p in root.iterdir() if not is_scratchpad(p.name) and p.is_dir()) if root.is_dir() else []
+    for p in projects:
+        try:
+            entries = sorted(os.scandir(p / "memory"), key=lambda e: e.name)
+        except (FileNotFoundError, NotADirectoryError):
+            continue
+        except OSError:
+            unread.append(str(p / "memory"))
+            continue
+        for e in entries:
+            if e.name.startswith("feedback_") and e.name.endswith(".md") and not is_scratchpad(e.name) \
+                    and not e.is_symlink():
+                yield Path(e.path)
+
+
+def harvest_memory(root: Path, unread: list[str]) -> tuple[list[Item], list[str]]:
     """(one item per feedback_*.md keyed on its description, files with no description).
 
-    The description, not the body: bodies get edited, descriptions rarely.
+    The description, not the body: bodies get edited, descriptions rarely. A project dir for a
+    path under a todos/ (name has -todos- or ends -todos) is the owner's private companion.
     """
     items, skipped = [], []
-    projects = sorted(p for p in root.iterdir() if not is_scratchpad(p.name)) if root.is_dir() else []
-    for path in (f for p in projects for f in sorted((p / "memory").glob("feedback_*.md"))):
-        if is_scratchpad(path.name):
-            continue
+    for path in memory_files(root, unread):
         try:
             text = path.read_text(errors="replace")
         except OSError:
+            unread.append(str(path))
             continue
         m = re.search(r"^description:[ \t]*(.+)$", text, re.MULTILINE)
         if not m:
             skipped.append(str(path))
             continue
         desc = m.group(1).strip().strip("\"'")
-        source = f"memory:{path.parent.parent.name}"
-        items.append(Item(item_key(desc), desc, source, f"{path}:1", mtime_date(path), True))
+        d = path.parent.parent.name
+        nested = "-todos-" in d.lower() or d.lower().endswith("-todos")
+        items.append(Item(item_key(desc), desc, f"memory:{d}", f"{path}:1", mtime_date(path), True, nested))
     return items, skipped
 
 
@@ -434,7 +455,7 @@ def render(
         "",
         f"{headings} headings in {h.files} files; {len(h.items)} items, {len(by_key)} keys, "
         f"{len(undisposed)} undisposed, {len(recurred)} seen again, {len({o.source for o in h.items})} sources; "
-        f"{len(h.near)} near misses, {len(h.unlisted)} repos unread. {orgs_note}.",
+        f"{len(h.near)} near misses, {len(h.unlisted)} repos unread, {len(h.unread)} paths unread. {orgs_note}.",
         "",
         "## Undisposed: repo notes",
         "",
@@ -464,6 +485,10 @@ def render(
         "",
         *[f"- `{u}`" for u in h.unlisted],
         "",
+        "## Paths unread: raised on read",
+        "",
+        *[f"- `{u}`" for u in h.unread],
+        "",
     ]
     return "\n".join(md), len(undisposed), len(recurred)
 
@@ -483,11 +508,9 @@ def main(argv: list[str] | None = None) -> int:
     try:
         ledger = read_ledger(ledger_path)
         h = harvest_repos(args.repos)
-        memory, skipped = harvest_memory(args.memory)
+        memory, skipped = harvest_memory(args.memory, h.unread)
         h.items += memory
         orgs, orgs_note = private_orgs(args.playbook)
-        if not h.items and not h.empty and not h.near:
-            raise InstrumentFault(f"no feedback found under {args.repos} or {args.memory}: is the root right?")
         md, undisposed, again = render(h, skipped, ledger, args.playbook, orgs, orgs_note)
         out.mkdir(parents=True, exist_ok=True)
         digest = out / f"digest-{date.today().isoformat()}.md"
@@ -500,10 +523,15 @@ def main(argv: list[str] | None = None) -> int:
         return 2
     print(f"{undisposed} undisposed, {again} seen again, of {len({i.key for i in h.items})} keys; "
           f"{len(h.near)} near misses; digest {digest}")
-    for repo in h.unlisted:  # an unread repo makes the digest incomplete: never a close
-        print(f"feedback-harvest: {repo}: git cannot list its files; run `git -C {repo} status`, fix, rerun",
-              file=sys.stderr)
-    return 2 if h.unlisted else 1 if undisposed or again else 0
+    # An incomplete harvest is never a close, whatever the ledger says: name each cause, exit 2.
+    causes = [f"{r}: git cannot list its files; run `git -C {r} status`, fix, rerun" for r in h.unlisted]
+    causes += [f"{u}: could not be read" for u in h.unread]
+    if not any(not o.memory for o in h.items) and not h.empty:
+        causes.append(f"no repo heading matched under {args.repos}; {len(h.near)} near misses listed: "
+                      "is the root right, or did a heading shape change?")
+    for c in causes:
+        print(f"feedback-harvest: {c}", file=sys.stderr)
+    return 2 if causes else 1 if undisposed or again else 0
 
 
 if __name__ == "__main__":
