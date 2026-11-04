@@ -49,11 +49,17 @@ HOME_PATH_FIXTURES = {("tests/test_feedback_harvest.py", "/".join(["", "home", "
 HOME_PATH = r"/(Users|home)/[A-Za-z0-9._-]+"
 
 
-def test_home_path_pattern_needs_no_trailing_slash():
-    import re
+def test_home_path_pattern_needs_no_trailing_slash(tmp_path: Path):
+    """Through git grep -E, the engine the guard runs: Python re accepts syntax ERE does not."""
     user = "/".join(["", "Users", "alice"])
-    for line in (f"cd {user}", f'"{user}"', f"{user} x", f"{user}/src"):
-        assert re.search(HOME_PATH, line), line
+    sample = tmp_path / "sample.txt"
+    _ = sample.write_text("".join(f"{line}\n" for line in (f"cd {user}", f'"{user}"', f"{user} x", f"{user}/src")))
+    r = subprocess.run(
+        ["git", "grep", "--no-index", "-nE", HOME_PATH, "--", sample.name],
+        capture_output=True, text=True, cwd=tmp_path,
+    )
+    assert r.returncode == 0, r.stderr
+    assert len(r.stdout.splitlines()) == 4, r.stdout
 
 
 def test_no_users_home_path_in_tracked_files():
