@@ -6,9 +6,9 @@ difficulty: "advanced"
 model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-preamble', 'pb-deployment', 'pb-ship', 'pb-pr', 'pb-cycle']
-last_reviewed: "2026-02-18"
-version: "1.2.0"
-version_notes: "v2.13.1: Added pb-preamble backward reference (Mindset alignment)"
+last_reviewed: "2026-11-04"
+version: "1.3.0"
+version_notes: "v1.3.0: Tag only after CI is green on this exact commit (full SHA); the release step publishes an existing draft rather than duplicating it, and may prune old releases without --cleanup-tag; notes follow the GitHub Artifact Register; the hotfix CI check reads this commit's run, not the latest."
 breaking_changes: []
 ---
 # Release to Production
@@ -207,6 +207,9 @@ git pull origin main
 # Verify clean state
 git status  # Should be clean
 
+# Tag only after CI is green on this exact commit (full SHA: a short one lists nothing)
+gh run list --commit "$(git rev-parse HEAD)" --json conclusion -q '.[].conclusion'  # every line: success
+
 # Create annotated tag
 git tag -a vX.Y.Z -m "vX.Y.Z - Brief description"
 
@@ -217,23 +220,16 @@ git push origin vX.Y.Z
 ### Step 2.4: Create GitHub Release
 
 ```bash
-# Create release with notes from CHANGELOG
-gh release create vX.Y.Z \
-  --title "vX.Y.Z - Release Title" \
-  --notes "$(cat <<'EOF'
-## What's New
+# A draft left by a failed run, or made by an org workflow, is published, never duplicated
+gh release list --json tagName,isDraft -q '.[] | select(.isDraft) | .tagName'
+gh release edit vX.Y.Z --draft=false                                            # the draft exists
+gh release create vX.Y.Z --title "vX.Y.Z - Release Title" --notes-file notes.md  # it does not
 
-[Copy from CHANGELOG or write summary]
-
-## Highlights
-- [Key feature/fix 1]
-- [Key feature/fix 2]
-
-## Full Changelog
-See [CHANGELOG.md](./CHANGELOG.md) for complete details.
-EOF
-)"
+# Optional: keep the last N releases. The tag stays, so links and rollback by tag still work
+gh release delete <oldest-tag> --yes  # never --cleanup-tag
 ```
+
+The notes say what upgraders must do, any security line, and link the CHANGELOG entry and the compare view; see `~/.claude/CLAUDE.md` § GitHub Artifact Register.
 
 ---
 
@@ -325,8 +321,8 @@ For urgent fixes that don't warrant full ceremony:
 # 1. Quick quality check
 make lint && make test
 
-# 2. Verify CI passes
-gh run list --limit 1
+# 2. Verify CI passed on this commit (--limit 1 reads the latest run, not this one)
+gh run list --commit "$(git rev-parse HEAD)"
 
 # 3. Fast version bump
 git tag -a vX.Y.Z -m "Hotfix: [description]"
