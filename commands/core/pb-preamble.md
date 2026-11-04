@@ -6,9 +6,9 @@ difficulty: "beginner"
 model_hint: "opus"
 execution_pattern: "reference"
 related_commands: ['pb-calm-design', 'pb-design-rules', 'pb-preamble-async', 'pb-preamble-power', 'pb-think']
-last_reviewed: "2026-11-04"
+last_reviewed: "2026-11-05"
 version: "1.1.1"
-version_notes: "v1.1.1: Points to the 18 design rules, not 17."
+version_notes: "v1.1.1: Points to the 18 design rules, not 17, with Attention beside the four clusters; the principles heading says five; the companion parts are named as shipped."
 breaking_changes: []
 ---
 # Collaboration Preamble: Thinking Like Peers
@@ -68,7 +68,7 @@ This doesn't mean ignoring experience or authority. It means authority is earned
 
 **Design rules answer: WHAT do we build?**
 - See `/pb-design-rules` for the 18 technical principles
-- Organized into 4 clusters: Clarity, Simplicity, Resilience, Extensibility
+- 17 of them in 4 clusters (Clarity, Simplicity, Resilience, Extensibility), plus Attention
 - Guide every architectural and technical decision
 - Ensure systems that are clear, simple, reliable, and adaptable
 
@@ -86,7 +86,7 @@ Every command in the playbook assumes both: peer thinking (preamble) and sound d
 
 ---
 
-## II. Four Principles
+## II. Five Principles
 
 ### Principle A: Correctness Over Agreement
 
@@ -531,27 +531,7 @@ This preamble isn't nice-to-have. It's foundational. Everything else in the play
 
 ## IX. What's Next: Philosophy Expansion
 
-This preamble establishes the foundational mindset. Three more parts are being developed to address nuance and context:
-
-**Part 2: Async & Distributed Teams** (in progress)
-- How preamble thinking works in async communication (Slack, GitHub comments, async meetings)
-- Timing, tone, and intent in written feedback
-- Building trust across distributed teams
-- Psychological safety in remote-first cultures
-
-**Part 3: Power Dynamics & Psychology** (in progress)
-- How preamble applies across hierarchies (reporting relationships, performance reviews)
-- Dissent escalation: when to accept vs. escalate
-- Building toward preamble thinking on teams with low psychological safety
-- Authority earned through reasoning, not just position
-
-**Part 4: Decision Making & Dissent** (planned)
-- Decision reversal: when you've disagreed, now what?
-- Cost-benefit of continuous challenge
-- Loyalty after disagreement
-- Building toward organizational learning culture
-
-These expansions deepen the philosophy with context-specific guidance while keeping core preamble intact.
+Three companion parts extend it: `/pb-preamble-async` (async and distributed teams), `/pb-preamble-power` (power dynamics and psychological safety), `/pb-preamble-decisions` (decision making and dissent).
 
 ---
 
