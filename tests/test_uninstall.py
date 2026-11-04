@@ -167,3 +167,20 @@ def test_uninstall_removes_every_link_install_made_but_the_hook_copy(tmp_path: P
     assert left == [], f"links install made and uninstall left: {left}"
     assert (claude / "hooks" / "external-action-gate.sh").is_file(), "the hook copy stays (settings.json calls it)"
     assert "Left in place: ~/.claude/hooks/external-action-gate.sh" in result.stdout
+
+
+def test_uninstall_keeps_skill_and_script_links_it_does_not_own(tmp_path: Path):
+    assert run_install(tmp_path).returncode == 0
+    claude = tmp_path / ".claude"
+    elsewhere = tmp_path / "elsewhere"
+    (elsewhere / "my-skill").mkdir(parents=True)
+    _ = (elsewhere / "bar.sh").write_text("#!/bin/sh\n")
+    skill = claude / "skills" / "my-skill"
+    skill.symlink_to(elsewhere / "my-skill")
+    bar = claude / "context-bar.sh"
+    bar.unlink()
+    bar.symlink_to(elsewhere / "bar.sh")
+
+    assert run_uninstall(tmp_path).returncode == 0
+
+    assert skill.is_symlink() and bar.is_symlink(), "links into another dir are the user's"
