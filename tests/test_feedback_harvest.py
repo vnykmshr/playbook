@@ -1,0 +1,240 @@
+"""scripts/feedback-harvest.py: extraction, keys, sources, exit codes, and what it must never open."""
+import builtins
+import os
+import subprocess
+from pathlib import Path
+
+import pytest
+
+import feedback_harvest as fh  # registered by conftest
+
+
+def write(path: Path, text: str) -> Path:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    _ = path.write_text(text)
+    return path
+
+
+def run(tmp_path: Path, *extra: str) -> int:
+    args = [
+        "--repos", str(tmp_path / "repos"), "--memory", str(tmp_path / "mem"),
+        "--playbook", str(tmp_path / "pb"), "--ledger", str(tmp_path / "ledger.tsv"),
+        "--out", str(tmp_path / "out"), *extra,
+    ]
+    return fh.main(args)
+
+
+def digest(tmp_path: Path) -> str:
+    return next((tmp_path / "out").glob("digest-*.md")).read_text()
+
+
+def texts(md: str) -> list[str]:
+    return [t for _, t in fh.extract(md)[0]]
+
+
+def test_golden_key():
+    """A normaliser change orphans every ledger row: it must fail here first."""
+    assert fh.normalise("**Fix** `pb-pause` Step 6  (2026-10-14) [see](http://x)") == "fix pb-pause step 6 ( ) see"
+    assert fh.item_key("**Fix** `pb-pause` Step 6  (2026-10-14) [see](http://x)") == "44a94ecdce0e"
+
+
+@pytest.mark.parametrize("heading", [
+    "Patterns / playbook feedback:",
+    "**Patterns / playbook feedback:**",
+    "**Playbook feedback.**",
+    "**Playbook feedback:**",
+    "Playbook feedback:",
+    "### Patterns / playbook feedback",
+    "**Process / playbook feedback.**",
+])
+def test_every_heading_shape(heading: str):
+    assert texts(f"{heading}\n- one\n- two\n") == ["one", "two"]
+
+
+def test_inline_item_after_the_heading():
+    assert texts("**Playbook feedback:** `pb-handcraft` Lens 2 held.\n") == ["`pb-handcraft` Lens 2 held."]
+
+
+def test_bullet_block_shape():
+    md = (
+        "Playbook feedback:\n\n"
+        "- first\n  continued\n"
+        "  - nested detail\n"
+        "\n"
+        "- second\n"
+        "\n"
+        "A paragraph ends the block.\n"
+        "- not an item\n"
+    )
+    assert texts(md) == ["first continued - nested detail", "second"]
+
+
+@pytest.mark.parametrize("stop", ["## Next", "**Key observations:**"])
+def test_block_stops_at_a_heading_or_bold_label(stop: str):
+    assert texts(f"Playbook feedback:\n- one\n{stop}\n- other\n") == ["one"]
+
+
+def test_fenced_heading_and_template_placeholder_are_skipped():
+    md = (
+        "```markdown\nPatterns / playbook feedback:\n- fenced\n```\n"
+        "Patterns / playbook feedback:\n- [pattern or playbook command that needs attention]\n"
+    )
+    items, empty = fh.extract(md)
+    assert items == [] and empty == [5]
+
+
+def test_a_mention_in_prose_is_not_a_heading():
+    assert fh.extract("The pause asks for playbook feedback: see pb-pause.\n") == ([], [])
+
+
+def test_heading_date_skips_future_mentions():
+    lines = ["## Pause: 2026-10-01", "### Shipped (v2 stays on 2099-01-01)", "Playbook feedback:"]
+    assert fh.heading_date(lines, 2, "2026-11-04") == "2026-10-01"
+
+
+def repo_note(tmp_path: Path, repo: str, text: str, name: str = "pause-notes.md") -> Path:
+    return write(tmp_path / "repos" / repo / "todos" / name, text)
+
+
+def test_exit_2_when_nothing_is_found(tmp_path: Path):
+    (tmp_path / "repos").mkdir()
+    assert run(tmp_path) == 2
+
+
+@pytest.mark.parametrize("ledger", [
+    "key\tdisposition\n",
+    "key\tdisposition\tversion\tdate\nabc\ttaken\tv1\t2026-11-04\n",
+    "key\tdisposition\tversion\tdate\n0123456789ab\tseen\tv1\t2026-11-04\n",
+    "key\tdisposition\tversion\tdate\n0123456789ab\ttaken\tv1\n",
+    "key\tdisposition\tversion\tdate\n0123456789ab\tdup-of:xyz\tv1\t2026-11-04\n",
+    "key\tdisposition\tversion\tdate\n0123456789ab\ttaken\tv1\tsoon\n",
+])
+def test_exit_2_on_a_malformed_ledger(tmp_path: Path, ledger: str):
+    repo_note(tmp_path, "o/r", "## 2026-10-01\nPlaybook feedback:\n- one\n")
+    write(tmp_path / "ledger.tsv", ledger)
+    assert run(tmp_path) == 2
+
+
+def test_exit_1_then_0_once_every_key_is_dispositioned(tmp_path: Path):
+    repo_note(tmp_path, "o/r", "## 2026-10-01\nPlaybook feedback:\n- one\n- two\n")
+    assert run(tmp_path) == 1, "a missing ledger reads as empty"
+    one, two = fh.item_key("one"), fh.item_key("two")
+    write(tmp_path / "ledger.tsv", f"key\tdisposition\tversion\tdate\n{one}\ttaken\tv2.33.0\t2026-11-04\n")
+    assert run(tmp_path) == 1
+    write(tmp_path / "ledger.tsv", (
+        f"key\tdisposition\tversion\tdate\n{one}\ttaken\tv2.33.0\t2026-11-04\n"
+        f"{two}\tdup-of:{one}\tv2.33.0\t2026-11-04\n"
+    ))
+    assert run(tmp_path) == 0
+    assert not (tmp_path / "pb").exists() or not any((tmp_path / "pb").rglob("*.tsv")), "never writes a ledger"
+
+
+def test_sources_are_distinct_repos_and_private_orgs_are_flagged(tmp_path: Path):
+    write(tmp_path / "pb" / "todos" / "evolve" / "private-orgs", "# one per line\nacme\n")
+    repo_note(tmp_path, "o/a", "## 2026-10-01\nPlaybook feedback:\n- Same **thing**\n")
+    repo_note(tmp_path, "o/a", "## 2026-10-02\nPlaybook feedback:\n- same thing\n", "done/lessons.md")
+    repo_note(tmp_path, "acme/b", "## 2026-10-03\nPlaybook feedback:\n- same `thing`\n")
+    write(tmp_path / "mem" / "-u-github-acme-c" / "memory" / "feedback_z.md", "---\ndescription: Mem note\n---\n")
+    assert run(tmp_path) == 1
+    md = digest(tmp_path)
+    assert f"`{fh.item_key('same thing')}` 2 source(s), newest 2026-10-03 [private]" in md
+    assert next(x for x in md.splitlines() if "Mem note" in x).count("[private]") == 1
+
+
+def test_skips_tracked_files_and_its_own_output(tmp_path: Path):
+    repo = tmp_path / "repos" / "o" / "r"
+    repo_note(tmp_path, "o/r", "## 2026-10-01\nPlaybook feedback:\n- from upstream\n", "tracked.md")
+    repo_note(tmp_path, "o/r", "## 2026-10-01\nPlaybook feedback:\n- digest echo\n", "evolve/digest-x.md")
+    repo_note(tmp_path, "o/r", "## 2026-10-01\nPlaybook feedback:\n- raw sweep\n", "inbox/harvest-1/a.md")
+    repo_note(tmp_path, "o/r", "## 2026-10-01\nPlaybook feedback:\n- kept\n")
+    _ = subprocess.run(["git", "init", "-q", str(repo)], check=True)
+    _ = subprocess.run(["git", "-C", str(repo), "add", "todos/tracked.md"], check=True)
+    assert run(tmp_path) == 1
+    md = digest(tmp_path)
+    assert "kept" in md
+    for gone in ("from upstream", "digest echo", "raw sweep"):
+        assert gone not in md
+
+
+def test_never_opens_a_private_notes_path(tmp_path: Path, monkeypatch: pytest.MonkeyPatch):
+    for rel in ("scratchpad/a.md", ".scratchpad.md", "Old-Scratchpad/b.md", "notes/scratchpad-2/c.md"):
+        repo_note(tmp_path, "o/r", "## 2026-10-01\nPlaybook feedback:\n- hidden-item\n", rel)
+    repo_note(tmp_path, "o/r", "## 2026-10-01\nPlaybook feedback:\n- visible-item\n")
+    touched: list[str] = []
+    real_open, real_scandir, real_read = builtins.open, os.scandir, Path.read_text
+
+    def spy(path) -> None:
+        if "scratchpad" in str(path).lower():
+            touched.append(str(path))
+
+    def spy_open(file, *a, **k):
+        spy(file)
+        return real_open(file, *a, **k)
+
+    def spy_scandir(path=".", *a, **k):
+        spy(path)
+        return real_scandir(path, *a, **k)
+
+    def spy_read(self, *a, **k):
+        spy(self)
+        return real_read(self, *a, **k)
+
+    monkeypatch.setattr(builtins, "open", spy_open)
+    monkeypatch.setattr(os, "scandir", spy_scandir)
+    monkeypatch.setattr(Path, "read_text", spy_read)
+    assert run(tmp_path) == 1
+    assert touched == []
+    md = digest(tmp_path)
+    assert "visible-item" in md and "hidden-item" not in md
+
+
+def test_memory_items_key_on_description_and_list_files_without_one(tmp_path: Path):
+    write(tmp_path / "mem" / "p" / "memory" / "feedback_x.md", "---\nname: x\ndescription: Say the no first\n---\nbody\n")
+    write(tmp_path / "mem" / "p" / "memory" / "feedback_y.md", "no front matter\n")
+    assert run(tmp_path) == 1
+    md = digest(tmp_path)
+    memory = md.split("## Undisposed: memory")[1].split("##")[0]
+    assert f"`{fh.item_key('Say the no first')}` 1 source(s), newest ~" in memory
+    assert "feedback_y.md" in md.split("## Memory files with no description")[1]
+
+
+def git(repo: Path, *args: str, when: str = "2026-10-01T12:00:00") -> None:
+    env = {**os.environ, "GIT_AUTHOR_DATE": when, "GIT_COMMITTER_DATE": when}
+    _ = subprocess.run(
+        ["git", "-C", str(repo), "-c", "user.name=t", "-c", "user.email=t@t", *args],
+        check=True, capture_output=True, env=env,
+    )
+
+
+def command(version: str, body: str) -> str:
+    return f'---\nname: "pb-x"\nversion: "{version}"\nversion_notes: "v{version}: {body}"\n---\n\n# pb-x\n\n{body}\n'
+
+
+def test_may_be_fixed_reads_the_newest_bump_that_changed_the_body(tmp_path: Path):
+    pb = tmp_path / "pb"
+    path = write(pb / "commands" / "core" / "pb-x.md", command("1.0.0", "first"))
+    _ = subprocess.run(["git", "init", "-q", str(pb)], check=True)
+    git(pb, "add", ".")
+    git(pb, "commit", "-qm", "a", when="2026-09-01T12:00:00")
+    _ = path.write_text(command("1.1.0", "fixed"))
+    git(pb, "commit", "-qam", "b", when="2026-10-15T12:00:00")
+    _ = path.write_text(command("1.1.0", "fixed more"))  # body edit, no bump
+    git(pb, "commit", "-qam", "c", when="2026-10-20T12:00:00")
+    _ = path.write_text(command("1.2.0", "fixed more"))  # bump, body unchanged
+    git(pb, "commit", "-qam", "d", when="2026-10-25T12:00:00")
+
+    repo_note(tmp_path, "o/old", "## 2026-10-01\nPlaybook feedback:\n- pb-x was wrong\n")
+    repo_note(tmp_path, "o/new", "## 2026-10-18\nPlaybook feedback:\n- pb-x still wrong\n")
+    assert run(tmp_path) == 1
+    md = digest(tmp_path)
+    old = next(line for line in md.splitlines() if "pb-x was wrong" in line)
+    new = next(line for line in md.splitlines() if "pb-x still wrong" in line)
+    assert "[may be fixed: pb-x v1.1.0 bumped 2026-10-15: v1.1.0: fixed]" in old
+    assert "may be fixed" not in new
+
+
+def test_a_taken_key_seen_again_later_is_reported(tmp_path: Path):
+    repo_note(tmp_path, "o/r", "## 2026-11-01\nPlaybook feedback:\n- recurring\n")
+    write(tmp_path / "ledger.tsv", f"key\tdisposition\tversion\tdate\n{fh.item_key('recurring')}\ttaken\tv1\t2026-10-01\n")
+    assert run(tmp_path) == 0
+    assert "recurring" in digest(tmp_path).split("## Taken, then seen again")[1].split("##")[0]

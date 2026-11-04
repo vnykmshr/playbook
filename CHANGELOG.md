@@ -11,6 +11,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - **Gate hook: case and line continuation no longer bypass it.** The command is lowercased and backslash-newline joined with a space before matching, so `GH pr merge`, `RM -rf`, `NPM publish`, `gh api -X post` and `rm \` + newline + `-rf` ask. If lowercasing fails, the hook asks.
 
+### Added
+
+- **Feedback harvester** (`scripts/feedback-harvest.py`). Collects bullets under a playbook-feedback heading in every `~/workspace/github/*/*/todos/` and one item per Claude memory `feedback_*.md`, keys each on its normalised text, counts distinct repos per key, and writes a digest of keys the ledger (`todos/evolve/harvest-ledger.tsv`) has not dispositioned. A key whose named command changed its body and version since the note carries that version's notes as a hint. Scratchpad paths are never listed or opened; git-tracked `todos/` files are skipped. Exit 0 all dispositioned, 1 new keys, 2 nothing found or a malformed ledger.
+
 ### Changed
 
 - **`scripts/install.sh` updates an unedited hook copy.** A `~/.claude/hooks/external-action-gate.sh` that matches a committed version of the hook is replaced; one that matches none is your edit and is still skipped. Without git or full history, it is skipped as before.
