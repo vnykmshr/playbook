@@ -18,6 +18,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- **`/pb-onboarding` v1.1.0.** When Someone Leaves points to `/pb-knowledge-transfer`'s For the Departing Engineer, which supersedes its two checklists; the title drops "& Knowledge Transfer". The new-hire ramp stays: a fold into `/pb-knowledge-transfer` was read and rejected (about 400 of 493 lines are a ramp that command does not carry).
 - **`/pb-review` v2.8.1.** After fixing feedback, the independent pass runs again on the fixes alone, from the commit before them, since a same-context recheck misses what the fix introduced. The footer's stale `v2.7.0` is gone.
 - **`/pb-context-review` v2.4.0.** Step 4 consolidates instead of trimming. Trimming shortens the longest paragraph and never asks whether an item still belongs; the growth is usually earned rules, so delete what is closed, move durable lessons to their own file and keep one index line each. The memory index line said "trim manually".
 - **`/pb-release` v1.3.0.** The tag step checks CI on this exact commit first (full SHA; a short one lists nothing). The release step publishes a draft left by a failed run or an org workflow instead of duplicating it, may keep the last N releases (`gh release delete`, never `--cleanup-tag`), and writes notes per the GitHub Artifact Register in place of a change-summary template. The hotfix CI check read the latest run (`--limit 1`), not this commit's.

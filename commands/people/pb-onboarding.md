@@ -1,17 +1,17 @@
 ---
 name: "pb-onboarding"
-title: "Developer Onboarding & Knowledge Transfer"
+title: "Developer Onboarding"
 category: "people"
 difficulty: "advanced"
 model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-team', 'pb-documentation', 'pb-cycle', 'pb-knowledge-transfer']
-last_reviewed: "2026-02-09"
-version: "1.0.0"
-version_notes: "v2.10.0 baseline"
+last_reviewed: "2026-11-04"
+version: "1.1.0"
+version_notes: "v1.1.0: When Someone Leaves points to /pb-knowledge-transfer's departing-engineer section, which supersedes it; the title drops Knowledge Transfer, which that command owns."
 breaking_changes: []
 ---
-# Developer Onboarding & Knowledge Transfer
+# Developer Onboarding
 
 Effective onboarding reduces time to productivity, builds confidence, and prevents knowledge loss.
 
@@ -451,27 +451,7 @@ Each person documents:
 
 ### When Someone Leaves
 
-**Exit interview:**
-```
-Manager: "What knowledge should others have that I don't have?"
-Manager: "What systems do only you understand?"
-Person: Document critical processes
-
-2-week transition:
-  - Document your work
-  - Pair with your replacement
-  - Write down gotchas and lessons learned
-  - Introduce to your contacts
-```
-
-**Knowledge handoff:**
-```
-Before last day:
-  - List of systems you owned
-  - How each system works (document or record)
-  - Key people to know for each system
-  - Critical processes you did
-```
+See `/pb-knowledge-transfer`, For the Departing Engineer: the handoff ordered by what is lost first, with a tier for an adversarial or disengaged departure.
 
 ---
 

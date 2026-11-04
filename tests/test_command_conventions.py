@@ -685,7 +685,7 @@ BARE_OPENER_BASELINE = {
     "pb-logging.md": 3,
     "pb-maya-product.md": 16,
     "pb-observability.md": 16,
-    "pb-onboarding.md": 21,
+    "pb-onboarding.md": 19,
     "pb-patterns-api.md": 1,
     "pb-patterns-async.md": 2,
     "pb-patterns-core.md": 3,
