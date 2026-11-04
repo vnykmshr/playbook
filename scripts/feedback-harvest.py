@@ -2,18 +2,24 @@
 """Harvest playbook feedback from every repo's todos/ and the Claude memory dirs.
 
 Read-only on sources. Finds bullets under a "playbook feedback" heading in
-<repos>/*/*/todos/**/*.md and one item per <memory>/*/memory/feedback_*.md,
+<root>/<org>/<repo>/todos/**/*.md and one item per <memory>/*/memory/feedback_*.md,
 keys each item on its normalised text, and writes a digest of the keys the
 ledger has not dispositioned. Only intake (`/pb-evolve` Step 0) writes the ledger.
+
+Conventions live here; this machine's specifics (roots, private orgs) live in the
+untracked todos/evolve/harvest.toml, and flags override it.
 
 Exit: 0 every key dispositioned, 1 undisposed keys or a taken key seen again, 2 instrument fault
 (no repo heading found, a malformed ledger, a repo git cannot list, a path that cannot be read,
 or any error). An incomplete harvest still writes its digest, so the paths to fix are in it.
 
 Usage:
+    python3 scripts/feedback-harvest.py --init     # writes the config once, with derived defaults
     python3 scripts/feedback-harvest.py
-    python3 scripts/feedback-harvest.py --repos ~/workspace/github --out /tmp/digest
+    python3 scripts/feedback-harvest.py --repos ~/src --out /tmp/digest
 """
+
+import json
 
 import argparse
 import functools
@@ -230,9 +236,9 @@ def todo_files(todos: Path, tracked: set[str], unread: list[str]):
                     yield here / f, inside[here]
 
 
-def harvest_repos(root: Path) -> Harvest:
+def harvest_repos(roots: tuple[Path, ...]) -> Harvest:
     h = Harvest([], [], [], [], 0)
-    for todos in sorted(root.glob("*/*/todos")):
+    for todos in (t for root in roots for t in sorted(root.glob("*/*/todos"))):
         repo = todos.parent
         if is_scratchpad(str(todos)) or not todos.is_dir():
             continue
@@ -302,22 +308,71 @@ def harvest_memory(root: Path, unread: list[str]) -> tuple[list[Item], list[str]
     return items, skipped
 
 
-def private_orgs(playbook: Path) -> tuple[frozenset[str], str]:
-    """(orgs, digest note) from <playbook>/todos/evolve/private-orgs, one per line: untracked,
-    so no name ships. A missing file is said in the digest, never silent."""
-    path = playbook / "todos" / "evolve" / "private-orgs"
-    if not path.exists():
-        return frozenset(), f"private-orgs missing ({path}): no source flagged by org"
-    lines = (x.strip().lower() for x in path.read_text().split("\n"))
-    orgs = frozenset(x for x in lines if x and not x.startswith("#"))
-    return orgs, f"private orgs: {len(orgs)} from {path}"
+@dataclass(frozen=True)
+class Config:
+    repos: tuple[Path, ...]
+    memory: Path
+    private: frozenset[str]  # lowercased org names
+    note: str                # the digest says where private orgs came from, or that nothing was read
 
 
-def is_private(source: str, orgs: frozenset[str]) -> bool:
-    """An org's repo, or a memory dir under it. Dir names encode / as -, so `acme` also
-    flags `acme-labs`: the ambiguity errs private."""
-    s = source.lower()
-    return any(s.startswith(f"{o}/") or f"-github-{o}-" in s or s.endswith(f"-github-{o}") for o in orgs)
+def _strings(cfg: dict, key: str, path: Path) -> list[str]:
+    v = cfg.get(key, [])
+    if not isinstance(v, list) or not all(isinstance(x, str) for x in v):
+        raise InstrumentFault(f"{path}: {key} must be a list of strings")
+    return v
+
+
+def load_config(path: Path, repos: list[Path] | None, memory: Path | None) -> Config:
+    """Flags win over the file; no root from either is a fault, never a guessed default."""
+    cfg: dict = {}
+    if path.exists():
+        import tomllib
+        try:
+            cfg = tomllib.loads(path.read_text())
+        except tomllib.TOMLDecodeError as e:
+            raise InstrumentFault(f"{path}: {e}") from e
+    if path.exists() and "private" not in cfg:
+        raise InstrumentFault(f"{path}: private is required (an empty list is fine): leaving it out would flag nothing")
+    roots = repos or [Path(r).expanduser() for r in _strings(cfg, "repos", path)]
+    if not roots:
+        raise InstrumentFault(f"no repos root: pass --repos, or run --init to write {path}")
+    mem = memory or Path(cfg.get("memory", "~/.claude/projects")).expanduser()
+    orgs = frozenset(o.strip().lower() for o in _strings(cfg, "private", path) if o.strip())
+    note = f"private orgs: {len(orgs)} from {path}" if path.exists() else f"config missing ({path}): no source flagged by org"
+    return Config(tuple(roots), mem, orgs, note)
+
+
+def init_config(path: Path, playbook: Path) -> str:
+    """Write the config once. The root is derived from the convention <root>/<org>/<playbook>."""
+    if path.exists():
+        raise InstrumentFault(f"{path} exists; edit it (--init never overwrites)")
+    root = playbook.resolve().parent.parent
+    home = Path.home().resolve()
+    shown = f"~/{root.relative_to(home)}" if root.is_relative_to(home) else str(root)
+    text = (
+        f"repos = [{json.dumps(shown)}]   # roots holding <org>/<repo>/todos/\n"
+        'memory = "~/.claude/projects"   # Claude Code\'s default\n'
+        "private = []                    # orgs whose notes are flagged private\n"
+    )
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(text)
+    return text
+
+
+def project_dir(path: Path) -> str:
+    """Claude Code's memory dir name for a working directory: every non-alphanumeric becomes -."""
+    return re.sub(r"[^A-Za-z0-9]", "-", str(path))
+
+
+def is_private(source: str, cfg: Config) -> bool:
+    """A private org's repo, or a memory dir for a path under <root>/<org>. Dir names encode
+    / as -, so org `acme` also flags a sibling org `acme-labs`: the ambiguity errs private."""
+    if not source.startswith("memory:"):
+        return source.split("/", 1)[0].lower() in cfg.private
+    d = source[len("memory:"):].lower()
+    prefixes = [project_dir(r / o).lower() for r in cfg.repos for o in cfg.private]
+    return any(d == p or d.startswith(p + "-") for p in prefixes)
 
 
 Ledger = dict[str, tuple[str, str, str, int]]
@@ -414,7 +469,7 @@ def may_be_fixed(playbook: Path, text: str, newest: str) -> str | None:
 
 
 def render(
-    h: Harvest, skipped: list[str], ledger: Ledger, playbook: Path, orgs: frozenset[str], orgs_note: str,
+    h: Harvest, skipped: list[str], ledger: Ledger, playbook: Path, cfg: Config,
 ) -> tuple[str, int, int]:
     """(digest markdown, undisposed keys, taken keys seen again)."""
     by_key: dict[str, list[Item]] = defaultdict(list)
@@ -427,7 +482,7 @@ def render(
     def line(key: str, occ: list[Item]) -> list[str]:
         sources = sorted({o.source for o in occ})
         flags = []
-        if any(o.nested or is_private(o.source, orgs) for o in occ):
+        if any(o.nested or is_private(o.source, cfg) for o in occ):
             flags.append("private")
         if fixed := may_be_fixed(playbook, occ[0].text, newest(occ)):
             flags.append(f"may be fixed: {fixed}")
@@ -455,7 +510,7 @@ def render(
         "",
         f"{headings} headings in {h.files} files; {len(h.items)} items, {len(by_key)} keys, "
         f"{len(undisposed)} undisposed, {len(recurred)} seen again, {len({o.source for o in h.items})} sources; "
-        f"{len(h.near)} near misses, {len(h.unlisted)} repos unread, {len(h.unread)} paths unread. {orgs_note}.",
+        f"{len(h.near)} near misses, {len(h.unlisted)} repos unread, {len(h.unread)} paths unread. {cfg.note}.",
         "",
         "## Undisposed: repo notes",
         "",
@@ -495,23 +550,33 @@ def render(
 
 def main(argv: list[str] | None = None) -> int:
     ap = argparse.ArgumentParser(description="Harvest playbook feedback into a digest of undisposed keys.")
-    ap.add_argument("--repos", type=Path, default=Path.home() / "workspace" / "github",
-                    help="root holding <org>/<repo>/todos (default ~/workspace/github)")
-    ap.add_argument("--memory", type=Path, default=Path.home() / ".claude" / "projects",
-                    help="root holding <project>/memory/feedback_*.md (default ~/.claude/projects)")
+    ap.add_argument("--repos", type=Path, action="append",
+                    help="a root holding <org>/<repo>/todos; repeatable (default: repos in the config)")
+    ap.add_argument("--memory", type=Path,
+                    help="root holding <project>/memory/feedback_*.md (default: config, else ~/.claude/projects)")
     ap.add_argument("--playbook", type=Path, default=PLAYBOOK, help="playbook checkout, for command history")
+    ap.add_argument("--config", type=Path, help="default <playbook>/todos/evolve/harvest.toml (untracked)")
     ap.add_argument("--ledger", type=Path, help="default <playbook>/todos/evolve/harvest-ledger.tsv")
     ap.add_argument("--out", type=Path, help="digest directory (default <playbook>/todos/evolve)")
+    ap.add_argument("--init", action="store_true", help="write the config with derived defaults, then stop")
     args = ap.parse_args(argv)
+    config = args.config or args.playbook / "todos" / "evolve" / "harvest.toml"
+    if args.init:
+        try:
+            print(f"wrote {config}:\n{init_config(config, args.playbook)}add private orgs, if any, to `private`")
+        except InstrumentFault as e:
+            print(f"feedback-harvest: {e}", file=sys.stderr)
+            return 2
+        return 0
     ledger_path = args.ledger or args.playbook / "todos" / "evolve" / "harvest-ledger.tsv"
     out = args.out or args.playbook / "todos" / "evolve"
     try:
+        cfg = load_config(config, args.repos, args.memory)
         ledger = read_ledger(ledger_path)
-        h = harvest_repos(args.repos)
-        memory, skipped = harvest_memory(args.memory, h.unread)
+        h = harvest_repos(cfg.repos)
+        memory, skipped = harvest_memory(cfg.memory, h.unread)
         h.items += memory
-        orgs, orgs_note = private_orgs(args.playbook)
-        md, undisposed, again = render(h, skipped, ledger, args.playbook, orgs, orgs_note)
+        md, undisposed, again = render(h, skipped, ledger, args.playbook, cfg)
         out.mkdir(parents=True, exist_ok=True)
         digest = out / f"digest-{date.today().isoformat()}.md"
         digest.write_text(md)
@@ -527,7 +592,7 @@ def main(argv: list[str] | None = None) -> int:
     causes = [f"{r}: git cannot list its files; run `git -C {r} status`, fix, rerun" for r in h.unlisted]
     causes += [f"{u}: could not be read" for u in h.unread]
     if not any(not o.memory for o in h.items) and not h.empty:
-        causes.append(f"no repo heading matched under {args.repos}; {len(h.near)} near misses listed: "
+        causes.append(f"no repo heading matched under {', '.join(map(str, cfg.repos))}; {len(h.near)} near misses listed: "
                       "is the root right, or did a heading shape change?")
     for c in causes:
         print(f"feedback-harvest: {c}", file=sys.stderr)

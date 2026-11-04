@@ -263,11 +263,12 @@ def test_exit_1_then_0_once_every_key_is_dispositioned(tmp_path: Path):
 
 
 def test_sources_are_distinct_repos_and_private_orgs_are_flagged(tmp_path: Path):
-    write(tmp_path / "pb" / "todos" / "evolve" / "private-orgs", "# one per line\nacme\n")
+    write(tmp_path / "pb" / "todos" / "evolve" / "harvest.toml", 'private = ["acme"]\n')
     repo_note(tmp_path, "o/a", "## 2026-10-01\nPlaybook feedback:\n- Same **thing**\n")
     repo_note(tmp_path, "o/a", "## 2026-10-02\nPlaybook feedback:\n- same thing\n", "done/lessons.md")
     repo_note(tmp_path, "acme/b", "## 2026-10-03\nPlaybook feedback:\n- same `thing`\n")
-    write(tmp_path / "mem" / "-u-github-acme-c" / "memory" / "feedback_z.md", "---\ndescription: Mem note\n---\n")
+    write(tmp_path / "mem" / f"{fh.project_dir(tmp_path / 'repos' / 'acme')}-c" / "memory" / "feedback_z.md",
+          "---\ndescription: Mem note\n---\n")
     assert run(tmp_path) == 1
     md = digest(tmp_path)
     assert f"`{fh.item_key('same thing')}` 2 source(s), newest 2026-10-03 [private]" in md
@@ -275,18 +276,53 @@ def test_sources_are_distinct_repos_and_private_orgs_are_flagged(tmp_path: Path)
 
 
 @pytest.mark.parametrize("source, flagged", [
-    ("acme/x", True), ("ACME/x", True), ("memory:-u-github-acme-x", True), ("memory:-u-github-acme", True),
-    ("memory:-u-github-acme-labs-x", True), ("acme-labs/x", False), ("o/acme", False),
+    ("acme/x", True), ("ACME/x", True), ("memory:-src-acme-x", True), ("memory:-src-acme", True),
+    ("memory:-SRC-Acme-x-todos", True), ("memory:-src-acme-labs-x", True),
+    ("acme-labs/x", False), ("o/acme", False), ("memory:-other-acme-x", False), ("memory:-src-acmex", False),
 ])
 def test_private_org_match(source: str, flagged: bool):
-    assert fh.is_private(source, frozenset({"acme"})) is flagged
+    cfg = fh.Config((Path("/src"),), Path("/m"), frozenset({"acme"}), "")
+    assert fh.is_private(source, cfg) is flagged
+
+
+def test_config_supplies_roots_and_its_absence_is_a_fault(tmp_path: Path):
+    repo_note(tmp_path, "o/r", "## 2026-10-01\nPlaybook feedback:\n- one\n")
+    base = ["--memory", str(tmp_path / "mem"), "--playbook", str(tmp_path / "pb"),
+            "--ledger", str(tmp_path / "ledger.tsv"), "--out", str(tmp_path / "out")]
+    assert fh.main(base) == 2, "no --repos and no config: never a guessed default"
+    write(tmp_path / "pb" / "todos" / "evolve" / "harvest.toml", f'repos = ["{tmp_path / "repos"}"]\nprivate = []\n')
+    assert fh.main(base) == 1
+    write(tmp_path / "pb" / "todos" / "evolve" / "harvest.toml", f'repos = ["{tmp_path / "repos"}"]\n')
+    assert fh.main(base) == 2, "private left out would silently flag nothing"
+    write(tmp_path / "pb" / "todos" / "evolve" / "harvest.toml", 'repos = "not-a-list"\nprivate = []\n')
+    assert fh.main(base) == 2
+
+
+def test_init_derives_the_root_and_never_overwrites(tmp_path: Path):
+    pb = tmp_path / "root" / "org" / "playbook"
+    pb.mkdir(parents=True)
+    config = pb / "todos" / "evolve" / "harvest.toml"
+    assert fh.main(["--init", "--playbook", str(pb)]) == 0
+    cfg = fh.load_config(config, None, None)
+    assert cfg.repos == ((tmp_path / "root").resolve(),) and cfg.private == frozenset()
+    assert fh.main(["--init", "--playbook", str(pb)]) == 2, "never overwrites"
+
+
+@pytest.mark.parametrize("root, org, project", [
+    ("/home/a.b/src_x", "my-org", "-home-a-b-src-x-my-org-repo"),
+    ("/src", "acme", "-src-acme"),
+])
+def test_project_dir_matches_claude_codes_encoding(root: str, org: str, project: str):
+    cfg = fh.Config((Path(root),), Path("/m"), frozenset({org}), "")
+    assert project.startswith(fh.project_dir(Path(root) / org))
+    assert fh.is_private(f"memory:{project}", cfg)
 
 
 def test_digest_says_whether_the_private_orgs_file_was_read(tmp_path: Path):
     repo_note(tmp_path, "o/r", "## 2026-10-01\nPlaybook feedback:\n- one\n")
     assert run(tmp_path) == 1
-    assert "private-orgs missing" in digest(tmp_path)
-    write(tmp_path / "pb" / "todos" / "evolve" / "private-orgs", "Acme\n")
+    assert "config missing" in digest(tmp_path)
+    write(tmp_path / "pb" / "todos" / "evolve" / "harvest.toml", f'repos = ["{tmp_path / "repos"}"]\nprivate = ["Acme"]\n')
     assert run(tmp_path) == 1
     assert "private orgs: 1 from" in digest(tmp_path)
 

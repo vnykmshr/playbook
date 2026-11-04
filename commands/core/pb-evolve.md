@@ -33,10 +33,11 @@ breaking_changes: ['Quarterly calendar dates, Evolution Manager, review meeting 
 ## Step 0: Intake
 
 ```bash
+python3 scripts/feedback-harvest.py --init    # once per machine: writes todos/evolve/harvest.toml
 python3 scripts/feedback-harvest.py; echo "exit $?"
 ```
 
-The harvester reads every `~/workspace/github/*/*/todos/` and the Claude memory `feedback_*.md` files, keys each item on its normalised text, and writes `todos/evolve/digest-YYYY-MM-DD.md`. It never writes the ledger.
+`todos/evolve/harvest.toml` is untracked and holds this machine's specifics: `repos` (roots holding `<org>/<repo>/todos/`), `memory` and `private` (orgs whose notes are flagged; required, may be empty). The harvester reads every `<root>/<org>/<repo>/todos/` and the Claude memory `feedback_*.md` files, keys each item on its normalised text, and writes `todos/evolve/digest-YYYY-MM-DD.md`. It never writes the ledger.
 
 | Exit | Meaning | Do |
 |------|---------|----|
@@ -54,7 +55,7 @@ Keys seen in more repos rank first; memory items come last. Cluster near-duplica
 In the digest:
 
 - `may be fixed`: the named command changed its body and version after the note, and the line shows that version's notes. Any body edit forces a bump, dash and fence fixes included, so it is a hint to check, never a reason to close a key.
-- `private`: the source is an org listed in `todos/evolve/private-orgs` (untracked, one per line), or the note sits in a git repo nested under a project's `todos/`. The summary line says whether the file was read.
+- `private`: the source is an org listed under `private` in the config, or the note sits in a git repo nested under a project's `todos/`. The summary line says whether the config was read.
 - **Taken, then seen again**: a dated note repeats a `taken` key after its row's date, so the fix did not reach the sessions that wrote it. It holds exit 1 until you edit the row that carries the disposition (the representative's, for a `dup-of` member); an archive written after the ruling can re-date an old note, so read the occurrence's path first. Memory files and undated notes cannot recur.
 - **Near-miss headings**: lines that start like the heading and are not one. They hold no key and no exit; fix the note if it was meant as one.
 

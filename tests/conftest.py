@@ -48,7 +48,7 @@ def _load_script(filename):
     return module
 
 
-# Three test modules import these by name at import time rather than calling
+# Four test modules import these by name at import time rather than calling
 # functions by path, and patch attributes on them by string. Registering here
 # is what makes that resolve; it replaces the scripts/*_*.py symlinks that
 # used to exist purely to give these two an importable spelling.
