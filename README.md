@@ -11,10 +11,10 @@ Structured Markdown commands for AI-assisted development. Covers the SDLC from p
 Structured commands organized by SDLC phase, for engineers who want repeatable structure without ceremony:
 
 - Two foundations: [`/pb-preamble`](commands/core/pb-preamble.md) (how to collaborate) and [`/pb-design-rules`](commands/core/pb-design-rules.md) (what to build)
-- A three-command daily ritual: `/pb-preferences --setup` → `/pb-start` → code → `/pb-review` → `/pb-pr`
+- A short daily ritual: `/pb-preferences --setup` once, then `/pb-start` → code → `/pb-review` → `/pb-pr`
 - Self-evolving: periodic cycles plus capability-triggered updates when the underlying model tier changes
 
-Content is Markdown. Structure is enforced by lint and tests. Commands are versioned independently; no breaking changes without a major release.
+Content is Markdown. Structure is enforced by lint and tests. Commands are versioned independently; a breaking change bumps the command's major version and is listed in the CHANGELOG and the command's `breaking_changes`.
 
 ## Who it's for
 
