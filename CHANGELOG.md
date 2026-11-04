@@ -28,7 +28,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Dash ratchet** (`TestDashRatchet`). Spaced double hyphens in command prose are counted per file against a shrink-only baseline (28 files, 268); a command whose body changes reaches 0. Fences count as CommonMark renders them, so a 4-backtick sample holding a nested block stays one fence. Inline code spans are exempt.
 - **Line budget** (`TestLineBudget`). A command is capped at 600 lines, fence lines included; the 29 over it are baselined at their current length and may only shrink.
 - **One version per `version_notes`** (`TestVersionNotesOneVersion`). A command bumped since the last tag has notes starting `v{version}:` and a space, naming no other version; earlier notes live in git and the CHANGELOG (`docs/command-versioning.md`). Commands not bumped keep their notes until their next bump.
-- **Nested samples** (`TestNestedSampleFences`). A fence line with an info string inside a block it cannot close fails, as does a block left open at end of file: the outer fence needs more backticks than the block inside it. A bare inner opener reads as a closer and is not caught; the four samples this release repaired by hand all had that shape. An info string on every opener would close the gap.
+- **Nested samples** (`TestNestedSampleFences`). A fence line with an info string inside a block it cannot close fails, as does a block left open at end of file: the outer fence needs more backticks than the block inside it. A bare inner opener reads as a closer and is not caught; every sample the scripted fix missed or misplaced had that shape. An info string on every opener would close the gap.
 
 ### Changed
 
