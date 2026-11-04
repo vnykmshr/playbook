@@ -226,49 +226,48 @@ def commands_changed_since_tag() -> list[tuple[str, str | None, str]]:
 FENCE_OPEN = re.compile(r" {0,3}(`{3,}|~{3,})")
 
 
-def rendered_fences(body: str) -> list[bool | None]:
-    """Per body line: False prose, True inside a fence, None a fence marker.
+def fence_walk(body: str):
+    """Yield (line, event, opener) per body line; event is prose, open, close or inside.
 
     A fence closes only on a bare run of its own character at least as long as
     the opener, as CommonMark renders it: a 4-backtick sample holding a
     ```bash block stays one fence. A plain open/close toggle reads the inner
-    block's close as the end of the sample and counts the rest as prose.
+    block's close as the end of the sample and counts the rest as prose. This
+    is the one close rule; every fence reader here goes through it.
     """
-    states: list[bool | None] = []
     fence = None
     for line in body.split("\n"):
         if fence is None:
             if match := FENCE_OPEN.match(line):
                 fence = match.group(1)
-                states.append(None)
+                yield line, "open", fence
             else:
-                states.append(False)
+                yield line, "prose", None
         elif re.fullmatch(r" {0,3}" + re.escape(fence[0]) + "{%d,}[ \t]*" % len(fence), line):
+            yield line, "close", fence
             fence = None
-            states.append(None)
         else:
-            states.append(True)
-    return states
+            yield line, "inside", fence
 
 
 def prose_lines(text: str) -> list[str]:
     """Body lines outside fenced blocks, as rendered."""
-    body = split_front_matter(text)[1]
-    return [line for line, state in zip(body.split("\n"), rendered_fences(body)) if state is False]
+    return [line for line, event, _ in fence_walk(split_front_matter(text)[1]) if event == "prose"]
 
 
 def fence_problems(text: str) -> list[str]:
     """Nested samples whose outer fence is too short, as far as syntax can prove.
 
     Inside a block, a fence line of the same character, at least the opener's
-    length and carrying an info string, is content; the bare close of that
-    inner block then ends the outer one. So such a line is always a defect, as
-    is a block still open at end of file.
+    length and carrying an info string, is content, and the inner block's bare
+    close then ends the outer one. The rule is conservative: a sample showing
+    a lone opener line as text trips it too, and lengthening its outer fence is
+    harmless. A block still open at end of file also fails.
 
     Gaps, by design:
     1. A bare inner opener reads as the outer's close; nothing in the syntax
-       says which was meant. Every remaining defect in v2.32.0 took this shape.
-       Requiring an info string on every opener closes the gap.
+       says which was meant. Requiring an info string on every opener closes
+       the gap.
     2. Fences in blockquotes, or in list items indented 4+ spaces, are not
        modelled.
     3. A backtick fence whose info string holds a backtick is not an opener in
@@ -276,18 +275,17 @@ def fence_problems(text: str) -> list[str]:
     """
     body = split_front_matter(text)[1]
     first = text.count("\n") - body.count("\n") + 1
-    problems, fence, opened = [], None, 0
-    for i, line in enumerate(body.split("\n"), first):
-        match = FENCE_OPEN.match(line)
-        if fence is None:
-            if match:
-                fence, opened = match.group(1), i
-        elif match and match.group(1)[0] == fence[0] and len(match.group(1)) >= len(fence):
-            if line[match.end():].strip():
+    problems, opened, still_open = [], 0, False
+    for i, (line, event, fence) in enumerate(fence_walk(body), first):
+        if event == "open":
+            opened, still_open = i, True
+        elif event == "close":
+            still_open = False
+        elif event == "inside":
+            match = FENCE_OPEN.match(line)
+            if match and match.group(1)[0] == fence[0] and len(match.group(1)) >= len(fence):
                 problems.append(f"line {i}: fence with an info string inside the block opened at line {opened}")
-            else:
-                fence = None
-    if fence is not None:
+    if still_open:
         problems.append(f"line {opened}: block never closed")
     return problems
 
