@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Breaking
 
-- **`/pb-evolve` v2.0.0.** Rewritten for one owner and many repos, 1,033 to 181 lines. Step 0 takes in harvested feedback, and the cycle closes only when `scripts/feedback-harvest.py` exits 0. Each release runs as one `/pb-forge` arc; push, tag and GitHub release are separately approved; rollback redeploys the previous tag. The quarterly calendar, Evolution Manager, snapshot, log and diff steps, report and dashboard templates, mkdocs and `pbai` are gone. `docs/evolution-operational-guide.md` is marked superseded.
+- **`/pb-evolve` v2.0.0.** Rewritten for one owner and many repos, 1,034 to 181 lines. Step 0 takes in harvested feedback, and the cycle closes only when `scripts/feedback-harvest.py` exits 0. Each release runs as one `/pb-forge` arc; push, tag and GitHub release are separately approved; rollback redeploys the previous tag. The quarterly calendar, Evolution Manager, snapshot, log and diff steps, report and dashboard templates, mkdocs and `pbai` are gone. `docs/evolution-operational-guide.md` is marked superseded.
 
 ### Security
 

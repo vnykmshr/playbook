@@ -64,7 +64,7 @@ Markers in the digest:
 ```bash
 git status                                    # clean
 git checkout main && git pull origin main
-python3 scripts/evolve.py --analyze           # writes todos/evolution-analysis.json
+python3 scripts/evolve.py --analyze           # model_hint and category counts (Step 3)
 python3 scripts/evolve.py --validate
 python3 scripts/git-signals.py                # adoption, churn, pain points: todos/git-signals/latest/
 ```

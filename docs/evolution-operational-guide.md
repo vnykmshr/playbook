@@ -1,6 +1,6 @@
 # Evolution System Operational Guide
 
-> **Superseded by `/pb-evolve` v2.0.0.** Cycles no longer run the snapshot, log and diff flow this guide describes. It stays until it is retired.
+> **Superseded by `/pb-evolve` v2.0.0.** Cycles no longer run the snapshot, log and diff flow this guide describes.
 >
 > **For playbook maintainers only.** If you're adopting the playbook, start with [Getting Started](getting-started.md) instead.
 
