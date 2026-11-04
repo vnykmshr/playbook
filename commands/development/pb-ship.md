@@ -6,9 +6,9 @@ difficulty: "advanced"
 model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-cycle', 'pb-pr', 'pb-release', 'pb-review-hygiene', 'pb-deployment']
-last_reviewed: "2026-08-04"
+last_reviewed: "2026-11-04"
 version: "1.2.2"
-version_notes: "v1.2.2: Spaced double hyphens replaced."
+version_notes: "v1.2.2: Step 5.2 runs /pb-release Phase 2-3, which tags only after CI is green on the merge commit, instead of an inline tag and deploy that skipped that gate; the diagram lists /pb-review-hygiene once; /code-review is named as invoked. 730 to 695 lines."
 breaking_changes: []
 ---
 # Ship Focus Area to Production
@@ -42,10 +42,10 @@ FOUNDATION           SPECIALIZED REVIEWS    FINAL GATE        PR & PEER REVIEW  
 │  (lint,test,type)  │  (REQUIRED)          │  Phase 1        │                    │
 │                    │                      │  (readiness)    ├─ Peer review       ├─ /pb-release
 ├─ /pb-cycle         ├─ /pb-review-hygiene  │                 │  (scoped to PR)    │  Phase 2-3
-│  (self-review)     │  (code quality)      └─ Ship decision  │                    │  (tag, deploy)
+│  (self-review)     │  (code + project)    └─ Ship decision  │                    │  (tag, deploy)
 │                    │                         (go/no-go)     ├─ Address feedback  │
-└─ Release artifacts ├─ /pb-review-hygiene                    │                    ├─ /pb-deployment
-   (CHANGELOG etc)   │  (project health)                      └─ Approved sign-off │
+└─ Release artifacts │                                        │                    ├─ /pb-deployment
+   (CHANGELOG etc)   │                                        └─ Approved sign-off │
                      │                                                             └─ Summarize
                      ├─ /pb-review-tests
                      │  (coverage)
@@ -186,7 +186,7 @@ Run `/pb-review-hygiene`:
 
 **Step 2.3: Project Hygiene Review**
 
-Run `/pb-review-hygiene`:
+The same `/pb-review-hygiene` run covers:
 
 - [ ] Dependencies up to date
 - [ ] No dead code or unused modules
@@ -331,7 +331,7 @@ Ship review status (release artifacts, hygiene, tests, security, docs) belongs i
 
 ### Step 4.2: Request Peer Review
 
-Run `/code-review:code-review` or `/pb-review` scoped to PR changes:
+Run `/code-review` or `/pb-review` scoped to PR changes:
 
 ```bash
 # Get the diff for context
@@ -467,44 +467,9 @@ gh pr merge [PR-NUMBER] --merge --delete-branch
 
 **Note:** If your repository has branch protection rules requiring CI to pass, the merge will be blocked automatically. If not, enforce this discipline manually.
 
-### Step 5.2: Release
+### Step 5.2: Release and Verify
 
-Run `/pb-release`:
-
-```bash
-# Verify main is updated
-git checkout main && git pull
-
-# Tag the release
-git tag -a vX.Y.Z -m "vX.Y.Z - Brief description"
-git push origin vX.Y.Z
-
-# Create GitHub release (use CHANGELOG entry for notes)
-gh release create vX.Y.Z --title "vX.Y.Z - Title" --notes "..."
-
-# Deploy
-make deploy  # or your deployment command
-```
-
-### Step 5.3: Verify Release
-
-```bash
-# Health check
-curl -s [PROD_URL]/api/health | jq
-
-# Smoke test critical flows
-# [Project-specific verification commands]
-
-# Monitor for errors
-# [Check logs, dashboards, alerts]
-```
-
-**Verification checklist:**
-- [ ] Health endpoint returns OK
-- [ ] Critical user flows work
-- [ ] No new errors in logs
-- [ ] Metrics look normal
-- [ ] Alerts are quiet
+Run `/pb-release` Phase 2-3: it tags only after CI is green on the merge commit, creates the release, deploys and verifies.
 
 ### Step 5.4: Release Summary
 

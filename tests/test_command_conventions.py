@@ -782,7 +782,7 @@ LINE_BUDGET_BASELINE = {
     "pb-review-microservice.md": 841,
     "pb-sam-documentation.md": 711,
     "pb-security.md": 739,
-    "pb-ship.md": 730,
+    "pb-ship.md": 695,
     "pb-sre-practices.md": 661,
     "pb-team.md": 663,
     "pb-testing.md": 716,
