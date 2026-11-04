@@ -7,6 +7,7 @@ so closing a gap fails until its entry is deleted. KNOWN_FALSE_POSITIVES is the
 reverse, asserting silence. Both lists only shrink.
 """
 import json
+import shutil
 import subprocess
 from pathlib import Path
 from typing import cast
@@ -99,6 +100,13 @@ ASKS = [
     ("gh api repos/o/r --jq '.[] | .x' --method POST", "gh api write method"),
     ("wrangler --config 'a|b' deploy", "worker deploy"),
     ("git clean -d -n -- 'x;y' -f", "git clean -f"),
+    # normalised: one case, backslash-newline joined with a space
+    ("GH pr merge 3", "gh pr/issue write"),
+    ("RM -rf build", "rm -r"),
+    ("NPM publish", "publish"),
+    ("rm \\\n  -rf build", "rm -r"),
+    ("gh api -X post repos/x/y", "gh api write method"),
+    ("echo C:\\\\\nrm -rf build", "rm -r"),
 ]
 
 
@@ -161,13 +169,8 @@ KNOWN_MISSES = [
     'rm "-rf" build',
     "git restore --worktree .",
     "git checkout HEAD -- .",
-    "GH pr merge 3",
-    "RM -rf build",
-    "NPM publish",
-    "rm \\\n  -rf build",
     "rm $(echo x) -rf build",
     "git --attr-source HEAD push",
-    "gh api -X post repos/x/y",
 ]
 
 
@@ -188,9 +191,28 @@ def test_known_false_positive(command: str):
     assert reason(run_hook(command)) is None
 
 
+EVERY_COMMAND = [c for c, _ in ASKS] + SILENT + KNOWN_MISSES + KNOWN_FALSE_POSITIVES
+
+
+@pytest.mark.parametrize("command", EVERY_COMMAND)
+def test_decision_survives_case_and_line_continuation(command: str):
+    """Same decision upper-cased or split by backslash-newline (pinned ASKS cover what this cannot)."""
+    asks = reason(run_hook(command)) is not None
+    for variant in (command.upper(), command.replace(" ", " \\\n  ", 1)):
+        assert (reason(run_hook(variant)) is not None) == asks, repr(variant)
+
+
 def test_jq_missing_asks_on_everything(tmp_path: Path):
     got = reason(run_hook("git status", env={"PATH": str(tmp_path)}))
     assert got is not None and "jq missing" in got
+
+
+def test_normalise_failure_asks(tmp_path: Path):
+    jq = shutil.which("jq")
+    assert jq, "jq is needed to reach the normalise step"
+    (tmp_path / "jq").symlink_to(jq)
+    got = reason(run_hook("git status", env={"PATH": str(tmp_path)}))
+    assert got is not None and "normalise failed" in got
 
 
 @pytest.mark.parametrize("payload", ["not json", "", '{"tool_input": {"cmd": "git push"}}'])
