@@ -6,10 +6,10 @@ difficulty: "advanced"
 model_hint: "opus"
 execution_pattern: "reference"
 related_commands: ['pb-review', 'pb-review-code', 'pb-review-hygiene', 'pb-review-tests', 'pb-security']
-last_reviewed: "2026-06-07"
-version: "2.2.0"
-version_notes: "v2.2.0: Add coverage ledger to consolidation (changed-file -> covering-review map; OCR --preview honesty for the large-changeset case) and recommend an independent automated second pass (/code-review or ocr). Patterns from alibaba/open-code-review + Claude /code-review."
-breaking_changes: []
+last_reviewed: "2026-11-04"
+version: "3.0.0"
+version_notes: "v3.0.0: Multi-Perspective Reviews names each lens pair and its tie-break; the three wrapper reviews are retired into it."
+breaking_changes: ['/pb-review-backend, /pb-review-frontend and /pb-review-infrastructure are retired; the Multi-Perspective Reviews table names their lens pairs. Re-run scripts/install.sh to prune the three links.']
 ---
 # Comprehensive Project Review
 
@@ -35,13 +35,13 @@ breaking_changes: []
 
 ## Multi-Perspective Reviews (v2.11.0+)
 
-For deeper, more contextualized reviews by complementary personas:
+For deeper reviews, run two complementary personas in parallel, then synthesize; the first named leads the order:
 
-| Review Type | Purpose | Use When |
-|-------------|---------|----------|
-| `/pb-review-backend` | Systems reliability & testing | Backend code, APIs, data layer |
-| `/pb-review-frontend` | User experience & clarity | Frontend code, UI, documentation |
-| `/pb-review-infrastructure` | Security & resilience | Infrastructure, deployments, hardening |
+| Change | Lenses | When they disagree |
+|--------|--------|--------------------|
+| Backend code, APIs, data layer | `/pb-alex-infra` then `/pb-jordan-testing` | Design for testability first: if tests can't verify it, don't build it |
+| Frontend code, UI, documentation | `/pb-maya-product` then `/pb-sam-documentation` | Build it and document it well, or defer it |
+| Infrastructure, deployments, hardening | `/pb-alex-infra` then `/pb-linus-agent` | Default to secure; profile before trading security for latency |
 
 **Persona Deep Dives:**
 - `/pb-linus-agent` - Security pragmatism and threat modeling

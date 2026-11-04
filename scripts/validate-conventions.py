@@ -21,7 +21,7 @@ import md_read
 from playbook_utils import setup_logger
 
 COMMANDS_DIR = Path(__file__).parent.parent / "commands"
-EXPECTED_COUNT = 116  # 118 - pb-guide-go, pb-guide-python
+EXPECTED_COUNT = 113  # 118 - pb-guide-go, pb-guide-python, the three wrapper reviews
 CHANGELOG_PATH = Path(__file__).parent.parent / "CHANGELOG.md"
 
 # Hub commands allowed to exceed the 5-link limit

@@ -91,10 +91,10 @@ Five specialized review agents providing complementary perspectives on code, sec
 | D | **pb-sam-documentation** | Clarity & knowledge transfer | UI clarity, accessibility, error messages, code readability, docs | Frontend changes, APIs, documentation, onboarding | S/M/L |
 | E | **pb-jordan-testing** | Testing quality & reliability | Coverage, error paths, concurrency, data integrity, integration | All features (testing always matters) | S/M/L |
 
-**Multi-Perspective Review Workflows** (combine complementary personas):
-- **pb-review-backend** - Alex (infrastructure) + Jordan (testing): For backend APIs, services, database operations
-- **pb-review-frontend** - Maya (product) + Sam (documentation): For UI/UX, components, user-facing features
-- **pb-review-infrastructure** - Alex (infrastructure) + Linus (security): For infrastructure code, deployment pipelines, security configs
+**Multi-Perspective Review Workflows** (combine complementary personas; `/pb-review-comprehensive` lists the pairs):
+- **Backend** - Alex (infrastructure) + Jordan (testing): For backend APIs, services, database operations
+- **Frontend** - Maya (product) + Sam (documentation): For UI/UX, components, user-facing features
+- **Infrastructure** - Alex (infrastructure) + Linus (security): For infrastructure code, deployment pipelines, security configs
 
 **Persona Composition** (how to use together):
 
@@ -113,9 +113,9 @@ Single-perspective (for small changes):
 Multi-perspective (for features):
   /pb-cycle (self-review)
     └─ Use multi-perspective review:
-         ├─ Backend: /pb-review-backend (Alex + Jordan parallel)
-         ├─ Frontend: /pb-review-frontend (Maya + Sam parallel)
-         └─ Infrastructure: /pb-review-infrastructure (Alex + Linus parallel)
+         ├─ Backend: /pb-alex-infra + /pb-jordan-testing (parallel)
+         ├─ Frontend: /pb-maya-product + /pb-sam-documentation (parallel)
+         └─ Infrastructure: /pb-alex-infra + /pb-linus-agent (parallel)
 
 Full review (for major releases):
   /pb-cycle (self-review)

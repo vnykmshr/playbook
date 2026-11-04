@@ -21,7 +21,7 @@ import pytest
 import yaml
 
 COMMANDS_DIR = Path(__file__).parent.parent / "commands"
-EXPECTED_COUNT = 116  # 118 - pb-guide-go, pb-guide-python
+EXPECTED_COUNT = 113  # 118 - pb-guide-go, pb-guide-python, the three wrapper reviews
 
 # Hub commands allowed to exceed the 5-link limit
 HUB_COMMANDS = {"pb-patterns.md"}
@@ -711,11 +711,8 @@ BARE_OPENER_BASELINE = {
     "pb-repo-organize.md": 3,
     "pb-repo-polish.md": 5,
     "pb-resume.md": 4,
-    "pb-review-backend.md": 1,
     "pb-review-code.md": 5,
     "pb-review-comprehensive.md": 4,
-    "pb-review-frontend.md": 1,
-    "pb-review-infrastructure.md": 1,
     "pb-review-microservice.md": 17,
     "pb-review-playbook.md": 2,
     "pb-review.md": 3,
@@ -933,9 +930,6 @@ MINDSET_BASELINE = {
     "pb-repo-organize.md",
     "pb-repo-polish.md",
     "pb-repo-readme.md",
-    "pb-review-backend.md",
-    "pb-review-frontend.md",
-    "pb-review-infrastructure.md",
     "pb-review.md",
     "pb-setup.md",
     "pb-sketch.md",
@@ -1266,14 +1260,6 @@ class TestPersonaIntegrity:
         ]
         assert not missing, f"Personas absent from the pb-huddle roster line: {missing}"
 
-    def test_multi_perspective_reviews_exist(self):
-        """Ensure multi-perspective review commands exist (Phase 2)."""
-        multi_reviews = {"pb-review-backend.md", "pb-review-frontend.md", "pb-review-infrastructure.md"}
-        files = get_command_files()
-        file_names = {f.name for f in files}
-        missing = multi_reviews - file_names
-        assert not missing, f"Missing multi-perspective reviews: {missing}"
-
     def test_persona_no_hardcoded_security_flaws(self):
         """Check persona agents for common security anti-patterns."""
         # Specifically validates pb-linus-agent.md for password hashing security
@@ -1320,10 +1306,7 @@ class TestRegisterRuleReference:
         "pb-review-comprehensive.md",
         "pb-review-hygiene.md",
         "pb-review-tests.md",
-        "pb-review-backend.md",
-        "pb-review-frontend.md",
-        "pb-review-infrastructure.md",
-        "pb-review-microservice.md",
+                    "pb-review-microservice.md",
         "pb-review-product.md",
         "pb-review-docs.md",
         "pb-review-playbook.md",

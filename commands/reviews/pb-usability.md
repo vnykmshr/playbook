@@ -5,10 +5,10 @@ category: "reviews"
 difficulty: "intermediate"
 model_hint: "opus"
 execution_pattern: "parallel"
-related_commands: ['pb-review-frontend', 'pb-a11y', 'pb-calm-design', 'pb-security', 'pb-performance']
-last_reviewed: "2026-04-26"
+related_commands: ['pb-review-comprehensive', 'pb-a11y', 'pb-calm-design', 'pb-security', 'pb-performance']
+last_reviewed: "2026-11-04"
 version: "1.1.1"
-version_notes: "v1.1.1: Spaced double hyphens replaced."
+version_notes: "v1.1.1: Spaced double hyphens replaced; the frontend review link points to /pb-review-comprehensive."
 breaking_changes: []
 ---
 
@@ -345,7 +345,7 @@ Findings posted as PR/issue comments follow `~/.claude/CLAUDE.md` § GitHub Arti
 
 ## Related Commands
 
-- `/pb-review-frontend` - Code-level frontend review (Maya + Sam). Use during PR review.
+- `/pb-review-comprehensive` - Code-level frontend review (Maya + Sam lenses). Use during PR review.
 - `/pb-a11y` - Deep accessibility audit. Delegated by this command.
 - `/pb-calm-design` - Attention-respecting design including dark patterns. Delegated by this command.
 - `/pb-security` - Security review including user-facing trust. Delegated by this command.

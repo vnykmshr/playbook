@@ -18,6 +18,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- **`/pb-calm-design` v1.3.1, `/pb-gha` v1.0.1, `/pb-usability` v1.1.1.** Links to the retired wrapper reviews point to `/pb-maya-product`, `/pb-alex-infra` and `/pb-review-comprehensive`.
+- **`/pb-review-comprehensive` v3.0.0.** Multi-Perspective Reviews names each lens pair (Alex and Jordan, Maya and Sam, Alex and Linus) and how the pair breaks a tie; the three wrapper reviews are retired into it.
 - **`/pb-usability` v1.1.1.** Spaced double hyphens replaced.
 - **`/pb-claude-global` v2.12.0.** Spaced double hyphens replaced.
 - **`/pb-llm-guidelines` v1.4.0.** Spaced double hyphens replaced.
@@ -32,6 +34,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - **A punctuation- or markup-only edit no longer moves a review date.** The review-date guard compares a body's words, so a dash or fence-marker fix owes a version bump but not a `last_reviewed` move; a word edit that amends an already-bumped version's notes still owes one, and an uncommitted edit is checked before the commit. Nine commands stamped by such fixes in v2.32.0 carry their real review dates again: pb-design-language, pb-observability and pb-repo-blog (2026-02-09), pb-documentation and pb-templates (2026-06-10), pb-sam-documentation and pb-new-playbook (2026-07-13), pb-learn (2026-08-03), pb-repo-readme (2026-10-03).
 - **The changed-command guards see a new command before `git add`.** An untracked file under `commands/` counts as added, so the dash, version-notes and body-change checks run on it pre-commit.
+
+### Removed
+
+- **`/pb-review-backend`, `/pb-review-frontend` and `/pb-review-infrastructure`.** `/pb-review-comprehensive` names their lens pairs and how each pair breaks a tie. Re-run `scripts/install.sh` to prune the three links. Commands 116 to 113.
 
 ## [v2.33.0] - 2026-11-04
 

@@ -5,10 +5,10 @@ category: "reviews"
 difficulty: "intermediate"
 model_hint: "sonnet"
 execution_pattern: "checklist"
-related_commands: ['pb-design-rules', 'pb-standards', 'pb-security', 'pb-review-product', 'pb-review-frontend']
-last_reviewed: "2026-04-26"
-version: "1.3.0"
-version_notes: "v1.3.0: Reference global GitHub Artifact Register rule for review-comment register."
+related_commands: ['pb-design-rules', 'pb-standards', 'pb-security', 'pb-review-product', 'pb-maya-product']
+last_reviewed: "2026-11-04"
+version: "1.3.1"
+version_notes: "v1.3.1: Related Commands: /pb-maya-product replaces the retired /pb-review-frontend."
 breaking_changes: []
 ---
 
@@ -378,7 +378,7 @@ Findings posted as PR/issue comments follow `~/.claude/CLAUDE.md` § GitHub Arti
 - `/pb-design-rules` - Technical principles (clarity, simplicity, modularity)
 - `/pb-standards` - Quality bar and MLP criteria
 - `/pb-review-product` - Product-focused review including user experience
-- `/pb-review-frontend` - Frontend review; applies calm principles to UI
+- `/pb-maya-product` - Product review; applies calm principles to UI
 - `/pb-a11y` - Accessibility review; overlaps with calm design
 
 ---

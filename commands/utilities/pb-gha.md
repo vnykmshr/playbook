@@ -6,9 +6,9 @@ difficulty: "intermediate"
 model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-doctor', 'pb-debug', 'pb-review-hygiene', 'pb-release']
-last_reviewed: "2026-02-18"
-version: "1.0.0"
-version_notes: "Initial release - structured CI failure investigation"
+last_reviewed: "2026-11-04"
+version: "1.0.1"
+version_notes: "v1.0.1: The infra root-cause row points to /pb-alex-infra; /pb-review-infrastructure is retired."
 breaking_changes: []
 ---
 # GitHub Actions Failure Analysis
@@ -206,7 +206,7 @@ Then follow up with the full methodology if the cause isn't obvious.
 |-----------|-----------|
 | Root cause is a code bug | `/pb-debug` for systematic fix |
 | Root cause is test flakiness | `/pb-review-tests` for reliability audit |
-| Root cause is infra/config | `/pb-review-infrastructure` for resilience check |
+| Root cause is infra/config | `/pb-alex-infra` for resilience check |
 | Blocking a release | `/pb-release` once green |
 | Recurring problem | `/pb-review-hygiene` for systemic health |
 
