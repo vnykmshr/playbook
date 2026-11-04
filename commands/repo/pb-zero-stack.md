@@ -8,7 +8,7 @@ execution_pattern: "interactive"
 related_commands: ['pb-greenfield', 'pb-start', 'pb-design-language', 'pb-calm-design']
 last_reviewed: "2026-11-04"
 version: "3.2.1"
-version_notes: "v3.2.1: Related Commands drop the retired /pb-patterns-cloud. CSP ships as a _headers response header: <meta> cannot carry frame-ancestors and HSTS is header-only. Deploy from the workflow, not Pages git integration, since a free private repo has no required checks; add the deploy secrets before merging the workflow, or gate it on a repo variable."
+version_notes: "v3.2.1: Related Commands drop the retired /pb-patterns-cloud. CSP ships as a _headers response header (<meta> cannot carry frame-ancestors; HSTS is header-only); both scaffolds list it and the Ship Gate checks the live response. Deploy from the workflow, not Pages git integration, since a free private repo has no required checks; add the deploy secrets before merging the workflow, or gate it on a repo variable."
 breaking_changes: []
 ---
 # Zero-Stack App Initiation ($0/month Architecture)
@@ -394,8 +394,8 @@ The structure adapts to the conversation. No `worker/` if minimal tier. No `data
 ```
 project-name/
 ├── public/
-│   ├── favicon.ico           # Placeholder, replace before go-live
-│   ├── favicon.svg           # SVG favicon (modern browsers)
+│   ├── _headers              # CSP and security headers (Step 6)
+│   ├── favicon.ico, .svg     # Placeholders, replace before go-live
 │   ├── apple-touch-icon.png  # 180×180 (iOS)
 │   ├── og-image.png          # 1200×630 (social sharing)
 │   ├── robots.txt            # Crawler directives
@@ -439,8 +439,8 @@ project-name/
 ├── scripts/
 │   └── main.js               # Vanilla JS (if any)
 ├── public/
-│   ├── favicon.ico
-│   ├── favicon.svg
+│   ├── _headers              # CSP and security headers (Step 6)
+│   ├── favicon.ico, favicon.svg
 │   ├── og-image.png
 │   ├── robots.txt
 │   └── site.webmanifest
@@ -478,7 +478,7 @@ Single exit gate for Phase A. The scaffold produces correct structure from your 
 **Verify scaffold output:**
 
 - [ ] `<html lang>`, `<title>`, `<meta description>`, canonical, theme-color match your choices
-- [ ] CSP `<meta>` tag matches your variant from Step 6
+- [ ] `public/_headers` CSP matches your variant from Step 6, and the live response carries it (`curl -sI`)
 - [ ] Semantic landmarks, one `<h1>` per page, skip-to-content link
 - [ ] OG tags populated (title, description, image, url)
 
