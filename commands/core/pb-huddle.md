@@ -59,7 +59,7 @@ When a huddle's synthesis identifies a refined follow-up question, run a re-hudd
 **When to use:**
 - The prior huddle surfaced a refined question worth deeper exploration
 - The same personas should weigh in on the follow-up
-- The context hasn't changed (same session, same files)
+- The context hasn't changed (same files)
 
 **What changes:**
 - **Skip context loading** (Step 2): personas already have the background from the prior huddle
@@ -77,7 +77,7 @@ When a huddle's synthesis identifies a refined follow-up question, run a re-hudd
 **Late evidence against a closed ruling** reopens it by re-huddle, with the evidence as the new question. It is never folded into the record quietly.
 
 **How it works:**
-1. Read the most recent huddle output from the conversation
+1. Read the most recent huddle output: the recorded findings file (Step 2), or the conversation while the panel is in it
 2. Extract the persona names used
 3. Frame the new question (Step 1)
 4. Run personas with abbreviated prompts that reference the prior output (Step 3). If the panel ran as agents that are still addressable, message those same agents (in Claude Code, `SendMessage` to each agent) rather than spawning new ones: each keeps the brief and its own argument, so the follow-up costs one message per lens
@@ -153,7 +153,7 @@ Name the lead by the decision's center of gravity and record it ("Lead: Travis, 
 Each persona gets the SAME brief; disagreement is expected and valuable. Run the panel in parallel so the first response doesn't anchor the others, as separate agents when the ruling binds. Panelists can run on sonnet; the lead and synthesis need opus. The lead rebuts and closes in its lane; the orchestrators synthesize.
 
 **Seats:**
-- **Opposition.** When the proposal has an obvious overreach (a cut, a rewrite, minimalism winning unopposed), one lens is assigned the opposite position. Easy agreement is the signal it was needed.
+- **Opposition.** When the proposal has an obvious overreach (a cut, a rewrite, minimalism winning unopposed), one lens is assigned the opposite position. A panel that agrees easily without one seats it after the fact, before synthesis.
 - **Fresh eyes.** A huddle reviewing work seats at least one panelist who did not plan it.
 
 **Fact-check before the lead.** When the panel returns, the process orchestrator checks the load-bearing claims that name no check, in the brief or in a panelist's argument, before the lead sees them. A wrong fact inside one lens reads as a position, and the other lenses argue with it instead of checking it. A check names its instrument, and the instrument must answer the claim: `git log -S` counts occurrences, so it cannot show when a line was last edited (`-G` can). Evidence that lands after the panel ran goes to the lead and synthesis labelled *the panel did not see this*. A panelist who finds a live defect reports it as a finding; argued as rhetoric, the best-argued room walks past the bug. The lead gets the panelists' verbatim text, not a paraphrase.
@@ -209,6 +209,7 @@ Lead: [persona] -- [why this lane leads]. Orchestrators: Clara (curatorial) + Cl
 [rebuttal and close, in-lane, on the panel's output and the fact-check]
 
 ### Tensions
+- Counts: agreed N, disputed N, deleted N, dropped N
 - [where they agree]
 - [where they disagree]
 - [irreconcilable trade-offs]
