@@ -6,10 +6,10 @@ difficulty: "advanced"
 model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-logging', 'pb-incident', 'pb-sre-practices', 'pb-performance', 'pb-maintenance']
-last_reviewed: "2026-02-09"
+last_reviewed: "2026-11-04"
 last_evolved: ""
-version: "1.0.0"
-version_notes: "v2.10.0 baseline"
+version: "1.0.1"
+version_notes: "v1.0.1: Nested samples use a 4-backtick outer fence, so the inner block no longer ends the sample and the page after it renders as prose, not code."
 breaking_changes: []
 ---
 # Observability & Monitoring Design
@@ -614,7 +614,7 @@ When alert fires, have dashboard that shows:
 
 When alert fires, on-call engineer needs a runbook:
 
-```markdown
+````markdown
 # Alert: API P99 Latency High
 
 ## Quick Diagnosis (5 min)
@@ -665,7 +665,7 @@ If you can't diagnose in 10 minutes:
 - Page database expert (if DB slow)
 - Page infrastructure expert (if resource constrained)
 - Declare incident if affecting customers
-```
+````
 
 ---
 

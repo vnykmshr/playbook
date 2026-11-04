@@ -6,10 +6,10 @@ difficulty: "advanced"
 model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-repo-readme', 'pb-documentation', 'pb-repo-enhance']
-last_reviewed: "2026-02-09"
+last_reviewed: "2026-11-04"
 last_evolved: ""
-version: "1.0.0"
-version_notes: "v2.10.0 baseline"
+version: "1.0.1"
+version_notes: "v1.0.1: Nested samples use a 4-backtick outer fence, so the inner block no longer ends the sample and the page after it renders as prose, not code."
 breaking_changes: []
 ---
 # Write Technical Blog Post
@@ -90,14 +90,14 @@ Include a **Mermaid diagram** showing:
 - Data flow
 - Key interactions
 
-```markdown
+````markdown
 ```mermaid
 graph LR
     A[Producer] --> B[Queue]
     B --> C[Worker Pool]
     C --> D[Handler]
 ```
-```
+````
 
 ### 6. Usage Examples
 Clear code snippets showing:
@@ -143,7 +143,7 @@ Ready for direct publication or review.
 
 ## Example Outline
 
-```markdown
+````markdown
 # [Project Name]: [Subtitle]
 
 ## Introduction
@@ -201,7 +201,7 @@ Ready for direct publication or review.
 ## Conclusion
 
 [Summary and call to action]
-```
+````
 
 ---
 

@@ -6,10 +6,10 @@ difficulty: "beginner"
 model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-adr', 'pb-review-docs', 'pb-repo-readme', 'pb-repo-blog', 'pb-onboarding']
-last_reviewed: "2026-06-10"
+last_reviewed: "2026-11-04"
 last_evolved: "2026-06-10"
-version: "1.1.0"
-version_notes: "v1.1.0: Q2 2026 staleness audit -- bump Node 18 install pins to Node 22 (current LTS; Node 18 EOL Apr 2025), including the 'keep version pins fresh' before/after example that had itself gone stale. v2.10.0 baseline."
+version: "1.1.1"
+version_notes: "v1.1.1: Nested samples use a 4-backtick outer fence, so the inner block no longer ends the sample and the page after it renders as prose, not code."
 breaking_changes: []
 ---
 # Writing Great Engineering Documentation
@@ -259,7 +259,7 @@ User → Payment API → Stripe
 
 **Purpose**: Help someone follow a process or handle an event.
 
-```markdown
+````markdown
 # Release Process
 
 ## Overview
@@ -290,7 +290,7 @@ Edit CHANGELOG.md:
 - Include author names
 
 Example:
-```
+````
 ## [1.2.3] - 2026-01-11
 ### Added
 - Support for bulk user import (#234)
@@ -299,7 +299,7 @@ Example:
 - Bug: Orders not showing in some cases (#240)
 ### Breaking
 - Removed deprecated /v1/orders endpoint
-```
+````
 
 ### 3. Tag Commit
 ```bash
@@ -347,7 +347,7 @@ If something breaks:
 ```
 Fast: < 2 minutes
 Safe: Previous version still tested
-```
+````
 
 ---
 
@@ -413,7 +413,7 @@ Use the create_order function to create orders.
 ```
 
 Good:
-```
+````
 Use the create_order function to create orders:
 
 ```python
@@ -430,7 +430,7 @@ print(f"Order created: {order.id}")
 ## Common mistakes
 - Empty items list (will raise ValueError)
 - Forgetting payment method (will fail at checkout)
-```
+````
 
 ### 4. Keep It Updated
 
@@ -558,7 +558,7 @@ Good:
 
 ### README.md Template
 
-```markdown
+````markdown
 # Project Name
 
 Short description of what this does.
@@ -594,7 +594,7 @@ Visit http://localhost:3000
 - Slack: #engineering
 - Issues: GitHub issues
 - Email: team@example.com
-```
+````
 
 ### API Documentation Template
 

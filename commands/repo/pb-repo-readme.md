@@ -6,10 +6,10 @@ difficulty: "advanced"
 model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-repo-about', 'pb-repo-blog', 'pb-repo-enhance', 'pb-documentation']
-last_reviewed: "2026-10-03"
+last_reviewed: "2026-11-04"
 last_evolved: ""
-version: "1.1.0"
-version_notes: "v1.1.0: Guidelines: the README states every limitation in the design docs that would change a reader's decision to adopt. v2.10.0 baseline"
+version: "1.1.1"
+version_notes: "v1.1.1: Nested samples use a 4-backtick outer fence, so the inner block no longer ends the sample and the page after it renders as prose, not code."
 breaking_changes: []
 ---
 # Generate Project README
@@ -80,16 +80,16 @@ Brief description of purpose (one line).
 ### 4. Installation
 
 **Go:**
-```markdown
+````markdown
 ## Installation
 
 ```bash
 go get github.com/user/project
 ```
-```
+````
 
 **Node:**
-```markdown
+````markdown
 ## Installation
 
 ```bash
@@ -97,27 +97,27 @@ npm install package-name
 # or
 yarn add package-name
 ```
-```
+````
 
 **Python:**
-```markdown
+````markdown
 ## Installation
 
 ```bash
 pip install package-name
 ```
-```
+````
 
 ### 5. Quick Start
 Minimal runnable example that demonstrates core functionality.
 
-```markdown
+````markdown
 ## Quick Start
 
 ```go
 // Minimal example showing primary use case
 ```
-```
+````
 
 ### 6. Usage / API
 - Primary functions or methods
@@ -172,7 +172,7 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
 
 ## Template
 
-```markdown
+````markdown
 # Project Name
 
 One-line description of what this does.
@@ -221,7 +221,7 @@ One-line description of what this does.
 ## License
 
 MIT
-```
+````
 
 ---
 

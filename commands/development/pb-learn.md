@@ -9,7 +9,7 @@ related_commands: ['pb-debug', 'pb-review-incoming', 'pb-resume', 'pb-documentat
 last_reviewed: "2026-11-04"
 last_evolved: "2026-08-03"
 version: "1.1.1"
-version_notes: "v1.1.1: Body prose drops spaced double hyphens."
+version_notes: "v1.1.1: Body prose drops spaced double hyphens. Nested samples use a 4-backtick outer fence, so the inner block no longer ends the sample and the page after it renders as prose, not code."
 breaking_changes: []
 ---
 # Pattern Learning
@@ -151,7 +151,7 @@ mkdir -p ~/.claude/learned
 
 ### Error Resolution Pattern
 
-```markdown
+````markdown
 # TypeScript: Cannot find module with .js extension
 
 ## Problem
@@ -190,11 +190,11 @@ don't have this issue. If using a bundler (webpack, vite), use
 ## Discovered
 
 2026-01-21, playbook project, debugging module resolution
-```
+````
 
 ### Debugging Technique Pattern
 
-```markdown
+````markdown
 # Debug React useEffect Running Twice
 
 ## Problem
@@ -238,11 +238,11 @@ Don't disable Strict Mode - fix the underlying issue instead.
 ## Discovered
 
 2026-01-21, investigating "duplicate API calls" issue
-```
+````
 
 ### Workaround Pattern
 
-```markdown
+````markdown
 # Jest ESM Modules: SyntaxError unexpected token export
 
 ## Problem
@@ -271,7 +271,7 @@ Alternative: migrate project to native ESM or use vitest.
 ## Discovered
 
 2026-01-21, adding nanoid to project
-```
+````
 
 ---
 

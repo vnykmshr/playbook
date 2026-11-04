@@ -6,10 +6,10 @@ difficulty: "advanced"
 model_hint: "opus"
 execution_pattern: "sequential"
 related_commands: ['pb-incident', 'pb-sre-practices', 'pb-database-ops', 'pb-deployment', 'pb-maintenance']
-last_reviewed: "2026-06-10"
+last_reviewed: "2026-11-04"
 last_evolved: ""
-version: "1.0.0"
-version_notes: "v2.10.0 baseline"
+version: "1.0.1"
+version_notes: "v1.0.1: Nested samples use a 4-backtick outer fence, so the inner block no longer ends the sample and the page after it renders as prose, not code."
 breaking_changes: []
 ---
 # Disaster Recovery
@@ -225,7 +225,7 @@ echo "=== Backup verification PASSED ==="
 
 When automated failover isn't possible or appropriate:
 
-```markdown
+````markdown
 ## Database Failover Runbook
 
 ### Pre-Conditions
@@ -270,7 +270,7 @@ When automated failover isn't possible or appropriate:
 - [ ] Document what happened
 - [ ] Schedule postmortem
 - [ ] Plan failback (when original primary is repaired)
-```
+````
 
 ### Automated Failover
 

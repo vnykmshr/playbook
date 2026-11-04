@@ -6,10 +6,10 @@ difficulty: "intermediate"
 model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-documentation', 'pb-preamble', 'pb-design-rules', 'pb-standards', 'pb-review-docs']
-last_reviewed: "2026-07-13"
+last_reviewed: "2026-11-04"
 last_evolved: "2026-07-13"
-version: "1.4.0"
-version_notes: "v1.4.0: Add Boundary & Authority section (lane, routes, collision-pair callout, domain authority); drop legacy footer."
+version: "1.4.1"
+version_notes: "v1.4.1: Nested samples use a 4-backtick outer fence, so the inner block no longer ends the sample and the page after it renders as prose, not code."
 breaking_changes: []
 ---
 
@@ -185,7 +185,7 @@ See the schema for details.
 Why this fails: Unclear who this is for. Assumes readers know Alembic. No example. No rationale.
 
 **Good pattern:**
-```markdown
+````markdown
 # Database Migrations
 
 **For:** Backend developers, DevOps engineers
@@ -213,7 +213,7 @@ A: Alembic tried to create a column that exists. Your local DB state is ahead of
    Reset: `alembic downgrade base && alembic upgrade head`
 
 See [Advanced Migrations](/docs/advanced-migrations.md) for complex scenarios.
-```
+````
 
 Why this works:
 - Audience is explicit (backend devs, DevOps)
@@ -275,7 +275,7 @@ The API returns HTTP status codes and JSON error responses.
 Why this fails: That's not documentation; that's describing the format. Reader still doesn't know what to do.
 
 **Good pattern:**
-```
+````
 # Handling API Errors
 
 Errors include HTTP status code + JSON response:
@@ -340,7 +340,7 @@ A: This means the server crashed. These are logged internally.
 A: Check response headers for `X-RateLimit-Remaining` and `X-RateLimit-Reset`.
    - If `Remaining: 0`, you're about to be rate limited
    - `Reset: timestamp` tells you when limit resets
-```
+````
 
 Why this works:
 - Explains what errors are
@@ -364,7 +364,7 @@ To deploy, SSH into prod-server-1 and run `./deploy.sh`.
 Why this fails: If deploy.sh changes or prod-server-1 is replaced, documentation is stale. No way to know.
 
 **Good pattern:**
-```
+````
 ## Deploying to Production
 
 **Current deployment method (2026-02-12):**
@@ -384,7 +384,7 @@ Manual deployment (if automation fails):
 ssh deploy@prod-1.internal
 cd /app && ./scripts/emergency-deploy.sh v2.0.0
 ```
-```
+````
 
 Why this works:
 - Links to actual configuration (not copy/pasted)
@@ -511,7 +511,7 @@ GET /users/:id
 Why this fails: Doesn't explain what users represent. No examples. No error handling.
 
 **AFTER (Reader-centric):**
-```markdown
+````markdown
 # User Management API
 
 Users represent people with accounts in our system. This API lets you create,
@@ -563,7 +563,7 @@ curl -X PATCH https://api.example.com/v1/users/user_abc123 \
 
 **Q: What if user creation fails?**
 A: See [Error Codes](/docs/api-errors.md) for troubleshooting.
-```
+````
 
 Why this works:
 - Context first (what are users?)
@@ -585,7 +585,7 @@ Configuration is environment-specific.
 Why this fails: Doesn't explain why Redis. Doesn't explain when to cache. No guidance on TTL values.
 
 **AFTER (Explicit):**
-```markdown
+````markdown
 # Caching Strategy
 
 ## Why Cache?
@@ -633,7 +633,7 @@ def get_user(user_id, cache=None):
 - Authentication/security-sensitive data (unless you understand the risks)
 - Data that must be current (prices, inventory)
 - Data you can generate faster than cache lookup
-```
+````
 
 Why this works:
 - Context first (why cache?)
