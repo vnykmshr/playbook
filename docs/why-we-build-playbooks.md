@@ -74,7 +74,7 @@ The Preamble establishes four core principles about collaboration:
 
 ### Design Rules: What We Build
 
-Design Rules are 17 classical principles organized into 4 clusters:
+Design Rules are 18 rules: 17 classical principles in 4 clusters, plus Attention:
 
 1. **CLARITY** - Systems are obviously correct; interfaces are unsurprising
    - Clarity, Least Surprise, Silence, Representation
@@ -86,7 +86,10 @@ Design Rules are 17 classical principles organized into 4 clusters:
    - Robustness, Repair, Diversity, Optimization
 
 4. **EXTENSIBILITY** - Systems designed to adapt and evolve
-   - Modularity, Economy, Generation, Extensibility
+   - Modularity, Economy, Generation, Extensibility, Transparency
+
+5. **ATTENTION** - Focus treated as a finite resource
+   - Attention
 
 **In practice:** Code review checks "Does this embody Clarity?" not just "Is this correct?" Architecture decisions are evaluated against design rules. When design rules conflict (Simplicity vs. Robustness), the decision framework makes trade-offs explicit.
 
@@ -145,7 +148,7 @@ The playbook isn't a set of independent commands. It's an **integrated system** 
 Two documents establish the complete philosophy:
 
 - `/pb-preamble` - How teams think together (peer collaboration, psychological safety, correctness)
-- `/pb-design-rules` - What teams build (17 classical design principles in 4 clusters)
+- `/pb-design-rules` - What teams build (18 rules: 17 classical in 4 clusters, plus Attention)
 
 Every command in the playbook assumes both frameworks. Every workflow integrates both.
 
@@ -556,7 +559,7 @@ Quality becomes the default. Not because of individual heroics, but because:
 Understand how teams think together: peer collaboration, challenge assumptions, correctness over agreement.
 
 **[Design Rules →](design-rules-quick-ref.md)**
-Understand what you build: 17 principles organized in 4 clusters (Clarity, Simplicity, Resilience, Extensibility).
+Understand what you build: 18 rules, 17 classical principles in 4 clusters (Clarity, Simplicity, Resilience, Extensibility) plus Attention.
 
 ### Then Pick Your Scenario
 

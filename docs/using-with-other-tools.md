@@ -13,7 +13,7 @@ The underlying patterns work with **any agentic development tool** - different f
 **What it is:** How you think together and what you build
 
 - **Preamble:** Challenge assumptions. Prefer correctness over agreement. Think like peers.
-- **Design Rules:** Clarity, Simplicity, Resilience, Extensibility. 17 classical principles.
+- **Design Rules:** Clarity, Simplicity, Resilience, Extensibility. 18 rules: 17 classical principles in these 4 clusters, plus Attention.
 - **BEACONs:** 9 guiding principles for code quality, decision-making, team dynamics
 
 **Portability:** Works in **any tool, any language, any team**. These are universal.

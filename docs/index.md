@@ -17,7 +17,7 @@ The playbook is a **decision framework** that codifies how to approach developme
 
 1. **Development quality depends on how teams think together**, not individual brilliance. The **Preamble** establishes principles about collaboration that make psychological safety and correctness the default.
 
-2. **System quality depends on sound design principles**, not just clever engineering. The **Design Rules** establish 17 classical principles organized in 4 clusters (Clarity, Simplicity, Resilience, Extensibility) that guide every technical decision.
+2. **System quality depends on sound design principles**, not just clever engineering. The **Design Rules** establish 18 rules, 17 classical principles in 4 clusters (Clarity, Simplicity, Resilience, Extensibility) plus Attention, that guide every technical decision.
 
 **[Read the full narrative →](why-we-build-playbooks.md)** - Why the playbook exists, how both frameworks solve real problems, and how it all works together as an integrated system.
 

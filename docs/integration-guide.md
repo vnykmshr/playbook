@@ -59,7 +59,7 @@ These establish baseline understanding and guiding philosophy. **Every engineer 
 |---|---------|---------|--------------|------------|------|
 | 1 | **pb-guide** | Master SDLC framework | 11 phases from intake through post-release | Reference for all other commands | All |
 | 2 | **pb-preamble** | Peer collaboration philosophy | Correctness, critical thinking, truth, holistic perspective | Foundation for all team interactions | All |
-| 3 | **pb-design-rules** | Technical design principles | 17 rules in 4 clusters (Clarity, Simplicity, Resilience, Extensibility) | When making architectural decisions | M/L |
+| 3 | **pb-design-rules** | Technical design principles | 18 rules: 17 classical in 4 clusters (Clarity, Simplicity, Resilience, Extensibility), plus Attention | When making architectural decisions | M/L |
 | 4 | **pb-standards** | Working principles and collaboration | Decision-making, scope discipline, quality standards | Before starting any work | All |
 | 5 | **pb-documentation** | Technical documentation at 5 levels | Code comments, APIs, system design, process docs, FAQ | When writing docs (inline with code per /pb-cycle) | M/L |
 | 6 | **pb-templates** | Reusable SDLC templates | Commit strategy, checklists, testing standards | When creating commits, PRs, tests | All |

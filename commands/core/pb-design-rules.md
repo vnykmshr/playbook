@@ -8,7 +8,7 @@ execution_pattern: "sequential"
 related_commands: ['pb-preamble', 'pb-calm-design', 'pb-standards', 'pb-adr', 'pb-patterns']
 last_reviewed: "2026-11-04"
 version: "1.3.1"
-version_notes: "v1.3.1: The anchor heading and the trade-offs section say 18 rules; the four clusters still hold the first 17."
+version_notes: "v1.3.1: The anchor heading and the trade-offs section say 18 rules; the four clusters still hold the first 17, and the anchor names Attention as the newer fifth theme."
 breaking_changes: []
 ---
 # Design Rules: Core Technical Principles
@@ -28,7 +28,7 @@ breaking_changes: []
 
 ## Anchor: Why These 18 Rules Matter
 
-These are 17 classical software design principles that have proven themselves across decades of software engineering. They're not new. They're not trendy. But they're foundational because they describe how to build systems that work, last, and adapt.
+These are 17 classical software design principles that have proven themselves across decades of software engineering. They're not new. They're not trendy. But they're foundational because they describe how to build systems that work, last, and adapt. Rule 18, Attention, is newer and joins them as a fifth theme.
 
 **The critical insight:** When a team uses preamble thinking (challenge assumptions, prefer correctness over agreement, think like peers), they need design rules to guide WHAT they're building. Without design rules, good collaboration produces poorly-designed systems. Without preamble thinking, teams debate design rules endlessly without resolution.
 

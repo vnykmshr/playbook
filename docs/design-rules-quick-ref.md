@@ -4,14 +4,14 @@
 
 ---
 
-## The 4 Clusters
+## The 4 Clusters and Attention
 
 | Cluster | Rules | Focus | When It Matters |
 |---------|-------|-------|-----------------|
 | **CLARITY** | Clarity, Least Surprise, Silence, Representation | Understandability | APIs, interfaces, code readability |
 | **SIMPLICITY** | Simplicity, Parsimony, Separation, Composition | Design Discipline | Architecture, scope, features |
 | **RESILIENCE** | Robustness, Repair, Diversity, Optimization | Reliability & Evolution | Error handling, failures, learning |
-| **EXTENSIBILITY** | Modularity, Economy, Generation, Extensibility | Long-term Growth | Architecture, future features |
+| **EXTENSIBILITY** | Modularity, Economy, Generation, Extensibility, Transparency | Long-term Growth | Architecture, future features |
 | **ATTENTION** | Attention | Focus as a resource | Alerts, notifications, defaults |
 
 ---

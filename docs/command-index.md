@@ -163,7 +163,7 @@ Self-sufficient thinking partner methodology for expert-quality collaboration.
 | `/pb-standards` | Coding standards, quality principles |
 | `/pb-documentation` | Writing technical docs at 5 levels |
 | `/pb-sam-documentation` | Documentation & clarity review (reader-centric, assumption surfacing, structural clarity) |
-| `/pb-design-rules` | 18 classical design principles (Clarity, Simplicity, Resilience, Extensibility) |
+| `/pb-design-rules` | 18 rules: 17 classical in 4 clusters (Clarity, Simplicity, Resilience, Extensibility), plus Attention |
 | `/pb-preamble-async` | Async/distributed team collaboration patterns |
 | `/pb-preamble-power` | Power dynamics and psychological safety |
 | `/pb-preamble-decisions` | Decision-making and constructive dissent |
