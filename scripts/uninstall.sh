@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Engineering Playbook Uninstaller
-# Removes symlinks from ~/.claude/commands/
+# Removes the command, skill and DX script links install.sh made
 
 set -e
 
@@ -51,10 +51,34 @@ while IFS= read -r file; do
     fi
 done < <(find "$COMMANDS_DIR" -name "*.md" -type f | sort)
 
+# Skill and DX script links, when they point into this repo
+SKILLS_DIR="$REPO_DIR/skills"
+if [ -d "$SKILLS_DIR" ]; then
+    SKILLS_PHYS="$(cd "$SKILLS_DIR" && pwd -P)"
+    for link in "$HOME/.claude/skills"/*; do
+        if [ -L "$link" ] && link_owned_by "$link" "$SKILLS_PHYS" 1; then
+            rm -f "$link"
+            echo "  ✓ Removed: ~/.claude/skills/$(basename "$link")"
+            removed=$((removed + 1))
+        fi
+    done
+fi
+SCRIPTS_PHYS="$(cd "$SCRIPT_DIR" && pwd -P)"
+for script in context-bar.sh check-context.sh; do
+    link="$HOME/.claude/$script"
+    if [ -L "$link" ] && link_owned_by "$link" "$SCRIPTS_PHYS" 1; then
+        rm -f "$link"
+        echo "  ✓ Removed: ~/.claude/$script"
+        removed=$((removed + 1))
+    fi
+done
+
 echo ""
 echo "Uninstall Summary:"
 echo "  Removed: $removed"
 echo "  Skipped: $skipped (same-named, not ours; still installed)"
 echo "  Not found: $not_found"
 echo ""
-echo "Uninstall complete!"
+echo "Left in place: ~/.claude/hooks/external-action-gate.sh (a copy) and its settings.json"
+echo "entry. Removing the copy alone leaves settings.json calling a missing hook; remove both"
+echo "by hand to turn the gate off."

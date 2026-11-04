@@ -154,3 +154,16 @@ def test_install_never_removes_a_users_real_skill_dir_or_script(tmp_path: Path):
     assert not bar.is_symlink() and "echo mine" in bar.read_text(), "a real script must survive install"
     assert result.stdout.count("Skipped: ~/.claude/") == 2, result.stdout
 
+
+def test_uninstall_removes_every_link_install_made_but_the_hook_copy(tmp_path: Path):
+    assert run_install(tmp_path).returncode == 0
+    claude = tmp_path / ".claude"
+    assert (claude / "skills" / "pb-threat-hunt").is_symlink() and (claude / "context-bar.sh").is_symlink()
+
+    result = run_uninstall(tmp_path)
+
+    assert result.returncode == 0, result.stderr
+    left = sorted(str(p.relative_to(claude)) for p in claude.rglob("*") if p.is_symlink())
+    assert left == [], f"links install made and uninstall left: {left}"
+    assert (claude / "hooks" / "external-action-gate.sh").is_file(), "the hook copy stays (settings.json calls it)"
+    assert "Left in place: ~/.claude/hooks/external-action-gate.sh" in result.stdout
