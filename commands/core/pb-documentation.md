@@ -6,9 +6,9 @@ difficulty: "beginner"
 model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-adr', 'pb-review-docs', 'pb-repo-readme', 'pb-repo-blog', 'pb-onboarding']
-last_reviewed: "2026-06-10"
-version: "1.1.1"
-version_notes: "v1.1.1: Nested samples use a 4-backtick outer fence, so they render as written."
+last_reviewed: "2026-11-04"
+version: "1.1.2"
+version_notes: "v1.1.2: Keep It Updated: each reference claim is definitionally stable or machine-checked, never in between."
 breaking_changes: []
 ---
 # Writing Great Engineering Documentation
@@ -433,7 +433,7 @@ print(f"Order created: {order.id}")
 
 ### 4. Keep It Updated
 
-**Stale docs are worse than no docs.**
+**Stale docs are worse than no docs.** In a reference doc, each claim is either definitionally stable or machine-checked, never in between: a claim nothing checks, a checklist included, outlives what it described.
 
 Outdated docs:
 ```
