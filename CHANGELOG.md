@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v2.33.0] - 2026-11-04
+
 The evolve cycle gets its intake: a feedback harvester reads every repo's notes into one digest, and `/pb-evolve` 2.0.0 closes a cycle only when every key has a ruling. The gate hook now matches a normalised command, and install updates a hook copy you have not edited.
 
 **After upgrading:** `git pull`, then re-run `scripts/install.sh`: an unedited hook copy is replaced, which carries the security fix below. Running `/pb-evolve` yourself: `python3 scripts/feedback-harvest.py --init` once per machine.
@@ -2004,6 +2006,7 @@ When releasing a new version:
 
 ---
 
+[v2.33.0]: https://github.com/vnykmshr/playbook/releases/tag/v2.33.0
 [v2.32.0]: https://github.com/vnykmshr/playbook/releases/tag/v2.32.0
 [v2.31.0]: https://github.com/vnykmshr/playbook/releases/tag/v2.31.0
 [v2.30.0]: https://github.com/vnykmshr/playbook/releases/tag/v2.30.0
