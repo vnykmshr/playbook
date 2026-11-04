@@ -6,9 +6,9 @@ difficulty: "advanced"
 model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-hardening', 'pb-security', 'pb-deployment']
-last_reviewed: "2026-02-09"
-version: "1.0.0"
-version_notes: "v2.10.0 baseline"
+last_reviewed: "2026-11-04"
+version: "1.0.1"
+version_notes: "v1.0.1: History purge and secret scanning point to /pb-git-hygiene (git filter-repo) and gitleaks; the git filter-branch recipe and the git-secrets block are gone."
 breaking_changes: []
 ---
 # Secrets Management
@@ -490,13 +490,8 @@ git log -p --all -S 'leaked_secret_value'
 # Check if secret was in any branch
 git branch --contains <commit_with_secret>
 
-# Remove from git history if needed
-git filter-branch --force --index-filter \
-  'git rm --cached --ignore-unmatch path/to/secret/file' \
-  --prune-empty --tag-name-filter cat -- --all
-
-# Or use BFG Repo-Cleaner (faster)
-bfg --delete-files .env
+# Remove it from history only after rotation, never instead of it:
+# /pb-git-hygiene covers git filter-repo and the force-push a rewrite needs
 ```
 
 ### Post-Incident
@@ -517,22 +512,7 @@ bfg --delete-files .env
 
 ### Prevention Tools
 
-```bash
-# Install git-secrets
-brew install git-secrets
-
-# Configure for repository
-cd your-repo
-git secrets --install
-git secrets --register-aws  # Block AWS credentials
-
-# Add custom patterns
-git secrets --add 'password\s*=\s*.+'
-git secrets --add 'api[_-]?key\s*=\s*.+'
-
-# Scan existing history
-git secrets --scan-history
-```
+Scan commits and history with gitleaks, as `/pb-preflight` 1.1 and this repo's CI do; `/pb-git-hygiene` covers the setup.
 
 **Pre-commit hook example:**
 ```bash
@@ -552,7 +532,7 @@ fi
 
 ### Pre-Deployment
 
-- [ ] No secrets in code (run `git secrets --scan`)
+- [ ] No secrets in code or history (gitleaks; see `/pb-preflight` 1.1)
 - [ ] All secrets encrypted (SOPS or secrets manager)
 - [ ] `.env` files in `.gitignore`
 - [ ] Secrets manager access configured
@@ -596,8 +576,7 @@ Production (secrets manager or SOPS)
 | Encrypt with SOPS | `sops -e file.env > file.env.enc` |
 | Decrypt with SOPS | `sops -d file.env.enc` |
 | Edit encrypted file | `sops file.env.enc` |
-| Scan for secrets | `git secrets --scan` |
-| Scan history | `git secrets --scan-history` |
+| Scan for secrets, history included | gitleaks (see `/pb-git-hygiene`) |
 
 ---
 

@@ -782,7 +782,6 @@ LINE_BUDGET_BASELINE = {
     "pb-repo-docsite.md": 879,
     "pb-review-microservice.md": 841,
     "pb-sam-documentation.md": 711,
-    "pb-secrets.md": 612,
     "pb-security.md": 739,
     "pb-ship.md": 730,
     "pb-sre-practices.md": 661,
