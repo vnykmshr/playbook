@@ -41,6 +41,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- **Stale counts in the docs:** two pages said 114 commands and CONTRIBUTING said 13 required fields (the schema has 11 of 17). They name the source instead of a number.
 - **README:** the "three-command daily ritual" listed five steps, and "no breaking changes without a major release" said retirements could not happen; it now says a breaking change bumps the major version and is listed in the CHANGELOG and the command's `breaking_changes`.
 - **The command index lacked 12 of 112 commands**, among them `/pb-preferences` (step one of the README), `/pb-forge`, `/pb-sketch`, `/pb-spec`, `/pb-preflight` and `/pb-threat-hunt`. A test now fails when a command is missing from `docs/command-index.md`.
 - **`llms.txt` linked the command index at a URL that 404s.** It names the built page, and a test fails when a URL into the reference site names no page `mdbook/SUMMARY.md` builds.

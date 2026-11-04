@@ -24,7 +24,7 @@ The underlying patterns work with **any agentic development tool** - different f
 
 ### Layer 2: Commands (95% Portable)
 
-**What it is:** 114 structured prompts covering full SDLC (planning → dev → review → ship)
+**What it is:** structured prompts covering the full SDLC (planning → dev → review → ship)
 
 - **Command content:** Universal. Patterns, questions, checklists don't care about your tool.
 - **Invocation:** Tool-specific. Claude Code users type `/pb-start`. You adapt to your tool.
