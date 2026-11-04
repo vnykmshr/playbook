@@ -7,7 +7,7 @@ keys each item on its normalised text, and writes a digest of the keys the
 ledger has not dispositioned. Only intake (`/pb-evolve` Step 0) writes the ledger.
 
 Exit: 0 every key dispositioned, 1 undisposed keys or a taken key seen again, 2 instrument fault
-(no feedback found at all, a malformed ledger, or any error).
+(no feedback found at all, a malformed ledger, a repo git cannot list, or any error).
 
 Usage:
     python3 scripts/feedback-harvest.py
@@ -37,6 +37,13 @@ HEADING = re.compile(
     r"(?:[ \t]*(?:\*\*[ \t]*)?[:.][ \t]*(?:\*\*)?[ \t]*(?P<rest>.*)|(?(h)[ \t]*(?:\*\*)?[ \t]*|(?!)))$",
     re.IGNORECASE,
 )
+# A line that starts like a heading (list marker, quote, indent, `#`, emphasis allowed)
+# but is not one. Listed in the digest so a shape HEADING drops is seen, never keyed.
+NEAR_MISS = re.compile(
+    r"^[ \t]{0,3}(?:>[ \t]*)*(?:(?:[-*+]|\d+[.)])[ \t]+)?(?:#{1,6}[ \t]+)?[*_]{0,2}"
+    r"(?:[a-z]+[ \t]*/[ \t]*)?playbook[ \t-]+feedback(?![a-z0-9])",
+    re.IGNORECASE,
+)
 BULLET = re.compile(r"^(?P<indent>[ \t]*)(?:[-*+]|\d+[.)])[ \t]+(?P<text>.*)$")
 MD_HEADING = re.compile(r"^#{1,6}([ \t]|$)")
 BOLD_LABEL = re.compile(r"^\*\*[^*]+\*\*")
@@ -61,6 +68,16 @@ class Item:
     where: str       # path:line
     when: str        # YYYY-MM-DD, prefixed "~" when it is the file's mtime
     memory: bool
+    nested: bool = False  # inside a git repo nested under todos/: the owner's private companion
+
+
+@dataclass
+class Harvest:
+    items: list[Item]
+    empty: list[str]     # headings with no item, path:line
+    near: list[str]      # near-miss headings, path:line
+    unlisted: list[str]  # repos git could not list
+    files: int           # files carrying a heading or a near miss
 
 
 def normalise(text: str) -> str:
@@ -142,6 +159,15 @@ def extract(text: str) -> tuple[list[tuple[int, str]], list[int]]:
     return items, empty
 
 
+def near_misses(text: str) -> list[int]:
+    """1-based numbers of unfenced lines that start like a heading and are not one."""
+    lines = text.split("\n")
+    return [
+        n + 1 for n, (line, ok) in enumerate(zip(lines, unfenced(lines)))
+        if ok and NEAR_MISS.match(line) and not HEADING.match(line)
+    ]
+
+
 def heading_date(lines: list[str], upto: int, today: str) -> str | None:
     """Date on the nearest markdown heading at or above line `upto` (0-based).
 
@@ -178,25 +204,31 @@ def tracked_todos(repo: Path) -> set[str] | None:
 
 
 def todo_files(todos: Path, tracked: set[str]):
-    """Markdown files under todos/, pruning scratchpad dirs before they are listed."""
+    """(path, inside a nested repo) per markdown file under todos/.
+
+    Scratchpad and .git dirs are pruned before they are listed. A dir holding .git starts a
+    nested repo; the parent tracks none of its files, so none are filtered out as tracked.
+    """
+    inside: dict[Path, bool] = {}
     for dirpath, dirnames, filenames in os.walk(todos):
-        rel = Path(dirpath).relative_to(todos)
+        here = Path(dirpath)
+        rel = here.relative_to(todos)
+        inside[here] = inside.get(here.parent, False) or ".git" in dirnames or ".git" in filenames
         dirnames[:] = sorted(
             d for d in dirnames
-            if not is_scratchpad(d)
+            if d != ".git"
+            and not is_scratchpad(d)
             and not (rel == Path(".") and d == "evolve")
             and not (rel == Path("inbox") and d.startswith("harvest-"))
         )
         for f in sorted(filenames):
             if f.endswith(".md") and not is_scratchpad(f):
-                path = Path(dirpath) / f
                 if str(Path("todos") / rel / f) not in tracked:
-                    yield path
+                    yield here / f, inside[here]
 
 
-def harvest_repos(root: Path) -> tuple[list[Item], list[str], int, list[str]]:
-    """(items, headings with no item as path:line, files carrying a heading, repos git could not list)."""
-    items, empty, files, unlisted = [], [], 0, []
+def harvest_repos(root: Path) -> Harvest:
+    h = Harvest([], [], [], [], 0)
     for todos in sorted(root.glob("*/*/todos")):
         repo = todos.parent
         if is_scratchpad(str(todos)) or not todos.is_dir():
@@ -204,23 +236,25 @@ def harvest_repos(root: Path) -> tuple[list[Item], list[str], int, list[str]]:
         source = f"{repo.parent.name}/{repo.name}"
         tracked = tracked_todos(repo)
         if tracked is None:
-            unlisted.append(str(repo))
+            h.unlisted.append(str(repo))
             continue
-        for path in todo_files(todos, tracked):
+        for path, nested in todo_files(todos, tracked):
             try:
                 text = path.read_text(errors="replace")
             except OSError:
                 continue
             found, none = extract(text)
-            if not found and not none:
+            near = near_misses(text)
+            if not found and not none and not near:
                 continue
-            files += 1
+            h.files += 1
             lines = text.split("\n")
-            empty += [f"{path}:{n}" for n in none]
+            h.empty += [f"{path}:{n}" for n in none]
+            h.near += [f"{path}:{n}" for n in near]
             for n, t in found:
                 when = heading_date(lines, n - 1, date.today().isoformat()) or mtime_date(path)
-                items.append(Item(item_key(t), t, source, f"{path}:{n}", when, False))
-    return items, empty, files, unlisted
+                h.items.append(Item(item_key(t), t, source, f"{path}:{n}", when, False, nested))
+    return h
 
 
 def harvest_memory(root: Path) -> tuple[list[Item], list[str]]:
@@ -247,28 +281,35 @@ def harvest_memory(root: Path) -> tuple[list[Item], list[str]]:
     return items, skipped
 
 
-def private_orgs(playbook: Path) -> frozenset[str]:
-    """Orgs listed one per line in <playbook>/todos/evolve/private-orgs: untracked, so no name ships."""
+def private_orgs(playbook: Path) -> tuple[frozenset[str], str]:
+    """(orgs, digest note) from <playbook>/todos/evolve/private-orgs, one per line: untracked,
+    so no name ships. A missing file is said in the digest, never silent."""
     path = playbook / "todos" / "evolve" / "private-orgs"
     if not path.exists():
-        return frozenset()
-    lines = (x.strip() for x in path.read_text().split("\n"))
-    return frozenset(x for x in lines if x and not x.startswith("#"))
+        return frozenset(), f"private-orgs missing ({path}): no source flagged by org"
+    lines = (x.strip().lower() for x in path.read_text().split("\n"))
+    orgs = frozenset(x for x in lines if x and not x.startswith("#"))
+    return orgs, f"private orgs: {len(orgs)} from {path}"
 
 
 def is_private(source: str, orgs: frozenset[str]) -> bool:
-    return any(source.startswith(f"{o}/") or f"-github-{o}-" in source for o in orgs)
+    """An org's repo, or a memory dir under it. Dir names encode / as -, so `acme` also
+    flags `acme-labs`: the ambiguity errs private."""
+    s = source.lower()
+    return any(s.startswith(f"{o}/") or f"-github-{o}-" in s or s.endswith(f"-github-{o}") for o in orgs)
 
 
-def read_ledger(path: Path) -> dict[str, tuple[str, str, str]]:
-    """key -> (disposition, version, date). Missing ledger is empty; malformed raises."""
+Ledger = dict[str, tuple[str, str, str, int]]
+
+
+def read_ledger(path: Path) -> Ledger:
+    """key -> (disposition, version, date, line). Missing ledger is empty; malformed raises."""
     if not path.exists():
         return {}
     rows = path.read_text().split("\n")
     if rows[0].split("\t") != LEDGER_HEADER:
         raise InstrumentFault(f"{path}:1: header must be {' '.join(LEDGER_HEADER)} (tab-separated)")
-    ledger: dict[str, tuple[str, str, str]] = {}
-    seen: dict[str, int] = {}
+    ledger: Ledger = {}
     for n, row in enumerate(rows[1:], start=2):
         if not row.strip():
             continue
@@ -282,14 +323,22 @@ def read_ledger(path: Path) -> dict[str, tuple[str, str, str]]:
             raise InstrumentFault(f"{path}:{n}: disposition {disp!r}: want {', '.join(DISPOSITIONS)} or dup-of:<key>")
         if not re.fullmatch(r"\d{4}-\d{2}-\d{2}", when):
             raise InstrumentFault(f"{path}:{n}: date {when!r} is not YYYY-MM-DD")
-        if key in seen:
-            raise InstrumentFault(f"{path}:{n}: key {key} repeats line {seen[key]}; edit that row instead")
-        seen[key] = n
-        ledger[key] = (disp, version, when)
-    for key, (disp, _, _) in ledger.items():
-        if disp.startswith("dup-of:") and ledger.get(disp[7:], ("dup-of:",))[0].startswith("dup-of:"):
-            raise InstrumentFault(f"{path}:{seen[key]}: {disp} names no key with its own disposition")
+        if key in ledger:
+            raise InstrumentFault(f"{path}:{n}: key {key} repeats line {ledger[key][3]}; edit that row instead")
+        ledger[key] = (disp, version, when, n)
+    for disp, _, _, n in ledger.values():
+        target = ledger.get(disp[7:]) if disp.startswith("dup-of:") else None
+        if disp.startswith("dup-of:") and (target is None or target[0].startswith("dup-of:")):
+            raise InstrumentFault(f"{path}:{n}: {disp} names no key with its own disposition")
     return ledger
+
+
+def ruling(ledger: Ledger, key: str) -> tuple[str, str] | None:
+    """(disposition, date) for a key, read through dup-of to its representative."""
+    row = ledger.get(key)
+    if row and row[0].startswith("dup-of:"):
+        row = ledger[row[0][7:]]
+    return (row[0], row[2]) if row else None
 
 
 def _show(repo: Path, spec: str) -> str | None:
@@ -344,12 +393,11 @@ def may_be_fixed(playbook: Path, text: str, newest: str) -> str | None:
 
 
 def render(
-    items: list[Item], ledger: dict[str, tuple[str, str, str]], empty: list[str], skipped: list[str],
-    playbook: Path, files: int, orgs: frozenset[str], unlisted: list[str],
-) -> tuple[str, int]:
+    h: Harvest, skipped: list[str], ledger: Ledger, playbook: Path, orgs: frozenset[str], orgs_note: str,
+) -> tuple[str, int, int]:
     """(digest markdown, undisposed keys, taken keys seen again)."""
     by_key: dict[str, list[Item]] = defaultdict(list)
-    for it in items:
+    for it in h.items:
         by_key[it.key].append(it)
 
     def newest(occ: list[Item]) -> str:
@@ -358,7 +406,7 @@ def render(
     def line(key: str, occ: list[Item]) -> list[str]:
         sources = sorted({o.source for o in occ})
         flags = []
-        if any(is_private(s, orgs) for s in sources):
+        if any(o.nested or is_private(o.source, orgs) for o in occ):
             flags.append("private")
         if fixed := may_be_fixed(playbook, occ[0].text, newest(occ)):
             flags.append(f"may be fixed: {fixed}")
@@ -371,22 +419,22 @@ def render(
         key, occ = kv
         return (-len({o.source for o in occ}), -int(newest(occ).lstrip("~").replace("-", "")), key)
 
+    def seen_again(occ: list[Item], r: tuple[str, str] | None) -> bool:
+        # Only a dated heading can recur: an mtime moves on any edit, so a memory file or an
+        # undated note would read as new evidence every time it is touched.
+        return bool(r) and r[0] == "taken" and any(not o.when.startswith("~") and o.when > r[1] for o in occ)
+
     undisposed = {k: v for k, v in by_key.items() if k not in ledger}
     repo_keys = sorted(((k, v) for k, v in undisposed.items() if not all(o.memory for o in v)), key=rank)
     mem_keys = sorted(((k, v) for k, v in undisposed.items() if all(o.memory for o in v)), key=rank)
-    # Only a dated heading can recur: an mtime moves on any edit, so a memory file or an
-    # undated note would read as new evidence every time it is touched.
-    recurred = [
-        (k, v) for k, v in by_key.items()
-        if k in ledger and ledger[k][0] == "taken"
-        and any(not o.when.startswith("~") and o.when > ledger[k][2] for o in v)
-    ]
-    headings = len({o.where for o in items if not o.memory}) + len(empty)
+    recurred = [(k, v) for k, v in by_key.items() if seen_again(v, ruling(ledger, k))]
+    headings = len({o.where for o in h.items if not o.memory}) + len(h.empty)
     md = [
         f"# Feedback digest {date.today().isoformat()}",
         "",
-        f"{headings} headings in {files} files; {len(items)} items, {len(by_key)} keys, "
-        f"{len(undisposed)} undisposed, {len(recurred)} seen again, {len({o.source for o in items})} sources.",
+        f"{headings} headings in {h.files} files; {len(h.items)} items, {len(by_key)} keys, "
+        f"{len(undisposed)} undisposed, {len(recurred)} seen again, {len({o.source for o in h.items})} sources; "
+        f"{len(h.near)} near misses, {len(h.unlisted)} repos unread. {orgs_note}.",
         "",
         "## Undisposed: repo notes",
         "",
@@ -402,15 +450,19 @@ def render(
         "",
         "## Headings with no item",
         "",
-        *[f"- `{e}`" for e in empty],
+        *[f"- `{e}`" for e in h.empty],
+        "",
+        "## Near-miss headings (start like the heading, are not one; no key, no exit)",
+        "",
+        *[f"- `{n}`" for n in h.near],
         "",
         "## Memory files with no description",
         "",
         *[f"- `{s}`" for s in skipped],
         "",
-        "## Repos skipped: git could not list their tracked files",
+        "## Repos unread: git could not list their tracked files",
         "",
-        *[f"- `{u}`" for u in unlisted],
+        *[f"- `{u}`" for u in h.unlisted],
         "",
     ]
     return "\n".join(md), len(undisposed), len(recurred)
@@ -430,13 +482,13 @@ def main(argv: list[str] | None = None) -> int:
     out = args.out or args.playbook / "todos" / "evolve"
     try:
         ledger = read_ledger(ledger_path)
-        items, empty, files, unlisted = harvest_repos(args.repos)
+        h = harvest_repos(args.repos)
         memory, skipped = harvest_memory(args.memory)
-        items += memory
-        orgs = private_orgs(args.playbook)
-        if not items and not empty:
+        h.items += memory
+        orgs, orgs_note = private_orgs(args.playbook)
+        if not h.items and not h.empty and not h.near:
             raise InstrumentFault(f"no feedback found under {args.repos} or {args.memory}: is the root right?")
-        md, undisposed, again = render(items, ledger, empty, skipped, args.playbook, files, orgs, unlisted)
+        md, undisposed, again = render(h, skipped, ledger, args.playbook, orgs, orgs_note)
         out.mkdir(parents=True, exist_ok=True)
         digest = out / f"digest-{date.today().isoformat()}.md"
         digest.write_text(md)
@@ -446,8 +498,12 @@ def main(argv: list[str] | None = None) -> int:
     except Exception as e:  # exit 1 means "undisposed keys": a crash must not read as that
         print(f"feedback-harvest: {type(e).__name__}: {e}", file=sys.stderr)
         return 2
-    print(f"{undisposed} undisposed, {again} seen again, of {len({i.key for i in items})} keys; digest {digest}")
-    return 1 if undisposed or again else 0
+    print(f"{undisposed} undisposed, {again} seen again, of {len({i.key for i in h.items})} keys; "
+          f"{len(h.near)} near misses; digest {digest}")
+    for repo in h.unlisted:  # an unread repo makes the digest incomplete: never a close
+        print(f"feedback-harvest: {repo}: git cannot list its files; run `git -C {repo} status`, fix, rerun",
+              file=sys.stderr)
+    return 2 if h.unlisted else 1 if undisposed or again else 0
 
 
 if __name__ == "__main__":

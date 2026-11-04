@@ -98,6 +98,46 @@ def test_heading_variants_still_match(heading: str):
     assert texts(f"{heading}\n- one\n")[-1] == "one"
 
 
+# The contract: a line is a heading, a near miss (listed, no key), or silent because the
+# words do not start it. A new shape is ruled against this table, not fixed in HEADING.
+@pytest.mark.parametrize("line, outcome", [
+    ("Playbook feedback:", "heading"),
+    ("**Patterns / playbook feedback:**", "heading"),
+    ("### Patterns / playbook feedback", "heading"),
+    ("## Playbook Feedback (v2.1)", "heading"),
+    ("**Playbook feedback**: inline", "heading"),
+    ("**Playbook feedback**", "near"),
+    ("Playbook feedback", "near"),
+    ("Playbook feedback (pb-forge)", "near"),
+    ("## Playbook feedback - 2026-11-03", "near"),
+    ("### Playbook feedback for pb-forge", "near"),
+    ("## Playbook feedback loop", "near"),
+    ("- **Playbook feedback:**", "near"),
+    ("  ## Playbook feedback", "near"),
+    ("> Playbook feedback:", "near"),
+    ("Playbook feedback harvesting runs before Step 1.", "near"),
+    ("## Q4 playbook feedback", "silent"),
+    ("Patterns and playbook feedback:", "silent"),
+    ("playbook feedbackish", "silent"),
+    ("The pause asks for playbook feedback: see pb-pause.", "silent"),
+])
+def test_every_line_is_a_heading_a_near_miss_or_silent(line: str, outcome: str):
+    got = "heading" if fh.HEADING.match(line) else "near" if fh.near_misses(line) == [1] else "silent"
+    assert got == outcome
+
+
+def test_near_misses_skip_fences_and_never_change_the_exit(tmp_path: Path):
+    assert fh.near_misses("```\nPlaybook feedback\n```\nPlaybook feedback\n---\n") == [4]
+    repo_note(tmp_path, "o/r", "## 2026-10-01\n**Playbook feedback**\n- lost\n")
+    assert run(tmp_path) == 0, "a near miss proves the root; it is listed, not keyed"
+    assert "pause-notes.md:2`" in digest(tmp_path).split("## Near-miss headings")[1]
+    repo_note(tmp_path, "o/r", "## 2026-10-01\nPlaybook feedback:\n- one\n\n**Playbook feedback**\n- lost\n")
+    write(tmp_path / "ledger.tsv", f"key\tdisposition\tversion\tdate\n{fh.item_key('one')}\ttaken\tv1\t2026-11-04\n")
+    assert run(tmp_path) == 0
+    md = digest(tmp_path)
+    assert "pause-notes.md:5`" in md.split("## Near-miss headings")[1] and "1 near misses" in md
+
+
 def test_heading_date_skips_future_mentions():
     lines = ["## Pause: 2026-10-01", "### Shipped (v2 stays on 2099-01-01)", "Playbook feedback:"]
     assert fh.heading_date(lines, 2, "2026-11-04") == "2026-10-01"
@@ -137,14 +177,24 @@ def test_any_error_exits_2_not_1(tmp_path: Path, monkeypatch: pytest.MonkeyPatch
     assert run(tmp_path) == 2, "git missing"
 
 
-def test_a_repo_git_cannot_list_is_skipped_and_named(tmp_path: Path):
+def test_a_repo_git_cannot_list_exits_2_and_is_named(tmp_path: Path):
     repo_note(tmp_path, "o/broken", "## 2026-10-01\nPlaybook feedback:\n- unvetted\n")
     write(tmp_path / "repos" / "o" / "broken" / ".git", "gitdir: /nowhere\n")
     repo_note(tmp_path, "o/plain", "## 2026-10-01\nPlaybook feedback:\n- kept\n")
+    write(tmp_path / "ledger.tsv", f"key\tdisposition\tversion\tdate\n{fh.item_key('kept')}\ttaken\tv1\t2026-11-04\n")
+    assert run(tmp_path) == 2, "every key dispositioned, but the harvest is incomplete"
+    md = digest(tmp_path)
+    assert "unvetted" not in md and "1 repos unread" in md
+    assert "o/broken`" in md.split("## Repos unread")[1]
+
+
+def test_a_crlf_note_is_harvested_with_its_date(tmp_path: Path):
+    path = tmp_path / "repos" / "o" / "r" / "todos" / "pause-notes.md"
+    path.parent.mkdir(parents=True)
+    _ = path.write_bytes(b"## 2026-10-01\r\n## Playbook feedback\r\n- one\r\n- two\r\n")
     assert run(tmp_path) == 1
     md = digest(tmp_path)
-    assert "kept" in md and "unvetted" not in md
-    assert "o/broken`" in md.split("## Repos skipped")[1]
+    assert f"`{fh.item_key('one')}` 1 source(s), newest 2026-10-01" in md and "two" in md
 
 
 def test_exit_1_then_0_once_every_key_is_dispositioned(tmp_path: Path):
@@ -171,6 +221,33 @@ def test_sources_are_distinct_repos_and_private_orgs_are_flagged(tmp_path: Path)
     md = digest(tmp_path)
     assert f"`{fh.item_key('same thing')}` 2 source(s), newest 2026-10-03 [private]" in md
     assert next(x for x in md.splitlines() if "Mem note" in x).count("[private]") == 1
+
+
+@pytest.mark.parametrize("source, flagged", [
+    ("acme/x", True), ("ACME/x", True), ("memory:-u-github-acme-x", True), ("memory:-u-github-acme", True),
+    ("memory:-u-github-acme-labs-x", True), ("acme-labs/x", False), ("o/acme", False),
+])
+def test_private_org_match(source: str, flagged: bool):
+    assert fh.is_private(source, frozenset({"acme"})) is flagged
+
+
+def test_digest_says_whether_the_private_orgs_file_was_read(tmp_path: Path):
+    repo_note(tmp_path, "o/r", "## 2026-10-01\nPlaybook feedback:\n- one\n")
+    assert run(tmp_path) == 1
+    assert "private-orgs missing" in digest(tmp_path)
+    write(tmp_path / "pb" / "todos" / "evolve" / "private-orgs", "Acme\n")
+    assert run(tmp_path) == 1
+    assert "private orgs: 1 from" in digest(tmp_path)
+
+
+def test_a_note_in_a_repo_nested_under_todos_is_private(tmp_path: Path):
+    repo_note(tmp_path, "o/pub", "## 2026-10-01\nPlaybook feedback:\n- public note\n")
+    repo_note(tmp_path, "o/pub", "## 2026-10-01\nPlaybook feedback:\n- desk note\n", "desk/notes/a.md")
+    repo_note(tmp_path, "o/pub", "## 2026-10-01\nPlaybook feedback:\n- git internals\n", "desk/.git/x.md")
+    assert run(tmp_path) == 1
+    md = digest(tmp_path)
+    assert "[private]: desk note" in md and "[private]" not in next(x for x in md.splitlines() if "public note" in x)
+    assert "git internals" not in md
 
 
 def test_skips_tracked_files_and_its_own_output(tmp_path: Path):
@@ -275,6 +352,15 @@ def test_a_taken_key_seen_again_later_holds_exit_1_until_re_ruled(tmp_path: Path
     assert "recurring" in digest(tmp_path).split("## Taken, then seen again")[1].split("##")[0]
     write(tmp_path / "ledger.tsv", row + "2026-11-02\n")
     assert run(tmp_path) == 0
+
+
+def test_a_dup_of_member_seen_again_reads_its_representatives_ruling(tmp_path: Path):
+    repo_note(tmp_path, "o/r", "## 2026-11-01\nPlaybook feedback:\n- member wording\n")
+    rep, member = fh.item_key("rep wording"), fh.item_key("member wording")
+    ledger = f"key\tdisposition\tversion\tdate\n{rep}\ttaken\tv1\t2026-10-01\n{member}\tdup-of:{rep}\t\t"
+    write(tmp_path / "ledger.tsv", ledger + "2026-11-04\n")
+    assert run(tmp_path) == 1
+    assert "member wording" in digest(tmp_path).split("## Taken, then seen again")[1].split("##")[0]
 
 
 def test_an_mtime_dated_item_never_recurs(tmp_path: Path):

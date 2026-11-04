@@ -42,7 +42,7 @@ The harvester reads every `~/workspace/github/*/*/todos/` and the Claude memory 
 |------|---------|----|
 | 0 | Every key dispositioned | Go to Step 1 |
 | 1 | Undisposed keys, or taken keys seen again | Disposition or re-rule them |
-| 2 | Nothing found, a malformed ledger, or an error | Fix the root, the ledger or the error; the digest is not evidence |
+| 2 | Nothing found, a malformed ledger, a repo git cannot list, or an error | Fix it and rerun; exit 2 never closes the cycle |
 
 Keys seen in more repos rank first; memory items come last. Cluster near-duplicates by hand, then give every key one row in `todos/evolve/harvest-ledger.tsv`, tab-separated `key disposition version date`:
 
@@ -51,11 +51,12 @@ Keys seen in more repos rank first; memory items come last. Cluster near-duplica
 - `deferred`: names where it goes (a later release, a single decision)
 - `dup-of:<key>`: the cluster's representative carries the disposition
 
-Markers in the digest:
+In the digest:
 
 - `may be fixed`: the named command changed its body and version after the note, and the line shows that version's notes. Any body edit forces a bump, dash and fence fixes included, so it is a hint to check, never a reason to close a key.
-- `private`: the source is an org listed in `todos/evolve/private-orgs` (untracked, one per line).
-- **Taken, then seen again**: a dated note repeats a `taken` key after its row's date, so the fix did not reach the sessions that wrote it. It holds exit 1 until you edit that row. Memory files and undated notes cannot recur.
+- `private`: the source is an org listed in `todos/evolve/private-orgs` (untracked, one per line), or the note sits in a git repo nested under a project's `todos/`. The summary line says whether the file was read.
+- **Taken, then seen again**: a dated note repeats a `taken` key after its row's date, so the fix did not reach the sessions that wrote it. It holds exit 1 until you edit that row; an archive written after the ruling can re-date an old note, so read the occurrence's path first. Memory files and undated notes cannot recur.
+- **Near-miss headings**: lines that start like the heading and are not one. They hold no key and no exit; fix the note if it was meant as one.
 
 **The cycle does not close until the harvester exits 0.**
 
