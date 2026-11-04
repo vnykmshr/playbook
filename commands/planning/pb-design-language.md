@@ -293,7 +293,7 @@ Example principles:
 
 ### Asset Naming Convention
 
-````
+```
 [type]-[name]-[variant].[ext]
 
 logo-primary-light.svg
@@ -330,7 +330,7 @@ When to update this document:
 2. **Changing a token** - Document why in decision log
 3. **Adding a constraint** - Explain what problem it prevents
 4. **Major version** - Review all sections for accuracy
-```
+````
 
 ---
 

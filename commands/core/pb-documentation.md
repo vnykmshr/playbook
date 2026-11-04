@@ -149,7 +149,7 @@ async function fetchUser(userId: string, options?: { useCache?: boolean }): Prom
 
 **Purpose**: Help someone use the API/service without reading code.
 
-```markdown
+````markdown
 # Payment API
 
 ## Overview
@@ -201,14 +201,14 @@ Error (400):
 - `payment.failed` - Payment failed
 
 See webhook specification in #webhooks section
-```
+````
 
 ### Level 4: System Documentation
 
 **Purpose**: Help someone understand how systems fit together.
 
 **What to include:**
-```markdown
+````markdown
 # Payment System Architecture
 
 ## Purpose
@@ -253,7 +253,7 @@ User → Payment API → Stripe
 ## Runbooks
 - Payment processing stuck: See runbook-payment-stuck.md
 - Database grew too large: See runbook-db-size.md
-```
+````
 
 ### Level 5: Process Documentation
 
@@ -290,7 +290,7 @@ Edit CHANGELOG.md:
 - Include author names
 
 Example:
-````
+```
 ## [1.2.3] - 2026-01-11
 ### Added
 - Support for bulk user import (#234)
@@ -299,7 +299,7 @@ Example:
 - Bug: Orders not showing in some cases (#240)
 ### Breaking
 - Removed deprecated /v1/orders endpoint
-````
+```
 
 ### 3. Tag Commit
 ```bash
@@ -598,7 +598,7 @@ Visit http://localhost:3000
 
 ### API Documentation Template
 
-```markdown
+````markdown
 # API Name
 
 ## Overview
@@ -630,7 +630,7 @@ What events are available?
 
 ## SDK
 Available libraries for common languages
-```
+````
 
 ### Architecture Documentation Template
 
