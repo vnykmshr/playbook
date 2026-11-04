@@ -632,7 +632,7 @@ The commands behind each gate for Go and Python. Tiers are the Change Tiers abov
 | Types | the compiler | `mypy src/`; type hints on public functions |
 | Tests | S: one package (`go test ./handler`); M and L: `go test ./...` | S: one module (`pytest tests/test_handler.py`); M and L: `pytest` |
 | Race and async | M and L: `go test -race ./...`; every goroutine can be stopped, and `context` carries cancellation | async functions tested under an event loop (`pytest-asyncio`) |
-| Coverage | S >50%, M >70%, L >80%: `go test -race -coverprofile=coverage.out ./...` | S >50%, M >70%, L >80%: `pytest --cov=src --cov-fail-under=70` (80 at L) |
+| Coverage | Minimum S 50%, M 70%, L 80%: `go test -coverprofile=coverage.out ./...`, then compare the `total:` line of `go tool cover -func=coverage.out` with the tier | Minimum S 50%, M 70%, L 80%: `pytest --cov=src --cov-fail-under=50` (70 at M, 80 at L) |
 | Dependencies | `go mod tidy && go mod verify`; `govulncheck ./...` | `pip-audit`; dependencies pinned in `pyproject.toml` with a lock file |
 | Review gotchas | no ignored errors; `context` for cancellation, not timeout parameters; no goroutine leaks; channels deadlock-free | no `import *`; no silent `except`; no hardcoded secrets |
 
