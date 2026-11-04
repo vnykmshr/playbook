@@ -31,10 +31,10 @@ Complete reference for how all playbook commands work together to form a unified
 → `/pb-todo-implement` (structured checkpoint-based implementation)
 
 **Reviewing code before merge?**
-→ `/pb-cycle` (self-review) → `/pb-review-hygiene` (peer review) → `/pb-security` (security review)
+→ `/pb-cycle` (self-review) → `/pb-review-code` (peer review) → `/pb-security` (security review)
 
 **Reviewing quality periodically?**
-→ `/pb-review-tests` (monthly) → `/pb-review-hygiene` (quarterly) → `/pb-review-product` (product alignment)
+→ `/pb-review-tests` (monthly) → `/pb-review-hygiene` (monthly) → `/pb-review-product` (product alignment)
 
 **Deploying to production?**
 → `/pb-release` (pre-release checks) → `/pb-deployment` (strategy selection) → `/pb-observability` (monitoring)
@@ -247,7 +247,7 @@ Quality gates at multiple checkpoints. **Use these during development, before me
 | # | Command | Purpose | Trigger | When to Use | Frequency |
 |---|---------|---------|---------|------------|-----------|
 | 23 | **pb-review** | Periodic project review overview | Feature/release boundaries | Quick reference to all review types | Monthly or pre-release |
-| 24 | **pb-review-hygiene** | Code quality and best practices | Every PR | Before merging code | Every PR |
+| 24 | **pb-review-code** | Review of a specific change | Every PR | Before merging code | Every PR |
 | 25 | **pb-review-product** | Product alignment + tech perspective | Feature completion | Before merging user-facing changes | Every user-facing PR |
 | 26 | **pb-review-docs** | Documentation accuracy and completeness | Periodic audit | Quarterly documentation review | Quarterly |
 | 27 | **pb-review-tests** | Test suite quality and coverage | Periodic audit | Monthly test health check | Monthly |

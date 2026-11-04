@@ -123,7 +123,7 @@ You're in the middle of a feature sprint. Here's your daily rhythm:
 A PR is ready for review. As a reviewer, you can follow a structured approach:
 
 ```bash
-/pb-review-hygiene       # Code quality checklist
+/pb-review-code          # Review the specific change
 /pb-security          # Security perspective
 /pb-review-tests      # Test coverage and quality
 /pb-logging           # Logging standards verification

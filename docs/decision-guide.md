@@ -292,7 +292,7 @@ START
 - As needed: `/pb-patterns-*`, `/pb-context`
 
 ### Code Reviewer / Senior Engineer
-- Per PR: `/pb-cycle`, `/pb-security`, `/pb-review-tests`, `/pb-review-hygiene`, `/pb-logging`
+- Per PR: `/pb-cycle`, `/pb-security`, `/pb-review-tests`, `/pb-review-code`, `/pb-logging`
 - Per release: `/pb-release`
 - Periodically: `/pb-review-product`, `/pb-review-hygiene`
 

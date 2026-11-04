@@ -9,7 +9,7 @@ Integrating the engineering playbook into your team's workflow. This guide shows
 ### **Startup (2-5 engineers)**
 - **Week 1**: Read `/pb-guide` (understand 11 phases) + `/pb-preamble` (collaboration style)
 - **Week 2**: Start using `/pb-start` → `/pb-cycle` → `/pb-commit` → `/pb-pr` for feature work
-- **Week 3**: Add `/pb-review-hygiene` for peer review, `/pb-standards` for decision-making
+- **Week 3**: Add `/pb-review-code` for peer review, `/pb-standards` for decision-making
 - **Payoff**: Clear development rhythm, better code review, shared decision language
 - **Effort**: 2-3 hours per engineer for onboarding
 
@@ -20,7 +20,7 @@ Integrating the engineering playbook into your team's workflow. This guide shows
   - Pick 3-4 core commands: `/pb-start`, `/pb-cycle`, `/pb-commit`, `/pb-pr`
 - **Phase 2 (Week 3-4)**:
   - Add `/pb-plan` for feature planning
-  - Add `/pb-review-hygiene` + `/pb-security` for code review gates
+  - Add `/pb-review-code` + `/pb-security` for code review gates
   - Document team decisions in `/pb-context`
 - **Payoff**: Structured planning, consistent code quality, documented decisions
 - **Effort**: 4-6 hours per engineer over 4 weeks
@@ -32,7 +32,7 @@ Integrating the engineering playbook into your team's workflow. This guide shows
   - Runs workshops for different roles (frontend, backend, infra, QA)
 - **Phase 2 (Week 3-4)**:
   - Rollout core workflow: `/pb-plan` → `/pb-adr` → `/pb-cycle` → `/pb-review-*` → `/pb-release`
-  - Establish review ceremony using `/pb-review-hygiene`, `/pb-review-tests`
+  - Establish review ceremony using `/pb-review-code`, `/pb-review-tests`
   - Create project `/pb-context` document for current work
 - **Phase 3 (Week 5-8)**:
   - Integrate `/pb-patterns-*` into architecture discussions
@@ -81,13 +81,13 @@ Integrating the engineering playbook into your team's workflow. This guide shows
 **Activities**:
 - [ ] Integrate `/pb-start` → `/pb-cycle` → `/pb-commit` → `/pb-pr` into real features
 - [ ] Use `/pb-testing` alongside `/pb-cycle` for test-driven development
-- [ ] Establish review process: `/pb-review-hygiene` for every PR
+- [ ] Establish review process: `/pb-review-code` for every PR
 - [ ] Create project `/pb-context` document for current decisions
 - [ ] Track metrics: % of features using playbook workflow
 
 **Success Signals**:
 - 50%+ of PRs reference playbook commands in PR description
-- Code review feedback uses `/pb-review-hygiene` language
+- Code review feedback uses `/pb-review-code` language
 - Commit messages follow `/pb-templates` format
 
 ---
@@ -163,7 +163,7 @@ Integrating the engineering playbook into your team's workflow. This guide shows
 ### **Adoption Metrics** (Track weekly)
 - % of engineers actively using core commands
 - % of features following `/pb-start` → `/pb-cycle` → `/pb-pr` workflow
-- % of PRs using `/pb-review-hygiene` perspective
+- % of PRs using `/pb-review-code` perspective
 - % of major decisions documented in `/pb-adr`
 
 ### **Quality Metrics** (Track monthly)
