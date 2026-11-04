@@ -7,7 +7,7 @@ Every engineering team faces the same challenges: preventing regressions, mainta
 The Engineering Playbook is a **complete decision framework** grounded in two complementary philosophies:
 
 1. **The Preamble** - How teams think together (peer collaboration, psychological safety, correctness over agreement)
-2. **Design Rules** - What teams build (clarity, simplicity, robustness, extensibility)
+2. **Design Rules** - What teams build (clarity, simplicity, resilience, extensibility)
 
 It's not a tool; it's a set of repeatable processes that work together to make quality the default, not something that requires heroic effort. The playbook codifies both **how to think** as a team and **how to build** systems well.
 
@@ -192,7 +192,6 @@ Different reviewers bring different lenses:
 Before production:
 
 - `/pb-release` - Pre-release checklist
-- `/pb-release` - Final gate by senior engineer
 - `/pb-deployment` - Strategy choice (blue-green, canary, rolling)
 
 ### Incident Response
@@ -529,7 +528,7 @@ Engineering teams face the same challenges repeatedly. The Playbook solves them 
 ### How It Works
 
 1. **The Preamble** (HOW teams think) - Establishes peer collaboration, psychological safety, correctness over agreement
-2. **Design Rules** (WHAT teams build) - Classical principles ensuring clarity, simplicity, robustness, extensibility
+2. **Design Rules** (WHAT teams build) - Classical principles ensuring clarity, simplicity, resilience, extensibility
 3. **Together** - Enable teams to build systems that are both technically excellent AND arrived at through trustworthy processes
 
 ### What This Enables

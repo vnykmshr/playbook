@@ -53,7 +53,7 @@ The standard development cycle using playbook commands.
 ```bash
 # make changes based on feedback
 /pb-review
-# auto-pushes to existing PR
+# commits; push to update the PR
 ```
 
 ---

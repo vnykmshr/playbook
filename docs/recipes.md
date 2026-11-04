@@ -19,7 +19,7 @@ Pre-built command sequences for common development scenarios. Each recipe links 
 | [recipe-onboarding](#recipe-onboarding) | New team member integration | N/A | Weeks |
 | [recipe-release](#recipe-release) | Pre-release preparation | L | Hours-days |
 
-**Discovery tip:** All recipes use the `recipe-` prefix for easy search and tab completion.
+**Discovery tip:** All recipes use the `recipe-` prefix for easy search.
 
 ---
 

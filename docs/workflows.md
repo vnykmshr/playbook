@@ -127,7 +127,7 @@ INCIDENT DECLARED     ASSESSMENT               MITIGATION            RECOVERY   
 Bringing new team members up to speed systematically:
 
 ```
-PREPARATION           FIRST DAY               FIRST WEEK             RAMP-UP             GROWTH & GROWTH
+PREPARATION           FIRST DAY               FIRST WEEK             RAMP-UP             GROWTH
 │                     │                       │                      │                  │
 ├─ /pb-onboarding     ├─ /pb-start            ├─ /pb-knowledge-      ├─ /pb-cycle        ├─ /pb-team
 │   (Setup access)    │   (orientation)       │   transfer           │   (first feature)  │   (feedback)
