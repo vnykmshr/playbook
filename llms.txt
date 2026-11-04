@@ -52,7 +52,7 @@ Two foundational commands anchor all others: `/pb-preamble` for how to collabora
 
 ## Optional
 
-- [Command index](https://vnykmshr.github.io/playbook/command-index/): complete catalog grouped by category
+- [Command index](https://vnykmshr.github.io/playbook/docs/command-index.html): complete catalog grouped by category
 - [Book site](https://playbook.1mb.dev): distraction-free reading view
 - [Integration guide](https://github.com/vnykmshr/playbook/blob/main/docs/integration-guide.md): how commands compose into workflows
 - [Using with other tools](https://github.com/vnykmshr/playbook/blob/main/docs/using-with-other-tools.md): adapting the playbook outside the reference toolchain

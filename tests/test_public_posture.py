@@ -72,3 +72,18 @@ def test_book_pages_load_scripts_only_from_known_hosts():
                 found.add(src.split("://", 1)[1].split("/", 1)[0])
     assert found <= BOOK_SCRIPT_HOSTS, f"third-party script hosts not on the list: {found - BOOK_SCRIPT_HOSTS}"
 
+
+def test_own_site_urls_point_at_a_built_page():
+    """A URL into the reference site names a page SUMMARY.md builds (`x.html` from `x.md`)."""
+    import re
+    summary = set(re.findall(r"\]\(([^)]+)\.md\)", (REPO / "mdbook" / "SUMMARY.md").read_text()))
+    bad = []
+    for hit in tracked_hits("https://vnykmshr.github.io/playbook/"):
+        path, _, text = hit.split(":", 2)
+        if path == "CHANGELOG.md":
+            continue
+        for rest in re.findall(r"https://vnykmshr\.github\.io/playbook/([^\s)\"'<>`]*)", text):
+            page = rest.split("#", 1)[0]
+            if page and not (page.endswith(".html") and page[:-5] in summary):
+                bad.append(f"{path}: {rest}")
+    assert not bad, f"URLs into the reference site that name no built page: {bad}"

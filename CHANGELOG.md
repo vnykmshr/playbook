@@ -41,6 +41,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- **`llms.txt` linked the command index at a URL that 404s.** It names the built page, and a test fails when a URL into the reference site names no page `mdbook/SUMMARY.md` builds.
 - **`scripts/uninstall.sh` removes the skill and DX script links install made**, not only the command links, and says that the hook copy and its `settings.json` entry stay (removing the copy alone leaves settings calling a missing hook).
 - **`scripts/install.sh` no longer deletes a user's own skill directory or overwrites their own `context-bar.sh` or `check-context.sh`.** A real file or directory where install would put a link is now skipped and named; before, a directory at `~/.claude/skills/<name>` was removed with `rm -rf`.
 - **A punctuation- or markup-only edit no longer moves a review date.** The review-date guard compares a body's words, so a dash or fence-marker fix owes a version bump but not a `last_reviewed` move; a word edit that amends an already-bumped version's notes still owes one, and an uncommitted edit is checked before the commit. Nine commands stamped by such fixes in v2.32.0 carry their real review dates again: pb-design-language, pb-observability and pb-repo-blog (2026-02-09), pb-documentation and pb-templates (2026-06-10), pb-sam-documentation and pb-new-playbook (2026-07-13), pb-learn (2026-08-03), pb-repo-readme (2026-10-03).
