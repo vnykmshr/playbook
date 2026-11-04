@@ -8,7 +8,7 @@ execution_pattern: "sequential"
 related_commands: ['pb-preamble', 'pb-deployment', 'pb-ship', 'pb-pr', 'pb-cycle']
 last_reviewed: "2026-11-04"
 version: "1.3.0"
-version_notes: "v1.3.0: Tag only after CI is green on this exact commit (full SHA); the release step publishes an existing draft rather than duplicating it, and may prune old releases without --cleanup-tag; notes follow the GitHub Artifact Register; the hotfix CI check reads this commit's run, not the latest."
+version_notes: "v1.3.0: Tag only after CI is green on this exact commit (full SHA), with no output read as no run yet, not as green; the release step publishes an existing draft rather than duplicating it, and may prune old releases without --cleanup-tag; notes follow the GitHub Artifact Register; the hotfix CI check reads this commit's run, not the latest; the title placeholder is a name, and the register is named as /pb-claude-global's."
 breaking_changes: []
 ---
 # Release to Production
@@ -208,7 +208,7 @@ git pull origin main
 git status  # Should be clean
 
 # Tag only after CI is green on this exact commit (full SHA: a short one lists nothing)
-gh run list --commit "$(git rev-parse HEAD)" --json conclusion -q '.[].conclusion'  # every line: success
+gh run list --commit "$(git rev-parse HEAD)" --json conclusion -q '.[].conclusion'  # at least one line, every line success; no output means no run is registered yet: wait
 
 # Create annotated tag
 git tag -a vX.Y.Z -m "vX.Y.Z - Brief description"
@@ -223,13 +223,13 @@ git push origin vX.Y.Z
 # A draft left by a failed run, or made by an org workflow, is published, never duplicated
 gh release list --json tagName,isDraft -q '.[] | select(.isDraft) | .tagName'
 gh release edit vX.Y.Z --draft=false                                            # the draft exists
-gh release create vX.Y.Z --title "vX.Y.Z - Release Title" --notes-file notes.md  # it does not
+gh release create vX.Y.Z --title "vX.Y.Z - <name>" --notes-file notes.md  # it does not
 
 # Optional: keep the last N releases. The tag stays, so links and rollback by tag still work
 gh release delete <oldest-tag> --yes  # never --cleanup-tag
 ```
 
-The notes say what upgraders must do, any security line, and link the CHANGELOG entry and the compare view; see `~/.claude/CLAUDE.md` § GitHub Artifact Register.
+The notes say what upgraders must do, any security line, and link the CHANGELOG entry and the compare view; see the GitHub Artifact Register that `/pb-claude-global` writes into `~/.claude/CLAUDE.md`.
 
 ---
 
@@ -321,7 +321,7 @@ For urgent fixes that don't warrant full ceremony:
 # 1. Quick quality check
 make lint && make test
 
-# 2. Verify CI passed on this commit (--limit 1 reads the latest run, not this one)
+# 2. A run for this commit is listed and passed; none listed means wait (--limit 1 reads the latest run, not this one)
 gh run list --commit "$(git rev-parse HEAD)"
 
 # 3. Fast version bump
