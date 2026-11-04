@@ -6,9 +6,9 @@ difficulty: "advanced"
 model_hint: "opus"
 execution_pattern: "sequential"
 related_commands: ['pb-review', 'pb-review-code', 'pb-review-hygiene', 'pb-testing', 'pb-cycle']
-last_reviewed: "2026-04-26"
-version: "2.1.0"
-version_notes: "v2.1.0: Reference global GitHub Artifact Register rule for review-comment register."
+last_reviewed: "2026-11-04"
+version: "2.2.0"
+version_notes: "v2.2.0: Common Problems: a new guard drowned in legacy debt narrows its rule first, then baselines what is left as shrink-only debt, never as exemptions."
 breaking_changes: []
 ---
 # Test Suite Review (Coverage & Reliability)
@@ -134,6 +134,7 @@ Act as **senior engineer and test architect** responsible for a test suite that 
 | Low value tests | Test trivial getters/setters | Delete them |
 | Duplicate tests | Same assertion in multiple tests | Consolidate |
 | Missing tests | Critical paths untested | Add focused tests |
+| Guard drowned in legacy debt | A new check fails on most of the codebase at once | Narrow the rule first, then baseline what is left as shrink-only debt, never as exemptions |
 
 ---
 
