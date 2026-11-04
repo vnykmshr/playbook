@@ -347,6 +347,9 @@ def memory_files(root: Path, h: Harvest):
                 yield Path(e.path)
 
 
+BLOCK_SCALAR = re.compile(r"[>|][1-9+-]*(\s+#.*)?$")  # a YAML block header, not the text
+
+
 def harvest_memory(root: Path, h: Harvest) -> tuple[list[Item], list[str]]:
     """(one item per feedback_*.md keyed on its description, files with no description).
 
@@ -361,10 +364,10 @@ def harvest_memory(root: Path, h: Harvest) -> tuple[list[Item], list[str]]:
             h.unread.append(str(path))
             continue
         m = re.search(r"^description:[ \t]*(.+)$", text, re.MULTILINE)
-        if not m or not normalise(m.group(1).strip().strip("\"'")):
+        desc = m.group(1).strip().strip("\"'") if m else ""
+        if not normalise(desc) or BLOCK_SCALAR.match(desc):
             skipped.append(str(path))
             continue
-        desc = m.group(1).strip().strip("\"'")
         d = path.parent.parent.name
         nested = "-todos-" in d.lower() or d.lower().endswith("-todos")
         items.append(Item(item_key(desc), desc, f"memory:{d}", f"{path}:1", mtime_date(path), True, nested))

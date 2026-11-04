@@ -520,12 +520,13 @@ def test_memory_items_key_on_description_and_list_files_without_one(tmp_path: Pa
     write(tmp_path / "mem" / "p" / "memory" / "feedback_x.md", "---\nname: x\ndescription: Say the no first\n---\nbody\n")
     write(tmp_path / "mem" / "p" / "memory" / "feedback_y.md", "no front matter\n")
     write(tmp_path / "mem" / "p" / "memory" / "feedback_z.md", "---\nname: z\ndescription: \"...\"\n---\nbody\n")
+    write(tmp_path / "mem" / "p" / "memory" / "feedback_w.md", "---\nname: w\ndescription: |2-\n  folded text\n---\nbody\n")
     assert run(tmp_path) == 1
     md = digest(tmp_path)
     memory = md.split("## Undisposed: memory")[1].split("##")[0]
     assert f"`{fh.item_key('Say the no first')}` 1 source(s), newest ~" in memory
     no_desc = md.split("## Memory files with no description")[1]
-    assert "feedback_y.md" in no_desc and "feedback_z.md" in no_desc
+    assert all(f"feedback_{n}.md" in no_desc for n in "yzw")
 
 
 def git(repo: Path, *args: str, when: str = "2026-10-01T12:00:00") -> None:
