@@ -6,9 +6,9 @@ difficulty: "advanced"
 model_hint: "opus"
 execution_pattern: "interactive"
 related_commands: ['pb-what-next', 'pb-review', 'pb-huddle', 'pb-preflight', 'pb-ship']
-last_reviewed: "2026-11-04"
+last_reviewed: "2026-11-05"
 version: "1.7.0"
-version_notes: "v1.7.0: Code-review takes explicit commit ranges; a counterexample to an approximating fix proposes the instrument change at round 1; a plan with falsifiers is Execute's scope; Land reads the previous release's notes and deploy runs, and release docs follow the final commit; a tracked cursor closes after the tag. The what-next comparison, When NOT to Use and Red Flags sections, which restated rules stated above them, are gone: 211 to 182 lines."
+version_notes: "v1.7.0: Code-review takes explicit commit ranges; a counterexample to an approximating fix proposes the instrument change at round 1; a plan with falsifiers is Execute's scope; Land reads what the previous Land left (deploy runs, release notes if any, the traps its cursor logged), and release docs follow the final commit; a tracked cursor closes after the tag. The what-next comparison, When NOT to Use and Red Flags sections, which restated rules stated above them, are gone: 211 to 182 lines."
 breaking_changes: []
 ---
 # Lifecycle Step-Runner
@@ -159,7 +159,7 @@ This file is the `/pb-resume` hook for the arc. Where `/pb-resume` tells you the
 
 ## External Actions Stop Hard
 
-Opening a PR, merging, syncing to remote, and releasing are stops under the global External Action Gate in `~/.claude/CLAUDE.md`, which also holds the GitHub Artifact Register. Forge states each and waits for the approval that gate requires, so you never tag a release on a reflex. Before Land, read the previous release's notes and deploy runs; release docs (the CHANGELOG cut, the notes) follow the final code commit.
+Opening a PR, merging, syncing to remote, and releasing are stops under the global External Action Gate in `~/.claude/CLAUDE.md`, which also holds the GitHub Artifact Register. Forge states each and waits for the approval that gate requires, so you never tag a release on a reflex. Before Land, read what the previous Land left: its deploy runs, its release notes if it published any, and the traps its cursor logged; release docs (the CHANGELOG cut, the notes) follow the final code commit.
 
 ---
 
