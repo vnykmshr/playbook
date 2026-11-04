@@ -238,3 +238,14 @@ def test_a_taken_key_seen_again_later_is_reported(tmp_path: Path):
     write(tmp_path / "ledger.tsv", f"key\tdisposition\tversion\tdate\n{fh.item_key('recurring')}\ttaken\tv1\t2026-10-01\n")
     assert run(tmp_path) == 0
     assert "recurring" in digest(tmp_path).split("## Taken, then seen again")[1].split("##")[0]
+
+
+def test_pb_pause_template_heading_feeds_the_harvester():
+    """Renaming the heading pb-pause asks for would silently starve the loop."""
+    pause = Path(__file__).resolve().parent.parent / "commands" / "development" / "pb-pause.md"
+    lines = pause.read_text().split("\n")
+    hits = [n for n, line in enumerate(lines) if fh.HEADING.match(line)]
+    assert len(hits) == 1, f"pb-pause lines matching the harvester heading: {[lines[n] for n in hits]}"
+    n = hits[0]
+    assert lines[n] == "Patterns / playbook feedback:"
+    assert fh.PLACEHOLDER.match(fh.BULLET.match(lines[n + 1]).group("text")), "the template's placeholder bullet follows it"
