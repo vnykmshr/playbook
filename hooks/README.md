@@ -1,6 +1,6 @@
 # Hook Patterns
 
-Hooks automate enforcement of development practices by triggering actions on Claude Code tool events. This directory provides pattern documentation and minimal examples — adapt them to your workflow.
+Hooks automate enforcement of development practices by triggering actions on Claude Code tool events. This directory provides pattern documentation and one shipped hook, the external action gate; adapt the patterns to your workflow.
 
 ---
 
