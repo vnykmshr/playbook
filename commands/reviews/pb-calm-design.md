@@ -378,7 +378,7 @@ Findings posted as PR/issue comments follow `~/.claude/CLAUDE.md` § GitHub Arti
 - `/pb-design-rules` - Technical principles (clarity, simplicity, modularity)
 - `/pb-standards` - Quality bar and MLP criteria
 - `/pb-review-product` - Product-focused review including user experience
-- `/pb-maya-product` - Product review; applies calm principles to UI
+- `/pb-maya-product` - Product review: user value and scope
 - `/pb-a11y` - Accessibility review; overlaps with calm design
 
 ---
