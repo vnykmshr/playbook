@@ -25,7 +25,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
-- **Gate hook: one command segment per rule.** A rule's later words must sit in the same segment as its command word, so `git clean -n && ls -lF` and `git reset --soft HEAD~1 && grep --hard x` no longer ask. A quoted `;`, `&` or `|` stays inside its segment.
+- **Gate hook: one command segment per rule.** A rule's later words must sit in the same segment as its command word, so `git clean -n && ls -lF` and `git reset --soft HEAD~1 && grep --hard x` no longer ask. A quoted `;`, `&` or `|` stays inside its segment. The segment is an approximation, and four shapes the old rule asked on now pass: an unbalanced or backslash-escaped quote, a backslash-escaped separator, a pipe inside `$()` or backticks, and a redirection such as `2>&1` before the later word. `tests/test_gate_hook.py` lists them.
 
 ### Removed
 

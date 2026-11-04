@@ -171,6 +171,17 @@ KNOWN_MISSES = [
     "git checkout HEAD -- .",
     "rm $(echo x) -rf build",
     "git --attr-source HEAD push",
+    # SEG approximates a shell segment: quotes must balance, a backslash escapes nothing,
+    # $() and backticks do not nest, and the & of a redirection reads as a separator.
+    # A rule's later word past such a spot is unseen; the pre-SEG `.*` asked on these.
+    r'git reset \" --hard',
+    r"git clean -e $'it\'s' -f",
+    r"git clean -e 'a'\''b' -f",
+    r"git reset a\;b --hard",
+    "gh api $(echo repos/o/r | cat) -X POST",
+    "gh api `echo repos/o/r | cat` -X POST",
+    "git reset HEAD~1 2>&1 --hard",
+    "git reset HEAD~1 &>/dev/null --hard",
 ]
 
 
