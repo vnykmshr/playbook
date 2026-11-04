@@ -793,6 +793,110 @@ class TestTemplateCurrency:
         assert not hits, "Model version in a generator template:\n  " + "\n  ".join(hits)
 
 
+MINDSET_CITE = re.compile(r"/pb-(preamble|design-rules)\b")
+
+
+def has_mindset(text: str) -> bool:
+    """A heading or bold label named Mindset whose own text cites /pb-preamble or /pb-design-rules.
+
+    A heading's text runs to the next heading at its level or above; a label's is its paragraph.
+    A citation in a code block, or in a later section, does not count.
+    """
+    toks = md_read.tokens(split_front_matter(text)[1])
+    for i, t in enumerate(toks):
+        if t.type == "heading_open" and "mindset" in toks[i + 1].content.lower():
+            chunk, j = [], i + 3
+            while j < len(toks) and not (toks[j].type == "heading_open" and toks[j].tag <= t.tag):
+                if toks[j].type == "inline":
+                    chunk.append(toks[j].content)
+                j += 1
+            if MINDSET_CITE.search(" ".join(chunk)):
+                return True
+        if t.type == "inline" and re.match(r"\*\*mindset\b", t.content, re.IGNORECASE) and MINDSET_CITE.search(t.content):
+            return True
+    return False
+
+
+# Commands with no Mindset that cites either source. Debt, not exemptions: no backfill
+# (each fix is a bump), so an entry is removed once its command passes.
+MINDSET_BASELINE = {
+    "pb-adr.md",
+    "pb-claude-global.md",
+    "pb-claude-project.md",
+    "pb-commit.md",
+    "pb-cycle.md",
+    "pb-deprecation.md",
+    "pb-design-rules.md",
+    "pb-doctor.md",
+    "pb-documentation.md",
+    "pb-git-signals.md",
+    "pb-knowledge-transfer.md",
+    "pb-learn.md",
+    "pb-logging.md",
+    "pb-onboarding.md",
+    "pb-patterns-api.md",
+    "pb-patterns-async.md",
+    "pb-patterns-cloud.md",
+    "pb-patterns-db.md",
+    "pb-patterns-deployment.md",
+    "pb-patterns-distributed.md",
+    "pb-patterns-frontend.md",
+    "pb-patterns-security.md",
+    "pb-patterns.md",
+    "pb-plan.md",
+    "pb-ports.md",
+    "pb-preamble-async.md",
+    "pb-preamble-decisions.md",
+    "pb-preamble-power.md",
+    "pb-preamble.md",
+    "pb-preferences.md",
+    "pb-repo-about.md",
+    "pb-repo-blog.md",
+    "pb-repo-enhance.md",
+    "pb-repo-organize.md",
+    "pb-repo-polish.md",
+    "pb-repo-readme.md",
+    "pb-review-backend.md",
+    "pb-review-frontend.md",
+    "pb-review-infrastructure.md",
+    "pb-review.md",
+    "pb-setup.md",
+    "pb-sketch.md",
+    "pb-spec.md",
+    "pb-standards.md",
+    "pb-standup.md",
+    "pb-storage.md",
+    "pb-team.md",
+    "pb-templates.md",
+    "pb-todo-implement.md",
+    "pb-update.md",
+}
+
+MINDSET_FIXTURE = [
+    ("label", "**Mindset:** Apply `/pb-preamble` thinking.\n", True),
+    ("heading", "## Mindset\n\nApply `/pb-design-rules` thinking.\n\n## Next\n", True),
+    ("label-without-citation", "**Mindset:** think hard.\n", False),
+    ("citation-in-a-later-section", "## Mindset\n\nthink.\n\n## Next\n\nSee `/pb-preamble`.\n", False),
+    ("citation-in-a-fence", "## Mindset\n\n```text\n/pb-preamble\n```\n", False),
+    ("no-mindset", "See `/pb-preamble`.\n", False),
+]
+
+
+class TestMindset:
+    @pytest.mark.parametrize("text, ok", [r[1:] for r in MINDSET_FIXTURE], ids=[r[0] for r in MINDSET_FIXTURE])
+    def test_definition(self, text, ok):
+        assert has_mindset(text) is ok
+
+    def test_every_command_outside_the_baseline_has_one(self):
+        missing = [p.name for p in get_command_files() if p.name not in MINDSET_BASELINE and not has_mindset(p.read_text())]
+        assert not missing, f"No Mindset citing /pb-preamble or /pb-design-rules: {missing}"
+
+    def test_baseline_only_shrinks(self):
+        files = {p.name: p for p in get_command_files()}
+        stale = sorted(n for n in MINDSET_BASELINE if n not in files or has_mindset(files[n].read_text()))
+        assert not stale, f"MINDSET_BASELINE entries that now pass or are gone: {stale}. Remove them."
+
+
 class TestResourceHint:
     @pytest.fixture(autouse=True)
     def setup(self):
