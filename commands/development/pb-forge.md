@@ -8,7 +8,7 @@ execution_pattern: "interactive"
 related_commands: ['pb-what-next', 'pb-review', 'pb-huddle', 'pb-preflight', 'pb-ship']
 last_reviewed: "2026-11-04"
 version: "1.7.0"
-version_notes: "v1.7.0: Code-review takes explicit commit ranges; a counterexample to an approximating fix proposes the instrument change at round 1; a plan with falsifiers is Execute's scope; Land reads the previous ship log and release docs follow the final commit; a tracked cursor closes after the tag. The what-next comparison, When NOT to Use and Red Flags sections, which restated rules stated above them, are gone: 211 to 182 lines."
+version_notes: "v1.7.0: Code-review takes explicit commit ranges; a counterexample to an approximating fix proposes the instrument change at round 1; a plan with falsifiers is Execute's scope; Land reads the previous release's notes and deploy runs, and release docs follow the final commit; a tracked cursor closes after the tag. The what-next comparison, When NOT to Use and Red Flags sections, which restated rules stated above them, are gone: 211 to 182 lines."
 breaking_changes: []
 ---
 # Lifecycle Step-Runner
@@ -131,7 +131,7 @@ A front-arc gate that returns a verdict of *not ready* moves the tally regardles
 
 Execute is where forge gets out of the way. It invokes `/pb-start` (or `/pb-todo-implement` when a plan exists), records the branch and plan path in the arc cursor, and releases control. From there the inner loop and `/pb-pause` / `/pb-resume` own session continuity exactly as they do today; forge does not wrap or micromanage your coding.
 
-A plan whose steps carry falsifiers is Execute's scope: `/pb-start` takes it as given. Forge treats execute as complete when you say so. Hints it offers but never acts on alone: the plan's tasks are all checked, or the tree is clean and ahead of main. When execute is done, put anything the commits do not show (deviations, open findings) in the cursor, compact the context or start fresh, then re-invoke `/pb-forge` to pick the arc back up at the next stage.
+A plan whose steps carry falsifiers is Execute's scope: the execute command takes it as given. Forge treats execute as complete when you say so. Hints it offers but never acts on alone: the plan's tasks are all checked, or the tree is clean and ahead of main. When execute is done, put anything the commits do not show (deviations, open findings) in the cursor, compact the context or start fresh, then re-invoke `/pb-forge` to pick the arc back up at the next stage.
 
 ---
 
@@ -159,7 +159,7 @@ This file is the `/pb-resume` hook for the arc. Where `/pb-resume` tells you the
 
 ## External Actions Stop Hard
 
-Opening a PR, merging, syncing to remote, and releasing are stops under the global External Action Gate in `~/.claude/CLAUDE.md`, which also holds the GitHub Artifact Register. Forge states each and waits for the approval that gate requires, so you never tag a release on a reflex. Before Land, read the previous release's ship log; release docs (the CHANGELOG cut, the notes) follow the final code commit.
+Opening a PR, merging, syncing to remote, and releasing are stops under the global External Action Gate in `~/.claude/CLAUDE.md`, which also holds the GitHub Artifact Register. Forge states each and waits for the approval that gate requires, so you never tag a release on a reflex. Before Land, read the previous release's notes and deploy runs; release docs (the CHANGELOG cut, the notes) follow the final code commit.
 
 ---
 
