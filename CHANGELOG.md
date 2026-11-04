@@ -35,6 +35,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **`/pb-standards` v1.3.1.** Technology-Specific Standards points Go and Python at `/pb-guide` Appendix C. Commit discipline drops its spaced double hyphen.
 - **`/pb-claude-project` v1.4.3.** The Relevant Playbooks sample names `/pb-guide` in place of the retired `/pb-guide-python`. Both template samples use a 4-backtick outer fence, so their nested bash block no longer ends the sample early. Body prose drops spaced double hyphens.
 - **`/pb-new-playbook` v2.1.1.** Body prose drops spaced double hyphens.
+- **`/pb-learn` v1.1.1.** Body prose drops spaced double hyphens.
 
 ### Removed
 

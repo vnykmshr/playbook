@@ -6,10 +6,10 @@ difficulty: "advanced"
 model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-debug', 'pb-review-incoming', 'pb-resume', 'pb-documentation', 'pb-standards']
-last_reviewed: "2026-08-03"
+last_reviewed: "2026-11-04"
 last_evolved: "2026-08-03"
-version: "1.1.0"
-version_notes: "v1.1.0: Cross-reference to /pb-review-incoming release mode. A session looking for consumer-side dependency intake reached for this command and guessed wrong -- it captures session knowledge as a document, with no accept/reject axis and no notion of an artifact outside the repo, so a release does not fit and stretching it would wreck what it does do. When NOT to Use names the right door; pb-cycle swapped out of Related Commands to stay within the 5 ceiling (it carried no back-link here). v2.10.0 baseline."
+version: "1.1.1"
+version_notes: "v1.1.1: Body prose drops spaced double hyphens."
 breaking_changes: []
 ---
 # Pattern Learning
@@ -285,7 +285,7 @@ Skip pattern extraction for:
 - **Well-documented elsewhere** - Official docs cover it well
 - **One-time decisions** - Choices that won't recur
 
-**Taking in a dependency's new release is not pattern learning.** If you are here because a library you consume cut a version and you need to decide what to do about it -- read the changelog against the code, decide adopt/pin/skip, migrate, re-pin -- that is `/pb-review-incoming` in release mode. This command captures session knowledge as a document; it has no accept/reject axis and no notion of an artifact outside this repo, and stretching it to cover a release would wreck what it does do.
+**Taking in a dependency's new release is not pattern learning.** If you are here because a library you consume cut a version and you need to decide what to do about it (read the changelog against the code, decide adopt/pin/skip, migrate, re-pin), that is `/pb-review-incoming` in release mode. This command captures session knowledge as a document; it has no accept/reject axis and no notion of an artifact outside this repo, and stretching it to cover a release would wreck what it does do.
 
 ---
 
