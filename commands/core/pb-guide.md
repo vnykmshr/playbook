@@ -6,9 +6,9 @@ difficulty: "beginner"
 model_hint: "sonnet"
 execution_pattern: "reference"
 related_commands: ['pb-preamble', 'pb-design-rules', 'pb-standards']
-last_reviewed: "2026-11-04"
+last_reviewed: "2026-11-05"
 version: "3.0.1"
-version_notes: "v3.0.1: Integration rows name the guide's real sections: the labels were off by one or more from §2 on, §5 Code Review matched no section, and §3 Requirements and §9 Documentation had no row."
+version_notes: "v3.0.1: Integration rows name the guide's real sections: the labels were off by one or more from §2 on, §5 Code Review matched no section, and §3 Requirements and §9 Documentation had no row; the master-framework line says most commands, not all, implement a phase."
 breaking_changes: ['/pb-guide-go and /pb-guide-python are retired; their gates are Appendix C, Language Gates. Re-run scripts/install.sh to prune the two links.']
 ---
 # Core Engineering SDLC Framework (Language-Agnostic)
@@ -639,7 +639,7 @@ The commands behind each gate for Go and Python. Tiers are the Change Tiers abov
 
 ## Integration with Playbook Ecosystem
 
-**This is the master SDLC framework.** All other commands implement phases described in this guide.
+**This is the master SDLC framework.** Most commands implement a phase of this guide; the rows below map them.
 
 **Key command integrations by phase:**
 
