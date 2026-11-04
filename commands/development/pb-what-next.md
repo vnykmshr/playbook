@@ -6,9 +6,9 @@ difficulty: "advanced"
 model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-start', 'pb-forge', 'pb-commit', 'pb-pr', 'pb-release']
-last_reviewed: "2026-02-18"
-version: "2.0.1"
-version_notes: "v2.0.1: Related-link swap -- drops pb-cycle, adds pb-forge (the executing twin)."
+last_reviewed: "2026-11-04"
+version: "2.0.2"
+version_notes: "v2.0.2: Says it needs a playbook clone, since it runs a script install does not link; the fully-implemented claim is gone."
 breaking_changes: []
 ---
 # Recommend Next Playbook Command
@@ -36,7 +36,7 @@ Run this command when you're unsure which playbook command to use next. The comm
 
 ✅ **Available Now** (Phase 3+)
 
-The `/pb-what-next` command is fully implemented and ready to use. It analyzes your git state and recommends the next playbook commands automatically.
+It analyzes your git state and recommends the next playbook commands. It needs a playbook clone: it runs `scripts/analyze-playbook-context.py`, which `install.sh` does not link.
 
 ## Usage
 

@@ -6,15 +6,15 @@ difficulty: "beginner"
 model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-evolve', 'pb-context', 'pb-learn', 'pb-cycle']
-last_reviewed: "2026-02-14"
-version: "1.0.0"
-version_notes: "v2.12.0 Phase 3: Complete workflow integration with quarterly evolution planning, pain score response framework, and real-world examples"
+last_reviewed: "2026-11-04"
+version: "1.0.1"
+version_notes: "v1.0.1: Says it needs a playbook clone: scripts/git-signals.py is not linked by install."
 breaking_changes: []
 ---
 
 # Extract Git History Signals
 
-**Purpose:** Analyze git history to extract adoption, churn, and pain point signals for data-driven decision making.
+**Purpose:** Analyze git history to extract adoption, churn, and pain point signals for data-driven decision making. It needs a playbook clone: `scripts/git-signals.py` is not linked by `install.sh`.
 
 **Mindset:** Use git history as a source of truth for understanding what's actually used, what changes frequently, and where pain points exist. These signals inform quarterly evolution planning and ad-hoc investigations.
 
