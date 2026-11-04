@@ -7,8 +7,8 @@ model_hint: "sonnet"
 execution_pattern: "reference"
 related_commands: ['pb-preamble', 'pb-design-rules', 'pb-standards']
 last_reviewed: "2026-11-04"
-version: "3.0.0"
-version_notes: "v3.0.0: Appendix C, Language Gates: one table of Go and Python commands per gate (lint, types, tests, race and async, coverage, dependencies, review gotchas), with ruff, govulncheck and pip-audit. Async and distributed pattern pointers name sections, not numbers. /pb-guide-go and /pb-guide-python are retired into it. Coverage gates are tier minimums; Go compares the cover total with the tier."
+version: "3.0.1"
+version_notes: "v3.0.1: Integration rows name the guide's real sections: the labels were off by one or more from §2 on, §5 Code Review matched no section, and §3 Requirements and §9 Documentation had no row."
 breaking_changes: ['/pb-guide-go and /pb-guide-python are retired; their gates are Appendix C, Language Gates. Re-run scripts/install.sh to prune the two links.']
 ---
 # Core Engineering SDLC Framework (Language-Agnostic)
@@ -643,16 +643,16 @@ The commands behind each gate for Go and Python. Tiers are the Change Tiers abov
 
 **Key command integrations by phase:**
 
-- **§1 Intake & Planning** → `/pb-plan`, `/pb-adr`, `/pb-patterns-core`
-- **§2 Team & Estimation** → `/pb-team`, `/pb-onboarding`, `/pb-knowledge-transfer`
-- **§3 Architecture & Design** → `/pb-patterns-core`, `/pb-patterns-async`, `/pb-patterns-db`, `/pb-patterns-distributed`, `/pb-patterns-frontend`, `/pb-patterns-api`
-- **§4 Implementation** → `/pb-start`, `/pb-cycle`, `/pb-testing`, `/pb-commit`, `/pb-todo-implement`, `/pb-debug`
-- **§5 Code Review** → `/pb-review-hygiene`, `/pb-security`, `/pb-logging`, `/pb-review-product`, `/pb-a11y`
-- **§6 Quality Gates** → `/pb-review-tests`, `/pb-review-hygiene`, `/pb-review-microservice`
-- **§7 Observability** → `/pb-observability`, `/pb-logging`, `/pb-performance`
-- **§8 Deployment** → `/pb-deployment`, `/pb-release`, `/pb-patterns-deployment`
-- **§9 Post-Release** → `/pb-incident`, `/pb-observability` (monitoring)
-- **Team & Growth** → `/pb-team`, `/pb-onboarding`, `/pb-documentation`
+- **§1 Intake & Clarification** → `/pb-plan`, `/pb-adr`, `/pb-patterns-core`
+- **§2 Stakeholder Involvement & Alignment** → `/pb-team`, `/pb-onboarding`, `/pb-knowledge-transfer`
+- **§3 Requirements & Scope Definition** → `/pb-sketch`, `/pb-spec`
+- **§4 Architecture & Design Preparation** → `/pb-patterns-core`, `/pb-patterns-async`, `/pb-patterns-db`, `/pb-patterns-distributed`, `/pb-patterns-frontend`, `/pb-patterns-api`
+- **§5 Development Plan** → `/pb-start`, `/pb-cycle`, `/pb-testing`, `/pb-commit`, `/pb-todo-implement`, `/pb-debug`
+- **§6 Testing & Quality Assurance** → `/pb-review-tests`, `/pb-review-hygiene`, `/pb-review-microservice`, `/pb-security`, `/pb-review-product`, `/pb-a11y`
+- **§7 Infra, Deployment & Security Readiness** → `/pb-deployment`, `/pb-patterns-deployment`, `/pb-observability`, `/pb-logging`, `/pb-performance`
+- **§8 CI/CD Requirements** → `/pb-gha`
+- **§9 Documentation** → `/pb-documentation`
+- **§10 Release & Post-Deployment** → `/pb-release`, `/pb-incident`, `/pb-observability` (monitoring)
 - **Frontend Development** → `/pb-design-language`, `/pb-patterns-frontend`, `/pb-a11y` (see `/docs/frontend-workflow.md`)
 
 ---
