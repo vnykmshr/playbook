@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- **Public posture guards that run in CI.** A tracked file with any user's home path fails (the existing check only knew this runner's), and a book page that loads a script from a host not on the list fails.
 - **Every new command needs a Mindset that cites `/pb-preamble` or `/pb-design-rules`.** A test reads it from a heading or bold label named Mindset, in that block's own text; the 50 commands without one sit in a shrink-only baseline.
 - **Bare fence openers only shrink.** A fence with no info string is the one shape the nesting guard cannot judge, so a test fails when a command gains one; the 535 existing ones (88 files) sit in a shrink-only baseline.
 

@@ -40,3 +40,35 @@ def test_no_private_org_or_root_from_the_local_config_in_tracked_files():
         roots.add(str(cfg.memory))
     hits |= {r: tracked_hits(r) for r in roots}
     assert not {k: v for k, v in hits.items() if v}
+
+
+# Synthetic paths a test needs as input, by file:line text. Anything else shaped like a home
+# path names a machine.
+# Built from parts so this line is not a hit itself.
+HOME_PATH_FIXTURES = {("tests/test_feedback_harvest.py", "/".join(["", "home", "a.b", ""]))}
+
+
+def test_no_users_home_path_in_tracked_files():
+    """Any user's home, not only this runner's: CI's HOME is not the author's."""
+    r = subprocess.run(
+        ["git", "-C", str(REPO), "grep", "-n", "-I", "-E", r"/(Users|home)/[A-Za-z0-9._-]+/", "--", "."],
+        capture_output=True, text=True,
+    )
+    assert r.returncode in (0, 1), r.stderr
+    hits = [h for h in r.stdout.splitlines()
+            if not any(h.startswith(f"{path}:") and part in h for path, part in HOME_PATH_FIXTURES)]
+    assert not hits, f"home paths in tracked files: {hits}"
+
+
+BOOK_SCRIPT_HOSTS = {"static.cloudflareinsights.com"}
+
+
+def test_book_pages_load_scripts_only_from_known_hosts():
+    import re
+    found = set()
+    for page in (REPO / "book").glob("*.html"):
+        for src in re.findall(r'<script[^>]*\bsrc="([^"]+)"', page.read_text()):
+            if "://" in src:
+                found.add(src.split("://", 1)[1].split("/", 1)[0])
+    assert found <= BOOK_SCRIPT_HOSTS, f"third-party script hosts not on the list: {found - BOOK_SCRIPT_HOSTS}"
+
