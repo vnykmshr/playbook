@@ -500,7 +500,6 @@ DASH_BASELINE = {
     "pb-kai-reach.md": 3,
     "pb-linus-agent.md": 2,
     "pb-llm-guidelines.md": 3,
-    "pb-new-playbook.md": 11,
     "pb-pause.md": 7,
     "pb-plan.md": 1,
     "pb-preflight.md": 12,

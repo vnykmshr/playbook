@@ -6,10 +6,10 @@ difficulty: "beginner"
 model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-evolve', 'pb-review-playbook', 'pb-standards', 'pb-documentation']
-last_reviewed: "2026-07-13"
+last_reviewed: "2026-11-04"
 last_evolved: "2026-07-13"
-version: "2.1.0"
-version_notes: "v2.1.0: Encode dash discipline, the /pb-handcraft gate, and a changelog-as-it-lands guard so new commands inherit them."
+version: "2.1.1"
+version_notes: "v2.1.1: Body prose drops spaced double hyphens."
 breaking_changes: []
 ---
 # Create New Engineering Playbook
@@ -533,13 +533,13 @@ Match depth to purpose. Simple commands don't need 500 lines.
 
 ---
 
-## Appendix: Review-Skill Design -- Scope-Locked Passes
+## Appendix: Review-Skill Design (Scope-Locked Passes)
 
 When authoring a new `/pb-review-*` skill (or extending one), use scope-locked passes rather than omnibus reviews.
 
-**Anti-pattern -- the Omnibus Review:** one skill or prompt asked to evaluate correctness AND simplicity AND duplication AND performance AND security AND style AND tests in a single pass. Symptoms: mixed-severity bullet lists, no natural stop condition, earlier findings bleed into later ones ("already flagged complexity; I'll go lighter on duplication").
+**Anti-pattern (the Omnibus Review):** one skill or prompt asked to evaluate correctness AND simplicity AND duplication AND performance AND security AND style AND tests in a single pass. Symptoms: mixed-severity bullet lists, no natural stop condition, earlier findings bleed into later ones ("already flagged complexity; I'll go lighter on duplication").
 
-**Pattern -- Named Passes with Explicit Refusal:** split the review into passes, each with a narrow mandate. Each pass declares what it does AND what it refuses, routing refused concerns to another pass.
+**Pattern (Named Passes with Explicit Refusal):** split the review into passes, each with a narrow mandate. Each pass declares what it does AND what it refuses, routing refused concerns to another pass.
 
 Canonical pass division:
 
@@ -569,17 +569,17 @@ This pass **does not**: evaluate correctness, style, performance, or security. I
 
 **Warning signs** when reviewing an existing skill for drift:
 
-- "Also consider X" (where X is a different domain) -- omnibus drift
-- "As a bonus, this skill can also..." -- scope creep
-- "Comprehensive review of..." -- omnibus by name
+- "Also consider X" (where X is a different domain): omnibus drift
+- "As a bonus, this skill can also...": scope creep
+- "Comprehensive review of...": omnibus by name
 
-**Existing playbook alignment:** the `code-simplifier`, `silent-failure-hunter`, `type-design-analyzer`, `pr-test-analyzer`, and `code-reviewer` subagents all refuse by prompt training. The `/pb-review-*` skills refuse by doc-only convention -- make that refusal explicit in skill prose.
+**Existing playbook alignment:** the `code-simplifier`, `silent-failure-hunter`, `type-design-analyzer`, `pr-test-analyzer`, and `code-reviewer` subagents all refuse by prompt training. The `/pb-review-*` skills refuse by doc-only convention; make that refusal explicit in skill prose.
 
 ---
 
 ## Related Commands
 
-- `/pb-evolve` -- Quarterly evolution cycles for updating the playbook ecosystem
-- `/pb-review-playbook` -- Review existing playbooks for quality and conventions
-- `/pb-standards` -- Code and content quality standards applied during validation
-- `/pb-documentation` -- Writing guidelines for clear, maintainable documentation
+- `/pb-evolve` - Quarterly evolution cycles for updating the playbook ecosystem
+- `/pb-review-playbook` - Review existing playbooks for quality and conventions
+- `/pb-standards` - Code and content quality standards applied during validation
+- `/pb-documentation` - Writing guidelines for clear, maintainable documentation
