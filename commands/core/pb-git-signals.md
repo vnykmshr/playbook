@@ -97,7 +97,7 @@ Least active: pb-legacy-tool (2 touches, 1 author)
   → Likely deprecated or superseded
 ```
 
-**Note:** Examples show data from a specific point in time. Your repository will show different values. Run `python scripts/git-signals.py` on your own project to see current signals.
+**Note:** Examples show data from a specific point in time. Your repository will show different values. Run `python scripts/git-signals.py` in your playbook clone to see current signals.
 
 ### Churn Analysis (`churn-analysis.json`)
 
