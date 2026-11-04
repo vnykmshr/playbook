@@ -9,7 +9,7 @@ related_commands: ['pb-patterns-core', 'pb-patterns-distributed', 'pb-database-o
 last_reviewed: "2026-11-04"
 last_evolved: ""
 version: "2.0.0"
-version_notes: "v2.0.0: Cut from 1046 to 307 lines: example code, walkthroughs and language sections removed; decisions, gotchas and when-to-use kept. Pool max times instances stays under max_connections less reserved slots; a materialized-view refresh recomputes the whole view, CONCURRENTLY needs a unique index, and refreshes run on a schedule, not per write."
+version_notes: "v2.0.0: Cut from 1046 to 307 lines: example code, walkthroughs and language sections removed; decisions, gotchas and when-to-use kept. Pool max times instances stays under max_connections less reserved slots; a PostgreSQL materialized-view refresh recomputes the whole view, CONCURRENTLY needs a unique index and a populated view, and refreshes run on a schedule, not per write."
 breaking_changes: ['Example code, walkthroughs and language sections removed; decisions and gotchas kept, constraints from removed code restated; deploy checklists live in /pb-preflight and /pb-deployment.']
 ---
 # Database Patterns
@@ -268,7 +268,7 @@ Store copied data in a denormalized table. Application keeps it in sync.
 
 **2. Materialized Views (Database-Managed)**
 
-The database stores a query's result. A refresh recomputes the whole view, and `REFRESH MATERIALIZED VIEW CONCURRENTLY` (reads stay unblocked) needs a unique index. Schedule refreshes; don't run one per write.
+The database stores a query's result. In PostgreSQL a refresh recomputes the whole view; `REFRESH MATERIALIZED VIEW CONCURRENTLY` keeps reads unblocked but needs a unique index (plain columns, no WHERE clause) and a view that is already populated, so the first refresh can't be concurrent. Engines with incremental maintenance apply only the changed rows and charge that to writes. Schedule PostgreSQL refreshes; don't run one per write.
 
 **When to use:**
 
