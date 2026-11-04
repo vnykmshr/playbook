@@ -498,7 +498,6 @@ class TestChangelogLandsWithChange:
 DASH_BASELINE = {
     "pb-alex-infra.md": 1,
     "pb-caveman.md": 17,
-    "pb-claude-global.md": 3,
     "pb-claude-orchestration.md": 3,
     "pb-greenfield.md": 15,
     "pb-handoff.md": 20,

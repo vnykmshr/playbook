@@ -18,6 +18,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- **`/pb-claude-global` v2.12.0.** Spaced double hyphens replaced.
 - **`/pb-llm-guidelines` v1.4.0.** Spaced double hyphens replaced.
 - **`/pb-preflight` v1.2.0.** Spaced double hyphens replaced.
 - **`/pb-handcraft` v1.6.0.** Spaced double hyphens replaced.
