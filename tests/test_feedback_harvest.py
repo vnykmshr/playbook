@@ -28,14 +28,46 @@ def digest(tmp_path: Path) -> str:
     return next((tmp_path / "out").glob("digest-*.md")).read_text()
 
 
+HEADER = "key\tdisposition\tversion\tdate\ttext\n"
+
+
+def row(note: str, disp: str, version: str = "v1", when: str = "2026-11-04") -> str:
+    """One ledger row for a note, keyed and texted as the harvester computes them."""
+    return f"{fh.item_key(note)}\t{disp}\t{version}\t{when}\t{fh.normalise(note)}\n"
+
+
+def ledger(*rows: str) -> str:
+    return HEADER + "".join(rows)
+
+
 def texts(md: str) -> list[str]:
     return [t for _, t in fh.extract(md)[0]]
 
 
 def test_golden_key():
-    """A normaliser change orphans every ledger row: it must fail here first."""
-    assert fh.normalise("**Fix** `pb-pause` Step 6  (2026-10-14) [see](http://x)") == "fix pb-pause step 6 ( ) see"
-    assert fh.item_key("**Fix** `pb-pause` Step 6  (2026-10-14) [see](http://x)") == "44a94ecdce0e"
+    """A normaliser change orphans every ledger row: it must fail here first, and the ledger's
+    text column is what a rekey recomputes from."""
+    assert fh.normalise("**Fix** `pb-pause` Step 6  (2026-10-14) [see](http://x)") == "fix pb pause step 6 see"
+    assert fh.item_key("**Fix** `pb-pause` Step 6  (2026-10-14) [see](http://x)") == "504571ef8b57"
+
+
+@pytest.mark.parametrize("a, b, same", [
+    ("rule holds — keep it", "rule holds, keep it", True),
+    ("pb-pause: step 6.", "pb pause step 6", True),
+    ("_emphasis_ and “quotes”", "emphasis and quotes", True),
+    ("<= 5", "5", False),
+    ("a → b", "a b", False),
+    ("café", "caf", False),
+    ("$x | y", "x y", False),
+])
+def test_punctuation_is_dropped_and_symbols_kept(a: str, b: str, same: bool):
+    """A dash-to-comma voice pass must not re-present a ruled note; an operator must not merge two."""
+    assert (fh.item_key(a) == fh.item_key(b)) is same
+
+
+def test_normalise_is_idempotent_so_the_text_column_can_rekey():
+    for note in ("**Fix** `pb-pause` (2026-10-14) [see](http://x) — done", "a ~~b~~ → c; d!"):
+        assert fh.normalise(fh.normalise(note)) == fh.normalise(note)
 
 
 @pytest.mark.parametrize("heading", [
@@ -132,7 +164,7 @@ def test_near_misses_skip_fences_and_never_change_the_exit(tmp_path: Path):
     assert run(tmp_path) == 2, "no repo heading at all: a regression or a wrong root, never a close"
     assert "pause-notes.md:2`" in digest(tmp_path).split("## Near-miss headings")[1]
     repo_note(tmp_path, "o/r", "## 2026-10-01\nPlaybook feedback:\n- one\n\n**Playbook feedback**\n- lost\n")
-    write(tmp_path / "ledger.tsv", f"key\tdisposition\tversion\tdate\n{fh.item_key('one')}\ttaken\tv1\t2026-11-04\n")
+    write(tmp_path / "ledger.tsv", ledger(row("one", "taken")))
     assert run(tmp_path) == 0
     md = digest(tmp_path)
     assert "pause-notes.md:5`" in md.split("## Near-miss headings")[1] and "1 near misses" in md
@@ -152,22 +184,27 @@ def test_exit_2_when_nothing_is_found(tmp_path: Path):
     assert run(tmp_path) == 2
 
 
-@pytest.mark.parametrize("ledger", [
-    "key\tdisposition\n",
-    "key\tdisposition\tversion\tdate\nabc\ttaken\tv1\t2026-11-04\n",
-    "key\tdisposition\tversion\tdate\n0123456789ab\tseen\tv1\t2026-11-04\n",
-    "key\tdisposition\tversion\tdate\n0123456789ab\ttaken\tv1\n",
-    "key\tdisposition\tversion\tdate\n0123456789ab\tdup-of:xyz\tv1\t2026-11-04\n",
-    "key\tdisposition\tversion\tdate\n0123456789ab\ttaken\tv1\tsoon\n",
-    "key\tdisposition\tversion\tdate\n0123456789ab\ttaken\tv1\t2026-11-04\n0123456789ab\trejected\t\t2026-11-05\n",
-    "key\tdisposition\tversion\tdate\n0123456789ab\tdup-of:deadbeef0000\t\t2026-11-04\n",
-    "key\tdisposition\tversion\tdate\n0123456789ab\tdup-of:deadbeef0000\t\t2026-11-04\n"
-    "deadbeef0000\tdup-of:0123456789ab\t\t2026-11-04\n",
+@pytest.mark.parametrize("text, says", [
+    ("key\tdisposition\tversion\tdate\n", "header must be"),
+    (ledger(row("one", "taken").replace("\t2026-11-04\tone", "\t2026-11-04")), "4 columns, want 5"),
+    (ledger("abc\ttaken\tv1\t2026-11-04\tone\n"), "not 12 hex"),
+    (ledger(row("one", "seen")), "disposition 'seen'"),
+    (ledger(row("one", "dup-of:xyz")), "disposition 'dup-of:xyz'"),
+    (ledger(row("one", "taken", when="soon")), "date 'soon'"),
+    (ledger(row("one", "taken"), row("one", "rejected", "", "2026-11-05")), "repeats line 2"),
+    (ledger(row("one", f"dup-of:{fh.item_key('gone')}", "")), "names no key"),
+    (ledger(row("one", f"dup-of:{fh.item_key('two')}", ""), row("two", f"dup-of:{fh.item_key('one')}", "")), "names no key"),
+    (ledger(f"{fh.item_key('one')}\ttaken\tv1\t2026-11-04\tone edited\n"), "text hashes to"),
+    (ledger(f"{fh.item_key('one')}\ttaken\tv1\t2026-11-04\t\n"), "text hashes to"),
+    (ledger(row("one", "deferred", "q1-2027")), "deferred to 'q1-2027'"),
+    (ledger(row("one", "deferred", "2027-q5")), "deferred to '2027-q5'"),
+    (ledger(row("one", "deferred", "v2.35.0")), "deferred to 'v2.35.0'"),
 ])
-def test_exit_2_on_a_malformed_ledger(tmp_path: Path, ledger: str):
+def test_exit_2_on_a_malformed_ledger(tmp_path: Path, capsys: pytest.CaptureFixture[str], text: str, says: str):
     repo_note(tmp_path, "o/r", "## 2026-10-01\nPlaybook feedback:\n- one\n")
-    write(tmp_path / "ledger.tsv", ledger)
+    write(tmp_path / "ledger.tsv", text)
     assert run(tmp_path) == 2
+    assert says in capsys.readouterr().err
 
 
 def test_any_error_exits_2_not_1(tmp_path: Path, monkeypatch: pytest.MonkeyPatch):
@@ -181,7 +218,7 @@ def test_a_repo_git_cannot_list_exits_2_and_is_named(tmp_path: Path):
     repo_note(tmp_path, "o/broken", "## 2026-10-01\nPlaybook feedback:\n- unvetted\n")
     write(tmp_path / "repos" / "o" / "broken" / ".git", "gitdir: /nowhere\n")
     repo_note(tmp_path, "o/plain", "## 2026-10-01\nPlaybook feedback:\n- kept\n")
-    write(tmp_path / "ledger.tsv", f"key\tdisposition\tversion\tdate\n{fh.item_key('kept')}\ttaken\tv1\t2026-11-04\n")
+    write(tmp_path / "ledger.tsv", ledger(row("kept", "taken")))
     assert run(tmp_path) == 2, "every key dispositioned, but the harvest is incomplete"
     md = digest(tmp_path)
     assert "unvetted" not in md and "1 repos unread" in md
@@ -199,7 +236,7 @@ def test_a_crlf_note_is_harvested_with_its_date(tmp_path: Path):
 
 def test_memory_cannot_mask_a_harvest_with_no_repo_heading(tmp_path: Path):
     write(tmp_path / "mem" / "p" / "memory" / "feedback_x.md", "---\ndescription: Kept\n---\n")
-    write(tmp_path / "ledger.tsv", f"key\tdisposition\tversion\tdate\n{fh.item_key('Kept')}\ttaken\tv1\t2026-11-04\n")
+    write(tmp_path / "ledger.tsv", ledger(row("Kept", "taken")))
     (tmp_path / "repos").mkdir()
     assert run(tmp_path) == 2
     assert digest(tmp_path), "the digest is still written"
@@ -307,13 +344,9 @@ def test_a_repo_whose_todos_cannot_be_stat_exits_2(tmp_path: Path, monkeypatch: 
 def test_exit_1_then_0_once_every_key_is_dispositioned(tmp_path: Path):
     repo_note(tmp_path, "o/r", "## 2026-10-01\nPlaybook feedback:\n- one\n- two\n")
     assert run(tmp_path) == 1, "a missing ledger reads as empty"
-    one, two = fh.item_key("one"), fh.item_key("two")
-    write(tmp_path / "ledger.tsv", f"key\tdisposition\tversion\tdate\n{one}\ttaken\tv2.33.0\t2026-11-04\n")
+    write(tmp_path / "ledger.tsv", ledger(row("one", "taken", "v2.33.0")))
     assert run(tmp_path) == 1
-    write(tmp_path / "ledger.tsv", (
-        f"key\tdisposition\tversion\tdate\n{one}\ttaken\tv2.33.0\t2026-11-04\n"
-        f"{two}\tdup-of:{one}\tv2.33.0\t2026-11-04\n"
-    ))
+    write(tmp_path / "ledger.tsv", ledger(row("one", "taken", "v2.33.0"), row("two", f"dup-of:{fh.item_key('one')}", "v2.33.0")))
     assert run(tmp_path) == 0
     assert not (tmp_path / "pb").exists() or not any((tmp_path / "pb").rglob("*.tsv")), "never writes a ledger"
 
@@ -522,19 +555,17 @@ def test_may_be_fixed_reads_the_newest_bump_that_changed_the_body(tmp_path: Path
 
 def test_a_taken_key_seen_again_later_holds_exit_1_until_re_ruled(tmp_path: Path):
     repo_note(tmp_path, "o/r", "## 2026-11-01\nPlaybook feedback:\n- recurring\n")
-    row = f"key\tdisposition\tversion\tdate\n{fh.item_key('recurring')}\ttaken\tv1\t"
-    write(tmp_path / "ledger.tsv", row + "2026-10-01\n")
+    write(tmp_path / "ledger.tsv", ledger(row("recurring", "taken", when="2026-10-01")))
     assert run(tmp_path) == 1
     assert "recurring" in digest(tmp_path).split("## Taken, then seen again")[1].split("##")[0]
-    write(tmp_path / "ledger.tsv", row + "2026-11-02\n")
+    write(tmp_path / "ledger.tsv", ledger(row("recurring", "taken", when="2026-11-02")))
     assert run(tmp_path) == 0
 
 
 def test_a_dup_of_member_seen_again_reads_its_representatives_ruling(tmp_path: Path):
     repo_note(tmp_path, "o/r", "## 2026-11-01\nPlaybook feedback:\n- member wording\n")
-    rep, member = fh.item_key("rep wording"), fh.item_key("member wording")
-    ledger = f"key\tdisposition\tversion\tdate\n{rep}\ttaken\tv1\t2026-10-01\n{member}\tdup-of:{rep}\t\t"
-    write(tmp_path / "ledger.tsv", ledger + "2026-11-04\n")
+    write(tmp_path / "ledger.tsv", ledger(
+        row("rep wording", "taken", when="2026-10-01"), row("member wording", f"dup-of:{fh.item_key('rep wording')}", "")))
     assert run(tmp_path) == 1
     assert "member wording" in digest(tmp_path).split("## Taken, then seen again")[1].split("##")[0]
 
@@ -542,10 +573,7 @@ def test_a_dup_of_member_seen_again_reads_its_representatives_ruling(tmp_path: P
 def test_an_mtime_dated_item_never_recurs(tmp_path: Path):
     repo_note(tmp_path, "o/r", "## 2026-10-01\nPlaybook feedback:\n- one\n")
     write(tmp_path / "mem" / "p" / "memory" / "feedback_x.md", "---\ndescription: Edited later\n---\n")
-    write(tmp_path / "ledger.tsv", (
-        f"key\tdisposition\tversion\tdate\n{fh.item_key('Edited later')}\ttaken\tv1\t2026-01-01\n"
-        f"{fh.item_key('one')}\ttaken\tv1\t2026-11-04\n"
-    ))
+    write(tmp_path / "ledger.tsv", ledger(row("Edited later", "taken", when="2026-01-01"), row("one", "taken")))
     assert run(tmp_path) == 0
     assert "Edited later" not in digest(tmp_path).split("## Taken, then seen again")[1].split("##")[0]
 
@@ -559,3 +587,32 @@ def test_pb_pause_template_heading_feeds_the_harvester():
     n = hits[0]
     assert lines[n] == "Patterns / playbook feedback:"
     assert fh.PLACEHOLDER.match(fh.BULLET.match(lines[n + 1]).group("text")), "the template's placeholder bullet follows it"
+
+
+@pytest.mark.parametrize("today, code", [("2026-12-31", 0), ("2027-01-01", 1), ("2027-03-31", 1)])
+def test_a_deferred_row_comes_due_on_its_quarters_first_day(tmp_path: Path, today: str, code: int):
+    repo_note(tmp_path, "o/r", "## 2026-10-01\nPlaybook feedback:\n- one\n- two\n")
+    write(tmp_path / "ledger.tsv", ledger(
+        row("one", "deferred", "2027-q1"), row("two", f"dup-of:{fh.item_key('one')}", "")))
+    assert run(tmp_path, "--today", today) == code
+    md = digest(tmp_path)
+    assert md.startswith(f"# Feedback digest {today}") and f"(today {today})" in md
+    due = md.split("## Deferred, now due")[1].split("\n## ")[0]
+    assert (f"`{fh.item_key('one')}` 2027-q1, ruled 2026-11-04 (+1 dup-of): one" in due) is bool(code)
+    assert f"`{fh.item_key('one')}` 2027-q1" in md.split("## Deferred backlog")[1]
+
+
+def test_a_due_deferred_row_holds_exit_1_after_its_note_is_deleted(tmp_path: Path):
+    """The backlog lives in the ledger: discarding the note never closes the deferral."""
+    repo_note(tmp_path, "o/r", "## 2026-10-01\nPlaybook feedback:\n- kept\n")
+    write(tmp_path / "ledger.tsv", ledger(row("kept", "taken"), row("Gone — deleted note", "deferred", "2027-q1")))
+    assert run(tmp_path, "--today", "2027-01-01") == 1
+    assert "gone deleted note" in digest(tmp_path).split("## Deferred, now due")[1]
+    write(tmp_path / "ledger.tsv", ledger(row("kept", "taken"), row("Gone — deleted note", "deferred", "2027-q2")))
+    assert run(tmp_path, "--today", "2027-01-01") == 0
+
+
+@pytest.mark.parametrize("today", ["2027-1-1", "tomorrow", "2027-02-30"])
+def test_a_malformed_today_exits_2(tmp_path: Path, today: str):
+    repo_note(tmp_path, "o/r", "## 2026-10-01\nPlaybook feedback:\n- one\n")
+    assert run(tmp_path, "--today", today) == 2

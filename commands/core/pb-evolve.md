@@ -7,8 +7,8 @@ model_hint: "opus"
 execution_pattern: "sequential"
 related_commands: ['pb-claude-global', 'pb-claude-project', 'pb-standards', 'pb-preamble', 'pb-design-rules']
 last_reviewed: "2026-11-04"
-version: "2.0.0"
-version_notes: "v2.0.0: Rewritten for one owner and many repos. Step 0 takes in harvested feedback until the harvester exits 0; each release runs as one /pb-forge arc; push, tag and release are separately gated; rollback redeploys the previous tag. Team machinery, the snapshot, log and diff steps, mkdocs and pbai are gone."
+version: "2.1.0"
+version_notes: "v2.1.0: Ledger rows carry the note text and must hash to their key; a deferred row names the quarter it comes due and holds exit 1 from that quarter's first day; the digest lists the deferred backlog."
 breaking_changes: ['Quarterly calendar dates, Evolution Manager, review meeting and pre-evolution checklist removed', 'Steps 1.5 and 4-11 replaced: no evolution-snapshot.py, evolution-log.py or evolution-diff.py step; rollback is a redeploy of the previous tag', 'Report, dashboard, log-structure and rollback-report templates removed', 'Step 0 Intake added: the cycle closes only when scripts/feedback-harvest.py exits 0']
 ---
 
@@ -42,15 +42,17 @@ python3 scripts/feedback-harvest.py; echo "exit $?"
 | Exit | Meaning | Do |
 |------|---------|----|
 | 0 | Every key dispositioned | Go to Step 1 |
-| 1 | Undisposed keys, or taken keys seen again | Disposition or re-rule them |
+| 1 | Undisposed keys, deferred rows now due, or taken keys seen again | Disposition or re-rule them |
 | 2 | No repo heading found, a malformed ledger, a repo or path that cannot be read, or an error | Fix it and rerun; exit 2 never closes the cycle |
 
-Keys seen in more repos rank first; memory items come last. Cluster near-duplicates by hand, then give every key one row in `todos/evolve/harvest-ledger.tsv`, tab-separated `key disposition version date`:
+Keys seen in more repos rank first; memory items come last. Cluster near-duplicates by hand, then give every key one row in `todos/evolve/harvest-ledger.tsv`, tab-separated `key disposition version date text`:
 
 - `taken`: a release this cycle carries it; version names that release
 - `rejected`: the reason goes in the cycle record
-- `deferred`: names where it goes (a later release, a single decision)
+- `deferred`: version names the quarter it comes due, as `2027-q1`. From that quarter's first day the row counts as undisposed until you re-rule it: taken, rejected, or deferred to a later quarter. The first run in a quarter exits 1 on every group deferred to it at once
 - `dup-of:<key>`: the cluster's representative carries the disposition
+
+`text` is the note as the digest shows it. A row whose text does not hash to its key is exit 2: a hand edit, or a normaliser change, which recomputes every key from this column. The ledger is untracked, so losing it re-presents every key. `--today YYYY-MM-DD` runs the due check against another date.
 
 In the digest:
 
@@ -58,6 +60,7 @@ In the digest:
 - `private`: the source is an org listed under `private` in the config, or the note sits in a git repo nested under a project's `todos/`. The summary line says whether the config was read.
 - **Taken, then seen again**: a dated note repeats a `taken` key after its row's date, so the fix did not reach the sessions that wrote it. It holds exit 1 until you edit the row that carries the disposition (the representative's, for a `dup-of` member); an archive written after the ruling can re-date an old note, so read the occurrence's path first. Memory files and undated notes cannot recur.
 - **Near-miss headings**: lines that start like the heading and are not one. They hold no key and no exit; fix the note if it was meant as one.
+- **Deferred backlog**: every deferred row by quarter, its text read from the ledger, so a deleted note stays listed.
 
 **The cycle does not close until the harvester exits 0.**
 

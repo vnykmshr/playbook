@@ -9,9 +9,10 @@ ledger has not dispositioned. Only intake (`/pb-evolve` Step 0) writes the ledge
 Conventions live here; this machine's specifics (roots, private orgs) live in the
 untracked todos/evolve/harvest.toml, and flags override it.
 
-Exit: 0 every key dispositioned, 1 undisposed keys or a taken key seen again, 2 instrument fault
-(no repo heading found, a malformed ledger, a repo git cannot list, a path that cannot be read,
-or any error). An incomplete harvest still writes its digest, so the paths to fix are in it.
+Exit: 0 every key dispositioned, 1 undisposed keys, a deferred row whose quarter has come, or a
+taken key seen again, 2 instrument fault (no repo heading found, a malformed ledger, a repo git
+cannot list, a path that cannot be read, or any error). An incomplete harvest still writes its
+digest, so the paths to fix are in it.
 
 Usage:
     python3 scripts/feedback-harvest.py --init     # writes the config once, with derived defaults
@@ -28,10 +29,12 @@ import re
 import stat
 import subprocess
 import sys
+import unicodedata
 from collections import defaultdict
 from dataclasses import dataclass, field
 from datetime import date
 from pathlib import Path
+from typing import NamedTuple
 
 PLAYBOOK = Path(__file__).resolve().parent.parent
 
@@ -59,8 +62,9 @@ ISO_DATE = re.compile(r"\d{4}-\d{2}-\d{2}")
 PLACEHOLDER = re.compile(r"^\[[^\]]*\]$")
 COMMAND = re.compile(r"\bpb-[a-z0-9]+(?:-[a-z0-9]+)*")
 KEY = re.compile(r"^[0-9a-f]{12}$")
+QUARTER = re.compile(r"^\d{4}-q[1-4]$")
 DISPOSITIONS = ("taken", "rejected", "deferred")
-LEDGER_HEADER = ["key", "disposition", "version", "date"]
+LEDGER_HEADER = ["key", "disposition", "version", "date", "text"]
 
 
 class InstrumentFault(Exception):
@@ -90,11 +94,13 @@ class Harvest:
 
 
 def normalise(text: str) -> str:
-    """Lowercase; links to their text; dates, emphasis and code marks gone; whitespace collapsed."""
+    """Lowercase; links to their text; dates, code marks and Unicode punctuation (P*) become
+    spaces; whitespace collapsed. Symbols (S*) stay: `<= 5` and `5` are different notes."""
     t = text.lower()
     t = re.sub(r"\[([^\]]*)\]\([^)]*\)", r"\1", t)
     t = ISO_DATE.sub(" ", t)
-    t = re.sub(r"[*`]+|~~", " ", t)
+    t = re.sub(r"`+|~~", " ", t)
+    t = "".join(" " if unicodedata.category(c)[0] == "P" else c for c in t)
     return re.sub(r"\s+", " ", t).strip()
 
 
@@ -175,6 +181,11 @@ def near_misses(text: str) -> list[int]:
         n + 1 for n, (line, ok) in enumerate(zip(lines, unfenced(lines)))
         if ok and NEAR_MISS.match(line) and not HEADING.match(line)
     ]
+
+
+def quarter_start(quarter: str) -> str:
+    """'2027-q1' -> '2027-01-01'."""
+    return f"{quarter[:4]}-{(int(quarter[-1]) - 1) * 3 + 1:02d}-01"
 
 
 def heading_date(lines: list[str], upto: int, today: str) -> str | None:
@@ -284,7 +295,7 @@ def todos_dir(repo: Path, h: Harvest) -> Path | None:
     return todos if stat.S_ISDIR(mode) else None
 
 
-def harvest_repos(roots: tuple[Path, ...], h: Harvest) -> None:
+def harvest_repos(roots: tuple[Path, ...], h: Harvest, today: str) -> None:
     for root in (r.resolve() for r in roots):
         if is_scratchpad(str(root)):
             continue
@@ -293,10 +304,10 @@ def harvest_repos(roots: tuple[Path, ...], h: Harvest) -> None:
                 repo = Path(repo_entry.path)
                 if (todos := todos_dir(repo, h)) is None:
                     continue
-                harvest_todos(todos, f"{org.name}/{repo.name}", h)
+                harvest_todos(todos, f"{org.name}/{repo.name}", h, today)
 
 
-def harvest_todos(todos: Path, source: str, h: Harvest) -> None:
+def harvest_todos(todos: Path, source: str, h: Harvest, today: str) -> None:
     repo = todos.parent
     tracked = tracked_todos(repo)
     if tracked is None:
@@ -317,7 +328,7 @@ def harvest_todos(todos: Path, source: str, h: Harvest) -> None:
         h.empty += [f"{path}:{n}" for n in none]
         h.near += [f"{path}:{n}" for n in near]
         for n, t in found:
-            when = heading_date(lines, n - 1, date.today().isoformat()) or mtime_date(path)
+            when = heading_date(lines, n - 1, today) or mtime_date(path)
             h.items.append(Item(item_key(t), t, source, f"{path}:{n}", when, False, nested))
 
 
@@ -440,11 +451,19 @@ def is_private(source: str, cfg: Config) -> bool:
     return any(d == p or d.startswith(p + "-") for p in cfg.prefixes)
 
 
-Ledger = dict[str, tuple[str, str, str, int]]
+class Row(NamedTuple):
+    disp: str
+    version: str
+    when: str
+    text: str  # the normalised note: the backlog and a rekey outlive the source note
+    line: int
+
+
+Ledger = dict[str, Row]
 
 
 def read_ledger(path: Path) -> Ledger:
-    """key -> (disposition, version, date, line). Missing ledger is empty; malformed raises."""
+    """key -> Row. Missing ledger is empty; malformed raises."""
     if not path.exists():
         return {}
     rows = path.read_text().split("\n")
@@ -455,31 +474,37 @@ def read_ledger(path: Path) -> Ledger:
         if not row.strip():
             continue
         cols = row.split("\t")
-        if len(cols) != 4:
-            raise InstrumentFault(f"{path}:{n}: {len(cols)} columns, want 4")
-        key, disp, version, when = cols
+        if len(cols) != len(LEDGER_HEADER):
+            raise InstrumentFault(f"{path}:{n}: {len(cols)} columns, want {len(LEDGER_HEADER)}")
+        key, disp, version, when, text = cols
         if not KEY.match(key):
             raise InstrumentFault(f"{path}:{n}: key {key!r} is not 12 hex characters")
+        if not text or item_key(text) != key:
+            raise InstrumentFault(
+                f"{path}:{n}: text hashes to {item_key(text)}, not {key}: a hand edit, or a normaliser change "
+                "that needs every key recomputed from the text column")
         if disp not in DISPOSITIONS and not (disp.startswith("dup-of:") and KEY.match(disp[7:])):
             raise InstrumentFault(f"{path}:{n}: disposition {disp!r}: want {', '.join(DISPOSITIONS)} or dup-of:<key>")
+        if disp == "deferred" and not QUARTER.match(version):
+            raise InstrumentFault(f"{path}:{n}: deferred to {version!r}: name the quarter it comes due, as 2027-q1")
         if not re.fullmatch(r"\d{4}-\d{2}-\d{2}", when):
             raise InstrumentFault(f"{path}:{n}: date {when!r} is not YYYY-MM-DD")
         if key in ledger:
-            raise InstrumentFault(f"{path}:{n}: key {key} repeats line {ledger[key][3]}; edit that row instead")
-        ledger[key] = (disp, version, when, n)
-    for disp, _, _, n in ledger.values():
-        target = ledger.get(disp[7:]) if disp.startswith("dup-of:") else None
-        if disp.startswith("dup-of:") and (target is None or target[0].startswith("dup-of:")):
-            raise InstrumentFault(f"{path}:{n}: {disp} names no key with its own disposition")
+            raise InstrumentFault(f"{path}:{n}: key {key} repeats line {ledger[key].line}; edit that row instead")
+        ledger[key] = Row(disp, version, when, text, n)
+    for r in ledger.values():
+        target = ledger.get(r.disp[7:]) if r.disp.startswith("dup-of:") else None
+        if r.disp.startswith("dup-of:") and (target is None or target.disp.startswith("dup-of:")):
+            raise InstrumentFault(f"{path}:{r.line}: {r.disp} names no key with its own disposition")
     return ledger
 
 
 def ruling(ledger: Ledger, key: str) -> tuple[str, str] | None:
     """(disposition, date) for a key, read through dup-of to its representative."""
     row = ledger.get(key)
-    if row and row[0].startswith("dup-of:"):
-        row = ledger[row[0][7:]]
-    return (row[0], row[2]) if row else None
+    if row and row.disp.startswith("dup-of:"):
+        row = ledger[row.disp[7:]]
+    return (row.disp, row.when) if row else None
 
 
 def _show(repo: Path, spec: str) -> str | None:
@@ -534,9 +559,9 @@ def may_be_fixed(playbook: Path, text: str, newest: str) -> str | None:
 
 
 def render(
-    h: Harvest, skipped: list[str], ledger: Ledger, playbook: Path, cfg: Config,
+    h: Harvest, skipped: list[str], ledger: Ledger, playbook: Path, cfg: Config, today: str,
 ) -> tuple[str, int, int]:
-    """(digest markdown, undisposed keys, taken keys seen again)."""
+    """(digest markdown, undisposed keys including deferred rows now due, taken keys seen again)."""
     by_key: dict[str, list[Item]] = defaultdict(list)
     for it in h.items:
         by_key[it.key].append(it)
@@ -569,12 +594,27 @@ def render(
     repo_keys = sorted(((k, v) for k, v in undisposed.items() if not all(o.memory for o in v)), key=rank)
     mem_keys = sorted(((k, v) for k, v in undisposed.items() if all(o.memory for o in v)), key=rank)
     recurred = [(k, v) for k, v in by_key.items() if seen_again(v, ruling(ledger, k))]
+    # A deferred row is read from the ledger, not the notes: deleting the note never closes it.
+    members: dict[str, int] = defaultdict(int)
+    for r in ledger.values():
+        if r.disp.startswith("dup-of:"):
+            members[r.disp[7:]] += 1
+    deferred = sorted(
+        ((k, r) for k, r in ledger.items() if r.disp == "deferred"), key=lambda kr: (kr[1].version, kr[0])
+    )
+    due = [(k, r) for k, r in deferred if quarter_start(r.version) <= today]
+
+    def row_line(k: str, r: Row) -> str:
+        more = f" (+{members[k]} dup-of)" if members[k] else ""
+        return f"- `{k}` {r.version}, ruled {r.when}{more}: {r.text}"
+
     headings = len({o.where for o in h.items if not o.memory}) + len(h.empty)
     md = [
-        f"# Feedback digest {date.today().isoformat()}",
+        f"# Feedback digest {today}",
         "",
         f"{headings} headings in {h.files} files; {len(h.items)} items, {len(by_key)} keys, "
-        f"{len(undisposed)} undisposed, {len(recurred)} seen again, {len({o.source for o in h.items})} sources; "
+        f"{len(undisposed)} undisposed, {len(due)} deferred now due, {len(recurred)} seen again, "
+        f"{len({o.source for o in h.items})} sources; "
         f"{len(h.near)} near misses, {len(h.unlisted)} repos unread, {len(h.unread)} paths unread, "
         f"{len(h.links)} links not followed. {cfg.note}.",
         "",
@@ -585,6 +625,10 @@ def render(
         "## Undisposed: memory",
         "",
         *[x for kv in mem_keys for x in line(*kv)],
+        "",
+        f"## Deferred, now due (today {today}): re-rule each as taken, rejected, or deferred to a later quarter",
+        "",
+        *[row_line(k, r) for k, r in due],
         "",
         "## Taken, then seen again after the ledger date",
         "",
@@ -614,8 +658,12 @@ def render(
         "",
         *[f"- `{x}`" for x in h.links],
         "",
+        "## Deferred backlog, by the quarter it comes due (text from the ledger)",
+        "",
+        *[row_line(k, r) for k, r in deferred],
+        "",
     ]
-    return "\n".join(md), len(undisposed), len(recurred)
+    return "\n".join(md), len(undisposed) + len(due), len(recurred)
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -628,6 +676,7 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--config", type=Path, help="default <playbook>/todos/evolve/harvest.toml (untracked)")
     ap.add_argument("--ledger", type=Path, help="default <playbook>/todos/evolve/harvest-ledger.tsv")
     ap.add_argument("--out", type=Path, help="digest directory (default <playbook>/todos/evolve)")
+    ap.add_argument("--today", help="YYYY-MM-DD: the date deferred quarters come due against (default today)")
     ap.add_argument("--init", action="store_true", help="write the config with derived defaults, then stop")
     args = ap.parse_args(argv)
     config = args.config or args.playbook / "todos" / "evolve" / "harvest.toml"
@@ -643,15 +692,19 @@ def main(argv: list[str] | None = None) -> int:
     try:
         if args.config is not None and not config.exists():
             raise InstrumentFault(f"{config}: --config names no file; a typo here would flag nothing")
+        today = args.today or date.today().isoformat()
+        if not re.fullmatch(r"\d{4}-\d{2}-\d{2}", today):
+            raise InstrumentFault(f"--today {today!r} is not YYYY-MM-DD")
+        date.fromisoformat(today)
         cfg = load_config(config, args.repos, args.memory)
         ledger = read_ledger(ledger_path)
         h = Harvest([], [], [], [], 0)
-        harvest_repos(cfg.repos, h)
+        harvest_repos(cfg.repos, h, today)
         memory, skipped = harvest_memory(cfg.memory, h)
         h.items += memory
-        md, undisposed, again = render(h, skipped, ledger, args.playbook, cfg)
+        md, undisposed, again = render(h, skipped, ledger, args.playbook, cfg, today)
         out.mkdir(parents=True, exist_ok=True)
-        digest = out / f"digest-{date.today().isoformat()}.md"
+        digest = out / f"digest-{today}.md"
         digest.write_text(md)
     except InstrumentFault as e:
         print(f"feedback-harvest: {e}", file=sys.stderr)
@@ -659,7 +712,7 @@ def main(argv: list[str] | None = None) -> int:
     except Exception as e:  # exit 1 means "undisposed keys": a crash must not read as that
         print(f"feedback-harvest: {type(e).__name__}: {e}", file=sys.stderr)
         return 2
-    print(f"{undisposed} undisposed, {again} seen again, of {len({i.key for i in h.items})} keys; "
+    print(f"{undisposed} undisposed (deferred now due included), {again} seen again, of {len({i.key for i in h.items})} keys; "
           f"{len(h.near)} near misses; digest {digest}")
     # An incomplete harvest is never a close, whatever the ledger says: name each cause, exit 2.
     causes = [f"{r}: git cannot list its files; run `git -C {r} status`, fix, rerun" for r in h.unlisted]
