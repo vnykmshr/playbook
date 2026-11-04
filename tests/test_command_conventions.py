@@ -21,7 +21,7 @@ import pytest
 import yaml
 
 COMMANDS_DIR = Path(__file__).parent.parent / "commands"
-EXPECTED_COUNT = 113  # 118 - pb-guide-go, pb-guide-python, the three wrapper reviews
+EXPECTED_COUNT = 112  # 118 - pb-guide-go, pb-guide-python, the three wrapper reviews, pb-patterns-cloud
 
 # Hub commands allowed to exceed the 5-link limit
 HUB_COMMANDS = {"pb-patterns.md"}
@@ -793,7 +793,7 @@ LINE_BUDGET_BASELINE = {
     "pb-testing.md": 716,
     "pb-think.md": 749,
     "pb-todo-implement.md": 616,
-    "pb-zero-stack.md": 620,
+    "pb-zero-stack.md": 619,
 }
 
 
@@ -910,7 +910,6 @@ MINDSET_BASELINE = {
     "pb-onboarding.md",
     "pb-patterns-api.md",
     "pb-patterns-async.md",
-    "pb-patterns-cloud.md",
     "pb-patterns-db.md",
     "pb-patterns-deployment.md",
     "pb-patterns-distributed.md",

@@ -7,9 +7,9 @@ model_hint: "sonnet"
 execution_pattern: "reference"
 related_commands: ['pb-patterns-core', 'pb-patterns-resilience', 'pb-patterns-async', 'pb-patterns-db', 'pb-patterns-distributed']
 last_reviewed: "2026-11-04"
-version: "2.0.0"
-version_notes: "v2.0.0: Cut from 388 to 101 lines: example code, walkthroughs and language sections removed; decisions, gotchas and when-to-use kept. The selection tree and Related list name every pattern family, pinned by a test; scaling points at /pb-patterns-deployment."
-breaking_changes: ['Example code, walkthroughs and language sections removed; decisions and gotchas kept, constraints from removed code restated; deploy checklists live in /pb-preflight and /pb-deployment.']
+version: "3.0.0"
+version_notes: "v3.0.0: /pb-patterns-cloud is retired; the selection tree and Related list drop it."
+breaking_changes: ['/pb-patterns-cloud is retired: a vendor service catalog with no playbook-specific decision, its limits drifting. Re-run scripts/install.sh to prune the link.']
 ---
 # Architecture & Design Patterns
 
@@ -46,7 +46,6 @@ DESIGN PROBLEM
 ├─ Complex UI events?      → /pb-patterns-async (Reactive/RxJS)
 ├─ Deployment strategy?    → /pb-patterns-deployment
 ├─ Frontend architecture?  → /pb-patterns-frontend
-├─ Cloud infrastructure?   → /pb-patterns-cloud
 └─ Security concerns?      → /pb-patterns-security
 
 THEN: Read pattern family, understand trade-offs, implement with knowledge
@@ -96,5 +95,4 @@ THEN: Read pattern family, understand trade-offs, implement with knowledge
 - `/pb-patterns-frontend` - Frontend architecture patterns (components, state, theming)
 - `/pb-patterns-api` - API design patterns (REST, GraphQL, gRPC)
 - `/pb-patterns-deployment` - Deployment strategies and patterns
-- `/pb-patterns-cloud` - Cloud deployment patterns (AWS, GCP, Azure)
 - `/pb-patterns-security` - Security patterns (authn, authz, secrets, data protection)

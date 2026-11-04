@@ -83,7 +83,6 @@
 - [Patterns: Frontend](commands/planning/pb-patterns-frontend.md)
 - [Patterns: Resilience](commands/planning/pb-patterns-resilience.md)
 - [Patterns: Security](commands/planning/pb-patterns-security.md)
-- [Patterns: Cloud](commands/planning/pb-patterns-cloud.md)
 - [Patterns: Deployment](commands/planning/pb-patterns-deployment.md)
 
 # Commands: Reviews

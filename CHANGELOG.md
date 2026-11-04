@@ -18,6 +18,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- **`/pb-patterns` v3.0.0, `/pb-zero-stack` v3.2.1.** `/pb-patterns-cloud` is retired: the hub's selection tree and Related list, and pb-zero-stack's Related list, drop it.
 - **`/pb-calm-design` v1.3.1, `/pb-gha` v1.0.1, `/pb-usability` v1.1.1.** Links to the retired wrapper reviews point to `/pb-maya-product`, `/pb-alex-infra` and `/pb-review-comprehensive`.
 - **`/pb-review-comprehensive` v3.0.0.** Multi-Perspective Reviews names each lens pair (Alex and Jordan, Maya and Sam, Alex and Linus) and how the pair breaks a tie; the three wrapper reviews are retired into it.
 - **`/pb-usability` v1.1.1.** Spaced double hyphens replaced.
@@ -38,6 +39,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Removed
 
 - **`/pb-review-backend`, `/pb-review-frontend` and `/pb-review-infrastructure`.** `/pb-review-comprehensive` names their lens pairs and how each pair breaks a tie. Re-run `scripts/install.sh` to prune the three links. Commands 116 to 113.
+- **`/pb-patterns-cloud`.** A vendor service catalog (AWS, GCP, Azure) with no playbook-specific decision, and its execution limits drift. Re-run `scripts/install.sh` to prune the link. Commands 113 to 112.
 
 ## [v2.33.0] - 2026-11-04
 

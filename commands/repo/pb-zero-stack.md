@@ -5,10 +5,10 @@ category: "repo"
 difficulty: "intermediate"
 model_hint: "opus"
 execution_pattern: "interactive"
-related_commands: ['pb-greenfield', 'pb-start', 'pb-patterns-cloud', 'pb-design-language', 'pb-calm-design']
-last_reviewed: "2026-02-25"
-version: "3.2.0"
-version_notes: "Friction reduction pass: cut bloat from Step 4 (creative assets, web identity table, content decisions table), removed substitutions table, moved active window to Budget Math. Added missing dev-phase decisions: data transformation prompt, error copy prompt, loading skeleton nudge, responsive/dark-mode/animation/URL questions, validation rules, testing strategy, retry default."
+related_commands: ['pb-greenfield', 'pb-start', 'pb-design-language', 'pb-calm-design']
+last_reviewed: "2026-11-04"
+version: "3.2.1"
+version_notes: "v3.2.1: Related Commands drop the retired /pb-patterns-cloud."
 breaking_changes: []
 ---
 # Zero-Stack App Initiation ($0/month Architecture)
@@ -611,7 +611,6 @@ API hits/day = (active_hours * 60 / kv_ttl_minutes) + cron_runs
 
 - `/pb-greenfield` - The general path (start there if unsure; it routes here when the Gist topology fits)
 - `/pb-start` - Begin feature work after scaffolding
-- `/pb-patterns-cloud` - Cloud deployment patterns reference
 - `/pb-design-language` - Deeper design system work (optional, after scaffold)
 - `/pb-calm-design` - Calm design principles (Gists embody these by default)
 

@@ -46,7 +46,6 @@ Quick reference for all playbook commands.
 | `/pb-patterns-db` | Database patterns (pooling, optimization, replication, sharding) |
 | `/pb-patterns-distributed` | Distributed patterns (saga, CQRS, eventual consistency, 2PC) |
 | `/pb-patterns-security` | Security patterns for microservices (OAuth, JWT, mTLS, RBAC, ABAC, encryption, audit trails) |
-| `/pb-patterns-cloud` | Cloud deployment patterns (AWS EC2/RDS, ECS, Lambda; GCP Cloud Run, GKE; Azure App Service, Functions) |
 | `/pb-patterns-frontend` | Frontend architecture patterns (mobile-first, theme-aware, component patterns, state management) |
 | `/pb-patterns-api` | API design patterns (REST, GraphQL, gRPC, versioning, error handling, pagination) |
 | `/pb-patterns-deployment` | Deployment strategies (blue-green, canary, rolling, feature flags, rollback) |
