@@ -6,9 +6,9 @@ difficulty: "beginner"
 model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-evolve', 'pb-review-playbook', 'pb-standards', 'pb-documentation']
-last_reviewed: "2026-07-13"
-version: "2.1.1"
-version_notes: "v2.1.1: Body prose drops spaced double hyphens. Nested samples use a 4-backtick outer fence, so they render as written."
+last_reviewed: "2026-11-04"
+version: "2.1.2"
+version_notes: "v2.1.2: The Review row's hint is opus; haiku is subagent-only, never a command's hint."
 breaking_changes: []
 ---
 # Create New Engineering Playbook
@@ -353,7 +353,7 @@ Copy this template and fill in:
 | Orchestrator | opus (main) | Coordinates subtasks, judgment needed |
 | Guide | opus | Deep reasoning about principles |
 | Reference | sonnet | Pattern application, lookup |
-| Review | opus + haiku | Automated checks (haiku), evaluation (opus) |
+| Review | opus | Judgment over the change; delegate mechanical checks to a scripted gate, not a haiku hint |
 
 See `/pb-claude-orchestration` for full model selection strategy.
 
