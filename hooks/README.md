@@ -57,61 +57,7 @@ Hooks are configured in `~/.claude/settings.json` under the `hooks` key:
 ### Hook Types
 
 - `"type": "command"` — Execute shell command
-- Command receives context via environment variables
-
----
-
-## Example Patterns
-
-See `examples/patterns.json` for minimal templates. These are **patterns to adapt**, not production-ready configs.
-
-### Pattern 1: Console.log Detection (PostToolUse)
-
-Warn when edited files contain debug statements:
-
-```json
-{
-  "PostToolUse": [{
-    "matcher": "Edit|Write",
-    "hooks": [{
-      "type": "command",
-      "command": "grep -l 'console.log' \"$CLAUDE_FILE_PATH\" 2>/dev/null && echo '[WARN] console.log detected in edited file'"
-    }]
-  }]
-}
-```
-
-### Pattern 2: Long-Running Command Reminder (PreToolUse)
-
-Remind to use tmux for commands that may run long:
-
-```json
-{
-  "PreToolUse": [{
-    "matcher": "Bash",
-    "hooks": [{
-      "type": "command",
-      "command": "echo \"$CLAUDE_COMMAND\" | grep -qE '(npm install|cargo build|pytest|make)' && echo '[TIP] Consider running in tmux for long commands'"
-    }]
-  }]
-}
-```
-
-### Pattern 3: Session State Preservation (PreCompact)
-
-Save context before compaction:
-
-```json
-{
-  "PreCompact": [{
-    "matcher": "*",
-    "hooks": [{
-      "type": "command",
-      "command": "echo \"[$(date)] Compaction triggered\" >> ~/.claude/compaction-log.txt"
-    }]
-  }]
-}
-```
+- The command receives the event as JSON on stdin (`tool_name`, `tool_input`); `external-action-gate.sh` reads it with `jq`
 
 ---
 
@@ -119,10 +65,9 @@ Save context before compaction:
 
 The install script does not wire hooks into `settings.json`. They require manual setup:
 
-1. Review patterns in `examples/patterns.json`
-2. Adapt to your workflow and environment
-3. Add to your `~/.claude/settings.json`
-4. Test with a sample session
+1. Adapt a hook to your workflow and environment
+2. Add it to your `~/.claude/settings.json`
+3. Test it by piping a sample event: `echo '{"tool_input":{"command":"git push"}}' | bash hook.sh`
 
 **Why manual?** Hooks interact with your shell environment and may need project-specific paths. Copy-and-adapt is safer than auto-install.
 
