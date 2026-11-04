@@ -7,14 +7,14 @@ model_hint: "opus"
 execution_pattern: "parallel"
 related_commands: ['pb-review-frontend', 'pb-a11y', 'pb-calm-design', 'pb-security', 'pb-performance']
 last_reviewed: "2026-04-26"
-version: "1.1.0"
-version_notes: "v1.1.0: Reference global GitHub Artifact Register rule for review-comment register."
+version: "1.1.1"
+version_notes: "v1.1.1: Spaced double hyphens replaced."
 breaking_changes: []
 ---
 
 # Webapp Usability Audit
 
-Post-deploy audit of the live product from a user's perspective. Not a code review -- a product audit. Run this against a staging URL or production site to surface usability gaps, trust issues, and readiness for AI-era expectations.
+Post-deploy audit of the live product from a user's perspective. Not a code review: a product audit. Run this against a staging URL or production site to surface usability gaps, trust issues, and readiness for AI-era expectations.
 
 **Mindset:** Apply `/pb-preamble` thinking: challenge "works for me" assumptions by auditing as if you're a first-time visitor. Apply `/pb-design-rules` thinking: clarity (is it obvious?), simplicity (is it minimal?), resilience (does it recover?).
 

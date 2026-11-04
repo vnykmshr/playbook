@@ -553,7 +553,6 @@ DASH_BASELINE = {
     "pb-storage.md": 19,
     "pb-threat-hunt.md": 1,
     "pb-todo-implement.md": 2,
-    "pb-usability.md": 1,
     "pb-voice.md": 4,
 }
 
