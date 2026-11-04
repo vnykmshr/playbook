@@ -101,7 +101,7 @@ Choose strategy based on risk and scope.
 
 ## Feature Flags: Deploy Without Releasing
 
-**Solution:** Deploy code dark behind a flag, then toggle it on or off without redeploying. Remove the flag and its dead branch once the rollout is stable.
+Deploy code dark behind a flag, then toggle it on or off without redeploying. Remove the flag and its dead branch once the rollout is stable.
 
 ---
 
