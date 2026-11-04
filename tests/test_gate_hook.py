@@ -107,6 +107,16 @@ ASKS = [
     ("rm \\\n  -rf build", "rm -r"),
     ("gh api -X post repos/x/y", "gh api write method"),
     ("echo C:\\\\\nrm -rf build", "rm -r"),
+    # SEG cannot read these, so the rule's later words ask anywhere in the line (fail closed)
+    (r'git reset \" --hard', "git reset --hard (segment not inspectable)"),
+    (r"git clean -e $'it\'s' -f", "git clean -f (segment not inspectable)"),
+    (r"git clean -e 'a'\''b' -f", "git clean -f (segment not inspectable)"),
+    (r"git reset a\;b --hard", "git reset --hard (segment not inspectable)"),
+    ("gh api $(echo repos/o/r | cat) -X POST", "gh api write method (segment not inspectable)"),
+    ("gh api `echo repos/o/r | cat` -X POST", "gh api write method (segment not inspectable)"),
+    ("git reset HEAD~1 2>&1 --hard", "git reset --hard (segment not inspectable)"),
+    ("git reset HEAD~1 &>/dev/null --hard", "git reset --hard (segment not inspectable)"),
+    ("git reset 'x --hard", "git reset --hard (segment not inspectable)"),
 ]
 
 
@@ -140,6 +150,10 @@ SILENT = [
     "rm -f $(find . -name '*.pyc' -print)",
     "git clean -n && ls -lf",
     "git reset --soft HEAD~1 && grep --hard x",
+    # an unreadable segment asks only when the rule's later words follow
+    "git reset HEAD~1 2>&1",
+    "gh api $(echo repos/o/r) --jq .x",
+    "git clean -n 'unbalanced",
 ]
 
 
@@ -171,17 +185,6 @@ KNOWN_MISSES = [
     "git checkout HEAD -- .",
     "rm $(echo x) -rf build",
     "git --attr-source HEAD push",
-    # SEG approximates a shell segment: quotes must balance, a backslash escapes nothing,
-    # $() and backticks do not nest, and the & of a redirection reads as a separator.
-    # A rule's later word past such a spot is unseen; the pre-SEG `.*` asked on these.
-    r'git reset \" --hard',
-    r"git clean -e $'it\'s' -f",
-    r"git clean -e 'a'\''b' -f",
-    r"git reset a\;b --hard",
-    "gh api $(echo repos/o/r | cat) -X POST",
-    "gh api `echo repos/o/r | cat` -X POST",
-    "git reset HEAD~1 2>&1 --hard",
-    "git reset HEAD~1 &>/dev/null --hard",
 ]
 
 

@@ -8,6 +8,8 @@
 # line, so a mention after a space, slash or separator asks even inside quotes. A quote or
 # backslash right before the command word does not (sh -c "git push"). A rule's later
 # words must sit in the same command segment: SEG stops at an unquoted ; & | or newline.
+# SEG cannot read $( ), backticks, backslashes, unbalanced quotes or the & of a redirection,
+# so when the command holds one, a SEG rule also asks on its words anywhere later in the line.
 # tests/test_gate_hook.py lists the shapes it misses and the ones it asks on wrongly.
 
 uninspected() {
@@ -48,11 +50,20 @@ RULES=(
   "rm -r|${B}rm([[:blank:]]+[^;&|()\`[:space:]]+)*[[:blank:]]+(-[[:alpha:]]*r|--r)"  # --r: GNU takes any prefix of --recursive
 )
 
+OPAQUE='\$\(|`|\\|>&|&>'
+sq=${COMMAND//[^$Q]/}; dq=${COMMAND//[^\"]/}
+opaque=0
+{ [[ "$COMMAND" =~ $OPAQUE ]] || (( ${#sq} % 2 )) || (( ${#dq} % 2 )); } && opaque=1
+
 matched=()
 for rule in "${RULES[@]}"; do
   label=${rule%%|*}
   re=${rule#*|}
-  [[ "$COMMAND" =~ $re ]] && matched+=("$label")
+  if [[ "$COMMAND" =~ $re ]]; then
+    matched+=("$label")
+  elif (( opaque )) && [[ $re == *"$SEG"* ]] && [[ "$COMMAND" =~ ${re//"$SEG"/.*} ]]; then
+    matched+=("$label (segment not inspectable)")
+  fi
 done
 
 [ ${#matched[@]} -eq 0 ] && exit 0

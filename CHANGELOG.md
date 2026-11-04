@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Security
+
+- **Gate hook fails closed where it cannot read a segment.** When a command holds `$(`, a backtick, a backslash, an unbalanced quote or a redirection `&`, a rule that needs its later words in one segment (`git reset --hard`, `git clean -f`, `gh api` writes, `wrangler deploy`) also asks when those words appear anywhere later in the line. The eight shapes listed as known misses in v2.33.0 now ask.
+
 ### Changed
 
 - **Harvester ledger rows carry the note's text, and deferred rows come due.** A fifth column holds the text, and a row whose text does not hash to its key is exit 2. A `deferred` row names the quarter it comes due (`2027-q1`); from that quarter's first day it counts as undisposed (exit 1) until re-ruled, and the digest lists the whole deferred backlog from the ledger. Keys drop Unicode punctuation and keep symbols, so a dash-to-comma edit no longer re-presents a ruled note. `--today` sets the date the due check runs against. A four-column ledger is exit 2.
