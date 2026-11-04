@@ -512,7 +512,7 @@ git branch --contains <commit_with_secret>
 
 ### Prevention Tools
 
-Scan commits and history with gitleaks, as `/pb-preflight` 1.1 and this repo's CI do; `/pb-git-hygiene` covers the setup.
+Scan commits and history with gitleaks, as `/pb-preflight` 1.1 does; `/pb-git-hygiene` covers the setup.
 
 **Pre-commit hook example:**
 ```bash
