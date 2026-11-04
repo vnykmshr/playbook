@@ -451,7 +451,7 @@ Each person documents:
 
 ### When Someone Leaves
 
-See `/pb-knowledge-transfer`, For the Departing Engineer: the handoff ordered by what is lost first, with a tier for an adversarial or disengaged departure.
+See `/pb-knowledge-transfer`: For the Departing Engineer orders the handoff by what is lost first; Tiered KT Modes covers an adversarial or disengaged departure.
 
 ---
 
