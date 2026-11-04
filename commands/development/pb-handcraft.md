@@ -6,9 +6,9 @@ difficulty: "intermediate"
 model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-voice', 'pb-review', 'pb-linus-agent', 'pb-commit', 'pb-llm-guidelines']
-last_reviewed: "2026-07-10"
+last_reviewed: "2026-11-04"
 version: "1.6.0"
-version_notes: "v1.6.0: Spaced double hyphens replaced."
+version_notes: "v1.6.0: A re-run on the same artifact needs no fresh invocation: the flagging lenses read the changed strings, then the Final Re-Read reads the whole. Lens 2's record says whether the voice pass ran inline; Lens 4's exit names the Final Re-Read as what catches a clean-looking insertion that changes a neighbour's meaning."
 breaking_changes: []
 ---
 # AI Output Quality Gate
@@ -140,7 +140,7 @@ Read every line looking for machine patterns. If a line makes you think "a human
 - PR template-header boilerplate (`## Changes` / `## Motivation` / `## Testing`) on a small change
 - Attribution trailers (`Co-Authored-By`, `🤖 Generated with`); strip per the GitHub Artifact Register
 
-**Exit:** Did the voice pass run on the prose, and did you flag at least one code/comment tell you initially overlooked? (Fails when you skip the voice pass, or when you've read so much AI output you've normalized the patterns.)
+**Exit:** Did the voice pass run on the prose, and did you flag at least one code/comment tell you initially overlooked? (Fails when you skip the voice pass, or when you've read so much AI output you've normalized the patterns.) Say in the record whether the voice pass ran inline or as `/pb-voice`.
 
 ### Lens 3: Bloat Check
 
@@ -171,7 +171,7 @@ Verify nothing was accidentally removed.
 
 **The test:** diff against the original. For each removed line, confirm it's genuinely unnecessary.
 
-**Exit:** Did you diff against the original and confirm every removal? (Fails when the diff is large and you skim instead of checking each line.)
+**Exit:** Did you diff against the original and confirm every removal? (Fails when the diff is large and you skim instead of checking each line.) A diff shows a clean insertion even when it changes what the next line means; the Final Re-Read is what catches that.
 
 ### Lens 5: Scope Check
 
@@ -235,6 +235,10 @@ If it sounds like a press release, rewrite until it sounds like a person.
 ### Final Re-Read
 
 Not an eighth lens: a closing sweep. After all seven lenses, re-read the final output once from top to bottom. You changed things. Confirm the fixes didn't introduce new tells. If you find one, fix it and re-read; one clean pass is enough. Don't restart the lens pass.
+
+### Re-runs
+
+A second pass on the same artifact, after fixes or a small revision, needs no fresh invocation: the lenses are already in context. Run the lenses that flagged something on the changed strings only, then the Final Re-Read over the whole.
 
 ---
 
