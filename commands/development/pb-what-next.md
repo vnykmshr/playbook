@@ -6,9 +6,9 @@ difficulty: "advanced"
 model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-start', 'pb-forge', 'pb-commit', 'pb-pr', 'pb-release']
-last_reviewed: "2026-11-04"
+last_reviewed: "2026-11-05"
 version: "2.0.2"
-version_notes: "v2.0.2: Says it needs a playbook clone, since it runs a script install does not link; the fully-implemented claim is gone."
+version_notes: "v2.0.2: Says it needs a playbook clone, since it runs a script install does not link; the fully-implemented claim, the phase label and the stale footer date are gone."
 breaking_changes: []
 ---
 # Recommend Next Playbook Command
@@ -33,8 +33,6 @@ Run this command when you're unsure which playbook command to use next. The comm
 ---
 
 ## Status
-
-✅ **Available Now** (Phase 3+)
 
 It analyzes your git state and recommends the next playbook commands. It needs a playbook clone: it runs `scripts/analyze-playbook-context.py`, which `install.sh` does not link.
 
@@ -464,4 +462,3 @@ Tip: Each command should take 5-60 minutes. If a step takes longer, you may need
 ---
 
 *Auto-generated recommendations based on git state, file changes, and command metadata.*
-*Last updated: 2026-01-12*
