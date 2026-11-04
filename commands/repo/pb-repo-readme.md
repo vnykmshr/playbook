@@ -9,7 +9,7 @@ related_commands: ['pb-repo-about', 'pb-repo-blog', 'pb-repo-enhance', 'pb-docum
 last_reviewed: "2026-11-04"
 last_evolved: ""
 version: "1.1.1"
-version_notes: "v1.1.1: Nested samples use a 4-backtick outer fence, so the inner block no longer ends the sample and the page after it renders as prose, not code."
+version_notes: "v1.1.1: Nested samples use a 4-backtick outer fence, so they render as written."
 breaking_changes: []
 ---
 # Generate Project README

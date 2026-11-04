@@ -9,7 +9,7 @@ related_commands: ['pb-patterns-core', 'pb-patterns-async', 'pb-patterns-securit
 last_reviewed: "2026-11-04"
 last_evolved: ""
 version: "2.0.0"
-version_notes: "v2.0.0: Cut from 1136 to 242 lines: example code, walkthroughs and language sections removed; decisions, gotchas and when-to-use kept. Saga idempotency dedupes on a request ID in the effect's transaction; the outbox writes in the state change's transaction and consumers dedupe by event ID; 2PC never rolls back after a participant commits; sagas stay short."
+version_notes: "v2.0.0: Cut from 1136 to 252 lines: example code, walkthroughs and language sections removed; decisions, gotchas and when-to-use kept. Saga idempotency dedupes on a request ID in the effect's transaction; the outbox writes in the state change's transaction and consumers dedupe by event ID; 2PC never rolls back after a participant commits; sagas stay short."
 breaking_changes: ['Example code, walkthroughs and language sections removed; decisions and gotchas kept, constraints from removed code restated; deploy checklists live in /pb-preflight and /pb-deployment.']
 ---
 # Distributed Patterns

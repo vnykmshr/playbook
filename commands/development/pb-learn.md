@@ -9,7 +9,7 @@ related_commands: ['pb-debug', 'pb-review-incoming', 'pb-resume', 'pb-documentat
 last_reviewed: "2026-11-04"
 last_evolved: "2026-08-03"
 version: "1.1.1"
-version_notes: "v1.1.1: Body prose drops spaced double hyphens. Nested samples use a 4-backtick outer fence, so the inner block no longer ends the sample and the page after it renders as prose, not code."
+version_notes: "v1.1.1: Body prose drops spaced double hyphens. Nested samples use a 4-backtick outer fence, so they render as written."
 breaking_changes: []
 ---
 # Pattern Learning

@@ -9,7 +9,7 @@ related_commands: ['pb-patterns-db', 'pb-dr', 'pb-deployment']
 last_reviewed: "2026-11-04"
 last_evolved: ""
 version: "2.0.0"
-version_notes: "v2.0.0: Cut from 865 to 296 lines: example code, walkthroughs and language sections removed; decisions, gotchas and when-to-use kept. Failover fences the old primary first and promotes the replica that received the most WAL; a backup counts once restored, with alerts on age and size; transaction pooling breaks session state; runbook fences render. Lag checks measure from the primary's current LSN, so unsent WAL counts."
+version_notes: "v2.0.0: Cut from 865 to 304 lines: example code, walkthroughs and language sections removed; decisions, gotchas and when-to-use kept. Failover fences the old primary first and promotes the replica that received the most WAL; a backup counts once restored, with alerts on age and size; transaction pooling breaks session state; runbook fences render. Lag checks measure from the primary's current LSN, so unsent WAL counts."
 breaking_changes: ['Example code, walkthroughs and language sections removed; decisions and gotchas kept, constraints from removed code restated; deploy checklists live in /pb-preflight and /pb-deployment.']
 ---
 # Database Operations

@@ -9,7 +9,7 @@ related_commands: ['pb-what-next', 'pb-review', 'pb-huddle', 'pb-preflight', 'pb
 last_reviewed: "2026-11-04"
 last_evolved: "2026-09-24"
 version: "1.6.0"
-version_notes: "v1.6.0: Every stop where the user rules carries forge's leans, vetted before the stop: the lane lead rules on each lean and reads what it rests on, gaps go back into the work first, and the stop names what changed and any dissent left open. A check derived from the same rule as the work is not the vet. An open menu at a stop is a Red Flag. Body prose uses colons, commas and parentheses in place of spaced double hyphens."
+version_notes: "v1.6.0: Every stop where the user rules carries forge's leans, vetted before the stop: the lane lead rules on each lean and reads what it rests on, gaps go back into the work first, and the stop names what changed and any dissent left open. A check derived from the same rule as the work is not the vet. An open menu at a stop is a Red Flag. Body prose drops spaced double hyphens."
 breaking_changes: []
 ---
 # Lifecycle Step-Runner

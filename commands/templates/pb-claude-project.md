@@ -9,7 +9,7 @@ related_commands: ['pb-claude-global', 'pb-claude-orchestration', 'pb-context', 
 last_reviewed: "2026-11-04"
 last_evolved: "2026-09-24"
 version: "1.4.3"
-version_notes: "v1.4.3: The Relevant Playbooks sample names /pb-guide in place of the retired /pb-guide-python. Both template samples use a 4-backtick outer fence, so their nested bash block no longer ends the sample early. Body prose drops spaced double hyphens."
+version_notes: "v1.4.3: The Relevant Playbooks sample names /pb-guide in place of the retired /pb-guide-python. Nested samples use a 4-backtick outer fence, so they render as written. Body prose drops spaced double hyphens."
 breaking_changes: ['Generated skeleton drops Testing, Environment and Session Quick Start (restated Commands); Tech Stack and Structure become optional', 'No per-commit state in the generated file -- the Status line and Current version are gone; the working context is linked instead']
 ---
 # Generate Project CLAUDE.md

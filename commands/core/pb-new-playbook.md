@@ -9,7 +9,7 @@ related_commands: ['pb-evolve', 'pb-review-playbook', 'pb-standards', 'pb-docume
 last_reviewed: "2026-11-04"
 last_evolved: "2026-07-13"
 version: "2.1.1"
-version_notes: "v2.1.1: Body prose drops spaced double hyphens. Nested samples use a 4-backtick outer fence, so the inner block no longer ends the sample and the page after it renders as prose, not code."
+version_notes: "v2.1.1: Body prose drops spaced double hyphens. Nested samples use a 4-backtick outer fence, so they render as written."
 breaking_changes: []
 ---
 # Create New Engineering Playbook

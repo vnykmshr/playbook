@@ -9,7 +9,7 @@ related_commands: ['pb-incident', 'pb-sre-practices', 'pb-database-ops', 'pb-dep
 last_reviewed: "2026-11-04"
 last_evolved: ""
 version: "1.0.1"
-version_notes: "v1.0.1: The failover runbook fences the old primary before promotion and measures loss by WAL the replica received, not replay lag. Nested samples use a 4-backtick outer fence, so the inner block no longer ends the sample and the page after it renders as prose, not code."
+version_notes: "v1.0.1: The failover runbook fences the old primary before promotion and measures loss by WAL the replica received, not replay lag. Nested samples use a 4-backtick outer fence, so they render as written."
 breaking_changes: []
 ---
 # Disaster Recovery

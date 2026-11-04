@@ -9,7 +9,7 @@ related_commands: ['pb-patterns-core', 'pb-patterns-distributed', 'pb-patterns-a
 last_reviewed: "2026-11-04"
 last_evolved: ""
 version: "2.0.0"
-version_notes: "v2.0.0: Cut from 572 to 188 lines: example code, walkthroughs and language sections removed; decisions, gotchas and when-to-use kept. Retry only idempotent or keyed calls, outside the breaker and never on its rejection; token bucket is the default rate limiter."
+version_notes: "v2.0.0: Cut from 572 to 191 lines: example code, walkthroughs and language sections removed; decisions, gotchas and when-to-use kept. Retry only idempotent or keyed calls, outside the breaker and never on its rejection; token bucket is the default rate limiter."
 breaking_changes: ['Example code, walkthroughs and language sections removed; decisions and gotchas kept, constraints from removed code restated; deploy checklists live in /pb-preflight and /pb-deployment.']
 ---
 # Resilience & Protection Patterns

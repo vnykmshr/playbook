@@ -7,44 +7,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+The twelve pattern and ops commands are cut to decisions and gotchas, `/pb-guide` absorbs the Go and Python guides, and four new guards keep command prose and fences from drifting back.
+
+**After upgrading:** `git pull`, then re-run `scripts/install.sh` to prune the retired `/pb-guide-go` and `/pb-guide-python` links.
+
 ### Breaking
 
-- **`/pb-patterns-distributed` v2.0.0.** 1,136 to 242 lines: example code, walkthroughs and language sections removed; decisions, gotchas and when-to-use kept. Saga idempotency dedupes on a request ID in the effect's transaction; the outbox writes in the state change's transaction and consumers dedupe by event ID; 2PC never rolls back after a participant commits; sagas stay short.
+- **`/pb-patterns-distributed` v2.0.0.** 1,136 to 252 lines: example code, walkthroughs and language sections removed; decisions, gotchas and when-to-use kept. Saga idempotency dedupes on a request ID in the effect's transaction; the outbox writes in the state change's transaction and consumers dedupe by event ID; 2PC never rolls back after a participant commits; sagas stay short.
 - **`/pb-patterns-db` v2.0.0.** 1,046 to 307 lines: example code, walkthroughs and language sections removed; decisions, gotchas and when-to-use kept. Pool max times instances stays under max_connections less reserved slots; a PostgreSQL materialized-view refresh recomputes the whole view, CONCURRENTLY needs a unique index and a populated view, and refreshes run on a schedule, not per write.
-- **`/pb-database-ops` v2.0.0.** 865 to 296 lines: example code, walkthroughs and language sections removed; decisions, gotchas and when-to-use kept. Failover fences the old primary first and promotes the replica that received the most WAL; a backup counts once restored, with alerts on age and size; transaction pooling breaks session state; runbook fences render. Lag checks measure from the primary's current LSN, so unsent WAL counts.
+- **`/pb-database-ops` v2.0.0.** 865 to 304 lines: example code, walkthroughs and language sections removed; decisions, gotchas and when-to-use kept. Failover fences the old primary first and promotes the replica that received the most WAL; a backup counts once restored, with alerts on age and size; transaction pooling breaks session state; runbook fences render. Lag checks measure from the primary's current LSN, so unsent WAL counts.
 - **`/pb-patterns-deployment` v2.0.0.** 1,076 to 163 lines: example code, walkthroughs and language sections removed; decisions, gotchas and when-to-use kept. /pb-preflight and /pb-deployment own the checklists; /pb-database-ops owns expand/contract; a feature flag is removed with its dead branch once the rollout is stable.
 - **`/pb-patterns-cloud` v2.0.0.** 872 to 222 lines: example code, walkthroughs and language sections removed; decisions, gotchas and when-to-use kept. Cloud Run deploys from Artifact Registry; the unsourced cold-start figure is gone.
-- **`/pb-patterns-security` v2.0.0.** 785 to 212 lines: example code, walkthroughs and language sections removed; decisions, gotchas and when-to-use kept. OAuth code flow uses PKCE with S256 (RFC 9700); JWT verification pins the algorithm and rejects none (RFC 8725).
+- **`/pb-patterns-security` v2.0.0.** 785 to 216 lines: example code, walkthroughs and language sections removed; decisions, gotchas and when-to-use kept. OAuth code flow uses PKCE with S256 (RFC 9700); JWT verification pins the algorithm and rejects none (RFC 8725).
 - **`/pb-patterns-frontend` v2.0.0.** 943 to 264 lines: example code, walkthroughs and language sections removed; decisions, gotchas and when-to-use kept.
 - **`/pb-patterns-api` v2.0.0.** 865 to 332 lines: example code, walkthroughs and language sections removed; decisions, gotchas and when-to-use kept. PATCH is not idempotent in general (RFC 5789); the breaking-change list names type, error-format and endpoint removals.
 - **`/pb-patterns-async` v2.0.0.** 715 to 222 lines: example code, walkthroughs and language sections removed; decisions, gotchas and when-to-use kept.
-- **`/pb-patterns-core` v2.0.0.** 658 to 189 lines: example code, walkthroughs and language sections removed; decisions, gotchas and when-to-use kept. Repository says when not to use it.
-- **`/pb-patterns-resilience` v2.0.0.** 572 to 188 lines: example code, walkthroughs and language sections removed; decisions, gotchas and when-to-use kept. Retry only idempotent or keyed calls, outside the breaker and never on its rejection; token bucket is the default rate limiter.
-- **`/pb-patterns` v2.0.0.** 388 to 99 lines: example code, walkthroughs and language sections removed; decisions, gotchas and when-to-use kept. The selection tree and Related list name every pattern family, pinned by a test; scaling points at /pb-patterns-deployment.
+- **`/pb-patterns-core` v2.0.0.** 658 to 191 lines: example code, walkthroughs and language sections removed; decisions, gotchas and when-to-use kept. Repository says when not to use it.
+- **`/pb-patterns-resilience` v2.0.0.** 572 to 191 lines: example code, walkthroughs and language sections removed; decisions, gotchas and when-to-use kept. Retry only idempotent or keyed calls, outside the breaker and never on its rejection; token bucket is the default rate limiter.
+- **`/pb-patterns` v2.0.0.** 388 to 101 lines: example code, walkthroughs and language sections removed; decisions, gotchas and when-to-use kept. The selection tree and Related list name every pattern family, pinned by a test; scaling points at /pb-patterns-deployment.
 - **`/pb-guide` v3.0.0.** Appendix C, Language Gates: Go and Python commands for each gate, with ruff, govulncheck and pip-audit. /pb-guide-go and /pb-guide-python are retired into it. Coverage gates are tier minimums; Go compares the cover total with the tier.
 
 ### Added
 
-- **Dash ratchet** (`TestDashRatchet`). Spaced double hyphens in command prose are counted per file against a shrink-only baseline (28 files, 268); a command whose body changes reaches 0. Fences count as CommonMark renders them, so a 4-backtick sample holding a nested block stays one fence. Inline code spans are exempt.
+- **Dash ratchet** (`TestDashRatchet`). Spaced double hyphens in command prose are counted per file against a shrink-only baseline (27 files, 257); a command whose body changes reaches 0. Fences count as CommonMark renders them, so a 4-backtick sample holding a nested block stays one fence. Inline code spans are exempt.
 - **Line budget** (`TestLineBudget`). A command is capped at 600 lines, fence lines included; the 29 over it are baselined at their current length and may only shrink.
 - **One version per `version_notes`** (`TestVersionNotesOneVersion`). A command bumped since the last tag has notes starting `v{version}:` and a space, naming no other version; earlier notes live in git and the CHANGELOG (`docs/command-versioning.md`). Commands not bumped keep their notes until their next bump.
 - **Nested samples** (`TestNestedSampleFences`). A fence line with an info string inside a block it cannot close fails, as does a block left open at end of file: the outer fence needs more backticks than the block inside it. A bare inner opener reads as a closer and is not caught; every sample the scripted fix missed or misplaced had that shape. An info string on every opener would close the gap.
 
 ### Changed
 
-- **`/pb-forge` v1.6.0.** Every stop where you rule carries forge's leans, vetted first: the lane lead rules on each lean against what it rests on, gaps it finds are fixed before the stop, and the stop names what changed. A check derived from the same rule as the work does not count as the vet. Body prose uses colons, commas and parentheses in place of spaced double hyphens.
+- **`/pb-forge` v1.6.0.** Every stop where you rule carries forge's leans, vetted first: the lane lead rules on each lean against what it rests on, gaps it finds are fixed before the stop, and the stop names what changed. A check derived from the same rule as the work does not count as the vet. Body prose drops spaced double hyphens.
 - **`/pb-standards` v1.3.1.** Technology-Specific Standards points Go and Python at `/pb-guide` Appendix C. Commit discipline drops its spaced double hyphen.
-- **`/pb-claude-project` v1.4.3.** The Relevant Playbooks sample names `/pb-guide` in place of the retired `/pb-guide-python`. Both template samples use a 4-backtick outer fence, so their nested bash block no longer ends the sample early. Body prose drops spaced double hyphens.
-- **`/pb-new-playbook` v2.1.1.** Body prose drops spaced double hyphens. Nested samples use a 4-backtick outer fence, so the inner block no longer ends the sample and the page after it renders as prose, not code.
-- **`/pb-learn` v1.1.1.** Body prose drops spaced double hyphens. Nested samples use a 4-backtick outer fence, so the inner block no longer ends the sample and the page after it renders as prose, not code.
-- **`/pb-documentation` v1.1.1.** Nested samples use a 4-backtick outer fence, so the inner block no longer ends the sample and the page after it renders as prose, not code.
-- **`/pb-sam-documentation` v1.4.1.** Nested samples use a 4-backtick outer fence, so the inner block no longer ends the sample and the page after it renders as prose, not code.
-- **`/pb-templates` v1.0.1.** Nested samples use a 4-backtick outer fence, so the inner block no longer ends the sample and the page after it renders as prose, not code.
-- **`/pb-dr` v1.0.1.** The failover runbook fences the old primary before promotion and measures loss by WAL the replica received, not replay lag. Nested samples use a 4-backtick outer fence, so the inner block no longer ends the sample and the page after it renders as prose, not code.
-- **`/pb-design-language` v1.0.1.** Nested samples use a 4-backtick outer fence, so the inner block no longer ends the sample and the page after it renders as prose, not code.
-- **`/pb-observability` v1.0.1.** Nested samples use a 4-backtick outer fence, so the inner block no longer ends the sample and the page after it renders as prose, not code.
-- **`/pb-repo-blog` v1.0.1.** Nested samples use a 4-backtick outer fence, so the inner block no longer ends the sample and the page after it renders as prose, not code.
-- **`/pb-repo-readme` v1.1.1.** Nested samples use a 4-backtick outer fence, so the inner block no longer ends the sample and the page after it renders as prose, not code.
+- **`/pb-claude-project` v1.4.3.** The Relevant Playbooks sample names `/pb-guide` in place of the retired `/pb-guide-python`. Nested samples use a 4-backtick outer fence, so they render as written. Body prose drops spaced double hyphens.
+- **`/pb-new-playbook` v2.1.1.** Body prose drops spaced double hyphens. Nested samples use a 4-backtick outer fence, so they render as written.
+- **`/pb-learn` v1.1.1.** Body prose drops spaced double hyphens. Nested samples use a 4-backtick outer fence, so they render as written.
+- **`/pb-documentation` v1.1.1.** Nested samples use a 4-backtick outer fence, so they render as written.
+- **`/pb-sam-documentation` v1.4.1.** Nested samples use a 4-backtick outer fence, so they render as written.
+- **`/pb-templates` v1.0.1.** Nested samples use a 4-backtick outer fence, so they render as written.
+- **`/pb-dr` v1.0.1.** The failover runbook fences the old primary before promotion and measures loss by WAL the replica received, not replay lag. Nested samples use a 4-backtick outer fence, so they render as written.
+- **`/pb-design-language` v1.0.1.** Nested samples use a 4-backtick outer fence, so they render as written.
+- **`/pb-observability` v1.0.1.** Nested samples use a 4-backtick outer fence, so they render as written.
+- **`/pb-repo-blog` v1.0.1.** Nested samples use a 4-backtick outer fence, so they render as written.
+- **`/pb-repo-readme` v1.1.1.** Nested samples use a 4-backtick outer fence, so they render as written.
 
 ### Removed
 
