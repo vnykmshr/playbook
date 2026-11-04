@@ -265,11 +265,21 @@ def test_may_be_fixed_reads_the_newest_bump_that_changed_the_body(tmp_path: Path
     assert "may be fixed" not in new
 
 
-def test_a_taken_key_seen_again_later_is_reported(tmp_path: Path):
+def test_a_taken_key_seen_again_later_holds_exit_1_until_re_ruled(tmp_path: Path):
     repo_note(tmp_path, "o/r", "## 2026-11-01\nPlaybook feedback:\n- recurring\n")
-    write(tmp_path / "ledger.tsv", f"key\tdisposition\tversion\tdate\n{fh.item_key('recurring')}\ttaken\tv1\t2026-10-01\n")
-    assert run(tmp_path) == 0
+    row = f"key\tdisposition\tversion\tdate\n{fh.item_key('recurring')}\ttaken\tv1\t"
+    write(tmp_path / "ledger.tsv", row + "2026-10-01\n")
+    assert run(tmp_path) == 1
     assert "recurring" in digest(tmp_path).split("## Taken, then seen again")[1].split("##")[0]
+    write(tmp_path / "ledger.tsv", row + "2026-11-02\n")
+    assert run(tmp_path) == 0
+
+
+def test_an_mtime_dated_item_never_recurs(tmp_path: Path):
+    write(tmp_path / "mem" / "p" / "memory" / "feedback_x.md", "---\ndescription: Edited later\n---\n")
+    write(tmp_path / "ledger.tsv", f"key\tdisposition\tversion\tdate\n{fh.item_key('Edited later')}\ttaken\tv1\t2026-01-01\n")
+    assert run(tmp_path) == 0
+    assert "Edited later" not in digest(tmp_path).split("## Taken, then seen again")[1].split("##")[0]
 
 
 def test_pb_pause_template_heading_feeds_the_harvester():

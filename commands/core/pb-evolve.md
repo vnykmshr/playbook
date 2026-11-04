@@ -41,8 +41,8 @@ The harvester reads every `~/workspace/github/*/*/todos/` and the Claude memory 
 | Exit | Meaning | Do |
 |------|---------|----|
 | 0 | Every key dispositioned | Go to Step 1 |
-| 1 | Undisposed keys | Disposition them |
-| 2 | Nothing found, or a malformed ledger | Fix the root or the ledger; the digest is not evidence |
+| 1 | Undisposed keys, or taken keys seen again | Disposition or re-rule them |
+| 2 | Nothing found, a malformed ledger, or an error | Fix the root, the ledger or the error; the digest is not evidence |
 
 Keys seen in more repos rank first; memory items come last. Cluster near-duplicates by hand, then give every key one row in `todos/evolve/harvest-ledger.tsv`, tab-separated `key disposition version date`:
 
@@ -51,7 +51,11 @@ Keys seen in more repos rank first; memory items come last. Cluster near-duplica
 - `deferred`: names where it goes (a later release, a single decision)
 - `dup-of:<key>`: the cluster's representative carries the disposition
 
-`may be fixed` means the named command changed its body and version after the note, and shows that version's notes. Any body edit forces a bump, dash and fence fixes included, so the flag is a hint to check, never a reason to close a key. `private` marks a source from an org listed in `todos/evolve/private-orgs` (untracked, one per line). A `taken` key listed under "seen again" means the fix did not reach the sessions that wrote it.
+Markers in the digest:
+
+- `may be fixed`: the named command changed its body and version after the note, and the line shows that version's notes. Any body edit forces a bump, dash and fence fixes included, so it is a hint to check, never a reason to close a key.
+- `private`: the source is an org listed in `todos/evolve/private-orgs` (untracked, one per line).
+- **Taken, then seen again**: a dated note repeats a `taken` key after its row's date, so the fix did not reach the sessions that wrote it. It holds exit 1 until you edit that row. Memory files and undated notes cannot recur.
 
 **The cycle does not close until the harvester exits 0.**
 

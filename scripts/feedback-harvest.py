@@ -6,7 +6,7 @@ Read-only on sources. Finds bullets under a "playbook feedback" heading in
 keys each item on its normalised text, and writes a digest of the keys the
 ledger has not dispositioned. Only intake (`/pb-evolve` Step 0) writes the ledger.
 
-Exit: 0 every key dispositioned, 1 undisposed keys, 2 instrument fault
+Exit: 0 every key dispositioned, 1 undisposed keys or a taken key seen again, 2 instrument fault
 (no feedback found at all, a malformed ledger, or any error).
 
 Usage:
@@ -348,7 +348,7 @@ def render(
     items: list[Item], ledger: dict[str, tuple[str, str, str]], empty: list[str], skipped: list[str],
     playbook: Path, files: int, orgs: frozenset[str], unlisted: list[str],
 ) -> tuple[str, int]:
-    """(digest markdown, count of undisposed keys)."""
+    """(digest markdown, undisposed keys, taken keys seen again)."""
     by_key: dict[str, list[Item]] = defaultdict(list)
     for it in items:
         by_key[it.key].append(it)
@@ -375,16 +375,19 @@ def render(
     undisposed = {k: v for k, v in by_key.items() if k not in ledger}
     repo_keys = sorted(((k, v) for k, v in undisposed.items() if not all(o.memory for o in v)), key=rank)
     mem_keys = sorted(((k, v) for k, v in undisposed.items() if all(o.memory for o in v)), key=rank)
+    # Only a dated heading can recur: an mtime moves on any edit, so a memory file or an
+    # undated note would read as new evidence every time it is touched.
     recurred = [
         (k, v) for k, v in by_key.items()
-        if k in ledger and ledger[k][0] == "taken" and newest(v).lstrip("~") > ledger[k][2]
+        if k in ledger and ledger[k][0] == "taken"
+        and any(not o.when.startswith("~") and o.when > ledger[k][2] for o in v)
     ]
     headings = len({o.where for o in items if not o.memory}) + len(empty)
     md = [
         f"# Feedback digest {date.today().isoformat()}",
         "",
         f"{headings} headings in {files} files; {len(items)} items, {len(by_key)} keys, "
-        f"{len(undisposed)} undisposed, {len({o.source for o in items})} sources.",
+        f"{len(undisposed)} undisposed, {len(recurred)} seen again, {len({o.source for o in items})} sources.",
         "",
         "## Undisposed: repo notes",
         "",
@@ -411,7 +414,7 @@ def render(
         *[f"- `{u}`" for u in unlisted],
         "",
     ]
-    return "\n".join(md), len(undisposed)
+    return "\n".join(md), len(undisposed), len(recurred)
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -434,7 +437,7 @@ def main(argv: list[str] | None = None) -> int:
         orgs = private_orgs(args.playbook)
         if not items and not empty:
             raise InstrumentFault(f"no feedback found under {args.repos} or {args.memory}: is the root right?")
-        md, undisposed = render(items, ledger, empty, skipped, args.playbook, files, orgs, unlisted)
+        md, undisposed, again = render(items, ledger, empty, skipped, args.playbook, files, orgs, unlisted)
         out.mkdir(parents=True, exist_ok=True)
         digest = out / f"digest-{date.today().isoformat()}.md"
         digest.write_text(md)
@@ -444,8 +447,8 @@ def main(argv: list[str] | None = None) -> int:
     except Exception as e:  # exit 1 means "undisposed keys": a crash must not read as that
         print(f"feedback-harvest: {type(e).__name__}: {e}", file=sys.stderr)
         return 2
-    print(f"{undisposed} undisposed of {len({i.key for i in items})} keys; digest {digest}")
-    return 1 if undisposed else 0
+    print(f"{undisposed} undisposed, {again} seen again, of {len({i.key for i in items})} keys; digest {digest}")
+    return 1 if undisposed or again else 0
 
 
 if __name__ == "__main__":
