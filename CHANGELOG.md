@@ -7,9 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+The evolve cycle gets its intake: a feedback harvester reads every repo's notes into one digest, and `/pb-evolve` 2.0.0 closes a cycle only when every key has a ruling. The gate hook now matches a normalised command, and install updates a hook copy you have not edited.
+
+**After upgrading:** `git pull`, then re-run `scripts/install.sh`: an unedited hook copy is replaced, which carries the security fix below. Running `/pb-evolve` yourself: `python3 scripts/feedback-harvest.py --init` once per machine.
+
 ### Breaking
 
-- **`/pb-evolve` v2.0.0.** Rewritten for one owner and many repos, 1,034 to 181 lines. Step 0 takes in harvested feedback, and the cycle closes only when `scripts/feedback-harvest.py` exits 0. Each release runs as one `/pb-forge` arc; push, tag and GitHub release are separately approved; rollback redeploys the previous tag. The quarterly calendar, Evolution Manager, snapshot, log and diff steps, report and dashboard templates, mkdocs and `pbai` are gone. `docs/evolution-operational-guide.md` is marked superseded.
+- **`/pb-evolve` v2.0.0.** Rewritten for one owner and many repos, 1,034 to 187 lines. Step 0 takes in harvested feedback, and the cycle closes only when `scripts/feedback-harvest.py` exits 0. Each release runs as one `/pb-forge` arc; push, tag and GitHub release are separately approved; rollback redeploys the previous tag. The quarterly calendar, Evolution Manager, snapshot, log and diff steps, report and dashboard templates, mkdocs and `pbai` are gone. `docs/evolution-operational-guide.md` is marked superseded.
 
 ### Security
 
