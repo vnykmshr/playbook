@@ -221,12 +221,28 @@ def test_unreadable_input_asks(payload: str):
     assert got is not None and "input not parsed" in got
 
 
-def run_install(home: Path) -> subprocess.CompletedProcess[str]:
+def run_install(home: Path, **env: str) -> subprocess.CompletedProcess[str]:
     script = HOOK.parent.parent / "scripts" / "install.sh"
     return subprocess.run(
-        ["bash", str(script)], env={"PATH": "/usr/bin:/bin", "HOME": str(home)},
+        ["bash", str(script)], env={"PATH": "/usr/bin:/bin", "HOME": str(home), **env},
         capture_output=True, text=True,
     )
+
+
+def oldest_committed_hook() -> bytes:
+    repo = HOOK.parent.parent
+    blobs = subprocess.run(
+        ["git", "-C", str(repo), "log", "--format=", "--raw", "--no-abbrev", "--", "hooks/external-action-gate.sh"],
+        capture_output=True, text=True, check=True,
+    ).stdout.split()
+    blob = [b for b in blobs if len(b) == 40 and b.strip("0")][-1]
+    return subprocess.run(["git", "-C", str(repo), "cat-file", "blob", blob], capture_output=True, check=True).stdout
+
+
+def hook_dest(home: Path) -> Path:
+    dest = home / ".claude" / "hooks" / "external-action-gate.sh"
+    dest.parent.mkdir(parents=True, exist_ok=True)
+    return dest
 
 
 def test_install_copies_the_hook_and_keeps_a_changed_copy(tmp_path: Path):
@@ -240,4 +256,42 @@ def test_install_copies_the_hook_and_keeps_a_changed_copy(tmp_path: Path):
     result = run_install(tmp_path)
     assert result.returncode == 0
     assert dest.read_text() == "# local edit\n", "a changed copy is the user's, not install's"
+    assert "differs from hooks/" in result.stdout
+
+
+def test_install_replaces_a_committed_older_copy(tmp_path: Path):
+    old = oldest_committed_hook()
+    assert old != HOOK.read_bytes()
+    dest = hook_dest(tmp_path)
+    _ = dest.write_bytes(old)
+    result = run_install(tmp_path)
+    assert result.returncode == 0, result.stderr
+    assert dest.read_bytes() == HOOK.read_bytes(), "an unedited older install is replaced"
+
+
+def test_install_replaces_a_symlinked_copy(tmp_path: Path):
+    target = tmp_path / "elsewhere.sh"
+    _ = target.write_text("# linked\n")
+    dest = hook_dest(tmp_path)
+    dest.symlink_to(target)
+    assert run_install(tmp_path).returncode == 0
+    assert dest.is_file() and not dest.is_symlink()
+    assert dest.read_bytes() == HOOK.read_bytes()
+
+
+@pytest.mark.parametrize("why", ["not a checkout", "git fails"])
+def test_install_keeps_an_older_copy_when_git_cannot_say(tmp_path: Path, why: str):
+    if why == "not a checkout":
+        env = {"GIT_DIR": str(tmp_path / "none")}
+    else:
+        fake = tmp_path / "bin"
+        fake.mkdir()
+        _ = (fake / "git").write_text("#!/bin/sh\nexit 1\n")
+        (fake / "git").chmod(0o755)
+        env = {"PATH": f"{fake}:/usr/bin:/bin"}
+    dest = hook_dest(tmp_path)
+    _ = dest.write_bytes(oldest_committed_hook())
+    result = run_install(tmp_path, **env)
+    assert result.returncode == 0, result.stderr
+    assert dest.read_bytes() == oldest_committed_hook(), "unverifiable, so kept"
     assert "differs from hooks/" in result.stdout

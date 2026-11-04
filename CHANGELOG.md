@@ -11,6 +11,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - **Gate hook: case and line continuation no longer bypass it.** The command is lowercased and backslash-newline joined with a space before matching, so `GH pr merge`, `RM -rf`, `NPM publish`, `gh api -X post` and `rm \` + newline + `-rf` ask. If lowercasing fails, the hook asks.
 
+### Changed
+
+- **`scripts/install.sh` updates an unedited hook copy.** A `~/.claude/hooks/external-action-gate.sh` that matches a committed version of the hook is replaced; one that matches none is your edit and is still skipped. Without git or full history, it is skipped as before.
+
 ### Fixed
 
 - **Gate hook: one command segment per rule.** A rule's later words must sit in the same segment as its command word, so `git clean -n && ls -lF` and `git reset --soft HEAD~1 && grep --hard x` no longer ask. A quoted `;`, `&` or `|` stays inside its segment.

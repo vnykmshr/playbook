@@ -128,7 +128,7 @@ The install script does not wire hooks into `settings.json`. They require manual
 
 ### External action gate
 
-`external-action-gate.sh` is the one hook shipped ready to use. On a Bash command that pushes, merges, releases, publishes, deploys or deletes, it makes Claude Code show a permission prompt (auto mode included). `scripts/install.sh` copies it to `~/.claude/hooks/` (a copy, so checking out an old tag cannot remove the live gate). An existing copy that differs, whether your edit or an older install, is skipped: diff it, move it aside, re-run. You wire it yourself:
+`external-action-gate.sh` is the one hook shipped ready to use. On a Bash command that pushes, merges, releases, publishes, deploys or deletes, it makes Claude Code show a permission prompt (auto mode included). `scripts/install.sh` copies it to `~/.claude/hooks/` (a copy, so checking out an old tag cannot remove the live gate). An existing copy that matches a committed version of the hook is replaced, so re-running install updates it. A copy that matches none is your edit and is skipped: diff it, move it aside, re-run. You wire it yourself:
 
 ```json
 {

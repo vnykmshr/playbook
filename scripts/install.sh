@@ -149,10 +149,21 @@ done
 # change or remove the live gate. Wired in settings.json by hand (hooks/README.md).
 hook_src="$REPO_DIR/hooks/external-action-gate.sh"
 hook_dest="$CLAUDE_HOME/hooks/external-action-gate.sh"
+
+# True when $1 is byte-identical to a committed version of the hook. Any git failure
+# (no git, not a checkout, shallow history) is false, so the copy is kept: set -e is on.
+committed_hook() {
+    local blob
+    blob=$(git -C "$REPO_DIR" hash-object --no-filters "$1" 2>/dev/null) || return 1
+    git -C "$REPO_DIR" log --format= --raw --no-abbrev -- hooks/external-action-gate.sh 2>/dev/null \
+        | awk '{print $4}' | grep -qx "$blob"
+}
+
 if [ -f "$hook_src" ]; then
     mkdir -p "$CLAUDE_HOME/hooks"
-    if [ -f "$hook_dest" ] && [ ! -L "$hook_dest" ] && ! cmp -s "$hook_src" "$hook_dest"; then
-        echo "  ⚠ Skipped: ~/.claude/hooks/external-action-gate.sh differs from hooks/ (your edit or an older install: diff it, move it aside, re-run)"
+    if [ -f "$hook_dest" ] && [ ! -L "$hook_dest" ] && ! cmp -s "$hook_src" "$hook_dest" \
+        && ! committed_hook "$hook_dest"; then
+        echo "  ⚠ Skipped: ~/.claude/hooks/external-action-gate.sh differs from hooks/ and matches no committed version (your edit: diff it, move it aside, re-run)"
     else
         rm -f "$hook_dest"
         cp "$hook_src" "$hook_dest"
