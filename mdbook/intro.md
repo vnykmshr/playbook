@@ -7,17 +7,19 @@ Built on two complementary frameworks:
 1. **The Preamble** - How teams think together (peer collaboration, correctness over agreement)
 2. **Design Rules** - What teams build toward (clarity, simplicity, resilience, extensibility)
 
-Every command in the playbook assumes both. Every workflow integrates both.
+Every command in the playbook assumes both.
 
 ---
 
 ## Start Here
 
+**Want to try it?** Install per the [README](https://github.com/vnykmshr/playbook#install), then run `/pb-start "what you're building"`.
+
 **Want the thinking, not the commands?** Read [The Playbook](https://playbook.1mb.dev) - five chapters on how teams think together, what they build toward, and how to adopt it. About thirty minutes cover to cover.
 
 **New to the playbook?** Read [Why We Build Playbooks](docs/why-we-build-playbooks.md) for the full philosophy, or jump to [Getting Started](docs/getting-started.md) for a scenario-based introduction.
 
-**Looking for a specific command?** Browse the sidebar by category, or use search (press `S`).
+**Looking for a specific command?** Search (press `S`), browse the sidebar, or open the [Command Index](docs/command-index.md); the [Decision Guide](docs/decision-guide.md) answers "which command do I use?"
 
 **Adopting for your team?** See the [Adoption Guide](docs/adoption-guide.md) for team-size-specific paths.
 

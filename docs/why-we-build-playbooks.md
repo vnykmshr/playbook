@@ -150,7 +150,7 @@ Two documents establish the complete philosophy:
 - `/pb-preamble` - How teams think together (peer collaboration, psychological safety, correctness)
 - `/pb-design-rules` - What teams build (18 rules: 17 classical in 4 clusters, plus Attention)
 
-Every command in the playbook assumes both frameworks. Every workflow integrates both.
+Every command in the playbook assumes both frameworks.
 
 ### Core Foundation Commands
 Three commands translate the frameworks into SDLC structure:

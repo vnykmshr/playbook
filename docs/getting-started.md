@@ -1,7 +1,5 @@
 # Getting Started with the Engineering Playbook
 
-Welcome to the Engineering Playbook! This guide will help you get up and running quickly.
-
 ## Installation
 
 See [Installation & Setup](https://github.com/vnykmshr/playbook/blob/main/README.md#install) in the main README for prerequisites and installation steps.
@@ -96,18 +94,15 @@ You're in the middle of a feature sprint. Here's your daily rhythm:
 /pb-resume            # Recover context from yesterday
 /pb-standup           # Write async standup for team
 
-# Development: Code → Review → Commit (repeat)
-/pb-cycle             # Self-review changes
-  # Includes: /pb-testing, /pb-security, /pb-standards, /pb-documentation
-
-/pb-commit            # Atomic, well-explained commit
+# Development: Code → Review (repeat)
+/pb-review            # Self-review, apply preferences, commit
 
 # Before lunch: Big picture
 /pb-context           # Refresh project context (decisions, roadmap)
 /pb-patterns          # Reference patterns for next component
 
 # Afternoon: Ready to merge?
-/pb-cycle             # Final self-review
+/pb-review            # Final quality gate
 /pb-pr                # Create pull request with context
 
 # End of day: Status
