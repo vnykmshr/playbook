@@ -11,7 +11,10 @@ Usage: python3 scripts/check-links.py [mdbook-out/]
 """
 import re
 import sys
+import tomllib
 from pathlib import Path
+
+BOOK_TOML = Path(__file__).resolve().parents[1] / "mdbook" / "book.toml"
 
 # Links that are examples in command prose, not real references.
 # Matched as substrings (see is_example_link), so every entry must be
@@ -35,14 +38,22 @@ def is_example_link(href):
     return False
 
 
+def site_root() -> str:
+    """The path the site is served under; a root-relative href is live only below it."""
+    with BOOK_TOML.open("rb") as f:
+        url = tomllib.load(f).get("output", {}).get("html", {}).get("site-url", "/")
+    return "/" + url.strip("/") + "/" if url.strip("/") else "/"
+
+
 def main():
     out_dir = Path(sys.argv[1]) if len(sys.argv) > 1 else Path("mdbook-out")
+    root = site_root()
 
     if not out_dir.is_dir():
         print(f"Error: {out_dir}/ not found. Run build-mdbook.sh first.")
         sys.exit(1)
 
-    href_re = re.compile(r'href="([^"]+)"')
+    href_re = re.compile(r'<[a-z]+\s[^>]*?\bhref="([^"]+)"')  # a tag's attribute, not escaped sample text
     skip_prefixes = ("http://", "https://", "mailto:", "javascript:", "#")
 
     checked = 0
@@ -76,9 +87,14 @@ def main():
 
             checked += 1
 
-            # Handle absolute paths (start with /)
+            if target.startswith("//"):
+                continue
+            # A root-relative href resolves against the host, so it must sit under the site path
             if target.startswith("/"):
-                resolved = (out_dir / target.lstrip("/")).resolve()
+                if not target.startswith(root):
+                    broken.append((str(html_file.relative_to(out_dir)), href))
+                    continue
+                resolved = (out_dir / target[len(root):]).resolve()
             else:
                 resolved = (page_dir / target).resolve()
 
