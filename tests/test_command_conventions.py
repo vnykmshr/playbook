@@ -996,6 +996,18 @@ class TestWhenToUse:
         assert not missing, f"Missing When to Use: {missing}"
 
 
+def test_one_ci_check_line():
+    """The CI-green check lives in /pb-release Step 2.3 only: each hand copy drifted from it."""
+    lines = [
+        f"{path.relative_to(REPO_ROOT)}:{n}"
+        for root in ("commands", "docs", "skills")
+        for path in sorted((REPO_ROOT / root).rglob("*.md"))
+        for n, line in enumerate(path.read_text().split("\n"), 1)
+        if "gh run list --commit" in line
+    ]
+    assert len(lines) == 1 and lines[0].startswith("commands/deployment/pb-release.md:"), lines
+
+
 def test_command_index_names_every_command():
     """docs/command-index.md is the public catalog: a command missing from it is unfindable."""
     index = (REPO_ROOT / "docs" / "command-index.md").read_text()
