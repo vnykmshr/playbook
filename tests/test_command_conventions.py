@@ -569,6 +569,125 @@ class TestNestedSampleFences:
         )
 
 
+def bare_openers(text: str) -> int:
+    """Fences opened with no info string: the one shape fence_problems cannot judge."""
+    return sum(1 for t in md_read.tokens(split_front_matter(text)[1]) if t.type == "fence" and not t.info.strip())
+
+
+# Commands with bare fence openers, at their current count. Debt, not exemptions: no sweep
+# (88 files would each take a bump), so an entry only goes down, removed at 0.
+BARE_OPENER_BASELINE = {
+    "pb-adr.md": 2,
+    "pb-calm-design.md": 1,
+    "pb-caveman.md": 2,
+    "pb-claude-orchestration.md": 2,
+    "pb-claude-project.md": 1,
+    "pb-commit.md": 3,
+    "pb-context-review.md": 3,
+    "pb-context.md": 3,
+    "pb-cycle.md": 3,
+    "pb-database-ops.md": 3,
+    "pb-debug.md": 9,
+    "pb-deployment.md": 1,
+    "pb-deprecation.md": 7,
+    "pb-design-language.md": 1,
+    "pb-design-rules.md": 6,
+    "pb-doctor.md": 3,
+    "pb-documentation.md": 20,
+    "pb-dr.md": 7,
+    "pb-gha.md": 1,
+    "pb-git-signals.md": 8,
+    "pb-handoff.md": 1,
+    "pb-hardening.md": 3,
+    "pb-huddle.md": 3,
+    "pb-incident.md": 13,
+    "pb-jordan-testing.md": 5,
+    "pb-kai-reach.md": 8,
+    "pb-knowledge-transfer.md": 3,
+    "pb-learn.md": 3,
+    "pb-llm-guidelines.md": 1,
+    "pb-logging.md": 3,
+    "pb-maya-product.md": 16,
+    "pb-observability.md": 16,
+    "pb-onboarding.md": 21,
+    "pb-patterns-api.md": 1,
+    "pb-patterns-async.md": 2,
+    "pb-patterns-core.md": 3,
+    "pb-patterns-db.md": 7,
+    "pb-patterns-distributed.md": 5,
+    "pb-patterns-frontend.md": 1,
+    "pb-patterns-resilience.md": 3,
+    "pb-patterns.md": 1,
+    "pb-pause.md": 2,
+    "pb-performance.md": 11,
+    "pb-ports.md": 3,
+    "pb-pr.md": 2,
+    "pb-preamble-async.md": 12,
+    "pb-preamble-decisions.md": 32,
+    "pb-preamble-power.md": 24,
+    "pb-preamble.md": 10,
+    "pb-preferences.md": 15,
+    "pb-release.md": 3,
+    "pb-repo-about.md": 6,
+    "pb-repo-docsite.md": 10,
+    "pb-repo-enhance.md": 1,
+    "pb-repo-organize.md": 3,
+    "pb-repo-polish.md": 5,
+    "pb-resume.md": 4,
+    "pb-review-backend.md": 1,
+    "pb-review-code.md": 5,
+    "pb-review-comprehensive.md": 4,
+    "pb-review-frontend.md": 1,
+    "pb-review-infrastructure.md": 1,
+    "pb-review-microservice.md": 17,
+    "pb-review-playbook.md": 2,
+    "pb-review.md": 3,
+    "pb-sam-documentation.md": 16,
+    "pb-secrets.md": 2,
+    "pb-server-hygiene.md": 1,
+    "pb-setup.md": 3,
+    "pb-ship.md": 4,
+    "pb-sketch.md": 4,
+    "pb-spec.md": 4,
+    "pb-sre-practices.md": 8,
+    "pb-standards.md": 1,
+    "pb-standup.md": 6,
+    "pb-start.md": 2,
+    "pb-storage.md": 4,
+    "pb-team.md": 39,
+    "pb-templates.md": 6,
+    "pb-testing.md": 3,
+    "pb-think.md": 13,
+    "pb-threat-hunt.md": 1,
+    "pb-todo-implement.md": 7,
+    "pb-update.md": 3,
+    "pb-usability.md": 2,
+    "pb-voice.md": 10,
+    "pb-what-next.md": 6,
+    "pb-zero-stack.md": 8,
+}
+
+
+class TestBareFenceOpeners:
+    """Every new fence names its language (or `text`), so a nested sample's inner opener
+    can never be read as the outer fence's close."""
+
+    def test_no_command_adds_bare_openers(self):
+        over = {
+            p.name: n for p in get_command_files()
+            if (n := bare_openers(p.read_text())) > BARE_OPENER_BASELINE.get(p.name, 0)
+        }
+        assert not over, f"Fences with no info string above baseline: {over}. Add one (`text` for plain output)."
+
+    def test_baseline_only_shrinks(self):
+        current = {p.name: bare_openers(p.read_text()) for p in get_command_files()}
+        stale = {k: (v, current.get(k)) for k, v in BARE_OPENER_BASELINE.items() if current.get(k) != v}
+        assert not stale, (
+            f"BARE_OPENER_BASELINE entries that no longer match (baseline, now): {stale}. "
+            "Lower the entry to the new count; remove it at 0 or when the command is gone."
+        )
+
+
 LINE_BUDGET = 600
 # Commands over LINE_BUDGET, at their current length, fence lines included.
 # Debt, not exemptions: an entry only goes down, and is removed at or under 600.
