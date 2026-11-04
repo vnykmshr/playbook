@@ -121,12 +121,12 @@ The playbook is designed for distributed teams. Instead of "let's sync up," it u
 
 ### 4. Multi-Perspective Review Catches More Issues
 
-A single code reviewer can miss things. The playbook uses **five perspectives on every major piece of code**:
-- **Code quality** - Clarity, Modularity (design rules in practice)
-- **Security** - Robustness, Transparency (design rules in practice)
-- **Product alignment** - Simplicity, Clarity (design rules in practice)
-- **Testing** - Robustness, Repair (design rules in practice)
-- **Performance** - Optimization discipline (design rules in practice)
+A single code reviewer can miss things. The playbook uses **specialized perspectives; `/pb-review-comprehensive` pairs them by change type**:
+- **Correctness** - `/pb-linus-agent`
+- **Resilience** - `/pb-alex-infra`
+- **Product** - `/pb-maya-product`
+- **Clarity** - `/pb-sam-documentation`
+- **Testing** - `/pb-jordan-testing`
 
 These perspectives catch different issues using design rules as shared language. A performance engineer might miss a security vulnerability. A security engineer might miss a test coverage gap. Together, they create a high bar for quality.
 

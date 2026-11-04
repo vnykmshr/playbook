@@ -58,7 +58,7 @@ These establish baseline understanding and guiding philosophy. **Every engineer 
 | # | Command | Purpose | Key Sections | When to Use | Tier |
 |---|---------|---------|--------------|------------|------|
 | 1 | **pb-guide** | Master SDLC framework | 11 phases from intake through post-release | Reference for all other commands | All |
-| 2 | **pb-preamble** | Peer collaboration philosophy | Correctness, critical thinking, truth, holistic perspective | Foundation for all team interactions | All |
+| 2 | **pb-preamble** | Peer collaboration philosophy | Correctness, critical thinking, truth, holistic perspective, attention | Foundation for all team interactions | All |
 | 3 | **pb-design-rules** | Technical design principles | 18 rules: 17 classical in 4 clusters (Clarity, Simplicity, Resilience, Extensibility), plus Attention | When making architectural decisions | M/L |
 | 4 | **pb-standards** | Working principles and collaboration | Decision-making, scope discipline, quality standards | Before starting any work | All |
 | 5 | **pb-documentation** | Technical documentation at 5 levels | Code comments, APIs, system design, process docs, FAQ | When writing docs (inline with code per /pb-cycle) | M/L |
@@ -81,11 +81,11 @@ These establish baseline understanding and guiding philosophy. **Every engineer 
 ---
 
 ### SPECIALIZED REVIEW PERSONAS (v2.11.0+)
-Five specialized review agents providing complementary perspectives on code, security, reliability, product value, and documentation. **Use for deep multi-perspective reviews.**
+Five review agents that `/pb-review-comprehensive` pairs by change type; `/pb-travis-security`, `/pb-elena-design` and `/pb-kai-reach` hold the security, design and reach lanes. **Use for deep multi-perspective reviews.**
 
 | # | Persona | Philosophy | Focus | When to Use | Tier |
 |---|---------|-----------|-------|------------|------|
-| A | **pb-linus-agent** | Pragmatic security & directness | Correctness, assumptions, security, clarity, performance | Security-sensitive code, sensitive data, auth/payment | S/M/L |
+| A | **pb-linus-agent** | Directness & correctness | Correctness, assumptions, clarity, performance | Correctness-critical code, risky changes | S/M/L |
 | B | **pb-alex-infra** | Infrastructure resilience | Failure modes, degradation, deployment, observability, capacity | Infrastructure changes, deployment code, scaling | M/L |
 | C | **pb-maya-product** | Product strategy & user value | Problem validation, scope, impact, alignment, maintenance burden | User-facing features, product decisions, scope discipline | M/L |
 | D | **pb-sam-documentation** | Clarity & knowledge transfer | UI clarity, accessibility, error messages, code readability, docs | Frontend changes, APIs, documentation, onboarding | S/M/L |
@@ -104,7 +104,7 @@ CODE REVIEW WORKFLOW WITH PERSONAS:
 Single-perspective (for small changes):
   /pb-cycle (self-review)
     └─ Pick ONE persona based on change type:
-         ├─ Security issue? → /pb-linus-agent
+         ├─ Security issue? → /pb-travis-security
          ├─ Performance issue? → /pb-alex-infra
          ├─ Feature validation? → /pb-maya-product
          ├─ UI/docs issue? → /pb-sam-documentation
