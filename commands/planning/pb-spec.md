@@ -8,7 +8,7 @@ execution_pattern: "interactive"
 related_commands: ['pb-plan', 'pb-sketch', 'pb-adr', 'pb-todo-implement', 'pb-start']
 last_reviewed: "2026-10-03"
 version: "1.2.2"
-version_notes: "v1.2.2: Spaced double hyphens replaced."
+version_notes: "v1.2.2: Spaced double hyphens replaced; the tool-agnostic link resolves on the published site."
 breaking_changes:
   - "Path A template renamed '## Notes' to '## Design Notes'. Existing plan/{name}.md files keep working; only new specs use the new heading."
   - "Path A output path changed from plan/{name}.md to todos/plan/{name}.md. Existing plan/{name}.md files keep working; new specs write under todos/."
@@ -19,7 +19,7 @@ Produces the committed, numbered implementation plan. Input: a sketch with resol
 
 **Resource Hint:** opus - Architect-tier work: scope-locking, phase sequencing, verification and rollback design.
 
-**Tool-agnostic:** Spec framework (scope lock, phase breakdown, verification, rollback) works with any tool. Claude Code users invoke as `/pb-spec`. Using another tool? Read this file as Markdown for the framework. See [`/docs/using-with-other-tools.md`](/docs/using-with-other-tools.md).
+**Tool-agnostic:** Spec framework (scope lock, phase breakdown, verification, rollback) works with any tool. Claude Code users invoke as `/pb-spec`. Using another tool? Read this file as Markdown for the framework. See [`/docs/using-with-other-tools.md`](../../docs/using-with-other-tools.md).
 
 ---
 

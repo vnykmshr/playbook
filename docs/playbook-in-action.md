@@ -58,4 +58,4 @@ The standard development cycle using playbook commands.
 
 ---
 
-See [`/pb-guide`](/commands/core/pb-guide.md) for the full SDLC framework.
+See [`/pb-guide`](../commands/core/pb-guide.md) for the full SDLC framework.

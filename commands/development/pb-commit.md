@@ -8,14 +8,14 @@ execution_pattern: "automatic"
 related_commands: ['pb-review', 'pb-start', 'pb-pr']
 last_reviewed: "2026-11-04"
 version: "2.3.2"
-version_notes: "v2.3.2: The message register states its default inline; the full register is named as /pb-claude-global's, so it reads without the user's global file."
+version_notes: "v2.3.2: The message register states its default inline; the full register is named as /pb-claude-global's, so it reads without the user's global file; the tool-agnostic link resolves on the published site."
 breaking_changes: []
 ---
 # Commit (Usually Automatic)
 
 **Resource Hint:** sonnet - Commit message drafting with context-aware summaries and bisectable splitting guidance.
 
-**Tool-agnostic:** This command documents commit discipline (atomic, clear messages) that works with any version control system. Claude Code users invoke as `/pb-commit`. Using another tool? Read this file as Markdown for commit principles and message format. See [`/docs/using-with-other-tools.md`](/docs/using-with-other-tools.md) for how to adapt the ritual.
+**Tool-agnostic:** This command documents commit discipline (atomic, clear messages) that works with any version control system. Claude Code users invoke as `/pb-commit`. Using another tool? Read this file as Markdown for commit principles and message format. See [`/docs/using-with-other-tools.md`](../../docs/using-with-other-tools.md) for how to adapt the ritual.
 
 **Usually:** `/pb-review` auto-commits when all passes. You get a notification.
 

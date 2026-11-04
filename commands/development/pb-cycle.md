@@ -7,8 +7,8 @@ model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-start', 'pb-commit', 'pb-pr', 'pb-review-code', 'pb-testing']
 last_reviewed: "2026-11-04"
-version: "1.2.1"
-version_notes: "v1.2.1: The commit body ceiling matches the global Register: at most 2 short lines. v1.2.0: Reference global GitHub Artifact Register rule via single-line pointer; subject-only as default in HEREDOC template, body optional only when WHY is non-obvious."
+version: "1.2.2"
+version_notes: "v1.2.2: The tool-agnostic link resolves on the published site."
 breaking_changes: []
 ---
 # Development Cycle: Self-Review + Peer Review
@@ -17,7 +17,7 @@ Run this after completing a unit of work. Guides you through self-review, qualit
 
 **Resource Hint:** sonnet - iterative code review and quality gate checks
 
-**Tool-agnostic:** This command works with any development tool or peer review process. Claude Code users invoke as `/pb-cycle`. Using another tool? Read this file as Markdown and follow the checklist with your tool. See [`/docs/using-with-other-tools.md`](/docs/using-with-other-tools.md) for adaptation examples.
+**Tool-agnostic:** This command works with any development tool or peer review process. Claude Code users invoke as `/pb-cycle`. Using another tool? Read this file as Markdown and follow the checklist with your tool. See [`/docs/using-with-other-tools.md`](../../docs/using-with-other-tools.md) for adaptation examples.
 
 ---
 

@@ -8,7 +8,7 @@ execution_pattern: "automatic"
 related_commands: ['pb-start', 'pb-commit', 'pb-review-code', 'pb-review-comprehensive']
 last_reviewed: "2026-11-04"
 version: "2.8.1"
-version_notes: "v2.8.1: After fixing feedback, the independent pass re-runs on the fixes alone, from the commit before them; the footer drops its stale version."
+version_notes: "v2.8.1: After fixing feedback, the independent pass re-runs on the fixes alone, from the commit before them; the footer drops its stale version; the tool-agnostic link resolves on the published site."
 breaking_changes: []
 ---
 # Automated Quality Gate
@@ -23,7 +23,7 @@ Run this after you finish coding. System analyzes what you built, applies your e
 
 Feedback is prose: what matters and why, not a diagnostic checklist.
 
-**Tool-agnostic:** The quality gate principles (verify outcomes, check code quality, run tests, address feedback) work with any development tool. Claude Code users invoke as `/pb-review`. Using another tool? Read this file as Markdown for the checklist and process. Adapt the execution to your tool. See [`/docs/using-with-other-tools.md`](/docs/using-with-other-tools.md) for examples.
+**Tool-agnostic:** The quality gate principles (verify outcomes, check code quality, run tests, address feedback) work with any development tool. Claude Code users invoke as `/pb-review`. Using another tool? Read this file as Markdown for the checklist and process. Adapt the execution to your tool. See [`/docs/using-with-other-tools.md`](../../docs/using-with-other-tools.md) for examples.
 
 ---
 

@@ -8,7 +8,7 @@ execution_pattern: "interactive"
 related_commands: ['pb-plan', 'pb-spec', 'pb-think', 'pb-adr']
 last_reviewed: "2026-07-13"
 version: "1.1.1"
-version_notes: "v1.1.1: Spaced double hyphens replaced."
+version_notes: "v1.1.1: Spaced double hyphens replaced; the tool-agnostic link resolves on the published site."
 breaking_changes:
   - "Sketch output path changed from sketch/{name}.md to todos/sketch/{name}.md. Existing sketch/{name}.md files keep working; new sketches write under todos/."
 ---
@@ -18,7 +18,7 @@ A high-level exploration of a focus area that surfaces hidden complexity, identi
 
 **Resource Hint:** opus - Architect-tier work: surface unknowns, enumerate decision forks, tag recommendations with reasoning.
 
-**Tool-agnostic:** Sketching phases (discovery, analysis, decision forks) work with any development methodology. Claude Code users invoke as `/pb-sketch`. Using another tool? Read this file as Markdown for the framework. See [`/docs/using-with-other-tools.md`](/docs/using-with-other-tools.md).
+**Tool-agnostic:** Sketching phases (discovery, analysis, decision forks) work with any development methodology. Claude Code users invoke as `/pb-sketch`. Using another tool? Read this file as Markdown for the framework. See [`/docs/using-with-other-tools.md`](../../docs/using-with-other-tools.md).
 
 ---
 
