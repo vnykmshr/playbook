@@ -10,12 +10,14 @@ Solo-curated playbook. PRs welcome -- open an issue first, it saves rework.
 
 ## Local checks (all must pass)
 
+Python 3.11, as CI: `python3 -m pip install pytest pyyaml markdown-it-py==4.0.0`.
+
 ```bash
 python3 -m pytest tests/ -q
 python3 scripts/validate-conventions.py
-python3 scripts/check-links.py
 npx markdownlint-cli --config .markdownlint.json 'commands/**/*.md'
 ./scripts/build-mdbook.sh
+python3 scripts/check-links.py
 ```
 
 ## PR expectations
