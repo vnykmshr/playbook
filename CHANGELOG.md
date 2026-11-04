@@ -18,6 +18,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- **`/pb-preflight` v1.2.0.** Spaced double hyphens replaced.
 - **`/pb-handcraft` v1.6.0.** Spaced double hyphens replaced.
 - **`/pb-huddle` v1.8.0.** Spaced double hyphens replaced.
 - **Harvester ledger rows carry the note's text, and deferred rows come due.** A fifth column holds the text, and a row whose text does not hash to its key is exit 2. A `deferred` row names the quarter it comes due (`2027-q1`); from that quarter's first day it counts as undisposed (exit 1) until re-ruled, and the digest lists the whole deferred backlog from the ledger. Keys drop Unicode punctuation and keep symbols, so a dash-to-comma edit no longer re-presents a ruled note. `--today` sets the date the due check runs against. A four-column ledger is exit 2.

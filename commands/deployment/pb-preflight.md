@@ -7,8 +7,8 @@ model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-ship', 'pb-security', 'pb-hardening', 'pb-deployment', 'pb-release']
 last_reviewed: "2026-10-03"
-version: "1.1.1"
-version_notes: "v1.1.1: Static/Managed 4.3 checks every file of the deployed build (or a rebuild with the deploy's pinned toolchain) against its served bytes, not only that the new content arrived; host control files such as .nojekyll are not served; a host, zone or proxy change you made resets the delegated dates it touches. v1.1.0: Step 0 Surface Assessment, and a third state. The 30 bullets describe a service you operate, which the command never said -- run against a static site or a docs corpus, 22 of 30 do not land, and a gate showing 22 irrelevant items is not filtered, it is abandoned. Step 0 picks a profile (Service = all 30; Static/Managed = a 9/12/9 partition of owned, delegated and out-of-surface) with a declare-and-justify escape hatch so the profile list never has to be exhaustive. Two profiles, not five orthogonal axes and not a 30-row tag matrix: the failure mode of a wrong tag is a gate that silently renders fewer items. The Static profile is transcribed from the v2.27.0 ship rather than invented. Binary becomes PASS / FAIL / DELEGATED(provider, verified-date), because a managed host terminating TLS is not the same fact as TLS not applying -- one has an owner you can name and a date you can check, the other stops the thinking. N/A is deleted as a writable outcome. Initial v1.0.0: 30-item gate for solo devs and small teams, distinct from /pb-security (depth audit) and /pb-ship (workflow orchestrator)."
+version: "1.2.0"
+version_notes: "v1.2.0: Spaced double hyphens replaced."
 breaking_changes: ['Bullets are numbered N.M and referenced by number', 'N/A is no longer a valid outcome -- a bullet is in your profile or it is not rendered']
 ---
 # Pre-Ship Readiness Gate
@@ -51,16 +51,16 @@ One question, asked once per project: **what are you shipping?**
 
 | Profile | You are shipping | Gate |
 |---|---|---|
-| **Service** | A process you operate that serves requests -- API, web app, worker, anything with a runtime you restart | All 30 |
-| **Static/Managed** | A build artifact served by a provider you do not operate -- static site, docs corpus, published pages | The partition below |
+| **Service** | A process you operate that serves requests: API, web app, worker, anything with a runtime you restart | All 30 |
+| **Static/Managed** | A build artifact served by a provider you do not operate: static site, docs corpus, published pages | The partition below |
 
-**Neither fits?** Do not force one. Write your deploy surface in a single sentence -- what runs, who operates it, what it touches -- then rule on all 30 against that sentence. Every out-of-surface call must name the clause that excludes it. A profile list that is not exhaustive is fine; a silent skip is not.
+**Neither fits?** Do not force one. Write your deploy surface in a single sentence (what runs, who operates it, what it touches), then rule on all 30 against that sentence. Every out-of-surface call must name the clause that excludes it. A profile list that is not exhaustive is fine; a silent skip is not.
 
 ### The Static/Managed partition
 
 Nine you own, twelve delegated, nine out of surface. Referenced by number against The Gate below, which is always printed in full.
 
-- **You own (execute these):** 1.1 secrets in history · 2.3 a clean checkout rebuilds and redeploys the live site (this is the restore test) · 3.1 build and CI config match the expected schema · 3.5 rollback rehearsed · 4.3 every file in the deployed build (or a rebuild with the deploy's pinned toolchain), fetched from its public URL with redirects followed, matches byte for byte; host control files such as `.nojekyll` are not served · 4.5 dependency audit · 6.1 smoke test on a real page and a real link · 6.2 watched after the flip · 6.5 read like an attacker -- for a published corpus, what did you publish that you did not mean to
+- **You own (execute these):** 1.1 secrets in history · 2.3 a clean checkout rebuilds and redeploys the live site (this is the restore test) · 3.1 build and CI config match the expected schema · 3.5 rollback rehearsed · 4.3 every file in the deployed build (or a rebuild with the deploy's pinned toolchain), fetched from its public URL with redirects followed, matches byte for byte; host control files such as `.nojekyll` are not served · 4.5 dependency audit · 6.1 smoke test on a real page and a real link · 6.2 watched after the flip · 6.5 read like an attacker: for a published corpus, what did you publish that you did not mean to
 - **Delegated (name the provider and the date you last verified):** 1.2 · 3.2 · 3.3 · 3.4 · 4.1 · 4.2 · 4.4 · 5.1-5.5
 - **Out of surface (no database, no sessions, no uploads):** 1.3 · 1.4 · 1.5 · 2.1 · 2.2 · 2.4 · 2.5 · 6.3 · 6.4
 
@@ -72,7 +72,7 @@ Nine you own, twelve delegated, nine out of surface. Referenced by number agains
 
 1. Run Step 0 once. Record the profile in your deploy notes so the next run does not re-litigate it.
 2. Read every bullet in the gate. Rule on each one in your profile.
-3. Three outcomes, no fourth: **PASS** (paste evidence -- command output, link, one sentence), **FAIL**, or **DELEGATED** (name the provider and the date you last verified it). "Probably fine" is a FAIL. **N/A is not an outcome** -- a bullet is in your profile or it is not rendered.
+3. Three outcomes, no fourth: **PASS** (paste evidence: command output, link, one sentence), **FAIL**, or **DELEGATED** (name the provider and the date you last verified it). "Probably fine" is a FAIL. **N/A is not an outcome**: a bullet is in your profile or it is not rendered.
 4. Any FAIL stops the deploy until resolved or explicitly accepted in writing by a named human.
 5. Total time: 5-10 minutes once you know your stack. First run will take longer while you wire up the missing pieces.
 
@@ -98,9 +98,9 @@ Nine you own, twelve delegated, nine out of surface. Referenced by number agains
 
 ### [3] Infrastructure & Deployment
 
-- [ ] **3.1 Prod env vars match the expected schema.** Not "present" -- matching. Diff against a checked-in template or schema. Missing optional vars flagged; typo'd keys caught.
+- [ ] **3.1 Prod env vars match the expected schema.** Not "present": matching. Diff against a checked-in template or schema. Missing optional vars flagged; typo'd keys caught.
 - [ ] **3.2 SSL cert valid and auto-renewal proven.** Scheduled is not proven. The last renewal actually happened and the new cert is live.
-- [ ] **3.3 Firewall exposes only required ports.** Internal services (DB, cache, queue) unreachable from the public internet -- verified from an external host, not assumed.
+- [ ] **3.3 Firewall exposes only required ports.** Internal services (DB, cache, queue) unreachable from the public internet, verified from an external host, not assumed.
 - [ ] **3.4 Process/container auto-restart verified.** Kill the main process; service returns in under 10 seconds. If this has never been tested, it does not work.
 - [ ] **3.5 Rollback rehearsed end-to-end.** One person executed it once, start to finish, in under 5 minutes. Documented trigger criteria and the exact command.
 
@@ -132,7 +132,7 @@ Nine you own, twelve delegated, nine out of surface. Referenced by number agains
 
 ## If a Bullet Fails
 
-First check you are not mislabelling a delegated bullet as a failure. If a provider owns it, name the provider and the date you last verified their behaviour -- that is a DELEGATED ruling, not a FAIL. If you cannot name the provider, it is a FAIL, and the fix is finding out who owns it.
+First check you are not mislabelling a delegated bullet as a failure. If a provider owns it, name the provider and the date you last verified their behaviour: that is a DELEGATED ruling, not a FAIL. If you cannot name the provider, it is a FAIL, and the fix is finding out who owns it.
 
 For a real failure you have three options, in order of preference:
 
@@ -177,7 +177,7 @@ The gate is not done at "deploy succeeded." It is done at "the thing works for r
 - Treat delegated as done. A provider you cannot name is not a provider; it is an assumption with a logo.
 - Ship with "probably fine." That is how incidents start.
 - Skip the post-deploy watch because the build went green. CI passing is not production working.
-- Turn this into a ceremony. It is 5-10 minutes. If it is taking longer every time, your stack has drift -- fix the drift, not the gate.
+- Turn this into a ceremony. It is 5-10 minutes. If it is taking longer every time, your stack has drift; fix the drift, not the gate.
 - Add a third profile speculatively. Two exist because two have been run; the escape hatch covers the rest until a real surface earns its own.
 
 ---
@@ -192,4 +192,4 @@ The gate is not done at "deploy succeeded." It is done at "the thing works for r
 
 ---
 
-*Cannot tick every box? You are not ready to ship. The patch after launch costs more than the fix before launch -- always.*
+*Cannot tick every box? You are not ready to ship. The patch after launch costs more than the fix before launch, always.*

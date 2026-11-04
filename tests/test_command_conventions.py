@@ -507,7 +507,6 @@ DASH_BASELINE = {
     "pb-llm-guidelines.md": 3,
     "pb-pause.md": 7,
     "pb-plan.md": 1,
-    "pb-preflight.md": 12,
     "pb-resume.md": 3,
     "pb-review-code.md": 1,
     "pb-review-hygiene.md": 3,
