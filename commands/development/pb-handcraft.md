@@ -316,7 +316,7 @@ Run after work is functionally complete, before presenting externally. Integrate
 - `/pb-review` - Code review (bugs, logic, tests)
 - `/pb-linus-agent` - Peer review persona
 - `/pb-commit` - Commit message quality
-- `/pb-llm-guidelines` - LLM coding guardrails referenced in Scope Guard
+- `/pb-llm-guidelines` - LLM coding guardrails
 
 ---
 
