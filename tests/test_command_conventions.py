@@ -15,6 +15,7 @@ import re
 import subprocess
 from pathlib import Path
 
+import md_read  # scripts/, on sys.path via conftest
 import pytest
 import yaml
 
@@ -223,115 +224,25 @@ def commands_changed_since_tag() -> list[tuple[str, str | None, str]]:
     return changed
 
 
-FENCE_OPEN = re.compile(r" {0,3}(`{3,}|~{3,})")
-
-
-def fence_walk(body: str):
-    """Yield (line, event, opener) per body line; event is prose, open, close or inside.
-
-    A fence closes only on a bare run of its own character at least as long as
-    the opener, as CommonMark renders it: a 4-backtick sample holding a
-    ```bash block stays one fence. A plain open/close toggle reads the inner
-    block's close as the end of the sample and counts the rest as prose. The
-    prose and nesting guards read fences through this; the Related Commands
-    counters still toggle (v2.34.0).
-    """
-    fence = None
-    for line in body.split("\n"):
-        if fence is None:
-            if match := FENCE_OPEN.match(line):
-                fence = match.group(1)
-                yield line, "open", fence
-            else:
-                yield line, "prose", None
-        elif re.fullmatch(r" {0,3}" + re.escape(fence[0]) + "{%d,}[ \t]*" % len(fence), line):
-            yield line, "close", fence
-            fence = None
-        else:
-            yield line, "inside", fence
-
-
-def prose_lines(text: str) -> list[str]:
-    """Body lines outside fenced blocks, as rendered."""
-    return [line for line, event, _ in fence_walk(split_front_matter(text)[1]) if event == "prose"]
+def dash_count(text: str) -> int:
+    """Spaced double hyphens (` -- `) in rendered prose; code blocks, code spans and front matter are exempt."""
+    return sum(line.count(" -- ") for line in md_read.prose_text(split_front_matter(text)[1]))
 
 
 def fence_problems(text: str) -> list[str]:
-    """Nested samples whose outer fence is too short, as far as syntax can prove.
-
-    Inside a block, a fence line of the same character, at least the opener's
-    length and carrying an info string, is content, and the inner block's bare
-    close then ends the outer one. The rule is conservative: a sample showing
-    a lone opener line as text trips it too, and lengthening its outer fence is
-    harmless. A block still open at end of file also fails.
-
-    Gaps, by design:
-    1. A bare inner opener reads as the outer's close; nothing in the syntax
-       says which was meant. Requiring an info string on every opener closes
-       the gap.
-    2. Fences in blockquotes, or in list items indented 4+ spaces, are not
-       modelled.
-    3. A backtick fence whose info string holds a backtick is not an opener in
-       CommonMark; FENCE_OPEN reads it as one.
-    """
+    """md_read.fence_problems, with file line numbers (front matter counted)."""
     body = split_front_matter(text)[1]
     first = text.count("\n") - body.count("\n") + 1
-    problems, opened, still_open = [], 0, False
-    for i, (line, event, fence) in enumerate(fence_walk(body), first):
-        if event == "open":
-            opened, still_open = i, True
-        elif event == "close":
-            still_open = False
-        elif event == "inside":
-            match = FENCE_OPEN.match(line)
-            if match and match.group(1)[0] == fence[0] and len(match.group(1)) >= len(fence):
-                problems.append(f"line {i}: fence with an info string inside the block opened at line {opened}")
-    if still_open:
-        problems.append(f"line {opened}: block never closed")
-    return problems
-
-
-CODE_SPAN = re.compile(r"(?<![`\\])(`+)(?!`)(.+?)(?<!`)\1(?!`)")
-
-
-def dash_count(text: str) -> int:
-    """Spaced double hyphens (` -- `) in prose; fenced samples and code spans are exempt.
-
-    Spans are matched per line, so one that crosses a line break is counted,
-    and backslash escapes are not modelled beyond a lone escaped backtick.
-    """
-    return sum(CODE_SPAN.sub("", line).count(" -- ") for line in prose_lines(text))
+    return [
+        f"line {line + first}: fence with an info string inside the block opened at line {opened + first}"
+        if kind == "info" else f"line {opened + first}: block never closed"
+        for line, opened, kind in md_read.fence_problems(body)
+    ]
 
 
 def get_related_commands_count(content: str) -> int:
-    """Count Related Commands links in standard section.
-
-    Fenced lines are skipped, matching scripts/validate-conventions.py. Generator
-    commands embed a sample Related Commands block inside ```; counting the
-    sample's heading first ends the scan at the fence and returns 0, which
-    `test_related_commands_within_limits` reads as "no section" and skips. The
-    file then sits outside the ceiling entirely -- one rule, two implementations,
-    and the blind one is the one CI runs.
-    """
-    in_section = False
-    in_fence = False
-    count = 0
-    for line in content.splitlines():
-        stripped = line.strip()
-        if stripped.startswith("```"):
-            in_fence = not in_fence
-            continue
-        if in_fence:
-            continue
-        if stripped.startswith("## Related Commands"):
-            in_section = True
-            continue
-        if in_section:
-            if line.startswith("## ") or line.startswith("---"):
-                break
-            if stripped.startswith("- `/pb-"):
-                count += 1
-    return count
+    """Related Commands links in the file's own section; the validator reads the same function."""
+    return md_read.related_commands_count(content)
 
 
 FM = '---\nname: "pb-x"\nversion: "{v}"\nversion_notes: "{n}"\n---\n'
@@ -579,6 +490,10 @@ PROSE_FIXTURE = [
     ("inline-code", "run `git checkout -- f` -- now\n", 1),
     ("double-backtick-span", "``a ` -- b`` -- c\n", 1),
     ("escaped-backtick", "\\`a -- b` x\n", 1),
+    ("backtick-in-info-is-not-a-fence", "```a`b\nx -- y\n", 1),
+    ("quoted-fence", "> ```\n> a -- b\n> ```\nc -- d\n", 1),
+    ("indented-code", "text\n\n    a -- b\n", 0),
+    ("span-across-lines", "`a\n-- b` c -- d\n", 1),
 ]
 
 
@@ -627,6 +542,8 @@ FENCE_FIXTURE = [
     ("tilde-inside-tilde", "~~~markdown\n~~~bash\nx\n~~~\n~~~\n", "line 2: fence with an info string"),
     ("open-at-eof", "```\nx\n", "line 1: block never closed"),
     ("front-matter-offset", '---\nname: "x"\n---\n```markdown\n```bash\nx\n```\n```\n', "line 5: fence with an info string"),
+    ("quoted-nested", "> ```markdown\n> ```bash\n> x\n> ```\n> ```\n", "line 2: fence with an info string"),
+    ("backtick-in-info-is-not-an-opener", "```a`b\n```bash\nx\n```\n", None),
 ]
 
 
@@ -636,7 +553,7 @@ class TestNestedSampleFences:
     A 3-backtick outer fence closes at the inner block's close, and the rest of
     the page flips between prose and code: headings and Related Commands render
     as code on the site, and the other guards misread the file. See
-    fence_problems for what syntax cannot prove.
+    md_read.fence_problems for what syntax cannot prove.
     """
 
     @pytest.mark.parametrize("text, problem", [row[1:] for row in FENCE_FIXTURE], ids=[row[0] for row in FENCE_FIXTURE])

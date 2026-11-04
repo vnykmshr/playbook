@@ -38,6 +38,9 @@ jobs:
           npm install -g markdownlint-cli
           markdownlint --config .markdownlint.json 'docs/**/*.md' 'commands/**/*.md'
 
+      - name: Install Python tooling
+        run: python3 -m pip install --quiet pytest pyyaml markdown-it-py==4.0.0
+
       - name: Validate command conventions
         run: python3 scripts/validate-conventions.py
 
@@ -51,9 +54,7 @@ jobs:
           python3 scripts/validate-extracted-metadata.py .playbook-metadata.json
 
       - name: Run Python tests
-        run: |
-          python3 -m pip install --quiet pytest pyyaml
-          python3 -m pytest tests/ -q
+        run: python3 -m pytest tests/ -q
 
       - name: Scan for secrets (gitleaks)
         uses: gitleaks/gitleaks-action@v3

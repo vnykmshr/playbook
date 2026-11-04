@@ -17,6 +17,7 @@ import re
 import sys
 from pathlib import Path
 
+import md_read
 from playbook_utils import setup_logger
 
 COMMANDS_DIR = Path(__file__).parent.parent / "commands"
@@ -104,29 +105,7 @@ class ConventionValidator:
     def validate_related_commands(self, path: Path, content: str) -> None:
         """Check Related Commands count within limits."""
         name = path.name
-        lines = content.splitlines()
-
-        in_section = False
-        in_fence = False
-        link_count = 0
-        for line in lines:
-            stripped = line.strip()
-            # Generator/meta commands (e.g. pb-new-playbook) embed sample
-            # Related Commands blocks inside ``` fences. Skip fenced lines so a
-            # template heading isn't mistaken for the command's own section.
-            if stripped.startswith("```"):
-                in_fence = not in_fence
-                continue
-            if in_fence:
-                continue
-            if stripped.startswith("## Related Commands"):
-                in_section = True
-                continue
-            if in_section:
-                if line.startswith("## ") or line.startswith("---"):
-                    break
-                if stripped.startswith("- `/pb-"):
-                    link_count += 1
+        link_count = md_read.related_commands_count(content)
 
         if link_count == 0:
             self._warn(f"{name}: no standard Related Commands section found")
