@@ -8,7 +8,7 @@ execution_pattern: "sequential"
 related_commands: ['pb-cycle', 'pb-pr', 'pb-release', 'pb-review-hygiene', 'pb-deployment']
 last_reviewed: "2026-11-04"
 version: "1.2.2"
-version_notes: "v1.2.2: Step 5.2 runs /pb-release Phase 2-3, which tags only after CI is green on the merge commit, instead of an inline tag and deploy that skipped that gate; the diagram lists /pb-review-hygiene once; /code-review is named as invoked. 730 to 695 lines."
+version_notes: "v1.2.2: Step 5.2 runs /pb-release Phase 2-3, which tags only after CI is green on the merge commit, instead of an inline tag and deploy that skipped that gate; the diagram lists /pb-review-hygiene once; /code-review is named as invoked; steps renumbered. 730 to 695 lines."
 breaking_changes: []
 ---
 # Ship Focus Area to Production
@@ -471,7 +471,7 @@ gh pr merge [PR-NUMBER] --merge --delete-branch
 
 Run `/pb-release` Phase 2-3: it tags only after CI is green on the merge commit, creates the release, deploys and verifies.
 
-### Step 5.4: Release Summary
+### Step 5.3: Release Summary
 
 Update `todos/ship-review-YYYY-MM-DD.md`:
 
