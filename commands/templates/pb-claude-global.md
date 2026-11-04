@@ -8,7 +8,7 @@ execution_pattern: "sequential"
 related_commands: ['pb-claude-project', 'pb-claude-orchestration', 'pb-preamble', 'pb-design-rules', 'pb-standards']
 last_reviewed: "2026-11-04"
 version: "2.12.0"
-version_notes: "v2.12.0: Spaced double hyphens replaced."
+version_notes: "v2.12.0: Operational Guardrails gain Denied commands: plan around a denied rm or chain from the start, check state after a denied call, and order durable writes before permission-gated cleanup. The GitHub register's Never write adds register narration and unproven claims; Never in public text names internal tooling, personas and /pb-* names, process trails and hard wraps."
 breaking_changes: ['Template output restructured -- BEACON headers, standalone Non-Negotiables, Session Ritual added', 'Personas list removed from global (project-specific)', 'Context Efficiency section removed (generic)', 'Project-Specific Overrides section removed (obvious)', 'Development Ritual removed (duplicated the Quick Reference)', 'Session Ritual removed (duplicated the last Quick Reference row)', 'Model Selection prose paragraph removed; the tier table stays']
 ---
 # Generate Global CLAUDE.md
@@ -163,6 +163,7 @@ For strategy: `/pb-claude-orchestration`
 - Preserve functionality -- never fix a bug by removing a feature
 - Scope -- deliver what was asked, at the scope intended. Check in only when different readings of the request lead to materially different work; if a better approach exists, say so in a sentence and continue as asked
 - Git safety -- pull before writing, diff after changes
+- **Denied commands** -- `rm` and some chained commands are denied in most sessions; plan around it from the start (move to `todos/done/`, `git rm`, split the chain, or hand the user `! <command>`), and say up front when a plan ends in a delete. A denied call may still have done part of its work: check the state before reporting. Order durable writes before cleanup that needs permission
 - **Skill invocation discipline** -- `/pb-*` notation in assistant output is reserved for actual Skill-tool invocations. For conceptual references, use plain language ("a multi-lens review", "structured thinking", "huddle-style synthesis") without the slash. Paraphrasing under slash-form breaks the sigil users rely on to verify a skill ran.
 - **External action gate** -- STOP before any externally-visible action (git push, issue/PR create, comments, email, publish). Present what you are about to do, then wait for an explicit "go ahead" in a **new user message**. One message may approve a numbered list of exact commands; the approval covers those commands and the exact text approved, nothing else. A tag carried by `push.followTags`, a push inside a script or an edited draft is not covered: name it or stop on it. Run each approved item as its own Bash call, never chained with another gated action. Never batched: merge, tag, release, publish, deploy, and any push to the default branch or with tag flags. The PreToolUse hook is a speed bump on known Bash shapes, not a boundary: it does not stop injected instructions, does not see non-Bash tools (MCP, Artifact), and its test lists what it misses.
 
@@ -183,7 +184,9 @@ The Register BEACON applied to GitHub, with ceilings. The reader is a peer; do n
 
 **Always strip** (on every GitHub artifact -- commits, issues, PR descriptions, PR/review/inline comments, release notes -- even when a skill template includes them by default): `Co-Authored-By`, `Generated-With`, `🤖 Generated with [Claude Code]`, thumbs-up/down feedback prompts, any assistant-attribution or engagement-bait footers.
 
-**Never write:** narration ("I examined...", "After analysis..."), scope reminders, severity adjectives ("critical", "important to note"), closing summaries, restatements of what the diff already shows.
+**Never write:** narration ("I examined...", "After analysis...", "let me..."), narration of the register itself ("keeping it terse", a list of tells removed), scope reminders, severity adjectives ("critical", "important to note"), closing summaries, restatements of what the diff already shows, or claims the diff does not prove.
+
+**Never in public text:** internal tooling, personas, CLAUDE.md or `/pb-*` names; a process trail (scores, pass logs); hard-wrapped prose (commit bodies and code comments excepted). Compress without cutting scene-setters or file pointers.
 
 **Large changes (>3 files, >1 concern):** Split bisectable -- infra -> data+tests -> logic -> versioning.
 
