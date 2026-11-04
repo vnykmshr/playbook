@@ -8,7 +8,7 @@ execution_pattern: "sequential"
 related_commands: ['pb-claude-project', 'pb-claude-orchestration', 'pb-preamble', 'pb-design-rules', 'pb-standards']
 last_reviewed: "2026-11-04"
 version: "2.12.0"
-version_notes: "v2.12.0: Operational Guardrails gain Denied commands: plan around a denied rm or chain from the start, check state after a denied call, and order durable writes before permission-gated cleanup. The GitHub register's Never write adds register narration and unproven claims; Never in public text names internal tooling, personas and /pb-* names, process trails and hard wraps."
+version_notes: "v2.12.0: Operational Guardrails gain Denied commands: plan around a denied rm or chain from the start, check state after a denied call, and order durable writes before permission-gated cleanup. The GitHub register's Never write adds register narration and unproven claims; Never in public text names process trails and hard wraps, and, outside the project that ships them, internal tooling, personas and /pb-* names."
 breaking_changes: ['Template output restructured -- BEACON headers, standalone Non-Negotiables, Session Ritual added', 'Personas list removed from global (project-specific)', 'Context Efficiency section removed (generic)', 'Project-Specific Overrides section removed (obvious)', 'Development Ritual removed (duplicated the Quick Reference)', 'Session Ritual removed (duplicated the last Quick Reference row)', 'Model Selection prose paragraph removed; the tier table stays']
 ---
 # Generate Global CLAUDE.md
@@ -186,7 +186,7 @@ The Register BEACON applied to GitHub, with ceilings. The reader is a peer; do n
 
 **Never write:** narration ("I examined...", "After analysis...", "let me..."), narration of the register itself ("keeping it terse", a list of tells removed), scope reminders, severity adjectives ("critical", "important to note"), closing summaries, restatements of what the diff already shows, or claims the diff does not prove.
 
-**Never in public text:** internal tooling, personas, CLAUDE.md or `/pb-*` names; a process trail (scores, pass logs); hard-wrapped prose (commit bodies and code comments excepted). Compress without cutting scene-setters or file pointers.
+**Never in public text:** a process trail (scores, pass logs); hard-wrapped prose (commit bodies and code comments excepted); outside the project that ships them, internal tooling, personas, CLAUDE.md or `/pb-*` names. Compress without cutting scene-setters or file pointers.
 
 **Large changes (>3 files, >1 concern):** Split bisectable -- infra -> data+tests -> logic -> versioning.
 
