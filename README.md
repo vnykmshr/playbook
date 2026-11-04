@@ -50,7 +50,7 @@ For deeper work: `/pb-plan` (architecture), `/pb-adr` (decision records), `/pb-s
 
 ## Learn more
 
-- **[Command index](https://vnykmshr.github.io/playbook/command-index/)** -- complete catalog grouped by category
+- **[Command index](https://vnykmshr.github.io/playbook/docs/command-index.html)** -- complete catalog grouped by category
 - **[Book site](https://playbook.1mb.dev)** -- distraction-free reading view
 - **[Integration guide](docs/integration-guide.md)** -- how commands compose
 - **[Using with other tools](docs/using-with-other-tools.md)** -- adapting the playbook outside the reference toolchain
