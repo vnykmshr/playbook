@@ -8,7 +8,7 @@ execution_pattern: "sequential"
 related_commands: ['pb-debug', 'pb-start']
 last_reviewed: "2026-11-05"
 version: "2.1.0"
-version_notes: "v2.1.0: Spaced double hyphens replaced."
+version_notes: "v2.1.0: Spaced double hyphens replaced. The Everything block is cut to one line; the Docker dry run uses `docker system df -v` (prune has no dry run); the space-not-freed fix checks local snapshots instead of `sudo purge`; the commandless Node globals row is gone; the header and Related name the recovery tiers; the disk trigger cites `/pb-doctor`."
 breaking_changes: ['Tier names and membership changed: SAFE/MODERATE/AGGRESSIVE -> SECONDS/A BUILD/A DOWNLOAD/NEVER. A script or habit that ran "Tier 1" now sweeps less (~/.Trash left it) and "Tier 3" now means network-recoverable rather than most-destructive. Re-read the tier tables before reusing any saved invocation.']
 ---
 # macOS Storage Cleanup
@@ -16,15 +16,15 @@ breaking_changes: ['Tier names and membership changed: SAFE/MODERATE/AGGRESSIVE 
 Tiered storage cleanup for developer machines. Reclaim disk space safely with user confirmation at each tier.
 
 **Platform:** macOS only
-**Risk Model:** Safe → Moderate → Aggressive (each tier requires explicit confirmation)
+**Recovery model:** Seconds → A build → A download (each tier requires explicit confirmation; Never is not swept)
 
-**Mindset:** Design Rules say "measure before optimizing" - check what's using space before cleaning.
+**Mindset:** Apply `/pb-design-rules` thinking: measure before optimizing. Check what's using space before cleaning.
 
 **Resource Hint:** sonnet - Storage analysis and safe cleanup with careful file operations.
 
 ## When to Use
 
-- Disk usage exceeds 80% (run `/pb-doctor` first to confirm)
+- `/pb-doctor` warns on disk (over 80%); run it first to confirm
 - Build tools failing due to insufficient disk space
 - Quarterly maintenance to prevent space issues from accumulating
 
@@ -161,14 +161,13 @@ find ~/Library/Developer/Xcode/DerivedData -mindepth 1 -maxdepth 1 -exec rm -rf 
 | Android system-images | `~/Library/Android/sdk/system-images/*` | Re-download, and these are large |
 | iOS simulators | `xcrun simctl delete unavailable` | Only removes sims whose runtime is already gone; recreating needs a runtime download |
 | Rust toolchains | `rustup toolchain uninstall` | Re-download; keeps default only |
-| Node globals | `/usr/local/lib/node_modules/*` | `npm i -g` again |
 
 **Commands:**
 ```bash
 # 1. DRY RUN -- sizes, then exactly what would go.
 du -sh ~/.npm ~/.gradle/caches ~/Library/Caches/pip ~/.pub-cache 2>/dev/null
 brew cleanup --dry-run 2>/dev/null
-docker system prune -a --dry-run 2>/dev/null || docker system df
+docker system df -v 2>/dev/null                    # prune -a has no dry run; images with 0 containers go
 docker volume ls                                   # volumes are NOT pruned below; look anyway
 rustup toolchain list 2>/dev/null
 find ~/.gradle/caches ~/Library/Caches/pip ~/.pub-cache ~/Library/Caches/CocoaPods \
@@ -194,7 +193,7 @@ need to be productive offline.
 ### Tier 4: NEVER (unrecoverable: decide per item, never sweep)
 
 These look like cleanup targets. They are not. Nothing here is swept by any command on this page,
-including the nuclear block, because no flag can make the decision for you.
+because no flag can make the decision for you.
 
 | Target | Path | What you actually lose |
 |--------|------|------------------------|
@@ -312,19 +311,9 @@ find ~/.gradle/caches ~/.pub-cache ~/Library/Caches/pip ~/Library/Caches/CocoaPo
 docker system prune -a -f                          # NO --volumes
 xcrun simctl delete unavailable
 rustup toolchain list 2>/dev/null | grep -v default | xargs -I {} rustup toolchain uninstall {}
-
-# Everything (Tiers 1-3, no prompts). "Everything" means accepting rebuilds and re-downloads --
-# never destroying data. Tier 4 is absent by construction: ~/.cache, ~/.Trash, docker volumes,
-# Xcode Archives, Safari LocalStorage and AVD state each need you to look first, and no flag
-# can do that for you.
-find ~/Library/Caches ~/Library/Logs ~/Library/Developer/Xcode/DerivedData \
-     -mindepth 1 -maxdepth 1 -exec rm -rf {} +
-npm cache clean --force && brew cleanup
-find ~/.gradle/caches ~/.pub-cache ~/Library/Caches/pip ~/Library/Caches/CocoaPods \
-     ~/.cargo/registry/cache ~/Library/Android/sdk/system-images \
-     -mindepth 1 -maxdepth 1 -exec rm -rf {} +
-docker system prune -a -f
 ```
+
+For everything, run the Tier 1-3 lines in order, each after its dry run. Tier 4 is never swept.
 
 ---
 
@@ -370,16 +359,16 @@ For automatic maintenance, add to crontab:
 | "Permission denied" | Some caches locked by running apps. Quit apps first. |
 | "Operation not permitted" on `~/.Trash` | Terminal lacks Full Disk Access. Grant it in System Settings -> Privacy & Security, or empty Trash from Finder. |
 | Docker won't prune | Start Docker Desktop first |
-| Space not freed immediately | macOS may delay reporting. Run `sudo purge` to update |
+| Space not freed immediately | Time Machine local snapshots hold the deleted blocks: `tmutil listlocalsnapshots /`. macOS thins them under pressure, or `tmutil deletelocalsnapshots <date>` |
 | Xcode paths not found | Xcode not installed, skip those items |
 
 ---
 
 ## Related Commands
 
-- `/pb-debug` - Troubleshoot issues after aggressive cleanup
+- `/pb-debug` - Troubleshoot issues after a cleanup
 - `/pb-start` - Resume development after cleanup
 
 ---
 
-*Run quarterly or when disk usage exceeds 80%.*
+*Run quarterly or when `/pb-doctor` warns on disk.*

@@ -6,16 +6,16 @@ difficulty: "advanced"
 model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-onboarding', 'pb-guide', 'pb-security', 'pb-adr', 'pb-incident']
-last_reviewed: "2026-04-23"
-version: "1.3.0"
-version_notes: "v2.21.1 (v1.3.0): Post-enrichment review pass. New top-level For the Departing Engineer: Do These Before Friday section (irreversibility-ordered priority list). New Adversarial / disengaged departure sub-tier. Standard budget 1-2d → 2-3d with who-writes-what split. Portable Python co-change recipe (replaces GNU-awk pipeline). Batched git-blame for bus-factor. Mechanical/tribal split extended to Sections 3 and 9. Numbers (80%, 3/6/12mo, 90d) reframed as overridable defaults. Doc-hygiene reviews land as calendar invites during the session. New week-1 exit criterion: receiver explains a marker unprompted. Contradiction fixes (Sections 1-12 → 1-13, footer drop, version_notes count). Dropped repowise references. Merged When-to-Use + When-to-Conduct. v1.2.0: Added How to Use workflow block, Tiered KT Modes, Section 13 Access & Authority, Shadow Mode, Doc Hygiene. v1.1.0: Pruned Payment Service stubs (-352 lines). Pre-KT risk map, mechanical/tribal on five Core Sections, WHY/DECISION/TRADEOFF markers, week-1 exit criteria, per-section audience."
+last_reviewed: "2026-11-05"
+version: "1.3.1"
+version_notes: "v1.3.1: The hotspot commands drop the blank line git log emits, so it no longer ranks first; Section 13 is labelled partially reversible in both places; Related Commands say what each link is for; Mindset cites its sources."
 breaking_changes: []
 ---
 # Knowledge Transfer (KT) Session Preparation
 
 Structured guide for documenting and transferring project knowledge to new team members and stakeholders.
 
-**Mindset:** Teach the preamble first, then the design rules.
+**Mindset:** Teach `/pb-preamble` first, then `/pb-design-rules`.
 
 `/pb-preamble` gives new team members the stance: challenge assumptions, prefer correctness, think like peers. `/pb-design-rules` gives them the shape: the design principles (Clarity, Modularity, Robustness, Extensibility) that govern how systems are built in this team.
 
@@ -28,7 +28,7 @@ Structured guide for documenting and transferring project knowledge to new team 
 1. **Identify the scenario** - cooperative planned transition, new-hire onboarding, emergency departure, or adversarial/disengaged exit. The last changes the shape of the whole KT; see *Adversarial / disengaged departure* under Tiered KT Modes.
 2. **Pick a tier** - Standard (2-3 days) for most cooperative handoffs, Comprehensive (1-2 weeks with shadow) for critical or new-hire. See *Tiered KT Modes* below.
 3. **Run *Pre-KT: Map Knowledge Risk*** - target the session before writing a single section.
-4. **If you are the departing engineer, work the priority list first** - see *For the Departing Engineer: Do These Before Friday*. Irreversible artifacts (markers, Section 7 tribal, Section 13 vendor relationships) before reconstructable ones.
+4. **If you are the departing engineer, work the priority list first** - see *For the Departing Engineer: Do These Before Friday*. Irreversible artifacts (markers, Section 7 tribal) and the partially reversible Section 13 vendor relationships before reconstructable ones.
 5. **Fill the Core Sections required for your tier** - Section 1 is shown full as the worked example; 2-13 give you the shape and a compact snippet. Sections 1-2 are receiving-engineer homework from the repo; the departing engineer spends time where only they can.
 6. **Produce inline markers in the departing engineer's hot paths** - durable beyond the doc. See *Durable Artifacts: Inline Decision Markers*.
 7. **Run the exit-criteria checklist for your tier** - verify the KT actually landed, not just that setup worked.
@@ -145,7 +145,7 @@ Files in the top 25% of both churn (commit count) and complexity (line count) ar
 ```bash
 # Commit count per file, last 6 months
 git log --since="6 months ago" --name-only --pretty=format: \
-  | sort | uniq -c | sort -rn | head -20
+  | grep . | sort | uniq -c | sort -rn | head -20
 ```
 
 High-churn + high-size = hotspot. The departing engineer has implicit models of how these files behave that pure code-reading will not recover.
@@ -199,7 +199,7 @@ $ git shortlog -sne -- payment-service/payments/
   → bus factor: alice owns ~91% of payments/. PRIORITY.
 
 $ git log --since="6 months ago" --name-only --pretty=format: \
-    payment-service/ | sort | uniq -c | sort -rn | head -5
+    payment-service/ | grep . | sort | uniq -c | sort -rn | head -5
   48 payments/processor.ts
   31 webhooks/stripe.ts
   29 refunds/handler.ts
@@ -699,10 +699,10 @@ Used in the Comprehensive tier. Not a replacement for a formal session - a compl
 ## Related Commands
 
 - `/pb-onboarding` - Full team onboarding (includes KT)
-- `/pb-guide` - SDLC guide (referenced in KT)
-- `/pb-security` - Security considerations during KT
+- `/pb-guide` - SDLC framework the receiving engineer works within
+- `/pb-security` - Security review of the service being handed over
 - `/pb-adr` - Architecture decisions (why choices were made)
-- `/pb-incident` - Incident runbooks (part of KT package)
+- `/pb-incident` - Incident response, for the on-call half of the handoff
 
 ---
 

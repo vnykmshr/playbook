@@ -5,10 +5,10 @@ category: "utilities"
 difficulty: "intermediate"
 model_hint: "sonnet"
 execution_pattern: "sequential"
-related_commands: ['pb-doctor', 'pb-debug', 'pb-review-hygiene', 'pb-release']
-last_reviewed: "2026-11-04"
-version: "1.0.1"
-version_notes: "v1.0.1: The infra root-cause row points to /pb-alex-infra; /pb-review-infrastructure is retired."
+related_commands: ['pb-doctor', 'pb-debug', 'pb-review-hygiene', 'pb-release', 'pb-review-tests']
+last_reviewed: "2026-11-05"
+version: "1.1.0"
+version_notes: "v1.1.0: Integration with Other Commands removed; /pb-review-tests joins Related Commands for flaky-test follow-up."
 breaking_changes: []
 ---
 # GitHub Actions Failure Analysis
@@ -200,18 +200,6 @@ Then follow up with the full methodology if the cause isn't obvious.
 
 ---
 
-## Integration with Other Commands
-
-| Situation | Follow Up |
-|-----------|-----------|
-| Root cause is a code bug | `/pb-debug` for systematic fix |
-| Root cause is test flakiness | `/pb-review-tests` for reliability audit |
-| Root cause is infra/config | `/pb-alex-infra` for resilience check |
-| Blocking a release | `/pb-release` once green |
-| Recurring problem | `/pb-review-hygiene` for systemic health |
-
----
-
 ## Anti-Patterns
 
 | Don't | Do Instead |
@@ -230,3 +218,4 @@ Then follow up with the full methodology if the cause isn't obvious.
 - `/pb-doctor` - Local system health check
 - `/pb-review-hygiene` - Codebase operational health
 - `/pb-release` - Release orchestration (needs green CI)
+- `/pb-review-tests` - Reliability audit when the root cause is flakiness

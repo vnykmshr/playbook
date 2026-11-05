@@ -6,16 +6,16 @@ difficulty: "intermediate"
 model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-repo-enhance', 'pb-repo-about', 'pb-repo-readme', 'pb-repo-organize']
-last_reviewed: "2026-03-01"
-version: "1.0.0"
-version_notes: "Initial release"
+last_reviewed: "2026-11-05"
+version: "1.1.0"
+version_notes: "v1.1.0: Fleet view scores each repo live; the Last Audited and Not audited columns are gone, since nothing stores past audits. Mindset cites /pb-preamble."
 breaking_changes: []
 ---
 # Repository AI Discoverability Audit
 
 Audit a repository's visibility to AI coding agents and developer search.
 
-**Mindset:** AI agents are becoming the primary way developers discover libraries. A functionally strong library that scores poorly on machine-readable signals will never get recommended. This command measures the gap between code quality and discoverability, and surfaces what polish can fix vs. what requires usage evidence that polish alone cannot create.
+**Mindset:** AI agents are becoming the primary way developers discover libraries. A functionally strong library that scores poorly on machine-readable signals will never get recommended. This command measures the gap between code quality and discoverability, and surfaces what polish can fix vs. what requires usage evidence that polish alone cannot create. Apply `/pb-preamble` thinking: report the gap as measured, not as hoped.
 
 **Resource Hint:** sonnet - structured audit with concrete rubrics, optional content drafting
 
@@ -42,7 +42,7 @@ Produce a scorecard measuring how well a repository converts when discovered by 
 ```
 /pb-repo-polish owner/repo           Full audit: scorecard + action items
 /pb-repo-polish owner/repo --draft   Audit + generate content drafts (llms.txt, README sections)
-/pb-repo-polish --status             Fleet view: which repos polished, scores
+/pb-repo-polish --status             Fleet view: every repo in the org, scored live
 ```
 
 ---
@@ -236,14 +236,15 @@ gh repo edit owner/repo --add-topic topic1 --add-topic topic2
 
 ### Fleet View (--status mode)
 
+Scores each repo from `gh repo list {org}` on this run; no past audit is stored.
+
 ```
 ## AI Discoverability Status: {org}
 
-| Repo | Score | Tier | Last Audited | Top Gap |
-|------|-------|------|-------------|---------|
-| repo-1 | 12/15 | Functional | 2026-03-01 | Examples |
-| repo-2 | 8/15 | Gaps | 2026-02-15 | Search terms |
-| repo-3 | -- | Not audited | -- | -- |
+| Repo | Score | Tier | Top Gap |
+|------|-------|------|---------|
+| repo-1 | 12/15 | Functional | Examples |
+| repo-2 | 8/15 | Gaps | Search terms |
 ```
 
 ---

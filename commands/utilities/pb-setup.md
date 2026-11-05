@@ -7,8 +7,8 @@ model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-doctor', 'pb-update', 'pb-storage', 'pb-start']
 last_reviewed: "2026-11-05"
-version: "1.0.1"
-version_notes: "v1.0.1: nvm installs from the v0.40.8 installer, replacing v0.39.0."
+version: "1.1.0"
+version_notes: "v1.1.0: Quick Setup Script removed. Claude Code DX says install.sh links the scripts and shows the settings.json wiring it leaves to you; the context-warning text matches the script. The Brewfile drops the homebrew/bundle and homebrew/cask taps."
 breaking_changes: []
 ---
 # Bootstrap Dev Machine
@@ -18,7 +18,7 @@ Set up a new Mac for development from scratch. Opinionated defaults with escape 
 **Platform:** macOS
 **Use Case:** New machine, nuke-and-pave, or standardizing team setups
 
-**Mindset:** Design Rules emphasize "simple by default" - install only what's needed, configure minimally.
+**Mindset:** Apply `/pb-design-rules` thinking: simple by default. Install only what's needed, configure minimally.
 
 **Resource Hint:** sonnet - Dev machine bootstrap with accurate tool detection and configuration.
 
@@ -313,17 +313,23 @@ If you use Claude Code, configure these optimizations:
 # Add to ~/.claude/settings.json:
 #   "env": { "ENABLE_TOOL_SEARCH": "true" }
 
-# Status line with context bar - shows model, branch, token usage
-# Install playbook scripts (includes context-bar.sh + check-context.sh)
+# Link the playbook scripts (context-bar.sh + check-context.sh) into ~/.claude
 cd /path/to/playbook && ./scripts/install.sh
 
-# Verify status line and hooks are configured
-cat ~/.claude/settings.json | jq '.statusLine, .hooks'
+# install.sh does not edit settings.json. Add to ~/.claude/settings.json:
+#   "statusLine": { "type": "command", "command": "bash ~/.claude/context-bar.sh" },
+#   "hooks": { "Stop": [ { "matcher": "", "hooks": [
+#     { "type": "command", "command": "bash ~/.claude/check-context.sh" } ] } ] }
+
+# Verify the wiring
+jq '.statusLine, .hooks.Stop' ~/.claude/settings.json
 ```
 
-The playbook's `install.sh` sets up:
+The playbook's `install.sh` links:
 - **Context bar** - model, branch, uncommitted files, token usage progress bar
-- **Context warning hook** - advisory at 80% usage, suggests `/pb-pause` at 90%
+- **Context warning hook** - at 80% suggests `/pb-pause` soon; at 90%, `/pb-pause` then `/compact` or a fresh session
+
+Hook wiring in general: `hooks/README.md`.
 
 ---
 
@@ -355,10 +361,6 @@ For repeatable setups, use a Brewfile:
 ```bash
 # Create Brewfile
 cat > ~/Brewfile << 'EOF'
-# Taps
-tap "homebrew/bundle"
-tap "homebrew/cask"
-
 # CLI Tools
 brew "git"
 brew "gh"
@@ -421,22 +423,6 @@ Options:
   - PostgreSQL
   - Redis
 MultiSelect: true
-```
-
----
-
-## Quick Setup Script
-
-One-liner for the brave (installs essentials):
-
-```bash
-# WARNING: Review before running
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)" && \
-eval "$(/opt/homebrew/bin/brew shellenv)" && \
-brew install git gh jq ripgrep fd fzf && \
-touch ~/.zshrc && \
-curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.8/install.sh | bash && \
-source ~/.zshrc && nvm install --lts
 ```
 
 ---

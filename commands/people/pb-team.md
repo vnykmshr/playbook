@@ -6,9 +6,9 @@ difficulty: "advanced"
 model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-preamble', 'pb-onboarding', 'pb-knowledge-transfer', 'pb-sre-practices']
-last_reviewed: "2026-02-09"
-version: "1.0.0"
-version_notes: "v2.10.0 baseline"
+last_reviewed: "2026-11-05"
+version: "1.1.0"
+version_notes: "v1.1.0: Integration with Playbook removed; meeting samples match their cadence text (one small-team standup time, a two-week medium-team sprint); onboarding pointers match what /pb-onboarding holds; Mindset cites its sources."
 breaking_changes: []
 ---
 # Building High-Performance Engineering Teams
@@ -41,7 +41,7 @@ A healthy engineering team has:
 - **Growth**: People are learning and advancing
 - **Recognition**: Good work is acknowledged
 
-**Foundation:** High-performance teams operate from both frameworks.
+**Mindset:** High-performance teams operate from both frameworks: `/pb-preamble` and `/pb-design-rules`.
 
 Psychological safety is enabled by `/pb-preamble` thinking: when teams challenge assumptions, disagreement becomes professional, and silence becomes a risk. Technical excellence is enabled by `/pb-design-rules` thinking: teams that understand and apply Clarity, Simplicity, Modularity, and Robustness build systems that scale and evolve. Together: safe collaboration + sound design = high performance.
 
@@ -194,10 +194,8 @@ Different team sizes need different collaboration structures.
 **Emphasis:** Direct communication, minimal meetings
 
 ```
-Monday 10am: Daily standup
-Tuesday-Friday 9:30am: Daily standup
-Wednesday 3pm: Weekly planning (30 min)
-Friday 4pm: Retrospective (30 min)
+Monday-Friday 9:30am: Daily standup
+Wednesday 3pm: Weekly sync, planning + retro (30 min)
 ```
 
 **What works:** Messaging, pairing, quick decisions
@@ -206,17 +204,17 @@ Friday 4pm: Retrospective (30 min)
 
 **Structure:**
 - Daily standup (20 min): Async or quick sync
-- Weekly planning (1 hour): What are we doing?
+- Sprint planning (1 hour, biweekly): What are we doing?
 - Biweekly retro (1 hour): What did we learn?
 - 1-on-1s (biweekly): Manager + each engineer
 
 **Emphasis:** Structured communication, clear roles
 
 ```
-Sprint Structure:
-  Monday: Sprint planning (1 hour)
-  Tuesday-Thursday: Daily async standup
-  Friday: Demo + retro (1.5 hours)
+Sprint Structure (two weeks):
+  Monday, week 1: Sprint planning (1 hour)
+  Other days: Daily async standup
+  Friday, week 2: Demo + retro (1.5 hours)
 
 Cadence:
   Manager 1-on-1s: Biweekly
@@ -346,7 +344,7 @@ Live Q&A optional for those who want to join
 
 ### Remote Onboarding
 
-See `/pb-onboarding` for detailed remote onboarding checklists (first day, first week, first month).
+See `/pb-onboarding` for remote onboarding specifics.
 
 ---
 
@@ -599,23 +597,6 @@ Use results to identify problems and improve.
 
 ---
 
-## Integration with Playbook
-
-**Part of SDLC cycle:**
-- `/pb-cycle` - How teams review code
-- `/pb-guide` - Team practices section
-- `/pb-standup` - Daily team communication
-- `/pb-incident` - How teams respond together
-- `/pb-onboarding` - How teams integrate new people
-
-**Related Commands:**
-- `/pb-onboarding` - New team member experience
-- `/pb-documentation` - Communication via docs
-- `/pb-commit` - How team agrees on commits
-- `/pb-standards` - Team working principles
-
----
-
 ## Team Health Checklist
 
 ### Psychological Safety
@@ -658,6 +639,6 @@ Use results to identify problems and improve.
 ## Related Commands
 
 - `/pb-preamble` - Collaboration philosophy and psychological safety
-- `/pb-onboarding` - Developer onboarding and knowledge transfer
+- `/pb-onboarding` - Developer onboarding
 - `/pb-knowledge-transfer` - KT session preparation and execution
 - `/pb-sre-practices` - Site reliability engineering practices for teams

@@ -6,16 +6,16 @@ difficulty: "advanced"
 model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-repo-about', 'pb-repo-blog', 'pb-repo-enhance', 'pb-documentation']
-last_reviewed: "2026-10-03"
-version: "1.1.1"
-version_notes: "v1.1.1: Nested samples use a 4-backtick outer fence, so they render as written."
+last_reviewed: "2026-11-05"
+version: "1.1.2"
+version_notes: "v1.1.2: The License section and template take the license from LICENSE instead of assuming MIT. Mindset labelled."
 breaking_changes: []
 ---
 # Generate Project README
 
 Write or rewrite a clear, professional, developer-friendly README.
 
-**Philosophy:** A good README invites scrutiny. Use `/pb-preamble` thinking (examples and assumptions must be clear) and `/pb-design-rules` thinking (especially Clarity and Representation: README should make the project's purpose obvious).
+**Mindset:** A good README invites scrutiny. Use `/pb-preamble` thinking (examples and assumptions must be clear) and `/pb-design-rules` thinking (especially Clarity and Representation: README should make the project's purpose obvious).
 
 Examples and assumptions must be clear enough that errors are obvious. Unclear READMEs hide problems.
 
@@ -140,7 +140,7 @@ Minimal runnable example that demonstrates core functionality.
 ```markdown
 ## License
 
-MIT License - see [LICENSE](LICENSE) for details.
+[License name from LICENSE] - see [LICENSE](LICENSE) for details.
 ```
 
 ### 11. Contributing (Optional)
@@ -219,7 +219,7 @@ One-line description of what this does.
 
 ## License
 
-MIT
+[License name from LICENSE]
 ````
 
 ---

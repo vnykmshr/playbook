@@ -6,16 +6,16 @@ difficulty: "advanced"
 model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-greenfield', 'pb-repo-enhance', 'pb-review-hygiene']
-last_reviewed: "2026-02-09"
-version: "1.0.0"
-version_notes: "v2.10.0 baseline"
+last_reviewed: "2026-11-05"
+version: "1.0.1"
+version_notes: "v1.0.1: Step 3 moves files that exist (root docs into docs/, GitHub's root files stay) instead of two no-op moves; memory/ and .claude/ join the protected folders. Mindset labelled."
 breaking_changes: []
 ---
 # Organize Repository Structure
 
 Clean up and reorganize the project root for clarity and maintainability.
 
-**Approach:** Organization is about inviting scrutiny. Use `/pb-preamble` thinking (structure should invite challenge) and `/pb-design-rules` thinking (especially Clarity and Modularity: organization should be obvious, not clever).
+**Mindset:** Organization is about inviting scrutiny. Use `/pb-preamble` thinking (structure should invite challenge) and `/pb-design-rules` thinking (especially Clarity and Modularity: organization should be obvious, not clever).
 
 Clear, obvious organization beats clever categorization. The structure should make it easy for others to find code and understand it.
 
@@ -84,6 +84,8 @@ Cargo.toml          # Rust
 
 **Do not remove or modify:**
 - `/todos` - Development tracker (gitignored)
+- `/memory` - Working notes (gitignored)
+- `/.claude` - Claude Code context and settings
 - `/.git` - Version control
 
 ---
@@ -133,8 +135,14 @@ mkdir -p docs scripts examples assets
 ```bash
 # Example moves (adjust for your project)
 mv *.sh scripts/           # Shell scripts
-mv docs/*.md docs/         # Documentation
-mv examples/* examples/    # Example code
+
+# Root markdown into docs/, except the files GitHub reads at the root
+for f in *.md; do
+  case "$f" in
+    README.md|CHANGELOG.md|CONTRIBUTING.md|CODE_OF_CONDUCT.md|SECURITY.md) ;;
+    *) mv "$f" docs/ ;;
+  esac
+done
 ```
 
 ### Step 4: Update References
@@ -163,6 +171,7 @@ After cleanup, the root should look like:
 ```
 project/
 ├── .github/            # GitHub configs
+├── .claude/            # Claude Code context (protected)
 ├── cmd/                # Entry points (Go)
 ├── src/                # Source code
 ├── internal/           # Private packages
@@ -173,6 +182,7 @@ project/
 ├── assets/             # Static assets
 ├── deploy/             # Deployment configs
 ├── todos/              # Dev tracking (gitignored)
+├── memory/             # Working notes (gitignored)
 │
 ├── README.md
 ├── LICENSE

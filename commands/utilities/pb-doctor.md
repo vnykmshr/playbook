@@ -6,19 +6,19 @@ difficulty: "advanced"
 model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-storage', 'pb-ports', 'pb-update', 'pb-debug', 'pb-git-hygiene']
-last_reviewed: "2026-07-28"
-version: "1.1.0"
-version_notes: "v1.1.0: measure the APFS Data volume (`/` is the read-only system volume and its capacity never moves); BSD `ps` throughout -- macOS rejects GNU --sort= outright."
+last_reviewed: "2026-11-05"
+version: "1.1.1"
+version_notes: "v1.1.1: Disk thresholds match the check (warn over 80%, critical over 90%); the memory summary reads the host page size and prints GB (wired was always 0); the runaway-process comment says over a day; Platform is macOS only."
 breaking_changes: []
 ---
 # System Health Check
 
 Diagnose system health issues: disk space, memory pressure, CPU usage, and common developer environment problems. The "what's wrong" before "how to fix."
 
-**Platform:** macOS (with Linux alternatives noted)
+**Platform:** macOS
 **Use Case:** "Something's slow" / "Builds are failing" / "Machine feels sluggish"
 
-**Mindset:** Design Rules say "fail noisily and early" - surface system problems before they cascade.
+**Mindset:** Apply `/pb-design-rules` thinking: fail noisily and early. Surface system problems before they cascade.
 
 **Resource Hint:** sonnet - System health diagnostics with accurate assessment.
 
@@ -79,7 +79,9 @@ VOL=$([ -d /System/Volumes/Data ] && echo /System/Volumes/Data || echo /)
 df -h "$VOL"
 
 USAGE=$(df -h "$VOL" | tail -1 | awk '{print $5}' | tr -d '%')
-if [ "$USAGE" -gt 80 ]; then
+if [ "$USAGE" -gt 90 ]; then
+  echo "CRITICAL: Disk usage at ${USAGE}% on $VOL"
+elif [ "$USAGE" -gt 80 ]; then
   echo "WARNING: Disk usage at ${USAGE}% on $VOL"
 fi
 ```
@@ -104,9 +106,9 @@ du -sh node_modules 2>/dev/null
 **Thresholds:**
 | Usage | Status | Action |
 |-------|--------|--------|
-| < 70% | Healthy | None needed |
-| 70-85% | Warning | Consider `/pb-storage` |
-| > 85% | Critical | Run `/pb-storage` immediately |
+| ≤ 80% | Healthy | None needed |
+| > 80% | Warning | Consider `/pb-storage` |
+| > 90% | Critical | Run `/pb-storage` immediately |
 
 ---
 
@@ -119,13 +121,13 @@ du -sh node_modules 2>/dev/null
 vm_stat
 
 # Human-readable summary
-vm_stat | awk '
-  /Pages free/ {free=$3}
-  /Pages active/ {active=$3}
-  /Pages inactive/ {inactive=$3}
-  /Pages wired/ {wired=$3}
+vm_stat | awk -v bytes="$(sysctl -n hw.pagesize)" '
+  /Pages free/ {free=$NF}
+  /Pages active/ {active=$NF}
+  /Pages inactive/ {inactive=$NF}
+  /Pages wired/ {wired=$NF}
   END {
-    page=4096/1024/1024
+    page=bytes/1024/1024/1024
     print "Free: " free*page " GB"
     print "Active: " active*page " GB"
     print "Wired: " wired*page " GB"
@@ -195,7 +197,7 @@ ps -Ao pcpu,pid,comm -r | awk '$1 > 50'
 ### Check for Runaway Processes
 
 ```bash
-# Processes running > 1 hour with high CPU
+# Processes running > 1 day with high CPU
 ps -eo pid,etime,pcpu,comm | awk '$3 > 50 && $2 ~ /-/ {print}'
 ```
 

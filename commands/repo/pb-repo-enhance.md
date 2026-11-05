@@ -6,16 +6,16 @@ difficulty: "advanced"
 model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-greenfield', 'pb-repo-organize', 'pb-repo-docsite', 'pb-repo-polish']
-last_reviewed: "2026-02-18"
-version: "1.1.0"
-version_notes: "v2.13.1: Added visual workflow diagram for Audit → Organize → Document → Present phases"
+last_reviewed: "2026-11-05"
+version: "1.1.1"
+version_notes: "v1.1.1: The workflow diagram shows Phase 5 Verify, matching Process. Mindset labelled."
 breaking_changes: []
 ---
 # Repository Enhancement Suite
 
 Comprehensive repository polish: organize, document, and present.
 
-**Meta-perspective:** Enhancing a repository is about making it easy for others to understand it and challenge it. Use `/pb-preamble` thinking (organize for scrutiny, document for error-detection) and `/pb-design-rules` thinking (Clarity, Modularity, Representation: repository should be obviously organized).
+**Mindset:** Enhancing a repository is about making it easy for others to understand it and challenge it. Use `/pb-preamble` thinking (organize for scrutiny, document for error-detection) and `/pb-design-rules` thinking (Clarity, Modularity, Representation: repository should be obviously organized).
 
 Organize for scrutiny. Document clearly. Present honestly. Let others understand and challenge your work.
 
@@ -41,12 +41,12 @@ Transform a working repository into a polished, professional, discoverable proje
 ## Workflow
 
 ```
-PHASE 1         PHASE 2         PHASE 3         PHASE 4
-AUDIT           ORGANIZE        DOCUMENT        PRESENT
-│               │               │               │
-├─ List files   ├─ Create dirs   ├─ Write README  ├─ GitHub About
-├─ Count root   ├─ Move files    ├─ Tech blog     ├─ Topic tags
-├─ Tree view    ├─ Update paths  ├─ CHANGELOG     └─ Add badges
+PHASE 1         PHASE 2         PHASE 3         PHASE 4           PHASE 5
+AUDIT           ORGANIZE        DOCUMENT        PRESENT           VERIFY
+│               │               │               │                 │
+├─ List files   ├─ Create dirs   ├─ Write README  ├─ GitHub About ├─ Build
+├─ Count root   ├─ Move files    ├─ Tech blog     ├─ Topic tags   ├─ Tests
+├─ Tree view    ├─ Update paths  ├─ CHANGELOG     └─ Add badges   └─ Links, render
 │               ├─ Verify build  └─ CONTRIBUTING
 └─ Establish    │
    current      └─ pb-repo-organize

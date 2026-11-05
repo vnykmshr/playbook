@@ -6,9 +6,9 @@ difficulty: "advanced"
 model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-doctor', 'pb-debug', 'pb-storage']
-last_reviewed: "2026-02-09"
-version: "1.0.0"
-version_notes: "v2.10.0 baseline"
+last_reviewed: "2026-11-05"
+version: "1.1.0"
+version_notes: "v1.1.0: Every kill goes through one escalation in Step 4 (SIGTERM, check, then SIGKILL) on the listener only (`-sTCP:LISTEN`), so clients on the port survive. The kill quick commands, port-range and clean-slate loops, `pkill -f node` and the `killport` alias are gone."
 breaking_changes: []
 ---
 # Port Management
@@ -18,7 +18,7 @@ Find processes using ports, kill stale listeners, and resolve port conflicts. A 
 **Platform:** macOS/Linux
 **Use Case:** "What's using port 3000?" / "Kill whatever's blocking my server"
 
-**Mindset:** Design Rules say "silence when nothing to say" - only report conflicts that need action.
+**Mindset:** Apply `/pb-design-rules` thinking: silence when nothing to say. Only report conflicts that need action.
 
 **Resource Hint:** sonnet - Port scanning and process identification.
 
@@ -45,16 +45,7 @@ lsof -i :3000 -i :8080 -i :5432
 lsof -i -P | grep LISTEN
 ```
 
-### Kill Process on Port
-
-```bash
-# Find and kill (interactive)
-lsof -ti :3000 | xargs kill -9
-
-# Or two-step (safer)
-lsof -i :3000  # Note the PID
-kill -9 <PID>
-```
+To free a port, use the escalation in Step 4.
 
 ---
 
@@ -143,81 +134,33 @@ redis      11111  *:6379
 # Full details about port 3000
 lsof -i :3000
 
-# Show process tree (what spawned it)
-ps -f $(lsof -ti :3000)
+# Show the parent PID (what spawned it)
+ps -f $(lsof -ti :3000 -sTCP:LISTEN)
 
 # Show process start time and command
-ps -p $(lsof -ti :3000) -o pid,lstart,command
+ps -p $(lsof -ti :3000 -sTCP:LISTEN) -o pid,lstart,command
 ```
 
 ---
 
-## Step 4: Kill Strategies
+## Step 4: Free the Port
 
-### Safe Kill (SIGTERM)
-
-```bash
-# Graceful shutdown - process can cleanup
-kill $(lsof -ti :3000)
-```
-
-### Force Kill (SIGKILL)
+One escalation for every kill: ask, check, then force. `-sTCP:LISTEN` selects the listener only; plain `lsof -ti :PORT` also returns clients connected to it (a browser, `curl`).
 
 ```bash
-# Immediate termination - no cleanup
-kill -9 $(lsof -ti :3000)
+PORT=3000
+
+# 1. SIGTERM: the process can clean up
+kill $(lsof -ti :$PORT -sTCP:LISTEN)
+
+# 2. Check, then 3. SIGKILL (no cleanup) only if it is still listening
+sleep 2
+if PIDS=$(lsof -ti :$PORT -sTCP:LISTEN); then kill -9 $PIDS; else echo "port $PORT free"; fi
 ```
 
-### Kill All on Port Range
+For several ports, run the same three steps per port.
 
-```bash
-# Kill everything on ports 3000-3010
-for port in {3000..3010}; do
-  lsof -ti :$port | xargs kill -9 2>/dev/null
-done
-```
-
----
-
-## Common Scenarios
-
-### Scenario: "Port already in use"
-
-```bash
-# Find what's using it
-lsof -i :3000
-
-# If it's a zombie process from crashed dev server
-kill -9 $(lsof -ti :3000)
-
-# Verify it's free
-lsof -i :3000  # Should return nothing
-```
-
-### Scenario: Clean Slate for Development
-
-```bash
-# Kill common dev server ports
-for port in 3000 3001 4000 5000 5173 8000 8080; do
-  PID=$(lsof -ti :$port 2>/dev/null)
-  if [ -n "$PID" ]; then
-    echo "Killing process on port $port (PID: $PID)"
-    kill -9 $PID
-  fi
-done
-```
-
-### Scenario: Find Rogue Node Processes
-
-```bash
-# Find all node processes listening
-lsof -i -P | grep node | grep LISTEN
-
-# Kill all node listeners
-pkill -f node
-```
-
-### Scenario: Docker Port Conflicts
+### Port Held by a Docker Container
 
 ```bash
 # List Docker port mappings
@@ -247,7 +190,6 @@ Question: "What would you like to do?"
 Options:
   - Scan all listening ports
   - Free specific port (I'll ask which)
-  - Kill all dev server ports (3000, 5173, 8080, etc.)
   - Show me what's using the most ports
 ```
 
@@ -261,7 +203,7 @@ Options:
 | Process respawns after kill | Check if it's a managed service (launchd, systemd) |
 | "No such process" | Process already exited, port should be free |
 | Docker container won't release port | `docker stop` then `docker rm` the container |
-| Kill doesn't work | Try `kill -9` (SIGKILL) instead of graceful |
+| Process ignores SIGTERM | Step 4: check, then `kill -9` |
 
 ---
 
@@ -272,9 +214,6 @@ Add to your shell profile:
 ```bash
 # What's using this port?
 port() { lsof -i :$1; }
-
-# Kill whatever's using this port
-killport() { lsof -ti :$1 | xargs kill -9 2>/dev/null && echo "Killed" || echo "Nothing on port $1"; }
 
 # List all listening ports
 ports() { lsof -i -P | grep LISTEN; }

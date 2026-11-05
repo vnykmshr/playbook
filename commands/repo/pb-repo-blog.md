@@ -6,16 +6,16 @@ difficulty: "advanced"
 model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-repo-readme', 'pb-documentation', 'pb-repo-enhance']
-last_reviewed: "2026-02-09"
-version: "1.0.1"
-version_notes: "v1.0.1: Nested samples use a 4-backtick outer fence, so they render as written."
+last_reviewed: "2026-11-05"
+version: "1.0.2"
+version_notes: "v1.0.2: One outline: Structure stays, the second Example Outline and the Value Proposition section are gone. Mindset labelled."
 breaking_changes: []
 ---
 # Write Technical Blog Post
 
 Create a crisp, practical technical blog post explaining this project to a technical audience.
 
-**Writing principle:** Share real decisions, not marketing. Use `/pb-preamble` thinking (honesty, transparency) and `/pb-design-rules` thinking (especially Clarity: explain your reasoning, not just your conclusions).
+**Mindset:** Share real decisions, not marketing. Use `/pb-preamble` thinking (honesty, transparency) and `/pb-design-rules` thinking (especially Clarity: explain your reasoning, not just your conclusions).
 
 Explain the problems you solved, the trade-offs you made, what you'd do differently. Honest technical writing builds trust.
 
@@ -75,15 +75,7 @@ Descriptive and straightforward. Not clickbait.
 - Why existing solutions weren't sufficient
 - Key constraints or requirements
 
-### 4. Value Proposition
-What makes it worth using:
-- Simplicity
-- Performance
-- Flexibility
-- Maintainability
-- Developer experience
-
-### 5. Architecture Overview
+### 4. Architecture Overview
 Include a **Mermaid diagram** showing:
 - Core components
 - Data flow
@@ -98,24 +90,24 @@ graph LR
 ```
 ````
 
-### 6. Usage Examples
+### 5. Usage Examples
 Clear code snippets showing:
 - Basic setup
 - Common patterns
 - Configuration options
 
-### 7. Key Design Decisions
+### 6. Key Design Decisions
 Explain important trade-offs:
 - What was chosen and why
 - What was explicitly avoided
 - Lessons learned
 
-### 8. Real-World Applications
+### 7. Real-World Applications
 - Where it fits in typical architectures
 - Example use cases
 - Integration patterns
 
-### 9. Conclusion
+### 8. Conclusion
 - When to use it
 - When not to use it
 - Potential extensions or future work
@@ -137,70 +129,6 @@ Explain important trade-offs:
 Save as: `docs/TECHNICAL_BLOG.md`
 
 Ready for direct publication or review.
-
----
-
-## Example Outline
-
-````markdown
-# [Project Name]: [Subtitle]
-
-## Introduction
-
-[What problem we're solving and why it matters]
-
-## The Problem
-
-[Specific challenges that led to building this]
-
-## Our Approach
-
-[High-level solution overview]
-
-## Architecture
-
-```mermaid
-[Diagram]
-```
-
-[Explanation of components]
-
-## Implementation
-
-### Core Concepts
-
-[Key abstractions and patterns]
-
-### Example Usage
-
-```go
-[Code example]
-```
-
-## Design Decisions
-
-| Decision | Choice | Rationale |
-|----------|--------|-----------|
-| [Topic] | [What we chose] | [Why] |
-
-## Performance
-
-[Benchmarks or performance characteristics]
-
-## When to Use This
-
-**Good fit:**
-- [Use case 1]
-- [Use case 2]
-
-**Not ideal for:**
-- [Anti-pattern 1]
-- [Anti-pattern 2]
-
-## Conclusion
-
-[Summary and call to action]
-````
 
 ---
 

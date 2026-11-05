@@ -13,6 +13,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- **`/pb-update` v1.1.0.** Tiers re-cut by mechanism (tracked, named, platform) with no semver claims; pip goes through a venv or pipx, `--break-system-packages` last; nvm is sourced before use; the update script survives `brew doctor` warnings; Platform is macOS. Mindset cites `/pb-design-rules`.
+- **`/pb-setup` v1.1.0.** Quick Setup Script removed. Claude Code DX says `install.sh` links the scripts and shows the `settings.json` wiring it leaves to you; the context-warning text matches the script. The Brewfile drops the `homebrew/bundle` and `homebrew/cask` taps.
+- **`/pb-ports` v1.1.0.** Every kill goes through one escalation in Step 4 (SIGTERM, check, then SIGKILL) on the listener only (`-sTCP:LISTEN`), so clients on the port survive. The kill quick commands, port-range and clean-slate loops, `pkill -f node` and the `killport` alias are removed. Mindset cites `/pb-design-rules`.
+- **`/pb-git-hygiene` v1.1.0.** Samples run as written: the ignored-file check uses `-ci`/`-oi`, the CI size check passes a clean tree, gitleaks uses `git`/`dir`, filter-repo starts from a fresh clone and re-adds origin, and Fresh Start archives the old history outside the tree. CI and pre-commit samples state the pin rule and a read-only token; the `git add .` exception cites `/pb-standards`.
+- **`/pb-gha` v1.1.0.** Integration with Other Commands removed; `/pb-review-tests` joins Related Commands for flaky-test follow-up.
+- **`/pb-doctor` v1.1.1.** Disk thresholds match the check (warn over 80%, critical over 90%); the memory summary reads the host page size and prints GB; the runaway-process comment says over a day; Platform is macOS only. Mindset cites `/pb-design-rules`.
+- **`/pb-zero-stack` v3.3.0.** Phase A stays account-free: the live CSP check moves from the Ship Gate to Step 10, and full-tier Worker and cron are built under `wrangler dev` and deployed in Phase B. Freshness signals match the data-path table. Budget Math links the vendor limit pages instead of copying figures.
+- **`/pb-repo-readme` v1.1.2.** The License section and template take the license name from LICENSE instead of assuming MIT. Mindset labelled.
+- **`/pb-repo-polish` v1.1.0.** Fleet view scores each repo live; the Last Audited and Not audited columns are removed, since nothing stores past audits. Mindset cites `/pb-preamble`.
+- **`/pb-repo-organize` v1.0.1.** Step 3 moves root docs into `docs/` and leaves GitHub's root files, replacing two no-op moves; `memory/` and `.claude/` join the protected folders. Mindset labelled.
+- **`/pb-repo-enhance` v1.1.1.** The workflow diagram shows Phase 5 Verify, matching Process. Mindset labelled.
+- **`/pb-repo-docsite` v1.1.0.** Appendix B is one workflow plus an SSG table: actions pinned by commit SHA (rule stated, none pasted), no `latest`, Pages permissions on the deploy job only, no configure-pages. Pages setup uses POST to create and PUT to update; the link check reads the build output before deploy; the MkDocs layout is noted; the Hugo mermaid snippet is removed.
+- **`/pb-repo-blog` v1.0.2.** One outline: Structure stays, the duplicate Example Outline and the Value Proposition section are removed. Mindset labelled.
+- **`/pb-team` v1.1.0.** Integration with Playbook removed. Meeting samples match their cadence text (one small-team standup time, a two-week medium-team sprint); onboarding pointers match what `/pb-onboarding` holds. Mindset cites `/pb-preamble` and `/pb-design-rules`.
+- **`/pb-onboarding` v1.2.0.** Integration with Playbook removed. One PR ladder throughout: first merged by end of week 2, 2-3 by week 3, 5+ by month 1. Mindset cites `/pb-preamble` and `/pb-design-rules`.
+- **`/pb-knowledge-transfer` v1.3.1.** The hotspot commands filter the blank line `git log` emits, so it no longer ranks first; Section 13 is labelled partially reversible in both places; Related Commands say what each link is for; Mindset cites `/pb-preamble` and `/pb-design-rules`.
 - **`/pb-deprecation` v1.1.0.** Integration with Playbook section removed. Mindset cites `/pb-preamble` and `/pb-design-rules`.
 - **`/pb-performance` v1.2.0.** Integration with Playbook section removed.
 - **`/pb-patterns-deployment` v2.0.1.** Canary is chosen for real-traffic evidence and rolling for backward-compatible changes on a budget; the comparison table's risk column matches the strategy headings. Mindset added.
@@ -47,7 +63,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **`/pb-todo-implement` v1.4.0.** Spaced double hyphens replaced.
 - **`/pb-voice` v2.3.1.** Spaced double hyphens replaced.
 - **`/pb-claude-orchestration` v1.5.2.** Spaced double hyphens replaced.
-- **`/pb-storage` v2.1.0.** Spaced double hyphens replaced.
+- **`/pb-storage` v2.1.0.** Spaced double hyphens replaced. The Everything block is cut to one line; the Docker dry run uses `docker system df -v`, since prune has no dry run; space-not-freed points at local snapshots instead of `sudo purge`; the Node globals row with no command is removed; the header and Related name the recovery tiers; the disk trigger cites `/pb-doctor`. Mindset cites `/pb-design-rules`.
 - **`/pb-greenfield` v2.0.2.** Spaced double hyphens replaced.
 - **`/pb-threat-hunt` v1.1.1.** Spaced double hyphens replaced. Step 11 counts 6 report fields (command, skill and methodology); the SHA-pin search adds `-P` for its look-ahead, and the NoSQL search escapes its brace.
 

@@ -6,9 +6,9 @@ difficulty: "intermediate"
 model_hint: "opus"
 execution_pattern: "interactive"
 related_commands: ['pb-greenfield', 'pb-start', 'pb-design-language', 'pb-calm-design']
-last_reviewed: "2026-11-04"
-version: "3.2.1"
-version_notes: "v3.2.1: Related Commands drop the retired /pb-patterns-cloud. CSP ships as a _headers response header (<meta> cannot carry frame-ancestors; HSTS is header-only); both scaffolds list it and the Ship Gate checks the live response. Deploy from the workflow, not Pages git integration, since a free private repo has no required checks; add the deploy secrets before merging the workflow, or gate it on a repo variable."
+last_reviewed: "2026-11-05"
+version: "3.3.0"
+version_notes: "v3.3.0: Phase A stays account-free: the live CSP check moves from the Ship Gate to Step 10, and full-tier Worker and cron are built under `wrangler dev` with deploy in Phase B. Freshness signals match the data-path table. Budget Math points at the vendor limit pages instead of copying figures."
 breaking_changes: []
 ---
 # Zero-Stack App Initiation ($0/month Architecture)
@@ -84,7 +84,7 @@ Not every Gist needs every piece. The data source, update frequency, and scale d
 
 **Tier escalation signals:**
 - API key required → needs Worker proxy (standard → full)
-- Hourly or real-time freshness → needs cron + KV (full)
+- Hourly freshness → cron + KV; real-time → live Worker proxy (full)
 - Public scale with external data → needs Worker proxy (standard → full)
 - Multi-page with routing → standard minimum (Astro file-based routing)
 - User-saves-data with multi-user → standard minimum (needs storage backend)
@@ -307,7 +307,7 @@ Show the default stack with rationale. The default adapts to the complexity tier
 | SSG | Astro | Islands architecture, zero JS default |
 | Host | CF Pages | Same vendor for hosting + proxy + cache |
 | Proxy | CF Worker | API key hiding, response caching, health endpoint |
-| Cache | CF KV | Global, free 100K reads/day |
+| Cache | CF KV | Global, free tier (see Budget Math) |
 | CI | GitHub Actions | Lint + test + deploy + cron for data refresh |
 
 > Full tier uses the same CSS/JS/Islands defaults as standard. The additions are Worker, KV, and cron.
@@ -366,16 +366,16 @@ Generate a step-by-step build order. Each step builds on the previous. An AI cod
 | Data Source | Step 3 |
 |-------------|--------|
 | External API (keyless) | **Connect API** - Wire fetch calls, handle errors, implement stale-first rendering |
-| External API (keyed) | **Deploy Worker proxy** - API key in Worker secrets, KV cache with TTL, health endpoint |
+| External API (keyed) | **Worker proxy** (step 2.5) - API key in `.dev.vars` locally, Worker secrets once deployed |
 | User content (simple-form) | **Form handler** - Connect to submission endpoint |
 | User content (user-saves-data) | **Storage backend** - Set up persistence, define schema, wire CRUD, confirm data round-trips |
 | Display-only | No step 3 - content is already in HTML |
 | Mixed | Combine relevant steps above |
 
-**Full tier additions** (insert between steps 2 and 3):
+**Full tier additions** (insert between steps 2 and 3; build under `wrangler dev` with local KV, deploy in Phase B):
 
 ```
-2.5. Worker proxy - deploy Worker with KV bindings, health endpoint
+2.5. Worker proxy - KV bindings, cache with TTL, health endpoint
 2.6. Cron job - GitHub Actions schedule, data fetch script, KV writes
 ```
 
@@ -478,7 +478,7 @@ Single exit gate for Phase A. The scaffold produces correct structure from your 
 **Verify scaffold output:**
 
 - [ ] `<html lang>`, `<title>`, `<meta description>`, canonical, theme-color match your choices
-- [ ] `public/_headers` CSP matches your variant from Step 6, and the live response carries it (`curl -sI`)
+- [ ] `public/_headers` CSP matches your variant from Step 6
 - [ ] Semantic landmarks, one `<h1>` per page, skip-to-content link
 - [ ] OG tags populated (title, description, image, url)
 
@@ -549,7 +549,7 @@ git push origin main
 
 CI runs. Pages deploy. Worker deploy (if applicable). Verify:
 
-- Pages serve at `project-name.pages.dev`
+- Pages serve at `project-name.pages.dev`, and `curl -sI` shows the CSP from `public/_headers`
 - Worker proxies at `project-name.workers.dev/api/...` (if applicable)
 - `/health` returns 200 on both GET and HEAD (if Worker deployed)
 - Cron runs on schedule (if applicable)
@@ -568,20 +568,15 @@ Calculate during Step 2. Exceeding free tier limits is the #1 failure mode.
 API hits/day = (active_hours * 60 / kv_ttl_minutes) + cron_runs
 ```
 
-**Free tier headroom:**
+**Free tier headroom:** limits change, so read the current figures from the vendor pages ([Workers](https://developers.cloudflare.com/workers/platform/limits/), [KV](https://developers.cloudflare.com/kv/platform/limits/), [Pages](https://developers.cloudflare.com/pages/platform/limits/), [D1](https://developers.cloudflare.com/d1/platform/limits/), GitHub Actions and Supabase billing) and plug them into the formula.
 
-| Resource | Free Tier | Notes |
-|----------|-----------|-------|
-| Workers requests | 100K/day | Exceeding returns 1015 errors (visible to users) |
-| KV reads | 100K/day | Exceeding returns errors (visible) |
-| KV writes | 1K/day | **Exceeding fails silently** - always check put() response |
-| KV storage | 1 GB | |
-| Pages builds | 500/month | |
-| GH Actions | 2K min/month | |
-| D1 rows (if user-saves-data) | 5M read, 100K written/day | |
-| Supabase (if user-saves-data) | 500MB storage, 2GB bandwidth/month | |
+| Resource | Notes |
+|----------|-------|
+| Workers requests | Exceeding returns errors (visible to users) |
+| KV reads | Exceeding returns errors (visible) |
+| KV writes | **Exceeding fails silently** - always check put() response |
 
-> Sharing a CF account across apps? KV writes (1K/day) are shared. Divide by app count.
+> Sharing a CF account across apps? Its limits, KV writes included, are shared. Divide by app count.
 
 **Active window refinement:** Usage pattern global (24h) or regional (e.g., 14h)? Fewer active hours = fewer API hits. Factor this into the formula.
 

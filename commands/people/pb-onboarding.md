@@ -6,9 +6,9 @@ difficulty: "advanced"
 model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-team', 'pb-documentation', 'pb-cycle', 'pb-knowledge-transfer']
-last_reviewed: "2026-11-04"
-version: "1.1.0"
-version_notes: "v1.1.0: When Someone Leaves points to /pb-knowledge-transfer's departing-engineer section, which supersedes it; the title drops Knowledge Transfer, which that command owns."
+last_reviewed: "2026-11-05"
+version: "1.2.0"
+version_notes: "v1.2.0: One PR ladder throughout (first merged by end of week 2, 2-3 by week 3, 5+ by month 1); Integration with Playbook removed; Mindset cites its sources."
 breaking_changes: []
 ---
 # Developer Onboarding
@@ -43,7 +43,7 @@ Bad onboarding:
 - Knowledge exists only in one person's head
 - People leave quickly (bad first impression)
 
-**Culture First:** Onboarding should teach both frameworks on day one.
+**Mindset:** Culture first. Onboarding teaches both `/pb-preamble` and `/pb-design-rules` on day one.
 
 Teach `/pb-preamble`: new team members need to know - challenge assumptions, disagree when needed, prefer correctness. Teach `/pb-design-rules`: introduce the design principles (Clarity, Simplicity, Modularity, Robustness) that guide how this team builds systems. This is how you set culture from the start.
 
@@ -231,8 +231,8 @@ Code review: Every PR reviewed, feedback given
 
 Quantitative milestones (can measure):
 ```
-☐ First PR merged by day 5 (shows you can code)
-☐ 5+ PRs merged by end of week 3 (demonstrates productivity)
+☐ First PR merged by end of week 2, 2-3 by end of week 3 (shows you can code)
+☐ 5+ PRs merged by end of month 1 (demonstrates productivity)
 ☐ Can run tests/deploy independently (self-sufficient)
 ☐ Average PR takes <1 day to merge (not blocked)
 ☐ Code review feedback positive (quality meeting standard)
@@ -249,7 +249,7 @@ Qualitative milestones (team feedback):
 
 Red flags (needs help):
 ```
-[NO] No PR by week 2 (blocked or overwhelmed)
+[NO] No PR merged by end of week 2 (blocked or overwhelmed)
 [NO] PRs have major quality issues (misunderstood standards)
 [NO] Silent in meetings (not engaged or confused)
 [NO] Many questions about basics (environment still broken)
@@ -350,7 +350,7 @@ Tools: Loom (free, simple), Asciinema (terminal recordings), ScreenFlow (Mac)
 - [ ] Architecture overview understood (high-level)
 - [ ] Code compiles and tests run locally
 - [ ] Pairing session with senior engineer (1-2 hours)
-- [ ] First small task assigned and completed
+- [ ] First small task assigned and under way
 - [ ] Questions are welcomed and answered
 - [ ] Person feels safe to ask "dumb" questions
 
@@ -452,16 +452,6 @@ Each person documents:
 ### When Someone Leaves
 
 See `/pb-knowledge-transfer`: For the Departing Engineer orders the handoff by what is lost first; Tiered KT Modes covers an adversarial or disengaged departure.
-
----
-
-## Integration with Playbook
-
-**Part of SDLC cycle:**
-- `/pb-team` - Team culture onboarding
-- `/pb-guide` - Engineering practices to learn
-- `/pb-commit` - Code review process training
-- `/pb-standards` - Code style to learn
 
 ---
 

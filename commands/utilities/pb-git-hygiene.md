@@ -6,9 +6,9 @@ difficulty: "advanced"
 model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-review-hygiene', 'pb-security', 'pb-repo-organize', 'pb-repo-enhance', 'pb-doctor']
-last_reviewed: "2026-04-26"
-version: "1.0.1"
-version_notes: "v1.0.1: Document fresh-init exception to the 'never git add .' rule inline."
+last_reviewed: "2026-11-05"
+version: "1.1.0"
+version_notes: "v1.1.0: Samples fixed to run: ignored-file check uses `-ci`/`-oi`, the CI size check passes a clean tree, gitleaks uses `git`/`dir`, filter-repo starts from a fresh clone and re-adds origin, the fresh start archives history outside the tree. CI and pre-commit samples state the pin rule and a read-only token; the git add exception cites /pb-standards."
 breaking_changes: []
 ---
 # Git Hygiene
@@ -64,8 +64,11 @@ git ls-files | grep -E '\.idea/|\.vscode/|\.DS_Store|Thumbs\.db|\.swp$'
 Compare what's ignored vs what should be:
 
 ```bash
-# Show files that would be ignored if .gitignore were applied fresh
-git ls-files --ignored --exclude-standard
+# Tracked files that .gitignore now matches (committed before the rule)
+git ls-files -ci --exclude-standard
+
+# Untracked files being ignored (check nothing wanted is hidden)
+git ls-files -oi --exclude-standard
 
 # Check if common patterns are in .gitignore
 for pattern in ".env" "node_modules" ".DS_Store" "*.pyc" ".idea" "dist"; do
@@ -132,11 +135,12 @@ git ls-files | xargs grep -l -E \
 
 **History scan (use dedicated tools):**
 ```bash
-# gitleaks (recommended)
-gitleaks detect --source . --verbose
+# gitleaks (recommended): history, then the working tree
+gitleaks git . --verbose
+gitleaks dir .
 
-# trufflehog
-trufflehog git file://. --only-verified
+# trufflehog (verified and unverified; --only-verified hides keys it cannot check)
+trufflehog git file://.
 
 # git-secrets (AWS-focused)
 git secrets --scan-history
@@ -244,7 +248,10 @@ git commit -m "original message"
 
 ```bash
 # Install if needed
-pip install git-filter-repo
+brew install git-filter-repo   # or: pipx install git-filter-repo
+
+# filter-repo refuses anything but a fresh clone
+git clone <url> repo-rewrite && cd repo-rewrite
 
 # Remove file from entire history
 git filter-repo --path path/to/secret/file --invert-paths
@@ -259,7 +266,9 @@ git filter-repo --path-glob '*.pem' --invert-paths
 #### After history rewrite
 
 ```bash
-# Force push (coordinate with team first!)
+# filter-repo removed origin; add it back, then force push (coordinate with team first!)
+# --force-with-lease fails here: the remote-tracking refs it compares against are gone
+git remote add origin <url>
 git push origin --force --all
 git push origin --force --tags
 
@@ -304,13 +313,14 @@ git gc --prune=now --aggressive
 When history is too contaminated:
 
 ```bash
-# Archive old repo
-mv .git .git-old
+# Archive old history outside the tree (inside it, `git add .` would commit it)
+mv .git ../repo-history.git
 
 # Initialize fresh
-git init
-git add .                    # fresh-init initial commit -- documented exception to "never git add ."
+git init -b main
+git add .                    # a fresh repo's first commit: the exception in /pb-standards
 git commit -m "chore: fresh start (history archived)"
+git ls-tree -r --name-only HEAD   # read it for files that do not belong
 
 # Push to new remote (or same with force)
 git remote add origin <url>
@@ -377,6 +387,7 @@ repos:
       - id: detect-private-key
 EOF
 
+pre-commit autoupdate        # moves each rev: to the current release
 pre-commit install
 ```
 
@@ -384,16 +395,26 @@ pre-commit install
 
 Add to CI pipeline:
 
+Pin each action to the full commit SHA of its current release, version in a trailing comment (as `/pb-zero-stack` does), and give the job a read-only token:
+
 ```yaml
 # GitHub Actions example
-- name: Gitleaks
-  uses: gitleaks/gitleaks-action@v2
-  env:
-    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+permissions:
+  contents: read
 
-- name: Check file sizes
-  run: |
-    find . -type f -size +5M -not -path "./.git/*" && exit 1 || exit 0
+jobs:
+  hygiene:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@<sha> # vX.Y.Z
+        with:
+          fetch-depth: 0  # gitleaks scans the pushed commit range
+      - name: Gitleaks
+        uses: gitleaks/gitleaks-action@<sha> # vX.Y.Z
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Check file sizes
+        run: test -z "$(find . -type f -size +5M -not -path './.git/*')"
 ```
 
 ---
@@ -455,7 +476,7 @@ Focus areas: [Areas to watch]
 | List merged branches | `git branch --merged main` |
 | Delete merged branches | `git branch --merged main \| grep -v main \| xargs git branch -d` |
 | Remove file from history | `git filter-repo --path FILE --invert-paths` |
-| Scan for secrets | `gitleaks detect --source .` |
+| Scan for secrets | `gitleaks git .` |
 | Check repo size | `du -sh .git` |
 | Prune dangling objects | `git gc --prune=now` |
 

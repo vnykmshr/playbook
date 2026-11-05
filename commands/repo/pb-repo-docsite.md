@@ -6,9 +6,9 @@ difficulty: "advanced"
 model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-repo-enhance', 'pb-repo-readme', 'pb-documentation', 'pb-review-docs', 'pb-ship']
-last_reviewed: "2026-02-09"
-version: "1.0.0"
-version_notes: "v2.10.0 baseline"
+last_reviewed: "2026-11-05"
+version: "1.1.0"
+version_notes: "v1.1.0: Appendix B is one workflow plus an SSG table: actions pinned by SHA (rule stated, none pasted), no `latest`, Pages permissions on the deploy job only, no configure-pages. Pages setup uses POST to create and PUT to update; the link check reads the build output before deploy; the MkDocs layout is noted; the Hugo mermaid snippet is gone."
 breaking_changes: []
 ---
 # Documentation Site Setup
@@ -177,8 +177,8 @@ Phase 5: Release
 
 **Via gh CLI:**
 ```bash
-gh api -X PUT repos/OWNER/REPO/pages \
-  -f build_type=workflow
+gh api -X POST repos/OWNER/REPO/pages -f build_type=workflow   # create the site
+gh api -X PUT repos/OWNER/REPO/pages -f build_type=workflow    # site exists: switch to Actions
 ```
 
 ---
@@ -223,6 +223,8 @@ docs/
 │   └── changelog.md           # Release history
 └── [theme/static assets]
 ```
+
+MkDocs differs: `mkdocs.yml` sits at the repo root, and `docs/` holds the pages.
 
 ### Content Migration Map
 
@@ -349,8 +351,8 @@ flowchart TD
 ### Link Verification
 
 ```bash
-# Build and check for broken links
-npx broken-link-checker https://USER.github.io/PROJECT/ --recursive
+# Check the build output before it deploys (Hugo docs/public, MkDocs site, Docusaurus docs/build)
+npx linkinator docs/public --recurse
 ```
 
 ---
@@ -440,7 +442,7 @@ cd docs && npm install
 ```
 
 **Mermaid diagrams not rendering:**
-- Hugo: Ensure shortcode syntax `{{</* mermaid */>}}`
+- Hugo: Use the theme's mermaid shortcode (see the hugo-book docs)
 - MkDocs: Enable `pymdownx.superfences` with mermaid fence
 - Docusaurus: Add `@docusaurus/theme-mermaid` to config
 
@@ -547,14 +549,6 @@ theme = 'hugo-book'
 
 [markup.goldmark.renderer]
   unsafe = true
-```
-
-**Mermaid syntax:**
-```
-{{</* mermaid */>}}
-graph TB
-    A --> B
-{{</* /mermaid */>}}
 ```
 
 **Build command:** `hugo --minify --source docs`
@@ -674,7 +668,7 @@ title: Page Title
 
 ## Appendix B: GitHub Actions Workflow
 
-### Hugo Workflow
+One workflow for all three generators; the table gives the lines that differ. Pin every action to the full commit SHA of its current release, version in a trailing comment (`<sha>` marks each place). The build job keeps a read-only token; only the deploy job gets `pages: write` and `id-token: write`.
 
 ```yaml
 # .github/workflows/docs.yml
@@ -683,19 +677,14 @@ name: Deploy Documentation
 on:
   push:
     branches: [main]
-    paths:
-      - 'docs/**'
-      - '.github/workflows/docs.yml'
+    paths: ['docs/**', '.github/workflows/docs.yml']   # MkDocs: add 'mkdocs.yml'
   pull_request:
     branches: [main]
-    paths:
-      - 'docs/**'
+    paths: ['docs/**']
   workflow_dispatch:
 
 permissions:
   contents: read
-  pages: write
-  id-token: write
 
 concurrency:
   group: "pages"
@@ -705,174 +694,41 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@<sha> # vX.Y.Z
         with:
-          submodules: recursive
-          fetch-depth: 0
+          submodules: recursive   # Hugo themes are submodules
 
-      - name: Setup Hugo
-        uses: peaceiris/actions-hugo@v3
-        with:
-          hugo-version: 'latest'
-          extended: true
+      # Setup step for your generator (table below)
 
       - name: Build
-        run: hugo --minify --source docs
-
-      - name: Setup Pages
-        uses: actions/configure-pages@v5
+        run: <build command>
 
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@<sha> # vX.Y.Z
         with:
-          path: ./docs/public
+          path: <output directory>
 
   deploy:
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
-    needs: build
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@<sha> # vX.Y.Z
 ```
 
-### MkDocs Workflow
-
-```yaml
-# .github/workflows/docs.yml
-name: Deploy Documentation
-
-on:
-  push:
-    branches: [main]
-    paths:
-      - 'docs/**'
-      - 'mkdocs.yml'
-      - '.github/workflows/docs.yml'
-  pull_request:
-    branches: [main]
-    paths:
-      - 'docs/**'
-      - 'mkdocs.yml'
-  workflow_dispatch:
-
-permissions:
-  contents: read
-  pages: write
-  id-token: write
-
-concurrency:
-  group: "pages"
-  cancel-in-progress: false
-
-jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
-      - uses: actions/setup-python@v5
-        with:
-          python-version: '3.x'
-
-      - name: Install dependencies
-        run: pip install mkdocs mkdocs-material mkdocs-mermaid2-plugin
-
-      - name: Build
-        run: mkdocs build
-
-      - name: Setup Pages
-        uses: actions/configure-pages@v5
-
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: ./site
-
-  deploy:
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
-    needs: build
-    steps:
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
-```
-
-### Docusaurus Workflow
-
-```yaml
-# .github/workflows/docs.yml
-name: Deploy Documentation
-
-on:
-  push:
-    branches: [main]
-    paths:
-      - 'docs/**'
-      - '.github/workflows/docs.yml'
-  pull_request:
-    branches: [main]
-    paths:
-      - 'docs/**'
-  workflow_dispatch:
-
-permissions:
-  contents: read
-  pages: write
-  id-token: write
-
-concurrency:
-  group: "pages"
-  cancel-in-progress: false
-
-jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-
-      - uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-          cache: 'npm'
-          cache-dependency-path: docs/package-lock.json
-
-      - name: Install dependencies
-        run: cd docs && npm ci
-
-      - name: Build
-        run: cd docs && npm run build
-
-      - name: Setup Pages
-        uses: actions/configure-pages@v5
-
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: ./docs/build
-
-  deploy:
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
-    needs: build
-    steps:
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
-```
+| Generator | Setup step | Build command | Output directory |
+|-----------|------------|---------------|------------------|
+| Hugo | `peaceiris/actions-hugo@<sha>` with `extended: true` and `hugo-version` set to a release number, never `latest` | `hugo --minify --source docs` | `./docs/public` |
+| MkDocs | `actions/setup-python@<sha>`, then `pip install mkdocs mkdocs-material mkdocs-mermaid2-plugin` | `mkdocs build` | `./site` |
+| Docusaurus | `actions/setup-node@<sha>` with a current LTS `node-version` and `cache-dependency-path: docs/package-lock.json`, then `cd docs && npm ci` | `cd docs && npm run build` | `./docs/build` |
 
 ---
 
