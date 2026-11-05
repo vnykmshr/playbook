@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - **`/pb-alex-infra` v1.4.0.** Spaced double hyphens replaced.
+- **`/pb-resume` v1.12.0.** Spaced double hyphens replaced.
 
 ## [v2.35.0] - 2026-11-05
 
