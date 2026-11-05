@@ -70,16 +70,20 @@ def fence_problems(text: str) -> list[tuple[int, int, str]]:
     return problems
 
 
-def related_commands_count(text: str) -> int:
-    """`- `/pb-...`` items under the `## Related Commands` heading, up to the next h1, h2 or rule."""
+def related_commands(text: str) -> list[str]:
+    """Names of the `- `/pb-...`` items under the `## Related Commands` heading, up to the next h1, h2 or rule."""
     toks = tokens(text)
-    count, inside = 0, False
+    names, inside = [], False
     for i, t in enumerate(toks):
         if t.type == "heading_open" and t.tag in ("h1", "h2"):
             inside = t.tag == "h2" and toks[i + 1].content.startswith("Related Commands")
         elif t.type == "hr":
             inside = False
         elif inside and t.type == "list_item_open" and t.markup == "-":
-            own = toks[i + 1].type == "paragraph_open" and toks[i + 2].content.startswith("`/pb-")
-            count += own
-    return count
+            if toks[i + 1].type == "paragraph_open" and (m := re.match(r"`/(pb-[a-z0-9-]+)`", toks[i + 2].content)):
+                names.append(m.group(1))
+    return names
+
+
+def related_commands_count(text: str) -> int:
+    return len(related_commands(text))
