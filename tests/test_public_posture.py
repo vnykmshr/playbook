@@ -111,3 +111,9 @@ def test_nothing_under_todos_or_claude_is_tracked():
     )
     assert r.returncode == 0, r.stderr
     assert not r.stdout, f"tracked under todos/ or .claude/: {r.stdout.split()}"
+
+
+def test_book_pages_with_the_analytics_beacon_disclose_it():
+    silent = [p.name for p in sorted((REPO / "book").glob("*.html"))
+              if "static.cloudflareinsights.com" in (t := p.read_text()) and "Cloudflare Web Analytics" not in t]
+    assert not silent, f"book pages that load the beacon without saying so: {silent}"
