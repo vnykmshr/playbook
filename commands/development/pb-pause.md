@@ -7,8 +7,8 @@ model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-resume', 'pb-start', 'pb-standup', 'pb-handoff']
 last_reviewed: "2026-11-04"
-version: "1.9.5"
-version_notes: "v1.9.5: Step 6 points to /pb-claude-project Step 0 and Output Location instead of restating regenerate-then-diff. v1.9.4: The working context is found by `todos/*working-context*.md`, not a hardcoded `1-working-context.md`; /pb-context lists both common names. Step 0 comment names the step that creates it (deep Step 5). Step 2 checks tracker items against the code before marking them done or trimming a backlog. v1.9.3: Health-check project CLAUDE.md target ~180 -> <200, Anthropic's single figure, matching /pb-claude-project v1.4.0. v1.9.2: Step 4 names the archive's owner -- the recap stays in pause notes, /pb-resume Step 0 writes it. Pre-archiving at pause trips Step 0a's dedup check, which then correctly skips a recap that was never surfaced or classified. Observed 2026-08-04. v1.9.1: Health-check global CLAUDE.md target ~160 -> ~200, tracking the raised gate in /pb-claude-global. v1.9.0: Step 1 gates the push. The commit stays automatic -- preserving work state is what the command was invoked for -- but publishing is a separate decision, and pause runs at the moment a bad one is least likely to be caught: end of session, on whatever branch is checked out. Unpushed is now a complete pause rather than a failed one. v1.8.0: Step 4 archives to the project's existing recap archive rather than a fixed path; `todos/done/lessons.md` is the default for a project that has none. Matches /pb-resume v1.8.0. v1.7.0: Deep Step 7 runs any handoff the session wrote, from the receiver's directory. A document verified only from inside the repo that produced it passes every runnable claim it makes. v1.6.2: Deep Step 6 no longer routes around the generator -- pb-claude-project v1.2.0 preserves `## Custom (Manual)` blocks, so regenerate-then-diff replaces the hand-edit caveat. v1.6.1: An existing memory/lessons.md stays put and is linked from the new archive -- the path move must not fork a project's history silently. v1.6.0: Step 0 bootstraps the todos/ tree — a first pause no longer assumes todos/done/ and the working context already exist. Recap archive path moves to todos/done/lessons.md. v1.5.1: Deep-mode Step 6 caveat — diff before regenerating a hand-evolved project CLAUDE.md."
+version: "1.10.0"
+version_notes: "v1.10.0: Spaced double hyphens replaced."
 breaking_changes: []
 ---
 # Pause Development Work
@@ -58,7 +58,7 @@ mkdir -p todos/done
 # todos/pause-notes.md is created by Step 3; the working context by /pb-context (deep Step 5).
 ```
 
-Confirm `todos/` is gitignored. If it is not, add it -- `todos/` is the dev-only tree: position, scratch, and reflection, never a tracked artifact. Anything durable that lands there belongs in `docs/` instead.
+Confirm `todos/` is gitignored. If it is not, add it: `todos/` is the dev-only tree: position, scratch, and reflection, never a tracked artifact. Anything durable that lands there belongs in `docs/` instead.
 
 Do not treat a missing file as "nothing to preserve." A first pause is exactly when the breadcrumbs matter most.
 
@@ -81,7 +81,7 @@ git stash push -m "WIP: [describe what's stashed]"
 
 **Rule:** Never leave uncommitted work on a local-only branch overnight.
 
-**The commit is automatic; the push is not.** Preserving work state is what you invoked this command for, so committing needs no further permission. Publishing is a separate decision with a different blast radius, and pause runs at the moment you are least able to catch a bad one -- end of session, on whatever branch you happen to be on, which is sometimes `main`.
+**The commit is automatic; the push is not.** Preserving work state is what you invoked this command for, so committing needs no further permission. Publishing is a separate decision with a different blast radius, and pause runs at the moment you are least able to catch a bad one: end of session, on whatever branch you happen to be on, which is sometimes `main`.
 
 State the branch and what would be pushed, then wait for an explicit go in a new message:
 
@@ -111,7 +111,7 @@ Skip this step if there are no active trackers.
 
 ### Step 3: Write Pause Notes + Context Hygiene
 
-**3a. Write pause entry** -- replace contents of `todos/pause-notes.md`:
+**3a. Write pause entry:** replace contents of `todos/pause-notes.md`:
 
 ```markdown
 # Pause Notes
@@ -149,9 +149,9 @@ Patterns / playbook feedback:
 - [pattern or playbook command that needs attention]
 ```
 
-Target: ~30-40 lines. Be specific about what's next. Skip sections that don't apply. The Session Recap section is written by the assistant, not the user -- it is a thorough analysis, not a quick skim.
+Target: ~30-40 lines. Be specific about what's next. Skip sections that don't apply. The Session Recap section is written by the assistant, not the user: it is a thorough analysis, not a quick skim.
 
-**3b. Archive old entries** -- if pause-notes has entries beyond the latest, move old entries to `todos/done/pause-notes-archive-YYYY-MM-DD.md`.
+**3b. Archive old entries:** if pause-notes has entries beyond the latest, move old entries to `todos/done/pause-notes-archive-YYYY-MM-DD.md`.
 
 **3c. Context health check:**
 
@@ -180,7 +180,7 @@ After the pause entry is written, reflect on the session and fill in the `### Se
 
 **Leave the recap in the pause notes. `/pb-resume` Step 0 owns the archive write, not this command.** Step 0 surfaces the recap, classifies each finding, then archives it. Archiving it here skips all three: Step 0a's dedup check finds the entry already in the archive and correctly moves on, so the findings are never surfaced and never classified. Pre-archiving defeats the surfacing the archive exists to feed.
 
-Where it lands is `/pb-resume`'s decision -- the project's recap archive, wherever this project's recaps already go. A project that has none starts one at `todos/done/lessons.md`, the default because `todos/` is gitignored and already holds the pause notes these continue. An existing archive stays where it is and keeps receiving entries: a second location forks the record whether or not a pointer connects them.
+Where it lands is `/pb-resume`'s decision: the project's recap archive, wherever this project's recaps already go. A project that has none starts one at `todos/done/lessons.md`, the default because `todos/` is gitignored and already holds the pause notes these continue. An existing archive stays where it is and keeps receiving entries: a second location forks the record whether or not a pointer connects them.
 
 ---
 
@@ -224,7 +224,7 @@ Follow `/pb-claude-project` Step 0 and Output Location.
 
 ### Step 7: Run any handoff the session wrote
 
-Skip when the session produced no document another repo or person will follow. Otherwise `cd` to where the receiver will be standing and execute its opening moves -- see `/pb-handoff` Step 6.
+Skip when the session produced no document another repo or person will follow. Otherwise `cd` to where the receiver will be standing and execute its opening moves (see `/pb-handoff` Step 6).
 
 A handoff pauses cleanly and reads correctly from inside the repo that wrote it, because that repo supplies every working directory, installed package and credential its instructions assume. Writing it is not verifying it, and the gap surfaces on the receiver's first five minutes rather than on yours.
 

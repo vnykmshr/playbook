@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- **`/pb-pause` v1.10.0.** Spaced double hyphens replaced.
+
 ## [v2.34.0] - 2026-11-05
 
 v2.34.0 rules every harvested feedback note, retires four commands into the hubs that cover them (116 to 112), and moves the convention guards onto a markdown parser. The gate hook asks where it cannot read a command segment, install no longer deletes a user's own skill directory or script, and the CI-green check before a tag lives in one place.

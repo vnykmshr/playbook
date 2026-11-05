@@ -538,7 +538,6 @@ DASH_BASELINE = {
     "pb-handoff.md": 20,
     "pb-kai-reach.md": 3,
     "pb-linus-agent.md": 2,
-    "pb-pause.md": 7,
     "pb-plan.md": 1,
     "pb-resume.md": 3,
     "pb-review-code.md": 1,
