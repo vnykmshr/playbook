@@ -58,7 +58,7 @@ mkdir -p todos/done
 # todos/pause-notes.md is created by Step 3; the working context by /pb-context (deep Step 5).
 ```
 
-Confirm `todos/` is gitignored; if it is not, add it. Each note has one home, by lifetime and audience: `todos/` holds session state (position, scratch, reflection) and is never tracked; durable and public belongs in `docs/`; durable and private belongs in a private repo, because nothing backs up `todos/`.
+Confirm `todos/` is gitignored; if it is not, add it. Each note has one home, by lifetime and audience. `todos/` holds session state (position, scratch, reflection) and is never tracked. Durable and public belongs in `docs/`. Durable and private belongs in a private repo, because git does not keep `todos/`.
 
 Do not treat a missing file as "nothing to preserve." A first pause is exactly when the breadcrumbs matter most.
 
@@ -153,7 +153,7 @@ Target: ~30-40 lines. Be specific about what's next. Skip sections that don't ap
 
 **3b. Archive old entries:** if pause-notes has entries beyond the latest, move old entries to `todos/done/pause-notes-archive-YYYY-MM-DD.md`.
 
-**3c. Rescue scratch links:** a session scratch directory dies with the session, and so does every link into it. Grep what outlives the session (pause notes, cursors, briefs, commit messages) for the scratch path; copy each file it points at into `todos/` and repoint the link.
+**3c. Rescue scratch links:** the session scratch directory your tool gives you need not outlive the session, and a link into it breaks with it. Grep the notes that outlive the session (pause notes, cursors, briefs) for that path; copy each file it points at into `todos/` and repoint the link.
 
 **3d. Context health check:**
 
