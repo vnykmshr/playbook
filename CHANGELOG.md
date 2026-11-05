@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Security
+
+- **wrangler install runs without the Cloudflare token.** `deploy-book.yml` installs wrangler in its own step, so package install scripts never see `CLOUDFLARE_API_TOKEN`; the deploy step runs the installed binary.
+
 ### Changed
 
 - **`/pb-alex-infra` v1.4.0.** Spaced double hyphens replaced.
