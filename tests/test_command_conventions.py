@@ -532,7 +532,6 @@ class TestChangelogLandsWithChange:
 # leaves it at 0. Each file's fix is its own commit; there is no sweep.
 DASH_BASELINE = {
     "pb-caveman.md": 17,
-    "pb-claude-orchestration.md": 3,
     "pb-greenfield.md": 15,
     "pb-handoff.md": 20,
     "pb-kai-reach.md": 3,

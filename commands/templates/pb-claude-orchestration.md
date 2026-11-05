@@ -6,9 +6,9 @@ difficulty: "beginner"
 model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-claude-global', 'pb-claude-project', 'pb-learn', 'pb-review-playbook', 'pb-new-playbook']
-last_reviewed: "2026-11-04"
-version: "1.5.1"
-version_notes: "v1.5.1: Size the Pass: long or failure-prone runs write each pass result to disk and return the path. v1.5.0: Q3 2026 -- Harness Reality is dated rather than named after a model, and states only what the docs support: the default a session runs depends on plan, not a flat Opus claim. Delegation gains a cap -- current Opus over-delegates, and a subagent that checks your own work is documented to add cost without quality -- so validation leaves the Scout tier and the delegate list. Project budget <200 to match the single CLAUDE.md figure. Task tool naming retired. v1.4.1: Sync the context budget table to the generating commands (global <200, project <180); it had drifted to <150 for both. v1.4.0: Size the Pass, Not the Agent — inline the evidence and narrow the question; the whole-repo-reading subagent is the one that dies late. v1.3.0: Q2 2026 capability refresh -- Harness Reality to Opus 4.8 GA; corrected /fast (keeps Opus with faster output, no Sonnet downgrade); [1m] 1M-context framing; brief Fable 5 note (Opus stays default). v1.2.0: add Output Discipline subsection to Task Delegation Patterns -- accept subagent summaries as context, do not pipe raw tool output back into main conversation."
+last_reviewed: "2026-11-05"
+version: "1.5.2"
+version_notes: "v1.5.2: Spaced double hyphens replaced."
 breaking_changes: []
 ---
 # Claude Code Orchestration
@@ -85,7 +85,7 @@ When unsure, start with sonnet. Upgrade to opus if results lack depth. Downgrade
 
 ### When to Delegate
 
-Current Opus delegates more readily than earlier models, and delegation multiplies cost and time on small tasks. Delegate only large, genuinely independent tracks. **Never delegate checking your own work** -- the model already verifies its output, and a verifier subagent is documented to add cost without adding quality. The deterministic caps are `CLAUDE_CODE_MAX_SUBAGENT_SPAWN_DEPTH` and `CLAUDE_CODE_MAX_CONCURRENT_SUBAGENTS`.
+Current Opus delegates more readily than earlier models, and delegation multiplies cost and time on small tasks. Delegate only large, genuinely independent tracks. **Never delegate checking your own work:** the model already verifies its output, and a verifier subagent is documented to add cost without adding quality. The deterministic caps are `CLAUDE_CODE_MAX_SUBAGENT_SPAWN_DEPTH` and `CLAUDE_CODE_MAX_CONCURRENT_SUBAGENTS`.
 
 **Delegate to subagents:**
 
@@ -103,11 +103,11 @@ Current Opus delegates more readily than earlier models, and delegation multipli
 
 ### Output Discipline
 
-When a subagent returns a summary, **accept the summary as context**. Do not pipe raw tool output, diffs, or file dumps back into the main conversation unless verification explicitly requires it. Context is finite; delegation is the exchange -- pay for it once, not twice.
+When a subagent returns a summary, **accept the summary as context**. Do not pipe raw tool output, diffs, or file dumps back into the main conversation unless verification explicitly requires it. Context is finite; delegation is the exchange; pay for it once, not twice.
 
 ### Size the Pass, Not the Agent
 
-The subagent that has to read a whole repo before it can answer is the one that dies mid-run on an API error -- and it is the expensive one to lose, because it dies late.
+The subagent that has to read a whole repo before it can answer is the one that dies mid-run on an API error, and it is the expensive one to lose, because it dies late.
 
 **Inline the evidence, narrow the question.** Paste the file excerpt, the failing output, the rule text you already have, and ask one specific thing. Several lean passes beat one heavy pass that reconstructs context from disk: they finish, they are cheap to retry, and a failure costs one narrow answer instead of the whole analysis.
 

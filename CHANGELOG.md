@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **`/pb-review-code` v2.4.0.** Spaced double hyphens replaced.
 - **`/pb-todo-implement` v1.4.0.** Spaced double hyphens replaced.
 - **`/pb-voice` v2.3.1.** Spaced double hyphens replaced.
+- **`/pb-claude-orchestration` v1.5.2.** Spaced double hyphens replaced.
 
 ## [v2.35.0] - 2026-11-05
 
