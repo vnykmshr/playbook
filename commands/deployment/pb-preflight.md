@@ -8,7 +8,7 @@ execution_pattern: "sequential"
 related_commands: ['pb-ship', 'pb-security', 'pb-hardening', 'pb-deployment', 'pb-release']
 last_reviewed: "2026-11-05"
 version: "1.3.0"
-version_notes: "v1.3.0: 1.1 counts a zero only after a planted canary fires; a scan counter is not evidence."
+version_notes: "v1.3.0: 1.1 counts a zero only after the same scan reports a generated canary, on a throwaway branch and in a copy of the artifact."
 breaking_changes: ['Bullets are numbered N.M and referenced by number', 'N/A is no longer a valid outcome -- a bullet is in your profile or it is not rendered']
 ---
 # Pre-Ship Readiness Gate
@@ -82,7 +82,7 @@ Nine you own, twelve delegated, nine out of surface. Referenced by number agains
 
 ### [1] Secrets & Authentication
 
-- [ ] **1.1 No secrets in client bundles or git history.** Run a scanner (gitleaks, trufflehog, or equivalent) against the last 100 commits and the production build artifact. Zero findings or all findings triaged to false-positive. A zero is evidence only once the scanner has fired here: plant a canary (a fake token in a scratch file or commit), see it reported, then remove it. A scanned-commits counter that prints 0 proves nothing either way.
+- [ ] **1.1 No secrets in client bundles or git history.** Run a scanner (gitleaks, trufflehog, or equivalent) against the last 100 commits and the production build artifact. Zero findings or all findings triaged to false-positive. A zero is evidence only once the same scan has reported a canary. Generate a token shaped like one the scanner knows (gitleaks: `echo "ghp_$(openssl rand -hex 18)"`): not a published example key, not a value containing "fake" or "example", never a real credential. Commit it on a throwaway local branch and run the history scan on that branch; put it in a copy of the build artifact and run the artifact scan on that. See both reported, then delete the branch and the copy. Never push the branch. A scan filtered to verified secrets cannot fire on a fake, so its zero covers live keys only.
 - [ ] **1.2 HTTPS enforced, HTTP redirected, HSTS header set.** Test: `curl -I http://your-domain` returns 301 to https; `curl -I https://your-domain` shows `Strict-Transport-Security`.
 - [ ] **1.3 CORS restricted to known origins.** Not `*`. Not reflected from the `Origin` header. Allow-list only.
 - [ ] **1.4 Every private route checks authn AND authz.** Not just "user is logged in." Resource ownership verified per request. Tested with a second user account against a first user's resource ID.
