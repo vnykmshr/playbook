@@ -8,7 +8,7 @@ execution_pattern: "sequential"
 related_commands: ['pb-preamble', 'pb-deployment', 'pb-ship', 'pb-pr', 'pb-cycle']
 last_reviewed: "2026-11-05"
 version: "1.4.0"
-version_notes: "v1.4.0: Tag message is the release title; notes and CHANGELOG entry checked against the register before the release step."
+version_notes: "v1.4.0: Tag message is the release title; dispatch deploy workflows on main and verify before tagging; notes and CHANGELOG entry checked against the register before the release step."
 breaking_changes: []
 ---
 # Release to Production
@@ -218,6 +218,8 @@ git push origin vX.Y.Z
 ```
 
 The CI check reads each workflow's newest run for this commit, so a cancelled run that a re-run replaced does not block. It passes when it prints at least one line and every line is `success`. An empty line is a run still going and no output is a run not registered yet: wait. Skip it only when no workflow runs on a push to this branch.
+
+If a deploy workflow can be dispatched by hand, run it on main and verify the result before tagging: the tag then publishes a build already seen working.
 
 ### Step 2.4: Create GitHub Release
 

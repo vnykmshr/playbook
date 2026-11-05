@@ -17,7 +17,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **`/pb-commit` v2.4.0.** Message Register points to the register instead of restating a body length, and checks the drafted message before committing. Mindset added.
 - **`/pb-cycle` v1.3.0.** Commit step drops the with-body example and checks the subject against the register. Mindset added.
 - **`/pb-pr` v1.2.0.** Small-PR body is one sentence of what plus upgrader impact; the drafted title and body are checked against the register before the PR opens.
-- **`/pb-release` v1.4.0.** Tag message is the release title; notes and CHANGELOG entry checked against the register before the release step.
+- **`/pb-release` v1.4.0.** Tag message is the release title; dispatch deploy workflows on main and verify before tagging; notes and CHANGELOG entry checked against the register before the release step.
 - **`/pb-context` v1.1.0.** Release step tags with the release title and publishes notes from a file.
 - **`/pb-handcraft` v1.6.1.** Lens 6 says text drafted after the pass is checked by the step that drafts it.
 - **`/pb-forge` v1.9.0.** Peer and Land check their drafted text against the register.
