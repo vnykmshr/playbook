@@ -6,9 +6,9 @@ difficulty: "advanced"
 model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-cycle', 'pb-review-tests', 'pb-standards', 'pb-debug']
-last_reviewed: "2026-02-09"
-version: "1.0.0"
-version_notes: "v2.10.0 baseline"
+last_reviewed: "2026-11-05"
+version: "1.1.0"
+version_notes: "v1.1.0: Integration section and the second pyramid removed. Mutation, contract and chaos tool sections cut to tool names; the chaos sample is labelled pseudocode."
 breaking_changes: []
 ---
 # Advanced Testing Scenarios
@@ -186,25 +186,7 @@ def test_is_adult():
 
 ### Mutation Testing Across Languages
 
-**JavaScript:**
-```bash
-npm install stryker
-npx stryker run
-# Reports mutation score: % of mutations caught
-```
-
-**Python:**
-```bash
-pip install mutmut
-mutmut run --html-report
-# Reports detailed mutations and survival
-```
-
-**Java:**
-```bash
-mvn install pitest:mutationCoverage
-# Generates HTML report of mutations
-```
+Stryker (`@stryker-mutator/core`) for JavaScript and TypeScript, mutmut for Python, PIT (`pitest-maven`) for Java.
 
 ### When to Use Mutation Testing
 
@@ -291,20 +273,7 @@ def test_get_user():
 
 ### Contract Testing Tools
 
-**Pact (Most popular):**
-```python
-# Provider: Verify API matches consumer contract
-from pact import Provider
-pact = Provider("UserService")
-
-# Consumer recorded contract expectations
-pact.upon_receiving('a request for user 123') \
-    .with_request('get', '/users/123') \
-    .will_respond_with(200, body={"id": 123, "name": "John"})
-
-# Provider tests: Does our API match consumer expectations?
-pact.verify()  # PASS or FAIL
-```
+**Pact:** consumer-driven contracts. The consumer's tests record its expectations; the provider's build verifies its API against them.
 
 ### When to Use Contract Testing
 
@@ -342,6 +311,7 @@ def get_user_with_orders(user_id):
 Intentionally break things, verify system handles gracefully.
 
 ```python
+# Pseudocode: @chaos_test stands for your fault-injection harness
 # Chaos test: Order service is slow
 @chaos_test(failure_mode='latency', service='order_service', latency=10_000)
 def test_order_service_slow():
@@ -378,28 +348,7 @@ def test_payment_errors():
 - Gradual rollout: 5% of traffic → 25% → 100%
 - Automated recovery
 
-**Chaos Toolkit (Open Source):**
-```yaml
-# chaos-experiment.yml
-title: "Order Service Handles Payment Failures"
-description: "Verify orders queue when payment API down"
-
-probes:
-- type: http
-  name: "Get orders"
-  method: GET
-  url: http://api/orders
-
-actions:
-- type: "latency"
-  duration: 5000  # 5 second latency
-  target: "payment-api"
-  percentage: 100
-
-rollbacks:
-- type: "stop"
-  target: "payment-api-failure"
-```
+**Chaos Toolkit (open source):** declarative experiments with a steady-state probe, fault actions and rollbacks.
 
 ### When to Use Chaos Testing
 
@@ -627,23 +576,6 @@ orders = OrderFactory.create_batch(10)  # Create 10 orders
          └─────────────────────────┘
 ```
 
-**Advanced testing adds:**
-```
-         ┌──────────────────────────────┐
-         │  Chaos/Chaos (5%)            │  Failure scenarios
-         ├──────────────────────────────┤
-         │  Contract Tests (10%)        │  Integration boundaries
-         ├──────────────────────────────┤
-         │  Mutation Tests (5%)         │  Test strength
-         ├──────────────────────────────┤
-         │  Property-Based (10%)        │  Edge cases
-         ├──────────────────────────────┤
-         │  Synthetic Monitoring (5%)   │  Production health
-         ├──────────────────────────────┤
-         │  Traditional (65%)           │  Unit/Integration/E2E
-         └──────────────────────────────┘
-```
-
 ---
 
 ## Advanced Testing Checklist
@@ -671,14 +603,6 @@ orders = OrderFactory.create_batch(10)  # Create 10 orders
 - [ ] A/B testing: Real user validation
 
 ---
-
-## Integration with Playbook
-
-**Part of quality and testing:**
-- `/pb-guide` - Section 6 covers testing strategy
-- `/pb-cycle` - Includes testing in peer review
-- `/pb-review-tests` - Periodic test review
-- `/pb-observability` - Monitoring catches regression
 
 ## Related Commands
 

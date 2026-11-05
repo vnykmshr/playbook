@@ -8,7 +8,7 @@ execution_pattern: "sequential"
 related_commands: ['pb-deployment', 'pb-hardening', 'pb-patterns-resilience', 'pb-observability', 'pb-linus-agent']
 last_reviewed: "2026-11-05"
 version: "1.4.0"
-version_notes: "v1.4.0: Spaced double hyphens replaced."
+version_notes: "v1.4.0: Spaced double hyphens replaced. Examples cut to one failure-mode line per review category; a failed rollout stalls and is rolled back by command; images pinned; Related names Linus for correctness."
 breaking_changes: []
 ---
 
@@ -122,91 +122,7 @@ Is recovery manual when it could be automatic? Is detection reactive instead of 
 - Are alerts actionable (not noise)?
 - Can we detect failures before users do?
 
-**Bad pattern:**
-```yaml
-# Kubernetes Deployment - no health checks
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: api-server
-spec:
-  replicas: 3
-  template:
-    spec:
-      containers:
-      - name: api
-        image: api:latest
-        # No readiness/liveness probes!
-```
-
-**Why this fails:** Pod could be running but hung. Kubernetes sends traffic to dead pods. No monitoring of database connection pool.
-
-**Good pattern:**
-```yaml
-# Kubernetes Deployment with comprehensive health checks
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: api-server
-spec:
-  replicas: 3
-  strategy:
-    type: RollingUpdate
-    rollingUpdate:
-      maxSurge: 1
-      maxUnavailable: 0
-  template:
-    spec:
-      terminationGracePeriodSeconds: 30
-      containers:
-      - name: api
-        image: api:latest
-        resources:
-          requests:
-            cpu: 200m
-            memory: 256Mi
-          limits:
-            cpu: 500m
-            memory: 512Mi
-
-        # Startup probe: is service ready?
-        startupProbe:
-          httpGet:
-            path: /health/startup
-            port: 8080
-          initialDelaySeconds: 5
-          periodSeconds: 5
-          failureThreshold: 30  # 150 seconds total
-
-        # Readiness probe: can handle traffic?
-        readinessProbe:
-          httpGet:
-            path: /health/ready
-            port: 8080
-          initialDelaySeconds: 2
-          periodSeconds: 5
-          failureThreshold: 2
-
-        # Liveness probe: is it hung?
-        livenessProbe:
-          httpGet:
-            path: /health/live
-            port: 8080
-          initialDelaySeconds: 15
-          periodSeconds: 10
-          failureThreshold: 3
-
-        # Metrics for monitoring
-        ports:
-        - name: metrics
-          containerPort: 9090
-```
-
-**Why this works:**
-- Multiple health checks catch different failure modes
-- Kubernetes removes unhealthy pods automatically
-- Gradual rollout prevents cascading failures
-- Resources constrained prevent resource starvation
+**Failure mode:** a pod that is running but hung keeps receiving traffic, because nothing tells Kubernetes it cannot serve. Liveness restarts a hung process, readiness keeps traffic off one that cannot serve, and a startup probe covers slow boots.
 
 #### 2. Degradation & Fallbacks
 
@@ -216,51 +132,7 @@ spec:
 - Does degradation mode have acceptable performance?
 - Can users tell the system is degraded?
 
-**Bad pattern:**
-```python
-def get_user_recommendations(user_id):
-    # Crashes if recommendation service is down
-    recommendations = call_recommendation_service(user_id)
-    return recommendations
-```
-
-**Why this fails:** Service outage cascades. Users get 500 errors instead of partial experience.
-
-**Good pattern:**
-```python
-def get_user_recommendations(user_id, cache_ttl=3600):
-    """Get recommendations with graceful fallback to cache.
-
-    Returns:
-    - Fresh recommendations if service healthy
-    - Cached recommendations if service fails
-    - Empty list if cache empty (don't crash)
-    """
-    try:
-        recommendations = call_recommendation_service(user_id, timeout=2)
-        cache.set(f"rec:{user_id}", recommendations, ttl=cache_ttl)
-        return recommendations
-    except (TimeoutError, ServiceError) as e:
-        logger.warning(f"Recommendation service failed for {user_id}: {e}")
-
-        # Fallback 1: Return cached recommendations
-        cached = cache.get(f"rec:{user_id}")
-        if cached:
-            logger.info(f"Returning cached recommendations for {user_id}")
-            return cached
-
-        # Fallback 2: Return popular items
-        logger.info(f"Returning popular items for {user_id} (recommendation service down)")
-        return get_popular_items()
-
-        # We never crash; at minimum we return something useful
-```
-
-**Why this works:**
-- Service failure doesn't break user experience
-- Degradation is intentional and monitored
-- Users get reduced but functional experience
-- System stays available during dependency outages
+**Failure mode:** a call to an optional dependency with no timeout or fallback turns its outage into your 500s. Bound the call, return a reduced response, and count fallbacks so the degradation is visible.
 
 #### 3. Deployment & Rollback
 
@@ -271,69 +143,7 @@ def get_user_recommendations(user_id, cache_ttl=3600):
 - Do deployments have health checks?
 - Can you deploy at 3 AM?
 
-**Bad pattern:**
-```bash
-# Manual SSH deployment
-ssh prod-server
-cd /app
-git pull origin main
-npm install
-npm run build
-# Hope it works!
-```
-
-**Why this fails:** Error-prone, no observability, can't rollback quickly, humans make mistakes at 3 AM.
-
-**Good pattern:**
-```yaml
-# Automated deployment with health checks and rollback
-apiVersion: v1
-kind: Service
-metadata:
-  name: api-service
-spec:
-  selector:
-    app: api
-  ports:
-  - port: 80
-    targetPort: 8080
----
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: api
-spec:
-  replicas: 3
-  strategy:
-    type: RollingUpdate
-    rollingUpdate:
-      maxSurge: 1        # One extra pod while rolling
-      maxUnavailable: 0  # Never take down pods without replacement
-  selector:
-    matchLabels:
-      app: api
-  template:
-    metadata:
-      labels:
-        app: api
-    spec:
-      containers:
-      - name: api
-        image: api:v1.2.3  # Immutable, versioned image
-        livenessProbe:
-          httpGet:
-            path: /health
-            port: 8080
-          failureThreshold: 3
-          periodSeconds: 10
-```
-
-**Why this works:**
-- Deployment is automated (no human error)
-- Health checks prevent bad versions from going live
-- Rolling update keeps service available
-- Rollback is automatic if new version fails
-- Can deploy at any time safely
+**Failure mode:** an `ssh` and `git pull` deploy has no health gate and no fast way back. Automate it: readiness-gated rolling updates of an immutable, versioned image (`api:v1.2.3`, never `latest`). A failed Kubernetes rollout stalls and takes no traffic, but it does not roll itself back; rollback is a command (`kubectl rollout undo`) you have run before.
 
 #### 4. Observability & Alerts
 
@@ -344,77 +154,7 @@ spec:
 - Can you debug production issues without logs?
 - Are SLOs defined and measured?
 
-**Bad pattern:**
-```python
-# Insufficient logging
-def process_payment(user_id, amount):
-    result = charge_card(user_id, amount)
-    return result
-```
-
-**Why this fails:** If payment fails, you have no way to debug. No audit trail for compliance. Can't measure failure rates.
-
-**Good pattern:**
-```python
-import logging
-import time
-
-logger = logging.getLogger(__name__)
-
-def process_payment(user_id, amount):
-    """Process payment with comprehensive observability."""
-    start_time = time.time()
-
-    logger.info(f"payment_started", extra={
-        "user_id": user_id,
-        "amount": amount,
-    })
-
-    try:
-        result = charge_card(user_id, amount)
-
-        duration_ms = (time.time() - start_time) * 1000
-        logger.info(f"payment_succeeded", extra={
-            "user_id": user_id,
-            "amount": amount,
-            "duration_ms": duration_ms,
-            "transaction_id": result.id,
-        })
-
-        return result
-
-    except InsufficientFundsError as e:
-        logger.warning(f"payment_insufficient_funds", extra={
-            "user_id": user_id,
-            "amount": amount,
-        })
-        raise
-
-    except CardDeclinedError as e:
-        logger.warning(f"payment_declined", extra={
-            "user_id": user_id,
-            "amount": amount,
-            "decline_code": e.code,
-        })
-        raise
-
-    except Exception as e:
-        duration_ms = (time.time() - start_time) * 1000
-        logger.error(f"payment_failed", extra={
-            "user_id": user_id,
-            "amount": amount,
-            "duration_ms": duration_ms,
-            "error": str(e),
-        }, exc_info=True)
-        raise
-```
-
-**Why this works:**
-- Every payment is logged (audit trail)
-- Success and failure cases have context
-- Timing helps identify performance issues
-- Error codes enable debugging
-- Can measure payment success rate
+**Failure mode:** a payment fails and the only log line is `Error`. Log each important transaction with its IDs, amount, duration and error code, so success rate and latency can be measured.
 
 #### 5. Capacity Planning & Scaling
 
@@ -425,79 +165,7 @@ def process_payment(user_id, amount):
 - What happens at peak load?
 - What happens during cascading failures?
 
-**Bad pattern:**
-```yaml
-# No resource limits - can crash other services
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: memory-hog
-spec:
-  replicas: 1
-  template:
-    spec:
-      containers:
-      - name: app
-        image: app:latest
-        # No memory limit! Can consume all node memory
-```
-
-**Why this fails:** Service can consume all node memory, crashes other pods, cascades to cluster failure.
-
-**Good pattern:**
-```yaml
-# Resource limits with autoscaling
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: api
-spec:
-  replicas: 3
-  template:
-    spec:
-      containers:
-      - name: api
-        image: api:latest
-        resources:
-          requests:
-            cpu: 200m
-            memory: 256Mi
-          limits:
-            cpu: 500m
-            memory: 512Mi
----
-apiVersion: autoscaling/v2
-kind: HorizontalPodAutoscaler
-metadata:
-  name: api-autoscaler
-spec:
-  scaleTargetRef:
-    apiVersion: apps/v1
-    kind: Deployment
-    name: api
-  minReplicas: 3
-  maxReplicas: 20
-  metrics:
-  - type: Resource
-    resource:
-      name: cpu
-      target:
-        type: Utilization
-        averageUtilization: 70
-  - type: Resource
-    resource:
-      name: memory
-      target:
-        type: Utilization
-        averageUtilization: 80
-```
-
-**Why this works:**
-- Resource requests reserve capacity
-- Limits prevent runaway memory usage
-- Autoscaler adds replicas when needed
-- Won't scale indefinitely (maxReplicas limit)
-- Other services stay healthy
+**Failure mode:** a pod with no resource requests or limits grows until it starves its neighbours. Set requests and limits, and autoscale between a floor and a ceiling (`maxReplicas`).
 
 ---
 
@@ -517,7 +185,7 @@ spec:
 
 ### Deployment Safety
 - [ ] Rollouts are gradual (not all-at-once)
-- [ ] Rollbacks are automatic (based on health checks)
+- [ ] A failed rollout stalls without taking traffic; rollback is one rehearsed command
 - [ ] Health checks are run before traffic routing
 - [ ] Resource limits prevent cascade failures
 
@@ -555,90 +223,10 @@ Infrastructure that's rejected outright:
 
 ---
 
-## Examples: Before & After
+## Examples
 
-### Example 1: Database Failover
-
-**BEFORE (Single point of failure):**
-```yaml
-# Single database - entire app down if database fails
-- name: POSTGRES_URL
-  value: postgres://db-prod:5432/myapp
-```
-
-**Why this breaks:** Database goes down → entire application down → no recovery.
-
-**AFTER (High availability):**
-```yaml
-# Database cluster with automatic failover
-- name: POSTGRES_URL
-  value: "postgresql://db-primary:5432,db-replica1:5432,db-replica2:5432/myapp?target_session_attrs=read-write"
-- name: POSTGRES_POOL_SIZE
-  value: "20"
-- name: POSTGRES_POOL_TIMEOUT
-  value: "5"  # Seconds
-```
-
-With cloud provider:
-```bash
-# AWS RDS Multi-AZ: automatic failover
-aws rds create-db-instance \
-  --engine postgres \
-  --multi-az \
-  --backup-retention-period 30 \
-  --enable-cloudwatch-logs-exports postgresql
-```
-
-**Why this works:**
-- Replicas provide redundancy
-- Connection pooling prevents exhaustion
-- Automatic failover in seconds
-- Backups enable recovery
-
-### Example 2: Cascading Failure Prevention
-
-**BEFORE (Can cascade):**
-```javascript
-// If auth service is slow, entire API becomes slow
-app.get('/api/users', async (req, res) => {
-    const user = await authService.getUser(req.token);
-    res.json(user);
-});
-```
-
-**Why this breaks:** Auth service slow → API slow → client timeouts → increased load → system collapse.
-
-**AFTER (Circuit breaker pattern):**
-```javascript
-const CircuitBreaker = require('opossum');
-
-const authBreaker = new CircuitBreaker(
-    async (token) => authService.getUser(token),
-    {
-        timeout: 1000,  // 1 second max
-        errorThresholdPercentage: 50,  // Open if 50% fail
-        resetTimeout: 30000,  // Try again after 30 seconds
-    }
-);
-
-authBreaker.fallback(() => ({id: null, isGuest: true}));
-
-app.get('/api/users', async (req, res) => {
-    try {
-        const user = await authBreaker.fire(req.token);
-        res.json(user);
-    } catch (error) {
-        // Timeout or circuit open - return guest or cached user
-        res.json({id: null, isGuest: true});
-    }
-});
-```
-
-**Why this works:**
-- Auth service slow doesn't block API
-- Circuit breaker stops hammering broken service
-- Fallback provides graceful degradation
-- System stays responsive
+- **Database failover.** One database instance means one failure takes the whole app down. Use failover that promotes a replica (a managed Multi-AZ database, or Patroni); a multi-host connection string only reconnects to whichever host is already primary.
+- **Cascading failure.** A slow auth service makes every API call slow, and client retries add load until the system collapses. Put a timeout and a circuit breaker with a fallback around the call (`/pb-patterns-resilience`).
 
 ---
 
@@ -680,4 +268,4 @@ Findings posted as PR/issue comments follow `~/.claude/CLAUDE.md` § GitHub Arti
 - `/pb-hardening` - Security hardening for infrastructure
 - `/pb-patterns-resilience` - Resilience design patterns
 - `/pb-observability` - Monitoring and observability strategy
-- `/pb-linus-agent` - Security assumptions and threat modeling (sibling persona)
+- `/pb-linus-agent` - Correctness review (sibling persona)

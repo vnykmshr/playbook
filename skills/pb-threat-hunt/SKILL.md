@@ -72,7 +72,7 @@ Workflow phases run in sequence with step-completion enforcement: a phase produc
 | 8 | Provider and crypto boundaries | Manual |
 | 9 | Concurrency and cache safety | Workflow |
 | 10 | 3-vote adversarial verify with Scope Sweep gate | Workflow |
-| 11 | Report per-finding (7-field template) | Manual |
+| 11 | Report per-finding (6-field template) | Manual |
 | 12 | Fix conservatively with regression tests | Manual |
 
 Full step details, payload tables, and language-specific search passes in `references/methodology.md`.
@@ -97,7 +97,7 @@ Full step details, payload tables, and language-specific search passes in `refer
 
 ```
 skills/pb-threat-hunt/
-  SKILL.md                              ← You are here (~100 lines)
+  SKILL.md                              ← You are here
   references/
     methodology.md                       ← Full 12-step breakdown, payload tables, appendices
   workflows/

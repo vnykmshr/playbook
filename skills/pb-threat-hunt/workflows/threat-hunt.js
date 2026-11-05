@@ -367,7 +367,7 @@ if (allFindings.length > 0) {
     }
   }
   log('')
-  log('Manual steps remaining: Step 11 (report per-finding with 7-field template) and Step 12 (fix conservatively with regression tests).')
+  log('Manual steps remaining: Step 11 (report per-finding with the 6-field template) and Step 12 (fix conservatively with regression tests).')
   log('Provider boundaries (Step 8) require manual judgment — OAuth, SAML, LDAP, KMS, DB.')
 } else {
   log('No findings to verify.')

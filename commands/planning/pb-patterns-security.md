@@ -6,9 +6,9 @@ difficulty: "advanced"
 model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-security', 'pb-hardening', 'pb-patterns-core', 'pb-patterns-distributed']
-last_reviewed: "2026-11-04"
-version: "2.0.0"
-version_notes: "v2.0.0: Cut from 785 to 216 lines: example code, walkthroughs and language sections removed; decisions, gotchas and when-to-use kept. OAuth code flow uses PKCE with S256 (RFC 9700); JWT verification pins the algorithm and rejects none (RFC 8725)."
+last_reviewed: "2026-11-05"
+version: "2.0.1"
+version_notes: "v2.0.1: Password hashing lists argon2id, scrypt and bcrypt; secrets live in a vault, env vars only deliver them; the pb-patterns-core line no longer promises an OWASP overview. Mindset label."
 breaking_changes: ['Example code, walkthroughs and language sections removed; decisions and gotchas kept, constraints from removed code restated; deploy checklists live in /pb-preflight and /pb-deployment.']
 ---
 # Security Patterns & Microservice Security
@@ -19,7 +19,7 @@ Security in microservices requires a multi-layered approach: authentication prov
 
 This guide covers proven security patterns for microservices, showing when to use each and real-world trade-offs.
 
-**Caveat:** Security patterns can add significant complexity. Use `/pb-preamble` thinking (challenge assumptions, surface trade-offs) and `/pb-design-rules` thinking (does this pattern serve Simplicity while maintaining Robustness?).
+**Mindset:** Security patterns can add significant complexity. Use `/pb-preamble` thinking (challenge assumptions, surface trade-offs) and `/pb-design-rules` thinking (does this pattern serve Simplicity while maintaining Robustness?).
 
 Question threat models. Challenge assumed attack surfaces. Surface the real risk vs. implementation cost trade-off. Don't add complexity without understanding the actual risk.
 
@@ -178,9 +178,9 @@ Authorization answers: "What are you allowed to do?"
 
 ## Common Security Antipatterns
 
-❌ **Storing passwords in plaintext** - Always hash with bcrypt/scrypt
+❌ **Storing passwords in plaintext** - Always hash with argon2id, scrypt or bcrypt
 ❌ **Logging sensitive data** - Never log passwords, tokens, PII
-❌ **Hardcoding secrets** - Use vault or environment variables
+❌ **Hardcoding secrets** - Store them in a vault or secrets manager; env vars only deliver them (`/pb-secrets`)
 ❌ **SQL injection** - Use parameterized queries, never string concatenation
 ❌ **XSS vulnerabilities** - Always encode/escape output
 ❌ **Trusting client-side validation** - Always validate server-side
@@ -207,7 +207,7 @@ Authorization answers: "What are you allowed to do?"
 
 - `/pb-security` - Security review checklist for code and infrastructure
 - `/pb-hardening` - Security hardening reference for deployment configs
-- `/pb-patterns-core` - Core architectural patterns including OWASP overview
+- `/pb-patterns-core` - Core architectural patterns
 - `/pb-patterns-distributed` - Distributed system patterns and service-to-service concerns
 
 ---

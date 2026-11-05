@@ -6,9 +6,9 @@ difficulty: "advanced"
 model_hint: "opus"
 execution_pattern: "sequential"
 related_commands: ['pb-review', 'pb-review-hygiene', 'pb-hardening', 'pb-secrets', 'pb-threat-hunt']
-last_reviewed: "2026-04-26"
-version: "1.3.0"
-version_notes: "v1.3.0: Reference global GitHub Artifact Register rule for review-comment register."
+last_reviewed: "2026-11-05"
+version: "1.4.0"
+version_notes: "v1.4.0: Integration section removed. SSRF example checks every resolved address and connects to the checked one; open-redirect example rejects backslashes; secrets, PII and password rules follow /pb-secrets, /pb-logging and NIST SP 800-63B; secret scanning names gitleaks."
 breaking_changes: []
 ---
 # Security Review & Checklist
@@ -61,8 +61,8 @@ Use for small changes, bug fixes, single-file updates.
 
 ### Secrets & Configuration
 - [ ] No secrets in code (no hardcoded passwords, API keys, tokens)
-- [ ] Secrets in environment variables or secrets manager
-- [ ] No secrets in git history (use git-secrets or similar)
+- [ ] Secrets stored in a secrets manager or encrypted file; env vars only deliver them (`/pb-secrets`)
+- [ ] No secrets in git history (gitleaks; see `/pb-preflight` 1.1)
 
 ### Authentication & Authorization
 - [ ] Authentication required for protected endpoints
@@ -134,7 +134,7 @@ Use for feature development, API changes, multi-file changes.
 ### Authentication
 - [ ] Authentication mechanism appropriate (basic auth not over HTTP, etc.)
 - [ ] Passwords never logged or stored in plain text
-- [ ] Password requirements reasonable (length, complexity)
+- [ ] Password rules: minimum length and a breached-password check, no composition rules (NIST SP 800-63B)
 - [ ] Failed login attempts rate-limited
 - [ ] Multi-factor authentication available for sensitive operations
 - [ ] Session timeout configured (15-30 min recommended)
@@ -176,7 +176,7 @@ Use for feature development, API changes, multi-file changes.
 - [ ] Don't reveal information about the system (versions, paths, etc.)
 
 ### Logging & Monitoring
-- [ ] No PII logged (names, emails, passwords, credit cards, etc.)
+- [ ] No PII logged as `/pb-logging` defines it (log `user_id`, not email); passwords, tokens and card numbers never
 - [ ] Authentication/authorization events logged
 - [ ] Failed login attempts logged and alerted
 - [ ] Data access logged (who accessed what data)
@@ -221,7 +221,7 @@ Use for security-critical features, payment processing, authentication systems, 
 - [ ] Batch input size limits (prevent bulk operations DoS)
 
 ### Advanced Authentication
-- [ ] Password hashing uses strong algorithm (bcrypt, argon2, scrypt)
+- [ ] Password hashing uses argon2id, scrypt or bcrypt
 - [ ] Password salt used and unique per user
 - [ ] Account lockout after failed attempts
 - [ ] Password reset flow secure (token expiration, one-time use)
@@ -292,7 +292,7 @@ Use for security-critical features, payment processing, authentication systems, 
 - [ ] Network isolation (not all services accessible from everywhere)
 - [ ] Firewall rules minimal (default deny)
 - [ ] Database not directly accessible from internet
-- [ ] Secrets not in environment (consider Secrets Manager)
+- [ ] Secrets fetched from a secrets manager at runtime, not baked into images or task definitions (`/pb-secrets`)
 - [ ] Container image scanning for vulnerabilities
 - [ ] Container running as non-root
 - [ ] Secret scanning in CI/CD pipeline
@@ -511,32 +511,34 @@ user_url = request.args.get('url')
 data = requests.get(user_url).text  # Could fetch internal services
 # Attacker passes: http://internal-api:8080/admin or http://localhost:6379
 
-# [YES] SAFE (Allowlist + DNS validation)
-import requests
+# [YES] SAFE (Allowlist + every address checked + pinned connect)
 import ipaddress
 import socket
 from urllib.parse import urlparse
+import urllib3
 
-user_url = request.args.get('url')
-parsed = urlparse(user_url)
+parsed = urlparse(request.args.get('url'))
 
-# Step 1: Scheme must be http/https
-if parsed.scheme not in ('http', 'https'):
+# Step 1: Scheme must be https
+if parsed.scheme != 'https':
     raise ValueError("Invalid scheme")
 
 # Step 2: Allowlist safe domains
-ALLOWED_DOMAINS = ['example.com', 'api.example.com']
+ALLOWED_DOMAINS = {'example.com', 'api.example.com'}
 if parsed.hostname not in ALLOWED_DOMAINS:
     raise ValueError("Domain not allowed")
 
-# Step 3: Resolve DNS and validate IP is not private
-resolved_ip = socket.getaddrinfo(parsed.hostname, None)[0][4][0]
-ip = ipaddress.ip_address(resolved_ip)
-if ip.is_private or ip.is_loopback or ip.is_link_local:
+# Step 3: Resolve once; every returned address must be public, not just the first
+port = parsed.port or 443
+addrs = {ipaddress.ip_address(a[4][0]) for a in socket.getaddrinfo(parsed.hostname, port, proto=socket.IPPROTO_TCP)}
+if not all((getattr(ip, 'ipv4_mapped', None) or ip).is_global for ip in addrs):
     raise ValueError("Private/internal IPs not allowed")
 
-# Step 4: Request using resolved IP (pin it, don't re-resolve)
-data = requests.get(user_url, timeout=5).text
+# Step 4: Connect to the checked address; TLS still verifies the hostname.
+# requests.get(url) would resolve again, and a rebinding DNS server answers differently.
+pool = urllib3.HTTPSConnectionPool(str(next(iter(addrs))), port, server_hostname=parsed.hostname, timeout=5)
+target = parsed._replace(scheme='', netloc='').geturl() or '/'
+data = pool.request('GET', target, headers={'Host': parsed.hostname}, redirect=False).data
 ```
 
 **Why**: Without validation, attacker can access internal services, cloud metadata APIs (AWS, GCP credentials), or local services.
@@ -621,8 +623,8 @@ from urllib.parse import urlparse
 redirect_url = request.args.get('next', '/')
 parsed = urlparse(redirect_url)
 
-# Only allow relative paths
-if parsed.netloc or parsed.scheme:
+# Only allow relative paths. Browsers read \ as /, so /\evil.com means //evil.com
+if parsed.netloc or parsed.scheme or not redirect_url.startswith('/') or '\\' in redirect_url:
     redirect_url = '/'  # Fall back to safe default
 
 return redirect(redirect_url)
@@ -711,16 +713,6 @@ Additional: Privacy by design, user data export/deletion
 - **NIST Cybersecurity Framework** - https://www.nist.gov/cyberframework/
 - **Snyk Vulnerability Database** - https://snyk.io/vuln/
 - **PortSwigger Web Security Academy** - https://portswigger.net/web-security/
-
----
-
-## Integration with Playbook
-
-**Part of review workflow:**
-- `/pb-cycle` Step 1 - Self-review security checklist
-- `/pb-review-hygiene` - Security section in code review
-- `/pb-guide` §4.5 - Security design during planning
-- `/pb-release` - Pre-release security checklist
 
 ---
 

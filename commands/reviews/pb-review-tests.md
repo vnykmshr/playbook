@@ -6,9 +6,9 @@ difficulty: "advanced"
 model_hint: "opus"
 execution_pattern: "sequential"
 related_commands: ['pb-review', 'pb-review-hygiene', 'pb-testing', 'pb-cycle']
-last_reviewed: "2026-11-04"
-version: "2.2.0"
-version_notes: "v2.2.0: Common Problems: a new guard drowned in legacy debt narrows its rule first, then baselines what is left as shrink-only debt, never as exemptions."
+last_reviewed: "2026-11-05"
+version: "2.2.1"
+version_notes: "v2.2.1: Speed and coverage thresholds are examples, and the example report uses the same numbers."
 breaking_changes: []
 ---
 # Test Suite Review (Coverage & Reliability)
@@ -99,7 +99,7 @@ Act as **senior engineer and test architect** responsible for a test suite that 
 |-------|----------|
 | Coverage | Are critical code paths covered? |
 | Isolation | Do tests run independently? |
-| Speed | Do unit tests run in < 30 seconds total? |
+| Speed | Do unit tests run within the team's budget (example: 30 seconds total)? |
 | Clarity | Can you understand what failed from the error? |
 | Maintainability | Will tests break if implementation changes? |
 
@@ -130,7 +130,7 @@ Act as **senior engineer and test architect** responsible for a test suite that 
 |---------|--------|-----|
 | Flaky tests | Random failures, works on retry | Find race condition or mock issue |
 | Brittle tests | Break when refactoring | Test behavior, not implementation |
-| Slow tests | CI takes > 10 min | Parallelize or reduce scope |
+| Slow tests | CI over the team's budget (example: 5 min) | Parallelize or reduce scope |
 | Low value tests | Test trivial getters/setters | Delete them |
 | Duplicate tests | Same assertion in multiple tests | Consolidate |
 | Missing tests | Critical paths untested | Add focused tests |
@@ -214,7 +214,7 @@ Specific actions:
 |--------|---------|--------|
 | Total runtime | 8 min | < 5 min |
 | Flaky tests | 3 | 0 |
-| Unit test coverage | 72% | 80% |
+| Critical-path coverage | 72% | 100% |
 | Integration tests | 45 | 30 (reduce) |
 ```
 

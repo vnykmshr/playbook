@@ -27,7 +27,7 @@ Flag: `DEBUG=true`, `ENVIRONMENT=development`, default credentials in config. Si
 ### Supply-Chain Integrity `[Workflow: Phase 1]`
 
 ```bash
-rg -n 'uses:\s+(?!.*@[a-f0-9]{40})' .github/workflows/  # Actions not SHA-pinned
+rg -n -P 'uses:\s+(?!.*@[a-f0-9]{40})' .github/workflows/  # Actions not SHA-pinned
 test -f go.sum && echo "go.sum present" || echo "MISSING: go.sum"  # Go sumdb
 ```
 
@@ -286,7 +286,7 @@ Structure each finding so a reviewer can understand the risk without redoing the
 **Recommended fix:** [specific, at the nearest boundary]
 ```
 
-**Exit:** Every Confirmed/Likely finding has all 7 fields. Fails when exploit scenarios are vague ("could lead to RCE").
+**Exit:** Every Confirmed/Likely finding has all 6 fields. Fails when exploit scenarios are vague ("could lead to RCE").
 
 ### Step 12: Fix Conservatively `[Manual only]`
 
@@ -315,7 +315,7 @@ The hunt is not complete until ALL boxes are checked:
 - [ ] ≥2 skeptics concur on each Confirmed/Likely classification (or `--quick` flag used)
 - [ ] Every Confirmed and Likely finding has a concrete exploit scenario
 - [ ] Every Confirmed finding has a fix with a regression test
-- [ ] Report written with all 7 fields per finding for Confirmed/Likely
+- [ ] Report written with all 6 fields per finding for Confirmed/Likely
 - [ ] Provider boundaries checked (each present in this project: OAuth, SAML, LDAP, KMS, DB)
 - [ ] `go test -race ./...` passes (or explained if not run)
 
@@ -418,7 +418,7 @@ rg -n 'child_process\.exec|child_process\.spawn|child_process\.fork|exec\(|execS
 rg -n '\.__proto__|\.constructor\.prototype|Object\.assign.*req\.body|merge\(.*req\.body|\.extend.*req\.body'
 
 # NoSQL injection (MongoDB)
-rg -n '\$where|\$regex.*req\.|\.find\({.*req\.'
+rg -n '\$where|\$regex.*req\.|\.find\(\{.*req\.'
 ```
 
 ---

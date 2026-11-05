@@ -13,6 +13,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- **`/pb-logging` v1.2.0.** Defines PII for logs (log `user_id`; IP addresses only on security events, with a retention limit); samples drop emails and the payment-module DEBUG override; the JSON formatter reads `extra=` fields from the record and keeps tracebacks. Mindset added.
+- **`/pb-jordan-testing` v1.5.0.** Examples use a real test database and mock only external services, as the Overview says; signup hashes with bcrypt and logs the user id, not the email; the concurrency test no longer claims to prove the lock; the connection-pool claim is gone.
+- **`/pb-review-tests` v2.2.1.** Speed thresholds are labelled examples and match the example report (5 min CI); the example tracks critical-path coverage toward 100%, as `/pb-jordan-testing` does.
+- **`/pb-testing` v1.1.0.** Integration section and the second pyramid removed. Mutation, contract and chaos tool sections cut to tool names; the chaos sample is labelled pseudocode.
+- **`/pb-patterns-security` v2.0.1.** Password hashing lists argon2id, scrypt and bcrypt; secrets live in a vault or secrets manager and env vars only deliver them; the `/pb-patterns-core` line no longer promises an OWASP overview. Mindset added.
+- **`/pb-secrets` v1.1.0.** Integration section removed. Environment variables deliver secrets, never store them (the one rule `/pb-security`, `/pb-hardening` and `/pb-patterns-security` now cite); SOPS files are named `*.enc.env` so sops detects the format, and `.gitignore` keeps them committable; deploys use `sops exec-env` with `docker compose`; key rotation is `updatekeys` then `sops rotate`, and the removed key still reads git history.
+- **`/pb-hardening` v1.1.0.** Integration section removed. Docker-published ports bypass UFW (gotcha beside the firewall block: publish only what the proxy serves, bind the rest to loopback, filter in DOCKER-USER); a line on who reboots for kernel updates; the Redis password comes from a mounted secret, not the environment; `KbdInteractiveAuthentication`, fail2ban `backend = systemd`, verification by `sshd -T`; pinned image tag and a supported Node LTS.
+- **`/pb-security` v1.4.0.** Integration section removed. The SSRF example checks every resolved address and connects to the checked one with TLS hostname verification; the open-redirect example rejects backslashes and non-slash paths; secrets, PII and password rules follow `/pb-secrets`, `/pb-logging` and NIST SP 800-63B (length plus breached-password check, no composition rules; argon2id, scrypt or bcrypt); secret scanning names gitleaks.
 - **`/pb-huddle` v1.9.0.** A command the close rules is dry-run and diffed against the untouched base; re-huddle messages each agent once, then spawns fresh agents from the brief and findings files.
 - **`/pb-claude-global` v2.13.0.** Register covers tag messages and CHANGELOG entries; length ceilings become defaults (commit subject only, PR body one sentence of what plus upgrader impact); the drafting step checks its own text; process vocabulary named under Never in public text. Mindset added.
 - **`/pb-commit` v2.4.0.** Message Register points to the register instead of restating a body length, and checks the drafted message before committing. Mindset added.
@@ -22,7 +30,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **`/pb-context` v1.1.0.** Release step tags with the release title and publishes notes from a file.
 - **`/pb-handcraft` v1.6.1.** Lens 6 says text drafted after the pass is checked by the step that drafts it.
 - **`/pb-forge` v1.9.0.** Peer and Land check their drafted text against the register; a change pulled from a release is removed by rebuilding the range, not by a forward revert.
-- **`/pb-alex-infra` v1.4.0.** Spaced double hyphens replaced.
+- **`/pb-alex-infra` v1.4.0.** Spaced double hyphens replaced. Examples cut to one failure-mode line per review category and two one-line examples; a failed rollout stalls and is rolled back by command; images pinned; Related names Linus for correctness.
 - **`/pb-resume` v1.12.0.** Spaced double hyphens replaced. Step 0c sends durable notes to the home `/pb-pause` Step 0 assigns.
 - **`/pb-review-code` v2.4.0.** Spaced double hyphens replaced.
 - **`/pb-todo-implement` v1.4.0.** Spaced double hyphens replaced.
@@ -30,7 +38,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **`/pb-claude-orchestration` v1.5.2.** Spaced double hyphens replaced.
 - **`/pb-storage` v2.1.0.** Spaced double hyphens replaced.
 - **`/pb-greenfield` v2.0.2.** Spaced double hyphens replaced.
-- **`/pb-threat-hunt` v1.1.1.** Spaced double hyphens replaced.
+- **`/pb-threat-hunt` v1.1.1.** Spaced double hyphens replaced. Step 11 counts 6 report fields (command, skill and methodology); the SHA-pin search adds `-P` for its look-ahead, and the NoSQL search escapes its brace.
 
 ## [v2.35.0] - 2026-11-05
 

@@ -6,9 +6,9 @@ difficulty: "advanced"
 model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-hardening', 'pb-security', 'pb-deployment']
-last_reviewed: "2026-11-04"
-version: "1.0.1"
-version_notes: "v1.0.1: History purge and secret scanning point to /pb-git-hygiene (git filter-repo) and gitleaks; the git filter-branch recipe and the git-secrets block are gone."
+last_reviewed: "2026-11-05"
+version: "1.1.0"
+version_notes: "v1.1.0: Integration section removed. Environment variables deliver secrets, never store them; SOPS files keep a .enc.env suffix so the format is detected; deploys use sops exec-env with docker compose; key rotation re-wraps with updatekeys, then sops rotate, and notes git history."
 breaking_changes: []
 ---
 # Secrets Management
@@ -46,6 +46,10 @@ A leaked secret is a security incident. Treat secrets as radioactive: minimize e
 
 Different environments have different security requirements.
 
+### Environment Variables Deliver, They Do Not Store
+
+Outside local development, a secret lives in a store: a secrets manager, a SOPS-encrypted file, or the CI platform's secrets. An environment variable only carries it from the store into the process at start. Never put secret values in an image, a Dockerfile, or a compose file in git. Anything that reads the process environment reads the secret (`docker inspect`, `/proc/<pid>/environ`, child processes, crash reports), so where the platform mounts secrets as files (Compose or Kubernetes `secrets`), prefer the file.
+
 ### Local Development
 
 **Never commit secrets. Ever.**
@@ -57,7 +61,9 @@ Different environments have different security requirements.
 .env.*.local
 *.pem
 *.key
-secrets/
+# SOPS-encrypted files are committed
+secrets/*
+!secrets/*.enc.env
 ```
 
 **Local secrets pattern:**
@@ -120,14 +126,8 @@ deploy:
 SOPS-encrypted files, limited access.
 
 ```bash
-# Decrypt for deployment
-sops -d secrets/staging.env > .env
-
-# Deploy
-docker-compose up -d
-
-# Clean up decrypted file
-rm .env
+# Decrypt into one command's environment; no file on disk
+sops exec-env secrets/staging.enc.env 'docker compose up -d'
 ```
 
 ### Production Environment
@@ -227,44 +227,43 @@ API_KEY=sk_live_abc123...
 JWT_SECRET=32_byte_random_hex_value
 EOF
 
-# Encrypt with SOPS
-sops -e secrets/production.env > secrets/production.env.enc
+# Encrypt with SOPS. Keep the .env suffix: sops reads the format from it
+sops -e secrets/production.env > secrets/production.enc.env
 
 # Remove plaintext (IMPORTANT!)
 rm secrets/production.env
 
 # Verify encryption
-cat secrets/production.env.enc  # Should show encrypted values
+cat secrets/production.enc.env  # Should show encrypted values
 ```
 
 ### Decrypt for Deployment
 
 ```bash
-# Decrypt to stdout (preferred - no file on disk)
-sops -d secrets/production.env.enc | docker-compose --env-file /dev/stdin up -d
-
-# Or decrypt to file temporarily
-sops -d secrets/production.env.enc > .env
-docker-compose up -d
-rm .env  # Clean up immediately
+# Decrypt into one command's environment (preferred: no file on disk)
+sops exec-env secrets/production.enc.env 'docker compose up -d'
 ```
+
+Compose hands a variable to a container only where the compose file names it (`environment: [DATABASE_URL]`); the shell environment alone reaches interpolation, not the container.
 
 ### Edit Encrypted Files
 
 ```bash
 # SOPS opens in editor, decrypts, then re-encrypts on save
-sops secrets/production.env.enc
+sops secrets/production.enc.env
 ```
 
 ### Key Rotation
 
 ```bash
-# Add new key to .sops.yaml, then updatekeys
-sops updatekeys secrets/production.env.enc
+# 1. Replace the old recipient with the new one in .sops.yaml, then re-wrap the data key
+sops updatekeys -y secrets/production.enc.env
 
-# Old keys can still decrypt during transition
-# Remove old keys from .sops.yaml when rotation complete
+# 2. Generate a new data key and re-encrypt every value with it
+sops rotate -i secrets/production.enc.env
 ```
+
+`updatekeys` alone keeps the data key, so a removed recipient who ever decrypted the file can still read new versions; `rotate` closes that. Neither touches git history: the removed key still decrypts every committed version. When a key is removed because it leaked or its holder left, rotate the secret values too.
 
 ---
 
@@ -475,8 +474,8 @@ If a secret is exposed, act immediately.
 # Tokens: invalidate in auth system
 
 # 3. Deploy with new secret
-sops -e secrets/production.env > secrets/production.env.enc
-git add secrets/production.env.enc
+sops secrets/production.enc.env   # replace the leaked value, save
+git add secrets/production.enc.env
 git commit -m "security: rotate leaked credentials"
 # Deploy immediately
 ```
@@ -547,35 +546,15 @@ fi
 
 ---
 
-## Integration with Playbook
-
-**Part of production readiness:**
-- `/pb-hardening` - Infrastructure security
-- `/pb-secrets` - Secrets management (this command)
-- `/pb-security` - Application security review
-- `/pb-deployment` - Deployment strategies
-
-**Workflow:**
-```
-Development (local .env)
-    ↓
-CI/CD (platform secrets)
-    ↓
-Staging (SOPS-encrypted)
-    ↓
-Production (secrets manager or SOPS)
-```
-
----
-
 ## Quick Commands
 
 | Action | Command |
 |--------|---------|
 | Generate random secret | `openssl rand -hex 32` |
-| Encrypt with SOPS | `sops -e file.env > file.env.enc` |
-| Decrypt with SOPS | `sops -d file.env.enc` |
-| Edit encrypted file | `sops file.env.enc` |
+| Encrypt with SOPS | `sops -e file.env > file.enc.env` |
+| Decrypt with SOPS | `sops -d file.enc.env` |
+| Edit encrypted file | `sops file.enc.env` |
+| Rotate the data key | `sops rotate -i file.enc.env` |
 | Scan for secrets, history included | gitleaks (see `/pb-git-hygiene`) |
 
 ---

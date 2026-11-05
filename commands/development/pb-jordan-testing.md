@@ -6,9 +6,9 @@ difficulty: "advanced"
 model_hint: "opus"
 execution_pattern: "sequential"
 related_commands: ['pb-testing', 'pb-preamble', 'pb-design-rules', 'pb-review-tests', 'pb-standards']
-last_reviewed: "2026-07-13"
-version: "1.4.0"
-version_notes: "v1.4.0: Add Boundary & Authority section (lane, routes, collision-pair callout, domain authority); drop legacy footer."
+last_reviewed: "2026-11-05"
+version: "1.5.0"
+version_notes: "v1.5.0: Examples use a real test database and mock only external services; signup hashes with bcrypt; the concurrency test no longer claims to prove the lock; the connection-pool claim is gone."
 breaking_changes: []
 ---
 
@@ -379,13 +379,13 @@ def test_counter_concurrent():
     for t in threads:
         t.join()
 
-    assert c.count == 100  # Would fail without lock
+    assert c.count == 100
 ```
 
 Why this works:
 - Single-threaded case tested ✓
 - Concurrent case tested ✓
-- Would catch race conditions ✓
+- Not proof of the lock: CPython rarely loses an increment here; a race shows only under a forced interleaving
 
 #### 4. Data Integrity & Invariants
 
@@ -487,7 +487,7 @@ Database connection pool exhausted in production: Hangs. Tests never saw it.
 **Good pattern:**
 ```python
 import pytest
-from sqlalchemy import create_engine, Pool
+from sqlalchemy import create_engine
 
 def save_user_to_database(user, db_connection):
     # Explicit connection injection for testability
@@ -528,7 +528,6 @@ Why this works:
 - Real database schema tested ✓
 - Query correctness verified ✓
 - Error handling tested ✓
-- Would catch connection pool issues ✓
 
 ---
 
@@ -624,42 +623,40 @@ def process_payment(user_id, amount, db, payment_processor):
 
     return transaction
 
-def test_process_payment_success(mock_db, mock_payment):
-    mock_db.get_user.return_value = User(id=123, card_id="card_123")
+# db: a real test database, rolled back after each test; only the payment processor is mocked
+def test_process_payment_success(db, mock_payment):
+    user = db.insert_user(card_id="card_123")
     mock_payment.charge.return_value = {'id': 'charge_456'}
-
-    result = process_payment(123, 100, mock_db, mock_payment)
+    result = process_payment(user.id, 100, db, mock_payment)
 
     assert result.status == 'completed'
     assert result.amount == 100
     mock_payment.charge.assert_called_with('card_123', 100)
 
-def test_process_payment_user_not_found(mock_db, mock_payment):
-    mock_db.get_user.return_value = None
-
+def test_process_payment_user_not_found(db, mock_payment):
     with pytest.raises(ValueError):
-        process_payment(999, 100, mock_db, mock_payment)
+        process_payment(999, 100, db, mock_payment)
 
-def test_process_payment_invalid_amount(mock_db, mock_payment):
+def test_process_payment_invalid_amount(db, mock_payment):
     with pytest.raises(ValueError):
-        process_payment(123, -10, mock_db, mock_payment)
+        process_payment(123, -10, db, mock_payment)
 
-def test_process_payment_charge_fails(mock_db, mock_payment):
-    mock_db.get_user.return_value = User(id=123, card_id="card_123")
+def test_process_payment_charge_fails(db, mock_payment):
+    user = db.insert_user(card_id="card_123")
     mock_payment.charge.side_effect = PaymentError("card declined")
 
     with pytest.raises(PaymentError):
-        process_payment(123, 100, mock_db, mock_payment)
+        process_payment(user.id, 100, db, mock_payment)
 
     # Verify transaction was NOT created on failure
-    mock_db.create_transaction.assert_not_called()
+    assert db.transactions_for(user.id) == []
 ```
 
 Why this works:
 - Happy path tested ✓
 - Error cases tested ✓
 - Invariants checked (amount > 0) ✓
-- Dependencies mocked ✓
+- Real database; only the external payment processor mocked ✓
 - Would catch most production bugs ✓
 
 ### Example 2: User Signup
@@ -667,7 +664,7 @@ Why this works:
 **BEFORE (No error cases):**
 ```python
 def create_user(email, password):
-    user = User(email=email, password=hash(password))
+    user = User(email=email, password_hash=bcrypt.hashpw(password.encode(), bcrypt.gensalt()))
     db.save(user)
     send_welcome_email(email)
     return user
@@ -691,42 +688,39 @@ def create_user(email, password, db, email_service):
     if existing:
         raise ValueError("email already in use")
 
-    user = User(email=email, password=hash(password))
+    user = User(email=email, password_hash=bcrypt.hashpw(password.encode(), bcrypt.gensalt()))
     db.save(user)
 
     try:
         email_service.send_welcome_email(email)
     except EmailServiceError as e:
         # User created but email failed
-        logger.error(f"Welcome email failed for {email}: {e}")
+        logger.error(f"Welcome email failed for user {user.id}: {e}")
         # Don't fail-user can still login
 
     return user
 
-def test_create_user_success(mock_db, mock_email):
-    mock_db.find_user_by_email.return_value = None
-
-    user = create_user("john@example.com", "password123", mock_db, mock_email)
+def test_create_user_success(db, mock_email):
+    user = create_user("john@example.com", "password123", db, mock_email)
 
     assert user.email == "john@example.com"
     mock_email.send_welcome_email.assert_called_with("john@example.com")
 
-def test_create_user_invalid_email(mock_db, mock_email):
+def test_create_user_invalid_email(db, mock_email):
     with pytest.raises(ValueError):
-        create_user("invalid_email", "password123", mock_db, mock_email)
+        create_user("invalid_email", "password123", db, mock_email)
 
-def test_create_user_duplicate_email(mock_db, mock_email):
-    mock_db.find_user_by_email.return_value = User(email="john@example.com")
+def test_create_user_duplicate_email(db, mock_email):
+    create_user("john@example.com", "password123", db, mock_email)
 
     with pytest.raises(ValueError):
-        create_user("john@example.com", "password123", mock_db, mock_email)
+        create_user("john@example.com", "password123", db, mock_email)
 
-def test_create_user_email_service_fails(mock_db, mock_email):
-    mock_db.find_user_by_email.return_value = None
+def test_create_user_email_service_fails(db, mock_email):
     mock_email.send_welcome_email.side_effect = EmailServiceError("service down")
 
     # Should NOT raise-graceful degradation
-    user = create_user("john@example.com", "password123", mock_db, mock_email)
+    user = create_user("john@example.com", "password123", db, mock_email)
 
     assert user.email == "john@example.com"
     # User created even though email failed

@@ -6,16 +6,16 @@ difficulty: "advanced"
 model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-security', 'pb-observability', 'pb-incident', 'pb-guide', 'pb-testing']
-last_reviewed: "2026-04-26"
-version: "1.1.0"
-version_notes: "v1.1.0: Reference global GitHub Artifact Register rule for review-comment register."
+last_reviewed: "2026-11-05"
+version: "1.2.0"
+version_notes: "v1.2.0: PII defined (log user_id; IPs only on security events, with retention); samples drop emails and the payment DEBUG override; JSONFormatter reads extra= fields from the record and keeps tracebacks; Mindset label."
 breaking_changes: []
 ---
 # Logging Strategy & Standards
 
 Guidance for designing effective logging that aids troubleshooting without creating noise.
 
-**Principle:** Good logging embodies `/pb-preamble` thinking (reveal assumptions, surface problems) and `/pb-design-rules` thinking (especially Transparency and Silence: systems should be observable when important, quiet otherwise).
+**Mindset:** Good logging embodies `/pb-preamble` thinking (reveal assumptions, surface problems) and `/pb-design-rules` thinking (especially Transparency and Silence: systems should be observable when important, quiet otherwise).
 
 Logs must invite scrutiny. They should reveal assumptions and make failures obvious, not hide them with verbosity or silence.
 
@@ -69,7 +69,7 @@ logger.debug("Cache hit for key: user_profile_123")
 **Use for**: Important business events and state changes
 
 ```python
-logger.info("User registered", extra={"user_id": 456, "email": "user@example.com"})
+logger.info("User registered", extra={"user_id": 456, "plan": "free"})
 logger.info("Order created", extra={"order_id": "ORD-789", "customer_id": 456, "total": 99.99})
 logger.info("Payment processed successfully", extra={"payment_id": "PAY-123", "amount": 99.99})
 logger.info("Job completed", extra={"job_id": 999, "duration_ms": 5000, "status": "success"})
@@ -191,7 +191,7 @@ logger.info("User login successful", extra={
 })
 
 logger.warning("Failed login attempt", extra={
-    "email": "user@example.com",  # OK to log email, not password
+    "user_id": 789,  # None for an unknown account; never the email typed
     "attempt": 3,
     "reason": "invalid_password"
 })
@@ -287,15 +287,19 @@ logger.error("Background job failed", extra={
 import json
 import logging
 
+RESERVED = set(vars(logging.makeLogRecord({}))) | {"message", "asctime"}
+
 class JSONFormatter(logging.Formatter):
     def format(self, record):
+        extras = {k: v for k, v in vars(record).items() if k not in RESERVED}  # extra= keys land here
         return json.dumps({
             "timestamp": self.formatTime(record),
             "level": record.levelname,
             "message": record.getMessage(),
             "logger": record.name,
-            **record.extra if hasattr(record, 'extra') else {}
-        })
+            **({"exc_info": self.formatException(record.exc_info)} if record.exc_info else {}),
+            **extras,
+        }, default=str)
 
 logger = logging.getLogger(__name__)
 handler = logging.StreamHandler()
@@ -305,7 +309,7 @@ logger.addHandler(handler)
 # Usage:
 logger.info("User registered", extra={
     "user_id": 123,
-    "email": "user@example.com"
+    "plan": "free"
 })
 ```
 
@@ -382,7 +386,6 @@ logging.basicConfig(level=getattr(logging, log_level))
 
 # Specific module log levels
 logging.getLogger('vendor_library').setLevel(logging.WARNING)  # Less verbose for 3rd party
-logging.getLogger('myapp.payment').setLevel(logging.DEBUG)      # More verbose for critical
 ```
 
 ---
@@ -447,6 +450,8 @@ logger.warning("API request timed out", extra={
 
 ### Problem: Logging Sensitive Data
 
+**PII here** means names, email addresses, phone numbers, postal addresses, government IDs, card numbers and free text a user typed. Log the internal `user_id` instead. IP addresses are personal data too: log them only on security events (logins, lockouts) and give those logs a retention limit.
+
 **[NO] Bad:**
 ```python
 logger.info("User login", extra={
@@ -460,8 +465,7 @@ logger.info("User login", extra={
 ```python
 logger.info("User login successful", extra={
     "user_id": user.id,
-    "email_hash": hash(user.email),  # Hash for verification
-    "ip_address": request.remote_addr
+    "ip_address": request.remote_addr  # security event: see the retention rule above
 })
 ```
 
@@ -471,7 +475,7 @@ logger.info("User login successful", extra={
 
 Before deploying, verify:
 
-- [ ] **No sensitive data**: No passwords, API keys, PII in logs
+- [ ] **No sensitive data**: No passwords, API keys, or PII as defined under Logging Sensitive Data
 - [ ] **Appropriate levels**: DEBUG/INFO in right places
 - [ ] **Unique identifiers**: Include IDs (user_id, order_id, request_id)
 - [ ] **Correlation IDs**: All related requests traceable (microservices)

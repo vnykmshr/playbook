@@ -6,9 +6,9 @@ difficulty: "advanced"
 model_hint: "opus"
 execution_pattern: "sequential"
 related_commands: ['pb-secrets', 'pb-security', 'pb-deployment', 'pb-server-hygiene', 'pb-patterns-resilience']
-last_reviewed: "2026-06-10"
-version: "1.0.0"
-version_notes: "v2.10.0 baseline"
+last_reviewed: "2026-11-05"
+version: "1.1.0"
+version_notes: "v1.1.0: Integration section removed. Docker-published ports bypass UFW (gotcha beside the firewall block); who reboots for kernel updates; Redis password from a mounted secret, not the environment; KbdInteractiveAuthentication, fail2ban systemd backend, sshd -T verification; pinned image tag and a supported Node LTS."
 breaking_changes: []
 ---
 # Production Security Hardening
@@ -64,7 +64,7 @@ PermitRootLogin prohibit-password
 MaxAuthTries 3
 
 # Disable unused authentication methods
-ChallengeResponseAuthentication no
+KbdInteractiveAuthentication no
 UsePAM yes
 
 # Timeout idle sessions
@@ -82,8 +82,8 @@ sudo systemctl restart sshd
 # Test key-based login works BEFORE disabling password auth
 ssh -o PasswordAuthentication=no user@server
 
-# Verify password auth is disabled
-grep "PasswordAuthentication no" /etc/ssh/sshd_config
+# Verify the effective config (an earlier sshd_config.d/*.conf match wins over the main file)
+sudo sshd -T | grep -iE '^(passwordauthentication|kbdinteractiveauthentication) '
 ```
 
 ### Firewall (UFW)
@@ -113,6 +113,8 @@ sudo ufw status verbose
 sudo ufw allow from 10.0.0.0/8 to any port 5432  # PostgreSQL from internal network
 ```
 
+**Docker bypasses UFW.** A port a container publishes (`ports: - "5432:5432"`) is reachable from anywhere whatever `ufw` says: Docker writes its own iptables rules ahead of UFW's. Publish only what the reverse proxy serves, bind the rest to loopback (`127.0.0.1:5432:5432`) or leave it unpublished, and put extra host filtering in the `DOCKER-USER` chain. In `docker ps --format '{{.Ports}}'`, `0.0.0.0:` means public.
+
 ### Fail2ban
 
 Protect against brute-force attacks.
@@ -126,7 +128,8 @@ sudo apt install fail2ban
 enabled = true
 port = ssh
 filter = sshd
-logpath = /var/log/auth.log
+# Read the journal: journald-only hosts (Debian 12+) have no /var/log/auth.log
+backend = systemd
 maxretry = 3
 bantime = 86400   # 24 hours
 findtime = 600    # 10 minute window
@@ -195,7 +198,7 @@ Start with no capabilities, add only what's needed.
 # docker-compose.yml
 services:
   app:
-    image: myapp:latest
+    image: myapp:v1.2.3
     cap_drop:
       - ALL
     cap_add:
@@ -219,8 +222,8 @@ services:
 Never run containers as root.
 
 ```dockerfile
-# Dockerfile
-FROM node:20-slim
+# Dockerfile (a supported LTS major; Node 20 reached end of life in April 2026)
+FROM node:24-slim
 
 # Create non-root user
 RUN groupadd -r appuser && useradd -r -g appuser appuser
@@ -442,18 +445,24 @@ Internal services should authenticate each other.
 ```yaml
 services:
   redis:
-    command: redis-server --requirepass ${REDIS_PASSWORD}
-    environment:
-      - REDIS_PASSWORD=${REDIS_PASSWORD}
+    command: ["redis-server", "/run/secrets/redis.conf"]  # holds: requirepass <password>
+    secrets: [redis.conf]
     networks:
       - internal
 
   api:
-    environment:
-      - REDIS_URL=redis://:${REDIS_PASSWORD}@redis:6379
+    secrets: [redis_password]  # the app reads /run/secrets/redis_password
     networks:
       - internal
+
+secrets:  # both files written from the store at deploy, never committed
+  redis.conf:
+    file: ./secrets/redis.conf
+  redis_password:
+    file: ./secrets/redis_password
 ```
+
+The password stays out of the compose file, the environment and `docker inspect` (why: `/pb-secrets`). The files must be readable by the container user; the official redis image runs as uid 999.
 
 **Even on internal networks**, use authentication. Defense-in-depth.
 
@@ -516,6 +525,8 @@ Unattended-Upgrade::Allowed-Origins {
 Unattended-Upgrade::Automatic-Reboot "false";
 Unattended-Upgrade::Mail "admin@example.com";
 ```
+
+With automatic reboot off, a kernel or libc update is installed but not running until someone reboots. Name who reboots and when (`/var/run/reboot-required` exists while one is pending), or set `Automatic-Reboot "true"` with `Automatic-Reboot-Time` on hosts that can take it.
 
 ### File Permissions
 
@@ -614,7 +625,7 @@ Before deploying to production:
 - [ ] Security groups follow least privilege
 
 ### Secrets
-- [ ] No secrets in code or environment
+- [ ] No secret values in code, images or compose files (env vars deliver them, never store them: `/pb-secrets`)
 - [ ] Secrets encrypted at rest
 - [ ] Secret rotation configured
 - [ ] See `/pb-secrets` for comprehensive guidance
@@ -648,26 +659,6 @@ docker ps --format "{{.Names}}: {{.Ports}}"
 # Verify network isolation
 docker network ls
 docker network inspect internal
-```
-
----
-
-## Integration with Playbook
-
-**Part of production readiness:**
-- `/pb-hardening` - Harden infrastructure (this command)
-- `/pb-secrets` - Manage secrets securely
-- `/pb-security` - Application security review
-- `/pb-deployment` - Deployment strategies
-- `/pb-dr` - Disaster recovery planning
-
-**Workflow:**
-```
-Development → Security Review (/pb-security)
-           → Infrastructure Hardening (/pb-hardening)
-           → Secrets Setup (/pb-secrets)
-           → Deployment (/pb-deployment)
-           → Monitoring (/pb-observability)
 ```
 
 ---
