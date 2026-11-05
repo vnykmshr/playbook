@@ -6,9 +6,9 @@ difficulty: "advanced"
 model_hint: "opus"
 execution_pattern: "sequential"
 related_commands: ['pb-review', 'pb-review-hygiene', 'pb-review-tests', 'pb-security', 'pb-cycle']
-last_reviewed: "2026-07-31"
-version: "2.3.0"
-version_notes: "v2.3.0: Family decision tree forks on whether the author is reachable -- an unreachable author routes to /pb-review-incoming, since this command's feedback loop assumes someone to hand findings back to. v2.2.0: Reference global GitHub Artifact Register rule for review-comment register via single-line pointer."
+last_reviewed: "2026-11-05"
+version: "2.4.0"
+version_notes: "v2.4.0: Spaced double hyphens replaced."
 breaking_changes: []
 ---
 # Code Review (Specific Changes)
@@ -174,7 +174,7 @@ Q1: Is this for a specific change (PR/commit)?
 - **Be curious** - Ask questions when you don't understand a choice
 - **Surface criticals individually** - For MUST-level findings, raise one issue at a time. Don't batch critical findings into a list - each one requires explicit acknowledgment before moving to the next
 
-**Comment register:** `~/.claude/CLAUDE.md` § GitHub Artifact Register. State the issue, cite the line, stop -- the reader wrote the code.
+**Comment register:** `~/.claude/CLAUDE.md` § GitHub Artifact Register. State the issue, cite the line, stop: the reader wrote the code.
 
 ### Feedback Categories
 
