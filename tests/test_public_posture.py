@@ -101,3 +101,13 @@ def test_own_site_urls_point_at_a_built_page():
             if page and not (page.endswith(".html") and page[:-5] in summary):
                 bad.append(f"{path}: {rest}")
     assert not bad, f"URLs into the reference site that name no built page: {bad}"
+
+
+def test_nothing_under_todos_or_claude_is_tracked():
+    """Both hold session state and local config; `.gitignore` is the only thing keeping them out."""
+    r = subprocess.run(
+        ["git", "-C", str(REPO), "ls-files", "--", "todos", ".claude"],
+        capture_output=True, text=True,
+    )
+    assert r.returncode == 0, r.stderr
+    assert not r.stdout, f"tracked under todos/ or .claude/: {r.stdout.split()}"
