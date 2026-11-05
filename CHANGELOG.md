@@ -20,7 +20,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **`/pb-release` v1.4.0.** Tag message is the release title; dispatch deploy workflows on main and verify before tagging; notes and CHANGELOG entry checked against the register before the release step.
 - **`/pb-context` v1.1.0.** Release step tags with the release title and publishes notes from a file.
 - **`/pb-handcraft` v1.6.1.** Lens 6 says text drafted after the pass is checked by the step that drafts it.
-- **`/pb-forge` v1.9.0.** Peer and Land check their drafted text against the register.
+- **`/pb-forge` v1.9.0.** Peer and Land check their drafted text against the register; a change pulled from a release is removed by rebuilding the range, not by a forward revert.
 - **`/pb-alex-infra` v1.4.0.** Spaced double hyphens replaced.
 - **`/pb-resume` v1.12.0.** Spaced double hyphens replaced.
 - **`/pb-review-code` v2.4.0.** Spaced double hyphens replaced.

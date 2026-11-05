@@ -8,7 +8,7 @@ execution_pattern: "interactive"
 related_commands: ['pb-what-next', 'pb-review', 'pb-huddle', 'pb-preflight', 'pb-ship']
 last_reviewed: "2026-11-05"
 version: "1.9.0"
-version_notes: "v1.9.0: Peer and Land check their drafted text against the register."
+version_notes: "v1.9.0: Peer and Land check their drafted text against the register; a change pulled from a release is removed by rebuilding the range, not by a forward revert."
 breaking_changes: []
 ---
 # Lifecycle Step-Runner
@@ -74,7 +74,7 @@ Self-gate runs in three phases: find, then vet and fix, then judge. Every gate t
 
 1. **Vet.** The lead from the findings' lane rules on each one: TAKE with the fix, REJECT with why, or DEFER with where it goes. The lead convenes two or three more lenses, as in `/pb-huddle`, only for findings it cannot settle alone (disputed, cross-lane, or reversing a prior ruling) and briefs them with those findings only. Forge stops once with the rulings; the user confirms or overrides them.
 2. **Fix.** Start from a clean tree (`git status --porcelain` prints nothing) and record HEAD in the cursor as the pre-fix SHA. Land the TAKEs, `git add -N` any new file so the re-review diff sees it, and count the fix done only when the project's tests pass on their exit code (`/pb-review --no-auto-commit` holds the commit if the user wants signoff first).
-3. **Re-review.** An independent pass on the diff from the pre-fix SHA to the working tree, committed or not: the fixes are a new surface. Findings go back to the vet. When they are counterexamples to a fix that approximates a spec (a regex standing in for a parser), propose the instrument change at round 1, not at the cap.
+3. **Re-review.** An independent pass on the diff from the pre-fix SHA to the working tree, committed or not: the fixes are a new surface. Findings go back to the vet. When they are counterexamples to a fix that approximates a spec (a regex standing in for a parser), propose the instrument change at round 1, not at the cap. A change pulled out of the release whose command was versioned only for it is removed by rebuilding the range without it, not by a forward revert, which leaves a second version change in the same release.
 
 Stop when a vet takes nothing. At most two re-review rounds: if a third is needed, forge stops and proposes a guard or test for that defect class, and the user decides, as `/pb-review`'s loop detection escalates.
 
