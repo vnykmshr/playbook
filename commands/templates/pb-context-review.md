@@ -6,9 +6,9 @@ difficulty: "intermediate"
 model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-pause', 'pb-resume', 'pb-context', 'pb-claude-global', 'pb-evolve']
-last_reviewed: "2026-11-04"
-version: "2.4.0"
-version_notes: "v2.4.0: Step 4 consolidates rather than trims: the growth is usually earned rules, so delete what is closed, move durable lessons to their own file, keep one index line each; trimming the longest paragraph never asks whether an item still belongs."
+last_reviewed: "2026-11-05"
+version: "2.4.1"
+version_notes: "v2.4.1: Daily hygiene points at /pb-pause Step 3, where it lives; pause entries are archived at each pause, not after resume."
 breaking_changes: ["pb-review-context merged into this command; use `--violations` mode instead"]
 ---
 # Context Layer Review & Hygiene
@@ -375,7 +375,7 @@ rm -rf /tmp/context-audit-*
 
 ## Integration with /pb-pause and /pb-evolve
 
-Daily context hygiene is embedded in `/pb-pause` (Step 6):
+Daily context hygiene is embedded in `/pb-pause` (Step 3):
 - Writes concise pause entry
 - Archives old pause entries
 - Reports context layer sizes
@@ -398,7 +398,7 @@ Daily context hygiene is embedded in `/pb-pause` (Step 6):
 ### Structural Audit
 | Anti-Pattern | Problem | Fix |
 |--------------|---------|-----|
-| Never archiving pause notes | 650+ lines of historical entries | Archive after each resume |
+| Never archiving pause notes | 650+ lines of historical entries | Archive at each pause |
 | Copying info across layers | Same facts in 4 files | One canonical home, others cross-reference |
 | Detailed task logs in working context | 243 lines when target is 50 | Keep snapshot, move details to done/ |
 | Explaining the context system in context | Meta-context burns budget | System works without self-description |

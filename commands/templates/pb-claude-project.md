@@ -6,9 +6,9 @@ difficulty: "beginner"
 model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-claude-global', 'pb-claude-orchestration', 'pb-context', 'pb-onboarding', 'pb-greenfield']
-last_reviewed: "2026-11-04"
-version: "1.4.3"
-version_notes: "v1.4.3: The Relevant Playbooks sample names /pb-guide in place of the retired /pb-guide-python. Nested samples use a 4-backtick outer fence, so they render as written. Body prose drops spaced double hyphens."
+last_reviewed: "2026-11-05"
+version: "1.4.4"
+version_notes: "v1.4.4: The skeleton's Relevant Playbooks row names /pb-guide in place of the retired /pb-guide-[lang]. Mindset cites /pb-design-rules."
 breaking_changes: ['Generated skeleton drops Testing, Environment and Session Quick Start (restated Commands); Tech Stack and Structure become optional', 'No per-commit state in the generated file -- the Status line and Current version are gone; the working context is linked instead']
 ---
 # Generate Project CLAUDE.md
@@ -21,7 +21,7 @@ Generate a project-specific `.claude/CLAUDE.md` by analyzing the current project
 
 **Context efficiency:** This file is loaded into every session. Keep it **under 200 lines**, Anthropic's published target; longer files consume more context and reduce adherence. Move reference material to `docs/` and link it.
 
-**Mindset:** Design Rules emphasize "clarity over cleverness" - generated context should be immediately useful, not comprehensive.
+**Mindset:** Apply `/pb-design-rules` thinking (clarity over cleverness): generated context should be immediately useful, not comprehensive.
 
 **Resource Hint:** sonnet - project analysis and template generation from existing structure.
 
@@ -111,7 +111,7 @@ Create `.claude/CLAUDE.md` with this structure. Every section is optional except
 
 | Command | Relevance |
 |---------|-----------|
-| `/pb-guide-[lang]` | Language-specific SDLC |
+| `/pb-guide` | SDLC tiers; language gates in Appendix C |
 | `/pb-patterns-[type]` | Applicable patterns |
 
 ---

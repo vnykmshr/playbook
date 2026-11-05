@@ -188,7 +188,7 @@ Revisit: In [TIMEFRAME] if [CONDITIONS]
 |----------|------|
 | Core mindset | `/pb-preamble` - sections I-V |
 | When to challenge | `/pb-preamble` - section II.5 |
-| Failure modes | `/pb-preamble` - section VIII |
+| Failure modes | `/pb-preamble` - section VII |
 | Async communication | `/pb-preamble-async` |
 | Challenging my boss | `/pb-preamble-power` - section VI |
 | Building team safety | `/pb-preamble-power` - section VII |

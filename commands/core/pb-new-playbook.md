@@ -6,9 +6,9 @@ difficulty: "beginner"
 model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-evolve', 'pb-review-playbook', 'pb-standards', 'pb-documentation']
-last_reviewed: "2026-11-04"
-version: "2.1.2"
-version_notes: "v2.1.2: The Review row's hint is opus; haiku is subagent-only, never a command's hint."
+last_reviewed: "2026-11-05"
+version: "2.1.3"
+version_notes: "v2.1.3: Naming examples name /pb-release in place of the nonexistent pb-deploy; the skill-scope section drops its claim about how other tools' subagents are trained."
 breaking_changes: []
 ---
 # Create New Engineering Playbook
@@ -59,7 +59,7 @@ What type of playbook is this? Classification determines required sections.
 
 | Pattern | Use When | Examples |
 |---------|----------|----------|
-| `pb-<action>` | Single clear action | pb-commit, pb-ship, pb-deploy |
+| `pb-<action>` | Single clear action | pb-commit, pb-ship, pb-release |
 | `pb-<noun>` | Concept or thing | pb-security, pb-testing |
 | `pb-<category>-<target>` | Part of a family | pb-review-code, pb-patterns-api |
 | `pb-<noun>-<noun>` | Compound concept | pb-design-rules, pb-knowledge-transfer |
@@ -67,7 +67,7 @@ What type of playbook is this? Classification determines required sections.
 ### Naming Rules
 
 - Lowercase only, hyphens between words
-- Verb-first for actions (pb-commit, pb-deploy, pb-review)
+- Verb-first for actions (pb-commit, pb-release, pb-review)
 - Noun-first for concepts (pb-security, pb-patterns)
 - Avoid generic names (not pb-do-stuff, pb-misc)
 - Match existing family patterns (`pb-review-*` for reviews, `pb-patterns-*` for patterns)
@@ -572,7 +572,7 @@ This pass **does not**: evaluate correctness, style, performance, or security. I
 - "As a bonus, this skill can also...": scope creep
 - "Comprehensive review of...": omnibus by name
 
-**Existing playbook alignment:** the `code-simplifier`, `silent-failure-hunter`, `type-design-analyzer`, `pr-test-analyzer`, and `code-reviewer` subagents all refuse by prompt training. The `/pb-review-*` skills refuse by doc-only convention; make that refusal explicit in skill prose.
+**Existing playbook alignment:** the `/pb-review-*` skills refuse by doc-only convention; make that refusal explicit in skill prose.
 
 ---
 

@@ -13,6 +13,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- **`/pb-context-review` v2.4.1.** Daily hygiene points at `/pb-pause` Step 3; pause entries are archived at each pause, not after resume.
+- **`/pb-claude-project` v1.4.4.** The skeleton's Relevant Playbooks row names `/pb-guide` in place of the retired `/pb-guide-[lang]`. Mindset cites `/pb-design-rules`.
+- **`/pb-review-microservice` v1.2.0.** Example code cut; each section keeps its question and checklist, and the common issues and review template stay.
+- **`/pb-calm-design` v1.4.0.** Integration with Playbook section removed.
+- **`/pb-patterns` v3.0.1.** The payment scenario sends Saga failure handling to `/pb-patterns-distributed`; `/pb-incident` has none. Mindset labelled.
+- **`/pb-standards` v1.4.0.** Commit discipline states the one exception to never `git add .`: a fresh repo's first commit, then check the tree; `/pb-release` is the separate release step, not the cycle's close. Mindset labelled.
+- **`/pb-preamble` v1.2.0.** Section VII (quotes from commands that embed the preamble) removed; section III carries it, and later sections renumber. Mindset cites `/pb-design-rules`.
+- **`/pb-new-playbook` v2.1.3.** Naming examples name `/pb-release` in place of the nonexistent `pb-deploy`; the skill-scope section drops its claim about how other tools' subagents are trained.
+- **`/pb-guide` v3.1.0.** Integration with Playbook Ecosystem section removed; the tier table points at the command index, and §5 names the daily loop with `/pb-review`.
+- **`/pb-evolve` v2.1.1.** Step 3 names the trend measures and leaves their values to the cycle record; the Q3 baseline table is gone.
+- **`/pb-documentation` v1.2.0.** Level 5 sample is a process structure (Overview, Steps, Rollback) and sends releases to `/pb-release`; Compose commands use `docker compose`; Integration with Playbook section removed. Mindset cites `/pb-preamble`.
+- **`/pb-design-rules` v1.3.2.** PR review routes to `/pb-review-code`; `/pb-review-hygiene` is the periodic codebase review. Mindset cites `/pb-preamble`.
 - **`/pb-update` v1.1.0.** Tiers re-cut by mechanism (tracked, named, platform) with no semver claims; pip goes through a venv or pipx, `--break-system-packages` last; nvm is sourced before use; the update script survives `brew doctor` warnings; Platform is macOS. Mindset cites `/pb-design-rules`.
 - **`/pb-setup` v1.1.0.** Quick Setup Script removed. Claude Code DX says `install.sh` links the scripts and shows the `settings.json` wiring it leaves to you; the context-warning text matches the script. The Brewfile drops the `homebrew/bundle` and `homebrew/cask` taps.
 - **`/pb-ports` v1.1.0.** Every kill goes through one escalation in Step 4 (SIGTERM, check, then SIGKILL) on the listener only (`-sTCP:LISTEN`), so clients on the port survive. The kill quick commands, port-range and clean-slate loops, `pkill -f node` and the `killport` alias are removed. Mindset cites `/pb-design-rules`.
@@ -54,15 +66,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **`/pb-cycle` v1.3.0.** Commit step drops the with-body example and checks the subject against the register. Mindset added.
 - **`/pb-pr` v1.2.0.** Small-PR body is one sentence of what plus upgrader impact; the drafted title and body are checked against the register before the PR opens.
 - **`/pb-release` v1.4.0.** Tag message is the release title; dispatch deploy workflows on main and verify before tagging; notes and CHANGELOG entry checked against the register before the release step; run from `/pb-ship`, ship's Phase 2 reviews satisfy the Phase 1 review gates; one post-deploy watch, at least `/pb-preflight`'s 15 minutes; the hotfix CHANGELOG entry goes in a version section, not after the link footer; Integration with Playbook section removed.
-- **`/pb-context` v1.1.0.** Release step tags with the release title and publishes notes from a file.
+- **`/pb-context` v1.1.0.** The SDLC flow names the daily loop, and the release step hands off to `/pb-release`, which tags after CI is green; work tiers defer to `/pb-guide`; the line saying `/pb-start` reads the working context is gone.
 - **`/pb-handcraft` v1.6.1.** Lens 6 says text drafted after the pass is checked by the step that drafts it.
 - **`/pb-forge` v1.9.0.** Peer and Land check their drafted text against the register; a change pulled from a release is removed by rebuilding the range, not by a forward revert.
 - **`/pb-alex-infra` v1.4.0.** Spaced double hyphens replaced. Examples cut to one failure-mode line per review category and two one-line examples; a failed rollout stalls and is rolled back by command; images pinned; Related names Linus for correctness.
 - **`/pb-resume` v1.12.0.** Spaced double hyphens replaced. Step 0c sends durable notes to the home `/pb-pause` Step 0 assigns.
-- **`/pb-review-code` v2.4.0.** Spaced double hyphens replaced.
+- **`/pb-review-code` v2.4.0.** Spaced double hyphens replaced. Integration with Playbook section removed.
 - **`/pb-todo-implement` v1.4.0.** Spaced double hyphens replaced.
-- **`/pb-voice` v2.3.1.** Spaced double hyphens replaced.
-- **`/pb-claude-orchestration` v1.5.2.** Spaced double hyphens replaced.
+- **`/pb-voice` v2.3.1.** Spaced double hyphens replaced. The companion-script line says it needs a playbook clone.
+- **`/pb-claude-orchestration` v1.5.2.** Spaced double hyphens replaced. Harness Reality drops model versions, prices and its date; an independent re-derivation is the exception to never delegating your own check; the model mapping and Example 1 name the commands' real hints.
 - **`/pb-storage` v2.1.0.** Spaced double hyphens replaced. The Everything block is cut to one line; the Docker dry run uses `docker system df -v`, since prune has no dry run; space-not-freed points at local snapshots instead of `sudo purge`; the Node globals row with no command is removed; the header and Related name the recovery tiers; the disk trigger cites `/pb-doctor`. Mindset cites `/pb-design-rules`.
 - **`/pb-greenfield` v2.0.2.** Spaced double hyphens replaced.
 - **`/pb-threat-hunt` v1.1.1.** Spaced double hyphens replaced. Step 11 counts 6 report fields (command, skill and methodology); the SHA-pin search adds `-P` for its look-ahead, and the NoSQL search escapes its brace.

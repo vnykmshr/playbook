@@ -6,9 +6,9 @@ difficulty: "intermediate"
 model_hint: "sonnet"
 execution_pattern: "checklist"
 related_commands: ['pb-design-rules', 'pb-standards', 'pb-review-product', 'pb-maya-product', 'pb-a11y']
-last_reviewed: "2026-11-04"
-version: "1.3.1"
-version_notes: "v1.3.1: Related Commands: /pb-maya-product replaces the retired /pb-review-frontend."
+last_reviewed: "2026-11-05"
+version: "1.4.0"
+version_notes: "v1.4.0: Integration with Playbook section removed."
 breaking_changes: []
 ---
 
@@ -320,32 +320,6 @@ When reviewing code, ask:
 - [ ] **Consent**: Can users decline without friction or guilt?
 
 If you check all 9: Ship. If you check 6-8: Address gaps. If <6: Request redesign.
-
----
-
-## Integration with Playbook
-
-### Related to Design Rules
-
-See `/pb-design-rules`:
-- **Rule 1 (Clarity)**: Calm design is clarity extended to users
-- **Rule 3 (Silence)**: "When there's nothing to say, say nothing"
-- **Rule 5 (Simplicity)**: Minimum feature set respects user attention
-- **Rule 8 (Composition)**: Systems work together without demanding attention
-
-### Related to Standards
-
-See `/pb-standards`:
-- **Quality Bar (MLP)**: "Would you use this daily?" includes calm design
-- **Test Standards**: Test that errors are clear and recoverable
-- **Accessibility**: Keyboard-first and focus management are calm design
-
-### Related to Security & Operations
-
-See `/pb-security`, `/pb-observability`:
-- Calm systems are more observable (clear logs, metrics)
-- Calm failures are easier to debug (not hidden)
-- Graceful degradation is more secure (no cascading failures)
 
 ---
 

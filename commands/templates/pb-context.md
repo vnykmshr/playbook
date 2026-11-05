@@ -8,7 +8,7 @@ execution_pattern: "sequential"
 related_commands: ['pb-claude-project', 'pb-greenfield', 'pb-start', 'pb-resume', 'pb-onboarding']
 last_reviewed: "2026-11-05"
 version: "1.1.0"
-version_notes: "v1.1.0: Release step tags with the release title and publishes notes from a file."
+version_notes: "v1.1.0: The SDLC flow names the daily loop, and the release step hands off to /pb-release, which tags after CI is green; work tiers defer to /pb-guide; the line saying /pb-start reads the working context is gone."
 breaking_changes: []
 ---
 # [Project Name] Working Context
@@ -48,7 +48,6 @@ If the working context is stale (version mismatch, outdated commits), update it 
 
 **Integration with other playbooks:**
 - `/pb-claude-project` - Checks for working context during CLAUDE.md generation
-- `/pb-start` - Should review working context before starting work
 - `/pb-resume` - Should check and update working context when resuming
 
 ---
@@ -141,7 +140,9 @@ make rollback             # Restore previous images
 
 **Philosophy:** Stay committed to full SDLC flow - no shortcuts. Strive for bug-free, quality releases.
 
-> **Work Tiers:** S (small, <2h) | M (medium, phased) | L (large, multi-week). See `pb-guide` for tier definitions, gates, and checklists.
+**Daily loop:** `/pb-start` → code → `/pb-review` (commits) → `/pb-pr`. Steps 2-6 below are what that loop covers.
+
+> **Work Tiers:** see `pb-guide` for tier definitions, gates, and checklists.
 
 ### 1. Planning
 - Define focus area and scope
@@ -165,12 +166,12 @@ make test                 # Run all tests
 ```
 
 ### 4. Self Review
-- Review your own diff before pushing
+- Run `/pb-review` on your diff before pushing; it commits what passes
 - Check for: dead code, debug logs, hardcoded values, missing error handling
 - Verify tests cover the change
 
 ### 5. Create PR
-- Push feature branch, create PR to `main`
+- `/pb-pr`: push the feature branch, open a PR to `main`
 - Write clear PR description (what, why, how to test)
 - CI runs: lint, typecheck, tests, security scan
 - Ensure all checks green before requesting review
@@ -188,13 +189,7 @@ make test                 # Run all tests
 - Update relevant docs if needed
 
 ### 8. Release & Deploy
-```bash
-# After PR merged to main
-git tag -a vX.Y.Z -m "vX.Y.Z - <name>"
-git push origin vX.Y.Z
-gh release create vX.Y.Z --title "vX.Y.Z - <name>" --notes-file notes.md   # see /pb-release Step 2.4
-make deploy               # Deploy to production
-```
+- After the PR merges to `main`, run `/pb-release`: it tags only after CI is green on the merge commit, then deploys
 
 ### 9. Post-Deploy Verification
 - Verify prod health: `curl .../api/health`

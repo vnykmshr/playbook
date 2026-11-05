@@ -8,7 +8,7 @@ execution_pattern: "sequential"
 related_commands: ['pb-claude-global', 'pb-claude-project', 'pb-learn', 'pb-review-playbook', 'pb-new-playbook']
 last_reviewed: "2026-11-05"
 version: "1.5.2"
-version_notes: "v1.5.2: Spaced double hyphens replaced."
+version_notes: "v1.5.2: Spaced double hyphens replaced. Harness Reality drops model versions, prices and its date; an independent re-derivation is the named exception to never delegating your own check; the model mapping and Example 1 name the commands' real hints; Anti-Patterns says parallel subagent calls."
 breaking_changes: []
 ---
 # Claude Code Orchestration
@@ -41,13 +41,9 @@ breaking_changes: []
 
 Opus reasons. Sonnet builds. Haiku runs.
 
-### Harness Reality (as of 2026-09-24)
+### Harness Reality
 
-The table above is cost guidance, not a description of what the harness runs: which model a session starts on depends on plan and configuration, and `/model` shows it. Current at this date, from Anthropic's docs:
-
-- **Opus 5.5** is the default Opus model and Anthropic's recommended starting point; **Fable 5.1** is the default Fable model, for demanding long-horizon work. Both, and Sonnet 5, carry a 1M context window.
-- Fable 5.1 lists at 2.5x Opus 5.5 ($10/$50 vs $4/$20 per Mtok). The playbook's own June head-to-head found the union of two models caught the most real bugs and neither alone did, so Fable is a second lens in deliberate deep audits, not a default.
-- `/fast` speeds output on models that support it; it does not switch to a smaller model.
+The table above is cost guidance, not a description of what the harness runs: which model a session starts on depends on plan and configuration, and `/model` shows it. Fable is a second lens in deliberate deep audits, not a default: the playbook's own head-to-head found the union of two models caught the most real bugs and neither alone did.
 
 When cost discipline matters (routine dev loop, CI, automation), switch to Sonnet explicitly rather than relying on the harness default. Haiku remains subagent-only.
 
@@ -85,7 +81,7 @@ When unsure, start with sonnet. Upgrade to opus if results lack depth. Downgrade
 
 ### When to Delegate
 
-Current Opus delegates more readily than earlier models, and delegation multiplies cost and time on small tasks. Delegate only large, genuinely independent tracks. **Never delegate checking your own work:** the model already verifies its output, and a verifier subagent is documented to add cost without adding quality. The deterministic caps are `CLAUDE_CODE_MAX_SUBAGENT_SPAWN_DEPTH` and `CLAUDE_CODE_MAX_CONCURRENT_SUBAGENTS`.
+Current Opus delegates more readily than earlier models, and delegation multiplies cost and time on small tasks. Delegate only large, genuinely independent tracks. **Never delegate checking your own work:** the model already verifies its output, and a verifier subagent is documented to add cost without adding quality. The exception is an independent re-derivation of findings by a separate reviewer (see `/pb-review`). The deterministic caps are `CLAUDE_CODE_MAX_SUBAGENT_SPAWN_DEPTH` and `CLAUDE_CODE_MAX_CONCURRENT_SUBAGENTS`.
 
 **Delegate to subagents:**
 
@@ -163,9 +159,9 @@ A 1M window does not retire this hygiene. Compaction is still lossy, every turn 
 
 | Classification | Example Commands | Default Model | Delegation |
 |---------------|-----------------|---------------|------------|
-| Executor | pb-commit, pb-start, pb-deploy | sonnet | Procedural steps, well-defined |
-| Orchestrator | pb-release, pb-ship, pb-review | opus (main) | Delegates subtasks to sonnet/haiku |
-| Guide | pb-preamble, pb-design-rules | opus | Deep reasoning about principles |
+| Executor | pb-commit, pb-start, pb-deployment | sonnet | Procedural steps, well-defined |
+| Orchestrator | pb-forge | opus (main) | Delegates subtasks to sonnet/haiku |
+| Guide | pb-preamble | opus | Deep reasoning about principles |
 | Reference | `pb-patterns-*`, pb-templates | sonnet | Pattern application, lookup |
 | Review | `pb-review-*`, pb-security | opus + haiku | Phase 1: haiku automated; Phase 2-3: opus |
 
@@ -253,7 +249,7 @@ This creates a virtuous cycle: use playbooks → discover gaps → propose impro
 |-------------|--------------|-----------------|
 | Opus for file search | Expensive, no reasoning advantage | haiku subagent |
 | Haiku for architecture | Shallow reasoning, bad decisions | opus in main context |
-| Serializing independent subagents | Wastes wall-clock time | Parallel Task calls |
+| Serializing independent subagents | Wastes wall-clock time | Parallel subagent calls |
 | Loading full files for 10 lines | Context waste | Read with offset + limit |
 | Pasting plans into chat | Consumes context every turn | Store in files, reference by path |
 | Skipping compaction until forced | Lossy emergency compaction | Compact at natural breakpoints |
@@ -271,7 +267,7 @@ This creates a virtuous cycle: use playbooks → discover gaps → propose impro
 2. Explore codebase - haiku (2-3 parallel subagents): find relevant files
 3. Implementation - sonnet (main context): write code
 4. Write tests - sonnet subagent: parallel test generation
-5. Self-review - opus (main context): critical evaluation
+5. Self-review - sonnet (main context); opus on critical paths
 6. `/pb-commit` - sonnet: procedural commit workflow
 
 **Post-session reflection:**

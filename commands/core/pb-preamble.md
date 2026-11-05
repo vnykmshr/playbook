@@ -7,13 +7,15 @@ model_hint: "opus"
 execution_pattern: "reference"
 related_commands: ['pb-preamble-async', 'pb-preamble-power', 'pb-preamble-decisions', 'pb-design-rules', 'pb-think']
 last_reviewed: "2026-11-05"
-version: "1.1.1"
-version_notes: "v1.1.1: Points to the 18 design rules, not 17, with Attention beside the four clusters; the principles heading says five; the companion parts are named as shipped."
+version: "1.2.0"
+version_notes: "v1.2.0: Section VII, the list of quotes from commands that embed the preamble, is removed; section III carries how commands embed it, and later sections renumber. Mindset cites /pb-design-rules."
 breaking_changes: []
 ---
 # Collaboration Preamble: Thinking Like Peers
 
 This anchors how we think and work together. Not a process, but a mindset that every other playbook command assumes you bring.
+
+**Mindset:** Read it beside `/pb-design-rules` thinking: this command is how we work together, the design rules are what we build.
 
 **Resource Hint:** opus - Foundational philosophy; requires deep reasoning about collaboration dynamics.
 
@@ -357,55 +359,6 @@ Remember: they're operating from this preamble. They're not being rude; they're 
 
 ---
 
-## VII. Integration: Where This Anchors
-
-**This preamble is referenced by:**
-
-**Core Commands:**
-- `/pb-guide` - Scope lock is a collaborative decision, not a decree
-- `/pb-standards` - Collaboration principles section explicitly links to this
-- `/pb-documentation` - Clear writing invites healthy challenge
-
-**Development Workflow:**
-- `/pb-cycle` - Step 3: Peer Review assumes preamble thinking. Reviewer challenges, author welcomes critical feedback.
-- `/pb-commit` - Clear messages force you to explain *why*, inviting scrutiny and challenge
-- `/pb-pr` - Code review process assumes critical thinking from both author and reviewer
-- `/pb-start` - Team alignment gate explicitly includes "assumptions are explicit, disagreements surfaced"
-- `/pb-testing` - Tests are designed to catch flawed assumptions, not validate them
-
-**Planning & Architecture:**
-- `/pb-plan` - Clarify phase assumes peer-level challenge: "Clarify means ask hard questions and challenge assumptions"
-- `/pb-adr` - Alternatives and Rationale sections require explicit reasoning that can be challenged
-- `/pb-patterns-*` - Every pattern guide emphasizes: question if it fits, challenge the costs, explore alternatives
-- `/pb-performance` - "Question assumptions about slowness. Challenge whether optimization is worth the complexity cost."
-- `/pb-observability` - "Multi-perspective thinking: no single perspective is complete"
-- `/pb-deprecation` - "Challenge whether change is really necessary. Surface impact on users."
-
-**Reviews & Quality:**
-- `/pb-review` - Comprehensive review assumes critical perspective from multiple experts
-- `/pb-review-hygiene` - "Challenge architectural choices. Point out duplication and complexity. Surface flaws directly."
-- `/pb-review-tests` - "Question test assumptions. Challenge coverage claims. Point out flaky or brittle tests."
-- `/pb-review-docs` - "Find unclear sections, challenge stated assumptions, and surface gaps"
-- `/pb-security` - "Your job is to find what was missed, challenge assumptions about safety, and surface risks"
-- `/pb-review-product` - "Each perspective should challenge the others. Surface disagreements; they surface real problems."
-- `/pb-review-microservice` - "Question service boundaries. Challenge coupling. Surface design flaws early."
-- `/pb-logging` - "Logs must reveal assumptions and make failures obvious, not hide them"
-- `/pb-release` - "Challenge readiness assumptions. Surface risks directly. Don't hide issues at last gate."
-
-**Team & Operations:**
-- `/pb-team` - "Psychological safety is directly enabled by preamble thinking. When teams operate from that preamble, challenging assumptions becomes the default."
-- `/pb-incident` - "During response: be direct about status, challenge assumptions about cause, surface unknowns"
-- `/pb-standup` - "Surface blockers and risks directly. Use preamble thinking: be direct about problems, don't hide issues to seem productive."
-- `/pb-onboarding` - "New team members learn this preamble first: challenge assumptions, prefer correctness, think like peers."
-
-**Meta Commands:**
-- `/pb-what-next` - Context analysis requires critical perspective
-- `/pb-knowledge-transfer` - Transferring knowledge requires honest discussion
-
-**Every command that involves collaboration, decision-making, or review assumes this preamble.**
-
----
-
 ## Why This Matters
 
 Teams without this anchor fall into patterns:
@@ -426,7 +379,7 @@ This preamble isn't nice-to-have. It's foundational. Everything else in the play
 
 ---
 
-## VIII. When This Goes Wrong: Failure Modes
+## VII. When This Goes Wrong: Failure Modes
 
 ### Failure Mode 1: Argumentative Culture
 **What it looks like:** Team challenges everything. Every decision turns into debate. Nothing gets shipped.
@@ -529,7 +482,7 @@ This preamble isn't nice-to-have. It's foundational. Everything else in the play
 
 ---
 
-## IX. What's Next: Philosophy Expansion
+## VIII. What's Next: Philosophy Expansion
 
 Three companion parts extend it: `/pb-preamble-async` (async and distributed teams), `/pb-preamble-power` (power dynamics and psychological safety), `/pb-preamble-decisions` (decision making and dissent).
 

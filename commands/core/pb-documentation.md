@@ -6,18 +6,16 @@ difficulty: "beginner"
 model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-adr', 'pb-review-docs', 'pb-sam-documentation', 'pb-repo-readme', 'pb-onboarding']
-last_reviewed: "2026-11-04"
-version: "1.1.2"
-version_notes: "v1.1.2: Keep It Updated: each reference claim is definitionally stable or machine-checked, never in between."
+last_reviewed: "2026-11-05"
+version: "1.2.0"
+version_notes: "v1.2.0: The Level 5 sample is a process structure (Overview, Steps, Rollback) and sends releases to /pb-release, which tags after CI is green; Compose commands use `docker compose`; Integration with Playbook section removed. Mindset cites /pb-preamble in its own line."
 breaking_changes: []
 ---
 # Writing Great Engineering Documentation
 
 Clear documentation enables people to work independently, makes knowledge transferable, and saves time.
 
-**Mindset:** Documentation should invite scrutiny. Be clear enough that errors are obvious.
-
-This embodies `/pb-preamble` thinking (clear writing enables critical thinking, ambiguous docs hide flawed thinking) and applies `/pb-design-rules` thinking, particularly:
+**Mindset:** Documentation should invite scrutiny. Be clear enough that errors are obvious. This embodies `/pb-preamble` thinking (clear writing enables critical thinking, ambiguous docs hide flawed thinking) and applies `/pb-design-rules` thinking, particularly:
 
 **Key Design Rules for Documentation:**
 - **Clarity**: Documentation must be crystal clear so readers immediately understand the system
@@ -258,94 +256,20 @@ User → Payment API → Stripe
 
 **Purpose**: Help someone follow a process or handle an event.
 
+Keep the structure and fill it with the project's own commands. For a release, `/pb-release` holds the steps, including tagging only after CI is green.
+
 ````markdown
-# Release Process
+# [Process Name]
 
 ## Overview
-Releasing code to production involves building, testing, and deploying.
+What the process is for, who runs it, and how long it takes.
 
 ## Steps
-1. Create release branch (release/v1.2.3)
-2. Update CHANGELOG
-3. Tag commit (v1.2.3)
-4. Build Docker image
-5. Deploy to staging
-6. Run smoke tests
-7. Deploy to production
-8. Monitor for errors
-
-## Detailed Steps
-
-### 1. Create Release Branch
-```bash
-git checkout -b release/v1.2.3 main
-```
-Why: Isolates release prep from ongoing development
-
-### 2. Update Changelog
-Edit CHANGELOG.md:
-- Add new version (v1.2.3)
-- List features added, bugs fixed, breaking changes
-- Include author names
-
-Example:
-```
-## [1.2.3] - 2026-01-11
-### Added
-- Support for bulk user import (#234)
-- New analytics dashboard (#245)
-### Fixed
-- Bug: Orders not showing in some cases (#240)
-### Breaking
-- Removed deprecated /v1/orders endpoint
-```
-
-### 3. Tag Commit
-```bash
-git tag -a v1.2.3 -m "Release version 1.2.3"
-git push origin v1.2.3
-```
-
-### 4. Build Docker Image
-CI/CD automatically builds when tag pushed.
-Check: CI pipeline passes all checks.
-
-### 5. Deploy to Staging
-```bash
-./deploy staging v1.2.3
-./run-smoke-tests staging
-```
-
-Check:
-- Smoke tests pass
-- No errors in logs
-- Performance acceptable
-- Database migrations successful
-
-### 6. Deploy to Production
-```bash
-./deploy production v1.2.3
-```
-
-Monitor:
-- Error rate (should be same as before)
-- Latency (should be same as before)
-- Resource usage (should be reasonable)
-- User complaints (check Slack)
-
-### 7. Post-Release
-- Send release notes to stakeholders
-- Update documentation
-- Monitor for issues
-- Be available for next 2 hours
+1. [Step]: the command to run, and what to check before the next step
+2. [Step]: ...
 
 ## Rollback
-If something breaks:
-```bash
-./deploy production v1.2.2
-```
-Fast: < 2 minutes
-Safe: Previous version still tested
+The command that restores the previous state, and how long it takes.
 ````
 
 ---
@@ -531,7 +455,7 @@ People don't read documentation linearly. They scan.
 Bad:
 ```
 To set up, first you need to have docker installed, you can get it from
-docker.com, then you run docker-compose up which will start the database,
+docker.com, then you run docker compose up which will start the database,
 after that you can run npm install and then npm start to start the server
 ```
 
@@ -545,7 +469,7 @@ Good:
 - npm 9+
 
 ### Steps
-1. Start database: `docker-compose up -d`
+1. Start database: `docker compose up -d`
 2. Install dependencies: `npm install`
 3. Start server: `npm start`
 4. Visit http://localhost:3000
@@ -786,16 +710,6 @@ The hunt is not complete until ALL boxes are checked:
 - [ ] All 6 search passes from Step 3 executed (no skipped passes)
 - [ ] Every Confirmed and Likely finding has a concrete exploit scenario
 ```
-
----
-
-## Integration with Playbook
-
-**Part of SDLC:**
-- `/pb-guide` - Document requirements by project size
-- `/pb-onboarding` - Good docs enable self-guided learning
-- `/pb-adr` - Documenting decisions
-- `/pb-security` - Documenting security practices
 
 ---
 

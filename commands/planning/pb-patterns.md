@@ -6,16 +6,16 @@ difficulty: "advanced"
 model_hint: "sonnet"
 execution_pattern: "reference"
 related_commands: ['pb-patterns-core', 'pb-patterns-resilience', 'pb-patterns-async', 'pb-patterns-db', 'pb-patterns-distributed', 'pb-patterns-frontend', 'pb-patterns-api', 'pb-patterns-deployment', 'pb-patterns-security']
-last_reviewed: "2026-11-04"
-version: "3.0.0"
-version_notes: "v3.0.0: /pb-patterns-cloud is retired; the selection tree and Related list drop it."
+last_reviewed: "2026-11-05"
+version: "3.0.1"
+version_notes: "v3.0.1: The payment scenario sends Saga failure handling to /pb-patterns-distributed; /pb-incident has none. The trade-offs line is labelled Mindset."
 breaking_changes: ['/pb-patterns-cloud is retired: a vendor service catalog with no playbook-specific decision, its limits drifting. Re-run scripts/install.sh to prune the link.']
 ---
 # Architecture & Design Patterns
 
 Overview and navigation guide for the pattern family.
 
-**Every pattern has trade-offs:** Use `/pb-preamble` thinking (challenge assumptions, transparent reasoning) and `/pb-design-rules` thinking (patterns should serve Clarity, Simplicity, and Modularity).
+**Mindset:** Every pattern has trade-offs. Use `/pb-preamble` thinking (challenge assumptions, transparent reasoning) and `/pb-design-rules` thinking (patterns should serve Clarity, Simplicity, and Modularity).
 
 Question whether this pattern fits your constraints. Challenge the costs. Explore alternatives. Good patterns are tools you understand and choose, not dogma you follow.
 
@@ -74,8 +74,7 @@ THEN: Read pattern family, understand trade-offs, implement with knowledge
 **Payment/Order processing:**
 1. Read `/pb-patterns-core` (Event-Driven)
 2. Read `/pb-patterns-resilience` (Retry, Circuit Breaker)
-3. Read `/pb-patterns-distributed` (Saga)
-4. Read `/pb-incident` (handling Saga failures)
+3. Read `/pb-patterns-distributed` (Saga, including idempotency and compensating actions)
 
 **Scaling to 1M users:**
 1. Read `/pb-patterns-db` (Replication, Sharding)

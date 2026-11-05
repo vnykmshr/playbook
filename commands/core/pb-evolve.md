@@ -6,9 +6,9 @@ difficulty: "beginner"
 model_hint: "opus"
 execution_pattern: "sequential"
 related_commands: ['pb-claude-global', 'pb-claude-project', 'pb-standards', 'pb-preamble', 'pb-design-rules']
-last_reviewed: "2026-11-04"
-version: "2.1.0"
-version_notes: "v2.1.0: Ledger rows carry the note text and must hash to their key; a deferred row names the quarter it comes due and holds exit 1 from that quarter's first day; the digest lists the deferred backlog."
+last_reviewed: "2026-11-05"
+version: "2.1.1"
+version_notes: "v2.1.1: Step 3 names the trend measures and leaves their values to the cycle record; the Q3 baseline table is gone."
 breaking_changes: ['Quarterly calendar dates, Evolution Manager, review meeting and pre-evolution checklist removed', 'Steps 1.5 and 4-11 replaced: no evolution-snapshot.py, evolution-log.py or evolution-diff.py step; rollback is a redeploy of the previous tag', 'Report, dashboard, log-structure and rollback-report templates removed', 'Step 0 Intake added: the cycle closes only when scripts/feedback-harvest.py exits 0']
 ---
 
@@ -108,15 +108,7 @@ It constrains when it:
 
 **Scope:** this review changes what commands say. It does not retire commands; retirement stays a single human decision.
 
-**Run it as a huddle** (`/pb-huddle`): same brief to every panelist, ground-truth file attached, this question alongside the cycle's own. Record a trend row in the cycle record so the next cycle compares rather than re-derives:
-
-| Measure | Q3 2026 baseline |
-|---------|------------------|
-| Global CLAUDE.md, generated lines | 158 |
-| Project CLAUDE.md (the playbook's own), lines | 86 |
-| Verify-instructions in auto-loaded files | 0 (was 4) |
-| Model-version strings in generator templates | 0 (`TestTemplateCurrency`) |
-| Structure added / cut | 1 / ~12 |
+**Run it as a huddle** (`/pb-huddle`): same brief to every panelist, ground-truth file attached, this question alongside the cycle's own. Record a trend row in the cycle record (generated global and project CLAUDE.md lines, verify-instructions in auto-loaded files, model-version strings in generator templates, structure added and cut), so the next cycle compares against the previous record rather than re-derives.
 
 ## Step 4: Propose and Run
 

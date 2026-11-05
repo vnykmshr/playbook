@@ -6,14 +6,14 @@ difficulty: "beginner"
 model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-preamble', 'pb-adr', 'pb-patterns', 'pb-review-hygiene', 'pb-standards']
-last_reviewed: "2026-11-04"
-version: "1.3.1"
-version_notes: "v1.3.1: The anchor heading and the trade-offs section say 18 rules; the four clusters still hold the first 17, and the anchor names Attention as the newer fifth theme."
+last_reviewed: "2026-11-05"
+version: "1.3.2"
+version_notes: "v1.3.2: PR review routes to /pb-review-code; /pb-review-hygiene is the periodic codebase review. The opening line is the Mindset and cites /pb-preamble."
 breaking_changes: []
 ---
 # Design Rules: Core Technical Principles
 
-> **The preamble tells us HOW teams think together. Design rules tell us WHAT we build. Together, they form the complete framework for engineering excellence.**
+**Mindset:** `/pb-preamble` tells us HOW teams think together. Design rules tell us WHAT we build. Together, they form the complete framework for engineering excellence.
 
 **Resource Hint:** sonnet - Reference material for applying established design principles.
 
@@ -543,7 +543,7 @@ These 18 rules don't always agree with each other. Understanding the trade-offs 
 - **Modularity**: Build small, focused pieces
 - **Optimization**: Test first; optimize only if measured
 
-### In Review (`/pb-review-hygiene`, `/pb-review-product`)
+### In Review (`/pb-review-code`, `/pb-review-product`)
 - **Clarity**: Code is understandable
 - **Robustness**: Error handling is appropriate
 - **Modularity**: Pieces are independent
@@ -683,7 +683,7 @@ Add more error handling downstream hoping to catch it eventually.
 - `/pb-preamble` - How teams think together (complement to design rules)
 - `/pb-adr` - Architecture decisions document rules
 - `/pb-patterns` - Patterns show rules in practice
-- `/pb-review-hygiene` - Code review checks rules
+- `/pb-review-hygiene` - Periodic codebase review against the rules
 - `/pb-standards` - Working principles and code quality
 
 ---

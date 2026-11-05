@@ -8,7 +8,7 @@ execution_pattern: "sequential"
 related_commands: ['pb-handcraft', 'pb-review-docs', 'pb-documentation', 'pb-design-rules', 'pb-preamble']
 last_reviewed: "2026-11-05"
 version: "2.3.1"
-version_notes: "v2.3.1: Spaced double hyphens replaced."
+version_notes: "v2.3.1: Spaced double hyphens replaced. The companion-script line says it needs a playbook clone."
 breaking_changes: []
 ---
 # Voice Review
@@ -70,7 +70,7 @@ Input  DETECT  annotated flags  REWRITE (flagged only)  VERIFY  output
 - `/pb-voice mode=profile` - Build voice profile from samples
 - `/pb-voice persona=/path/to/persona.md` - Calibrate to author voice
 
-Companion script: `scripts/voice-review.sh` (run `--help` for usage).
+Companion script: `scripts/voice-review.sh` (run `--help` for usage). It needs a playbook clone: `install.sh` does not link it.
 
 ---
 

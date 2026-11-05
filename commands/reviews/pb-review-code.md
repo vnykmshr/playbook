@@ -8,7 +8,7 @@ execution_pattern: "sequential"
 related_commands: ['pb-review', 'pb-review-hygiene', 'pb-review-tests', 'pb-security', 'pb-cycle']
 last_reviewed: "2026-11-05"
 version: "2.4.0"
-version_notes: "v2.4.0: Spaced double hyphens replaced."
+version_notes: "v2.4.0: Spaced double hyphens replaced. Integration with Playbook section removed."
 breaking_changes: []
 ---
 # Code Review (Specific Changes)
@@ -313,22 +313,6 @@ For smaller changes or when time is limited:
 3. **Verify tests exist** - At minimum, happy path covered
 4. **Run quality gates** - lint, typecheck, test
 5. **Spot-check naming** - If names are clear, code is likely clear
-
----
-
-## Integration with Playbook
-
-**During development cycle:**
-- Author runs `/pb-cycle` (includes self-review)
-- Author requests peer review
-- Reviewer runs `/pb-review-code` (YOU ARE HERE)
-- Author addresses feedback
-- Author commits with `/pb-commit`
-
-**During PR review:**
-- Reviewer uses `/pb-review-code` checklist
-- Combine with `/pb-security` for security-critical changes
-- Combine with `/pb-review-tests` for test coverage analysis
 
 ---
 

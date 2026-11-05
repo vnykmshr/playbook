@@ -7,8 +7,8 @@ model_hint: "sonnet"
 execution_pattern: "reference"
 related_commands: ['pb-preamble', 'pb-design-rules', 'pb-standards', 'pb-start', 'pb-cycle']
 last_reviewed: "2026-11-05"
-version: "3.0.1"
-version_notes: "v3.0.1: Integration rows name the guide's real sections: the labels were off by one or more from §2 on, §5 Code Review matched no section, and §3 Requirements and §9 Documentation had no row; the master-framework line says most commands, not all, implement a phase."
+version: "3.1.0"
+version_notes: "v3.1.0: Integration with Playbook Ecosystem section removed; the tier table points at the command index, and §5 names the daily loop with /pb-review."
 breaking_changes: ['/pb-guide-go and /pb-guide-python are retired; their gates are Appendix C, Language Gates. Re-run scripts/install.sh to prune the two links.']
 ---
 # Core Engineering SDLC Framework (Language-Agnostic)
@@ -42,7 +42,7 @@ Determine tier FIRST, then follow only required sections.
 | **M** | New endpoint, feature enhancement, multi-file change | 1-6, 7.1, 8, 10, 11 | Tech lead |
 | **L** | New service, architectural change, breaking changes | All sections | Tech lead + Product |
 
-**Default to one tier higher if uncertain.** Go and Python commands for each gate: Appendix C.
+**Default to one tier higher if uncertain.** Go and Python commands for each gate: Appendix C. Commands by area: `docs/command-index.md`.
 
 ---
 
@@ -254,7 +254,7 @@ Reference **Appendix A: Security Checklist** and document:
 
 *Required for: S, M, L tiers*
 
-Break work into implementable steps.
+Break work into implementable steps. Each unit runs the daily loop: `/pb-start` → code → `/pb-review` (commits) → `/pb-pr`.
 
 **5.1 Implementation roadmap**
 
@@ -634,26 +634,6 @@ The commands behind each gate for Go and Python. Tiers are the Change Tiers abov
 | Coverage | Minimum S 50%, M 70%, L 80%: `go test -coverprofile=coverage.out ./...`, then compare the `total:` line of `go tool cover -func=coverage.out` with the tier | Minimum S 50%, M 70%, L 80%: `pytest --cov=src --cov-fail-under=50` (70 at M, 80 at L) |
 | Dependencies | `go mod tidy && go mod verify`; `govulncheck ./...` | `pip-audit`; dependencies pinned in `pyproject.toml` with a lock file |
 | Review gotchas | no ignored errors; `context` for cancellation, not timeout parameters; no goroutine leaks; channels deadlock-free | no `import *`; no silent `except`; no hardcoded secrets |
-
----
-
-## Integration with Playbook Ecosystem
-
-**This is the master SDLC framework.** Most commands implement a phase of this guide; the rows below map them.
-
-**Key command integrations by phase:**
-
-- **§1 Intake & Clarification** → `/pb-plan`, `/pb-adr`, `/pb-patterns-core`
-- **§2 Stakeholder Involvement & Alignment** → `/pb-team`, `/pb-onboarding`, `/pb-knowledge-transfer`
-- **§3 Requirements & Scope Definition** → `/pb-sketch`, `/pb-spec`
-- **§4 Architecture & Design Preparation** → `/pb-patterns-core`, `/pb-patterns-async`, `/pb-patterns-db`, `/pb-patterns-distributed`, `/pb-patterns-frontend`, `/pb-patterns-api`
-- **§5 Development Plan** → `/pb-start`, `/pb-cycle`, `/pb-testing`, `/pb-commit`, `/pb-todo-implement`, `/pb-debug`
-- **§6 Testing & Quality Assurance** → `/pb-review-tests`, `/pb-review-hygiene`, `/pb-review-microservice`, `/pb-security`, `/pb-review-product`, `/pb-a11y`
-- **§7 Infra, Deployment & Security Readiness** → `/pb-deployment`, `/pb-patterns-deployment`, `/pb-observability`, `/pb-logging`, `/pb-performance`
-- **§8 CI/CD Requirements** → `/pb-gha`
-- **§9 Documentation** → `/pb-documentation`
-- **§10 Release & Post-Deployment** → `/pb-release`, `/pb-incident`, `/pb-observability` (monitoring)
-- **Frontend Development** → `/pb-design-language`, `/pb-patterns-frontend`, `/pb-a11y` (see `/docs/frontend-workflow.md`)
 
 ---
 
