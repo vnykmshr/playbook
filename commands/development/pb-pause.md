@@ -6,9 +6,9 @@ difficulty: "advanced"
 model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-resume', 'pb-start', 'pb-standup', 'pb-handoff']
-last_reviewed: "2026-11-04"
+last_reviewed: "2026-11-05"
 version: "1.10.0"
-version_notes: "v1.10.0: Spaced double hyphens replaced."
+version_notes: "v1.10.0: Spaced double hyphens replaced. Step 0 names three homes: `todos/` for session state, `docs/` for durable public notes, a private repo for durable private ones. Step 3c copies whatever a lasting note links to in the session scratch directory into `todos/` before the directory goes."
 breaking_changes: []
 ---
 # Pause Development Work
@@ -58,7 +58,7 @@ mkdir -p todos/done
 # todos/pause-notes.md is created by Step 3; the working context by /pb-context (deep Step 5).
 ```
 
-Confirm `todos/` is gitignored. If it is not, add it: `todos/` is the dev-only tree: position, scratch, and reflection, never a tracked artifact. Anything durable that lands there belongs in `docs/` instead.
+Confirm `todos/` is gitignored; if it is not, add it. Each note has one home, by lifetime and audience: `todos/` holds session state (position, scratch, reflection) and is never tracked; durable and public belongs in `docs/`; durable and private belongs in a private repo, because nothing backs up `todos/`.
 
 Do not treat a missing file as "nothing to preserve." A first pause is exactly when the breadcrumbs matter most.
 
@@ -153,7 +153,9 @@ Target: ~30-40 lines. Be specific about what's next. Skip sections that don't ap
 
 **3b. Archive old entries:** if pause-notes has entries beyond the latest, move old entries to `todos/done/pause-notes-archive-YYYY-MM-DD.md`.
 
-**3c. Context health check:**
+**3c. Rescue scratch links:** a session scratch directory dies with the session, and so does every link into it. Grep what outlives the session (pause notes, cursors, briefs, commit messages) for the scratch path; copy each file it points at into `todos/` and repoint the link.
+
+**3d. Context health check:**
 
 ```bash
 wc -l ~/.claude/CLAUDE.md            # Global (target: <200)

@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-- **`/pb-pause` v1.10.0.** Spaced double hyphens replaced.
+- **`/pb-pause` v1.10.0.** Spaced double hyphens replaced. Step 0 names three homes: `todos/` for session state, `docs/` for durable public notes, a private repo for durable private ones. Step 3c copies whatever a lasting note links to in the session scratch directory into `todos/` before the directory goes.
 
 ## [v2.34.0] - 2026-11-05
 
