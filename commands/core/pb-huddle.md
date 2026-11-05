@@ -8,7 +8,7 @@ execution_pattern: "parallel-then-sequential"
 related_commands: ['pb-think', 'pb-preamble', 'pb-clara-curator', 'pb-maya-product', 'pb-adr']
 last_reviewed: "2026-11-05"
 version: "1.9.0"
-version_notes: "v1.9.0: A command the close rules is dry-run and diffed against the untouched base."
+version_notes: "v1.9.0: A command the close rules is dry-run and diffed against the untouched base; re-huddle messages each agent once, then spawns fresh agents from the brief and findings files."
 breaking_changes: []
 ---
 # Multi-Perspective Decision Session
@@ -81,7 +81,7 @@ When a huddle's synthesis identifies a refined follow-up question, run a re-hudd
 1. Read the most recent huddle output: the recorded findings file (Step 2), or the conversation while the panel is in it
 2. Extract the persona names used
 3. Frame the new question (Step 1)
-4. Run personas with abbreviated prompts that reference the prior output (Step 3). If the panel ran as agents that are still addressable, message those same agents (in Claude Code, `SendMessage` to each agent) rather than spawning new ones: each keeps the brief and its own argument, so the follow-up costs one message per lens
+4. Run personas with abbreviated prompts that reference the prior output (Step 3). If the panel ran as agents that are still addressable, message those same agents (in Claude Code, `SendMessage` to each agent) rather than spawning new ones: each keeps the brief and its own argument, so the follow-up costs one message per lens. One follow-up per agent: past that, a resumed agent carries every round in its context, so spawn fresh ones from the brief and findings files
 5. Find tensions, synthesize, record (Steps 4-6)
 
 ---

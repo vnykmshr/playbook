@@ -13,7 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-- **`/pb-huddle` v1.9.0.** A command the close rules is dry-run and diffed against the untouched base.
+- **`/pb-huddle` v1.9.0.** A command the close rules is dry-run and diffed against the untouched base; re-huddle messages each agent once, then spawns fresh agents from the brief and findings files.
 - **`/pb-claude-global` v2.13.0.** Register covers tag messages and CHANGELOG entries; length ceilings become defaults (commit subject only, PR body one sentence of what plus upgrader impact); the drafting step checks its own text; process vocabulary named under Never in public text. Mindset added.
 - **`/pb-commit` v2.4.0.** Message Register points to the register instead of restating a body length, and checks the drafted message before committing. Mindset added.
 - **`/pb-cycle` v1.3.0.** Commit step drops the with-body example and checks the subject against the register. Mindset added.
