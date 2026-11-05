@@ -5,7 +5,7 @@ category: "core"
 difficulty: "beginner"
 model_hint: "opus"
 execution_pattern: "reference"
-related_commands: ['pb-calm-design', 'pb-design-rules', 'pb-preamble-async', 'pb-preamble-power', 'pb-think']
+related_commands: ['pb-preamble-async', 'pb-preamble-power', 'pb-preamble-decisions', 'pb-design-rules', 'pb-think']
 last_reviewed: "2026-11-05"
 version: "1.1.1"
 version_notes: "v1.1.1: Points to the 18 design rules, not 17, with Attention beside the four clusters; the principles heading says five; the companion parts are named as shipped."

@@ -5,7 +5,7 @@ category: "reviews"
 difficulty: "advanced"
 model_hint: "opus"
 execution_pattern: "reference"
-related_commands: ['pb-review', 'pb-review-code', 'pb-review-hygiene', 'pb-review-tests', 'pb-security']
+related_commands: ['pb-review-code', 'pb-review-hygiene', 'pb-review-tests', 'pb-security', 'pb-cycle']
 last_reviewed: "2026-11-05"
 version: "3.0.0"
 version_notes: "v3.0.0: Multi-Perspective Reviews names each lens pair and its tie-break; the three wrapper reviews are retired into it; security-critical code goes to /pb-travis-security."

@@ -5,7 +5,7 @@ category: "core"
 difficulty: "beginner"
 model_hint: "sonnet"
 execution_pattern: "sequential"
-related_commands: ['pb-preamble', 'pb-calm-design', 'pb-standards', 'pb-adr', 'pb-patterns']
+related_commands: ['pb-preamble', 'pb-adr', 'pb-patterns', 'pb-review-hygiene', 'pb-standards']
 last_reviewed: "2026-11-04"
 version: "1.3.1"
 version_notes: "v1.3.1: The anchor heading and the trade-offs section say 18 rules; the four clusters still hold the first 17, and the anchor names Attention as the newer fifth theme."

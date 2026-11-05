@@ -5,7 +5,7 @@ category: "deployment"
 difficulty: "advanced"
 model_hint: "opus"
 execution_pattern: "sequential"
-related_commands: ['pb-deployment', 'pb-hardening', 'pb-patterns-resilience', 'pb-observability', 'pb-maintenance']
+related_commands: ['pb-deployment', 'pb-hardening', 'pb-patterns-resilience', 'pb-observability', 'pb-linus-agent']
 last_reviewed: "2026-11-05"
 version: "1.4.0"
 version_notes: "v1.4.0: Spaced double hyphens replaced."

@@ -5,7 +5,7 @@ category: "reviews"
 difficulty: "intermediate"
 model_hint: "sonnet"
 execution_pattern: "checklist"
-related_commands: ['pb-design-rules', 'pb-standards', 'pb-security', 'pb-review-product', 'pb-maya-product']
+related_commands: ['pb-design-rules', 'pb-standards', 'pb-review-product', 'pb-maya-product', 'pb-a11y']
 last_reviewed: "2026-11-04"
 version: "1.3.1"
 version_notes: "v1.3.1: Related Commands: /pb-maya-product replaces the retired /pb-review-frontend."

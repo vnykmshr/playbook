@@ -5,7 +5,7 @@ category: "planning"
 difficulty: "advanced"
 model_hint: "opus"
 execution_pattern: "interactive"
-related_commands: ['pb-plan', 'pb-spec', 'pb-think', 'pb-adr']
+related_commands: ['pb-plan', 'pb-spec', 'pb-think', 'pb-adr', 'pb-design-rules']
 last_reviewed: "2026-07-13"
 version: "1.1.1"
 version_notes: "v1.1.1: Spaced double hyphens replaced; the tool-agnostic link resolves on the published site."

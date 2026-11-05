@@ -5,7 +5,7 @@ category: "development"
 difficulty: "intermediate"
 model_hint: "sonnet"
 execution_pattern: "interactive"
-related_commands: ['pb-preamble', 'pb-review', 'pb-commit', 'pb-pause', 'pb-plan']
+related_commands: ['pb-review', 'pb-commit', 'pb-pause', 'pb-resume', 'pb-plan']
 last_reviewed: "2026-11-05"
 version: "2.3.2"
 version_notes: "v2.3.2: The tool-agnostic link resolves on the published site; the questions are a few, not 3-4, and the Quick Start takes 2 minutes, not 5; no background watcher is claimed; the migration table keeps /pb-cycle and /pb-review-code, which ship."

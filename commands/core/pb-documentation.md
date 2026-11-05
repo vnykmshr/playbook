@@ -5,7 +5,7 @@ category: "core"
 difficulty: "beginner"
 model_hint: "sonnet"
 execution_pattern: "sequential"
-related_commands: ['pb-adr', 'pb-review-docs', 'pb-repo-readme', 'pb-repo-blog', 'pb-onboarding']
+related_commands: ['pb-adr', 'pb-review-docs', 'pb-sam-documentation', 'pb-repo-readme', 'pb-onboarding']
 last_reviewed: "2026-11-04"
 version: "1.1.2"
 version_notes: "v1.1.2: Keep It Updated: each reference claim is definitionally stable or machine-checked, never in between."

@@ -5,7 +5,7 @@ category: "planning"
 difficulty: "advanced"
 model_hint: "sonnet"
 execution_pattern: "reference"
-related_commands: ['pb-patterns-core', 'pb-patterns-resilience', 'pb-patterns-async', 'pb-patterns-db', 'pb-patterns-distributed']
+related_commands: ['pb-patterns-core', 'pb-patterns-resilience', 'pb-patterns-async', 'pb-patterns-db', 'pb-patterns-distributed', 'pb-patterns-frontend', 'pb-patterns-api', 'pb-patterns-deployment', 'pb-patterns-security']
 last_reviewed: "2026-11-04"
 version: "3.0.0"
 version_notes: "v3.0.0: /pb-patterns-cloud is retired; the selection tree and Related list drop it."

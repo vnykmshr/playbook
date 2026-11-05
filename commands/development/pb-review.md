@@ -5,7 +5,7 @@ category: "development"
 difficulty: "beginner"
 model_hint: "sonnet"
 execution_pattern: "automatic"
-related_commands: ['pb-start', 'pb-commit', 'pb-review-code', 'pb-review-comprehensive']
+related_commands: ['pb-start', 'pb-preferences', 'pb-commit', 'pb-pr']
 last_reviewed: "2026-11-04"
 version: "2.8.1"
 version_notes: "v2.8.1: After fixing feedback, the independent pass re-runs on the fixes alone, from the commit before them; the footer drops its stale version; the tool-agnostic link resolves on the published site."

@@ -5,7 +5,7 @@ category: "reviews"
 difficulty: "advanced"
 model_hint: "opus"
 execution_pattern: "sequential"
-related_commands: ['pb-review', 'pb-review-code', 'pb-review-hygiene', 'pb-testing', 'pb-cycle']
+related_commands: ['pb-review', 'pb-review-hygiene', 'pb-testing', 'pb-cycle']
 last_reviewed: "2026-11-04"
 version: "2.2.0"
 version_notes: "v2.2.0: Common Problems: a new guard drowned in legacy debt narrows its rule first, then baselines what is left as shrink-only debt, never as exemptions."

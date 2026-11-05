@@ -5,7 +5,7 @@ category: "core"
 difficulty: "beginner"
 model_hint: "sonnet"
 execution_pattern: "reference"
-related_commands: ['pb-preamble', 'pb-design-rules', 'pb-standards']
+related_commands: ['pb-preamble', 'pb-design-rules', 'pb-standards', 'pb-start', 'pb-cycle']
 last_reviewed: "2026-11-05"
 version: "3.0.1"
 version_notes: "v3.0.1: Integration rows name the guide's real sections: the labels were off by one or more from §2 on, §5 Code Review matched no section, and §3 Requirements and §9 Documentation had no row; the master-framework line says most commands, not all, implement a phase."

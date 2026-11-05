@@ -5,7 +5,7 @@ category: "core"
 difficulty: "beginner"
 model_hint: "opus"
 execution_pattern: "interactive"
-related_commands: ['pb-preamble', 'pb-design-rules', 'pb-plan', 'pb-adr', 'pb-huddle']
+related_commands: ['pb-preamble', 'pb-design-rules', 'pb-plan', 'pb-adr', 'pb-debug']
 last_reviewed: "2026-04-17"
 version: "2.1.0"
 version_notes: "v2.20.0: model_hint sonnet → opus; deep structured thinking is Architect-tier work"

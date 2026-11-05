@@ -5,7 +5,7 @@ category: "deployment"
 difficulty: "advanced"
 model_hint: "sonnet"
 execution_pattern: "sequential"
-related_commands: ['pb-preamble', 'pb-deployment', 'pb-ship', 'pb-pr', 'pb-cycle']
+related_commands: ['pb-deployment', 'pb-ship', 'pb-pr', 'pb-review-hygiene']
 last_reviewed: "2026-11-05"
 version: "1.4.0"
 version_notes: "v1.4.0: Tag message is the release title; dispatch deploy workflows on main and verify before tagging; notes and CHANGELOG entry checked against the register before the release step."
