@@ -8,7 +8,7 @@ execution_pattern: "sequential"
 related_commands: ['pb-doctor', 'pb-update', 'pb-storage', 'pb-start']
 last_reviewed: "2026-11-05"
 version: "1.0.1"
-version_notes: "v1.0.1: nvm comes from Homebrew, not a stale installer piped to bash."
+version_notes: "v1.0.1: nvm installs from the v0.40.8 installer, replacing v0.39.0."
 breaking_changes: []
 ---
 # Bootstrap Dev Machine
@@ -122,10 +122,8 @@ touch ~/.zshrc
 ### Node.js (via nvm)
 
 ```bash
-# Install nvm from the package manager, then load it from your profile
-brew install nvm
-mkdir -p ~/.nvm
-echo 'export NVM_DIR="$HOME/.nvm"; . "$(brew --prefix nvm)/nvm.sh"' >> ~/.zshrc
+# Install nvm
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.8/install.sh | bash
 
 # Reload shell
 source ~/.zshrc
@@ -435,9 +433,9 @@ One-liner for the brave (installs essentials):
 # WARNING: Review before running
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)" && \
 eval "$(/opt/homebrew/bin/brew shellenv)" && \
-brew install git gh jq ripgrep fd fzf nvm && \
-mkdir -p ~/.nvm && export NVM_DIR="$HOME/.nvm" && . "$(brew --prefix nvm)/nvm.sh" && \
-nvm install --lts
+brew install git gh jq ripgrep fd fzf && \
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.8/install.sh | bash && \
+source ~/.zshrc && nvm install --lts
 ```
 
 ---
