@@ -6,9 +6,9 @@ difficulty: "advanced"
 model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-spec', 'pb-start', 'pb-review', 'pb-cycle', 'pb-commit']
-last_reviewed: "2026-10-03"
-version: "1.3.0"
-version_notes: "v1.3.0: Approved-plan mode: for a plan the owner already approved, one explicit y covers the \"Use this description?\", \"Use this implementation plan?\", \"Ready to implement?\" and per-checkpoint \"Approve these changes?\" STOPs, for one todo. The commit STOP stays and shows the whole todo's staged diff (git diff --cached), so every written line is reviewed once before commit; deviation, failed-validation, manual-verification, description-update and next-todo STOPs remain. v1.2.0: Phase 4 Step 2 wires plan-notes deviation log (`plan/{name}-notes.md`) into the STOP gate -- append bullet before proceeding. Format and discipline live in /pb-spec § Implementation Notes File. v1.2.1: plan-notes path aligned to todos/plan/{name}-notes.md."
+last_reviewed: "2026-11-05"
+version: "1.4.0"
+version_notes: "v1.4.0: Spaced double hyphens replaced."
 breaking_changes: []
 ---
 # Todo-Based Implementation Workflow
@@ -333,7 +333,7 @@ Show what was changed, why, and how it aligns with the plan.
 
 **2. Handle Unexpected Work**
 
-When implementation diverges from the spec -- new checkpoint, abandoned step, swapped approach, accepted tradeoff, deferred item, or surprise discovery -- append a one-line bullet to the plan-notes file (`todos/plan/{name}-notes.md` or `todos/releases/vX.Y.Z/notes.md`) *before* the next checkpoint proceeds. See `/pb-spec` § Implementation Notes File for format and discipline.
+When implementation diverges from the spec (new checkpoint, abandoned step, swapped approach, accepted tradeoff, deferred item, or surprise discovery), append a one-line bullet to the plan-notes file (`todos/plan/{name}-notes.md` or `todos/releases/vX.Y.Z/notes.md`) *before* the next checkpoint proceeds. See `/pb-spec` § Implementation Notes File for format and discipline.
 
 **STOP → "Plan needs a new checkpoint: [description]. Add it? (y/n)"**
 - If yes: append note, add checkbox to plan, proceed with work
