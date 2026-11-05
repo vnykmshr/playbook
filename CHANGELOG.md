@@ -23,7 +23,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **`/pb-handcraft` v1.6.1.** Lens 6 says text drafted after the pass is checked by the step that drafts it.
 - **`/pb-forge` v1.9.0.** Peer and Land check their drafted text against the register; a change pulled from a release is removed by rebuilding the range, not by a forward revert.
 - **`/pb-alex-infra` v1.4.0.** Spaced double hyphens replaced.
-- **`/pb-resume` v1.12.0.** Spaced double hyphens replaced.
+- **`/pb-resume` v1.12.0.** Spaced double hyphens replaced. Step 0c sends durable notes to the home `/pb-pause` Step 0 assigns.
 - **`/pb-review-code` v2.4.0.** Spaced double hyphens replaced.
 - **`/pb-todo-implement` v1.4.0.** Spaced double hyphens replaced.
 - **`/pb-voice` v2.3.1.** Spaced double hyphens replaced.
