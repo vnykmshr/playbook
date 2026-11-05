@@ -542,7 +542,6 @@ DASH_BASELINE = {
     "pb-review-incoming.md": 55,
     "pb-storage.md": 19,
     "pb-threat-hunt.md": 1,
-    "pb-voice.md": 4,
 }
 
 PROSE_FIXTURE = [

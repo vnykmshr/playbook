@@ -6,9 +6,9 @@ difficulty: "advanced"
 model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-handcraft', 'pb-review-docs', 'pb-documentation', 'pb-design-rules', 'pb-preamble']
-last_reviewed: "2026-07-10"
-version: "2.3.0"
-version_notes: "v2.3.0: Shapes-over-words meta-principle (the vocabulary rotates each model generation; weight structural tells over any single word). New tells: markup-leak artifacts (Cat 9), vague-authority attribution (Cat 8). Positive-craft tests wired into existing categories: name-the-dog + verifiable-detail-per-paragraph (Cat 8), earned-vs-named transition delete-test (Cat 5), 5-word-band burstiness test (Cat 7). Antithesis elevated to the strongest current syntactic tell (Cat 3). Canonical prose engine that /pb-handcraft fires as a required lens."
+last_reviewed: "2026-11-05"
+version: "2.3.1"
+version_notes: "v2.3.1: Spaced double hyphens replaced."
 breaking_changes: []
 ---
 # Voice Review
@@ -102,7 +102,7 @@ Before running any detection category, determine what register the text should b
 
 **Output:** State the detected register at the top of your detection report: "Register: conversational (from persona)" or "Register: dev-to-dev (PR description)". This makes the calibration visible and challengeable. Each detection category documents its own register sensitivity where applicable.
 
-**Voice Profile:** If a persona file is provided, load it now -- before detection, not after. The persona's vocabulary anchors and formality ceiling inform what counts as a tell across all categories. See "Voice Profile Integration" in Stage 2 for how the persona also calibrates rewrites.
+**Voice Profile:** If a persona file is provided, load it now, before detection, not after. The persona's vocabulary anchors and formality ceiling inform what counts as a tell across all categories. See "Voice Profile Integration" in Stage 2 for how the persona also calibrates rewrites.
 
 ### Reading these categories
 
@@ -156,7 +156,7 @@ Sentence-construction habits and repetition patterns that go beyond individual w
 - **Synonym cycling** - Repetition-penalty-driven substitution. "The protagonist... The main character... The central figure... The hero..." all in one paragraph. Real writers repeat or use pronouns.
 - **Negative parallelisms / antithesis** - "Not only X but Y" / "It's not just about X; it's about Y" / "The issue isn't X, it's Y." The strongest current syntactic tell: models make the contrast explicit with "not/isn't" instead of trusting the reader to see it. Legitimate rhetoric in moderation; the tell is *saturation*. Cap at one per section; don't ban it.
 - **False ranges** - "from X to Y" where X and Y aren't on a meaningful scale. "From hobbyist experiments to enterprise-wide rollouts."
-- **Explanatory completeness** - The model can't leave anything unexplained. If it mentions a concept, it defines it. A person writing to peers assumes shared context. "Claude's project files" is enough -- the model adds "which allow you to store persistent context for your projects." If the audience already knows, the explanation is a tell.
+- **Explanatory completeness** - The model can't leave anything unexplained. If it mentions a concept, it defines it. A person writing to peers assumes shared context. "Claude's project files" is enough; the model adds "which allow you to store persistent context for your projects." If the audience already knows, the explanation is a tell.
 - **Clause-final summation** - Restating the point in abstract terms at the end of a sentence. "...which makes it ideal for teams that need both speed and reliability." "...providing a robust foundation for future development." The clause after "which" or the participial phrase adds no information. People end sentences on the specific, not the abstract.
 
 **Action:** Simplify. Use "is"/"are." Delete -ing clauses that add no information. Let a word repeat rather than cycling synonyms. Replace false ranges with specifics. Delete explanations the audience doesn't need. Cut clause-final summations.
@@ -358,7 +358,7 @@ After rewriting, validate the output.
 
 1. **Re-score** - Run detection on rewritten text. Score should improve by at least 2 points.
 2. **Two-pass audit** - Ask: "What still makes this obviously AI-generated?" Answer honestly, then fix the remaining tells. This meta-cognitive step catches patterns that category-by-category detection misses.
-3. **Read-aloud test** - The primary check for conversational registers. Read the text out loud (or simulate it). For each sentence, ask: "Would the author say this exact phrase to a colleague?" Not the idea -- the exact words. "Persistent memory across interactions" fails. "Remembering things between conversations" passes. If the register is conversational and a sentence sounds like a textbook, a slide deck, or a product brief, it's still a tell. For technical or formal registers, the bar is different: precision matters more than conversational flow.
+3. **Read-aloud test** - The primary check for conversational registers. Read the text out loud (or simulate it). For each sentence, ask: "Would the author say this exact phrase to a colleague?" Not the idea: the exact words. "Persistent memory across interactions" fails. "Remembering things between conversations" passes. If the register is conversational and a sentence sounds like a textbook, a slide deck, or a product brief, it's still a tell. For technical or formal registers, the bar is different: precision matters more than conversational flow.
 4. **Meaning preservation** - Every claim in the original survives in the output.
 5. **Length check** - Output should be shorter than input (typically 10-30% shorter). Longer means something went wrong.
 
@@ -454,7 +454,7 @@ The framework natively supports persistent memory across interactions,
 enabling context retention for multi-session workflows.
 ```
 
-Only "seamless" was cut -- it's Category 8 (precise-sounding vagueness), not register mismatch.
+Only "seamless" was cut: it's Category 8 (precise-sounding vagueness), not register mismatch.
 
 ---
 
