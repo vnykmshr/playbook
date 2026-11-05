@@ -677,7 +677,7 @@ BARE_OPENER_BASELINE = {
     "pb-patterns-frontend.md": 1,
     "pb-patterns-resilience.md": 3,
     "pb-patterns.md": 1,
-    "pb-pause.md": 2,
+    "pb-pause.md": 1,
     "pb-performance.md": 11,
     "pb-ports.md": 3,
     "pb-pr.md": 2,
@@ -702,7 +702,7 @@ BARE_OPENER_BASELINE = {
     "pb-secrets.md": 1,
     "pb-server-hygiene.md": 1,
     "pb-setup.md": 3,
-    "pb-ship.md": 4,
+    "pb-ship.md": 3,
     "pb-sketch.md": 4,
     "pb-spec.md": 4,
     "pb-sre-practices.md": 7,
@@ -715,11 +715,11 @@ BARE_OPENER_BASELINE = {
     "pb-testing.md": 2,
     "pb-think.md": 13,
     "pb-threat-hunt.md": 1,
-    "pb-todo-implement.md": 7,
+    "pb-todo-implement.md": 6,
     "pb-update.md": 3,
     "pb-usability.md": 2,
     "pb-voice.md": 10,
-    "pb-what-next.md": 6,
+    "pb-what-next.md": 4,
     "pb-zero-stack.md": 8,
 }
 
@@ -766,11 +766,10 @@ LINE_BUDGET_BASELINE = {
     "pb-repo-docsite.md": 735,
     "pb-sam-documentation.md": 711,
     "pb-security.md": 731,
-    "pb-ship.md": 695,
+    "pb-ship.md": 671,
     "pb-team.md": 644,
     "pb-testing.md": 640,
     "pb-think.md": 749,
-    "pb-todo-implement.md": 616,
     "pb-zero-stack.md": 614,
 }
 
@@ -886,12 +885,10 @@ MINDSET_BASELINE = {
     "pb-preamble-power.md",
     "pb-preferences.md",
     "pb-repo-about.md",
-    "pb-review.md",
     "pb-sketch.md",
     "pb-spec.md",
     "pb-standup.md",
     "pb-templates.md",
-    "pb-todo-implement.md",
 }
 
 MINDSET_FIXTURE = [

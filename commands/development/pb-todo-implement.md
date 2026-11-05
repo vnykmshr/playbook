@@ -8,14 +8,14 @@ execution_pattern: "sequential"
 related_commands: ['pb-spec', 'pb-start', 'pb-review', 'pb-cycle', 'pb-commit']
 last_reviewed: "2026-11-05"
 version: "1.4.0"
-version_notes: "v1.4.0: Spaced double hyphens replaced."
+version_notes: "v1.4.0: Spaced double hyphens replaced. The Integration section is gone; its directory layout stays as its own section. Mindset added."
 breaking_changes: []
 ---
 # Todo-Based Implementation Workflow
 
 Structured implementation of individual todos with checkpoint-based approval. Transforms vague todos into concrete, tested features with full audit trail.
 
-**Checkpoint thinking:** Each checkpoint is a gate where `/pb-preamble` thinking (challenge assumptions, surface risks) and `/pb-design-rules` thinking (verify Clarity, verify Simplicity) apply. Challenge assumptions at each stage. Don't proceed past a gate without genuine confidence that design is sound and risks are surfaced.
+**Mindset:** Each checkpoint is a gate where `/pb-preamble` thinking (challenge assumptions, surface risks) and `/pb-design-rules` thinking (verify Clarity, verify Simplicity) apply. Challenge assumptions at each stage. Don't proceed past a gate without genuine confidence that design is sound and risks are surfaced.
 
 **Resource Hint:** sonnet - structured task implementation with checkpoints
 
@@ -468,23 +468,7 @@ Move completed todo to "Completed" section in `todos/todos.md`:
 
 ---
 
-## Integration with Playbook
-
-### Workflow Integration
-
-```
-/pb-plan
-  ↓ (after scope is locked)
-/pb-todo-implement  ← YOU ARE HERE
-  ↓ (when code is ready for review)
-/pb-cycle (self-review + peer review)
-  ↓ (when ready to finalize)
-/pb-pr or /pb-commit (create PR or direct commit)
-```
-
-See `/pb-plan` to define scope before starting, `/pb-cycle` for self-review after implementation, and `/pb-pr` or `/pb-commit` to finalize.
-
-### Directory Structure
+## Directory Structure
 
 ```
 todos/

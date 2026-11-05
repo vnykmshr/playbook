@@ -6,9 +6,9 @@ difficulty: "beginner"
 model_hint: "sonnet"
 execution_pattern: "automatic"
 related_commands: ['pb-start', 'pb-preferences', 'pb-commit', 'pb-pr']
-last_reviewed: "2026-11-04"
-version: "2.8.1"
-version_notes: "v2.8.1: After fixing feedback, the independent pass re-runs on the fixes alone, from the commit before them; the footer drops its stale version; the tool-agnostic link resolves on the published site."
+last_reviewed: "2026-11-05"
+version: "2.8.2"
+version_notes: "v2.8.2: The ritual line ends at /pb-pr, as README's does. Mindset added."
 breaking_changes: []
 ---
 # Automated Quality Gate
@@ -19,7 +19,9 @@ Run this after you finish coding. System analyzes what you built, applies your e
 
 > **Note:** This is the fast quality gate in the `/pb-start` → code → `/pb-review` workflow. For deep, comprehensive project reviews, see `/pb-review-comprehensive`.
 
-**Part of the ritual:** `/pb-start` → code → `/pb-review` → done
+**Mindset:** Apply `/pb-preamble` thinking (state findings directly, do not soften them) and `/pb-design-rules` thinking (clarity and simplicity are review criteria, not style).
+
+**Part of the ritual:** `/pb-start` → code → `/pb-review` (commits) → `/pb-pr`
 
 Feedback is prose: what matters and why, not a diagnostic checklist.
 

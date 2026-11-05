@@ -7,15 +7,15 @@ model_hint: "sonnet"
 execution_pattern: "interactive"
 related_commands: ['pb-review', 'pb-commit', 'pb-pause', 'pb-resume', 'pb-plan']
 last_reviewed: "2026-11-05"
-version: "2.3.2"
-version_notes: "v2.3.2: The tool-agnostic link resolves on the published site; the questions are a few, not 3-4, and the Quick Start takes 2 minutes, not 5; no background watcher is claimed; the migration table keeps /pb-cycle and /pb-review-code, which ship."
+version: "2.3.3"
+version_notes: "v2.3.3: The ritual is README's: /pb-start, code, /pb-review (which commits), /pb-pr; /pb-commit is the manual path. The size signal sets review depth and is not /pb-guide's change tier."
 breaking_changes: ["Replaced detailed pre-start checklist with 3-4 adaptive scope questions. Old commands pb-cycle/pb-review-code merged into /pb-review. See MIGRATION section."]
 ---
 # Start Development Work
 
 Begin work on a feature, bug fix, or enhancement. Establishes scope through adaptive questions, then you work. No ceremony - just clarity.
 
-**Part of the ritual:** `/pb-start` → code → `/pb-review` → decide → `/pb-commit`
+**Part of the ritual:** `/pb-start` → code → `/pb-review` (commits) → `/pb-pr`
 
 **Mindset:** Apply `/pb-preamble` thinking (challenge assumptions) and `/pb-design-rules` thinking (verify clarity, simplicity, robustness). This command ensures you know *what* success looks like before writing code.
 
@@ -53,7 +53,7 @@ The system asks clarifying questions naturally, like a peer reviewing your appro
 
 2. **How complex?** (files and LOC estimate)
    - You: "~200 LOC, 3 files, touches auth + email"
-   - System detects: small/medium/large
+   - System detects: small/medium/large, which sets review depth (not `/pb-guide`'s XS-L change tiers)
 
 3. **Scope mode?** (expanding, holding, or reducing)
    - **Expanding:** New capability - building something that doesn't exist yet
@@ -100,10 +100,11 @@ This command is part of a 3-command ritual:
   ↓ Clean? Auto-commits. Issues? Preferences decide.
   ↓ Ambiguous? Asks you, then commits.
 
-/pb-commit
-  ↓ Usually automatic (triggered by /pb-review)
-  ↓ Use explicitly if you want manual control
+/pb-pr
+  ↓ Opens the PR for peer review
 ```
+
+`/pb-commit` is the manual commit, for when you want control; `/pb-review` usually commits for you.
 
 **Total cognitive load: 3 commands.** That's a habit.
 
@@ -145,14 +146,14 @@ You don't need to think about this.
 | `/pb-security`, `/pb-performance` | Consulted automatically by `/pb-review` |
 | Manual persona selection | Automatic (system decides who to consult) |
 
-**No more commands to remember: just `/pb-start`, `/pb-review`, `/pb-commit`.**
+**No more commands to remember: just `/pb-start`, `/pb-review`, `/pb-pr`.**
 
 ---
 
 ## Related Commands
 
 - `/pb-review` - Quality gate (the second part of the ritual)
-- `/pb-commit` - Make the commit (the third part)
+- `/pb-commit` - Manual commit (`/pb-review` usually commits)
 - `/pb-pause` - Pause work, save context
 - `/pb-resume` - Get back into context
 - `/pb-plan` - Plan architecture before starting (optional, for complex work)

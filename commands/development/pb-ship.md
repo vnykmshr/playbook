@@ -7,8 +7,8 @@ model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-cycle', 'pb-pr', 'pb-release', 'pb-review-hygiene', 'pb-deployment']
 last_reviewed: "2026-11-05"
-version: "1.2.2"
-version_notes: "v1.2.2: Step 5.2 runs /pb-release Phase 2-3, which tags only after CI is green on the merge commit, instead of an inline tag and deploy that skipped that gate; the diagram lists /pb-review-hygiene once; /code-review is named as invoked; steps renumbered; the Escape Hatch runs /pb-release Step 2.3's CI check on the merge commit before deploying, not the latest run on the branch. 730 to 695 lines."
+version: "1.3.0"
+version_notes: "v1.3.0: Phase 3 lists /pb-preflight in the diagram, table and checklist; peer review is /pb-review-code, with /code-review as an independent pass; /pb-deployment is no longer listed beside /pb-release, which runs it; /pb-review-hygiene is the periodic check run before a release, and the escape hatch reviews touched code with /pb-review-code; the PR body and commit subjects are checked against the register; the Integration section and its change markers are gone."
 breaking_changes: []
 ---
 # Ship Focus Area to Production
@@ -38,15 +38,15 @@ Ship when ready, not when tired. Every review step is an opportunity to find iss
 PHASE 1              PHASE 2                PHASE 3           PHASE 4              PHASE 5
 FOUNDATION           SPECIALIZED REVIEWS    FINAL GATE        PR & PEER REVIEW     MERGE & RELEASE
 │                    │                      │                 │                    │
-├─ Quality gates     ├─ /pb-review-docs     ├─ /pb-release    ├─ /pb-pr            ├─ Merge PR
-│  (lint,test,type)  │  (REQUIRED)          │  Phase 1        │                    │
-│                    │                      │  (readiness)    ├─ Peer review       ├─ /pb-release
-├─ /pb-cycle         ├─ /pb-review-hygiene  │                 │  (scoped to PR)    │  Phase 2-3
-│  (self-review)     │  (code + project)    └─ Ship decision  │                    │  (tag, deploy)
-│                    │                         (go/no-go)     ├─ Address feedback  │
-└─ Release artifacts │                                        │                    ├─ /pb-deployment
-   (CHANGELOG etc)   │                                        └─ Approved sign-off │
-                     │                                                             └─ Summarize
+├─ Quality gates     ├─ /pb-review-docs     ├─ /pb-preflight  ├─ /pb-pr            ├─ Merge PR
+│  (lint,test,type)  │  (REQUIRED)          │  (wiring)       │                    │
+│                    │                      │                 ├─ Peer review       ├─ /pb-release
+├─ /pb-cycle         ├─ /pb-review-hygiene  ├─ /pb-release    │  (/pb-review-code) │  Phase 2-3
+│  (self-review)     │  (code + project)    │  Phase 1        │                    │  (tag, deploy)
+│                    │                      │  (readiness)    ├─ Address feedback  │
+└─ Release artifacts │                      │                 │                    └─ Summarize
+   (CHANGELOG etc)   │                      └─ Ship decision  └─ Approved sign-off
+                     │                         (go/no-go)
                      ├─ /pb-review-tests
                      │  (coverage)
                      │
@@ -61,7 +61,7 @@ FOUNDATION           SPECIALIZED REVIEWS    FINAL GATE        PR & PEER REVIEW  
 
 ## Release Type Quick Reference
 
-| Release Type | Phase 1 | Phase 2 | Phase 3 | Phase 4-5 |
+| Release Type | Phase 1 | Phase 2 | Phase 3 (preflight + readiness) | Phase 4-5 |
 |--------------|---------|---------|---------|-----------|
 | Versioned (vX.Y.Z) | Full + Artifacts | At least `/pb-review-docs` | Required | Required |
 | S-tier versioned | Full + Artifacts | `/pb-review-docs` only | Quick check | Required |
@@ -174,7 +174,7 @@ Run `/pb-review-docs`:
 
 **Step 2.2: Code Quality Review**
 
-Run `/pb-review-hygiene`:
+Run `/pb-review-hygiene`, the periodic health check, here before a release:
 
 - [ ] Code patterns are consistent
 - [ ] No duplication (DRY)
@@ -311,7 +311,7 @@ If NO-GO, document blockers and return to appropriate phase.
 
 ### Step 4.1: Create Pull Request
 
-Run `/pb-pr`. Body register follows the global rule (see `~/.claude/CLAUDE.md` § GitHub Artifact Register). `/pb-pr` selects the size-tier template based on file count and concern count. For a ship-scope PR (multi-concern by definition), the sectioned form usually applies:
+Run `/pb-pr`. Body register follows the global rule (see `~/.claude/CLAUDE.md` § GitHub Artifact Register). `/pb-pr` selects the size-tier template based on file count and concern count. For a ship-scope PR (multi-concern by definition), the sectioned form usually applies. Check the drafted title and body against the register before opening:
 
 ```bash
 gh pr create --title "<type>(<scope>): brief description" --body "$(cat <<'EOF'
@@ -331,7 +331,7 @@ Ship review status (release artifacts, hygiene, tests, security, docs) belongs i
 
 ### Step 4.2: Request Peer Review
 
-Run `/code-review` or `/pb-review` scoped to PR changes:
+Run `/pb-review-code` on the PR; `/code-review` adds an independent pass:
 
 ```bash
 # Get the diff for context
@@ -387,7 +387,7 @@ git push
 gh pr ready [PR-NUMBER]
 ```
 
-Commit messages here follow the global rule (see `~/.claude/CLAUDE.md` § GitHub Artifact Register): subject line by default; body only when the WHY is non-obvious. Avoid generic `"address review feedback"` subjects; cite the actual fix.
+Commit messages here follow the global rule (see `~/.claude/CLAUDE.md` § GitHub Artifact Register): subject line by default; body only when the WHY is non-obvious. Check the drafted subject against it before committing. Avoid generic `"address review feedback"` subjects; cite the actual fix.
 
 ### Step 4.5: Get Approved Sign-Off
 
@@ -469,7 +469,7 @@ gh pr merge [PR-NUMBER] --merge --delete-branch
 
 ### Step 5.2: Release and Verify
 
-Run `/pb-release` Phase 2-3: it tags only after CI is green on the merge commit, creates the release, deploys and verifies.
+Run `/pb-release` Phase 2-3: it tags only after CI is green on the merge commit, creates the release, deploys (its Step 3.1 runs `/pb-deployment`) and verifies.
 
 ### Step 5.3: Release Summary
 
@@ -488,7 +488,7 @@ Update `todos/ship-review-YYYY-MM-DD.md`:
 - [Feature/fix 2]
 
 ### Review Stats
-- Reviews completed: 6
+- Reviews completed: N
 - Issues found: X
 - Issues fixed: X
 - Issues deferred: X
@@ -517,7 +517,7 @@ For genuinely trivial changes (typo fix, comment update, README tweak):
 make lint && make test
 
 # Phase 2: Pick ONE relevant review
-# /pb-review-hygiene (if code touched)
+# /pb-review-code (if code touched)
 # /pb-review-docs (if docs touched)
 
 # Phase 3: Skip
@@ -619,30 +619,6 @@ gh release edit vX.Y.Z --notes "..."
 
 ---
 
-## Integration with Playbook
-
-**Part of development workflow:**
-```
-/pb-start → /pb-cycle (iterate) → /pb-pause/resume → /pb-ship
-                                                        │
-                                    ┌───────────────────┘
-                                    ↓
-                              Foundation
-                              + Release Artifacts ← NEW
-                                    ↓
-                           Specialized Reviews
-                           (docs REQUIRED)      ← CLARIFIED
-                                    ↓
-                              Final Gate
-                              (CHANGELOG check) ← ADDED
-                                    ↓
-                            PR & Peer Review
-                                    ↓
-                            Merge & Release
-                                    ↓
-                                Verify
-```
-
 ## Related Commands
 
 - `/pb-cycle` - Self-review and peer review before shipping
@@ -663,7 +639,7 @@ PHASE 1: FOUNDATION
 [ ] Release artifacts verified (CHANGELOG, version)
 
 PHASE 2: SPECIALIZED REVIEWS
-[ ] /pb-review-docs - REQUIRED for versioned releases ← CLARIFIED
+[ ] /pb-review-docs - REQUIRED for versioned releases
 [ ] /pb-review-hygiene - code quality (recommended)
 [ ] /pb-review-hygiene - project health (recommended)
 [ ] /pb-review-tests - test coverage (recommended)
@@ -671,6 +647,7 @@ PHASE 2: SPECIALIZED REVIEWS
 [ ] /pb-logging - logging standards (optional)
 
 PHASE 3: FINAL GATE
+[ ] /pb-preflight - wiring check
 [ ] /pb-release Phase 1 - readiness gate (senior sign-off)
 [ ] CHANGELOG.md verified
 [ ] Ship decision: GO
@@ -685,8 +662,7 @@ PHASE 4: PR & PEER REVIEW
 PHASE 5: MERGE & RELEASE
 [ ] Final CI verification (all checks green)
 [ ] PR merged
-[ ] /pb-release Phase 2-3 - version, tag, GitHub release
-[ ] /pb-deployment - execute deployment, verify
+[ ] /pb-release Phase 2-3 - version, tag, GitHub release, deploy, verify
 [ ] Summary documented
 ```
 

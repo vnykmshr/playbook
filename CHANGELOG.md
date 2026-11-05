@@ -13,6 +13,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- **`/pb-what-next` v2.1.0.** Example Output is a real run of the script; the other examples are labelled illustrative and carry no times; four detected phases, as the script has; Recommended Workflow is the daily ritual, with hygiene and test reviews periodic; `/pb-review` replaces `/pb-cycle` in the comparison table; `/pb-templates` is SDLC and quality templates.
+- **`/pb-start` v2.3.3.** The ritual is README's: `/pb-start`, code, `/pb-review` (which commits), `/pb-pr`; `/pb-commit` is the manual path. The size signal sets review depth and is not `/pb-guide`'s change tier.
+- **`/pb-ship` v1.3.0.** Phase 3 lists `/pb-preflight` in the diagram, table and checklist; peer review is `/pb-review-code`, with `/code-review` as an independent pass; `/pb-deployment` is no longer listed beside `/pb-release`, which runs it; `/pb-review-hygiene` runs as the periodic check before a release, and the escape hatch reviews touched code with `/pb-review-code`; the PR body and commit subjects are checked against the register; the Integration section and its change markers are gone.
+- **`/pb-review` v2.8.2.** The ritual line ends at `/pb-pr`, as README's does. Mindset added.
+- **`/pb-pause` v1.11.0.** The Integration section is gone.
 - **`/pb-context-review` v2.4.1.** Daily hygiene points at `/pb-pause` Step 3; pause entries are archived at each pause, not after resume.
 - **`/pb-claude-project` v1.4.4.** The skeleton's Relevant Playbooks row names `/pb-guide` in place of the retired `/pb-guide-[lang]`. Mindset cites `/pb-design-rules`.
 - **`/pb-review-microservice` v1.2.0.** Example code cut; each section keeps its question and checklist, and the common issues and review template stay.
@@ -62,17 +67,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **`/pb-security` v1.4.0.** Integration section removed. The SSRF example checks every resolved address and connects to the checked one with TLS hostname verification; the open-redirect example rejects backslashes and non-slash paths; secrets, PII and password rules follow `/pb-secrets`, `/pb-logging` and NIST SP 800-63B (length plus breached-password check, no composition rules; argon2id, scrypt or bcrypt); secret scanning names gitleaks.
 - **`/pb-huddle` v1.9.0.** A command the close rules is dry-run and diffed against the untouched base; re-huddle messages each agent once, then spawns fresh agents from the brief and findings files.
 - **`/pb-claude-global` v2.13.0.** Register covers tag messages and CHANGELOG entries; length ceilings become defaults (commit subject only, PR body one sentence of what plus upgrader impact); the drafting step checks its own text; process vocabulary named under Never in public text. Mindset added.
-- **`/pb-commit` v2.4.0.** Message Register points to the register instead of restating a body length, and checks the drafted message before committing. Mindset added.
-- **`/pb-cycle` v1.3.0.** Commit step drops the with-body example and checks the subject against the register. Mindset added.
+- **`/pb-commit` v2.4.0.** Message Register points to the register instead of restating a body length, and checks the drafted message before committing; the ritual line ends at `/pb-pr`; the Integration section and the footer's stale version are gone. Mindset added.
+- **`/pb-cycle` v1.3.0.** Commit step drops the with-body example and checks the subject against the register; placed in the ritual as the manual path; Step 0 reads the success criteria given to `/pb-start`; Step 5 is done when `/pb-review` ran; the Integration section is gone. Mindset added.
 - **`/pb-pr` v1.2.0.** Small-PR body is one sentence of what plus upgrader impact; the drafted title and body are checked against the register before the PR opens.
 - **`/pb-release` v1.4.0.** Tag message is the release title; dispatch deploy workflows on main and verify before tagging; notes and CHANGELOG entry checked against the register before the release step; run from `/pb-ship`, ship's Phase 2 reviews satisfy the Phase 1 review gates; one post-deploy watch, at least `/pb-preflight`'s 15 minutes; the hotfix CHANGELOG entry goes in a version section, not after the link footer; Integration with Playbook section removed.
 - **`/pb-context` v1.1.0.** The SDLC flow names the daily loop, and the release step hands off to `/pb-release`, which tags after CI is green; work tiers defer to `/pb-guide`; the line saying `/pb-start` reads the working context is gone.
-- **`/pb-handcraft` v1.6.1.** Lens 6 says text drafted after the pass is checked by the step that drafts it.
+- **`/pb-handcraft` v1.6.1.** Lens 6 says text drafted after the pass is checked by the step that drafts it; the Integration section is gone.
 - **`/pb-forge` v1.9.0.** Peer and Land check their drafted text against the register; a change pulled from a release is removed by rebuilding the range, not by a forward revert.
 - **`/pb-alex-infra` v1.4.0.** Spaced double hyphens replaced. Examples cut to one failure-mode line per review category and two one-line examples; a failed rollout stalls and is rolled back by command; images pinned; Related names Linus for correctness.
 - **`/pb-resume` v1.12.0.** Spaced double hyphens replaced. Step 0c sends durable notes to the home `/pb-pause` Step 0 assigns.
 - **`/pb-review-code` v2.4.0.** Spaced double hyphens replaced. Integration with Playbook section removed.
-- **`/pb-todo-implement` v1.4.0.** Spaced double hyphens replaced.
+- **`/pb-todo-implement` v1.4.0.** Spaced double hyphens replaced; the Integration section is gone, its directory layout kept as its own section. Mindset added.
 - **`/pb-voice` v2.3.1.** Spaced double hyphens replaced. The companion-script line says it needs a playbook clone.
 - **`/pb-claude-orchestration` v1.5.2.** Spaced double hyphens replaced. Harness Reality drops model versions, prices and its date; an independent re-derivation is the exception to never delegating your own check; the model mapping and Example 1 name the commands' real hints.
 - **`/pb-storage` v2.1.0.** Spaced double hyphens replaced. The Everything block is cut to one line; the Docker dry run uses `docker system df -v`, since prune has no dry run; space-not-freed points at local snapshots instead of `sudo purge`; the Node globals row with no command is removed; the header and Related name the recovery tiers; the disk trigger cites `/pb-doctor`. Mindset cites `/pb-design-rules`.

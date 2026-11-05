@@ -7,8 +7,8 @@ model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-start', 'pb-forge', 'pb-commit', 'pb-pr', 'pb-release']
 last_reviewed: "2026-11-05"
-version: "2.0.2"
-version_notes: "v2.0.2: Says it needs a playbook clone, since it runs a script install does not link; the fully-implemented claim, the phase label and the stale footer date are gone."
+version: "2.1.0"
+version_notes: "v2.1.0: Example Output is a real run of the script; the other examples are labelled illustrative and carry no times. Four phases are detected, as the script does; branch names other than main or master change nothing; the commit count caps at 10. Recommended Workflow is the daily ritual, with hygiene and test reviews periodic; /pb-review replaces /pb-cycle in the comparison table; /pb-templates is SDLC and quality templates."
 breaking_changes: []
 ---
 # Recommend Next Playbook Command
@@ -58,7 +58,9 @@ This command analyzes:
 
 ---
 
-## Real-World Examples
+## Examples (Illustrative)
+
+Abridged sketches of what each phase recommends; Example Output below is a real run.
 
 ### Example 1: Starting a Feature
 
@@ -74,7 +76,6 @@ Recommended Next Steps
 
 1. `/pb-start` - Start Development Work
    - Begin iterative development
-   - Time: 5 min
 ```
 
 **Why:** You've just created the branch. `/pb-start` helps establish the rhythm for your work.
@@ -93,11 +94,11 @@ Recommended Next Steps
 
 1. `/pb-cycle` - Development Cycle
    - Self-review + peer review
-   - Confidence: 90% | Time: 45 min
+   - Confidence: 90%
 
 2. `/pb-testing` - Advanced Testing
    - Verify test coverage
-   - Confidence: 85% | Time: 5 min
+   - Confidence: 85%
 
 Why These Commands?
 ━━━━━━━━━━━━━━━━━━━
@@ -123,11 +124,11 @@ Recommended Next Steps
 
 1. `/pb-commit` - Atomic Commits
    - Organize into logical commits
-   - Confidence: 90% | Time: 10 min
+   - Confidence: 90%
 
 2. `/pb-pr` - Quick PR Creation
    - Create pull request
-   - Confidence: 90% | Time: varies
+   - Confidence: 90%
 
 Why These Commands?
 ━━━━━━━━━━━━━━━━━━━
@@ -153,11 +154,9 @@ Recommended Next Steps
 
 1. `/pb-release` - Release Preparation
    - Prepare for production
-   - Time: 45 min
 
 2. `/pb-deployment` - Deployment Strategies
    - Plan deployment
-   - Time: 5 min
 
 Why These Commands?
 ━━━━━━━━━━━━━━━━━━━
@@ -175,15 +174,15 @@ Why These Commands?
 
 ### Current Work State
 - **Branch**: The git branch you're on (feature/*, fix/*, main, etc.)
-- **Phase**: Detected workflow phase (START, DEVELOP, FINALIZE, REVIEW, RELEASE)
+- **Phase**: Detected workflow phase (START, DEVELOP, FINALIZE, RELEASE)
 - **Changes**: Number of modified files and their types
 
 ### Recommended Next Steps
 Each recommendation includes:
 - **Command name**: Which `/pb-*` command to run next
 - **Purpose**: Brief description of what the command does
-- **Confidence**: 0.6-1.0 score indicating how certain the recommendation is
-- **Time**: Estimated duration (5 min to 2 hours)
+- **Confidence**: A percentage indicating how certain the recommendation is
+- **Time**: From the command's tier in metadata: 5, 10, 25 or 45 min, or varies
 
 ### Confidence Levels
 - **0.90-1.0** (Very High): Direct match to your situation
@@ -225,7 +224,7 @@ This generates the metadata that `/pb-what-next` uses for command details.
 **Solution:**
 - Run with `--verbose` to see how the phase was detected
 - Check your git state: `git status`, `git log --oneline -5`
-- Branch name matters: use `feature/*`, `fix/*`, `refactor/*` naming for best results
+- Only `main` and `master` change the phase (RELEASE); other branch names do not
 
 ### "Can't analyze git state"
 **Problem:** Git analysis fails
@@ -255,13 +254,7 @@ This generates the metadata that `/pb-what-next` uses for command details.
    - Each command builds on the previous one
    - Complete each step before returning for new recommendations
 
-4. **Use with feature/fix/refactor branch naming**
-   - `feature/new-feature` → Development workflow
-   - `fix/bug-name` → Bug fix workflow
-   - `refactor/cleanup` → Refactor workflow
-   - Naming helps the tool detect your intent
-
-5. **Combine with `/pb-standup` for tracking**
+4. **Combine with `/pb-standup` for tracking**
    - Run `/pb-what-next` to see what's next
    - Complete that step
    - Run `/pb-standup` to track progress
@@ -273,65 +266,61 @@ This generates the metadata that `/pb-what-next` uses for command details.
 
 The command analyzes your current situation and recommends relevant commands:
 
-### Branch Analysis
-- **feature/*** branch? → Development workflow
-- **fix/*** branch? → Bug fix workflow
-- **refactor/*** branch? → Refactor workflow
-- Just merged to main? → Release workflow
+### Phase Recommendations
+- START (no commits, clean tree) → `/pb-start`
+- DEVELOP → `/pb-cycle`, `/pb-testing`
+- FINALIZE → `/pb-commit`, `/pb-pr`
+- RELEASE (on `main` or `master`) → `/pb-release`, `/pb-deployment`
+
+DEVELOP and FINALIZE name the manual path. In the ritual, `/pb-review` commits and `/pb-pr` follows. The script also holds a REVIEW set (`/pb-review-code`, `/pb-review-tests`, `/pb-security`) that no git state reaches.
 
 ### File Analysis
-- Changed **tests/**? → Run `/pb-testing`
-- Changed **docs/**? → Use `/pb-documentation`
-- Changed **src/** + **tests/**? → Full cycle needed
-- No tests changed? → Add test coverage with `/pb-testing`
-
-### Time-Based Recommendations
-- Early in feature? → `/pb-start`, `/pb-cycle`, `/pb-standards`
-- Mid-feature? → `/pb-cycle`, `/pb-testing`
-- Ready to finalize? → `/pb-commit`, `/pb-pr`
-- Code review? → `/pb-review-hygiene`, `/pb-review-tests`, `/pb-security`
-- Release time? → `/pb-release`, `/pb-deployment`
+- Changed **tests/**? → `/pb-testing`
+- Changed **docs/** or Markdown? → `/pb-documentation`
+- Changed **.github/workflows/**? → `/pb-deployment`
 
 ---
 
 ## Example Output
 
-```
-📊 Current Work State
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+A real run on a branch of this repo (`python3 scripts/analyze-playbook-context.py`):
 
-Branch:    feature/v1.3.0-user-auth
-Files:     3 changed (src/, tests/)
-Status:    Mid-feature, tests need updating
+```text
+# Current Work State
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-✅ RECOMMENDED NEXT STEPS
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+**Branch**: `stabilize`
+**Phase**: FINALIZE
+**Changes**: 22 files changed (docs/)
+**Commits**: 10 recent commits
 
-1. 🔄 /pb-cycle  →  Self-review + peer feedback
-   "Self-review your changes and get peer feedback on approach"
-   Time: 30-60 minutes
+# Recommended Next Steps
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-2. ✅ /pb-testing  →  Verify test coverage
-   "Ensure your tests match your changes"
-   Time: 10 minutes
+1. **`/pb-pr`** — Quick PR Creation
+   - Create pull request for integration
+   - Confidence: 90% | Time: 5 min
 
-3. 🎯 /pb-commit  →  Craft atomic commits
-   "Organize your work into logical commits"
-   Time: 5 minutes
+2. **`/pb-documentation`** — Writing Great Engineering Documentation
+   - Documentation changed, ensure clarity
+   - Confidence: 75% | Time: 5 min
 
-4. 🔗 /pb-pr  →  Create pull request
-   "Submit your work for integration"
-   Time: 10 minutes
+3. **`/pb-commit`** — Commit (Usually Automatic)
+   - Organize work into logical commits
+   - Confidence: 90% | Time: 45 min
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+# Why These Commands?
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-💡 WHY THESE COMMANDS?
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+• Multiple commits → Time to organize and prepare for integration
+• Documentation updated → Ensure clarity and completeness
 
-• Both src/ and tests/ changed  → You're doing TDD (good!)
-• Tests modified recently       → Run /pb-testing to verify coverage
-• Feature branch active         → You're in development mode
-• No commits yet                → Time to wrap up and PR
+# Tips
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+- Run `/pb-what-next --verbose` for detailed analysis
+- Each command should take 5-60 minutes
+- Return here after each step for updated recommendations
 ```
 
 ---
@@ -352,7 +341,7 @@ Status:    Mid-feature, tests need updating
 |---------|---------|------|
 | `/pb-what-next` | Recommend next action | Unsure, need guidance |
 | `/pb-start` | Create branch, establish rhythm | Starting feature |
-| `/pb-cycle` | Self-review + peer review | After coding a unit |
+| `/pb-review` | Quality gate; commits on pass | After coding a unit |
 | `/pb-release` | Release checklist | Preparing for production |
 
 Use `/pb-what-next` when in doubt. It analyzes your situation and points you to the right command.
@@ -383,18 +372,19 @@ Categorizes changes by type:
 - **CI**: GitHub Actions workflows, CI config files
 
 ### 3. Workflow Phase Detection
-Maps your situation to one of 5 phases:
-- **START** (0 commits, fresh branch)
+Maps your situation to one of 4 phases:
+- **START** (0 commits, clean tree)
 - **DEVELOP** (1-4 commits, active changes)
-- **FINALIZE** (5+ commits, ready to wrap up)
-- **REVIEW** (PR created, in review)
-- **RELEASE** (on main branch, deployment time)
+- **FINALIZE** (5+ commits, or committed and clean)
+- **RELEASE** (on `main` or `master`)
+
+The commit count comes from `git log --oneline -10`: it counts HEAD's history, not the branch's own commits, and caps at 10. In a repo with 5 or more commits, every branch other than `main` or `master` reads as FINALIZE.
 
 ### 4. Recommendation Generation
 Uses your phase + file types to suggest commands:
 - Phase-based: Different commands for each workflow phase
 - File-type-based: Test changes trigger `/pb-testing`, doc changes trigger `/pb-documentation`
-- Confidence scoring: Each recommendation gets 0.6-1.0 confidence based on match strength
+- Confidence scoring: Each recommendation gets a confidence based on match strength
 
 ### 5. Metadata-Driven
 Uses `.playbook-metadata.json` for:
@@ -406,36 +396,17 @@ Uses `.playbook-metadata.json` for:
 
 ## Recommended Workflow
 
-Typical development session:
+The daily ritual, by phase:
 
-```
-1. START
-   └─ /pb-start       Create branch
-                      Time: 5 min
-
-2. DEVELOP
-   └─ /pb-cycle       Iterate (repeat 3-5x)
-      /pb-testing     Verify tests
-                      Time: 30-60 min per iteration
-
-3. FINALIZE
-   └─ /pb-commit      Organize commits
-      /pb-pr          Create PR
-                      Time: 15 min
-
-4. REVIEW
-   └─ /pb-review-hygiene Code review
-      /pb-review-tests Test review
-      /pb-security     Security check
-                       Time: 30-60 min
-
-5. MERGE & DEPLOY
-   └─ /pb-release     Release checklist
-      /pb-deployment   Deploy strategy
-                       Time: 1-2 hours
+```text
+1. START      /pb-start           Scope and branch
+2. DEVELOP    code → /pb-review   Gate; commits on pass (repeat)
+3. FINALIZE   /pb-pr              Open the PR
+4. REVIEW     /pb-review-code     Peer review of the PR
+5. RELEASE    /pb-release         Readiness gate, tag, deploy
 ```
 
-At any point, run `/pb-what-next` to confirm you're on the right path.
+`/pb-review-hygiene` and `/pb-review-tests` are periodic checks, not steps of each PR. At any point, run `/pb-what-next` to confirm you're on the right path.
 
 ---
 
@@ -445,7 +416,7 @@ At any point, run `/pb-what-next` to confirm you're on the right path.
 - **Learning?** Check "Related Commands" to understand the full workflow
 - **Customizing?** Edit command recommendations by improving command metadata
 - **Tracking?** Use `/pb-standup` to record daily progress
-- **Templates?** Use `/pb-templates` for starting code templates
+- **Templates?** Use `/pb-templates` for SDLC and quality templates
 
 ---
 
@@ -456,8 +427,6 @@ After getting recommendations:
 2. Complete that step
 3. Come back and run `/pb-what-next` again
 4. Repeat until your work is ready to merge
-
-Tip: Each command should take 5-60 minutes. If a step takes longer, you may need to break it into smaller pieces.
 
 ---
 

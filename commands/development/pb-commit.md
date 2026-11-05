@@ -8,7 +8,7 @@ execution_pattern: "automatic"
 related_commands: ['pb-review', 'pb-start', 'pb-pr']
 last_reviewed: "2026-11-05"
 version: "2.4.0"
-version_notes: "v2.4.0: Message Register points to the register instead of restating a body length, and checks the drafted message before committing. Mindset added."
+version_notes: "v2.4.0: Message Register points to the register instead of restating a body length, and checks the drafted message before committing. Mindset added. The ritual line ends at /pb-pr, as README's does; the Integration section and the footer's stale version are gone."
 breaking_changes: []
 ---
 # Commit (Usually Automatic)
@@ -23,7 +23,7 @@ breaking_changes: []
 
 **Rarely:** You want manual control. Use this command explicitly.
 
-**Part of the ritual:** `/pb-start` → code → `/pb-review` → (automatic `/pb-commit`)
+**Part of the ritual:** `/pb-start` → code → `/pb-review` (commits) → `/pb-pr`
 
 ---
 
@@ -109,22 +109,6 @@ Default: `<type>(<scope>): <subject>`, present tense, subject only. No attributi
 
 ---
 
-## Integration
-
-**Before:**
-- `/pb-review` auto-commits when all passes
-
-**This command:**
-- Usually not needed (automatic)
-- Exists if you want manual control
-- Exists if something went wrong
-
-**After:**
-- Commit is in remote
-- Ready for `/pb-pr` or next work
-
----
-
 ## Related Commands
 
 - `/pb-review` - Runs auto-commit (you don't need to do anything)
@@ -133,4 +117,4 @@ Default: `<type>(<scope>): <subject>`, present tense, subject only. No attributi
 
 ---
 
-*Automatic by default | Manual if you prefer | v2.3.0*
+*Automatic by default | Manual if you prefer*

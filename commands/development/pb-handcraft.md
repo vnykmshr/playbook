@@ -8,7 +8,7 @@ execution_pattern: "sequential"
 related_commands: ['pb-voice', 'pb-review', 'pb-linus-agent', 'pb-commit', 'pb-llm-guidelines']
 last_reviewed: "2026-11-05"
 version: "1.6.1"
-version_notes: "v1.6.1: Lens 6 says text drafted after the pass is checked by the step that drafts it."
+version_notes: "v1.6.1: Lens 6 says text drafted after the pass is checked by the step that drafts it. The Integration section is gone."
 breaking_changes: []
 ---
 # AI Output Quality Gate
@@ -300,13 +300,6 @@ All work stays local until explicitly approved for external action. No auto-push
 - Execute any external action
 
 If the handcraft pass reveals a real issue (missing test case, logic bug), fix it, but don't use it as an excuse to expand scope.
-
----
-
-## Integration
-
-Run after work is functionally complete, before presenting externally. Integrates naturally with:
-- `/pb-review` (code quality) -> `/pb-handcraft` (human quality) -> `/pb-commit` (messages) -> `/pb-pr` (PR descriptions)
 
 ---
 

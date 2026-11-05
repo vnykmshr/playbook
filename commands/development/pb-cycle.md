@@ -8,12 +8,14 @@ execution_pattern: "sequential"
 related_commands: ['pb-start', 'pb-commit', 'pb-pr', 'pb-review-code', 'pb-testing']
 last_reviewed: "2026-11-05"
 version: "1.3.0"
-version_notes: "v1.3.0: Commit step drops the with-body example and checks the subject against the register. Mindset added."
+version_notes: "v1.3.0: Commit step drops the with-body example and checks the subject against the register. Mindset added. Placed in the ritual as the manual path; Step 0 reads the success criteria given to /pb-start instead of a file it never writes; Step 5 is done when /pb-review ran; the Integration section is gone."
 breaking_changes: []
 ---
 # Development Cycle: Self-Review + Peer Review
 
 Run this after completing a unit of work. Guides you through self-review, quality gates, and peer review before committing.
+
+**Part of the ritual:** optional. The default is `/pb-start` → code → `/pb-review` → `/pb-pr`; `/pb-cycle` is the manual path, each step by hand.
 
 **Mindset:** Apply `/pb-preamble` thinking (challenge your own work before a peer has to) and `/pb-design-rules` thinking (clarity and simplicity are review criteria, not style).
 
@@ -36,13 +38,7 @@ Run this after completing a unit of work. Guides you through self-review, qualit
 
 Before self-review, verify you've achieved the defined outcomes.
 
-**Pull up the outcome clarification document** (created during `/pb-start`):
-
-```bash
-cat todos/work/[task-date]-outcome.md
-```
-
-**Verify each success criterion:**
+**Pull up the success criteria you gave `/pb-start`.** Verify each one:
 - [ ] Success criterion 1: VERIFIED? (How? Measured? Tested?)
 - [ ] Success criterion 2: VERIFIED?
 - [ ] Success criterion 3: VERIFIED?
@@ -96,7 +92,7 @@ Request review from senior engineer perspective.
 **CRITICAL: Reviewers must verify outcomes before approving.**
 
 Before approving, reviewer should check:
-- [ ] Outcomes were defined (in outcome clarification document)
+- [ ] Outcomes were defined (the success criteria given to `/pb-start`)
 - [ ] Success criteria are met (verified in code/tests)
 - [ ] If outcomes not met: Ask author to complete work or explain why criteria changed
 - [ ] If outcomes met: Proceed to code review
@@ -164,7 +160,7 @@ If issues identified:
 
 ## Step 5: Commit
 
-After reviews pass, create a logical commit:
+If `/pb-review` ran, it already committed: go to Step 6. Otherwise, after reviews pass, create a logical commit:
 
 ```bash
 git add [specific files]    # NEVER use git add . or git add -A
@@ -312,35 +308,6 @@ After committing, assess context health. See `/pb-claude-orchestration` for deta
 | Test additions | `test:` |
 
 **Don't wait until end of session. Commit incrementally.**
-
----
-
-## Integration with Playbook
-
-**Part of feature development workflow:**
-- `/pb-start` → Create branch, set iteration rhythm
-- `/pb-resume` → Get back in context (if context switching)
-- **`/pb-cycle`** → Self-review + peer review (YOU ARE HERE)
-  - Includes: `/pb-testing` (write tests), `/pb-standards` (check principles), `/pb-security` (security gate)
-  - Peer reviewer uses: `/pb-review-code` (code review checklist)
-- `/pb-commit` → Craft atomic commits (after approval)
-- `/pb-pr` → Create pull request
-- `/pb-review-*` → Additional reviews if needed
-- `/pb-release` → Deploy
-
-**Key integrations during /pb-cycle:**
-- **Peer Review**: `/pb-review-code` for reviewer's code review checklist
-- **Testing**: `/pb-testing` for test patterns (unit, integration, E2E)
-- **Security**: `/pb-security` checklist during self-review
-- **Logging**: `/pb-logging` standards for logging validation
-- **Standards**: `/pb-standards` for working principles
-- **Documentation**: `/pb-documentation` for updating docs alongside code
-
-**After /pb-cycle approval:**
-- `/pb-commit` - Craft atomic, well-formatted commit
-- `/pb-pr` - Create pull request with context
-
-**See also**: `/docs/integration-guide.md` for how all commands work together
 
 ---
 

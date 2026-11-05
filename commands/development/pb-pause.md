@@ -7,8 +7,8 @@ model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-resume', 'pb-start', 'pb-standup', 'pb-handoff']
 last_reviewed: "2026-11-05"
-version: "1.10.0"
-version_notes: "v1.10.0: Spaced double hyphens replaced. Step 0 names three homes: `todos/` for session state, `docs/` for durable public notes, a private repo for durable private ones. Step 3c copies whatever a lasting note links to in the session scratch directory into `todos/` before the directory goes."
+version: "1.11.0"
+version_notes: "v1.11.0: The Integration section is gone."
 breaking_changes: []
 ---
 # Pause Development Work
@@ -250,18 +250,6 @@ Additional checks:
 - CI passing on current branch
 - PR status clear (draft/ready/blocked)
 - Team notified if applicable
-
----
-
-## Integration with Playbook
-
-```
-/pb-start → [develop] → /pb-review → /pb-commit → /pb-ship
-                ↕
-        /pb-pause ←→ /pb-resume
-```
-
-**Deep mode runs:** `/pb-context` + `/pb-claude-project` (if needed)
 
 ---
 
