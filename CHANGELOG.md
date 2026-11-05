@@ -13,6 +13,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- **`/pb-deprecation` v1.1.0.** Integration with Playbook section removed. Mindset cites `/pb-preamble` and `/pb-design-rules`.
+- **`/pb-performance` v1.2.0.** Integration with Playbook section removed.
+- **`/pb-patterns-deployment` v2.0.1.** Canary is chosen for real-traffic evidence and rolling for backward-compatible changes on a budget; the comparison table's risk column matches the strategy headings. Mindset added.
+- **`/pb-observability` v1.1.0.** One 5xx alert threshold; resource alerts use the `/pb-sre-practices` thresholds; error budget arithmetic fixed (43.2 min); Log Levels point at `/pb-logging`; the login sample logs no username; tracing names OpenTelemetry over OTLP in place of the removed Jaeger exporter sample; PromQL cut to five valid SLO queries; Integration with Playbook section removed.
+- **`/pb-sre-practices` v1.1.0.** Page response times are `/pb-incident`'s per severity; the capacity table is the threshold home other commands cite; one Monday handoff; migration and new-server sections cut to one paragraph; Integration with Playbook section removed.
+- **`/pb-server-hygiene` v1.0.1.** Docker cleanup is inspected with `docker system df` and `docker container ls -a` (prune has no dry run), and `docker system prune` moves under the judgment block; disk and memory thresholds and the restore-test cadence come from `/pb-sre-practices` and `/pb-dr`.
+- **`/pb-preflight` v1.4.0.** 1.1 scans full history on the first run, then the commits since the last clean scan; 4.2 sets the production log level at info or above; the Static/Managed partition's byte-match check is numbered 4.3s, in place of 4.3.
+- **`/pb-maintenance` v1.0.1.** `VACUUM FULL` only after measured bloat, with `pg_repack` preferred; restore-test cadence and resource thresholds come from `/pb-dr` and `/pb-sre-practices`.
+- **`/pb-incident` v1.1.0.** VP Engineering is told at SEV-1 declaration only; the postmortem checklist follows the per-severity timing; disk alerts use the `/pb-sre-practices` thresholds; unsourced root-cause percentages dropped; Integration with Playbook section removed.
+- **`/pb-dr` v1.1.0.** One verification cadence (monthly restore, quarterly failover, annual DR test); point-in-time recovery restores the base backup into the data directory before the recovery settings; Object Lock uses COMPLIANCE mode; disaster communication and escalation extend `/pb-incident`'s SEV-1 path; the `/pb-database-ops` Related line names what it owns; Integration with Playbook section removed.
+- **`/pb-deployment` v1.1.0.** Rollback trigger is the threshold stated in `/pb-preflight` 6.2; the smoke test reads a write back; Compose commands use `docker compose`, and a Compose rollback pins the previous tag in the compose file; Integration with Playbook section removed.
 - **`/pb-logging` v1.2.0.** Defines PII for logs (log `user_id`; IP addresses only on security events, with a retention limit); samples drop emails and the payment-module DEBUG override; the JSON formatter reads `extra=` fields from the record and keeps tracebacks. Mindset added.
 - **`/pb-jordan-testing` v1.5.0.** Examples use a real test database and mock only external services, as the Overview says; signup hashes with bcrypt and logs the user id, not the email; the concurrency test no longer claims to prove the lock; the connection-pool claim is gone.
 - **`/pb-review-tests` v2.2.1.** Speed thresholds are labelled examples and match the example report (5 min CI); the example tracks critical-path coverage toward 100%, as `/pb-jordan-testing` does.
@@ -26,7 +37,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **`/pb-commit` v2.4.0.** Message Register points to the register instead of restating a body length, and checks the drafted message before committing. Mindset added.
 - **`/pb-cycle` v1.3.0.** Commit step drops the with-body example and checks the subject against the register. Mindset added.
 - **`/pb-pr` v1.2.0.** Small-PR body is one sentence of what plus upgrader impact; the drafted title and body are checked against the register before the PR opens.
-- **`/pb-release` v1.4.0.** Tag message is the release title; dispatch deploy workflows on main and verify before tagging; notes and CHANGELOG entry checked against the register before the release step.
+- **`/pb-release` v1.4.0.** Tag message is the release title; dispatch deploy workflows on main and verify before tagging; notes and CHANGELOG entry checked against the register before the release step; run from `/pb-ship`, ship's Phase 2 reviews satisfy the Phase 1 review gates; one post-deploy watch, at least `/pb-preflight`'s 15 minutes; the hotfix CHANGELOG entry goes in a version section, not after the link footer; Integration with Playbook section removed.
 - **`/pb-context` v1.1.0.** Release step tags with the release title and publishes notes from a file.
 - **`/pb-handcraft` v1.6.1.** Lens 6 says text drafted after the pass is checked by the step that drafts it.
 - **`/pb-forge` v1.9.0.** Peer and Land check their drafted text against the register; a change pulled from a release is removed by rebuilding the range, not by a forward revert.

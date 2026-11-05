@@ -6,9 +6,9 @@ difficulty: "advanced"
 model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-maintenance', 'pb-hardening', 'pb-dr', 'pb-sre-practices', 'pb-observability']
-last_reviewed: "2026-02-09"
-version: "1.0.0"
-version_notes: "v2.10.0 baseline"
+last_reviewed: "2026-11-05"
+version: "1.0.1"
+version_notes: "v1.0.1: Docker cleanup is inspected with docker system df and docker container ls -a (prune has no dry run) and the prune moves under judgment; disk and memory thresholds and the restore-test cadence come from /pb-sre-practices and /pb-dr."
 breaking_changes: []
 ---
 # Server Hygiene
@@ -40,7 +40,7 @@ This is not firefighting. This is the periodic physical exam that prevents the e
 |---------|-------|------|
 | **Weekly** | Glance: disk, errors, failed jobs | 5 min |
 | **Monthly** | Hygiene: logs, images, packages, access | 30 min |
-| **Quarterly** | Full: drift analysis, capacity, backup test | 1-2 hrs |
+| **Quarterly** | Full: drift analysis, capacity, backup readiness | 1-2 hrs |
 
 ---
 
@@ -136,9 +136,11 @@ iostat -x 1 3 2>/dev/null
 | Resource | Healthy | Warning | Critical |
 |----------|---------|---------|----------|
 | Disk | < 70% | 70-85% | > 85% |
-| Memory | < 80% | 80-90% | > 90% or swapping |
+| Memory | < 70% | 70-85% | > 85% or swapping |
 | CPU load | < cores | 1-2x cores | > 2x cores sustained |
 | Swap | None | Any active | Growing over time |
+
+Disk and memory are the `/pb-sre-practices` Capacity Metrics thresholds; load is per core.
 
 ### Process Health
 
@@ -280,9 +282,9 @@ journalctl --vacuum-size=500M
 apt --dry-run autoremove
 apt autoremove && apt clean
 
-# Show what Docker would prune (images, containers, build cache)
-docker system prune --dry-run
-docker system prune
+# Show what Docker holds (prune has no dry run)
+docker system df
+docker container ls -a
 ```
 
 **Requires judgment** - these can destroy data if containers are temporarily stopped:
@@ -295,6 +297,9 @@ find /tmp -type f -mtime +30 | head -20
 # List unused volumes - verify none belong to stopped services you intend to restart
 docker volume ls -f "dangling=true"
 # Only prune after reviewing: docker volume prune
+
+# Removes stopped containers, unused networks, dangling images and build cache
+docker system prune
 ```
 
 ### Stability Improvements
@@ -332,7 +337,7 @@ This is where the ritual pays off long-term.
 |-------|--------|
 | What is backed up? | Data, config, secrets, or all three? |
 | Backup frequency | Matches your acceptable data loss? |
-| Last restore test | If "never," schedule one now |
+| Last restore test | Inside the `/pb-dr` cadence? If "never," schedule one now |
 | Off-server storage | Backups on the same VPS are not backups |
 | Retention and cost | How far back can you go? What does it cost? |
 

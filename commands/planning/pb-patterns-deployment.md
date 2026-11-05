@@ -6,9 +6,9 @@ difficulty: "advanced"
 model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-deployment', 'pb-preflight', 'pb-release', 'pb-database-ops', 'pb-dr']
-last_reviewed: "2026-11-04"
-version: "2.0.0"
-version_notes: "v2.0.0: Cut from 1076 to 163 lines: example code, walkthroughs and language sections removed; decisions, gotchas and when-to-use kept. /pb-preflight and /pb-deployment own the checklists; /pb-database-ops owns expand/contract; a feature flag is removed with its dead branch once the rollout is stable."
+last_reviewed: "2026-11-05"
+version: "2.0.1"
+version_notes: "v2.0.1: Canary is chosen for real-traffic evidence and rolling for backward-compatible changes on a budget; the comparison table's risk column matches the strategy headings; the thinking line is labelled Mindset."
 breaking_changes: ['Example code, walkthroughs and language sections removed; decisions and gotchas kept, constraints from removed code restated; deploy checklists live in /pb-preflight and /pb-deployment.']
 ---
 # Deployment Patterns & Strategies
@@ -19,7 +19,7 @@ Reference guide for deployment strategies, patterns, and best practices. Use thi
 
 **Principle:** Every deployment strategy involves trade-offs.
 
-Use `/pb-preamble` thinking: question your actual risk tolerance before choosing. Use `/pb-design-rules` thinking: balance Simplicity (don't use complex strategies you don't need) with Robustness (design for failure and rollback). Challenge whether you need the complexity of advanced strategies or if simpler approaches work.
+**Mindset:** Use `/pb-preamble` thinking: question your actual risk tolerance before choosing. Use `/pb-design-rules` thinking: balance Simplicity (don't use complex strategies you don't need) with Robustness (design for failure and rollback). Challenge whether you need the complexity of advanced strategies or if simpler approaches work.
 
 **Resource Hint:** sonnet - Deployment pattern reference; implementation-level release strategy decisions.
 
@@ -71,9 +71,8 @@ Choose strategy based on risk and scope.
 - Database must be compatible
 
 **When to use:**
-- Medium-risk deployments
-- Want real traffic testing
-- Can monitor and react quickly
+- Want real-traffic evidence before full rollout
+- Can compare v1 and v2 metrics and react quickly
 
 ---
 
@@ -94,7 +93,7 @@ Choose strategy based on risk and scope.
 **When to use:**
 - Budget-constrained
 - Fast deployments
-- Confident in changes
+- Backward-compatible changes (both versions serve at once)
 
 ---
 
@@ -136,14 +135,14 @@ Deploy code dark behind a flag, then toggle it on or off without redeploying. Re
 
 | Strategy | Time | Risk | Rollback | Cost | Complexity |
 |----------|------|------|----------|------|------------|
-| Blue-Green | 5-10m | Low | Instant | High | Medium |
+| Blue-Green | 5-10m | Lowest | Instant | High | Medium |
 | Canary | 30m-2h | Low | Fast | Medium | High |
 | Rolling | 5-15m | Medium | Slow | Low | Medium |
 | Feature Flag | N/A | Very Low | Instant | Low | Low |
 
 **Choose:**
 - **Critical system:** Blue-Green
-- **Confident in changes:** Canary
+- **Want real-traffic evidence:** Canary
 - **Budget constraints:** Rolling
 - **Testing new feature:** Feature Flag
 

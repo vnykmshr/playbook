@@ -6,9 +6,9 @@ difficulty: "advanced"
 model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-release', 'pb-patterns-deployment', 'pb-alex-infra', 'pb-incident', 'pb-observability']
-last_reviewed: "2026-02-09"
-version: "1.0.0"
-version_notes: "v2.10.0 baseline"
+last_reviewed: "2026-11-05"
+version: "1.1.0"
+version_notes: "v1.1.0: Rollback trigger is the threshold stated in /pb-preflight 6.2; the smoke test reads a write back; Compose commands use `docker compose`, and a Compose rollback pins the previous tag; Integration with Playbook section removed."
 breaking_changes: []
 ---
 # Deploy to Environment
@@ -53,7 +53,7 @@ ls -la k8s/ kubernetes/ deploy/ 2>/dev/null
 | Infrastructure | Indicators | Typical Command |
 |----------------|------------|-----------------|
 | **Makefile** | `make deploy` target | `make deploy` |
-| **Docker Compose** | `docker-compose.yml` | `docker-compose up -d` |
+| **Docker Compose** | `docker-compose.yml` | `docker compose up -d` |
 | **Kubernetes** | `k8s/`, `kubectl` | `kubectl apply -f` |
 | **Serverless** | `serverless.yml` | `serverless deploy` |
 | **Platform** | Vercel, Netlify, Fly.io | `vercel --prod`, `flyctl deploy` |
@@ -173,7 +173,7 @@ Execute the deployment command identified in Discovery:
 make deploy ENV=production
 
 # Docker Compose
-docker-compose -f docker-compose.prod.yml up -d --build
+docker compose -f docker-compose.prod.yml up -d --build
 
 # Kubernetes
 kubectl apply -f k8s/
@@ -229,6 +229,10 @@ curl -s -X POST [PROD_URL]/api/auth/login \
 # Test core API endpoint
 curl -s [PROD_URL]/api/[core-endpoint] | jq
 
+# Test a write persists: create a record, then read it back
+curl -s -X POST [PROD_URL]/api/[core-endpoint] -d '[test record]' | jq
+curl -s [PROD_URL]/api/[core-endpoint]/[new-id] | jq
+
 # Test frontend loads (if applicable)
 curl -s -o /dev/null -w "%{http_code}" [PROD_URL]
 ```
@@ -237,6 +241,7 @@ curl -s -o /dev/null -w "%{http_code}" [PROD_URL]
 - [ ] Health endpoint returns OK
 - [ ] Authentication works
 - [ ] Core API endpoints respond
+- [ ] A write is read back (a 200 does not prove the data was saved)
 - [ ] Frontend loads (if applicable)
 - [ ] No errors in logs
 
@@ -280,7 +285,7 @@ git tag -a deploy-[env]-$(date +%Y%m%d-%H%M) -m "Deployed to [env]"
 
 **Immediate rollback triggers:**
 - Health check failing
-- Error rate spike (>5% increase)
+- Error rate past the threshold stated in `/pb-preflight` 6.2
 - Critical user flows broken
 - Crash loops detected
 
@@ -291,8 +296,8 @@ git tag -a deploy-[env]-$(date +%Y%m%d-%H%M) -m "Deployed to [env]"
 kubectl rollout undo deployment/[app-name]
 kubectl rollout status deployment/[app-name]
 
-# Docker Compose (restore previous image)
-docker-compose -f docker-compose.prod.yml up -d [previous-image]
+# Docker Compose: set the service's image back to the previous tag in the compose file, then
+docker compose -f docker-compose.prod.yml up -d
 
 # Platform (Fly.io)
 flyctl releases list --app [app-name]
@@ -357,22 +362,6 @@ PHASE 5: FINALIZE
 | Watch logs | `kubectl logs -f deployment/[app]` |
 | Rollback (K8s) | `kubectl rollout undo deployment/[app]` |
 | Check metrics | Platform-specific dashboard |
-
----
-
-## Integration with Playbook
-
-**Part of release workflow:**
-- `/pb-release` - Orchestrates release (triggers this command)
-- `/pb-patterns-deployment` - Strategy reference (blue-green, canary, etc.)
-- `/pb-incident` - If deployment causes issues
-
-**Related commands:**
-- `/pb-observability` - Monitoring setup
-- `/pb-hardening` - Infrastructure security
-- `/pb-secrets` - Secrets management
-- `/pb-database-ops` - Database migrations
-- `/pb-dr` - Disaster recovery
 
 ---
 

@@ -6,9 +6,9 @@ difficulty: "advanced"
 model_hint: "opus"
 execution_pattern: "sequential"
 related_commands: ['pb-incident', 'pb-sre-practices', 'pb-database-ops', 'pb-deployment', 'pb-maintenance']
-last_reviewed: "2026-11-04"
-version: "1.0.1"
-version_notes: "v1.0.1: The failover runbook fences the old primary before promotion and measures loss by WAL the replica received, not replay lag. Nested samples use a 4-backtick outer fence, so they render as written."
+last_reviewed: "2026-11-05"
+version: "1.1.0"
+version_notes: "v1.1.0: One verification cadence (monthly restore); point-in-time recovery restores the base backup into the data directory before the recovery settings; Object Lock uses COMPLIANCE mode; disaster communication extends /pb-incident's SEV-1 path; Integration with Playbook section removed."
 breaking_changes: []
 ---
 # Disaster Recovery
@@ -153,13 +153,14 @@ aws s3api put-object-lock-configuration \
     "ObjectLockEnabled": "Enabled",
     "Rule": {
       "DefaultRetention": {
-        "Mode": "GOVERNANCE",
+        "Mode": "COMPLIANCE",
         "Days": 30
       }
     }
   }'
 
-# Objects cannot be deleted for 30 days
+# COMPLIANCE: no one, root included, can delete or shorten retention for 30 days
+# (GOVERNANCE yields to any principal with s3:BypassGovernanceRetention)
 ```
 
 **Immutability options:**
@@ -200,11 +201,11 @@ curl -f http://test-app/health || exit 1
 echo "=== Backup verification PASSED ==="
 ```
 
-**Verification schedule:**
+**Verification schedule** (the one cadence; other commands point here):
 - Daily: Automated integrity checks
-- Weekly: Restore to test environment
-- Monthly: Full recovery drill
-- Quarterly: DR test (see below)
+- Monthly: Restore to a test environment (the script above)
+- Quarterly: Failover test (game day, see below)
+- Annually: Full DR test
 
 ### Retention Policies
 
@@ -443,24 +444,24 @@ Attackers demand 10 BTC. Last known good backup was Friday 6pm.
 # PostgreSQL: Restore to specific timestamp
 # Requires WAL archiving enabled
 
-# 1. Stop application
-sudo systemctl stop myapp
+# 1. Stop application and database
+sudo systemctl stop myapp postgresql
 
-# 2. Create recovery configuration (PostgreSQL 12+)
-# Note: recovery.conf was removed in PostgreSQL 12
-cat >> /var/lib/postgresql/data/postgresql.conf << EOF
+# 2. Move the data directory aside, restore the base backup into a fresh one
+sudo mv /var/lib/postgresql/data /var/lib/postgresql/data-old
+sudo install -d -m 700 -o postgres -g postgres /var/lib/postgresql/data
+sudo -u postgres tar -xzf /backup/base/base.tar.gz -C /var/lib/postgresql/data
+sudo -u postgres find /var/lib/postgresql/data/pg_wal -mindepth 1 -delete  # stale; archived WAL replays
+
+# 3. Recovery settings (PostgreSQL 12+: recovery.conf is gone), then the signal file
+sudo -u postgres tee -a /var/lib/postgresql/data/postgresql.conf << EOF
 restore_command = 'cp /backup/wal/%f %p'
 recovery_target_time = '2026-01-20 14:30:00'
 recovery_target_action = 'promote'
 EOF
+sudo -u postgres touch /var/lib/postgresql/data/recovery.signal
 
-# Create recovery signal file
-touch /var/lib/postgresql/data/recovery.signal
-
-# 3. Restore base backup
-pg_basebackup -h backup-server -D /var/lib/postgresql/data-new
-
-# 4. Start PostgreSQL (will replay WAL to target time)
+# 4. Start PostgreSQL (replays archived WAL to the target time, then promotes)
 sudo systemctl start postgresql
 
 # 5. Verify data
@@ -528,19 +529,11 @@ We are experiencing database connectivity issues.
 Some users may see errors. We are investigating.
 ```
 
-**Communication cadence:**
-- Initial: Within 10 minutes of detection
-- Updates: Every 30 minutes (or on significant change)
-- Resolution: When fully restored
+**Communication cadence:** a disaster runs at `/pb-incident` SEV-1 (initial within 2 minutes, updates every 15) until it is resolved.
 
 ### Stakeholder Communication
 
-**Internal escalation:**
-1. On-call engineer
-2. Team lead
-3. Engineering manager
-4. VP Engineering (for major incidents)
-5. CEO (for customer-facing outages > 1 hour)
+**Internal escalation:** `/pb-incident`'s SEV-1 path, extended to the CEO for customer-facing outages over 1 hour.
 
 **External communication:**
 - Status page (all incidents)
@@ -684,25 +677,6 @@ Every critical service needs a DR plan.
 
 ---
 
-## Integration with Playbook
-
-**Part of operational excellence:**
-- `/pb-hardening` - Prevent disasters through security
-- `/pb-secrets` - Protect credentials
-- `/pb-sre-practices` - Sustainable operations
-- `/pb-dr` - Recover when prevention fails (this command)
-- `/pb-incident` - Respond during disasters
-
-**DR testing cadence:**
-```
-Monthly: Backup verification
-Quarterly: Failover testing (game day)
-Annually: Full DR simulation
-After changes: Verify DR still works
-```
-
----
-
 ## Quick Reference
 
 | Topic | Action |
@@ -719,7 +693,7 @@ After changes: Verify DR still works
 
 - `/pb-incident` - Respond to incidents during disaster scenarios
 - `/pb-sre-practices` - Sustainable operations and toil reduction
-- `/pb-database-ops` - Database backup and failover procedures
+- `/pb-database-ops` - Database operations: migrations, pooling, runbooks
 - `/pb-deployment` - Deploy recovery infrastructure
 - `/pb-maintenance` - Backup verification and ongoing maintenance scheduling
 

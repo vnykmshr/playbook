@@ -6,9 +6,9 @@ difficulty: "advanced"
 model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-observability', 'pb-review-hygiene', 'pb-patterns-core']
-last_reviewed: "2026-02-09"
-version: "1.1.0"
-version_notes: "v1.1.0: Added SEO & LLM Discoverability section"
+last_reviewed: "2026-11-05"
+version: "1.2.0"
+version_notes: "v1.2.0: Integration with Playbook section removed."
 breaking_changes: []
 ---
 # Performance Optimization & Scalability
@@ -600,21 +600,6 @@ Blind: Cache expensive query (updates hourly)
 Reality: Cache becomes stale, users see wrong data
 Lesson: Cache read-heavy data, not mutable data
 ```
-
----
-
-## Integration with Playbook
-
-**Part of design and deployment:**
-- `/pb-guide` - Section 4.4 covers performance requirements
-- `/pb-observability` - Set up monitoring to catch performance regressions
-- `/pb-adr` - Architecture decisions affect performance
-- `/pb-release` - Load test before releasing at scale
-
-**Related Commands:**
-- `/pb-observability` - Monitor P99 latency and throughput
-- `/pb-guide` - Performance requirements during design phase
-- `/pb-incident` - Performance degradation is incident (if sudden)
 
 ---
 

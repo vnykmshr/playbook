@@ -7,8 +7,8 @@ model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-ship', 'pb-security', 'pb-hardening', 'pb-deployment', 'pb-release']
 last_reviewed: "2026-11-05"
-version: "1.3.0"
-version_notes: "v1.3.0: 1.1 counts a zero only after the same scan reports a generated canary, on a throwaway branch and in a copy of the artifact."
+version: "1.4.0"
+version_notes: "v1.4.0: 1.1 scans full history on the first run, then recent commits; 4.2 sets the production log level at info or above; the Static/Managed partition's byte-match check is 4.3s, in place of 4.3."
 breaking_changes: ['Bullets are numbered N.M and referenced by number', 'N/A is no longer a valid outcome -- a bullet is in your profile or it is not rendered']
 ---
 # Pre-Ship Readiness Gate
@@ -60,7 +60,7 @@ One question, asked once per project: **what are you shipping?**
 
 Nine you own, twelve delegated, nine out of surface. Referenced by number against The Gate below, which is always printed in full.
 
-- **You own (execute these):** 1.1 secrets in history · 2.3 a clean checkout rebuilds and redeploys the live site (this is the restore test) · 3.1 build and CI config match the expected schema · 3.5 rollback rehearsed · 4.3 every file in the deployed build (or a rebuild with the deploy's pinned toolchain), fetched from its public URL with redirects followed, matches byte for byte; host control files such as `.nojekyll` are not served. Capture the deploy's artifact during the run (it is deleted after). Where the host edits responses (an injected bot-detection script), strip the known injection before comparing, or compare a non-HTML asset · 4.5 dependency audit · 6.1 smoke test on a real page and a real link · 6.2 watched after the flip · 6.5 read like an attacker: for a published corpus, what did you publish that you did not mean to
+- **You own (execute these):** 1.1 secrets in history · 2.3 a clean checkout rebuilds and redeploys the live site (this is the restore test) · 3.1 build and CI config match the expected schema · 3.5 rollback rehearsed · 4.3s (in place of 4.3, which needs a health endpoint) every file in the deployed build (or a rebuild with the deploy's pinned toolchain), fetched from its public URL with redirects followed, matches byte for byte; host control files such as `.nojekyll` are not served. Capture the deploy's artifact during the run (it is deleted after). Where the host edits responses (an injected bot-detection script), strip the known injection before comparing, or compare a non-HTML asset · 4.5 dependency audit · 6.1 smoke test on a real page and a real link · 6.2 watched after the flip · 6.5 read like an attacker: for a published corpus, what did you publish that you did not mean to
 - **Delegated (name the provider and the date you last verified):** 1.2 · 3.2 · 3.3 · 3.4 · 4.1 · 4.2 · 4.4 · 5.1-5.5
 - **Out of surface (no database, no sessions, no uploads):** 1.3 · 1.4 · 1.5 · 2.1 · 2.2 · 2.4 · 2.5 · 6.3 · 6.4
 
@@ -82,7 +82,7 @@ Nine you own, twelve delegated, nine out of surface. Referenced by number agains
 
 ### [1] Secrets & Authentication
 
-- [ ] **1.1 No secrets in client bundles or git history.** Run a scanner (gitleaks, trufflehog, or equivalent) against the last 100 commits and the production build artifact. Zero findings or all findings triaged to false-positive. A zero is evidence only once the same scan has reported a canary. Generate a token shaped like one the scanner knows (gitleaks: `echo "ghp_$(openssl rand -hex 18)"`): not a published example key, not a value containing "fake" or "example", never a real credential. Commit it on a throwaway local branch and run the history scan on that branch; put it in a copy of the build artifact and run the artifact scan on that. See both reported, then delete the branch and the copy. Never push the branch. A scan filtered to verified secrets cannot fire on a fake, so its zero covers live keys only.
+- [ ] **1.1 No secrets in client bundles or git history.** Run a scanner (gitleaks, trufflehog, or equivalent) against the full git history on the first run, the commits since the last clean scan after that, and the production build artifact. Zero findings or all findings triaged to false-positive. A zero is evidence only once the same scan has reported a canary. Generate a token shaped like one the scanner knows (gitleaks: `echo "ghp_$(openssl rand -hex 18)"`): not a published example key, not a value containing "fake" or "example", never a real credential. Commit it on a throwaway local branch and run the history scan on that branch; put it in a copy of the build artifact and run the artifact scan on that. See both reported, then delete the branch and the copy. Never push the branch. A scan filtered to verified secrets cannot fire on a fake, so its zero covers live keys only.
 - [ ] **1.2 HTTPS enforced, HTTP redirected, HSTS header set.** Test: `curl -I http://your-domain` returns 301 to https; `curl -I https://your-domain` shows `Strict-Transport-Security`.
 - [ ] **1.3 CORS restricted to known origins.** Not `*`. Not reflected from the `Origin` header. Allow-list only.
 - [ ] **1.4 Every private route checks authn AND authz.** Not just "user is logged in." Resource ownership verified per request. Tested with a second user account against a first user's resource ID.
@@ -107,7 +107,7 @@ Nine you own, twelve delegated, nine out of surface. Referenced by number agains
 ### [4] Observability & Feedback
 
 - [ ] **4.1 Error tracker receiving events from the production build.** Fire a test exception. See it appear in the dashboard within 60 seconds. Not "the SDK is installed."
-- [ ] **4.2 Structured, searchable logs.** Log level at info or below in prod (no debug flood, no stdout garbage). Can query by request ID end-to-end.
+- [ ] **4.2 Structured, searchable logs.** Log level at info or above in prod (no debug flood, no stdout garbage). Can query by request ID end-to-end.
 - [ ] **4.3 Health endpoint returns 200 from public DNS.** Not localhost. Not the internal network. The address a real user hits. Include one dependency check, not just `return "ok"`.
 - [ ] **4.4 Alerts wired for real failure modes.** Error rate spike, p99 latency, downtime, disk/memory threshold. At least one reachable human on the receiving end right now. Test-fire one alert.
 - [ ] **4.5 Dependency audit clean on criticals.** `npm audit` / `pip-audit` / `govulncheck ./...` / equivalent run within the last 7 days; `go list -m -u all` lists outdated modules, not vulnerable ones. A scanner that checks the toolchain catches what no code change fixes (a vulnerable Go release). No critical or high vulns unacknowledged.

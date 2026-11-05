@@ -6,9 +6,9 @@ difficulty: "advanced"
 model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-logging', 'pb-incident', 'pb-sre-practices', 'pb-performance', 'pb-maintenance']
-last_reviewed: "2026-02-09"
-version: "1.0.1"
-version_notes: "v1.0.1: Nested samples use a 4-backtick outer fence, so they render as written."
+last_reviewed: "2026-11-05"
+version: "1.1.0"
+version_notes: "v1.1.0: One 5xx alert threshold; resource alerts use the /pb-sre-practices thresholds; the error budget arithmetic is fixed (43.2 min); Log Levels point at /pb-logging; the login sample logs no username; tracing names OpenTelemetry over OTLP instead of the removed Jaeger exporter; PromQL cut to five valid SLO queries; Integration with Playbook section removed."
 breaking_changes: []
 ---
 # Observability & Monitoring Design
@@ -102,7 +102,7 @@ Example tracking:
 - 4xx errors (client issues): 1% acceptable
 - 5xx errors (server issues): <0.1% target
 - By endpoint, error type
-- Alert on: 5xx > 0.5%
+- Alert on: 5xx > 1% for 1 minute
 
 ```
 Example tracking:
@@ -115,19 +115,21 @@ Example tracking:
 
 ### Resource Metrics
 
+Alert thresholds for CPU, memory, disk and connections are the `/pb-sre-practices` Capacity Metrics table's.
+
 **CPU/Memory**:
-- Usage percentage (alert on >80% sustained)
+- Usage percentage, sustained
 - By service, pod, host
 - Trending (is it growing?)
 
 **Database**:
-- Connection count (alert on >90% of pool)
+- Connection count (share of pool)
 - Query latency (P95, P99)
 - Slow queries (>1s)
 - Row counts (growing tables)
 
 **Disk**:
-- Used space (alert on >85%)
+- Used space
 - Inode usage
 - I/O operations
 
@@ -189,22 +191,7 @@ Benefits:
 
 ### Log Levels
 
-```
-DEBUG    Use: Development, detailed tracing
-         Don't: Log in production (too verbose)
-
-INFO     Use: Major events (startup, shutdown, deployments)
-         Example: "User 123 logged in"
-
-WARNING  Use: Potentially problematic situations
-         Example: "Cache miss rate > 20%"
-
-ERROR    Use: Something failed, but system still works
-         Example: "Failed to send email to user 123, will retry"
-
-CRITICAL Use: System is down or degraded
-         Example: "Database connection pool exhausted"
-```
+Levels and what each means in production: `/pb-logging`.
 
 ### What to Log
 
@@ -238,9 +225,7 @@ def handle_user_login(username, password, ip_address):
             logger.warning(
                 json.dumps({
                     "event": "user_not_found",
-                    "username": username,  # OK: not sensitive
-                    "ip_address": ip_address,
-                    "timestamp": datetime.utcnow().isoformat()
+                    "ip_address": ip_address
                 })
             )
             return {"error": "Invalid credentials"}
@@ -273,8 +258,7 @@ def handle_user_login(username, password, ip_address):
             json.dumps({
                 "event": "login_error",
                 "error": str(e),
-                "error_type": type(e).__name__,
-                "username": username
+                "error_type": type(e).__name__
             })
         )
         return {"error": "Internal error"}
@@ -337,29 +321,7 @@ Action: Optimize payments API or add timeout
 
 ### Implementing Tracing
 
-```python
-from opentelemetry import trace, metrics
-from opentelemetry.instrumentation.requests import RequestsInstrumentor
-from opentelemetry.exporter.jaeger.thrift import JaegerExporter
-
-# Setup trace exporter (send to Jaeger)
-jaeger_exporter = JaegerExporter(
-    agent_host_name="localhost",
-    agent_port=6831,
-)
-
-# Instrument HTTP library
-RequestsInstrumentor().instrument()
-
-# Create tracer
-tracer = trace.get_tracer(__name__)
-
-# Use in code
-with tracer.start_as_current_span("database_query") as span:
-    span.set_attribute("query", "SELECT * FROM users")
-    span.set_attribute("duration_ms", 150)
-    user = database.query("SELECT * FROM users WHERE id = ?", user_id)
-```
+Instrument with OpenTelemetry (SDK plus auto-instrumentation for your HTTP and database libraries) and export over OTLP to the backend: Jaeger, Grafana Tempo, Honeycomb, Datadog. Jaeger ingests OTLP directly; its dedicated exporter is gone.
 
 ---
 
@@ -386,7 +348,7 @@ Severity: WARNING
 Action: Check database/cache metrics, review recent deployments
 
 Alert: Database Connection Pool Critical
-Condition: Used connections > 90% for >= 2 minutes
+Condition: Used connections > 85% for >= 2 minutes
 Severity: CRITICAL (pages on-call)
 Action: Check slow queries, close abandoned connections, scale up
 
@@ -396,7 +358,7 @@ Severity: CRITICAL
 Action: Check recent deployments, review error logs, rollback if needed
 
 Alert: Disk Space Critical
-Condition: Disk usage > 90% for >= 10 minutes
+Condition: Disk usage > 85% for >= 10 minutes
 Severity: CRITICAL
 Action: Delete old logs, archive data, scale storage
 ```
@@ -444,7 +406,7 @@ INFO (log for reference)
 
 **Error Budget** - How much you can fail and still meet SLO:
 - If SLO is 99.9% uptime, error budget is 0.1%
-- Over 30 days: 0.1% of 30 days × 24h × 3600s = 25,920 seconds ≈ 7.2 hours of allowed downtime
+- Over 30 days: 0.1% of 2,592,000 s = 2,592 s ≈ 43.2 minutes of allowed downtime
 - Use error budget to decide: Ship risky feature? Take infrastructure down? Run load tests?
 
 ### Setting SLIs & SLOs
@@ -633,7 +595,7 @@ When alert fires, on-call engineer needs a runbook:
 1. Connect to database
    ```sql
    SHOW PROCESSLIST;  -- see current queries
-   SHOW SLOW LOG;     -- see recent slow queries
+   SELECT * FROM mysql.slow_log ORDER BY start_time DESC LIMIT 10;  -- needs log_output=TABLE
    ```
 
 2. Identify slow query
@@ -668,129 +630,24 @@ If you can't diagnose in 10 minutes:
 
 ---
 
-## Prometheus Query Examples
-
-If using Prometheus, these PromQL queries are commonly useful:
-
-### Request Rate & Errors
+## Prometheus Queries for SLOs
 
 ```promql
-# Request rate per second (5-minute average)
-rate(http_requests_total[5m])
+# Request rate per second
+sum(rate(http_requests_total[5m]))
 
-# Error rate (5xx only)
-rate(http_requests_total{status=~"5.."}[5m])
+# 5xx error ratio (alert above 0.01)
+sum(rate(http_requests_total{status=~"5.."}[5m])) / sum(rate(http_requests_total[5m]))
 
-# Error rate as percentage
-(rate(http_requests_total{status=~"5.."}[5m]) / rate(http_requests_total[5m])) * 100
+# P99 latency by endpoint (sum the buckets by le before the quantile)
+histogram_quantile(0.99, sum by (le, endpoint) (rate(http_request_duration_seconds_bucket[5m])))
 
-# 4xx vs 5xx error rates
-rate(http_requests_total{status=~"4.."}[5m]) # Client errors
-rate(http_requests_total{status=~"5.."}[5m]) # Server errors
+# Availability over 30 days, percent
+avg_over_time(up[30d]) * 100
 
-# Requests by endpoint
-sum(rate(http_requests_total[5m])) by (endpoint)
-
-# Errors by endpoint (find problematic endpoints)
-sum(rate(http_requests_total{status=~"5.."}[5m])) by (endpoint)
+# Burn rate against a 99.9% SLO (1 = spending the budget exactly on pace)
+(sum(rate(http_requests_total{status=~"5.."}[1h])) / sum(rate(http_requests_total[1h]))) / 0.001
 ```
-
-### Latency (Duration)
-
-```promql
-# P95 latency (95th percentile)
-histogram_quantile(0.95, rate(http_request_duration_seconds_bucket[5m]))
-
-# P99 latency (99th percentile)
-histogram_quantile(0.99, rate(http_request_duration_seconds_bucket[5m]))
-
-# Average latency
-rate(http_request_duration_seconds_sum[5m]) / rate(http_request_duration_seconds_count[5m])
-
-# Latency by endpoint
-histogram_quantile(0.99, rate(http_request_duration_seconds_bucket[5m])) by (endpoint)
-
-# Slow requests (> 1 second)
-rate(http_request_duration_seconds_bucket{le="+Inf"}[5m]) - rate(http_request_duration_seconds_bucket{le="1"}[5m])
-```
-
-### Resource Usage
-
-```promql
-# CPU usage percentage
-100 - (avg by (instance) (irate(node_cpu_seconds_total{mode="idle"}[5m])) * 100)
-
-# Memory usage percentage
-(1 - (node_memory_MemAvailable_bytes / node_memory_MemTotal_bytes)) * 100
-
-# Disk usage percentage
-(node_filesystem_size_bytes - node_filesystem_avail_bytes) / node_filesystem_size_bytes * 100
-
-# Database connections in use
-pg_stat_activity_count # PostgreSQL
-OR mysql_global_status_threads_connected # MySQL
-```
-
-### Database Performance
-
-```promql
-# Query execution rate
-rate(mysql_global_status_queries[5m])
-
-# Slow query rate
-rate(mysql_global_status_slow_queries[5m])
-
-# Connection pool usage
-mysql_global_status_threads_connected / mysql_global_variables_max_connections
-
-# Replication lag (MySQL)
-mysql_slave_status_seconds_behind_master
-```
-
-### SLO Monitoring
-
-```promql
-# Error budget burn rate (5-minute)
-rate(errors_total[5m]) / rate(requests_total[5m])
-
-# SLO status: Is P99 latency within SLO? (SLO: 500ms)
-histogram_quantile(0.99, rate(http_request_duration_seconds_bucket[5m])) < 0.5
-
-# Availability (uptime) over last month
-avg_over_time((up[1m])[30d:1m]) * 100
-```
-
-### Useful Query Patterns
-
-```promql
-# Alert if any endpoint has > 1% error rate
-(rate(http_requests_total{status=~"5.."}[5m]) / rate(http_requests_total[5m])) > 0.01
-
-# Alert if P99 latency > 1 second
-histogram_quantile(0.99, rate(http_request_duration_seconds_bucket[5m])) > 1
-
-# Alert if CPU > 80% for more than 5 minutes
-100 - (avg(irate(node_cpu_seconds_total{mode="idle"}[5m])) * 100) > 80
-
-# Alert if disk > 85%
-(node_filesystem_size_bytes - node_filesystem_avail_bytes) / node_filesystem_size_bytes > 0.85
-```
-
----
-
-## Integration with Playbook
-
-**Part of design and planning:**
-- `/pb-plan` - Include observability in feature planning
-- `/pb-guide` - Section 4.4 covers monitoring design
-- `/pb-review-hygiene` - Code review checks for logging
-- `/pb-release` - Release checklist includes dashboard setup
-
-**Related Commands:**
-- `/pb-plan` - Feature planning (include observability)
-- `/pb-guide` - SDLC workflow
-- `/pb-adr` - Architecture decision (monitoring tools)
-- `/pb-sre-practices` - SRE operational practices, error budgets
 
 ---
 

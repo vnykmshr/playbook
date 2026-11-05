@@ -6,9 +6,9 @@ difficulty: "advanced"
 model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-observability', 'pb-sre-practices', 'pb-incident', 'pb-dr', 'pb-server-hygiene']
-last_reviewed: "2026-02-09"
-version: "1.0.0"
-version_notes: "v2.10.0 baseline"
+last_reviewed: "2026-11-05"
+version: "1.0.1"
+version_notes: "v1.0.1: VACUUM FULL only after measured bloat, with pg_repack preferred; restore-test cadence and resource thresholds come from /pb-dr and /pb-sre-practices."
 breaking_changes: []
 ---
 # Production Maintenance
@@ -37,7 +37,7 @@ Establish systematic maintenance patterns to prevent production incidents. This 
 |------|-----------|-------|
 | Daily | Every day | Logs, backups, health checks |
 | Weekly | Once/week | Database stats, security updates, reports |
-| Monthly | Once/month | Deep cleans, cert audits, DR tests |
+| Monthly | Once/month | Deep cleans, cert audits, restore test (cadence: `/pb-dr`) |
 
 ---
 
@@ -91,7 +91,7 @@ Before implementing maintenance, answer:
 | Task | Purpose | When to Consider |
 |------|---------|------------------|
 | `VACUUM ANALYZE` | Mark dead tuples reusable, update stats | High-write tables, weekly minimum |
-| `VACUUM FULL` | Reclaim disk space (requires lock) | Significant bloat, monthly or less |
+| `VACUUM FULL` | Reclaim disk space (ACCESS EXCLUSIVE lock: blocks reads and writes while it rewrites the table) | Only after measured bloat; prefer `pg_repack`, which rewrites online |
 | `REINDEX` | Rebuild bloated indexes | After bulk deletes, schema changes |
 
 **Bloat detection trigger:**
@@ -159,10 +159,12 @@ See `/pb-dr` for comprehensive backup strategy (3-2-1 rule, retention policies, 
 
 ### Common Resources
 
+Warning thresholds are the `/pb-sre-practices` Capacity Metrics table's.
+
 | Resource | Warning Sign | Question |
 |----------|--------------|----------|
 | Disk | >70% full | What's growing? Logs? Data? Uploads? |
-| Memory | Sustained >85% | Memory leak? Undersized? Cache unbounded? |
+| Memory | Sustained >70% | Memory leak? Undersized? Cache unbounded? |
 | Connections | >70% of pool | Connection leak? Pool too small? |
 | File descriptors | Approaching limit | Too many open files? Socket leak? |
 

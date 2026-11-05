@@ -6,9 +6,9 @@ difficulty: "advanced"
 model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-adr', 'pb-release', 'pb-documentation']
-last_reviewed: "2026-02-09"
-version: "1.0.0"
-version_notes: "v2.10.0 baseline"
+last_reviewed: "2026-11-05"
+version: "1.1.0"
+version_notes: "v1.1.0: Integration with Playbook section removed; the Mindset line cites /pb-preamble and /pb-design-rules."
 breaking_changes: []
 ---
 # Deprecation & Backwards Compatibility Strategy
@@ -27,9 +27,7 @@ Deprecation allows you to:
 
 **The principle**: Give users time and clear guidance to migrate.
 
-**Mindset:** Deprecation decisions should be made with both frameworks.
-
-Use `/pb-preamble` thinking: challenge whether this change is really necessary; surface the impact on users; be honest about the cost vs. benefit. Use `/pb-design-rules` thinking: ensure the new approach is genuinely simpler (Simplicity), clearer (Clarity), and more robust than what it replaces. This is where critical thinking matters most.
+**Mindset:** Deprecation decisions should be made with both frameworks. Use `/pb-preamble` thinking: challenge whether this change is really necessary; surface the impact on users; be honest about the cost vs. benefit. Use `/pb-design-rules` thinking: ensure the new approach is genuinely simpler (Simplicity), clearer (Clarity), and more robust than what it replaces. This is where critical thinking matters most.
 
 **Resource Hint:** sonnet - Deprecation planning follows structured process; implementation-level guidance.
 
@@ -435,21 +433,6 @@ def v1_users(id):
 
 ⚠️ **Large sudden jump in errors**
 - Solution: Gradual rollout, monitor metrics, extend deadline if needed
-
----
-
-## Integration with Playbook
-
-**Part of architecture and planning:**
-- `/pb-plan` - Plan deprecations during scope phase
-- `/pb-adr` - Document deprecation decisions (ADR-style)
-- `/pb-guide` - Section 4.6 covers backwards compatibility
-- `/pb-commit` - Mark deprecated code clearly in commits
-
-**Related Commands:**
-- `/pb-plan` - Feature planning (includes deprecation planning)
-- `/pb-guide` - SDLC workflow
-- `/pb-release` - Communication of deprecations in release notes
 
 ---
 

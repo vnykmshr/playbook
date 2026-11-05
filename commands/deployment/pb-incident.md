@@ -6,9 +6,9 @@ difficulty: "advanced"
 model_hint: "opus"
 execution_pattern: "sequential"
 related_commands: ['pb-observability', 'pb-sre-practices', 'pb-dr', 'pb-logging', 'pb-maintenance']
-last_reviewed: "2026-06-10"
-version: "1.0.0"
-version_notes: "v2.10.0 baseline"
+last_reviewed: "2026-11-05"
+version: "1.1.0"
+version_notes: "v1.1.0: VP Engineering is told at SEV-1 declaration only; the postmortem checklist follows the per-severity timing; disk alerts use the /pb-sre-practices thresholds; unsourced root-cause percentages dropped; Integration with Playbook section removed."
 breaking_changes: []
 ---
 # Incident Response & Recovery
@@ -233,7 +233,7 @@ Updates every 15 minutes in thread.
 
 ### Root Cause Patterns
 
-**Deployment-related (50% of incidents)**
+**Deployment-related**
 - New code has bug
 - Migration script failed
 - Configuration not deployed
@@ -241,7 +241,7 @@ Updates every 15 minutes in thread.
 
 Action: Rollback or hotfix
 
-**Database-related (20% of incidents)**
+**Database-related**
 - Slow query locking table
 - Connection pool exhausted
 - Disk full
@@ -249,7 +249,7 @@ Action: Rollback or hotfix
 
 Action: Kill slow query, scale connections, free space
 
-**Resource exhaustion (15% of incidents)**
+**Resource exhaustion**
 - CPU 100%
 - Memory full
 - Disk full
@@ -257,7 +257,7 @@ Action: Kill slow query, scale connections, free space
 
 Action: Identify process consuming, kill or scale
 
-**External dependency (10% of incidents)**
+**External dependency**
 - API provider down
 - CDN down
 - Payment processor down
@@ -265,7 +265,7 @@ Action: Identify process consuming, kill or scale
 
 Action: Use fallback, degrade gracefully, wait for recovery
 
-**Configuration (5% of incidents)**
+**Configuration**
 - Wrong environment variables
 - SSL certificate expired
 - Feature flag stuck on/off
@@ -579,7 +579,7 @@ du -sh /*  # Show which directory consuming space
 **Prevention:**
 - Enable log rotation (logrotate)
 - Monitor disk space
-- Set alerts at 80% full
+- Alert at the disk thresholds in `/pb-sre-practices`
 - Clean up old files regularly
 
 ---
@@ -629,8 +629,7 @@ du -sh /*  # Show which directory consuming space
 
 **For unknown cause after 10 minutes:**
 - Page service owner
-- Call VP Engineering
-- This means we're stumped, need leadership
+- This means we're stumped; at SEV-1, VP Engineering is already in (told at declaration)
 
 **For external dependency issues:**
 - If known contact: Call them
@@ -638,14 +637,6 @@ du -sh /*  # Show which directory consuming space
 - Post-incident: Get direct contact numbers
 
 ---
-
-## Integration with Playbook
-
-**Part of deployment and reliability:**
-- `/pb-guide` - Section 7 references incident readiness
-- `/pb-observability` - Monitoring enables incident detection
-- `/pb-release` - Release runbook includes incident contacts
-- `/pb-adr` - Architecture decisions affect failure modes
 
 ## Related Commands
 
@@ -682,7 +673,7 @@ See `/pb-sre-practices` for on-call setup, rotation health, and escalation polic
 
 ### After Incident
 
-- [ ] Post-incident review scheduled (within 24 hours)
+- [ ] Post-incident review scheduled (per severity, see Timing)
 - [ ] Action items identified and assigned
 - [ ] Runbook updated with new learnings
 - [ ] Monitoring improved to detect earlier

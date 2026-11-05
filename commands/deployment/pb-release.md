@@ -8,7 +8,7 @@ execution_pattern: "sequential"
 related_commands: ['pb-deployment', 'pb-ship', 'pb-pr', 'pb-review-hygiene']
 last_reviewed: "2026-11-05"
 version: "1.4.0"
-version_notes: "v1.4.0: Tag message is the release title; dispatch deploy workflows on main and verify before tagging; notes and CHANGELOG entry checked against the register before the release step."
+version_notes: "v1.4.0: Tag message is the release title; dispatch deploy workflows on main and verify before tagging; notes and CHANGELOG entry checked against the register before the release step; run from /pb-ship, ship's Phase 2 reviews satisfy the Phase 1 review gates; one post-deploy watch, at least /pb-preflight's 15 minutes; the hotfix CHANGELOG entry goes in a version section, not after the link footer; Integration with Playbook section removed."
 breaking_changes: []
 ---
 # Release to Production
@@ -54,6 +54,8 @@ Phase 1: READINESS GATE          Phase 2: VERSION & TAG         Phase 3: DEPLOY 
 └─ Senior sign-off               │
    (final gate)                  │
 ```
+
+Run from `/pb-ship`, ship's Phase 2 reviews (hygiene, security, tests, docs) satisfy those Phase 1 gates; do not run them again.
 
 ---
 
@@ -283,7 +285,7 @@ curl -s [PROD_URL]/health | jq
 
 ### Step 3.3: Monitor Period
 
-**Stay alert for 30-60 minutes post-deploy:**
+**Watch for at least the `/pb-preflight` 6.2 window (15 minutes), against the rollback threshold stated there:**
 - Watch error rates
 - Monitor latency
 - Check resource usage
@@ -309,7 +311,6 @@ curl -s [PROD_URL]/health | jq
 - Monitoring: NOMINAL
 
 ### Post-Release
-- [ ] Monitor for 24h
 - [ ] Close related issues
 - [ ] Update project board
 - [ ] Announce (if applicable)
@@ -337,8 +338,8 @@ make deploy ENV=production
 # 5. Verify
 curl -s [PROD_URL]/health | jq
 
-# 6. Document
-echo "[$(date)] HOTFIX vX.Y.Z - [description]" >> CHANGELOG.md
+# 6. Document: a [vX.Y.Z] section in CHANGELOG.md, below [Unreleased]
+#    (>> would land after the version link footer)
 ```
 
 **Hotfix rules:**
@@ -406,20 +407,6 @@ PHASE 3: DEPLOY & VERIFY
 ```
 
 ---
-
-## Integration with Playbook
-
-**Part of shipping workflow:**
-```
-/pb-start → /pb-cycle → /pb-ship → /pb-release → /pb-deployment
-                                        │              │
-                                   (orchestrator)  (executor)
-```
-
-**This command orchestrates:**
-- Readiness verification (absorbs former pb-review-prerelease)
-- Version management
-- `/pb-deployment` trigger
 
 ## Related Commands
 

@@ -6,9 +6,9 @@ difficulty: "advanced"
 model_hint: "opus"
 execution_pattern: "sequential"
 related_commands: ['pb-incident', 'pb-observability', 'pb-dr', 'pb-team']
-last_reviewed: "2026-02-09"
-version: "1.0.0"
-version_notes: "v2.10.0 baseline"
+last_reviewed: "2026-11-05"
+version: "1.1.0"
+version_notes: "v1.1.0: Page response times are /pb-incident's per severity; the capacity table is the threshold home other commands cite; one Monday handoff; migration and new-server sections cut to one paragraph; Integration with Playbook section removed."
 breaking_changes: []
 ---
 # SRE Practices
@@ -207,6 +207,8 @@ Track these for critical services:
 | Database connections | > 70% of pool | > 85% | Increase pool or optimize |
 | Request latency | P99 > 2x baseline | P99 > 5x | Investigate |
 
+These are the thresholds other commands cite (`/pb-observability` alerts, `/pb-incident`, `/pb-server-hygiene`); change them here.
+
 ### Forecasting Load
 
 **Simple linear projection:**
@@ -399,15 +401,15 @@ Before incidents happen, establish clear on-call coverage. This section covers s
 ### Rotation Structure
 
 ```
-Primary On-Call: Responds immediately (paged on SEV-1/2)
-  - Expected to join call within 5 minutes
+Primary On-Call: Paged on SEV-1/2
+  - Joins within the response time in /pb-incident's severity table
   - Use 1 week rotations (high interrupt cost)
 
 Secondary On-Call: Backup if primary unavailable
   - Called if primary doesn't respond in 5 minutes
 
 Weekly Rotation:
-  - Handoff: Friday 5pm (or end of week)
+  - Handoff: Monday, start of day
   - Ramp-up: New person shadows for 1 week first
 ```
 
@@ -423,7 +425,7 @@ Weekly Rotation:
 ### On-Call Expectations
 
 **During on-call week:**
-- Respond to SEV-1/2 pages within 5 minutes
+- Respond to pages within the `/pb-incident` response time for their severity
 - Work from location where you can join calls
 - Avoid travel to areas without cell service
 
@@ -499,7 +501,7 @@ Track per rotation:
 ### On-Call Handoff Template
 
 ```markdown
-## On-Call Handoff: Jan 20 → Jan 27
+## On-Call Handoff: Jan 19 → Jan 26
 
 ### Outgoing (Alice)
 - No ongoing incidents
@@ -560,80 +562,9 @@ Regular reviews prevent drift and maintain operational health.
 
 ---
 
-## Server Migration Checklist
+## Server Migrations and New Servers
 
-### Database Migrations
-
-**Always use full dump/restore:**
-
-```bash
-# WRONG: Selective table export (misses users, tokens, etc.)
-pg_dump -t verses -t cases dbname > partial.sql
-
-# RIGHT: Full database dump
-pg_dump -U user dbname > backup.sql
-psql -U user dbname < backup.sql
-```
-
-**Pre-migration:**
-- [ ] Document all table row counts on source
-- [ ] Verify auth tables included (users, refresh_tokens, sessions)
-- [ ] Plan for downtime window
-
-**Post-migration verification:**
-```sql
-SELECT 'users', count(*) FROM users
-UNION ALL SELECT 'refresh_tokens', count(*) FROM refresh_tokens
-UNION ALL SELECT 'cases', count(*) FROM cases;
-```
-
-- [ ] Row counts match source
-- [ ] Login flow works
-- [ ] Existing sessions remain valid
-
-**Rollback plan:**
-- Keep source database running (read-only) until verification complete
-- Document rollback steps before starting migration
-- Test rollback procedure in staging first
-
-### New Server Security Verification
-
-Before deploying services, verify hardening (Linux servers):
-
-| Item | Command | Expected |
-|------|---------|----------|
-| SSH key-only | `grep PasswordAuth /etc/ssh/sshd_config` | `no` |
-| Root restricted | `grep PermitRootLogin /etc/ssh/sshd_config` | `prohibit-password` |
-| UFW enabled | `ufw status` | `Status: active` |
-| Fail2ban running | `systemctl status fail2ban` | `active` |
-| Auditd running | `systemctl status auditd` | `active` |
-| Kernel hardened | `sysctl net.ipv4.tcp_syncookies` | `1` |
-| Secrets protected | `stat -c %a .env` | `600` |
-
-**Note:** `stat` syntax varies by platform. Use `-c %a` on Linux, `-f%Lp` on macOS.
-
----
-
-## Integration with Playbook
-
-**Complements existing commands:**
-- `/pb-incident` - Incident response and postmortems
-- `/pb-observability` - SLO definitions, metrics, alerting
-- `/pb-deployment` - Deployment strategies
-- `/pb-dr` - Disaster recovery planning
-
-**Workflow:**
-```
-Design (/pb-observability - define SLOs)
-    ↓
-Operate (this command - sustainable practices)
-    ↓
-Respond (/pb-incident - when things break)
-    ↓
-Recover (/pb-dr - disaster scenarios)
-    ↓
-Improve (back to operate)
-```
+Move a database with a full dump and restore, never a table list; check row counts against the source and keep the source read-only until they match. Verify a new server's hardening before its first deploy with `/pb-hardening` Post-Deployment Verification.
 
 ---
 
