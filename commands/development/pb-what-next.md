@@ -8,7 +8,7 @@ execution_pattern: "sequential"
 related_commands: ['pb-start', 'pb-forge', 'pb-commit', 'pb-pr', 'pb-release']
 last_reviewed: "2026-11-05"
 version: "2.1.0"
-version_notes: "v2.1.0: Example Output is a real run of the script; the other examples are labelled illustrative and carry no times. Four phases are detected, as the script does; branch names other than main or master change nothing; the commit count caps at 10. Recommended Workflow is the daily ritual, with hygiene and test reviews periodic; /pb-review replaces /pb-cycle in the comparison table; /pb-templates is SDLC and quality templates."
+version_notes: "v2.1.0: Example Output is a real run of the script; the other examples are labelled illustrative and carry no times. Four phases are detected, as the script does; branch names other than main or master change nothing; the commit count is the branch's own commits since the default branch. Recommended Workflow is the daily ritual, with hygiene and test reviews periodic; /pb-review replaces /pb-cycle in the comparison table; /pb-templates is SDLC and quality templates."
 breaking_changes: []
 ---
 # Recommend Next Playbook Command
@@ -357,7 +357,7 @@ Runs these git commands to understand your work:
 ```bash
 git branch --show-current    # Current branch
 git status --porcelain       # Modified files
-git log --oneline -10        # Recent commits
+git log --oneline main..HEAD # This branch's commits
 git diff --name-only         # Files changed
 ```
 
@@ -378,7 +378,7 @@ Maps your situation to one of 4 phases:
 - **FINALIZE** (5+ commits, or committed and clean)
 - **RELEASE** (on `main` or `master`)
 
-The commit count comes from `git log --oneline -10`: it counts HEAD's history, not the branch's own commits, and caps at 10. In a repo with 5 or more commits, every branch other than `main` or `master` reads as FINALIZE.
+The commit count is the branch's own commits since it left the default branch (`origin/HEAD`, else `main`, else `master`).
 
 ### 4. Recommendation Generation
 Uses your phase + file types to suggest commands:

@@ -87,8 +87,11 @@ class PlaybookContextAnalyzer:
             changed_files_staged = staged.split("\n") if staged else []
             all_changed_files = list(set(changed_files_unstaged + changed_files_staged))
 
-            # Get recent commits
-            commits_output = self._run_git_command("git log --oneline -10").strip()
+            # Count this branch's own commits: HEAD's history includes everything already on the
+            # default branch, which reads every branch of a repo with 5+ commits as FINALIZE.
+            base = self._branch_base(branch)
+            log_range = f"{base}..HEAD" if base else "-10"
+            commits_output = self._run_git_command(f"git log --oneline {log_range}").strip()
             commits = commits_output.split("\n") if commits_output else []
             commit_count = len([c for c in commits if c.strip()])
 
@@ -109,6 +112,15 @@ class PlaybookContextAnalyzer:
             self.errors.append(f"Error analyzing git state: {e}")
             self.logger.error(f"Error analyzing git state: {e}")
             return None
+
+    def _branch_base(self, branch: str) -> Optional[str]:
+        """The default branch this branch's commits are counted from; None on it or when none exists."""
+        if branch in ("main", "master"):
+            return None
+        for ref in ("origin/HEAD", "main", "master"):
+            if self._run_git_command(f"git rev-parse --verify --quiet {ref}").strip():
+                return ref
+        return None
 
     def _run_git_command(self, command: str) -> str:
         """Run git command safely."""

@@ -13,7 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-- **`/pb-what-next` v2.1.0.** Example Output is a real run of the script; the other examples are labelled illustrative and carry no times; four detected phases, as the script has; Recommended Workflow is the daily ritual, with hygiene and test reviews periodic; `/pb-review` replaces `/pb-cycle` in the comparison table; `/pb-templates` is SDLC and quality templates.
+- **`/pb-what-next` v2.1.0.** The script counts a branch's own commits since the default branch, so START and DEVELOP are reachable again. Example Output is a real run of the script; the other examples are labelled illustrative and carry no times; four detected phases, as the script has; Recommended Workflow is the daily ritual, with hygiene and test reviews periodic; `/pb-review` replaces `/pb-cycle` in the comparison table; `/pb-templates` is SDLC and quality templates.
 - **`/pb-start` v2.3.3.** The ritual is README's: `/pb-start`, code, `/pb-review` (which commits), `/pb-pr`; `/pb-commit` is the manual path. The size signal sets review depth and is not `/pb-guide`'s change tier.
 - **`/pb-ship` v1.3.0.** Phase 3 lists `/pb-preflight` in the diagram, table and checklist; peer review is `/pb-review-code`, with `/code-review` as an independent pass; `/pb-deployment` is no longer listed beside `/pb-release`, which runs it; `/pb-review-hygiene` runs as the periodic check before a release, and the escape hatch reviews touched code with `/pb-review-code`; the PR body and commit subjects are checked against the register; the Integration section and its change markers are gone.
 - **`/pb-review` v2.8.2.** The ritual line ends at `/pb-pr`, as README's does. Mindset added.

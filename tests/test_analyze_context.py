@@ -155,7 +155,8 @@ class TestGitStateAnalysis:
             "feature/new-feature\n",  # branch
             "M  file1.py\n?? file2.py\n",  # status
             "file2.py\n",  # staged
-            "commit1\ncommit2\ncommit3\n",  # log
+            "abc123\n",  # rev-parse origin/HEAD: the base exists
+            "commit1\ncommit2\ncommit3\n",  # log origin/HEAD..HEAD
             "file1.py\nfile2.py\n",  # diff
         ]
 
@@ -189,13 +190,45 @@ class TestGitStateAnalysis:
     @mock.patch("analyze_playbook_context.PlaybookContextAnalyzer._run_git_command")
     def test_analyze_git_state_no_changes(self, mock_git, metadata_file):
         """Test git state with no changes."""
-        mock_git.side_effect = ["feature/branch\n", "", "", "", ""]
+        # branch, status, staged, three failed base lookups, log, diff
+        mock_git.side_effect = ["feature/branch\n", "", "", "", "", "", "", ""]
 
         analyzer = PlaybookContextAnalyzer(metadata_file=metadata_file)
         analyzer.load_metadata()
         git_state = analyzer._analyze_git_state()
 
         assert len(git_state["changed_files"]) == 0
+
+
+class TestBranchCommitCount:
+    """A branch's commit count starts where it left the default branch."""
+
+    def test_new_branch_in_an_old_repo_is_not_finalize(self, tmp_path, monkeypatch, metadata_file):
+        import subprocess
+
+        def git(*args):
+            subprocess.run(["git", *args], cwd=tmp_path, check=True, capture_output=True)
+
+        git("init", "-q", "-b", "main")
+        git("config", "user.email", "t@example.com")
+        git("config", "user.name", "t")
+        for i in range(6):
+            (tmp_path / f"f{i}.txt").write_text(str(i))
+            git("add", f"f{i}.txt")
+            git("commit", "-q", "-m", f"c{i}")
+        git("switch", "-q", "-c", "feature/x")
+        (tmp_path / "new.py").write_text("x = 1\n")
+        git("add", "new.py")
+        git("commit", "-q", "-m", "start feature")
+        (tmp_path / "new.py").write_text("x = 2\n")
+        monkeypatch.chdir(tmp_path)
+
+        analyzer = PlaybookContextAnalyzer(metadata_file=metadata_file)
+        analyzer.load_metadata()
+        state = analyzer._analyze_git_state()
+
+        assert state["commit_count"] == 1
+        assert analyzer._detect_workflow_phase(state) == "DEVELOP"
 
 
 class TestWorkflowPhaseDetection:
