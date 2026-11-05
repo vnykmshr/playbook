@@ -1,13 +1,13 @@
 # Engineering Playbook
 
-A set of commands and guides for structuring development workflows, architectural decisions, code reviews, and team operations.
+Structured Markdown commands for AI-assisted development. They cover development workflows, architectural decisions, code reviews and team operations.
 
 Built on two complementary frameworks:
 
 1. **The Preamble** - How teams think together (peer collaboration, correctness over agreement)
 2. **Design Rules** - What teams build toward (clarity, simplicity, resilience, extensibility)
 
-Every command in the playbook assumes both.
+Most commands build on both.
 
 ---
 

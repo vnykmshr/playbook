@@ -1,7 +1,7 @@
 [book]
 title = "Engineering Playbook"
 authors = ["vnykmshr"]
-description = "Command reference for the Engineering Playbook"
+description = "Structured Markdown commands for AI-assisted development."
 language = "en"
 src = "."
 
