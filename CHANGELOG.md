@@ -7,12 +7,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+v2.35.0 tightens the CI behind both sites and fixes four commands. Workflow tokens are scoped to the job that needs them, every action and downloaded build tool is pinned, and the book says where its page-view counts go.
+
+**After upgrading:** `git pull` is enough.
+
+### Security
+
+- **CI token scope.** `deploy-docs.yml` grants `contents: read` at the workflow level; `pages: write` and `id-token: write` move to the deploy job, and `configure-pages` is gone. `deploy-book.yml` gets `contents: read`.
+- **Pinned CI inputs.** Every action is pinned to a commit SHA, its tag as a comment. The mdbook and mdbook-mermaid downloads are checked by sha256 before extraction; neither project publishes sums, so these are GitHub's asset digests recorded at pin time: they catch a later swap of the asset, not a bad first upload. wrangler is pinned to 4.151.3; its transitive dependencies still resolve fresh on every run.
+
 ### Changed
 
-- **`/pb-forge` v1.8.0.** The arc cursor carries the after-Land list: every step the plan defers to Land or the cursor's close.
+- **`/pb-pause` v1.10.0.** Step 0 names three homes: `todos/` for session state, `docs/` for durable public notes, a private repo for durable private ones. New Step 3c copies whatever a lasting note links to in the session scratch directory into `todos/` before the directory goes. Spaced double hyphens become colons or parentheses.
 - **`/pb-preflight` v1.3.0.** 1.1 counts a zero only after the same scan reports a generated canary, on a throwaway branch and in a copy of the artifact.
+- **`/pb-forge` v1.8.0.** The arc cursor carries the after-Land list: every step the plan defers to Land or the cursor's close.
 - **`/pb-setup` v1.0.1.** The nvm installer pin moves from v0.39.0 to v0.40.8.
-- **`/pb-pause` v1.10.0.** Spaced double hyphens replaced. Step 0 names three homes: `todos/` for session state, `docs/` for durable public notes, a private repo for durable private ones. Step 3c copies whatever a lasting note links to in the session scratch directory into `todos/` before the directory goes.
+- **Book site.** The six pages that load the Cloudflare Web Analytics beacon say so in the footer.
 
 ## [v2.34.0] - 2026-11-05
 
