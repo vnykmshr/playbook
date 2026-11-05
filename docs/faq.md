@@ -7,13 +7,13 @@ Common questions about the Engineering Playbook.
 ## Getting Started
 
 ### Q: What is the Engineering Playbook?
-**A:** The Engineering Playbook is a decision framework: a set of commands and guides that codify how to approach development work. It covers planning, development, code review, release, and team operations. It's not a tool, but a structured process that reduces friction and maintains quality at every step.
+**A:** Structured Markdown commands for AI-assisted development, plus guides that codify how to approach development work. It covers planning, development, code review, release, and team operations. It's not a tool, but a structured process that reduces friction and maintains quality at every step.
 
 ### Q: Do I have to use all commands?
-**A:** No. Start with the commands that address your current challenges. Most teams begin with `/pb-plan`, `/pb-cycle`, and `/pb-release`. You can adopt others gradually as you need them.
+**A:** No. Start with the commands that address your current challenges. Most teams begin with the daily ritual: `/pb-start`, `/pb-review` and `/pb-pr`. You can adopt others gradually as you need them.
 
 ### Q: How long does it take to learn the playbook?
-**A:** You can start using key commands (like `/pb-start`, `/pb-cycle`, `/pb-commit`) in a few hours. Mastering the full system takes a few weeks of regular use. The playbook is designed to be adopted incrementally.
+**A:** You can start using key commands (like `/pb-start`, `/pb-review`, `/pb-pr`) in a few hours. Mastering the full system takes a few weeks of regular use. The playbook is designed to be adopted incrementally.
 
 ### Q: Can I use the playbook with my existing tools?
 **A:** Yes. The playbook works with any tech stack, version control system, and CI/CD platform. It's tool-agnostic by design.
@@ -32,7 +32,7 @@ git clone https://github.com/vnykmshr/playbook.git
 cd playbook
 ./scripts/install.sh
 ```
-This creates symlinks in `~/.claude/commands/` making all commands available in Claude Code.
+This links the commands, skills and helper scripts into `~/.claude/`, making all commands available in Claude Code.
 
 ### Q: I ran the install script but commands aren't showing up. What do I do?
 **A:** Check that `~/.claude/commands/` exists and has the symlinks:
@@ -46,7 +46,7 @@ If the directory doesn't exist, create it and re-run the install script. If syml
 ```bash
 ./scripts/uninstall.sh
 ```
-This removes all symlinks from `~/.claude/commands/`.
+This removes the playbook's links under `~/.claude/`: commands, skills and helper scripts.
 
 ### Q: Can I install the playbook in multiple locations?
 **A:** Yes. Each playbook installation is independent. You can have different playbook versions in different directories.
@@ -55,15 +55,15 @@ This removes all symlinks from `~/.claude/commands/`.
 
 ## Workflows
 
-### Q: What's the difference between `/pb-cycle` and `/pb-pr`?
+### Q: What's the difference between `/pb-review` and `/pb-pr`?
 **A:**
-- `/pb-cycle` is for iterative development and review before committing
-- `/pb-pr` is for creating the pull request after your code is approved and committed
+- `/pb-review` is the quality gate after each unit of work: it applies your preferences and commits on pass
+- `/pb-pr` creates the pull request when peer review is needed
 
-**Sequence**: Develop → `/pb-cycle` (self-review + peer review) → Approve → `/pb-commit` → `/pb-pr`
+**Sequence**: `/pb-start` → code → `/pb-review` → `/pb-pr`
 
 ### Q: Do I have to use `/pb-todo-implement`?
-**A:** No. `/pb-todo-implement` is for structured implementation with checkpoint-based review if you want extra feedback during development. Use `/pb-cycle` if you prefer simpler iteration without checkpoints.
+**A:** No. `/pb-todo-implement` is for structured implementation with checkpoint-based review if you want extra feedback during development. Use the ritual (`/pb-start` → code → `/pb-review`) if you prefer simpler iteration without checkpoints.
 
 ### Q: How often should I commit?
 **A:** Commit after each meaningful unit of work. Guidelines:
@@ -111,7 +111,7 @@ The key principle: **Fix the issue, don't argue.** If you believe the reviewer i
 If reviews are taking longer, consider smaller, more frequent PRs.
 
 ### Q: Can I review my own code?
-**A:** You do `/pb-cycle` self-review before requesting peer review. Self-review catches obvious issues, but a peer review from another engineer is always required before merging.
+**A:** `/pb-review` is the self-review gate and catches obvious issues. Whether a peer review is required before merging is your team's policy; `/pb-pr` opens one when it is.
 
 ---
 

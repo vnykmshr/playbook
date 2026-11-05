@@ -21,7 +21,7 @@ Complete guide to frontend development using the Engineering Playbook. Covers th
 
 **Frontend code review?**
 ```
-/pb-cycle (self-review) → /pb-a11y checklist → /pb-review-hygiene
+/pb-cycle (self-review) → /pb-a11y checklist → /pb-review-code
 ```
 
 ---
@@ -277,7 +277,7 @@ When feature is code-complete.
 
 | Review | Frontend Focus |
 |--------|---------------|
-| `/pb-review-hygiene` | Component structure, prop design, dead code |
+| `/pb-review-code` | Component structure, prop design, dead code |
 | `/pb-a11y` | Full accessibility checklist |
 | `/pb-security` | XSS prevention, CSP compliance |
 | `/pb-review-tests` | Component test coverage |
@@ -403,7 +403,7 @@ What are you doing?
 │   └─ /pb-patterns-api → /pb-patterns-frontend (state section)
 │
 ├─ Reviewing frontend code
-│   └─ /pb-a11y checklist → /pb-review-hygiene
+│   └─ /pb-a11y checklist → /pb-review-code
 │
 ├─ Fixing accessibility issue
 │   └─ /pb-a11y → Fix → Test with screen reader

@@ -1,6 +1,6 @@
 # Engineering Playbook
 
-An integrated set of commands and guides for structuring iterative development workflows, architectural decisions, code reviews, and team operations.
+Structured Markdown commands for AI-assisted development, with guides for workflows, architectural decisions, code reviews, and team operations.
 
 [![Latest Release](https://img.shields.io/github/v/release/vnykmshr/playbook)](https://github.com/vnykmshr/playbook/releases/latest)
 [![Commands](https://img.shields.io/badge/status-active-brightgreen)](command-index.md)
@@ -106,7 +106,7 @@ Decision tree showing which command to use for any situation
 FAQ section covering setup, workflow, integration, and common issues
 
 **[See playbook in action →](playbook-in-action.md)**
-Real-world walkthroughs showing development teams using playbook commands end-to-end
+The standard development cycle and quick reference
 
 ---
 
@@ -161,7 +161,6 @@ The playbook provides frameworks, not commandments:
 - Checklists are starting points, not finish lines
 - Patterns are tools to think with, not rules to obey
 - Design rules anchor decisions: when you break a pattern, you have principles on your side
-- Every command includes guidance on when to break the pattern
 
 **Why this matters:** Psychological safety requires autonomy. Rigid rules kill challenge. Frameworks anchored in both peer thinking AND sound design principles enable you to both challenge AND make sound decisions.
 
@@ -171,7 +170,7 @@ The playbook's power comes from both frameworks working together:
 - **Design rules without preamble**: Teams know what's right but can't decide together on it
 - **Together**: Teams collaboratively decide on technically sound systems
 
-This integration is woven throughout the playbook. Every command that references the preamble also references design rules. Every code review, every architecture decision, every commit assumes both matter.
+This integration is woven throughout the playbook. Most commands reference both. Every code review, every architecture decision, every commit assumes both matter.
 
 ---
 
@@ -295,7 +294,7 @@ Find the right command for your situation
 Browse commands by category
 
 **[Integration Guide →](integration-guide.md)**
-Understand how all commands work together as a system
+See how commands compose into workflows
 
 ---
 
@@ -315,4 +314,4 @@ MIT License - See [LICENSE](https://github.com/vnykmshr/playbook/blob/main/LICEN
 
 ---
 
-**Status**: Production Ready | **Integration**: 9 command clusters | [View Changelog](https://github.com/vnykmshr/playbook/blob/main/CHANGELOG.md)
+**Status**: Production Ready | [View Changelog](https://github.com/vnykmshr/playbook/blob/main/CHANGELOG.md)

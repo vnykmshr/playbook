@@ -176,5 +176,4 @@
 # Contributing
 
 - [Command Versioning](docs/command-versioning.md)
-- [Command Changelog](docs/command-changelog.md)
 - [Metadata Extraction](docs/metadata-extraction.md)

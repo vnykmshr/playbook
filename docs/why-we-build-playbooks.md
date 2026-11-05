@@ -4,7 +4,7 @@
 
 Every engineering team faces the same challenges: preventing regressions, maintaining code quality across a growing codebase, onboarding new team members, responding to incidents, and shipping features without burning out. These are solved problems. Yet most teams reinvent the solutions over and over-in slightly different ways, each time losing efficiency.
 
-The Engineering Playbook is a **complete decision framework** grounded in two complementary philosophies:
+The Engineering Playbook is a set of structured Markdown commands for AI-assisted development, grounded in two complementary philosophies:
 
 1. **The Preamble** - How teams think together (peer collaboration, psychological safety, correctness over agreement)
 2. **Design Rules** - What teams build (clarity, simplicity, resilience, extensibility)
@@ -128,7 +128,7 @@ A single code reviewer can miss things. The playbook uses **specialized perspect
 - **Clarity** - `/pb-sam-documentation`
 - **Testing** - `/pb-jordan-testing`
 
-These perspectives catch different issues using design rules as shared language. A performance engineer might miss a security vulnerability. A security engineer might miss a test coverage gap. Together, they create a high bar for quality.
+These perspectives catch different issues using design rules as shared language. A correctness reviewer might miss a failure mode; a resilience reviewer might miss a test coverage gap. Security, design and reach have their own lanes: `/pb-travis-security`, `/pb-elena-design` and `/pb-kai-reach`. Together, they create a high bar for quality.
 
 ### 5. Structured Processes Enable Faster Iteration
 
@@ -145,12 +145,12 @@ The playbook provides the structure. You decide how strictly to enforce it based
 The playbook isn't a set of independent commands. It's an **integrated system** grounded in two foundational frameworks that all others build on:
 
 ### Foundational Frameworks
-Two documents establish the complete philosophy:
+Two documents establish the philosophy:
 
 - `/pb-preamble` - How teams think together (peer collaboration, psychological safety, correctness)
 - `/pb-design-rules` - What teams build (18 rules: 17 classical in 4 clusters, plus Attention)
 
-Every command in the playbook assumes both frameworks.
+Most commands build on both frameworks.
 
 ### Core Foundation Commands
 Three commands translate the frameworks into SDLC structure:
@@ -172,17 +172,16 @@ Before writing code:
 Code flows through the same review loop repeatedly:
 
 - `/pb-start` - Create a feature branch with clear scope
-- `/pb-cycle` - Self-review, then peer review, iterate
 - `/pb-testing` - Unit, integration, end-to-end tests
 - `/pb-security` - Security checklist
 - `/pb-standards` - Code style and patterns
-- `/pb-commit` - Atomic commits with meaningful messages
-- `/pb-pr` - Pull request with context for reviewers
+- `/pb-review` - Quality gate after each unit of work; applies your preferences and commits on pass
+- `/pb-pr` - Pull request with context, when peer review is needed
 
 ### Multi-Perspective Review
 Different reviewers bring different lenses:
 
-- `/pb-review-hygiene` - Code quality and maintainability
+- `/pb-review-code` - Code quality and maintainability of the change
 - `/pb-security` - Security review
 - `/pb-review-tests` - Test coverage
 - `/pb-logging` - Logging standards
@@ -455,57 +454,14 @@ The playbook provides the framework. You adjust the rigor based on context.
 
 ## What's Included
 
-### Complete Framework + Command Library
+### Commands
 
-**Foundational Frameworks** - `/pb-preamble`, `/pb-design-rules` (with expansions on specific contexts)
-- Complete philosophy for peer collaboration and technical design
-- Preamble expansion guides for async teams, power dynamics, decision discipline
-- Design Rules organized into 4 clusters with decision framework
-
-**Core Foundation** - `/pb-guide`, `/pb-standards`, `/pb-documentation`, `/pb-templates`
-- SDLC framework with right-sized rigor
-- Collaboration norms and quality standards
-- Reusable templates for commits, PRs, decisions
-
-**Planning** - `/pb-plan`, `/pb-adr`, `/pb-patterns*` (core, API, async, database, distributed, frontend, resilience, security, deployment), `/pb-performance`, `/pb-observability`, `/pb-deprecation`
-- Scope planning and architectural decisions
-- Pattern library with trade-offs
-- Design considerations before implementation
-
-**Development** - `/pb-start`, `/pb-cycle`, `/pb-resume`, `/pb-commit`, `/pb-pr`, `/pb-testing`, `/pb-standup`, `/pb-todo-implement`, `/pb-knowledge-transfer`, `/pb-what-next`
-- Feature branch establishment with clear scope
-- Iteration cycles with self and peer review
-- Atomic commits and pull requests
-- Testing, async communication, knowledge transfer
-- Contextual command recommendations
-
-**Deployment** - `/pb-deployment`, `/pb-incident`
-- Deployment strategies (blue-green, canary, rolling)
-- Incident assessment, response, and recovery
-
-**Release** - `/pb-release`
-- Pre-release checklists and production sign-off
-
-**Review** - `/pb-review*` (code, incoming, tests, docs, product, hygiene, microservice, comprehensive, playbook), `/pb-security`, `/pb-logging`
-- Multi-perspective code review with design rules as shared language
-- Specialized audits (security, logging, architecture)
-
-**Repository** - `/pb-repo*` (organize, readme, about, blog, docsite, enhance, polish)
-- Greenfield project initialization
-- Repository structure and documentation
-
-**People** - `/pb-onboarding`, `/pb-team`
-- Structured team member onboarding
-- Retrospectives and team dynamics
-- Knowledge transfer processes
-
-**Reference** - `/pb-context`
-- Project working context and decision log template
+Commands sit in nine categories under `commands/`: core, planning, development, reviews, deployment, repo, templates, utilities and people. Two foundations anchor them: `/pb-preamble` (how teams think together) and `/pb-design-rules` (what teams build). The [command reference](command-index.md) lists every command by category.
 
 ### Documentation
 - **Frameworks** - Preamble and Design Rules with practical integration guides
 - Command reference with real-world examples
-- Integration guide showing framework and command relationships
+- Integration guide showing how commands compose into workflows
 - Decision guide for choosing the right command
 - Getting started scenarios for different situations
 - Quick references for daily lookup
@@ -514,7 +470,7 @@ The playbook provides the framework. You adjust the rigor based on context.
 ```bash
 git clone https://github.com/vnykmshr/playbook.git
 cd playbook
-./scripts/install.sh  # Creates symlinks in ~/.claude/commands/
+./scripts/install.sh  # Links commands, skills and scripts into ~/.claude/
 ```
 
 All commands are immediately available in Claude Code.
@@ -523,7 +479,7 @@ All commands are immediately available in Claude Code.
 
 ## The Bigger Picture
 
-Engineering teams face the same challenges repeatedly. The Playbook solves them with a **complete philosophy** that combines two complementary frameworks:
+Engineering teams face the same challenges repeatedly. The Playbook answers them with two complementary frameworks:
 
 ### How It Works
 

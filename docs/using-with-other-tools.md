@@ -14,7 +14,7 @@ The underlying patterns work with **any agentic development tool** - different f
 
 - **Preamble:** Challenge assumptions. Prefer correctness over agreement. Think like peers.
 - **Design Rules:** Clarity, Simplicity, Resilience, Extensibility. 18 rules: 17 classical principles in these 4 clusters, plus Attention.
-- **BEACONs:** 9 guiding principles for code quality, decision-making, team dynamics
+- **BEACONs:** Guiding principles for code quality, decision-making, team dynamics
 
 **Portability:** Works in **any tool, any language, any team**. These are universal.
 
@@ -59,7 +59,6 @@ You (with another tool):
 
 **Claude Code features:**
 - Skills: `/pb-start` invokes directly in conversation
-- Keybindings: Fast shortcuts to common commands
 - Context management: Automatic pause/resume, working context snapshots
 - Hooks: Advisory warnings when context gets large
 - Status line: Token usage visibility
@@ -72,8 +71,8 @@ You (with another tool):
 |--------------|-------------|-----------|
 | **Invocation** | Skill (`/pb-start`) | Shell alias, CLI subcommand, web form |
 | **Context** | CLAUDE.md, working-context.md | Config files, environment vars, database |
-| **Preferences** | `~/.claude/preferences.json` | `~/.config/yourtool/config`, CLI flags |
-| **Integration** | Git hooks, keybindings, status line | Whatever makes sense for your platform |
+| **Preferences** | `~/.playbook-preferences.yaml` | `~/.config/yourtool/config`, CLI flags |
+| **Integration** | Git hooks, status line | Whatever makes sense for your platform |
 
 ---
 
@@ -98,7 +97,7 @@ For each command category you care about:
 - `/pb-start` - Begin work (scoping ritual)
 - `/pb-cycle` - Self-review and iteration
 - `/pb-commit` - Atomic, well-explained commits
-- `/pb-review-hygiene` - Code quality checklist
+- `/pb-review-code` - Code review checklist
 - `/pb-plan` - Focus area planning
 
 ### 3. Adapt Integration (Medium Work)
@@ -138,11 +137,6 @@ git switch -c feature/$description
 # Verify: has atomic change (one concern)
 # Verify: no debug artifacts
 # Run: lint, tests
-
-# 4. Environment-based context
-# Set these in your shell profile
-export PB_WORKING_CONTEXT="$HOME/project/context.md"
-export PB_PRINCIPLES="$HOME/playbook/docs/preamble.md"
 ```
 
 **Invocation:**
@@ -157,7 +151,7 @@ git diff  # See your atomic change
 cat ~/playbook/commands/development/pb-commit.md  # Remind yourself of guidelines
 
 # Code review
-cat ~/playbook/commands/reviews/pb-review-hygiene.md  # Copy the checklist
+cat ~/playbook/commands/reviews/pb-review-code.md  # Copy the checklist
 ```
 
 ---
@@ -227,19 +221,13 @@ Claude Code surfaces commands as skills. Your tool has different affordances.
 
 **Solution:** Use the closest equivalent (alias, CLI subcommand, web form, manual reference).
 
-### 2. Keybindings
-
-Claude Code offers keyboard shortcuts. Your tool may not support them, or works differently.
-
-**Solution:** Use your tool's native shortcuts, or create a workflow guide for your team.
-
-### 3. Context Bar (Token Usage)
+### 2. Context Bar (Token Usage)
 
 Claude Code shows token usage in a status line. Different tools have different capabilities.
 
 **Solution:** Use your tool's native monitoring (IDE metrics, logs, API dashboards).
 
-### 4. Hooks (Advisory Warnings)
+### 3. Hooks (Advisory Warnings)
 
 Claude Code warns when context is approaching limits. Your tool may not have this concept.
 

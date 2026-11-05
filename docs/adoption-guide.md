@@ -8,7 +8,7 @@ Integrating the engineering playbook into your team's workflow. This guide shows
 
 ### **Startup (2-5 engineers)**
 - **Week 1**: Read `/pb-guide` (understand 11 phases) + `/pb-preamble` (collaboration style)
-- **Week 2**: Start using `/pb-start` → `/pb-cycle` → `/pb-commit` → `/pb-pr` for feature work
+- **Week 2**: Start using the ritual for feature work: `/pb-preferences --setup` once, then `/pb-start` → code → `/pb-review` → `/pb-pr`
 - **Week 3**: Add `/pb-review-code` for peer review, `/pb-standards` for decision-making
 - **Payoff**: Clear development rhythm, better code review, shared decision language
 - **Effort**: 2-3 hours per engineer for onboarding
@@ -17,7 +17,7 @@ Integrating the engineering playbook into your team's workflow. This guide shows
 - **Phase 1 (Week 1-2)**:
   - Run workshop: `/pb-guide` (SDLC overview) + `/pb-preamble` (team collaboration)
   - Establish team norms from `/pb-standards`
-  - Pick 3-4 core commands: `/pb-start`, `/pb-cycle`, `/pb-commit`, `/pb-pr`
+  - Adopt the core ritual: `/pb-preferences --setup` once, then `/pb-start` → code → `/pb-review` → `/pb-pr`
 - **Phase 2 (Week 3-4)**:
   - Add `/pb-plan` for feature planning
   - Add `/pb-review-code` + `/pb-security` for code review gates
@@ -31,13 +31,13 @@ Integrating the engineering playbook into your team's workflow. This guide shows
   - Creates team guide: custom command selection + team-specific examples
   - Runs workshops for different roles (frontend, backend, infra, QA)
 - **Phase 2 (Week 3-4)**:
-  - Rollout core workflow: `/pb-plan` → `/pb-adr` → `/pb-cycle` → `/pb-review-*` → `/pb-release`
+  - Rollout core workflow: `/pb-plan` → `/pb-adr` → `/pb-review` → `/pb-review-*` → `/pb-release`
   - Establish review ceremony using `/pb-review-code`, `/pb-review-tests`
   - Create project `/pb-context` document for current work
 - **Phase 3 (Week 5-8)**:
   - Integrate `/pb-patterns-*` into architecture discussions
   - Establish release process using `/pb-release` + `/pb-deployment`
-  - Monitor adoption via `/pb-review` (periodic) and `/pb-standards` (decisions)
+  - Monitor adoption via `/pb-review-hygiene` (periodic) and `/pb-standards` (decisions)
 - **Payoff**: Scaled decision-making, architecture consistency, knowledge sharing
 - **Effort**: 6-8 hours initial per engineer, 1-2 hours/week ongoing
 
@@ -79,8 +79,8 @@ Integrating the engineering playbook into your team's workflow. This guide shows
 **Goal**: Daily development process uses playbook
 
 **Activities**:
-- [ ] Integrate `/pb-start` → `/pb-cycle` → `/pb-commit` → `/pb-pr` into real features
-- [ ] Use `/pb-testing` alongside `/pb-cycle` for test-driven development
+- [ ] Integrate the ritual (`/pb-start` → code → `/pb-review` → `/pb-pr`) into real features
+- [ ] Use `/pb-testing` alongside `/pb-review` for test-driven development
 - [ ] Establish review process: `/pb-review-code` for every PR
 - [ ] Create project `/pb-context` document for current decisions
 - [ ] Track metrics: % of features using playbook workflow
@@ -101,7 +101,7 @@ Integrating the engineering playbook into your team's workflow. This guide shows
 - [ ] Architecture decisions reference applicable `/pb-design-rules`
 - [ ] Team uses `/pb-patterns-*` for system design
 - [ ] Add `/pb-observability` and `/pb-performance` to planning
-- [ ] Establish `/pb-review` (monthly) and `/pb-review-tests` (monthly) cadence
+- [ ] Establish `/pb-review-hygiene` (monthly) and `/pb-review-tests` (monthly) cadence
 
 **Success Signals**:
 - All major features have `/pb-adr` documents
@@ -135,9 +135,9 @@ Integrating the engineering playbook into your team's workflow. This guide shows
 | Stage | Focus | Key Commands |
 |-------|-------|--------------|
 | **Greenfield** | Structure first | `/pb-greenfield`, `/pb-plan`, `/pb-adr`, `/pb-patterns-*` |
-| **Growth** | Quality gates | `/pb-cycle`, `/pb-review-*`, `/pb-testing`, `/pb-standards` |
+| **Growth** | Quality gates | `/pb-review`, `/pb-review-*`, `/pb-testing`, `/pb-standards` |
 | **Maintenance** | Consistency | `/pb-review-hygiene`, `/pb-deprecation`, `/pb-context` |
-| **Scaling** | Governance | `/pb-plan`, `/pb-adr`, `/pb-design-rules`, `/pb-review` |
+| **Scaling** | Governance | `/pb-plan`, `/pb-adr`, `/pb-design-rules`, `/pb-review-comprehensive` |
 
 ### **By Team Distribution**
 
@@ -162,7 +162,7 @@ Integrating the engineering playbook into your team's workflow. This guide shows
 
 ### **Adoption Metrics** (Track weekly)
 - % of engineers actively using core commands
-- % of features following `/pb-start` → `/pb-cycle` → `/pb-pr` workflow
+- % of features following `/pb-start` → `/pb-review` → `/pb-pr` workflow
 - % of PRs using `/pb-review-code` perspective
 - % of major decisions documented in `/pb-adr`
 
@@ -188,7 +188,7 @@ Integrating the engineering playbook into your team's workflow. This guide shows
 | **Misaligned tier system** | Features skip `/pb-plan` because "it's just code" | Define team's tier system explicitly; make `/pb-plan` requirement for M/L features |
 | **Design rules as dogma** | Team debates "which rule applies" instead of deciding | Emphasize decision framework: rules guide, don't dictate; preamble thinking resolves conflicts |
 | **No shared context** | Engineers make decisions in isolation | Enforce `/pb-context` updates during `/pb-start`; review monthly |
-| **Review ceremonies die** | Established `/pb-review` and `/pb-review-tests` → skip after month 2 | Calendar invites, rotate facilitators, document findings in `/pb-context` |
+| **Review ceremonies die** | Established `/pb-review-hygiene` and `/pb-review-tests` → skip after month 2 | Calendar invites, rotate facilitators, document findings in `/pb-context` |
 | **Preamble not internalized** | Good intentions but team reverts to hierarchical decision-making | Schedule bi-weekly preamble discussion (30 min); connect to real decisions |
 | **Too much documentation** | Engineers write ADRs for tiny changes | Only require `/pb-adr` for M/L features; use decision framework to know when |
 

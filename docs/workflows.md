@@ -11,19 +11,18 @@ From planning through production, here's how commands work together to deliver f
 ```
 PLANNING PHASE        DEVELOPMENT PHASE       CODE REVIEW PHASE     RELEASE PHASE
 │                     │                       │                      │
-├─ /pb-plan           ├─ /pb-start            ├─ /pb-cycle           ├─ /pb-release
+├─ /pb-plan           ├─ /pb-start            ├─ /pb-review-code     ├─ /pb-release
 │                     │                       │                      │
-├─ /pb-adr            ├─ /pb-cycle (iterate)  ├─ /pb-testing         ├─ /pb-deployment
+├─ /pb-adr            ├─ code + /pb-testing   ├─ /pb-testing         ├─ /pb-deployment
 │                     │                       │                      │
-├─ /pb-patterns-*     ├─ /pb-testing          ├─ /pb-security        └─ Verify in
+├─ /pb-patterns-*     ├─ /pb-security         ├─ /pb-security        └─ Verify in
 │                     │                       │                         production
-├─ /pb-observability  ├─ /pb-security         ├─ /pb-logging
+├─ /pb-observability  ├─ /pb-standards        ├─ /pb-logging
 │                     │                       │
-└─ /pb-performance    ├─ /pb-standards        ├─ /pb-review-*
+└─ /pb-performance    ├─ /pb-documentation    └─ /pb-review-*
                       │
-                      ├─ /pb-documentation
-                      │
-                      ├─ /pb-commit
+                      ├─ /pb-review (iterate;
+                      │   commits on pass)
                       │
                       └─ /pb-pr
 ```
@@ -39,32 +38,27 @@ PLANNING PHASE        DEVELOPMENT PHASE       CODE REVIEW PHASE     RELEASE PHAS
 
 2. **Development Phase** (iterative)
    - `/pb-start` - Create feature branch, establish iteration rhythm
-   - `/pb-cycle` - Develop feature:
+   - For each unit of work:
      - Write code following `/pb-standards`
      - Include tests as you code (`/pb-testing`)
      - Review logging strategy (`/pb-logging`)
      - Update documentation (`/pb-documentation`)
-     - Self-review changes
-     - Request peer review (quality gates)
+     - `/pb-review` - Quality gate: applies your preferences, commits on pass
    - Repeat until feature is complete
+   - `/pb-pr` - Create pull request when peer review is needed
+   - Manual path: `/pb-cycle` (self-review and peer review), then `/pb-commit`, when you want each step by hand
 
 3. **Code Review Phase** (before merging)
-   - `/pb-cycle` - Iterate on feedback if needed
+   - `/pb-review-code` - Peer review of the change
    - `/pb-testing` - Verify test coverage and quality
    - `/pb-security` - Security checklist during review
    - `/pb-logging` - Logging standards validation
    - `/pb-review-*` - Additional specialized reviews as needed:
-     - `/pb-review-hygiene` - Code quality and patterns
      - `/pb-review-product` - Product alignment (if user-facing)
      - `/pb-review-tests` - Test suite depth and coverage
-     - `/pb-release` - Final senior engineer review
 
-4. **Commit & PR Phase**
-   - `/pb-commit` - Create atomic, well-formatted commit(s)
-   - `/pb-pr` - Create pull request with context and rationale
-
-5. **Release Phase** (after merge)
-   - `/pb-release` - Pre-release checklist (security, performance, docs)
+4. **Release Phase** (after merge)
+   - `/pb-release` - Phase 1 readiness gate, then version, tag and deploy
    - `/pb-deployment` - Choose deployment strategy (blue-green, canary, rolling)
    - Verify in production (monitor, observe)
 
@@ -129,7 +123,7 @@ Bringing new team members up to speed systematically:
 ```
 PREPARATION           FIRST DAY               FIRST WEEK             RAMP-UP             GROWTH
 │                     │                       │                      │                  │
-├─ /pb-onboarding     ├─ /pb-start            ├─ /pb-knowledge-      ├─ /pb-cycle        ├─ /pb-team
+├─ /pb-onboarding     ├─ /pb-start            ├─ /pb-knowledge-      ├─ /pb-review       ├─ /pb-team
 │   (Setup access)    │   (orientation)       │   transfer           │   (first feature)  │   (feedback)
 │                     │                       │                      │                  │
 ├─ SETUP DEV ENV      ├─ INTRO TO CODEBASE    ├─ /pb-guide           ├─ /pb-pr           ├─ RETROSPECTIVE
@@ -175,9 +169,9 @@ PREPARATION           FIRST DAY               FIRST WEEK             RAMP-UP    
      - Team priorities
 
 4. **Ramp-Up Phase** (weeks 2-4)
-   - `/pb-cycle` - Contribute first feature:
+   - Contribute first feature:
      - Pick small feature or bug fix
-     - Follow full cycle (plan → develop → review → commit → PR)
+     - Follow the ritual: `/pb-start` → code → `/pb-review` → `/pb-pr`
      - Get peer feedback
    - Request review, fix feedback, merge PR
    - Build confidence in workflow
@@ -199,7 +193,7 @@ Regular check-ins on different aspects of code and team health:
 ```
 MONTHLY CADENCE       QUARTERLY CADENCE       AS-NEEDED
 │                     │                       │
-├─ /pb-review-hygiene    ├─ /pb-review-hygiene  ├─ /pb-review (comprehensive)
+├─ /pb-review-hygiene    ├─ /pb-review-hygiene  ├─ /pb-review-comprehensive
 │   (Quality)         │   (Tech debt)        │
 │                     │                       ├─ /pb-performance
 ├─ /pb-review-tests   ├─ /pb-review-product  │   (Bottlenecks)
@@ -221,7 +215,7 @@ MONTHLY CADENCE       QUARTERLY CADENCE       AS-NEEDED
 | Quarterly | `/pb-review-product` | Feature fit, user feedback, roadmap alignment |
 | Quarterly | Team retrospective | Team health, communication, growth |
 | As-needed | `/pb-release` | Final gate before production release |
-| As-needed | `/pb-review` | Comprehensive multi-perspective audit |
+| As-needed | `/pb-review-comprehensive` | Comprehensive multi-perspective audit |
 
 ---
 
@@ -297,15 +291,14 @@ A typical day for an engineer using the playbook:
 ```
 MORNING               MIDDAY                AFTERNOON               END OF DAY
 │                     │                      │                      │
-├─ /pb-resume         ├─ /pb-context         ├─ /pb-cycle            ├─ /pb-pause
-│ (Get context)       │ (Big picture)        │ (Final self-review)   │ (Preserve context)
+├─ /pb-resume         ├─ /pb-context         ├─ /pb-review           ├─ /pb-pause
+│ (Get context)       │ (Big picture)        │ (Final gate)          │ (Preserve context)
 │                     │                      │                      │
 ├─ /pb-standup        ├─ /pb-patterns        ├─ Ready to ship?       └─ Update trackers,
 │ (Write standup)     │ (Plan next work)     │  → /pb-ship             document state
 │                     │                      │
-└─ /pb-cycle          └─ /pb-cycle           └─ Code review feedback
-  (Self-review)         (Develop feature)        (Address if needed)
-  (Peer review if ready)
+└─ code → /pb-review  └─ code → /pb-review   └─ Code review feedback
+  (Each unit of work)   (Develop feature)        (Address if needed)
 ```
 
 **Session boundaries:** `/pb-pause` and `/pb-resume` work as bookends-pause preserves context at end of session, resume recovers it at start of next.
@@ -318,4 +311,4 @@ MORNING               MIDDAY                AFTERNOON               END OF DAY
 
 - **[Decision Guide](decision-guide.md)** - Find the right command for any situation
 - **[Command Reference](command-index.md)** - Browse all commands
-- **[Integration Guide](integration-guide.md)** - Deep dive on command relationships
+- **[Integration Guide](integration-guide.md)** - Workflow maps and step-by-step scenarios

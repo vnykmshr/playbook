@@ -104,11 +104,8 @@ version: "1.1.0"
 ---
 ```
 
-**In the command index:**
-View `/docs/command-changelog.md` for version history of all commands.
-
-**In the help text:**
-When viewing a command's help, the version is displayed.
+**In the CHANGELOG:**
+[CHANGELOG.md](https://github.com/vnykmshr/playbook/blob/main/CHANGELOG.md) records each release's command version changes.
 
 ---
 
@@ -120,44 +117,16 @@ When a command has a MAJOR version bump (breaking change):
 Check what changed and how it affects you.
 
 ### Step 2: Follow the migration path
-The command will include a "Migration" section explaining:
-- What changed
-- Why it changed
-- How to adapt your usage
-- Alternative commands (if any)
+Each `breaking_changes` entry says what changed and how to adapt.
 
 ### Step 3: Update your workflows
 Adapt your processes to the new version.
-
-### Example: Hypothetical pb-cycle v2.0.0
-
-```
-## Migration Guide
-
-**What changed:** pb-cycle now requires parallel execution pattern (no sequential mode)
-
-**Why:** Testing infrastructure improved; serial execution no longer needed
-
-**How to adapt:**
-- Remove `sequential` mode from your workflows
-- All cycles now run: code → [parallel-review + parallel-test] → commit
-- Review results synthesized before approval
-
-**Alternative:** Use `/pb-cycle-sequential` for legacy serial workflows (deprecated, use sparingly)
-```
 
 ---
 
 ## Version Stability Guarantees
 
-### v1.x.x (1.0.0 - 1.9.9)
-**Stable API.** Features may be added (MINOR), bugs fixed (PATCH), but core structure is stable. Safe to depend on.
-
-### v2.x.x (2.0.0+)
-**Breaking changes possible.** Core has changed. Review breaking_changes list before upgrading.
-
-### v0.x.x (if ever used)
-**Unstable.** Not yet stable. Breaking changes expected. Use with caution.
+A MAJOR bump marks a breaking change, and the command's `breaking_changes` lists it. MINOR and PATCH bumps never break existing usage, whatever the major number.
 
 ---
 
@@ -215,7 +184,7 @@ Command deleted entirely (only after long deprecation period).
 - Check command version when starting a new workflow
 - Review `version_notes` to understand what's changed
 - When upgrading playbooks, check breaking_changes for any MAJOR version bumps
-- Bookmark `/docs/command-changelog.md` for reference
+- Read the [CHANGELOG](https://github.com/vnykmshr/playbook/blob/main/CHANGELOG.md) for each release's command changes
 
 ### For Maintainers (Playbook Authors)
 - Bump version ONLY when making changes
@@ -235,7 +204,7 @@ Command deleted entirely (only after long deprecation period).
 
 ## Related Documentation
 
-- **Command Changelog:** [command-changelog.md](command-changelog.md) - Version history of all commands
+- **CHANGELOG:** [CHANGELOG.md](https://github.com/vnykmshr/playbook/blob/main/CHANGELOG.md) - Release history, including command version changes
 - **Command Index:** [command-index.md](command-index.md) - Full list of commands
 - **Individual Commands:** Each command has version metadata in its YAML front-matter
 

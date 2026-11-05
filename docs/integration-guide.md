@@ -1,19 +1,15 @@
 # Playbook Integration Guide
 
-Complete reference for how all playbook commands work together to form a unified SDLC framework.
+How playbook commands compose into workflows: which command to reach for, workflow maps, and step-by-step scenarios.
 
 ---
 
 ## Table of Contents
 
 1. [Quick Start: Command Selection](#quick-start-command-selection)
-2. [Command Inventory](#command-inventory)
-3. [Specialized Review Personas](#specialized-review-personas-v2110)
-4. [Workflow Maps](#workflow-maps)
-5. [Command Clusters](#command-clusters-groups-that-work-together)
-6. [Reference Matrix](#reference-matrix-which-commands-work-together)
-7. [Integration Patterns](#integration-patterns)
-8. [Common Workflows](#common-workflows-step-by-step)
+2. [Workflow Maps](#workflow-maps)
+3. [Integration Patterns](#integration-patterns)
+4. [Common Workflows](#common-workflows-step-by-step)
 
 ---
 
@@ -25,13 +21,16 @@ Complete reference for how all playbook commands work together to form a unified
 → `/pb-plan` (planning) → `/pb-adr` (architecture) → `/pb-patterns-*` (select patterns) → `/pb-greenfield` (setup)
 
 **Implementing a feature?**
-→ `/pb-start` (begin) → `/pb-cycle` (iterate) → `/pb-commit` (atomic commits) → `/pb-pr` (merge)
+→ `/pb-start` (begin) → code → `/pb-review` (quality gate, commits on pass) → `/pb-pr` (when peer review is needed)
 
 **Implementing a specific todo?**
 → `/pb-todo-implement` (structured checkpoint-based implementation)
 
 **Reviewing code before merge?**
-→ `/pb-cycle` (self-review) → `/pb-review-code` (peer review) → `/pb-security` (security review)
+→ `/pb-review` (self-review gate) → `/pb-review-code` (peer review) → `/pb-security` (security review)
+
+**Deep multi-perspective review?**
+→ `/pb-review-comprehensive` pairs the five core review personas by change type; `/pb-travis-security`, `/pb-elena-design` and `/pb-kai-reach` hold the security, design and reach lanes
 
 **Reviewing quality periodically?**
 → `/pb-review-tests` (monthly) → `/pb-review-hygiene` (monthly) → `/pb-review-product` (product alignment)
@@ -47,394 +46,6 @@ Complete reference for how all playbook commands work together to form a unified
 
 **Quick context recovery?**
 → `/pb-resume` (get back in context) → `/pb-context` (refresh decision log)
-
----
-
-## Command Inventory
-
-### CORE FOUNDATION & PHILOSOPHY
-These establish baseline understanding and guiding philosophy. **Every engineer should know these.**
-
-| # | Command | Purpose | Key Sections | When to Use | Tier |
-|---|---------|---------|--------------|------------|------|
-| 1 | **pb-guide** | Master SDLC framework | 11 phases from intake through post-release | Reference for all other commands | All |
-| 2 | **pb-preamble** | Peer collaboration philosophy | Correctness, critical thinking, truth, holistic perspective, attention | Foundation for all team interactions | All |
-| 3 | **pb-design-rules** | Technical design principles | 18 rules: 17 classical in 4 clusters (Clarity, Simplicity, Resilience, Extensibility), plus Attention | When making architectural decisions | M/L |
-| 4 | **pb-standards** | Working principles and collaboration | Decision-making, scope discipline, quality standards | Before starting any work | All |
-| 5 | **pb-documentation** | Technical documentation at 5 levels | Code comments, APIs, system design, process docs, FAQ | When writing docs (inline with code per /pb-cycle) | M/L |
-| 6 | **pb-templates** | Reusable SDLC templates | Commit strategy, checklists, testing standards | When creating commits, PRs, tests | All |
-| 7 | **pb-preamble-async** | Preamble for distributed teams | Async decision-making, communication patterns | For teams working across time zones | M |
-| 8 | **pb-preamble-power** | Power dynamics and challenge | Psychological safety, healthy disagreement, authority | For building stronger team dynamics | M |
-| 9 | **pb-preamble-decisions** | Decision discipline through preamble | Decision frameworks, tradeoff analysis | When making complex technical decisions | M |
-| 10 | **pb-context** | Project context and decision log | Current focus, recent decisions, architecture notes | Quick context refresh, decision tracking | All |
-| 11 | **pb-think** | Unified thinking partner | Complete toolkit: ideate, synthesize, refine modes | Complex questions, research, multi-perspective | All |
-
-**How they work together**:
-- Read `/pb-preamble` and `/pb-standards` to understand philosophy and principles
-- Reference `/pb-guide` for framework (11 phases)
-- Use `/pb-design-rules` for technical design guidance
-- Use `/pb-templates` for format/structure
-- Use `/pb-documentation` for content quality
-- Use preamble expansions for specific team contexts
-- Use `/pb-think` for expert-quality collaboration (modes: ideate, synthesize, refine)
-
----
-
-### SPECIALIZED REVIEW PERSONAS (v2.11.0+)
-Five review agents that `/pb-review-comprehensive` pairs by change type; `/pb-travis-security`, `/pb-elena-design` and `/pb-kai-reach` hold the security, design and reach lanes. **Use for deep multi-perspective reviews.**
-
-| # | Persona | Philosophy | Focus | When to Use | Tier |
-|---|---------|-----------|-------|------------|------|
-| A | **pb-linus-agent** | Directness & correctness | Correctness, assumptions, clarity, performance | Correctness-critical code, risky changes | S/M/L |
-| B | **pb-alex-infra** | Infrastructure resilience | Failure modes, degradation, deployment, observability, capacity | Infrastructure changes, deployment code, scaling | M/L |
-| C | **pb-maya-product** | Product strategy & user value | Problem validation, scope, impact, alignment, maintenance burden | User-facing features, product decisions, scope discipline | M/L |
-| D | **pb-sam-documentation** | Clarity & knowledge transfer | UI clarity, accessibility, error messages, code readability, docs | Frontend changes, APIs, documentation, onboarding | S/M/L |
-| E | **pb-jordan-testing** | Testing quality & reliability | Coverage, error paths, concurrency, data integrity, integration | All features (testing always matters) | S/M/L |
-
-**Multi-Perspective Review Workflows** (combine complementary personas; `/pb-review-comprehensive` lists the pairs):
-- **Backend** - Alex (infrastructure) + Jordan (testing): For backend APIs, services, database operations
-- **Frontend** - Maya (product) + Sam (documentation): For UI/UX, components, user-facing features
-- **Infrastructure** - Alex (infrastructure) + Linus (security): For infrastructure code, deployment pipelines, security configs
-
-**Persona Composition** (how to use together):
-
-```
-CODE REVIEW WORKFLOW WITH PERSONAS:
-
-Single-perspective (for small changes):
-  /pb-cycle (self-review)
-    └─ Pick ONE persona based on change type:
-         ├─ Security issue? → /pb-travis-security
-         ├─ Performance issue? → /pb-alex-infra
-         ├─ Feature validation? → /pb-maya-product
-         ├─ UI/docs issue? → /pb-sam-documentation
-         └─ Test gaps? → /pb-jordan-testing
-
-Multi-perspective (for features):
-  /pb-cycle (self-review)
-    └─ Use multi-perspective review:
-         ├─ Backend: /pb-alex-infra + /pb-jordan-testing (parallel)
-         ├─ Frontend: /pb-maya-product + /pb-sam-documentation (parallel)
-         └─ Infrastructure: /pb-alex-infra + /pb-linus-agent (parallel)
-
-Full review (for major releases):
-  /pb-cycle (self-review)
-    └─ Compose personas in recommended sequence:
-       1. Maya (product): Is this solving a real problem?
-       2. Parallel: Alex, Jordan, Linus (infrastructure, testing, security)
-       3. Sam (documentation): Is this clear to users and maintainers?
-```
-
-**When to use which persona**:
-
-| Change Type | Recommended | Why |
-|-------------|-------------|-----|
-| API endpoint | Linus, Alex, Jordan | Security, infrastructure resilience, test coverage |
-| UI component | Maya, Sam, Jordan | Product fit, clarity, test coverage |
-| Database change | Alex, Jordan | Failure modes, data integrity |
-| Deployment pipeline | Alex, Linus | Infrastructure, security |
-| Authentication | Linus, Alex | Security, resilience |
-| Documentation | Sam | Clarity and accessibility |
-| Feature gate | Maya | Product alignment |
-| Refactoring | Jordan, Sam | Test coverage, code clarity |
-
----
-
-### DEVELOPMENT WORKFLOW
-Daily iterative development. **Use these multiple times per week.**
-
-| # | Command | Purpose | Flow | When to Use | Tier |
-|---|---------|---------|------|------------|------|
-| 5 | **pb-start** | Begin feature development | Create branch, set iteration rhythm | Start of feature/bug | All |
-| 6 | **pb-resume** | Get back in context after break | Restore working state, read pause notes | After context switch or day break | All |
-| 7 | **pb-pause** | Gracefully pause work | Preserve state, update trackers, document handoff | End of day/session, before break | All |
-| 8 | **pb-cycle** | Self-review + peer review iteration | Self-review → peer review → refine → commit | Multiple times per feature | All |
-| 9 | **pb-commit** | Craft atomic, meaningful commits | One concern per commit, good messages | Before merging to main | S/M/L |
-| 10 | **pb-ship** | Complete ship workflow | Reviews → PR → peer review → merge → release → verify | When focus area is code-complete | All |
-| 11 | **pb-pr** | Streamlined pull request creation | PR title, description template, merge strategy | When ready for code review (standalone) | All |
-| 12 | **pb-testing** | Testing philosophy and patterns | Unit/integration/E2E, test data, CI/CD | Alongside code in /pb-cycle | S/M/L |
-| 13 | **pb-knowledge-transfer** | KT session preparation | 12-section guide for knowledge sharing | Team transitions, onboarding | M |
-| 14 | **pb-todo-implement** | Guided implementation with checkpoints | 5 phases: INIT → SELECT → REFINE → IMPLEMENT → COMMIT | After /pb-plan, before /pb-cycle (for major work) | All |
-
-**Development flow**:
-```
-/pb-start
-  ↓
-ITERATION LOOP (repeat per task):
-  /pb-cycle
-    ├─ Self-review
-    ├─ /pb-testing (write tests)
-    ├─ /pb-standards (check principles)
-    └─ Peer review
-  /pb-commit (atomic commit)
-  ↓
-SESSION BOUNDARY (if needed):
-  ├─ /pb-pause (end of session: preserve context)
-  └─ /pb-resume (next session: recover context)
-  ↓
-READY TO SHIP:
-  /pb-ship (comprehensive workflow)
-    ├─ Specialized reviews (cleanup, hygiene, tests, security, docs)
-    ├─ Final gate (prerelease)
-    ├─ PR creation and peer review
-    ├─ Merge and release
-    └─ Verification
-```
-
-**Key integration points**:
-- `/pb-start` → `/pb-cycle` (iterative development)
-- `/pb-cycle` includes `/pb-testing` and `/pb-standards`
-- `/pb-cycle` → `/pb-commit` (after self-review)
-- `/pb-pause` ↔ `/pb-resume` (session boundary bookends)
-- `/pb-ship` orchestrates: reviews → PR → merge → release → verify
-- `/pb-todo-implement` provides **structured checkpoint-based alternative** to direct `/pb-cycle` workflow
-
----
-
-### PLANNING & ARCHITECTURE
-Technical planning before implementation. **Use these once per release.**
-
-| # | Command | Purpose | Phases | When to Use | Tier |
-|---|---------|---------|--------|------------|------|
-| 13 | **pb-plan** | New focus area planning | Discovery, analysis, scope lock, documentation | Before major feature/release | All |
-| 14 | **pb-adr** | Architecture Decision Records | When/how/format, examples, review process | When documenting technical decisions | M |
-| 15 | **pb-patterns** | Pattern family overview | Links to 4 specialized pattern commands | Quick reference, pattern selection | M/L |
-| 16 | **pb-patterns-async** | Async/concurrent patterns | Async/await, job queues, concurrency models | Designing concurrent systems | M/L |
-| 17 | **pb-patterns-core** | Core architectural patterns | SOA, event-driven, repository, DTO | Designing system architecture | M/L |
-| 17b | **pb-patterns-resilience** | Resilience patterns | Retry, circuit breaker, rate limiting, cache-aside | Protecting system reliability | M/L |
-| 18 | **pb-patterns-db** | Database patterns | Queries, optimization, N+1, sharding | Designing database layer | M/L |
-| 19 | **pb-patterns-distributed** | Distributed system patterns | Saga, CQRS, eventual consistency, 2PC | Designing distributed systems | M/L |
-| 20 | **pb-performance** | Performance optimization | Profiling, optimization strategies, monitoring | When performance is requirement | M/L |
-| 21 | **pb-observability** | Monitoring, logging, tracing, alerting | Dashboards, SLOs, distributed tracing | When designing production systems | M/L |
-| 22 | **pb-deprecation** | Safe API deprecation | Deprecation phases, versioning, migration | When needing backwards-compatible changes | M |
-
-**Planning flow**:
-```
-/pb-plan (clarify scope)
-  ↓
-/pb-adr (document decisions)
-  ↓
-/pb-patterns (select architectural patterns)
-  ├─ /pb-patterns-async (if async work needed)
-  ├─ /pb-patterns-db (if database changes)
-  ├─ /pb-patterns-distributed (if microservices)
-  ├─ /pb-patterns-core (core architecture)
-  └─ /pb-patterns-resilience (if reliability concerns)
-  ↓
-/pb-observability (plan monitoring strategy)
-/pb-performance (set performance targets)
-  ↓
-READY FOR IMPLEMENTATION
-  ↓
-/pb-todo-implement (implement individual todos)
-  ↓
-Development workflow (pb-start → pb-cycle → pb-commit → pb-pr)
-```
-
-**Pattern selection guide**:
-- **Async work?** Use `/pb-patterns-async` (goroutines, channels, job queues, etc.)
-- **Database layer?** Use `/pb-patterns-db` (pooling, optimization, replication, sharding)
-- **Core architecture?** Use `/pb-patterns-core` (SOA, event-driven, repository, DTO)
-- **Reliability?** Use `/pb-patterns-resilience` (circuit breaker, retry, rate limiting)
-- **Microservices?** Use `/pb-patterns-distributed` (Saga, CQRS, eventual consistency)
-- **Uncertain?** Start with `/pb-patterns` (overview, then jump to specialized)
-
----
-
-### REVIEWS & QUALITY
-Quality gates at multiple checkpoints. **Use these during development, before merge, and periodically.**
-
-| # | Command | Purpose | Trigger | When to Use | Frequency |
-|---|---------|---------|---------|------------|-----------|
-| 23 | **pb-review** | Periodic project review overview | Feature/release boundaries | Quick reference to all review types | Monthly or pre-release |
-| 24 | **pb-review-code** | Review of a specific change | Every PR | Before merging code | Every PR |
-| 25 | **pb-review-product** | Product alignment + tech perspective | Feature completion | Before merging user-facing changes | Every user-facing PR |
-| 26 | **pb-review-docs** | Documentation accuracy and completeness | Periodic audit | Quarterly documentation review | Quarterly |
-| 27 | **pb-review-tests** | Test suite quality and coverage | Periodic audit | Monthly test health check | Monthly |
-| 28 | **pb-review-hygiene** | Codebase cleanup (dead code, deps, etc.) | Periodic maintenance | Quarterly code cleanup | Quarterly |
-| 29 | **pb-review-microservice** | Microservice architecture review | Microservice development | Before microservice deployment | Per microservice |
-| 30 | **pb-security** | Security checklist (quick/standard/deep) | Code review, pre-release, incidents | Quick (5min), Standard (20min), Deep (1+ hr) | Every PR, pre-release |
-| 31 | **pb-logging** | Logging strategy & standards | Code review, pre-release | Verify structured logging, no secrets | Every PR, pre-release |
-
-**Code review flow** (per PR):
-```
-/pb-cycle (self-review)
-  ↓
-/pb-pr (create pull request)
-  ↓
-PEER REVIEW GATES:
-  /pb-review-hygiene (code quality)
-  /pb-security (security checklist)
-  /pb-review-tests (test coverage)
-  /pb-logging (logging standards)
-  /pb-review-product (if user-facing)
-  ↓
-APPROVED
-  ↓
-/pb-commit (merge with atomic commit)
-```
-
-**Periodic review schedule**:
-```
-WEEKLY
-  ├─ /pb-review-hygiene (spot check)
-  └─ /pb-logging (log quality)
-
-MONTHLY
-  ├─ /pb-review-tests (test health)
-  ├─ /pb-observability (dashboard/alert review)
-  └─ /pb-review-product (alignment check)
-
-QUARTERLY
-  ├─ /pb-review-hygiene (code cleanup)
-  ├─ /pb-review-docs (documentation audit)
-  ├─ /pb-security (deep dive)
-  └─ /pb-team (team retrospective)
-
-RELEASE
-  ├─ /pb-release (final gate)
-  ├─ /pb-security (security review)
-  └─ /pb-review-microservice (if applicable)
-```
-
----
-
-### DEPLOYMENT & OPERATIONS
-Infrastructure, deployment, and incident response.
-
-| # | Command | Purpose | When to Use | Tier |
-|---|---------|---------|------------|------|
-| 33 | **pb-deployment** | Deployment strategies and safety | Before production deployment | Blue-green, canary, rolling, feature flags | M/L |
-| 34 | **pb-incident** | Incident response framework | During production incidents | Severity assessment, mitigation, escalation | S/M/L |
-
-**Deployment flow**:
-```
-/pb-release (pre-release checks pass)
-  ↓
-/pb-deployment (select strategy: blue-green, canary, rolling)
-  ↓
-Deploy to production
-  ↓
-/pb-observability (monitor metrics, logs, alerts)
-  ├─ All good? Declare victory
-  └─ Issues? → /pb-incident (incident response)
-```
-
-**Incident flow**:
-```
-INCIDENT DETECTED
-  ↓
-/pb-incident (rapid assessment)
-  ├─ Severity: P0/P1/P2/P3
-  ├─ Choose mitigation:
-  │  ├─ Rollback (quickest)
-  │  ├─ Hotfix (if rollback not feasible)
-  │  └─ Feature disable (safest for toggles)
-  │
-  ├─ /pb-deployment (if need detailed rollback strategy)
-  ├─ /pb-observability (monitor recovery)
-  │
-  └─ POST-INCIDENT (within 24h)
-     ├─ Comprehensive incident review
-     ├─ Create /pb-adr if architectural change needed
-     └─ Document in /pb-context (decision log)
-```
-
----
-
-### REPOSITORY MANAGEMENT
-Professional repository structure and presentation.
-
-| # | Command | Purpose | Use | Delivers | Tier |
-|---|---------|---------|-----|----------|------|
-| 35 | **pb-greenfield** | Idea to working repo | Project start | Scaffold, `.claude/CLAUDE.md`, `todos/`, lint+test CI | M |
-| 36 | **pb-repo-organize** | Organize repository structure | Cleanup/improvement | Root layout, folder org, GitHub special files | S/M |
-| 37 | **pb-repo-readme** | Write high-quality README | Repository documentation | Clear, searchable, language-specific | S |
-| 38 | **pb-repo-about** | Set GitHub About section + tags | GitHub presentation | Profile optimization, tag selection | S |
-| 39 | **pb-repo-blog** | Write technical blog post | Share project learnings | Medium post, dev.to, etc. | M |
-| 40 | **pb-repo-enhance** | Complete repository enhancement suite | All of above at once | Combines all repo commands | M |
-
-**Repository setup flow**:
-```
-NEW PROJECT:
-  /pb-greenfield (idea → working repo; scaffold + playbook layer + stub README)
-    ↓
-  /pb-repo-readme (replace the stub with the real README)
-    ↓
-  /pb-repo-about (set GitHub About)
-    ↓
-  /pb-repo-blog (write project post)
-
-ENHANCE EXISTING:
-  /pb-repo-enhance (one command does all above)
-```
-
----
-
-### TEAM & CONTINUITY
-Knowledge sharing and team development.
-
-| # | Command | Purpose | When to Use | Tier |
-|---|---------|---------|------------|------|
-| 41 | **pb-onboarding** | Structured team onboarding | New team member joins | Preparation, first day, first week, ramp-up | M |
-| 42 | **pb-team** | Team dynamics, feedback, growth | Team retrospectives and feedback | Team health, learning culture, feedback loops | M |
-
-**Onboarding flow**:
-```
-NEW TEAM MEMBER JOINS
-  ↓
-/pb-onboarding (structured 4-phase plan)
-  ├─ Phase 1: Preparation
-  │  └─ Repo setup, access, dev environment
-  ├─ Phase 2: First Day
-  │  └─ Welcome, orientation, first task
-  ├─ Phase 3: First Week
-  │  └─ Pair programming, small tasks, KT sessions
-  └─ Phase 4: Ramp-up
-     └─ Increasing responsibility, independent work
-  ↓
-/pb-knowledge-transfer (actual KT session)
-  ↓
-/pb-guide (SDLC overview and reference)
-  ↓
-/pb-context (project context and decision log)
-```
-
-**Team health flow**:
-```
-MONTHLY/QUARTERLY
-  ↓
-/pb-team (team retrospective)
-  ├─ Team health check
-  ├─ Feedback loops
-  ├─ Learning culture
-  └─ Growth opportunities
-  ↓
-Create action items for improvement
-```
-
----
-
-### REFERENCE & CONTEXT
-
-Project working context and decision log.
-
-| # | Command | Purpose | When to Use | Tier |
-|---|---------|---------|------------|------|
-| 43 | **pb-context** | Project context and decision log | Quick context refresh | Current focus, recent decisions, architecture notes | All |
-
-**Context usage**:
-```
-CONTEXT REFRESH
-  ↓
-/pb-context (read current focus, decisions, architecture)
-  ↓
-Then:
-  ├─ Starting work → /pb-start
-  ├─ Resuming work → /pb-resume
-  ├─ Making decision → Document in /pb-context
-  └─ Understanding architecture → /pb-adr
-```
 
 ---
 
@@ -454,20 +65,14 @@ IMPLEMENTATION (iterative daily)
 ├─ /pb-start              ← Create branch
 │
 ├─ FOR EACH TASK:
-│  └─ ITERATION LOOP
-│     ├─ /pb-cycle        ← Self-review + peer review
-│     │  ├─ /pb-testing   ← Write tests
-│     │  ├─ /pb-standards ← Check principles
-│     │  ├─ /pb-security  ← Security check
-│     │  └─ Refine based feedback
-│     │
-│     └─ /pb-commit       ← Atomic commit
+│  ├─ Code + tests (/pb-testing)
+│  └─ /pb-review          ← Quality gate; commits on pass
 │
 └─ Repeat for each task
 
 CODE REVIEW
 ├─ /pb-pr                 ← Create pull request
-├─ /pb-review-hygiene        ← Code quality
+├─ /pb-review-code        ← Peer review
 ├─ /pb-review-tests       ← Test coverage
 ├─ /pb-logging            ← Logging standards
 ├─ /pb-security           ← Security review
@@ -475,8 +80,7 @@ CODE REVIEW
 └─ Approve / Request changes
 
 PRE-RELEASE
-├─ /pb-release            ← Release checklist
-├─ /pb-release  ← Senior engineer final gate
+├─ /pb-release            ← Phase 1 readiness gate
 ├─ /pb-deployment         ← Choose deployment strategy
 └─ /pb-observability      ← Verify monitoring ready
 
@@ -556,7 +160,7 @@ NEW TEAM MEMBER JOINS
 
 CONTINUOUS DEVELOPMENT
 ├─ /pb-start                 ← Start feature work
-├─ /pb-cycle                 ← Iterate with feedback
+├─ /pb-review                ← Quality gate on each unit of work
 └─ /pb-team                  ← Ongoing feedback and growth
 ```
 
@@ -564,16 +168,15 @@ CONTINUOUS DEVELOPMENT
 
 ```
 WEEKLY
-├─ /pb-review-hygiene           ← Code quality spot check
 └─ /pb-logging               ← Log quality check
 
 MONTHLY
+├─ /pb-review-hygiene        ← Code quality and dependency health
 ├─ /pb-review-tests          ← Test suite health
 ├─ /pb-observability         ← Dashboard and alert tuning
 └─ /pb-review-product        ← Product alignment
 
 QUARTERLY
-├─ /pb-review-hygiene        ← Code cleanup and deps
 ├─ /pb-review-docs           ← Documentation audit
 ├─ /pb-security              ← Security deep dive
 └─ /pb-team                  ← Team retrospective
@@ -583,128 +186,6 @@ RELEASE
 ├─ /pb-security              ← Security review
 └─ /pb-review-microservice   ← If applicable
 ```
-
----
-
-## Command Clusters: Groups That Work Together
-
-### Cluster 1: Core Foundation
-**Commands**: pb-guide, pb-standards, pb-templates, pb-context
-**Purpose**: Establish baseline understanding and discipline
-**Frequency**: Reference constantly; update /pb-context periodically
-**Who**: Every engineer
-
-### Cluster 2: Daily Development
-**Commands**: pb-start, pb-cycle, pb-pause, pb-resume, pb-commit, pb-ship, pb-pr, pb-testing
-**Purpose**: Iterative feature development with quality gates, session management, and shipping
-**Frequency**: Use multiple times per week per feature
-**Who**: All developers
-
-### Cluster 3: Planning & Architecture
-**Commands**: pb-plan, pb-adr, pb-patterns (+ 4 specialized), pb-observability, pb-performance
-**Purpose**: Design systems before implementation
-**Frequency**: Once per release or major feature
-**Who**: Tech leads, architects, senior engineers
-
-### Cluster 4: Checkpoint-Based Implementation
-**Commands**: pb-plan → pb-todo-implement → pb-cycle
-**Purpose**: Structured implementation with checkpoints before full code review
-**Frequency**: For major features or refactoring
-**Who**: Developers with checkpoint-based approval preference
-
-### Cluster 5: Code Review & Quality
-**Commands**: pb-review-*, pb-security, pb-logging, pb-testing
-**Purpose**: Multiple perspectives on quality
-**Frequency**: Every PR, periodic reviews, pre-release
-**Who**: All developers, leads, security team
-
-### Cluster 6: Production Safety
-**Commands**: pb-deployment, pb-incident, pb-observability, pb-release
-**Purpose**: Safe production deployment and incident response
-**Frequency**: Every release, during incidents
-**Who**: SREs, DevOps, on-call engineers
-
-### Cluster 7: Repository Management
-**Commands**: pb-greenfield, pb-repo-organize, pb-repo-readme, pb-repo-about, pb-repo-blog, pb-repo-enhance
-**Purpose**: Professional repository structure and presentation
-**Frequency**: Project start, periodic enhancement
-**Who**: Tech leads, project owners
-
-### Cluster 8: Knowledge & Continuity
-**Commands**: pb-knowledge-transfer, pb-onboarding, pb-team, pb-documentation
-**Purpose**: Preserve and share knowledge
-**Frequency**: Team transitions, regular intervals
-**Who**: Mentors, managers, all engineers
-
-### Cluster 9: Thinking Partner
-**Commands**: pb-think
-**Purpose**: Self-sufficient expert-quality collaboration
-**Frequency**: Throughout development for complex questions, ideation, synthesis
-**Who**: All engineers
-
-**Thinking Partner Stack:**
-```
-/pb-think mode=ideate     → Explore options (divergent)
-/pb-think mode=synthesize → Combine insights (integration)
-/pb-preamble              → Challenge assumptions (adversarial)
-/pb-plan                  → Structure approach (convergent)
-/pb-adr                   → Document decision (convergent)
-/pb-think mode=refine     → Refine output (refinement)
-```
-
----
-
-## Reference Matrix: Which Commands Work Together
-
-### By Incoming References
-
-**Most Referenced** (critical hub):
-- pb-guide: 25+ references (master framework)
-- pb-standards: 15+ references (working principles)
-- pb-cycle: 10+ references (core development loop)
-- pb-testing: 8+ references (quality verification)
-- pb-security: 7+ references (quality gate)
-
-**Well-Referenced** (important workflow nodes):
-- pb-adr, pb-deployment, pb-incident, pb-observability, pb-review-hygiene (5-9 references each)
-
-**Moderately Referenced** (specialized/optional):
-- pb-documentation, pb-pr, pb-commit, pb-patterns-* (2-4 references each)
-
-**Under-Referenced** (isolation issues):
-- pb-resume: 0 references (should integrate with pb-start, pb-context)
-- pb-standup: 0 references (should integrate with pb-standards, pb-context)
-
-### By Category Connections
-
-**Core → Everything**
-- All 44 other commands reference pb-guide and/or pb-standards
-
-**Development → Planning**
-- pb-start → pb-plan (for major features)
-- pb-cycle → pb-testing
-- pb-cycle → pb-standards
-- pb-cycle → pb-security
-
-**Planning → Development**
-- pb-plan → pb-todo-implement
-- pb-adr → pb-start (architectural context)
-- pb-patterns → pb-cycle (pattern selection)
-
-**Development → Review**
-- pb-cycle → pb-review-hygiene
-- pb-commit → pb-review-tests
-- pb-pr → pb-review-product
-
-**Review → Deployment**
-- pb-review-hygiene → pb-release (readiness gate)
-- pb-security → pb-release
-- pb-release → pb-deployment
-
-**Deployment → Observability**
-- pb-deployment → pb-observability
-- pb-incident → pb-observability
-- pb-observability → pb-incident (feedback loop)
 
 ---
 
@@ -738,7 +219,7 @@ DEEP (1+ hour)
 Commands are **ordered for maximum clarity**:
 
 ```
-/pb-plan → /pb-adr → /pb-patterns → /pb-todo-implement → /pb-cycle → /pb-pr → /pb-review-* → /pb-release
+/pb-plan → /pb-adr → /pb-patterns → /pb-todo-implement → /pb-review → /pb-pr → /pb-release
 ```
 
 Each feeds into the next with clear handoffs.
@@ -756,7 +237,7 @@ Most commands include this section showing:
 
 ```
 PLANNING PHASE → /pb-plan, /pb-adr, /pb-patterns, /pb-performance, /pb-observability
-DEVELOPMENT PHASE → /pb-start, /pb-cycle, /pb-commit, /pb-pr, /pb-testing, /pb-todo-implement
+DEVELOPMENT PHASE → /pb-start, /pb-review, /pb-pr, /pb-testing, /pb-todo-implement
 REVIEW PHASE → /pb-review-*, /pb-security, /pb-logging
 DEPLOYMENT PHASE → /pb-release, /pb-deployment
 OPERATIONS PHASE → /pb-incident, /pb-observability
@@ -779,24 +260,21 @@ STEP 1: Planning
 
 STEP 2: Implementation
 ├─ /pb-start (create feature branch)
-├─ LOOP: /pb-cycle (iterate)
+├─ LOOP, per unit of work:
 │  ├─ Code changes
 │  ├─ /pb-testing (add tests)
-│  ├─ Self-review
-│  └─ Peer review feedback
-├─ /pb-commit (atomic commits)
+│  └─ /pb-review (quality gate, commits on pass)
 └─ /pb-pr (create pull request)
 
 STEP 3: Code Review
-├─ /pb-review-hygiene (code quality)
+├─ /pb-review-code (peer review)
 ├─ /pb-review-product (product alignment)
 ├─ /pb-security (security review)
 ├─ /pb-review-tests (test coverage)
 └─ Approve / Merge
 
 STEP 4: Release Preparation
-├─ /pb-release (pre-release checks)
-├─ /pb-release (senior review)
+├─ /pb-release (Phase 1 readiness gate)
 ├─ /pb-deployment (choose strategy)
 └─ /pb-observability (verify monitoring)
 
@@ -819,10 +297,10 @@ STEP 2: Implement Fix
 ├─ /pb-start (create hotfix branch)
 ├─ Make minimal fix
 ├─ /pb-testing (add regression test)
-└─ /pb-cycle (review)
+└─ /pb-review (quality gate)
 
 STEP 3: Code Review
-├─ /pb-cycle (fast-track review)
+├─ /pb-review-code (fast-track peer review)
 ├─ /pb-security (safety check)
 └─ Approve / Merge
 
@@ -858,7 +336,7 @@ STEP 2: Implementation Phases
 └─ Continue for each component
 
 STEP 3: Code Review
-├─ /pb-review-hygiene (architecture alignment)
+├─ /pb-review-code (architecture alignment)
 ├─ /pb-review-tests (regression test coverage)
 ├─ /pb-security (if security implications)
 └─ Approve / Merge
@@ -893,11 +371,11 @@ WEEK 1: First Week
 WEEK 2-4: Ramp-up
 ├─ Increasing task complexity
 ├─ Independent work with feedback
-├─ /pb-cycle (code review feedback)
+├─ /pb-review-code (code review feedback)
 └─ /pb-team (feedback and support)
 
 ONGOING: Growth
-├─ /pb-cycle (iterate on features)
+├─ /pb-review (each unit of work)
 ├─ /pb-standards (reinforce principles)
 └─ /pb-team (regular feedback)
 ```
@@ -933,7 +411,7 @@ EFFECTIVE:
    - pb-plan → pb-adr → pb-patterns → pb-observability → pb-todo-implement
 
 3. **Develop** → Review → Release
-   - pb-start → pb-cycle → pb-commit → pb-pr → pb-review-* → pb-release
+   - pb-start → pb-review → pb-pr → pb-release
 
 4. **Safety** → Observability → Incident
    - pb-deployment → pb-observability → pb-incident
@@ -950,8 +428,9 @@ EFFECTIVE:
 - `/pb-adr`: You've made an architectural decision
 - `/pb-patterns-*`: You're designing a system component
 - `/pb-start`: You're beginning feature work
-- `/pb-cycle`: You've coded something and need review
-- `/pb-commit`: You're creating a commit message
+- `/pb-review`: You've finished a unit of work
+- `/pb-cycle`: You want the manual self-review and peer-review loop
+- `/pb-commit`: You're committing by hand
 - `/pb-pr`: You're merging code
 - `/pb-testing`: You're writing tests
 - `/pb-todo-implement`: You want checkpoint-based approval

@@ -1,6 +1,6 @@
 # Development Checklists & Quality Gates
 
-Single source of truth for all checklists used in the playbook. Reference these from `/pb-cycle`, `/pb-templates`, `/pb-guide`, and other commands.
+Shared checklists for the playbook's quality gates. Commands such as `/pb-cycle`, `/pb-security` and `/pb-release` carry their own versions; these are starting points to adapt.
 
 ---
 
@@ -325,21 +325,6 @@ For new frontend features.
 - [ ] Metrics within expected ranges
 - [ ] On-call engineer monitoring
 - [ ] Stakeholders notified
-
----
-
-## Checklist Usage in Playbook Commands
-
-| Checklist | Used By | Section |
-|-----------|---------|---------|
-| Self-Review | `/pb-cycle`, `/pb-templates` | Before peer review |
-| Peer Review | `/pb-cycle`, `/pb-templates` | During review |
-| Code Quality Gates | `/pb-cycle`, `/pb-guide` | Before commit |
-| Pre-Release | `/pb-release`, `/pb-guide` | Before tag |
-| Pre-Deployment | `/pb-release`, `/pb-guide` | Before deploy |
-| Post-Deployment | `/pb-release`, `/pb-guide` | After deploy |
-| Security | `/pb-cycle`, `/pb-security` | Before commit & release |
-| Testing | `/pb-guide`, `/pb-review-tests` | During development |
 
 ---
 

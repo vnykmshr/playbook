@@ -9,7 +9,7 @@ The Playbook automatically extracts metadata from command files to enable discov
 **Extraction runs automatically during docs deployment** (`deploy-docs.yml`).
 
 ```
-commands/*.md → extract-playbook-metadata.py → .playbook-metadata.json
+commands/<category>/pb-*.md → extract-playbook-metadata.py → .playbook-metadata.json
 ```
 
 **What gets extracted:**
@@ -31,46 +31,7 @@ python scripts/validate-extracted-metadata.py
 
 ## Writing Extraction-Friendly Commands
 
-Follow this structure for high-confidence metadata extraction:
-
-```markdown
-# Command Title
-
-One-line purpose that describes what this command does.
-
----
-
-## When to Use
-
-Clear guidance on when to use this command:
-- Specific scenarios
-- Types of work (feature, fix, refactor)
-- Tiers if applicable (XS, S, M, L)
-
----
-
-## Prerequisites
-
-What must be done first:
-- Related commands to run: `/pb-something`
-- Setup steps
-
----
-
-## Core Workflow
-
-1. First step using `/pb-related-command`
-2. Next step
-3. Final step, then `/pb-next-command`
-
----
-
-## Next Steps
-
-After completing this command:
-1. Run `/pb-next-command` for X
-2. Use `/pb-another-command` if Y
-```
+Start from `/pb-new-playbook`, which lists the required sections for each kind of command; `.playbook-metadata-schema.yaml` lists the front-matter fields. The guidance below covers what extraction reads from the body.
 
 ---
 
@@ -113,22 +74,6 @@ After completing this command:
 ### Tier Information
 - Explicit: `Tier: S` or `Tier: [S, M, L]`
 - Or include in a table showing requirements per tier
-
----
-
-## Authoring Checklist
-
-When writing or updating commands:
-
-- [ ] Title: Clear, 5-80 chars, starts with action verb
-- [ ] Purpose: First paragraph, 20-300 chars, complete sentence
-- [ ] When to Use: Explicit conditions, tier guidance if applicable
-- [ ] Prerequisites: Clear `/pb-*` references for required setup
-- [ ] Workflow: Numbered steps with `/pb-*` references
-- [ ] Related Commands: 3-10 `/pb-*` references naturally placed
-- [ ] Examples: At least one code block
-- [ ] Next Steps: Clear path to next command(s)
-- [ ] No TODOs: Remove TODO/FIXME comments before committing
 
 ---
 

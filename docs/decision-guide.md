@@ -35,11 +35,8 @@ This guide helps you find the right command for any situation. Answer the questi
 - `/pb-patterns-db` for database patterns
 - `/pb-patterns-distributed` for distributed system patterns
 
-**Ready to review your code before committing?**
-→ Use `/pb-cycle` for self-review and peer review
-
-**Ready to commit your changes?**
-→ Use `/pb-commit` to create atomic, well-formatted commits
+**Finished a unit of work?**
+→ Use `/pb-review`: the quality gate applies your preferences and commits on pass
 
 **Ready to create a pull request?**
 → Use `/pb-pr` for streamlined PR creation
@@ -67,7 +64,7 @@ This guide helps you find the right command for any situation. Answer the questi
 → Use `/pb-review-product` for product alignment review
 
 **Doing a comprehensive code review?**
-→ Use `/pb-review-hygiene` for code quality and maintainability
+→ Use `/pb-review-code` for the change, or `/pb-review-comprehensive` for a project-wide review
 
 **Is this a microservice change?**
 → Use `/pb-review-microservice` for service design and contract review
@@ -77,16 +74,13 @@ This guide helps you find the right command for any situation. Answer the questi
 ### I'm preparing for release...
 
 **Ready to release to production?**
-→ Use `/pb-release` for pre-release checks and deployment readiness
+→ Use `/pb-release`: Phase 1 is the readiness gate, then version, tag and deploy
 
 **Need to plan deployment strategy?**
 → Use `/pb-deployment` to choose strategy (blue-green, canary, rolling)
 
-**Doing final code review before release?**
-→ Use `/pb-release` for senior engineer final review
-
 **Is this a major release?**
-→ Use `/pb-review` for comprehensive multi-perspective audit
+→ Use `/pb-review-comprehensive` for a multi-perspective audit
 
 ---
 
@@ -185,8 +179,7 @@ START
 │
 ├─ "I'm developing"
 │  ├─ "Need patterns?" → /pb-patterns-*
-│  ├─ "Ready to review?" → /pb-cycle
-│  ├─ "Ready to commit?" → /pb-commit
+│  ├─ "Ready to review?" → /pb-review
 │  ├─ "Ready to PR?" → /pb-pr
 │  └─ "Need tests?" → /pb-testing
 │
@@ -196,12 +189,11 @@ START
 │  ├─ "Tests?" → /pb-review-tests
 │  ├─ "Product fit?" → /pb-review-product
 │  ├─ "Logging?" → /pb-logging
-│  └─ "Full review?" → /pb-review-hygiene
+│  └─ "Full review?" → /pb-review-code
 │
 ├─ "I'm releasing"
 │  ├─ "Pre-release?" → /pb-release
-│  ├─ "How to deploy?" → /pb-deployment
-│  └─ "Final check?" → /pb-release
+│  └─ "How to deploy?" → /pb-deployment
 │
 ├─ "Production issue"
 │  ├─ "Incident?" → /pb-incident
@@ -233,9 +225,8 @@ START
 
 ### Daily
 - `/pb-resume` - Get context
-- `/pb-cycle` - Code and review
+- `/pb-review` - Quality gate after each unit of work, commits on pass
 - `/pb-standup` - Team standup
-- `/pb-commit` - Create commits
 - `/pb-context` - Refresh project knowledge
 
 ### Per Feature
@@ -244,12 +235,10 @@ START
 - `/pb-testing` - Add tests
 - `/pb-security` - Security gate
 - `/pb-pr` - Create pull request
-- `/pb-commit` - Logical commits
 
 ### Per Release
-- `/pb-release` - Pre-release checks
+- `/pb-release` - Readiness gate, version, tag, deploy
 - `/pb-deployment` - Choose strategy
-- `/pb-release` - Final review
 
 ### Monthly
 - `/pb-review-hygiene` - Code quality
@@ -287,7 +276,7 @@ START
 ## By Role
 
 ### Individual Contributor
-- Daily: `/pb-resume`, `/pb-cycle`, `/pb-standup`, `/pb-commit`
+- Daily: `/pb-resume`, `/pb-review`, `/pb-standup`
 - Per feature: `/pb-plan`, `/pb-start`, `/pb-testing`, `/pb-security`, `/pb-pr`
 - As needed: `/pb-patterns-*`, `/pb-context`
 
@@ -298,8 +287,8 @@ START
 
 ### Tech Lead / Architect
 - Per feature: `/pb-plan`, `/pb-adr`, `/pb-patterns-*`
-- Per release: `/pb-release`, `/pb-deployment`, `/pb-release`
-- Periodically: `/pb-review`, `/pb-performance`, `/pb-observability`
+- Per release: `/pb-release`, `/pb-deployment`
+- Periodically: `/pb-review-comprehensive`, `/pb-performance`, `/pb-observability`
 
 ### Engineering Manager
 - Onboarding: `/pb-onboarding`, `/pb-knowledge-transfer`

@@ -39,15 +39,16 @@ You've decided to build something new. Here's how to establish a strong foundati
 
 # Step 4: Begin development
 /pb-start             # Create feature branch
-/pb-cycle             # (Repeat) Self-review → Peer review → Commit
-/pb-pr                # Create pull request
+  [code]
+/pb-review            # (Repeat) Quality gate, commits on pass
+/pb-pr                # Create pull request when peer review is needed
 
 # Step 5: Release
 /pb-release           # Pre-release checklist
 /pb-deployment        # Choose deployment strategy
 ```
 
-**See**: [Integration Guide](integration-guide.md) for complete workflow with step-by-step guidance
+**See**: [Integration Guide](integration-guide.md) → "Workflow 1: Complete Feature Delivery"
 
 ---
 
@@ -67,8 +68,8 @@ Your project already has code and processes. Let's integrate the playbook gradua
 
 # Step 3: Begin structured development
 /pb-start             # First feature with new workflow
-/pb-cycle             # Use quality gates for code review
-/pb-commit            # Structured commits
+/pb-review            # Quality gate, commits on pass
+/pb-pr                # Pull request when peer review is needed
 
 # Step 4: Scale practices
 /pb-team              # Team retrospectives
@@ -81,7 +82,7 @@ Your project already has code and processes. Let's integrate the playbook gradua
 /pb-performance       # Optimize when needed
 ```
 
-**See**: [Integration Guide](integration-guide.md) → "Scenario 2: Adopting Playbook"
+**See**: [Adoption Guide](adoption-guide.md) for a phased rollout
 
 ---
 
@@ -109,7 +110,7 @@ You're in the middle of a feature sprint. Here's your daily rhythm:
 /pb-standup           # Update team on progress, blockers
 ```
 
-**See**: [Integration Guide](integration-guide.md) → "Workflow 1: Feature Development"
+**See**: [Integration Guide](integration-guide.md) → "Workflow 1: Complete Feature Delivery"
 
 ---
 
@@ -154,7 +155,7 @@ Production is down. Execute quickly:
 Use the [Decision Guide](decision-guide.md) to find the right command for your situation.
 
 ### I need more context...
-Read the [Integration Guide](integration-guide.md) to understand how all commands work together.
+Read the [Integration Guide](integration-guide.md) to see how commands compose into workflows.
 
 ### I have a specific question...
 Check the [FAQ](faq.md) for common questions and answers.
@@ -167,7 +168,7 @@ See the [Full Command Reference](command-index.md) organized by category.
 ## Key Principles to Remember
 
 ### Quality at Every Step
-Never skip the review step. Each iteration includes self-review, testing, security checks, and peer review before committing.
+Never skip the review step. Each unit of work goes through `/pb-review` before it is committed; peer review follows your team's policy.
 
 ### Atomic, Logical Commits
 Create small commits that address one concern, are always deployable, and have clear messages explaining the "why."

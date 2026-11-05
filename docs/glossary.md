@@ -123,7 +123,7 @@ integration.
 ## See Also
 
 - **[Decision Guide](decision-guide.md)** - Which command to use?
-- **[Command Reference](command-index.md)** - All commands, generated
+- **[Command Reference](command-index.md)** - All commands
 - **[Getting Started](getting-started.md)** - Quick start
 - **[How Commands Talk](voice.md)** - The register commands use with you
 - **[FAQ](faq.md)** - Common questions

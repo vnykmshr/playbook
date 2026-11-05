@@ -2,7 +2,7 @@
 
 Quick reference for all playbook commands.
 
-**For detailed integration guide showing how commands work together, see [`/docs/integration-guide.md`](integration-guide.md)**
+**For how commands compose into workflows, see the [Integration Guide](integration-guide.md).**
 
 ---
 
@@ -111,7 +111,7 @@ Quick reference for all playbook commands.
 
 | Command | When to Use | Frequency |
 |---------|-------------|-----------|
-| `/pb-review` | Orchestrate multi-perspective review | Monthly or pre-release |
+| `/pb-review` | Automated quality gate: applies your preferences, commits on pass | After each unit of work |
 | `/pb-review-code` | Dedicated code review for reviewers (peer review checklist) | Every PR review |
 | `/pb-review-comprehensive` | Full project review with persona lens pairs and a coverage ledger | Pre-release, large changesets |
 | `/pb-calm-design` | Attention-respecting design review (interruptions, defaults, calm technology) | New features and surfaces |
@@ -267,4 +267,4 @@ Developer machine health and maintenance.
 
 ## Browse All Commands
 
-For all commands organized by category, see the command files in `/commands/` directory or consult the [integration guide](integration-guide.md) for workflow-based command references.
+For all commands organized by category, see the command files in `/commands/` directory or consult the [integration guide](integration-guide.md) for workflow maps.

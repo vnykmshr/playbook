@@ -37,15 +37,11 @@ Pre-built command sequences for common development scenarios. Each recipe links 
 2. /pb-debug (if cause unclear)
    └─ Reproduce → Isolate → Hypothesize → Test
 
-3. /pb-cycle
-   └─ Fix → Self-review → Test
+3. Fix + regression test, then /pb-review
+   └─ Quality gate; commits on pass: fix(scope): description, Fixes #123
    └─ Repeat until fix is solid
 
-4. /pb-commit
-   └─ fix(scope): description
-   └─ Fixes #123
-
-5. /pb-pr
+4. /pb-pr (when peer review is needed)
    └─ Summary: What was broken, how it's fixed
    └─ Test plan: How to verify
 
@@ -79,19 +75,15 @@ Pre-built command sequences for common development scenarios. Each recipe links 
 3. /pb-start
    └─ Create feature/feature-name branch
 
-4. /pb-cycle (repeat)
-   └─ Implement → Self-review → Test
-   └─ /pb-commit for each logical chunk
+4. Implement + test, then /pb-review (repeat)
+   └─ Quality gate; commits each logical chunk on pass
 
 5. /pb-ship
    └─ Phase 1: Quality gates
    └─ Phase 2: Specialized reviews
    └─ Phase 3: Final gate
    └─ Phase 4: PR & peer review
-   └─ Phase 5: Merge & release
-
-6. /pb-release (if production deployment)
-   └─ Deploy → Verify → Monitor
+   └─ Phase 5: Merge & release (runs /pb-release Phase 2-3)
 ```
 
 ### Checklist
@@ -128,17 +120,17 @@ Pre-built command sequences for common development scenarios. Each recipe links 
 4. /pb-start
    └─ Create feature/feature-name branch
 
-5. /pb-cycle (repeat)
+5. Build + test, then /pb-review (repeat)
    └─ Build components (mobile-first)
    └─ /pb-a11y checks during development
-   └─ Self-review → Test → Commit
+   └─ Quality gate; commits on pass
 
 6. /pb-ship
    └─ Include /pb-a11y checklist in reviews
    └─ Performance audit (bundle size, load time)
 
-7. /pb-release
-   └─ Deploy → Cross-browser testing → Monitor
+7. After /pb-ship releases
+   └─ Cross-browser testing → Monitor
 ```
 
 ### Frontend-Specific Checklist
@@ -176,18 +168,18 @@ Pre-built command sequences for common development scenarios. Each recipe links 
 4. /pb-start
    └─ Create feature/api-name branch
 
-5. /pb-cycle (repeat)
+5. Implement + test, then /pb-review (repeat)
    └─ Implement endpoint
    └─ Write API tests
    └─ Update documentation (OpenAPI)
-   └─ Commit
+   └─ Quality gate; commits on pass
 
 6. /pb-security
    └─ Authentication/authorization review
    └─ Input validation
    └─ Rate limiting
 
-7. /pb-ship → /pb-release
+7. /pb-ship (runs /pb-release Phase 2-3)
 ```
 
 ### API-Specific Checklist
@@ -220,20 +212,17 @@ Pre-built command sequences for common development scenarios. Each recipe links 
 3. /pb-start (expedited)
    └─ Create hotfix/incident-123 branch
 
-4. /pb-cycle (minimal)
-   └─ Fix → Quick self-review → Test critical path
+4. Fix + test critical path, then /pb-review
+   └─ Quick gate; commits on pass: fix(scope): hotfix for incident-123
 
-5. /pb-commit
-   └─ fix(scope): hotfix for incident-123
-
-6. /pb-pr (expedited review)
+5. /pb-pr (expedited review)
    └─ Sync review, not async
 
-7. Deploy immediately
+6. Deploy immediately
    └─ Verify fix in production
    └─ Monitor closely
 
-8. Post-incident (within 24-48 hours)
+7. Post-incident (within 24-48 hours)
    └─ Document timeline
    └─ Root cause analysis
    └─ Action items to prevent recurrence
@@ -322,7 +311,7 @@ Week 2:
    └─ Key contacts
 
 6. First task (XS or S tier)
-   └─ /pb-start → /pb-cycle → /pb-commit → /pb-pr
+   └─ /pb-start → code → /pb-review → /pb-pr
    └─ Experience the workflow
 
 Week 3+:
@@ -349,25 +338,18 @@ Week 3+:
 ### Pre-Release Workflow
 
 ```
-1. /pb-review (comprehensive)
+1. /pb-review-comprehensive
    └─ Security audit
    └─ Performance review
    └─ Test coverage analysis
    └─ Code quality review
 
-2. /pb-release (final gate)
-   └─ Senior engineer sign-off
-   └─ Go/no-go decision
+2. /pb-release
+   └─ Phase 1: Readiness gate, senior engineer sign-off, go/no-go
+   └─ Phase 2: Version bump, changelog update, tag release
+   └─ Phase 3: Deploy to production, smoke test, monitor for 1-24 hours
 
-3. /pb-release
-   └─ Version bump
-   └─ Changelog update
-   └─ Tag release
-   └─ Deploy to production
-   └─ Smoke test
-   └─ Monitor for 1-24 hours
-
-4. Post-release
+3. Post-release
    └─ Announce release
    └─ Monitor metrics
    └─ Be ready for hotfix if needed
@@ -411,32 +393,6 @@ What are you doing?
 │
 └─ Joining team
     └─ Onboarding recipe
-```
-
----
-
-## Creating Custom Recipes
-
-For project-specific workflows, create recipes in `todos/recipes/` or `docs/team-recipes.md`:
-
-```markdown
-## Recipe: [Name]
-
-**When to use:** [Scenario]
-**Tier:** [XS/S/M/L]
-
-### Workflow
-
-1. Command 1
-   └─ What to do
-
-2. Command 2
-   └─ What to do
-
-### Checklist
-
-- [ ] Item 1
-- [ ] Item 2
 ```
 
 ---
