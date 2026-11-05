@@ -539,7 +539,6 @@ DASH_BASELINE = {
     "pb-plan.md": 1,
     "pb-review-hygiene.md": 3,
     "pb-review-incoming.md": 55,
-    "pb-storage.md": 19,
     "pb-threat-hunt.md": 1,
 }
 

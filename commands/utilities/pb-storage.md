@@ -6,9 +6,9 @@ difficulty: "advanced"
 model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-debug', 'pb-start']
-last_reviewed: "2026-07-28"
-version: "2.0.0"
-version_notes: "v2.0.0: tiers re-cut on time to recover -- SECONDS / A BUILD / A DOWNLOAD / NEVER -- replacing SAFE / MODERATE / AGGRESSIVE. The old scale described how a deletion felt; recovery time describes what it costs, and it exposes the offline question the old names could not ask: Tier 3 needs a network, so do not clear it before a flight. Tier 4 is not a tier you run. v1.2.0: dry run before every tier, and a tier audit against the membership test ~/.cache failed -- can this be deleted without a human deciding anything? Five more rows failed it. v1.1.0: ~/.cache out of the always-reversible tier and enumerated, never globbed. Measure the APFS Data volume, not `/`. One zsh-safe deletion idiom throughout. Full Disk Access documented for ~/.Trash."
+last_reviewed: "2026-11-05"
+version: "2.1.0"
+version_notes: "v2.1.0: Spaced double hyphens replaced."
 breaking_changes: ['Tier names and membership changed: SAFE/MODERATE/AGGRESSIVE -> SECONDS/A BUILD/A DOWNLOAD/NEVER. A script or habit that ran "Tier 1" now sweeps less (~/.Trash left it) and "Tier 3" now means network-recoverable rather than most-destructive. Re-read the tier tables before reusing any saved invocation.']
 ---
 # macOS Storage Cleanup
@@ -87,10 +87,10 @@ feels; recovery time describes what it costs you, and only one of those is check
 
 | Tier | Recovery | Needs network? | Use when |
 |------|----------|----------------|----------|
-| 1 | **Seconds** -- regenerates on its own | No | Always. Start here |
-| 2 | **A build** -- local compute, once | No | You can afford one slow compile |
-| 3 | **A download** -- refetched over the network | **Yes** | You are online and staying online |
-| 4 | **Never** -- gone | n/a | Never sweep. Decide per item, or not at all |
+| 1 | **Seconds**: regenerates on its own | No | Always. Start here |
+| 2 | **A build**: local compute, once | No | You can afford one slow compile |
+| 3 | **A download**: refetched over the network | **Yes** | You are online and staying online |
+| 4 | **Never**: gone | n/a | Never sweep. Decide per item, or not at all |
 
 **The membership test, applied to every row:** *can this be deleted without a human deciding
 anything, and if so, what does getting it back cost?* A path whose answer is "it depends what is
@@ -106,7 +106,7 @@ safe/moderate/aggressive scale could not express.
 
 | Target | Path | Recovery |
 |--------|------|----------|
-| Library Caches | `~/Library/Caches/*` | Apps repopulate on next launch. This glob **subsumes** the `pip` and `CocoaPods` rows in Tier 3 -- running Tier 1 alone already clears them, and those are downloads |
+| Library Caches | `~/Library/Caches/*` | Apps repopulate on next launch. This glob **subsumes** the `pip` and `CocoaPods` rows in Tier 3: running Tier 1 alone already clears them, and those are downloads |
 | System Logs | `~/Library/Logs/*` | Regenerate as apps run. Skip if you are mid-investigation: they are your evidence, and deleting them is the one way this tier costs you something |
 
 **Commands:**
@@ -146,7 +146,7 @@ find ~/Library/Developer/Xcode/DerivedData -mindepth 1 -maxdepth 1 -exec rm -rf 
 
 ---
 
-### Tier 3: A DOWNLOAD (needs network -- check your connectivity first)
+### Tier 3: A DOWNLOAD (needs network: check your connectivity first)
 
 | Target | Path / Command | Recovery |
 |--------|----------------|----------|
@@ -156,8 +156,8 @@ find ~/Library/Developer/Xcode/DerivedData -mindepth 1 -maxdepth 1 -exec rm -rf 
 | Homebrew | `brew cleanup` | Refetches on next install |
 | CocoaPods | `~/Library/Caches/CocoaPods` | `pod install` refetches |
 | Cargo registry | `~/.cargo/registry/cache` | `cargo build` refetches crates |
-| pub-cache | `~/.pub-cache/*` | Refetches packages -- **also holds `dart pub global activate` executables**, which need reinstalling, not just refetching |
-| Docker images | `docker system prune -a` | Re-pull. **No `--volumes`** -- see Tier 4 |
+| pub-cache | `~/.pub-cache/*` | Refetches packages; **also holds `dart pub global activate` executables**, which need reinstalling, not just refetching |
+| Docker images | `docker system prune -a` | Re-pull. **No `--volumes`** (see Tier 4) |
 | Android system-images | `~/Library/Android/sdk/system-images/*` | Re-download, and these are large |
 | iOS simulators | `xcrun simctl delete unavailable` | Only removes sims whose runtime is already gone; recreating needs a runtime download |
 | Rust toolchains | `rustup toolchain uninstall` | Re-download; keeps default only |
@@ -191,19 +191,19 @@ need to be productive offline.
 
 ---
 
-### Tier 4: NEVER (unrecoverable -- decide per item, never sweep)
+### Tier 4: NEVER (unrecoverable: decide per item, never sweep)
 
 These look like cleanup targets. They are not. Nothing here is swept by any command on this page,
 including the nuclear block, because no flag can make the decision for you.
 
 | Target | Path | What you actually lose |
 |--------|------|------------------------|
-| User Cache | `~/.cache/*` | **Enumerate first.** A convention, not a guarantee -- it holds downloaded model weights, provisioned VM images, vendored toolchains |
+| User Cache | `~/.cache/*` | **Enumerate first.** A convention, not a guarantee: it holds downloaded model weights, provisioned VM images, vendored toolchains |
 | Trash | `~/.Trash/*` | Files *you* put there and have not confirmed deleting. "Already deleted" is the same reasoning that nearly cost a model file |
 | Docker named volumes | `docker volume ls` | Databases. Your local Postgres, the seeded test data. Re-pulling an image does not bring data back |
 | Xcode Archives | `~/Library/Developer/Xcode/Archives/*` | dSYMs for builds you shipped. Without them you cannot symbolicate a crash report from a release already in users' hands |
-| Safari LocalStorage | `~/Library/Safari/LocalStorage/*` | Site data -- drafts, offline state, signed-in sessions. It does not regenerate. Safari's actual cache is `~/Library/Caches/com.apple.Safari` |
-| Android AVDs | `~/.android/avd/*.avd` | The emulator is a download; the state inside it -- installed apps, configuration -- is not |
+| Safari LocalStorage | `~/Library/Safari/LocalStorage/*` | Site data: drafts, offline state, signed-in sessions. It does not regenerate. Safari's actual cache is `~/Library/Caches/com.apple.Safari` |
+| Android AVDs | `~/.android/avd/*.avd` | The emulator is a download; the state inside it (installed apps, configuration) is not |
 
 **`~/.cache`: enumerate, then exclude by name.**
 
@@ -241,7 +241,7 @@ When executing this playbook:
 
 ### AskUserQuestion Structure
 
-**Tier Selection** -- lead with recovery cost, since that is the choice being made:
+**Tier Selection:** lead with recovery cost, since that is the choice being made:
 ```
 Question: "Which cleanup tiers should I run?"
 Options:
@@ -253,7 +253,7 @@ MultiSelect: true
 
 Tier 4 is never offered. It is not a tier you run.
 
-**Before offering Tier 3, ask about connectivity** -- it is the only tier that can leave someone
+**Before offering Tier 3, ask about connectivity:** it is the only tier that can leave someone
 stuck. If they are about to travel, tether, or demo, say so and let them decline:
 ```
 Question: "Tier 3 refetches over the network. Are you staying online?"
@@ -292,7 +292,7 @@ echo "Cleanup complete. Verify freed space above."
 For users who know what they want:
 
 Expert mode is the *dry run* run first, every time. Swap `echo "WOULD DELETE"` for `rm -rf` once
-you have read the list -- that substitution is the whole ritual.
+you have read the list; that substitution is the whole ritual.
 
 ```bash
 # Dry run, any tier: same paths, harmless verb.
@@ -330,7 +330,7 @@ docker system prune -a -f
 
 ## What This Does NOT Clean
 
-Your data. These are not storage-cleanup candidates at any tier -- they are listed so nobody
+Your data. These are not storage-cleanup candidates at any tier; they are listed so nobody
 scripts them by accident.
 
 | Item | Why |
@@ -342,8 +342,8 @@ scripts them by accident.
 | Git repositories | User code |
 | Application data | App-specific, may lose settings |
 
-Distinct from **Tier 4**, which lists paths that *do* look like cleanup targets -- `~/.cache`,
-`~/.Trash`, docker volumes, Xcode Archives, Safari LocalStorage, AVD state -- and are unrecoverable
+Distinct from **Tier 4**, which lists paths that *do* look like cleanup targets (`~/.cache`,
+`~/.Trash`, docker volumes, Xcode Archives, Safari LocalStorage, AVD state) and are unrecoverable
 anyway. Those are decided per item; these are not decided at all.
 
 ---
