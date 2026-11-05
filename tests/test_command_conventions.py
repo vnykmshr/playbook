@@ -21,7 +21,7 @@ import pytest
 import yaml
 
 COMMANDS_DIR = Path(__file__).parent.parent / "commands"
-EXPECTED_COUNT = 112  # 118 - pb-guide-go, pb-guide-python, the three wrapper reviews, pb-patterns-cloud
+EXPECTED_COUNT = 112
 
 # Hub commands allowed to exceed the 5-link limit
 HUB_COMMANDS = {"pb-patterns.md"}
