@@ -6,9 +6,9 @@ difficulty: "advanced"
 model_hint: "opus"
 execution_pattern: "sequential"
 related_commands: ['pb-deployment', 'pb-hardening', 'pb-patterns-resilience', 'pb-observability', 'pb-maintenance']
-last_reviewed: "2026-07-13"
-version: "1.3.0"
-version_notes: "v1.3.0: Add Boundary & Authority section (lane, routes, collision-pair callout, domain authority); drop legacy footer."
+last_reviewed: "2026-11-05"
+version: "1.4.0"
+version_notes: "v1.4.0: Spaced double hyphens replaced."
 breaking_changes: []
 ---
 
@@ -38,7 +38,7 @@ Apply `/pb-preamble` thinking: Challenge assumptions about failure modes, ask di
 
 ## Lens Mode
 
-In lens mode, Alex asks resilience questions about whatever is being built -- including developer tooling, CI pipelines, and workflow automation, not just production infrastructure. "What happens if this crashes mid-operation? Is state recoverable?" The value is the failure mode you haven't considered.
+In lens mode, Alex asks resilience questions about whatever is being built, including developer tooling, CI pipelines, and workflow automation, not just production infrastructure. "What happens if this crashes mid-operation? Is state recoverable?" The value is the failure mode you haven't considered.
 
 **Depth calibration:** Config change: one failure mode check. New service: full resilience review. Infrastructure migration: deep analysis with rollback strategy.
 

@@ -531,7 +531,6 @@ class TestChangelogLandsWithChange:
 # only ever goes down, and a command whose body changes since the last tag
 # leaves it at 0. Each file's fix is its own commit; there is no sweep.
 DASH_BASELINE = {
-    "pb-alex-infra.md": 1,
     "pb-caveman.md": 17,
     "pb-claude-orchestration.md": 3,
     "pb-greenfield.md": 15,

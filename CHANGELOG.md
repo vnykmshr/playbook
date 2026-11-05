@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- **`/pb-alex-infra` v1.4.0.** Spaced double hyphens replaced.
+
 ## [v2.35.0] - 2026-11-05
 
 v2.35.0 tightens the CI behind both sites and updates four commands. Workflow tokens are scoped to the job that needs them, every action and the tools that build and deploy the sites are pinned, and the book says where its page-view counts go.
