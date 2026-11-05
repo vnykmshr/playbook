@@ -3,6 +3,7 @@
 The names to look for come from the untracked harvester config, read with the harvester's
 own loader, so this file names nothing. Without that config (CI) the name check skips.
 """
+import re
 import subprocess
 from pathlib import Path
 
@@ -114,6 +115,12 @@ def test_nothing_under_todos_or_claude_is_tracked():
 
 
 def test_book_pages_with_the_analytics_beacon_disclose_it():
-    silent = [p.name for p in sorted((REPO / "book").glob("*.html"))
-              if "static.cloudflareinsights.com" in (t := p.read_text()) and "Cloudflare Web Analytics" not in t]
-    assert not silent, f"book pages that load the beacon without saying so: {silent}"
+    silent = []
+    for p in sorted((REPO / "book").glob("*.html")):
+        t = p.read_text()
+        if "static.cloudflareinsights.com" not in t:
+            continue
+        m = re.search(r'<footer class="site-footer">(.*?)</footer>', t, re.S)
+        if not m or "Cloudflare Web Analytics" not in m.group(1):
+            silent.append(p.name)
+    assert not silent, f"book pages that load the beacon without saying so in the footer: {silent}"
