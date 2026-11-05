@@ -7,7 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-v2.35.0 tightens the CI behind both sites and fixes four commands. Workflow tokens are scoped to the job that needs them, every action and downloaded build tool is pinned, and the book says where its page-view counts go.
+## [v2.35.0] - 2026-11-05
+
+v2.35.0 tightens the CI behind both sites and updates four commands. Workflow tokens are scoped to the job that needs them, every action and the tools that build and deploy the sites are pinned, and the book says where its page-view counts go.
 
 **After upgrading:** `git pull` is enough.
 
@@ -2102,6 +2104,7 @@ When releasing a new version:
 
 ---
 
+[v2.35.0]: https://github.com/vnykmshr/playbook/releases/tag/v2.35.0
 [v2.34.0]: https://github.com/vnykmshr/playbook/releases/tag/v2.34.0
 [v2.33.0]: https://github.com/vnykmshr/playbook/releases/tag/v2.33.0
 [v2.32.0]: https://github.com/vnykmshr/playbook/releases/tag/v2.32.0
