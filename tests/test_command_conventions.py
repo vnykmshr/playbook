@@ -877,10 +877,7 @@ def has_mindset(text: str) -> bool:
 # (each fix is a bump), so an entry is removed once its command passes.
 MINDSET_BASELINE = {
     "pb-adr.md",
-    "pb-claude-global.md",
     "pb-claude-project.md",
-    "pb-commit.md",
-    "pb-cycle.md",
     "pb-deprecation.md",
     "pb-design-rules.md",
     "pb-doctor.md",
@@ -1362,6 +1359,23 @@ class TestRegisterRuleReference:
             f"Commands missing '{self.REGISTER_REFERENCE}' reference:\n"
             + "\n".join(f"  {c}" for c in no_reference)
         )
+
+    # A length rule restated outside the register drifts from it; the looser copy wins.
+    LENGTH_RULE = re.compile(r"\b(3\s*(-|–|to)\s*5\s+sentences|(2|two)\s+short\s+lines)\b", re.IGNORECASE)
+    REGISTER_HOME = "pb-claude-global.md"
+
+    @pytest.mark.parametrize("text", ["~3-5 sentences", "3 to 5 sentences", "at most 2 short lines", "two short lines"])
+    def test_length_rule_pattern_matches(self, text):
+        assert self.LENGTH_RULE.search(text)
+
+    def test_length_rules_live_only_in_the_register(self):
+        restated = [
+            f"{p.name}:{n}"
+            for p in get_command_files() if p.name != self.REGISTER_HOME
+            for n, line in enumerate(p.read_text().splitlines(), 1)
+            if self.LENGTH_RULE.search(line)
+        ]
+        assert not restated, f"Length rules restated outside {self.REGISTER_HOME}; point to the register instead: {restated}"
 
 
 class TestRecapArchiveCoherence:

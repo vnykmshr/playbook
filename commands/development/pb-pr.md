@@ -6,9 +6,9 @@ difficulty: "advanced"
 model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-commit', 'pb-cycle', 'pb-review-code', 'pb-ship']
-last_reviewed: "2026-04-26"
-version: "1.1.0"
-version_notes: "v1.1.0: Size-tiered templates (small/large by file count + concern count), drop Screenshots section, reference global GitHub Artifact Register rule via single-line pointer."
+last_reviewed: "2026-11-05"
+version: "1.2.0"
+version_notes: "v1.2.0: Small-PR body is one sentence of what plus upgrader impact; the drafted title and body are checked against the register before the PR opens."
 breaking_changes: []
 ---
 # Quick PR Creation
@@ -75,18 +75,15 @@ git diff origin/main...HEAD --stat
 
 ## Step 3: Create PR
 
-PR body register follows the global rule (see `~/.claude/CLAUDE.md` § GitHub Artifact Register). Pick the form that matches the change size.
+PR body register follows the global rule (see `~/.claude/CLAUDE.md` § GitHub Artifact Register). Pick the form that matches the change size, then check the drafted title and body against the register before opening the PR.
 
 ### Default: small PR (≤3 files OR single concern)
 
-No headers. Body length scales with the change:
-
-- Trivial (typo, lint, 1-line fix): 1-2 sentences.
-- Single concern: one paragraph, 3-5 sentences. State the WHY, the change, how verified.
+No headers. One sentence of what the PR does, plus one of upgrader impact when there is any.
 
 ```bash
 gh pr create --title "<type>(<scope>): <description>" --body "$(cat <<'EOF'
-<one paragraph or 1-2 sentences -- WHY, what, how verified>
+<one sentence: what; a second only for upgrader impact>
 EOF
 )"
 ```

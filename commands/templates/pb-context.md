@@ -6,9 +6,9 @@ difficulty: "beginner"
 model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-claude-project', 'pb-greenfield', 'pb-start', 'pb-resume', 'pb-onboarding']
-last_reviewed: "2026-02-09"
-version: "1.0.0"
-version_notes: "v2.10.0 baseline"
+last_reviewed: "2026-11-05"
+version: "1.1.0"
+version_notes: "v1.1.0: Release step tags with the release title and publishes notes from a file."
 breaking_changes: []
 ---
 # [Project Name] Working Context
@@ -190,9 +190,9 @@ make test                 # Run all tests
 ### 8. Release & Deploy
 ```bash
 # After PR merged to main
-git tag -a vX.Y.Z -m "vX.Y.Z - Brief description"
+git tag -a vX.Y.Z -m "vX.Y.Z - <name>"
 git push origin vX.Y.Z
-gh release create vX.Y.Z --title "vX.Y.Z - Title" --notes "..."
+gh release create vX.Y.Z --title "vX.Y.Z - <name>" --notes-file notes.md   # see /pb-release Step 2.4
 make deploy               # Deploy to production
 ```
 

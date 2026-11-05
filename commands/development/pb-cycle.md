@@ -6,14 +6,16 @@ difficulty: "advanced"
 model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-start', 'pb-commit', 'pb-pr', 'pb-review-code', 'pb-testing']
-last_reviewed: "2026-11-04"
-version: "1.2.2"
-version_notes: "v1.2.2: The tool-agnostic link resolves on the published site."
+last_reviewed: "2026-11-05"
+version: "1.3.0"
+version_notes: "v1.3.0: Commit step drops the with-body example and checks the subject against the register. Mindset added."
 breaking_changes: []
 ---
 # Development Cycle: Self-Review + Peer Review
 
 Run this after completing a unit of work. Guides you through self-review, quality gates, and peer review before committing.
+
+**Mindset:** Apply `/pb-preamble` thinking (challenge your own work before a peer has to) and `/pb-design-rules` thinking (clarity and simplicity are review criteria, not style).
 
 **Resource Hint:** sonnet - iterative code review and quality gate checks
 
@@ -169,19 +171,10 @@ git add [specific files]    # NEVER use git add . or git add -A
 git status                  # Verify what's staged
 git diff --staged           # Review staged changes
 
-# Subject-only (default for most commits):
 git commit -m "type(scope): subject"
-
-# OR with body (only when WHY is non-obvious; at most 2 short lines):
-git commit -m "$(cat <<'EOF'
-type(scope): subject
-
-WHY this change is needed (skip this body when the diff and subject are self-explanatory)
-EOF
-)"
 ```
 
-Commit message register: `~/.claude/CLAUDE.md` § GitHub Artifact Register.
+Commit message register: `~/.claude/CLAUDE.md` § GitHub Artifact Register. Check the drafted subject against it before committing.
 
 **Warning:** Never use `git add .` or `git add -A`. Always stage specific files intentionally. Blind adds lead to:
 - Committing debug code, secrets, or unrelated changes

@@ -7,8 +7,8 @@ model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-preamble', 'pb-deployment', 'pb-ship', 'pb-pr', 'pb-cycle']
 last_reviewed: "2026-11-05"
-version: "1.3.0"
-version_notes: "v1.3.0: Tag only after CI is green on this exact commit (full SHA), reading each workflow's newest run, with no output or an unfinished run read as wait, not as green; the release step publishes an existing draft rather than duplicating it, and may prune old releases without --cleanup-tag; notes follow the GitHub Artifact Register; the hotfix step runs Step 2.3's CI check, which reads each workflow's newest run for this commit; the title placeholder is a name, and the register is named as /pb-claude-global's."
+version: "1.4.0"
+version_notes: "v1.4.0: Tag message is the release title; notes and CHANGELOG entry checked against the register before the release step."
 breaking_changes: []
 ---
 # Release to Production
@@ -211,7 +211,7 @@ git status  # Should be clean
 gh run list --commit "$(git rev-parse HEAD)" --json workflowName,createdAt,conclusion -q 'group_by(.workflowName) | map(max_by(.createdAt)) | .[].conclusion'
 
 # Create annotated tag
-git tag -a vX.Y.Z -m "vX.Y.Z - Brief description"
+git tag -a vX.Y.Z -m "vX.Y.Z - <name>"   # the release title, or vX.Y.Z when unnamed
 
 # Push tag
 git push origin vX.Y.Z
@@ -231,7 +231,7 @@ gh release create vX.Y.Z --title "vX.Y.Z - <name>" --notes-file notes.md  # it d
 gh release delete <oldest-tag> --yes  # never --cleanup-tag
 ```
 
-The notes say what upgraders must do, any security line, and link the CHANGELOG entry and the compare view; see the GitHub Artifact Register that `/pb-claude-global` writes into `~/.claude/CLAUDE.md`.
+The notes say what upgraders must do, any security line, and link the CHANGELOG entry and the compare view; see the GitHub Artifact Register that `/pb-claude-global` writes into `~/.claude/CLAUDE.md`. Check the drafted notes and the CHANGELOG entry against it before this step: a review earlier in the release does not cover them.
 
 ---
 
@@ -326,7 +326,7 @@ make lint && make test
 # 2. CI green on this commit: Step 2.3's CI check
 
 # 3. Fast version bump
-git tag -a vX.Y.Z -m "Hotfix: [description]"
+git tag -a vX.Y.Z -m "vX.Y.Z"
 git push origin vX.Y.Z
 
 # 4. Deploy immediately

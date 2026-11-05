@@ -6,9 +6,9 @@ difficulty: "beginner"
 model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-claude-project', 'pb-claude-orchestration', 'pb-preamble', 'pb-design-rules', 'pb-standards']
-last_reviewed: "2026-11-04"
-version: "2.12.0"
-version_notes: "v2.12.0: Operational Guardrails gain Denied commands: plan around a denied rm or chain from the start, check state after a denied call, and order durable writes before permission-gated cleanup. The GitHub register's Never write adds register narration and unproven claims; Never in public text names process trails and hard wraps, and, outside the project that ships them, internal tooling, personas and /pb-* names."
+last_reviewed: "2026-11-05"
+version: "2.13.0"
+version_notes: "v2.13.0: Register covers tag messages and CHANGELOG entries; length ceilings become defaults (commit subject only, PR body one sentence of what plus upgrader impact); the drafting step checks its own text; process vocabulary named under Never in public text. Mindset added."
 breaking_changes: ['Template output restructured -- BEACON headers, standalone Non-Negotiables, Session Ritual added', 'Personas list removed from global (project-specific)', 'Context Efficiency section removed (generic)', 'Project-Specific Overrides section removed (obvious)', 'Development Ritual removed (duplicated the Quick Reference)', 'Session Ritual removed (duplicated the last Quick Reference row)', 'Model Selection prose paragraph removed; the tier table stays']
 ---
 # Generate Global CLAUDE.md
@@ -18,6 +18,8 @@ Generate or regenerate the global `~/.claude/CLAUDE.md` file from Engineering Pl
 **Purpose:** Create a concise, authoritative context file that informs Claude Code behavior across ALL projects.
 
 **Philosophy:** Playbooks are the source of truth. Global CLAUDE.md is a derived artifact, concise, with references to playbooks for depth.
+
+**Mindset:** Apply `/pb-design-rules` thinking (clarity, silence when there is nothing to say): every line generated here is read at the start of every session.
 
 **Resource Hint:** sonnet - template generation from existing playbook content.
 
@@ -169,16 +171,20 @@ For strategy: `/pb-claude-orchestration`
 
 ---
 
-## GitHub Artifact Register (commits, PRs, issues, comments, releases)
+## GitHub Artifact Register (commits, PRs, issues, comments, tags, releases, CHANGELOG)
 
-The Register BEACON applied to GitHub, with ceilings. The reader is a peer; do not re-explain the diff.
+The Register BEACON applied to text that leaves the machine, in every project. The reader is a peer; do not re-explain the diff. The step that drafts the text checks it against this section before presenting it; a review earlier in the work does not cover text written later.
 
-**Length ceilings (default; exceed only when the WHY is genuinely non-obvious):**
-- Commit: subject only; a body, if any, is at most 2 short lines.
-- PR body: 1 paragraph, ~3-5 sentences. No `## Summary` / `## Test plan` headers unless >3 files or >1 concern.
+**Defaults (a longer form needs a WHY the diff cannot show):**
+- Commit: subject only, with no "instead of", "so that" or "to ..." tail.
+- PR body: one sentence of what, plus one of upgrader impact when there is any. No `## Summary` / `## Test plan` headers unless >3 files or >1 concern.
 - Issue: 1 paragraph + repro steps if applicable. No template scaffolding.
 - Review/PR comments: state the issue, cite the line, stop. One sentence per finding.
+- CHANGELOG entry: what changed, in one line. No reasons, no inventory.
+- Tag message: the release title.
 - Release: title `vX.Y.Z - <pet name>`, or `vX.Y.Z` when unnamed; never a change summary. Notes: what upgraders must do, security lines, changelog and compare links. No generated PR list, no "New Contributors".
+
+**The test:** each clause tells the reviewer something the diff, title or linked CHANGELOG does not. Cut reasons, justifications and inventories.
 
 **Format:** `<type>(<scope>): <subject>` -- `feat:`, `fix:`, `refactor:`, `docs:`, `test:`, `chore:`, `perf:`. Present tense. Atomic. Auto-drafted by `/pb-review`.
 
@@ -186,7 +192,7 @@ The Register BEACON applied to GitHub, with ceilings. The reader is a peer; do n
 
 **Never write:** narration ("I examined...", "After analysis...", "let me..."), narration of the register itself ("keeping it terse", a list of tells removed), scope reminders, severity adjectives ("critical", "important to note"), closing summaries, restatements of what the diff already shows, or claims the diff does not prove.
 
-**Never in public text:** a process trail (scores, pass logs); hard-wrapped prose (commit bodies and code comments excepted); outside the project that ships them, internal tooling, personas, CLAUDE.md or `/pb-*` names. Compress without cutting scene-setters or file pointers.
+**Never in public text:** a process trail (scores, pass logs, review-step names, internal terms such as "minimal-sufficient" that the project does not ship); hard-wrapped prose (commit bodies and code comments excepted); outside the project that ships them, internal tooling, personas, CLAUDE.md or `/pb-*` names. Compress without cutting scene-setters or file pointers.
 
 **Large changes (>3 files, >1 concern):** Split bisectable -- infra -> data+tests -> logic -> versioning.
 

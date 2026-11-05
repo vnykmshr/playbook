@@ -7,8 +7,8 @@ model_hint: "opus"
 execution_pattern: "interactive"
 related_commands: ['pb-what-next', 'pb-review', 'pb-huddle', 'pb-preflight', 'pb-ship']
 last_reviewed: "2026-11-05"
-version: "1.8.0"
-version_notes: "v1.8.0: The arc cursor carries the after-Land list: every step the plan defers to Land or the cursor's close."
+version: "1.9.0"
+version_notes: "v1.9.0: Peer and Land check their drafted text against the register."
 breaking_changes: []
 ---
 # Lifecycle Step-Runner
@@ -48,8 +48,8 @@ Forge walks these stages. It auto-runs the mechanical ones, hands off during exe
 | Plan | `/pb-plan` (sketch + spec) | confirm vetted picks |
 | Execute | hands off to `/pb-start` or `/pb-todo-implement`; releases control | inner loop owns it |
 | Self-gate | Find, vet and fix, judge (see "Self-Gate Chain" below) | vet rulings, signoff |
-| Peer | `/pb-pr` opens the PR. No remote: skipped, and Land is the local merge | external: approve |
-| Land | merge, then sync, then release | external: each separate |
+| Peer | `/pb-pr` opens the PR, its body checked against the register first. No remote: skipped, and Land is the local merge | external: approve |
+| Land | merge, then sync, then release; tag message and notes checked against the register before each stop | external: each separate |
 
 The arc is the default for new, non-trivial work. Triage decides how much of the front you actually run.
 

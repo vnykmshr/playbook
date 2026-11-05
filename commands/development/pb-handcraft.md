@@ -6,9 +6,9 @@ difficulty: "intermediate"
 model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-voice', 'pb-review', 'pb-linus-agent', 'pb-commit', 'pb-llm-guidelines']
-last_reviewed: "2026-11-04"
-version: "1.6.0"
-version_notes: "v1.6.0: A re-run on the same artifact needs no fresh invocation: the flagging lenses read the changed strings, then the Final Re-Read reads the whole. Lens 2's record says whether the voice pass ran inline; Lens 4's exit names the Final Re-Read as what catches a clean-looking insertion that changes a neighbour's meaning."
+last_reviewed: "2026-11-05"
+version: "1.6.1"
+version_notes: "v1.6.1: Lens 6 says text drafted after the pass is checked by the step that drafts it."
 breaking_changes: []
 ---
 # AI Output Quality Gate
@@ -194,7 +194,7 @@ The reader built the system. Don't explain their code, their spec, their domain,
 
 ### Lens 6: Register Check
 
-Register is calibrated by the voice pass (`/pb-voice` Step 0 + Category 12), which already ran in Lens 2; it reads the target register from the artifact type or persona and flags register mismatch. This lens applies the handcraft-specific register concerns voice doesn't own: the GitHub Artifact Register ceilings for commits/PRs/issues, and the dev-to-dev defaults for code-adjacent output.
+Register is calibrated by the voice pass (`/pb-voice` Step 0 + Category 12), which already ran in Lens 2; it reads the target register from the artifact type or persona and flags register mismatch. This lens applies the handcraft-specific register concerns voice doesn't own: the GitHub Artifact Register defaults for commits/PRs/issues, and the dev-to-dev defaults for code-adjacent output. Text drafted after this pass (commit subjects, a PR body, release notes written at Peer or Land) is checked by the step that drafts it; this lens does not cover it.
 
 General dev-to-dev register:
 - No named transitions
@@ -204,7 +204,7 @@ General dev-to-dev register:
 - Scope unknowns explicitly
 - Use dev abbreviations (PoC, SSRF, authz, impl, etc.)
 
-**For GitHub artifacts** (commits, PRs, issues, PR/review/inline comments): `~/.claude/CLAUDE.md` § GitHub Artifact Register sets the ceilings, strip list, and never-write list.
+**For GitHub artifacts** (commits, PRs, issues, PR/review/inline comments): `~/.claude/CLAUDE.md` § GitHub Artifact Register sets the defaults, strip list, and never-write list.
 
 **Conversational check:** read the output aloud as if saying it to a colleague over a drink. Mouth the words; silent reading skips what the tongue catches.
 

@@ -6,12 +6,14 @@ difficulty: "beginner"
 model_hint: "sonnet"
 execution_pattern: "automatic"
 related_commands: ['pb-review', 'pb-start', 'pb-pr']
-last_reviewed: "2026-11-04"
-version: "2.3.2"
-version_notes: "v2.3.2: The message register states its default inline; the full register is named as /pb-claude-global's, so it reads without the user's global file; the tool-agnostic link resolves on the published site."
+last_reviewed: "2026-11-05"
+version: "2.4.0"
+version_notes: "v2.4.0: Message Register points to the register instead of restating a body length, and checks the drafted message before committing. Mindset added."
 breaking_changes: []
 ---
 # Commit (Usually Automatic)
+
+**Mindset:** Apply `/pb-design-rules` thinking (clarity over cleverness, one concern per commit): the subject is all most readers see.
 
 **Resource Hint:** sonnet - Commit message drafting with context-aware summaries and bisectable splitting guidance.
 
@@ -89,7 +91,7 @@ For changes touching >3 files across >1 concern, consider splitting into bisecta
 
 ## Message Register
 
-Default: `<type>(<scope>): <subject>`, present tense, subject only; a body, if any, is at most 2 short lines of why. No attribution trailers. The full register (length ceilings, strip list, never-write list) is the GitHub Artifact Register that `/pb-claude-global` writes into `~/.claude/CLAUDE.md`. When body includes test results: name the exact command run, or state "not run" with reason. No silent validation gaps.
+Default: `<type>(<scope>): <subject>`, present tense, subject only. No attribution trailers. The rest (defaults, strip list, never-write list) is the GitHub Artifact Register that `/pb-claude-global` writes into `~/.claude/CLAUDE.md`; check the drafted message against it before committing. When a body includes test results: name the exact command run, or state "not run" with reason. No silent validation gaps.
 
 ---
 
