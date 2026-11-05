@@ -434,6 +434,7 @@ One-liner for the brave (installs essentials):
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)" && \
 eval "$(/opt/homebrew/bin/brew shellenv)" && \
 brew install git gh jq ripgrep fd fzf && \
+touch ~/.zshrc && \
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.8/install.sh | bash && \
 source ~/.zshrc && nvm install --lts
 ```
