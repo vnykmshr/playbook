@@ -1056,6 +1056,24 @@ class TestRelatedCommands:
             "A fenced sample appearing before the real section must not consume it"
         )
 
+    def test_front_matter_and_body_name_the_same_commands(self):
+        """`related_commands` and the `## Related Commands` section are one list in two places."""
+        mismatched = []
+        for path in get_command_files():
+            text = path.read_text()
+            front = set(parse_front_matter(text).get("related_commands") or [])
+            body = set(md_read.related_commands(text))
+            if front != body:
+                mismatched.append(f"{path.name}: front only {sorted(front - body)}, body only {sorted(body - front)}")
+        assert not mismatched, "Related Commands differ between front matter and body:\n  " + "\n  ".join(mismatched)
+
+    def test_related_names_read_from_the_section_only(self):
+        text = (
+            "## Related Commands\n\n- `/pb-a` - one\n- `/pb-b` - two\n\n---\n\n"
+            "```markdown\n## Related Commands\n\n- `/pb-sample` - not this file's\n```\n"
+        )
+        assert md_read.related_commands(text) == ["pb-a", "pb-b"]
+
     def test_empty_items_count_nothing(self):
         """An empty `-` item has no inline of its own: it must not read the next item's."""
         empty_first = "## Related Commands\n\n-\n- `/pb-a` - one\n"
