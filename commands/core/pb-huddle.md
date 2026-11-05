@@ -7,8 +7,8 @@ model_hint: "opus"
 execution_pattern: "parallel-then-sequential"
 related_commands: ['pb-think', 'pb-preamble', 'pb-clara-curator', 'pb-maya-product', 'pb-adr']
 last_reviewed: "2026-11-05"
-version: "1.8.0"
-version_notes: "v1.8.0: Quick mode; agents gone re-brief from the brief and findings file on disk, and a re-huddle reads them and writes its own brief and findings file; late evidence reopens by re-huddle. The brief marks measured vs inferred, states purpose, provenance, hard constraints, callers and suspected misses, and asks coverage. Opposition and fresh-eyes seats replace the agree-too-easily row, and easy agreement seats the opposition after the fact; the close is fact-checked; findings land in counted buckets; a deletion owes concrete evidence; overrides of approved copy or reachable URLs are held for the user."
+version: "1.9.0"
+version_notes: "v1.9.0: A command the close rules is dry-run and diffed against the untouched base."
 breaking_changes: []
 ---
 # Multi-Perspective Decision Session
@@ -159,7 +159,7 @@ Each persona gets the SAME brief; disagreement is expected and valuable. Run the
 
 **Fact-check before the lead.** When the panel returns, the process orchestrator checks the load-bearing claims that name no check, in the brief or in a panelist's argument, before the lead sees them. A wrong fact inside one lens reads as a position, and the other lenses argue with it instead of checking it. A check names its instrument, and the instrument must answer the claim: `git log -S` counts occurrences, so it cannot show when a line was last edited (`-G` can). Evidence that lands after the panel ran goes to the lead and synthesis labelled *the panel did not see this*. A panelist who finds a live defect reports it as a finding; argued as rhetoric, the best-argued room walks past the bug. The lead gets the panelists' verbatim text, not a paraphrase.
 
-**Fact-check the close too.** Agents see the state as of their spawn, so re-read disk first, then check the lead's close for its claims and for what it leaves out.
+**Fact-check the close too.** Agents see the state as of their spawn, so re-read disk first, then check the lead's close for its claims and for what it leaves out. A command the close rules (a filter, a conflict resolution, a script) is code: dry-run it and diff the result against the untouched base, never against the output of the same filter.
 
 **One question is standing, whoever leads: what should be deleted rather than maintained?** Put it in every brief. A deletion owes the same evidence as any other finding: the concrete failure it removes. It is Clara's lens, but Clara synthesizes rather than argues, so on a technical or infrastructure huddle it never enters the room, and a panel asked only what to build will answer only what to build. The candidate proposed in Step 1 is not the only thing on the table; the code already carrying the problem is too.
 
