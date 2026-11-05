@@ -56,7 +56,6 @@ REPO_ROOT = COMMANDS_DIR.parent
 REVIEW_DATE_BASELINE = {
     "pb-adr.md",
     "pb-performance.md",
-    "pb-threat-hunt.md",
 }
 
 
@@ -538,7 +537,6 @@ DASH_BASELINE = {
     "pb-plan.md": 1,
     "pb-review-hygiene.md": 3,
     "pb-review-incoming.md": 55,
-    "pb-threat-hunt.md": 1,
 }
 
 PROSE_FIXTURE = [

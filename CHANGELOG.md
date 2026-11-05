@@ -17,6 +17,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **`/pb-claude-orchestration` v1.5.2.** Spaced double hyphens replaced.
 - **`/pb-storage` v2.1.0.** Spaced double hyphens replaced.
 - **`/pb-greenfield` v2.0.2.** Spaced double hyphens replaced.
+- **`/pb-threat-hunt` v1.1.1.** Spaced double hyphens replaced.
 
 ## [v2.35.0] - 2026-11-05
 

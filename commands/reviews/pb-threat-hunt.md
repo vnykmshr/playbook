@@ -6,14 +6,14 @@ difficulty: "expert"
 model_hint: "opus"
 execution_pattern: "sequential"
 related_commands: ['pb-security', 'pb-secrets', 'pb-hardening', 'pb-incident', 'pb-debug']
-last_reviewed: "2026-07-02"
-version: "1.1.0"
-version_notes: "v1.1.0: Pre-Hunt Sweeps (govulncheck, config drift, supply-chain). 3-vote adversarial verify with diverse skeptic prompts + Scope Sweep gate. CSP contextual audit (3 questions, not binary). DNS rebinding payload (nip.io). WebSocket/SSE search pass. Progressive disclosure: .claude/skills/pb-threat-hunt/ for Claude Code executable workflow."
+last_reviewed: "2026-11-05"
+version: "1.1.1"
+version_notes: "v1.1.1: Spaced double hyphens replaced."
 breaking_changes: []
 ---
 # Security Threat Hunt: Deep Audit Methodology
 
-A 12-step executable security audit that treats every auth shortcut, redirect, token source, cookie, forwarded header, parser, cache, and cryptographic decision as a security boundary until proven otherwise. The default answer to "is this safe?" is "prove it." Not a checklist -- a hunt.
+A 12-step executable security audit that treats every auth shortcut, redirect, token source, cookie, forwarded header, parser, cache, and cryptographic decision as a security boundary until proven otherwise. The default answer to "is this safe?" is "prove it." Not a checklist: a hunt.
 
 **Mindset:** Apply `/pb-preamble` thinking (challenge every safety assumption) and `/pb-design-rules` thinking (fail noisily, distrust "one true way," recovery-oriented errors). The hunt is adversarial by design.
 
