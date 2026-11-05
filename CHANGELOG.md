@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-- **`/pb-forge` v1.8.0.** The arc cursor carries the after-Land list: every step the plan defers to Land or the close.
+- **`/pb-forge` v1.8.0.** The arc cursor carries the after-Land list: every step the plan defers to Land or the cursor's close.
 - **`/pb-preflight` v1.3.0.** 1.1 counts a zero only after the same scan reports a generated canary, on a throwaway branch and in a copy of the artifact.
 - **`/pb-setup` v1.0.1.** The nvm installer pin moves from v0.39.0 to v0.40.8.
 - **`/pb-pause` v1.10.0.** Spaced double hyphens replaced. Step 0 names three homes: `todos/` for session state, `docs/` for durable public notes, a private repo for durable private ones. Step 3c copies whatever a lasting note links to in the session scratch directory into `todos/` before the directory goes.

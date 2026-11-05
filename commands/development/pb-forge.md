@@ -8,7 +8,7 @@ execution_pattern: "interactive"
 related_commands: ['pb-what-next', 'pb-review', 'pb-huddle', 'pb-preflight', 'pb-ship']
 last_reviewed: "2026-11-05"
 version: "1.8.0"
-version_notes: "v1.8.0: The arc cursor carries the after-Land list: every step the plan defers to Land or the close."
+version_notes: "v1.8.0: The arc cursor carries the after-Land list: every step the plan defers to Land or the cursor's close."
 breaking_changes: []
 ---
 # Lifecycle Step-Runner
@@ -147,7 +147,7 @@ Forge keeps one file per deliverable at `todos/forge/{slug}.md`, under the dev-o
 - the falsifier stated for any acceptance gate the front arc runs
 - decisions resolved at each seam, written as they are made
 - the next action, and the path of everything the next leg needs (briefs, panel records, measurements), under `todos/`, never only in the conversation or a session scratchpad
-- the after-Land list: every step the plan defers to Land or the close (ledger rows, pointer edits, archive moves), so none rests on memory
+- the after-Land list: every step the plan defers to Land or the cursor's close (ledger rows, pointer edits, archive moves), so none rests on memory
 - one log line per stage transition
 
 This file is the `/pb-resume` hook for the arc. Where `/pb-resume` tells you the session state (branch, uncommitted work), the cursor tells you the arc state (which stage, what's next): one command to resume a deliverable you left days ago, no reconstruction.
