@@ -105,6 +105,7 @@ class PlaybookContextAnalyzer:
                 "unstaged_changes": len(changed_files_unstaged) > 0,
                 "staged_changes": len(changed_files_staged) > 0,
                 "commit_count": commit_count,
+                "counted_from": base,
                 "recent_commits": commits,
                 "diff_files": diff_files_list,
             }
@@ -380,7 +381,8 @@ class PlaybookContextAnalyzer:
             lines.append("**Changes**: None (clean working directory)")
 
         commit_count = git_state.get("commit_count", 0)
-        lines.append(f"**Commits**: {commit_count} on this branch")
+        scope = "on this branch" if git_state.get("counted_from") else "recent (last 10)"
+        lines.append(f"**Commits**: {commit_count} {scope}")
         lines.append("")
 
         # Recommendations

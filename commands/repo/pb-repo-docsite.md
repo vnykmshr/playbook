@@ -8,7 +8,7 @@ execution_pattern: "sequential"
 related_commands: ['pb-repo-enhance', 'pb-repo-readme', 'pb-documentation', 'pb-review-docs', 'pb-ship']
 last_reviewed: "2026-11-06"
 version: "1.1.0"
-version_notes: "v1.1.0: Appendix B is one workflow plus an SSG table: actions pinned by SHA (rule stated, none pasted), no `latest`, Pages permissions on the deploy job only, no configure-pages. Pages setup uses POST to create and PUT to update; the link check reads the deployed site; Docusaurus caches npm; the PR paths note mkdocs.yml; the MkDocs layout is noted; the Hugo mermaid snippet is gone."
+version_notes: "v1.1.0: Appendix B is one workflow plus an SSG table: actions pinned by SHA (rule stated, none pasted), no `latest`, Pages permissions on the deploy job only, no configure-pages. Pages setup uses POST to create and PUT to update; the link check reads the deployed site; Docusaurus caches npm; the PR paths note mkdocs.yml; the MkDocs layout is noted; the Hugo mermaid snippet is gone; the link check takes the site URL, custom domains included."
 breaking_changes: []
 ---
 # Documentation Site Setup
@@ -352,7 +352,7 @@ flowchart TD
 
 ```bash
 # Check the deployed site: links carry the /PROJECT/ base, so a local build served at root misreports them
-npx linkinator https://USER.github.io/PROJECT/ --recurse
+npx linkinator "$SITE_URL" --recurse   # https://USER.github.io/PROJECT/ or your custom domain
 ```
 
 ---

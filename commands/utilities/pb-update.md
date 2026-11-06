@@ -8,7 +8,7 @@ execution_pattern: "sequential"
 related_commands: ['pb-doctor', 'pb-storage', 'pb-setup', 'pb-security']
 last_reviewed: "2026-11-06"
 version: "1.1.0"
-version_notes: "v1.1.0: Tiers re-cut by mechanism (tracked, named, platform) with no semver claims; pip goes through venv or pipx, `--break-system-packages` last; nvm is sourced before use; the update script survives `brew doctor` warnings; Platform is macOS; the script sources nvm and shows pipx and rustup failures."
+version_notes: "v1.1.0: Tiers re-cut by mechanism (tracked, named, platform) with no semver claims; pip goes through venv or pipx, `--break-system-packages` last; nvm is sourced before use; the update script survives `brew doctor` warnings; Platform is macOS; the script sources nvm and shows pipx and rustup failures; a failed nvm source prints instead of ending the script."
 breaking_changes: []
 ---
 # Update All Tools
@@ -358,7 +358,7 @@ echo "=== Homebrew ==="
 brew update && brew upgrade && brew cleanup
 
 echo -e "\n=== npm globals ==="
-[ -s "${NVM_DIR:-$HOME/.nvm}/nvm.sh" ] && . "${NVM_DIR:-$HOME/.nvm}/nvm.sh"
+[ -s "${NVM_DIR:-$HOME/.nvm}/nvm.sh" ] && { . "${NVM_DIR:-$HOME/.nvm}/nvm.sh" || echo "nvm: sourcing failed"; }
 npm update -g
 
 echo -e "\n=== pipx ==="

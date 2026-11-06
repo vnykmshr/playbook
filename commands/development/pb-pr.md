@@ -5,10 +5,10 @@ category: "development"
 difficulty: "advanced"
 model_hint: "sonnet"
 execution_pattern: "sequential"
-related_commands: ['pb-commit', 'pb-cycle', 'pb-review-code', 'pb-ship']
-last_reviewed: "2026-11-05"
+related_commands: ['pb-start', 'pb-commit', 'pb-cycle', 'pb-review-code', 'pb-ship']
+last_reviewed: "2026-11-06"
 version: "1.2.0"
-version_notes: "v1.2.0: Small-PR body is one sentence of what plus upgrader impact; the drafted title and body are checked against the register before the PR opens."
+version_notes: "v1.2.0: Small-PR body is one sentence of what plus upgrader impact; the drafted title and body are checked against the register before the PR opens; Related lists /pb-start."
 breaking_changes: []
 ---
 # Quick PR Creation
@@ -177,6 +177,7 @@ Before merging:
 
 ## Related Commands
 
+- `/pb-start` - Begin the work this PR closes (the ritual's first step)
 - `/pb-commit` - Craft atomic commits before creating PR
 - `/pb-cycle` - Self-review and peer review workflow
 - `/pb-review-code` - Code review checklist for reviewers

@@ -8,7 +8,7 @@ execution_pattern: "sequential"
 related_commands: ['pb-deployment', 'pb-ship', 'pb-pr', 'pb-review-hygiene']
 last_reviewed: "2026-11-06"
 version: "1.4.0"
-version_notes: "v1.4.0: Tag message is the release title; dispatch deploy workflows on main and verify before tagging; notes and CHANGELOG entry checked against the register before the release step; run from /pb-ship, ship's Phase 2 reviews satisfy the Phase 1 review gates; one post-deploy watch, at least /pb-preflight's 15 minutes; the hotfix CHANGELOG entry goes in a version section, not after the link footer; Integration with Playbook section removed; dispatch before the tag block with run SHA checked; ship-run reviews satisfy only the matching gates; notes.md written in the release, unnamed title fallback."
+version_notes: "v1.4.0: Tag message is the release title; dispatch deploy workflows on main and verify before tagging; notes and CHANGELOG entry checked against the register before the release step; run from /pb-ship, ship's Phase 2 reviews satisfy the Phase 1 review gates; one post-deploy watch, at least /pb-preflight's 15 minutes; the hotfix CHANGELOG entry goes in a version section, not after the link footer; Integration with Playbook section removed; dispatch before the tag block with run SHA checked; ship-run reviews satisfy only the matching gates; notes.md written in the release, unnamed title fallback; the dispatch runs after the pull."
 breaking_changes: []
 ---
 # Release to Production
@@ -201,7 +201,7 @@ npm version X.Y.Z --no-git-tag-version
 
 ### Step 2.3: Create Git Tag
 
-If a deploy workflow can be dispatched by hand, run it on main and verify the result before tagging: the tag then publishes a build already seen working. `--ref` takes a branch, not a SHA, so check that the run's `headSha` equals `git rev-parse HEAD`.
+If a deploy workflow can be dispatched by hand, run it on main after the pull below and verify the result before tagging: the tag then publishes a build already seen working. `--ref` takes a branch, not a SHA, so check that the run's `headSha` equals `git rev-parse HEAD`.
 
 ```bash
 # Ensure on main branch with latest

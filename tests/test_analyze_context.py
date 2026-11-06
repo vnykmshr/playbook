@@ -253,6 +253,11 @@ class TestBranchCommitCount:
         state, _ = self._state(metadata_file)
         assert state["commit_count"] == 1
 
+    def test_main_counts_recent_history_not_a_branch(self, repo, metadata_file):
+        state, _ = self._state(metadata_file)
+        assert state["counted_from"] is None
+        assert state["commit_count"] == 6
+
     def test_detached_head_is_not_release(self, repo, tmp_path, metadata_file):
         self._feature_commit(repo, tmp_path)
         repo("switch", "-q", "--detach", "HEAD")

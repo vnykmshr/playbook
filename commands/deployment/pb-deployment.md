@@ -8,7 +8,7 @@ execution_pattern: "sequential"
 related_commands: ['pb-release', 'pb-patterns-deployment', 'pb-alex-infra', 'pb-incident', 'pb-observability']
 last_reviewed: "2026-11-06"
 version: "1.1.0"
-version_notes: "v1.1.0: Rollback trigger is the threshold stated in /pb-preflight 6.2; the smoke test reads a write back; Compose commands use `docker compose`, and the Compose deploy tags the build with the release and rollback sets the tag back; the smoke test PUTs a designated record; Integration with Playbook section removed."
+version_notes: "v1.1.0: Rollback trigger is the threshold stated in /pb-preflight 6.2; the smoke test reads a write back; Compose commands use `docker compose`, and the Compose deploy tags the build with the release and rollback sets the tag back; the smoke test PUTs a designated record; Integration with Playbook section removed; the rollback runs with --no-build."
 breaking_changes: []
 ---
 # Deploy to Environment
@@ -296,8 +296,8 @@ git tag -a deploy-[env]-$(date +%Y%m%d-%H%M) -m "Deployed to [env]"
 kubectl rollout undo deployment/[app-name]
 kubectl rollout status deployment/[app-name]
 
-# Docker Compose: set TAG back to the previous release; no --build
-TAG=vX.Y.Y docker compose -f docker-compose.prod.yml up -d
+# Docker Compose: set TAG back to the previous release; --no-build fails if that image is gone
+TAG=vX.Y.Y docker compose -f docker-compose.prod.yml up -d --no-build
 
 # Platform (Fly.io)
 flyctl releases list --app [app-name]
