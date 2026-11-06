@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v2.36.0] - 2026-11-06
+
 v2.36.0 puts one daily loop in every command and doc, fixes samples that failed when run, and settles rules that two commands stated differently.
 
 **After upgrading:** `git pull`, then regenerate `~/.claude/CLAUDE.md` with `/pb-claude-global`.
@@ -2192,6 +2194,7 @@ When releasing a new version:
 
 ---
 
+[v2.36.0]: https://github.com/vnykmshr/playbook/releases/tag/v2.36.0
 [v2.35.0]: https://github.com/vnykmshr/playbook/releases/tag/v2.35.0
 [v2.34.0]: https://github.com/vnykmshr/playbook/releases/tag/v2.34.0
 [v2.33.0]: https://github.com/vnykmshr/playbook/releases/tag/v2.33.0
