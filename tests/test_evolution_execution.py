@@ -213,28 +213,6 @@ class TestEvolutionReadiness:
             + "\n".join(f"  {m}" for m in missing)
         )
 
-    def test_related_commands_not_excessive(self):
-        """Related commands should be limited (prevents link decay)."""
-        files = get_all_command_files()
-        over_limit = []
-
-        for filepath in files:
-            content = filepath.read_text()
-            related = extract_related_commands(content)
-            # Most commands: ≤5 related. Hub commands: ≤10 (pb-patterns indexes all sub-patterns).
-            limit = 10 if "pb-patterns.md" in filepath.name else 5
-
-            if len(related) > limit:
-                over_limit.append(f"{filepath.name}: {len(related)} related (limit {limit})")
-
-        assert not over_limit, (
-            f"Too many related commands:\n" + "\n".join(f"  {o}" for o in over_limit)
-        )
-
-
-class TestEvolutionDependencies:
-    """Ensure evolution won't break command dependencies."""
-
     def test_bidirectional_command_references_exist(self):
         """If A references B, B should exist."""
         template_files = {"pb-new-playbook.md"}

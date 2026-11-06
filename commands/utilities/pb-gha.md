@@ -5,7 +5,7 @@ category: "utilities"
 difficulty: "intermediate"
 model_hint: "sonnet"
 execution_pattern: "sequential"
-related_commands: ['pb-doctor', 'pb-debug', 'pb-review-hygiene', 'pb-release', 'pb-review-tests']
+related_commands: ['pb-debug', 'pb-doctor', 'pb-review-hygiene', 'pb-release', 'pb-review-tests']
 last_reviewed: "2026-11-05"
 version: "1.1.0"
 version_notes: "v1.1.0: Integration with Other Commands removed; /pb-review-tests joins Related Commands for flaky-test follow-up."

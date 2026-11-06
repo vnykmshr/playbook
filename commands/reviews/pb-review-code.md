@@ -5,7 +5,7 @@ category: "reviews"
 difficulty: "advanced"
 model_hint: "opus"
 execution_pattern: "sequential"
-related_commands: ['pb-review', 'pb-review-hygiene', 'pb-review-tests', 'pb-security', 'pb-cycle']
+related_commands: ['pb-cycle', 'pb-review', 'pb-review-hygiene', 'pb-review-tests', 'pb-security']
 last_reviewed: "2026-11-05"
 version: "2.4.0"
 version_notes: "v2.4.0: Spaced double hyphens replaced. Integration with Playbook section removed."

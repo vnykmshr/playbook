@@ -1031,15 +1031,15 @@ class TestRelatedCommands:
         mismatched = []
         for path in get_command_files():
             text = path.read_text()
-            front = set(parse_front_matter(text).get("related_commands") or [])
-            body = set(md_read.related_commands(text))
+            front = parse_front_matter(text).get("related_commands") or []
+            body = md_read.related_commands(text)
             if front != body:
-                mismatched.append(f"{path.name}: front only {sorted(front - body)}, body only {sorted(body - front)}")
+                mismatched.append(f"{path.name}: front {front}, body {body}")
         assert not mismatched, "Related Commands differ between front matter and body:\n  " + "\n  ".join(mismatched)
 
     def test_related_names_read_from_the_section_only(self):
         text = (
-            "## Related Commands\n\n- `/pb-a` - one\n- `/pb-b` - two\n\n---\n\n"
+            "## Related Commands\n\n- `/pb-a` - one\n* `/pb-b [PR]` - two\n\n"
             "```markdown\n## Related Commands\n\n- `/pb-sample` - not this file's\n```\n"
         )
         assert md_read.related_commands(text) == ["pb-a", "pb-b"]
@@ -1052,30 +1052,6 @@ class TestRelatedCommands:
         assert get_related_commands_count(empty_last) == 1
         empty_parent = "## Related Commands\n\n-\n  - `/pb-a` - one\n"
         assert get_related_commands_count(empty_parent) == 1
-
-    def test_front_matter_related_commands_within_limits(self):
-        """The limit applies to both lists; until now only one was counted.
-
-        get_related_commands_count parses the `## Related Commands` body
-        section, so the front-matter field could grow past the ceiling with
-        every gate green -- which it did, reaching 7 against a limit of 5.
-        """
-        over_limit = []
-        for path in get_command_files():
-            match = re.search(
-                r"^related_commands:\s*\[(.*?)\]", path.read_text(), re.MULTILINE | re.DOTALL
-            )
-            if not match:
-                continue
-            count = len(re.findall(r"'([^']*)'", match.group(1)))
-            limit = HUB_RELATED_LIMIT if path.name in HUB_COMMANDS else RELATED_LIMIT
-            if count > limit:
-                over_limit.append(f"{path.name} ({count}/{limit})")
-        assert not over_limit, (
-            "Over front-matter related_commands limit: "
-            + ", ".join(over_limit)
-            + "\nThe body section is counted separately; both lists share the limit."
-        )
 
     def test_patterns_hub_names_every_family(self):
         """The hub's selection tree and Related list each name every pb-patterns-* child.
@@ -1350,20 +1326,19 @@ class TestRegisterRuleReference:
 
     # A length rule restated outside the register drifts from it; the looser copy wins.
     LENGTH_RULE = re.compile(r"\b(3\s*(-|–|to)\s*5\s+sentences|(2|two)\s+short\s+lines)\b", re.IGNORECASE)
-    REGISTER_HOME = "pb-claude-global.md"
 
     @pytest.mark.parametrize("text", ["~3-5 sentences", "3 to 5 sentences", "at most 2 short lines", "two short lines"])
     def test_length_rule_pattern_matches(self, text):
         assert self.LENGTH_RULE.search(text)
 
-    def test_length_rules_live_only_in_the_register(self):
+    def test_no_command_body_states_a_length_ceiling(self):
+        """Bodies only: version_notes may name the ceiling they removed."""
         restated = [
-            f"{p.name}:{n}"
-            for p in get_command_files() if p.name != self.REGISTER_HOME
-            for n, line in enumerate(p.read_text().splitlines(), 1)
-            if self.LENGTH_RULE.search(line)
+            f"{p.name}: {m.group(0)!r}"
+            for p in get_command_files()
+            if (m := self.LENGTH_RULE.search(split_front_matter(p.read_text())[1]))
         ]
-        assert not restated, f"Length rules restated outside {self.REGISTER_HOME}; point to the register instead: {restated}"
+        assert not restated, f"Length ceilings in command bodies; point to the register instead: {restated}"
 
 
 class TestRecapArchiveCoherence:

@@ -71,7 +71,7 @@ def fence_problems(text: str) -> list[tuple[int, int, str]]:
 
 
 def related_commands(text: str) -> list[str]:
-    """Names of the `- `/pb-...`` items under the `## Related Commands` heading, up to the next h1, h2 or rule."""
+    """Names of the `/pb-...` list items under the `## Related Commands` heading, up to the next h1, h2 or rule."""
     toks = tokens(text)
     names, inside = [], False
     for i, t in enumerate(toks):
@@ -79,8 +79,8 @@ def related_commands(text: str) -> list[str]:
             inside = t.tag == "h2" and toks[i + 1].content.startswith("Related Commands")
         elif t.type == "hr":
             inside = False
-        elif inside and t.type == "list_item_open" and t.markup == "-":
-            if toks[i + 1].type == "paragraph_open" and (m := re.match(r"`/(pb-[a-z0-9-]+)`", toks[i + 2].content)):
+        elif inside and t.type == "list_item_open":
+            if toks[i + 1].type == "paragraph_open" and (m := re.match(r"`/(pb-[a-z0-9-]*)[^`]*`", toks[i + 2].content)):
                 names.append(m.group(1))
     return names
 
