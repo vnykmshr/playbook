@@ -182,11 +182,11 @@ This integration is woven throughout the playbook. Most commands reference both.
 PLAN                    DEVELOP                    RELEASE
 │                       │                          │
 ├─ /pb-plan             ├─ /pb-start               ├─ /pb-release
-├─ /pb-adr              │   /pb-cycle (iterate)    ├─ /pb-deployment
-├─ /pb-patterns         │   ├─ /pb-testing        └─ Verify in
-├─ /pb-observability    │   ├─ /pb-security          production
-└─ /pb-performance      │   └─ /pb-standards
-                        ├─ /pb-commit
+├─ /pb-adr              │   code                   ├─ /pb-deployment
+├─ /pb-patterns         │   /pb-review (commits)   └─ Verify in
+├─ /pb-observability    │   ├─ /pb-testing           production
+└─ /pb-performance      │   ├─ /pb-security
+                        │   └─ /pb-standards
                         └─ /pb-pr (+ reviews)
 ```
 

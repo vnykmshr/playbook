@@ -6,9 +6,9 @@ difficulty: "beginner"
 model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-claude-project', 'pb-greenfield', 'pb-start', 'pb-resume', 'pb-onboarding']
-last_reviewed: "2026-11-05"
+last_reviewed: "2026-11-06"
 version: "1.1.0"
-version_notes: "v1.1.0: The SDLC flow names the daily loop, and the release step hands off to /pb-release, which tags after CI is green; work tiers defer to /pb-guide; the line saying /pb-start reads the working context is gone."
+version_notes: "v1.1.0: The SDLC flow names the daily loop, and the release step hands off to /pb-release, which tags after CI is green; work tiers defer to /pb-guide; the line saying /pb-start reads the working context is gone; the daily-loop line says Steps 2-5."
 breaking_changes: []
 ---
 # [Project Name] Working Context
@@ -140,7 +140,7 @@ make rollback             # Restore previous images
 
 **Philosophy:** Stay committed to full SDLC flow - no shortcuts. Strive for bug-free, quality releases.
 
-**Daily loop:** `/pb-start` → code → `/pb-review` (commits) → `/pb-pr`. Steps 2-6 below are what that loop covers.
+**Daily loop:** `/pb-start` → code → `/pb-review` (commits) → `/pb-pr`. Steps 2-5 below are what that loop covers.
 
 > **Work Tiers:** see `pb-guide` for tier definitions, gates, and checklists.
 

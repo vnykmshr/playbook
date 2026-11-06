@@ -1,6 +1,6 @@
 # Engineering Playbook
 
-> Structured engineering playbook for AI-assisted development. Covers the SDLC from planning through production operations. Markdown-based, tool-adaptable.
+> Structured Markdown commands for AI-assisted development. Covers the SDLC from planning through production operations. Tool-adaptable.
 
 Two foundational commands anchor all others: `/pb-preamble` for how to collaborate, and `/pb-design-rules` for what to build. Daily rhythm: `/pb-start` to begin, code, `/pb-review` to self-review and commit, `/pb-pr` when peer review is needed. Specialized commands handle planning, review, deployment, incident response, and ongoing evolution.
 

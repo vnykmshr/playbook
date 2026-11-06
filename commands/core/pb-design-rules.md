@@ -6,14 +6,14 @@ difficulty: "beginner"
 model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-preamble', 'pb-adr', 'pb-patterns', 'pb-review-hygiene', 'pb-standards']
-last_reviewed: "2026-11-05"
+last_reviewed: "2026-11-06"
 version: "1.3.2"
-version_notes: "v1.3.2: PR review routes to /pb-review-code; /pb-review-hygiene is the periodic codebase review. The opening line is the Mindset and cites /pb-preamble."
+version_notes: "v1.3.2: PR review routes to /pb-review-code; /pb-review-hygiene is the periodic codebase review; the Mindset drops its framework claim. The opening line is the Mindset and cites /pb-preamble."
 breaking_changes: []
 ---
 # Design Rules: Core Technical Principles
 
-**Mindset:** `/pb-preamble` tells us HOW teams think together. Design rules tell us WHAT we build. Together, they form the complete framework for engineering excellence.
+**Mindset:** `/pb-preamble` tells us HOW teams think together. Design rules tell us WHAT we build.
 
 **Resource Hint:** sonnet - Reference material for applying established design principles.
 

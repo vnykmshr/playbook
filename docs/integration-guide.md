@@ -136,7 +136,7 @@ INCIDENT DETECTED
    └─ Document in /pb-context
 
 PREVENT REPEAT
-├─ /pb-cycle                 ← Implement prevention fixes
+├─ /pb-start                 ← Implement prevention fixes
 ├─ /pb-testing               ← Add regression tests
 └─ /pb-observability         ← Improve alerting
 ```
@@ -383,24 +383,6 @@ ONGOING: Growth
 ---
 
 ## Summary: Playbook as Unified System
-
-### Core Principle
-
-The commands form a **unified SDLC framework**. Use them **in combination**, not isolation:
-
-```
-ISOLATED:
-[NO] /pb-cycle alone
-[NO] /pb-security alone
-[NO] /pb-testing alone
-[NO] /pb-observability alone
-
-EFFECTIVE:
-[YES] /pb-cycle WITH /pb-testing, /pb-standards, /pb-security
-[YES] /pb-plan WITH /pb-adr, /pb-patterns, /pb-observability
-[YES] /pb-incident WITH /pb-observability, /pb-deployment, /pb-adr
-[YES] /pb-onboarding WITH /pb-knowledge-transfer, /pb-guide, /pb-standards
-```
 
 ### Key Relationships
 

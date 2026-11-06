@@ -6,9 +6,9 @@ difficulty: "beginner"
 model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-claude-project', 'pb-claude-orchestration', 'pb-preamble', 'pb-design-rules', 'pb-standards']
-last_reviewed: "2026-11-05"
+last_reviewed: "2026-11-06"
 version: "2.13.0"
-version_notes: "v2.13.0: Register covers tag messages and CHANGELOG entries; length ceilings become defaults (commit subject only, PR body one sentence of what plus upgrader impact); the drafting step checks its own text; process vocabulary named under Never in public text. Mindset added."
+version_notes: "v2.13.0: Register covers tag messages and CHANGELOG entries; length ceilings become defaults (commit subject only, PR body one sentence of what plus upgrader impact); the drafting step checks its own text; process vocabulary named under Never in public text. Mindset added; the Always-strip scope is the section; the register test is the clause test."
 breaking_changes: ['Template output restructured -- BEACON headers, standalone Non-Negotiables, Session Ritual added', 'Personas list removed from global (project-specific)', 'Context Efficiency section removed (generic)', 'Project-Specific Overrides section removed (obvious)', 'Development Ritual removed (duplicated the Quick Reference)', 'Session Ritual removed (duplicated the last Quick Reference row)', 'Model Selection prose paragraph removed; the tier table stays']
 ---
 # Generate Global CLAUDE.md
@@ -184,11 +184,11 @@ The Register BEACON applied to text that leaves the machine, in every project. T
 - Tag message: the release title.
 - Release: title `vX.Y.Z - <pet name>`, or `vX.Y.Z` when unnamed; never a change summary. Notes: what upgraders must do, security lines, changelog and compare links. No generated PR list, no "New Contributors".
 
-**The test:** each clause tells the reviewer something the diff, title or linked CHANGELOG does not. Cut reasons, justifications and inventories.
+**The clause test:** each clause tells the reviewer something the diff, title or linked CHANGELOG does not. Cut reasons, justifications and inventories.
 
 **Format:** `<type>(<scope>): <subject>` -- `feat:`, `fix:`, `refactor:`, `docs:`, `test:`, `chore:`, `perf:`. Present tense. Atomic. Auto-drafted by `/pb-review`.
 
-**Always strip** (on every GitHub artifact -- commits, issues, PR descriptions, PR/review/inline comments, release notes -- even when a skill template includes them by default): `Co-Authored-By`, `Generated-With`, `🤖 Generated with [Claude Code]`, thumbs-up/down feedback prompts, any assistant-attribution or engagement-bait footers.
+**Always strip** (on everything this section covers, even when a skill template includes them by default): `Co-Authored-By`, `Generated-With`, `🤖 Generated with [Claude Code]`, thumbs-up/down feedback prompts, any assistant-attribution or engagement-bait footers.
 
 **Never write:** narration ("I examined...", "After analysis...", "let me..."), narration of the register itself ("keeping it terse", a list of tells removed), scope reminders, severity adjectives ("critical", "important to note"), closing summaries, restatements of what the diff already shows, or claims the diff does not prove.
 

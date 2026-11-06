@@ -5,10 +5,10 @@ category: "development"
 difficulty: "intermediate"
 model_hint: "sonnet"
 execution_pattern: "interactive"
-related_commands: ['pb-review', 'pb-commit', 'pb-pause', 'pb-resume', 'pb-plan']
-last_reviewed: "2026-11-05"
+related_commands: ['pb-review', 'pb-pr', 'pb-pause', 'pb-resume', 'pb-plan']
+last_reviewed: "2026-11-06"
 version: "2.3.3"
-version_notes: "v2.3.3: The ritual is README's: /pb-start, code, /pb-review (which commits), /pb-pr; /pb-commit is the manual path. The size signal sets review depth and is not /pb-guide's change tier."
+version_notes: "v2.3.3: The ritual is README's: /pb-start, code, /pb-review (which commits), /pb-pr; /pb-commit is the manual path. The size signal sets review depth and is not /pb-guide's change tier; Related lists /pb-pr in place of /pb-commit."
 breaking_changes: ["Replaced detailed pre-start checklist with 3-4 adaptive scope questions. Old commands pb-cycle/pb-review-code merged into /pb-review. See MIGRATION section."]
 ---
 # Start Development Work
@@ -153,7 +153,7 @@ You don't need to think about this.
 ## Related Commands
 
 - `/pb-review` - Quality gate (the second part of the ritual)
-- `/pb-commit` - Manual commit (`/pb-review` usually commits)
+- `/pb-pr` - Open the PR (the third part of the ritual)
 - `/pb-pause` - Pause work, save context
 - `/pb-resume` - Get back into context
 - `/pb-plan` - Plan architecture before starting (optional, for complex work)

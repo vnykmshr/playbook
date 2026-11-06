@@ -7,7 +7,7 @@ Common questions about the Engineering Playbook.
 ## Getting Started
 
 ### Q: What is the Engineering Playbook?
-**A:** Structured Markdown commands for AI-assisted development, plus guides that codify how to approach development work. It covers planning, development, code review, release, and team operations. It's not a tool, but a structured process that reduces friction and maintains quality at every step.
+**A:** Structured Markdown commands for AI-assisted development, plus guides that codify how to approach development work. It covers planning, development, code review, release, and team operations.
 
 ### Q: Do I have to use all commands?
 **A:** No. Start with the commands that address your current challenges. Most teams begin with the daily ritual: `/pb-start`, `/pb-review` and `/pb-pr`. You can adopt others gradually as you need them.
@@ -47,6 +47,7 @@ If the directory doesn't exist, create it and re-run the install script. If syml
 ./scripts/uninstall.sh
 ```
 This removes the playbook's links under `~/.claude/`: commands, skills and helper scripts.
+The gate hook copy at `~/.claude/hooks/external-action-gate.sh` and its `settings.json` entry stay; remove both by hand to turn the gate off.
 
 ### Q: Can I install the playbook in multiple locations?
 **A:** Yes. Each playbook installation is independent. You can have different playbook versions in different directories.
@@ -86,7 +87,7 @@ Don't commit every 5 lines; don't wait until end-of-day. Commit logically.
 ## Code Review
 
 ### Q: Who should do code review?
-**A:** A senior engineer perspective is ideal for `/pb-cycle` peer review. They should understand:
+**A:** A senior engineer perspective is ideal for PR review (`/pb-pr`). They should understand:
 - System architecture and patterns
 - Correctness and edge cases
 - Maintainability and naming
@@ -132,7 +133,7 @@ Use `/pb-testing` for detailed guidance.
 - **Test-Alongside**: Write code and tests together
 - **Test-After**: Code first, then thorough tests
 
-The playbook requires tests before `/pb-cycle` peer review. Choose the approach that works for your team.
+The playbook requires tests before PR review (`/pb-pr`). Choose the approach that works for your team.
 
 ### Q: How do I handle flaky tests?
 **A:** Flaky tests are technical debt. If you encounter a flaky test:

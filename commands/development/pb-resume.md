@@ -6,9 +6,9 @@ difficulty: "advanced"
 model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-start', 'pb-pause', 'pb-cycle', 'pb-review-incoming']
-last_reviewed: "2026-11-05"
+last_reviewed: "2026-11-06"
 version: "1.12.0"
-version_notes: "v1.12.0: Spaced double hyphens replaced. Step 0c sends durable notes to the home /pb-pause Step 0 assigns, instead of restating two of its three homes."
+version_notes: "v1.12.0: Spaced double hyphens replaced. Step 0c sends durable notes to the home /pb-pause Step 0 assigns, instead of restating two of its three homes; the todos/ default-home sentence is gone."
 breaking_changes: ['Step 0b changes from ACT to CLASSIFY -- standard mode no longer applies fixes or commits while surfacing the recap; the SURFACE-ACT-ARCHIVE model becomes SURFACE-ARCHIVE', 'Standard mode gains a terminal Step 5 and ends there; deep-mode steps renumber 5-6 to 6-7', 'Quick Commands section removed -- every row duplicated a command already in Steps 1-3']
 ---
 # Resume Development Work
@@ -91,7 +91,7 @@ A finding is a claim about what should change. Reading it is not the same as bei
 2. **If the append fails:** leave the recap in pause notes, flag the error. Do not strip.
 3. **Strip from pause notes** only after confirming the archive write succeeded. Strip means remove the body and leave a one-line pointer to the archive - not a comment marker around retained text.
 
-Session notes and lesson notes are position and reflection, not tracked artifacts; anything durable goes to the home `/pb-pause` Step 0 assigns it. `todos/` is the default home because it already carries the pause notes they continue and inherits its gitignore - but a project whose archive lives outside the repo entirely (a Claude Code auto-memory directory, for instance) already satisfies that, and `memory/` in such a project is not the repo directory this rule was written about.
+Session notes and lesson notes are position and reflection, not tracked artifacts; anything durable goes to the home `/pb-pause` Step 0 assigns it.
 
 ---
 

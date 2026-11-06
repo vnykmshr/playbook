@@ -21,13 +21,13 @@ Examples:
 ### MAJOR Version (breaking changes)
 
 Bump MAJOR when:
-- **Removed sections** - Command has fewer sections than before (requires user adaptation)
+- **Removed invocation** - The command name, a flag or argument, or a step number or heading another command cites disappears (requires user adaptation)
 - **Changed scope/purpose** - Command does something fundamentally different
 - **Breaking API** - Command's structure or inputs/outputs change significantly
 - **Replaced** - Command is replaced by another (migration path required)
 
 Examples triggering major bump:
-- Remove "Outcome Clarification" from pb-start → 2.0.0
+- Renumber a step that another command cites → 2.0.0
 - Merge pb-security and pb-hardening into single command → 2.0.0
 - Change pb-cycle from sequential to parallel-only execution → 2.0.0
 
@@ -39,6 +39,7 @@ Bump MINOR when:
 - **New examples** - Added concrete examples or code snippets
 - **Related commands updated** - New cross-references added
 - **Reorganization** - Content reorganized for clarity (same content, different structure)
+- **Removed content** - Sections or examples nothing invokes or cites, however many
 
 Examples triggering minor bump:
 - Add "Philosophy" section to design rules → 1.1.0
@@ -116,8 +117,8 @@ When a command has a MAJOR version bump (breaking change):
 ### Step 1: Read the breaking_changes list
 Check what changed and how it affects you.
 
-### Step 2: Follow the migration path
-Each `breaking_changes` entry says what changed and how to adapt.
+### Step 2: Read what changed
+Each `breaking_changes` entry says what changed.
 
 ### Step 3: Update your workflows
 Adapt your processes to the new version.
@@ -126,7 +127,7 @@ Adapt your processes to the new version.
 
 ## Version Stability Guarantees
 
-A MAJOR bump marks a breaking change, and the command's `breaking_changes` lists it. MINOR and PATCH bumps never break existing usage, whatever the major number.
+A MAJOR bump marks a breaking change (something invoked or cited disappears), and the command's `breaking_changes` lists it. MINOR and PATCH bumps never remove what a caller invokes or cites, whatever the major number. A MINOR bump can cut reference content.
 
 ---
 
@@ -189,7 +190,7 @@ Command deleted entirely (only after long deprecation period).
 ### For Maintainers (Playbook Authors)
 - Bump version ONLY when making changes
 - Use clear version_notes describing what changed
-- Document breaking_changes for MAJOR bumps with migration paths
+- Document breaking_changes for MAJOR bumps, saying what changed
 - Announce deprecations 1-2 releases before removal
 - Never bump version without updating version_notes
 

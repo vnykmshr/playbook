@@ -6,9 +6,9 @@ difficulty: "advanced"
 model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-resume', 'pb-start', 'pb-standup', 'pb-handoff']
-last_reviewed: "2026-11-05"
+last_reviewed: "2026-11-06"
 version: "1.11.0"
-version_notes: "v1.11.0: The Integration section is gone."
+version_notes: "v1.11.0: The Integration section is gone; Step 3 archives old entries before writing the new one."
 breaking_changes: []
 ---
 # Pause Development Work
@@ -111,7 +111,9 @@ Skip this step if there are no active trackers.
 
 ### Step 3: Write Pause Notes + Context Hygiene
 
-**3a. Write pause entry:** replace contents of `todos/pause-notes.md`:
+**3a. Archive old entries:** before overwriting, move any existing entries in pause-notes to `todos/done/pause-notes-archive-YYYY-MM-DD.md`.
+
+**3b. Write pause entry:** replace contents of `todos/pause-notes.md`:
 
 ```markdown
 # Pause Notes
@@ -150,8 +152,6 @@ Patterns / playbook feedback:
 ```
 
 Target: ~30-40 lines. Be specific about what's next. Skip sections that don't apply. The Session Recap section is written by the assistant, not the user: it is a thorough analysis, not a quick skim.
-
-**3b. Archive old entries:** if pause-notes has entries beyond the latest, move old entries to `todos/done/pause-notes-archive-YYYY-MM-DD.md`.
 
 **3c. Rescue scratch links:** the session scratch directory your tool gives you need not outlive the session, and a link into it breaks with it. Grep the notes that outlive the session (pause notes, cursors, briefs) for that path; copy each file it points at into `todos/` and repoint the link.
 
