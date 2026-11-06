@@ -6,9 +6,9 @@ difficulty: "advanced"
 model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-greenfield', 'pb-repo-enhance', 'pb-review-hygiene']
-last_reviewed: "2026-11-05"
+last_reviewed: "2026-11-06"
 version: "1.0.1"
-version_notes: "v1.0.1: Step 3 moves files that exist (root docs into docs/, GitHub's root files stay) instead of two no-op moves; memory/ and .claude/ join the protected folders. Mindset labelled."
+version_notes: "v1.0.1: Step 3 moves files that exist (root docs into docs/, GitHub's root files stay) instead of two no-op moves; memory/ and .claude/ join the protected folders. Mindset labelled. The move uses `git mv` and keeps LICENSE.md, CLAUDE.md and AGENTS.md at the root."
 breaking_changes: []
 ---
 # Organize Repository Structure
@@ -136,11 +136,12 @@ mkdir -p docs scripts examples assets
 # Example moves (adjust for your project)
 mv *.sh scripts/           # Shell scripts
 
-# Root markdown into docs/, except the files GitHub reads at the root
+# Root markdown into docs/, except the files GitHub and agents read at the root.
+# git mv refuses to overwrite and fails on an unmatched glob
 for f in *.md; do
   case "$f" in
-    README.md|CHANGELOG.md|CONTRIBUTING.md|CODE_OF_CONDUCT.md|SECURITY.md) ;;
-    *) mv "$f" docs/ ;;
+    README.md|LICENSE.md|CHANGELOG.md|CONTRIBUTING.md|CODE_OF_CONDUCT.md|SECURITY.md|CLAUDE.md|AGENTS.md) ;;
+    *) git mv "$f" docs/ ;;
   esac
 done
 ```

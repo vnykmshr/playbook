@@ -6,9 +6,9 @@ difficulty: "intermediate"
 model_hint: "opus"
 execution_pattern: "interactive"
 related_commands: ['pb-zero-stack', 'pb-claude-project', 'pb-context', 'pb-plan', 'pb-start']
-last_reviewed: "2026-11-05"
+last_reviewed: "2026-11-06"
 version: "2.0.2"
-version_notes: "v2.0.2: Spaced double hyphens replaced."
+version_notes: "v2.0.2: Spaced double hyphens replaced; the first-commit check reads staged names before committing."
 breaking_changes: ['Renamed from pb-repo-init - the old name no longer resolves', 'No longer emits a phase plan; that content moved to /pb-plan -> /pb-spec', 'Language directory trees removed - the ecosystem initializers own them']
 ---
 # New Project, End to End (Idea → Working Repo)
@@ -118,7 +118,7 @@ Voice and positioning are discovered by building, not declared at minute three. 
 - [ ] `.gitignore` covers `todos/` and `memory/`, and `.claude/` matches the solo-or-team call
 - [ ] `todos/1-working-context.md` exists (via `/pb-context`) - not just an empty `todos/`
 - [ ] `.claude/CLAUDE.md` exists (via `/pb-claude-project`, run *after* `/pb-context`) and isn't hollow
-- [ ] `git init`, and the first commit actually contains the source: `git ls-tree -r --name-only HEAD`. `git add -A` won't warn you: a bare `myapp` in `.gitignore` also matches `cmd/myapp/`, so root it as `/myapp`
+- [ ] `git init`, and the first commit actually contains the source: read `git diff --cached --name-only` before committing. `git add -A` won't warn you: a bare `myapp` in `.gitignore` also matches `cmd/myapp/`, so root it as `/myapp`
 - [ ] `/pb-resume` works in the new repo - actually run it, don't assume
 
 ---

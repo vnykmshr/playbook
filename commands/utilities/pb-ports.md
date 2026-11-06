@@ -6,9 +6,9 @@ difficulty: "advanced"
 model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-doctor', 'pb-debug', 'pb-storage']
-last_reviewed: "2026-11-05"
+last_reviewed: "2026-11-06"
 version: "1.1.0"
-version_notes: "v1.1.0: Every kill goes through one escalation in Step 4 (SIGTERM, check, then SIGKILL) on the listener only (`-sTCP:LISTEN`), so clients on the port survive. The kill quick commands, port-range and clean-slate loops, `pkill -f node` and the `killport` alias are gone."
+version_notes: "v1.1.0: Every kill goes through one escalation in Step 4 (SIGTERM, check, then SIGKILL) on the listener only (`-sTCP:LISTEN`), so clients on the port survive. The kill quick commands, port-range and clean-slate loops, `pkill -f node` and the `killport` alias are gone. Multi-PID `ps -p` and an empty `kill` are fixed."
 breaking_changes: []
 ---
 # Port Management
@@ -138,7 +138,7 @@ lsof -i :3000
 ps -f $(lsof -ti :3000 -sTCP:LISTEN)
 
 # Show process start time and command
-ps -p $(lsof -ti :3000 -sTCP:LISTEN) -o pid,lstart,command
+ps -p "$(lsof -ti :3000 -sTCP:LISTEN | paste -sd, -)" -o pid,lstart,command
 ```
 
 ---
@@ -151,11 +151,11 @@ One escalation for every kill: ask, check, then force. `-sTCP:LISTEN` selects th
 PORT=3000
 
 # 1. SIGTERM: the process can clean up
-kill $(lsof -ti :$PORT -sTCP:LISTEN)
+if PIDS=$(lsof -ti :$PORT -sTCP:LISTEN); then kill $(echo $PIDS); else echo "port $PORT free"; fi
 
 # 2. Check, then 3. SIGKILL (no cleanup) only if it is still listening
 sleep 2
-if PIDS=$(lsof -ti :$PORT -sTCP:LISTEN); then kill -9 $PIDS; else echo "port $PORT free"; fi
+if PIDS=$(lsof -ti :$PORT -sTCP:LISTEN); then kill -9 $(echo $PIDS); else echo "port $PORT free"; fi
 ```
 
 For several ports, run the same three steps per port.

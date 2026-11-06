@@ -6,16 +6,16 @@ difficulty: "intermediate"
 model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-repo-enhance', 'pb-repo-about', 'pb-repo-readme', 'pb-repo-organize']
-last_reviewed: "2026-11-05"
+last_reviewed: "2026-11-06"
 version: "1.1.0"
-version_notes: "v1.1.0: Fleet view scores each repo live; the Last Audited and Not audited columns are gone, since nothing stores past audits. Mindset cites /pb-preamble."
+version_notes: "v1.1.0: Fleet view scores each repo live; the Last Audited and Not audited columns are gone, since nothing stores past audits. Mindset cites /pb-preamble; the fleet list takes `--limit`; the Mindset prediction is softened."
 breaking_changes: []
 ---
 # Repository AI Discoverability Audit
 
 Audit a repository's visibility to AI coding agents and developer search.
 
-**Mindset:** AI agents are becoming the primary way developers discover libraries. A functionally strong library that scores poorly on machine-readable signals will never get recommended. This command measures the gap between code quality and discoverability, and surfaces what polish can fix vs. what requires usage evidence that polish alone cannot create. Apply `/pb-preamble` thinking: report the gap as measured, not as hoped.
+**Mindset:** AI agents are becoming the primary way developers discover libraries. A functionally strong library that scores poorly on machine-readable signals gets passed over. This command measures the gap between code quality and discoverability, and surfaces what polish can fix vs. what requires usage evidence that polish alone cannot create. Apply `/pb-preamble` thinking: report the gap as measured, not as hoped.
 
 **Resource Hint:** sonnet - structured audit with concrete rubrics, optional content drafting
 
@@ -236,7 +236,7 @@ gh repo edit owner/repo --add-topic topic1 --add-topic topic2
 
 ### Fleet View (--status mode)
 
-Scores each repo from `gh repo list {org}` on this run; no past audit is stored.
+Scores each repo from `gh repo list {org} --limit 200` on this run; no past audit is stored.
 
 ```
 ## AI Discoverability Status: {org}

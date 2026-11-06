@@ -6,9 +6,9 @@ difficulty: "advanced"
 model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-review-hygiene', 'pb-security', 'pb-repo-organize', 'pb-repo-enhance', 'pb-doctor']
-last_reviewed: "2026-11-05"
+last_reviewed: "2026-11-06"
 version: "1.1.0"
-version_notes: "v1.1.0: Samples fixed to run: ignored-file check uses `-ci`/`-oi`, the CI size check passes a clean tree, gitleaks uses `git`/`dir`, filter-repo starts from a fresh clone and re-adds origin, the fresh start archives history outside the tree. CI and pre-commit samples state the pin rule and a read-only token; the git add exception cites /pb-standards."
+version_notes: "v1.1.0: Samples fixed to run: ignored-file check uses `-ci`/`-oi`, the CI size check passes a clean tree, gitleaks uses `git`/`dir`, filter-repo starts from a fresh clone and re-adds origin, the fresh start archives history outside the tree. CI and pre-commit samples state the pin rule and a read-only token; the git add exception cites /pb-standards. CI sample has `on:` and `pull-requests: read`; pre-commit installs through pipx; staged names are read before the first commit."
 breaking_changes: []
 ---
 # Git Hygiene
@@ -319,8 +319,8 @@ mv .git ../repo-history.git
 # Initialize fresh
 git init -b main
 git add .                    # a fresh repo's first commit: the exception in /pb-standards
+git diff --cached --name-only    # read it for files that do not belong, before committing
 git commit -m "chore: fresh start (history archived)"
-git ls-tree -r --name-only HEAD   # read it for files that do not belong
 
 # Push to new remote (or same with force)
 git remote add origin <url>
@@ -370,7 +370,7 @@ Install hooks to catch issues before commit:
 
 ```bash
 # Using pre-commit framework
-pip install pre-commit
+pipx install pre-commit
 
 # .pre-commit-config.yaml
 cat > .pre-commit-config.yaml << 'EOF'
@@ -399,8 +399,11 @@ Pin each action to the full commit SHA of its current release, version in a trai
 
 ```yaml
 # GitHub Actions example
+on: [push, pull_request]
+
 permissions:
   contents: read
+  pull-requests: read   # gitleaks-action lists a PR's commits
 
 jobs:
   hygiene:

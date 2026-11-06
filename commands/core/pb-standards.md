@@ -6,9 +6,9 @@ difficulty: "beginner"
 model_hint: "sonnet"
 execution_pattern: "reference"
 related_commands: ['pb-preamble', 'pb-design-rules', 'pb-guide', 'pb-commit', 'pb-testing']
-last_reviewed: "2026-11-05"
+last_reviewed: "2026-11-06"
 version: "1.4.0"
-version_notes: "v1.4.0: Commit discipline states the one exception to never git add . (a fresh repo's first commit, then check the tree); SDLC Discipline calls /pb-release the separate release step rather than the cycle's close. Mindset labelled."
+version_notes: "v1.4.0: Commit discipline states the one exception to never git add . (a fresh repo's first commit, then check the tree); SDLC Discipline calls /pb-release the separate release step rather than the cycle's close. Mindset labelled; the first-commit check reads staged names before committing; SDLC Discipline names the ritual and /pb-cycle as the manual path."
 breaking_changes: []
 ---
 # Project Guidelines & Working Principles
@@ -234,11 +234,11 @@ MLP is a discipline, not a milestone. Build less. Care more.
 
 ## VIII. SDLC Discipline
 
-The cycle itself lives in `/pb-cycle` (develop, self-review, test, peer review, commit) and is entered by `/pb-start`; `/pb-release` is the separate release step. What follows is only what those commands do not already carry.
+The ritual is `/pb-start`, code, `/pb-review`, `/pb-pr`; `/pb-cycle` is the manual path (self-review, quality gates, peer review, commit), and `/pb-release` is the separate release step. What follows is only what those commands do not already carry.
 
 **Quality gates.** Lint, typecheck and tests all pass before the work proceeds, every iteration, regardless of size. Wire them to one command the project already has; the runner is a project choice, the gate is not.
 
-**Commit discipline.** One concern per commit, every commit deployable, conventional prefix, and **never `git add .`**: stage the specific files that belong together. The one exception is the first commit of a fresh repo: add everything, then read `git ls-tree -r --name-only HEAD` for files that do not belong. Commit after each meaningful unit of work, not at end of session.
+**Commit discipline.** One concern per commit, every commit deployable, conventional prefix, and **never `git add .`**: stage the specific files that belong together. The one exception is the first commit of a fresh repo: add everything, then read `git diff --cached --name-only` for files that do not belong before committing. Commit after each meaningful unit of work, not at end of session.
 
 **Command quality.** Every multi-step command carries a Definition of Done checklist. Execution gates on the boxes, not on a judgment that it feels done.
 

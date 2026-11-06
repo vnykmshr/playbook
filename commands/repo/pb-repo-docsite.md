@@ -6,9 +6,9 @@ difficulty: "advanced"
 model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-repo-enhance', 'pb-repo-readme', 'pb-documentation', 'pb-review-docs', 'pb-ship']
-last_reviewed: "2026-11-05"
+last_reviewed: "2026-11-06"
 version: "1.1.0"
-version_notes: "v1.1.0: Appendix B is one workflow plus an SSG table: actions pinned by SHA (rule stated, none pasted), no `latest`, Pages permissions on the deploy job only, no configure-pages. Pages setup uses POST to create and PUT to update; the link check reads the build output before deploy; the MkDocs layout is noted; the Hugo mermaid snippet is gone."
+version_notes: "v1.1.0: Appendix B is one workflow plus an SSG table: actions pinned by SHA (rule stated, none pasted), no `latest`, Pages permissions on the deploy job only, no configure-pages. Pages setup uses POST to create and PUT to update; the link check reads the deployed site; Docusaurus caches npm; the PR paths note mkdocs.yml; the MkDocs layout is noted; the Hugo mermaid snippet is gone."
 breaking_changes: []
 ---
 # Documentation Site Setup
@@ -351,8 +351,8 @@ flowchart TD
 ### Link Verification
 
 ```bash
-# Check the build output before it deploys (Hugo docs/public, MkDocs site, Docusaurus docs/build)
-npx linkinator docs/public --recurse
+# Check the deployed site: links carry the /PROJECT/ base, so a local build served at root misreports them
+npx linkinator https://USER.github.io/PROJECT/ --recurse
 ```
 
 ---
@@ -680,7 +680,7 @@ on:
     paths: ['docs/**', '.github/workflows/docs.yml']   # MkDocs: add 'mkdocs.yml'
   pull_request:
     branches: [main]
-    paths: ['docs/**']
+    paths: ['docs/**']   # MkDocs: add 'mkdocs.yml'
   workflow_dispatch:
 
 permissions:
@@ -728,7 +728,7 @@ jobs:
 |-----------|------------|---------------|------------------|
 | Hugo | `peaceiris/actions-hugo@<sha>` with `extended: true` and `hugo-version` set to a release number, never `latest` | `hugo --minify --source docs` | `./docs/public` |
 | MkDocs | `actions/setup-python@<sha>`, then `pip install mkdocs mkdocs-material mkdocs-mermaid2-plugin` | `mkdocs build` | `./site` |
-| Docusaurus | `actions/setup-node@<sha>` with a current LTS `node-version` and `cache-dependency-path: docs/package-lock.json`, then `cd docs && npm ci` | `cd docs && npm run build` | `./docs/build` |
+| Docusaurus | `actions/setup-node@<sha>` with a current LTS `node-version`, `cache: 'npm'` and `cache-dependency-path: docs/package-lock.json`, then `cd docs && npm ci` | `cd docs && npm run build` | `./docs/build` |
 
 ---
 
