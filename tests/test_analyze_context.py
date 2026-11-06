@@ -156,7 +156,8 @@ class TestGitStateAnalysis:
             "M  file1.py\n?? file2.py\n",  # status
             "file2.py\n",  # staged
             "abc123\n",  # rev-parse origin/HEAD: the base exists
-            "commit1\ncommit2\ncommit3\n",  # log origin/HEAD..HEAD
+            "3\n",  # rev-list --count origin/HEAD..HEAD
+            "commit1\ncommit2\ncommit3\n",  # log -5 origin/HEAD..HEAD
             "file1.py\nfile2.py\n",  # diff
         ]
 
@@ -176,7 +177,8 @@ class TestGitStateAnalysis:
             "main\n",  # branch
             "",  # status (clean)
             "",  # staged
-            "commit1\n",  # log
+            "1\n",  # rev-list --count, capped at 10
+            "commit1\n",  # log -5
             "",  # diff
         ]
 
@@ -190,8 +192,8 @@ class TestGitStateAnalysis:
     @mock.patch("analyze_playbook_context.PlaybookContextAnalyzer._run_git_command")
     def test_analyze_git_state_no_changes(self, mock_git, metadata_file):
         """Test git state with no changes."""
-        # branch, status, staged, three failed base lookups, log, diff
-        mock_git.side_effect = ["feature/branch\n", "", "", "", "", "", "", ""]
+        # branch, status, staged, five failed base lookups, count, log, diff
+        mock_git.side_effect = ["feature/branch\n", "", "", "", "", "", "", "", "", "", ""]
 
         analyzer = PlaybookContextAnalyzer(metadata_file=metadata_file)
         analyzer.load_metadata()
@@ -203,11 +205,17 @@ class TestGitStateAnalysis:
 class TestBranchCommitCount:
     """A branch's commit count starts where it left the default branch."""
 
-    def test_new_branch_in_an_old_repo_is_not_finalize(self, tmp_path, monkeypatch, metadata_file):
+    @pytest.fixture
+    def repo(self, tmp_path, monkeypatch):
+        import os
         import subprocess
 
+        # The user's git config (signing, hooks, templates) must not reach the test or the analyzer.
+        monkeypatch.setenv("GIT_CONFIG_GLOBAL", os.devnull)
+        monkeypatch.setenv("GIT_CONFIG_NOSYSTEM", "1")
+
         def git(*args):
-            subprocess.run(["git", *args], cwd=tmp_path, check=True, capture_output=True)
+            return subprocess.run(["git", *args], cwd=tmp_path, check=True, capture_output=True, text=True).stdout
 
         git("init", "-q", "-b", "main")
         git("config", "user.email", "t@example.com")
@@ -216,19 +224,41 @@ class TestBranchCommitCount:
             (tmp_path / f"f{i}.txt").write_text(str(i))
             git("add", f"f{i}.txt")
             git("commit", "-q", "-m", f"c{i}")
+        monkeypatch.chdir(tmp_path)
+        return git
+
+    def _state(self, metadata_file):
+        analyzer = PlaybookContextAnalyzer(metadata_file=metadata_file)
+        analyzer.load_metadata()
+        state = analyzer._analyze_git_state()
+        return state, analyzer._detect_workflow_phase(state)
+
+    def _feature_commit(self, git, tmp_path):
         git("switch", "-q", "-c", "feature/x")
         (tmp_path / "new.py").write_text("x = 1\n")
         git("add", "new.py")
         git("commit", "-q", "-m", "start feature")
         (tmp_path / "new.py").write_text("x = 2\n")
-        monkeypatch.chdir(tmp_path)
 
-        analyzer = PlaybookContextAnalyzer(metadata_file=metadata_file)
-        analyzer.load_metadata()
-        state = analyzer._analyze_git_state()
-
+    def test_new_branch_in_an_old_repo_is_not_finalize(self, repo, tmp_path, metadata_file):
+        self._feature_commit(repo, tmp_path)
+        state, phase = self._state(metadata_file)
         assert state["commit_count"] == 1
-        assert analyzer._detect_workflow_phase(state) == "DEVELOP"
+        assert phase == "DEVELOP"
+
+    def test_remote_default_branch_wins_over_a_stale_local_main(self, repo, tmp_path, metadata_file):
+        repo("update-ref", "refs/remotes/origin/main", "HEAD")
+        self._feature_commit(repo, tmp_path)
+        repo("branch", "-f", "main", "HEAD~6")
+        state, _ = self._state(metadata_file)
+        assert state["commit_count"] == 1
+
+    def test_detached_head_is_not_release(self, repo, tmp_path, metadata_file):
+        self._feature_commit(repo, tmp_path)
+        repo("switch", "-q", "--detach", "HEAD")
+        state, phase = self._state(metadata_file)
+        assert state["branch"] == ""
+        assert phase != "RELEASE"
 
 
 class TestWorkflowPhaseDetection:

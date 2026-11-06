@@ -6,9 +6,9 @@ difficulty: "advanced"
 model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-start', 'pb-forge', 'pb-commit', 'pb-pr', 'pb-release']
-last_reviewed: "2026-11-05"
+last_reviewed: "2026-11-06"
 version: "2.1.0"
-version_notes: "v2.1.0: Example Output is a real run of the script; the other examples are labelled illustrative and carry no times. Four phases are detected, as the script does; branch names other than main or master change nothing; the commit count is the branch's own commits since the default branch. Recommended Workflow is the daily ritual, with hygiene and test reviews periodic; /pb-review replaces /pb-cycle in the comparison table; /pb-templates is SDLC and quality templates."
+version_notes: "v2.1.0: Example Output is a real run of the script; the other examples are labelled illustrative and carry no times. Four phases are detected, as the script does; branch names other than main or master change nothing; the commit count is the branch's own commits since the default branch (remote first), and a detached HEAD is not main. Recommended Workflow is the daily ritual, with hygiene and test reviews periodic; /pb-review replaces /pb-cycle in the comparison table; /pb-templates is SDLC and quality templates."
 breaking_changes: []
 ---
 # Recommend Next Playbook Command
@@ -286,13 +286,14 @@ DEVELOP and FINALIZE name the manual path. In the ritual, `/pb-review` commits a
 A real run on a branch of this repo (`python3 scripts/analyze-playbook-context.py`):
 
 ```text
+2026-11-06 03:08:28,244 - context-analyzer - INFO - Loaded metadata for 112 commands
 # Current Work State
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 **Branch**: `stabilize`
 **Phase**: FINALIZE
-**Changes**: 22 files changed (docs/)
-**Commits**: 10 recent commits
+**Changes**: 40 files changed (tests/, docs/, source/, ci/)
+**Commits**: 28 on this branch
 
 # Recommended Next Steps
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -301,19 +302,29 @@ A real run on a branch of this repo (`python3 scripts/analyze-playbook-context.p
    - Create pull request for integration
    - Confidence: 90% | Time: 5 min
 
-2. **`/pb-documentation`** — Writing Great Engineering Documentation
+2. **`/pb-testing`** — Advanced Testing Scenarios
+   - Test files changed, verify coverage
+   - Confidence: 88% | Time: 5 min
+
+3. **`/pb-documentation`** — Writing Great Engineering Documentation
    - Documentation changed, ensure clarity
    - Confidence: 75% | Time: 5 min
 
-3. **`/pb-commit`** — Commit (Usually Automatic)
+4. **`/pb-deployment`** — Deploy to Environment
+   - CI/CD workflow modified
+   - Confidence: 70% | Time: varies
+
+5. **`/pb-commit`** — Commit (Usually Automatic)
    - Organize work into logical commits
    - Confidence: 90% | Time: 45 min
 
 # Why These Commands?
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+• Both source and test files changed → Need full development cycle
 • Multiple commits → Time to organize and prepare for integration
 • Documentation updated → Ensure clarity and completeness
+• CI/CD modified → Review deployment impacts
 
 # Tips
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -357,7 +368,7 @@ Runs these git commands to understand your work:
 ```bash
 git branch --show-current    # Current branch
 git status --porcelain       # Modified files
-git log --oneline main..HEAD # This branch's commits
+git rev-list --count <base>..HEAD  # This branch's commits
 git diff --name-only         # Files changed
 ```
 
@@ -378,7 +389,7 @@ Maps your situation to one of 4 phases:
 - **FINALIZE** (5+ commits, or committed and clean)
 - **RELEASE** (on `main` or `master`)
 
-The commit count is the branch's own commits since it left the default branch (`origin/HEAD`, else `main`, else `master`).
+`<base>` is the first that exists of `origin/HEAD`, `origin/main`, `origin/master`, `main`, `master`. A detached HEAD is not `main`.
 
 ### 4. Recommendation Generation
 Uses your phase + file types to suggest commands:

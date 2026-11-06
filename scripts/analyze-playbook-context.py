@@ -76,9 +76,7 @@ class PlaybookContextAnalyzer:
         """Analyze current git state."""
         try:
             # Get current branch
-            branch = self._run_git_command("git branch --show-current").strip()
-            if not branch:
-                branch = "main"
+            branch = self._run_git_command("git branch --show-current").strip()  # empty when detached
 
             # Get changed files
             unstaged = self._run_git_command("git status --porcelain").strip()
@@ -90,10 +88,12 @@ class PlaybookContextAnalyzer:
             # Count this branch's own commits: HEAD's history includes everything already on the
             # default branch, which reads every branch of a repo with 5+ commits as FINALIZE.
             base = self._branch_base(branch)
-            log_range = f"{base}..HEAD" if base else "-10"
-            commits_output = self._run_git_command(f"git log --oneline {log_range}").strip()
-            commits = commits_output.split("\n") if commits_output else []
-            commit_count = len([c for c in commits if c.strip()])
+            count_range = f"{base}..HEAD" if base else "--max-count=10 HEAD"
+            count = self._run_git_command(f"git rev-list --count {count_range}").strip()
+            commit_count = int(count) if count.isdigit() else 0
+            recent_range = f"{base}..HEAD" if base else "HEAD"
+            commits_output = self._run_git_command(f"git log --oneline -5 {recent_range}").strip()
+            commits = [c for c in commits_output.split("\n") if c.strip()]
 
             # Get file diffs
             diff_files = self._run_git_command("git diff --name-only").strip()
@@ -105,7 +105,7 @@ class PlaybookContextAnalyzer:
                 "unstaged_changes": len(changed_files_unstaged) > 0,
                 "staged_changes": len(changed_files_staged) > 0,
                 "commit_count": commit_count,
-                "recent_commits": commits[:5],
+                "recent_commits": commits,
                 "diff_files": diff_files_list,
             }
         except Exception as e:
@@ -117,7 +117,7 @@ class PlaybookContextAnalyzer:
         """The default branch this branch's commits are counted from; None on it or when none exists."""
         if branch in ("main", "master"):
             return None
-        for ref in ("origin/HEAD", "main", "master"):
+        for ref in ("origin/HEAD", "origin/main", "origin/master", "main", "master"):
             if self._run_git_command(f"git rev-parse --verify --quiet {ref}").strip():
                 return ref
         return None
@@ -367,7 +367,7 @@ class PlaybookContextAnalyzer:
         lines.append("# Current Work State")
         lines.append("━" * 50)
         lines.append("")
-        lines.append(f"**Branch**: `{git_state.get('branch', 'unknown')}`")
+        lines.append(f"**Branch**: `{git_state.get('branch') or 'detached HEAD'}`")
         lines.append(f"**Phase**: {phase}")
 
         changed_count = len(git_state.get("changed_files", []))
@@ -380,7 +380,7 @@ class PlaybookContextAnalyzer:
             lines.append("**Changes**: None (clean working directory)")
 
         commit_count = git_state.get("commit_count", 0)
-        lines.append(f"**Commits**: {commit_count} recent commits")
+        lines.append(f"**Commits**: {commit_count} on this branch")
         lines.append("")
 
         # Recommendations
