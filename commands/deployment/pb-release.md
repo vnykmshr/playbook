@@ -8,7 +8,7 @@ execution_pattern: "sequential"
 related_commands: ['pb-deployment', 'pb-ship', 'pb-pr', 'pb-review-hygiene']
 last_reviewed: "2026-11-06"
 version: "1.4.0"
-version_notes: "v1.4.0: Tag message is the release title; dispatch deploy workflows on main and verify before tagging; notes and CHANGELOG entry checked against the register before the release step; run from /pb-ship, ship's Phase 2 reviews satisfy the Phase 1 review gates; one post-deploy watch, at least /pb-preflight's 15 minutes; the hotfix CHANGELOG entry goes in a version section, not after the link footer; Integration with Playbook section removed; dispatch before the tag block with run SHA checked; ship-run reviews satisfy only the matching gates; notes.md written in the release, unnamed title fallback; the dispatch runs after the pull."
+version_notes: "v1.4.0: Tag message is the release title; dispatch deploy workflows on main after the pull and verify the run at HEAD before tagging; notes and CHANGELOG entry checked against the register before the release step; run from /pb-ship, ship's Phase 2 reviews satisfy the Phase 1 review gates; one post-deploy watch, at least /pb-preflight's 15 minutes; the hotfix CHANGELOG entry goes in a version section, not after the link footer; Integration with Playbook section removed; ship-run reviews satisfy only the matching gates; notes.md written in the release, unnamed title fallback."
 breaking_changes: []
 ---
 # Release to Production
@@ -201,7 +201,7 @@ npm version X.Y.Z --no-git-tag-version
 
 ### Step 2.3: Create Git Tag
 
-If a deploy workflow can be dispatched by hand, run it on main after the pull below and verify the result before tagging: the tag then publishes a build already seen working. `--ref` takes a branch, not a SHA, so check that the run's `headSha` equals `git rev-parse HEAD`.
+If a deploy workflow can be dispatched by hand, the block runs it on main after the pull and checks the run before tagging: the tag then publishes a build already seen working. `--ref` takes a branch, not a SHA, so the check filters by `--commit`: wait until it prints `success`. It prints an empty line while the run is queued or running, and keeps doing so if main moved past your pull: pull again.
 
 ```bash
 # Ensure on main branch with latest
@@ -210,6 +210,10 @@ git pull origin main
 
 # Verify clean state
 git status  # Should be clean
+
+# Deploy dispatch, if the workflow takes one (deploy.yml stands for its file name)
+gh workflow run deploy.yml --ref main
+gh run list --workflow deploy.yml --event workflow_dispatch --commit "$(git rev-parse HEAD)" --json conclusion -q '.[0].conclusion'
 
 # CI check: tag only after CI is green on this exact commit (full SHA: a short one lists nothing)
 gh run list --commit "$(git rev-parse HEAD)" --json workflowName,createdAt,conclusion -q 'group_by(.workflowName) | map(max_by(.createdAt)) | .[].conclusion'

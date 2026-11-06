@@ -258,6 +258,22 @@ class TestBranchCommitCount:
         assert state["counted_from"] is None
         assert state["commit_count"] == 6
 
+    def test_label_names_the_base(self, repo, tmp_path, metadata_file):
+        repo("update-ref", "refs/remotes/origin/main", "HEAD")
+        self._feature_commit(repo, tmp_path)
+        output = PlaybookContextAnalyzer(metadata_file=metadata_file).analyze()
+        assert "**Commits**: 1 since origin/main" in output
+
+    def test_main_label_is_recent_and_capped(self, repo, tmp_path, metadata_file):
+        for i in range(6, 12):
+            (tmp_path / f"f{i}.txt").write_text(str(i))
+            repo("add", f"f{i}.txt")
+            repo("commit", "-q", "-m", f"c{i}")
+        output = PlaybookContextAnalyzer(metadata_file=metadata_file).analyze()
+        assert "**Commits**: 10 recent (last 10)" in output
+        assert "# Why These Commands?" in output
+        assert "Multiple commits" not in output
+
     def test_detached_head_is_not_release(self, repo, tmp_path, metadata_file):
         self._feature_commit(repo, tmp_path)
         repo("switch", "-q", "--detach", "HEAD")

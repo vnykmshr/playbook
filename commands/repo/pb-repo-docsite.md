@@ -351,8 +351,8 @@ flowchart TD
 ### Link Verification
 
 ```bash
-# Check the deployed site: links carry the /PROJECT/ base, so a local build served at root misreports them
-npx linkinator "$SITE_URL" --recurse   # https://USER.github.io/PROJECT/ or your custom domain
+# Check the deployed site: a local build served at root misreports links that carry a base path
+npx linkinator https://USER.github.io/PROJECT/ --recurse   # or your custom domain
 ```
 
 ---

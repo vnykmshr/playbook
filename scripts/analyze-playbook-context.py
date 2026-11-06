@@ -381,7 +381,8 @@ class PlaybookContextAnalyzer:
             lines.append("**Changes**: None (clean working directory)")
 
         commit_count = git_state.get("commit_count", 0)
-        scope = "on this branch" if git_state.get("counted_from") else "recent (last 10)"
+        base = git_state.get("counted_from")
+        scope = f"since {base}" if base else "recent (last 10)"
         lines.append(f"**Commits**: {commit_count} {scope}")
         lines.append("")
 
@@ -424,7 +425,7 @@ class PlaybookContextAnalyzer:
                     "• Both source and test files changed → Need full development cycle"
                 )
 
-            if commit_count >= 5:
+            if commit_count >= 5 and git_state.get("counted_from"):
                 lines.append(
                     "• Multiple commits → Time to organize and prepare for integration"
                 )

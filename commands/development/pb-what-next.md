@@ -293,7 +293,7 @@ A real run on a branch of this repo (`python3 scripts/analyze-playbook-context.p
 **Branch**: `stabilize`
 **Phase**: FINALIZE
 **Changes**: 40 files changed (tests/, docs/, source/, ci/)
-**Commits**: 28 on this branch
+**Commits**: 28 since origin/HEAD
 
 # Recommended Next Steps
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
