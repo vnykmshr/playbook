@@ -6,9 +6,9 @@ difficulty: "advanced"
 model_hint: "opus"
 execution_pattern: "sequential"
 related_commands: ['pb-secrets', 'pb-security', 'pb-deployment', 'pb-server-hygiene', 'pb-patterns-resilience']
-last_reviewed: "2026-11-05"
+last_reviewed: "2026-11-06"
 version: "1.1.0"
-version_notes: "v1.1.0: Integration section removed. Docker-published ports bypass UFW (gotcha beside the firewall block); who reboots for kernel updates; Redis password from a mounted secret, not the environment; KbdInteractiveAuthentication, fail2ban systemd backend, sshd -T verification; pinned image tag and a supported Node LTS."
+version_notes: "v1.1.0: Integration section removed. Docker-published ports bypass UFW (gotcha beside the firewall block); who reboots for kernel updates; Redis password from a mounted secret, not the environment; KbdInteractiveAuthentication, fail2ban systemd backend, sshd -T verification; pinned image tag and a supported Node LTS; post-deploy SSH check reads sshd -T effective values."
 breaking_changes: []
 ---
 # Production Security Hardening
@@ -638,7 +638,7 @@ After deployment, verify hardening:
 
 ```bash
 # Verify SSH config
-sudo sshd -t && echo "SSH config OK"
+sudo sshd -T | grep -iE '^(passwordauthentication|kbdinteractiveauthentication) '
 
 # Check firewall status
 sudo ufw status verbose

@@ -6,9 +6,9 @@ difficulty: "advanced"
 model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-logging', 'pb-incident', 'pb-sre-practices', 'pb-performance', 'pb-maintenance']
-last_reviewed: "2026-11-05"
+last_reviewed: "2026-11-06"
 version: "1.1.0"
-version_notes: "v1.1.0: One 5xx alert threshold; resource alerts use the /pb-sre-practices thresholds; the error budget arithmetic is fixed (43.2 min); Log Levels point at /pb-logging; the login sample logs no username; tracing names OpenTelemetry over OTLP instead of the removed Jaeger exporter; PromQL cut to five valid SLO queries; Integration with Playbook section removed."
+version_notes: "v1.1.0: One 5xx alert threshold; resource alerts use the /pb-sre-practices thresholds; the error budget arithmetic is fixed (43.2 min); Log Levels point at /pb-logging; the login sample logs no username; tracing names OpenTelemetry over OTLP instead of the removed Jaeger exporter; PromQL cut to five valid SLO queries; Integration with Playbook section removed; the percent-threshold burn-rate block is gone; the sample dashboard memory is under the warning threshold."
 breaking_changes: []
 ---
 # Observability & Monitoring Design
@@ -477,17 +477,6 @@ Action: Immediate incident response
 Example: Latency P99 exceeded 500ms for 5+ minutes
 ```
 
-Track error budget burn rate:
-
-```
-Prometheus query:
-  rate(errors_total[5m]) / rate(requests_total[5m])  # Current 5-min error rate
-
-If SLO allows 0.1% errors:
-  - Current burn rate > 0.1%: Burning budget fast (yellow alert)
-  - Current burn rate > 0.5%: Burning budget very fast (red alert)
-```
-
 ### SLI/SLO Template
 
 Copy this for each critical service:
@@ -553,7 +542,7 @@ Copy this for each critical service:
 
 ┌─ Resources ──────────────────────────┐
 │ CPU: 45% (healthy)                   │
-│ Memory: 72% (normal)                 │
+│ Memory: 62% (normal)                 │
 │ Disk: 58% (OK)                       │
 │ Database Connections: 87/100         │
 └─────────────────────────────────────┘

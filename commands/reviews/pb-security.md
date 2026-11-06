@@ -6,9 +6,9 @@ difficulty: "advanced"
 model_hint: "opus"
 execution_pattern: "sequential"
 related_commands: ['pb-review', 'pb-review-hygiene', 'pb-hardening', 'pb-secrets', 'pb-threat-hunt']
-last_reviewed: "2026-11-05"
+last_reviewed: "2026-11-06"
 version: "1.4.0"
-version_notes: "v1.4.0: Integration section removed. SSRF example checks every resolved address and connects to the checked one; open-redirect example rejects backslashes; secrets, PII and password rules follow /pb-secrets, /pb-logging and NIST SP 800-63B; secret scanning names gitleaks."
+version_notes: "v1.4.0: Integration section removed. SSRF example checks every resolved address and connects to the checked one; open-redirect example rejects backslashes; secrets, PII and password rules follow /pb-secrets, /pb-logging and NIST SP 800-63B; secret scanning names gitleaks; SSRF target defaults the path to / before a query and Host carries a non-default port."
 breaking_changes: []
 ---
 # Security Review & Checklist
@@ -537,8 +537,8 @@ if not all((getattr(ip, 'ipv4_mapped', None) or ip).is_global for ip in addrs):
 # Step 4: Connect to the checked address; TLS still verifies the hostname.
 # requests.get(url) would resolve again, and a rebinding DNS server answers differently.
 pool = urllib3.HTTPSConnectionPool(str(next(iter(addrs))), port, server_hostname=parsed.hostname, timeout=5)
-target = parsed._replace(scheme='', netloc='').geturl() or '/'
-data = pool.request('GET', target, headers={'Host': parsed.hostname}, redirect=False).data
+target = parsed._replace(scheme='', netloc='', path=parsed.path or '/').geturl()
+data = pool.request('GET', target, headers={'Host': parsed.hostname if port == 443 else f'{parsed.hostname}:{port}'}, redirect=False).data
 ```
 
 **Why**: Without validation, attacker can access internal services, cloud metadata APIs (AWS, GCP credentials), or local services.

@@ -6,9 +6,9 @@ difficulty: "advanced"
 model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-release', 'pb-patterns-deployment', 'pb-alex-infra', 'pb-incident', 'pb-observability']
-last_reviewed: "2026-11-05"
+last_reviewed: "2026-11-06"
 version: "1.1.0"
-version_notes: "v1.1.0: Rollback trigger is the threshold stated in /pb-preflight 6.2; the smoke test reads a write back; Compose commands use `docker compose`, and a Compose rollback pins the previous tag; Integration with Playbook section removed."
+version_notes: "v1.1.0: Rollback trigger is the threshold stated in /pb-preflight 6.2; the smoke test reads a write back; Compose commands use `docker compose`, and the Compose deploy tags the build with the release and rollback sets the tag back; the smoke test PUTs a designated record; Integration with Playbook section removed."
 breaking_changes: []
 ---
 # Deploy to Environment
@@ -172,8 +172,8 @@ Execute the deployment command identified in Discovery:
 # Makefile
 make deploy ENV=production
 
-# Docker Compose
-docker compose -f docker-compose.prod.yml up -d --build
+# Docker Compose (the service sets build: and image: app:${TAG}, so each deploy tags its build)
+TAG=vX.Y.Z docker compose -f docker-compose.prod.yml up -d --build
 
 # Kubernetes
 kubectl apply -f k8s/
@@ -229,9 +229,9 @@ curl -s -X POST [PROD_URL]/api/auth/login \
 # Test core API endpoint
 curl -s [PROD_URL]/api/[core-endpoint] | jq
 
-# Test a write persists: create a record, then read it back
-curl -s -X POST [PROD_URL]/api/[core-endpoint] -d '[test record]' | jq
-curl -s [PROD_URL]/api/[core-endpoint]/[new-id] | jq
+# Test a write persists: PUT a designated smoke record (idempotent), then read it back
+curl -s -X PUT [PROD_URL]/api/[core-endpoint]/smoke-test -H "Content-Type: application/json" -d '[test record]' | jq
+curl -s [PROD_URL]/api/[core-endpoint]/smoke-test | jq
 
 # Test frontend loads (if applicable)
 curl -s -o /dev/null -w "%{http_code}" [PROD_URL]
@@ -296,8 +296,8 @@ git tag -a deploy-[env]-$(date +%Y%m%d-%H%M) -m "Deployed to [env]"
 kubectl rollout undo deployment/[app-name]
 kubectl rollout status deployment/[app-name]
 
-# Docker Compose: set the service's image back to the previous tag in the compose file, then
-docker compose -f docker-compose.prod.yml up -d
+# Docker Compose: set TAG back to the previous release; no --build
+TAG=vX.Y.Y docker compose -f docker-compose.prod.yml up -d
 
 # Platform (Fly.io)
 flyctl releases list --app [app-name]

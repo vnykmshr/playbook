@@ -6,9 +6,9 @@ difficulty: "advanced"
 model_hint: "opus"
 execution_pattern: "sequential"
 related_commands: ['pb-incident', 'pb-observability', 'pb-dr', 'pb-team']
-last_reviewed: "2026-11-05"
+last_reviewed: "2026-11-06"
 version: "1.1.0"
-version_notes: "v1.1.0: Page response times are /pb-incident's per severity; the capacity table is the threshold home other commands cite; one Monday handoff; migration and new-server sections cut to one paragraph; Integration with Playbook section removed."
+version_notes: "v1.1.0: Page response times are /pb-incident's per severity; the capacity table is the threshold home other commands cite; one Monday handoff; migration and new-server sections cut to one paragraph; Integration with Playbook section removed; escalation steps run on acknowledgment, new-server pointer to the Pre-Deployment checklist."
 breaking_changes: []
 ---
 # SRE Practices
@@ -406,7 +406,7 @@ Primary On-Call: Paged on SEV-1/2
   - Use 1 week rotations (high interrupt cost)
 
 Secondary On-Call: Backup if primary unavailable
-  - Called if primary doesn't respond in 5 minutes
+  - Called if primary doesn't acknowledge in 5 minutes
 
 Weekly Rotation:
   - Handoff: Monday, start of day
@@ -416,7 +416,7 @@ Weekly Rotation:
 ### On-Call Tools
 
 **PagerDuty / Opsgenie (Recommended):**
-- Escalation policy: Primary → Secondary (5 min) → Manager (5 min)
+- Escalation policy: Primary → Secondary (5 min unacknowledged) → Manager (5 min)
 - Alert routing: SEV-1/2 page immediately, SEV-3 creates ticket
 - Calendar integration for swaps and visibility
 
@@ -564,7 +564,7 @@ Regular reviews prevent drift and maintain operational health.
 
 ## Server Migrations and New Servers
 
-Move a database with a full dump and restore, never a table list; check row counts against the source and keep the source read-only until they match. Verify a new server's hardening before its first deploy with `/pb-hardening` Post-Deployment Verification.
+Move a database with a full dump and restore, never a table list; check row counts against the source and keep the source read-only until they match. Verify a new server's hardening before its first deploy with `/pb-hardening` Pre-Deployment Security Checklist.
 
 ---
 

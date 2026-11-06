@@ -6,9 +6,9 @@ difficulty: "advanced"
 model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-deployment', 'pb-ship', 'pb-pr', 'pb-review-hygiene']
-last_reviewed: "2026-11-05"
+last_reviewed: "2026-11-06"
 version: "1.4.0"
-version_notes: "v1.4.0: Tag message is the release title; dispatch deploy workflows on main and verify before tagging; notes and CHANGELOG entry checked against the register before the release step; run from /pb-ship, ship's Phase 2 reviews satisfy the Phase 1 review gates; one post-deploy watch, at least /pb-preflight's 15 minutes; the hotfix CHANGELOG entry goes in a version section, not after the link footer; Integration with Playbook section removed."
+version_notes: "v1.4.0: Tag message is the release title; dispatch deploy workflows on main and verify before tagging; notes and CHANGELOG entry checked against the register before the release step; run from /pb-ship, ship's Phase 2 reviews satisfy the Phase 1 review gates; one post-deploy watch, at least /pb-preflight's 15 minutes; the hotfix CHANGELOG entry goes in a version section, not after the link footer; Integration with Playbook section removed; dispatch before the tag block with run SHA checked; ship-run reviews satisfy only the matching gates; notes.md written in the release, unnamed title fallback."
 breaking_changes: []
 ---
 # Release to Production
@@ -55,7 +55,7 @@ Phase 1: READINESS GATE          Phase 2: VERSION & TAG         Phase 3: DEPLOY 
    (final gate)                  │
 ```
 
-Run from `/pb-ship`, ship's Phase 2 reviews (hygiene, security, tests, docs) satisfy those Phase 1 gates; do not run them again.
+Run from `/pb-ship`: the reviews ship ran satisfy the matching Phase 1 gates; run the rest.
 
 ---
 
@@ -201,6 +201,8 @@ npm version X.Y.Z --no-git-tag-version
 
 ### Step 2.3: Create Git Tag
 
+If a deploy workflow can be dispatched by hand, run it on main and verify the result before tagging: the tag then publishes a build already seen working. `--ref` takes a branch, not a SHA, so check that the run's `headSha` equals `git rev-parse HEAD`.
+
 ```bash
 # Ensure on main branch with latest
 git checkout main
@@ -221,21 +223,19 @@ git push origin vX.Y.Z
 
 The CI check reads each workflow's newest run for this commit, so a cancelled run that a re-run replaced does not block. It passes when it prints at least one line and every line is `success`. An empty line is a run still going and no output is a run not registered yet: wait. Skip it only when no workflow runs on a push to this branch.
 
-If a deploy workflow can be dispatched by hand, run it on main and verify the result before tagging: the tag then publishes a build already seen working.
-
 ### Step 2.4: Create GitHub Release
 
 ```bash
 # A draft left by a failed run, or made by an org workflow, is published, never duplicated
 gh release list --json tagName,isDraft -q '.[] | select(.isDraft) | .tagName'
 gh release edit vX.Y.Z --draft=false                                            # the draft exists
-gh release create vX.Y.Z --title "vX.Y.Z - <name>" --notes-file notes.md  # it does not
+gh release create vX.Y.Z --title "vX.Y.Z - <name>" --notes-file notes.md  # it does not; the title is vX.Y.Z when unnamed
 
 # Optional: keep the last N releases. The tag stays, so links and rollback by tag still work
 gh release delete <oldest-tag> --yes  # never --cleanup-tag
 ```
 
-The notes say what upgraders must do, any security line, and link the CHANGELOG entry and the compare view; see the GitHub Artifact Register that `/pb-claude-global` writes into `~/.claude/CLAUDE.md`. Check the drafted notes and the CHANGELOG entry against it before this step: a review earlier in the release does not cover them.
+You write `notes.md` before this step. The notes say what upgraders must do, any security line, and link the CHANGELOG entry and the compare view; see the GitHub Artifact Register that `/pb-claude-global` writes into `~/.claude/CLAUDE.md`. Check the drafted notes and the CHANGELOG entry against it before this step: a review earlier in the release does not cover them.
 
 ---
 
@@ -394,6 +394,7 @@ PHASE 1: READINESS GATE
 PHASE 2: VERSION & TAG
 [ ] CHANGELOG updated with version entry
 [ ] Version bumped in package files
+[ ] Deploy workflow dispatched on main, run headSha = HEAD
 [ ] Git tag created (vX.Y.Z)
 [ ] GitHub release created
 

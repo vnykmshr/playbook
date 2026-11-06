@@ -6,9 +6,9 @@ difficulty: "advanced"
 model_hint: "opus"
 execution_pattern: "sequential"
 related_commands: ['pb-incident', 'pb-sre-practices', 'pb-database-ops', 'pb-deployment', 'pb-maintenance']
-last_reviewed: "2026-11-05"
+last_reviewed: "2026-11-06"
 version: "1.1.0"
-version_notes: "v1.1.0: One verification cadence (monthly restore); point-in-time recovery restores the base backup into the data directory before the recovery settings; Object Lock uses COMPLIANCE mode; disaster communication extends /pb-incident's SEV-1 path; Integration with Playbook section removed."
+version_notes: "v1.1.0: One verification cadence (monthly restore); point-in-time recovery restores the base backup into the data directory before the recovery settings; Object Lock uses COMPLIANCE mode; disaster communication extends /pb-incident's SEV-1 path; Integration with Playbook section removed; the database-ops pointer names backup and failover."
 breaking_changes: []
 ---
 # Disaster Recovery
@@ -693,7 +693,7 @@ Every critical service needs a DR plan.
 
 - `/pb-incident` - Respond to incidents during disaster scenarios
 - `/pb-sre-practices` - Sustainable operations and toil reduction
-- `/pb-database-ops` - Database operations: migrations, pooling, runbooks
+- `/pb-database-ops` - Database operations: migrations, backup, failover, runbooks
 - `/pb-deployment` - Deploy recovery infrastructure
 - `/pb-maintenance` - Backup verification and ongoing maintenance scheduling
 

@@ -6,9 +6,9 @@ difficulty: "advanced"
 model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-cycle', 'pb-pr', 'pb-release', 'pb-review-hygiene', 'pb-deployment']
-last_reviewed: "2026-11-05"
+last_reviewed: "2026-11-06"
 version: "1.3.0"
-version_notes: "v1.3.0: Phase 3 lists /pb-preflight in the diagram, table and checklist; peer review is /pb-review-code, with /code-review as an independent pass; /pb-deployment is no longer listed beside /pb-release, which runs it; /pb-review-hygiene is the periodic check run before a release, and the escape hatch reviews touched code with /pb-review-code; the PR body and commit subjects are checked against the register; the Integration section and its change markers are gone."
+version_notes: "v1.3.0: Phase 3 lists /pb-preflight in the diagram, table and checklist; peer review is /pb-review-code, with /code-review as an independent pass; /pb-deployment is no longer listed beside /pb-release, which runs it; /pb-review-hygiene is the periodic check run before a release, and the escape hatch reviews touched code with /pb-review-code; the PR body and commit subjects are checked against the register; the Integration section and its change markers are gone; the summary has no 24h watch, and Phase 1 runs only the gates Phase 2 did not."
 breaking_changes: []
 ---
 # Ship Focus Area to Production
@@ -277,7 +277,7 @@ Run `/pb-preflight` first. It is the wiring check (rollback, secrets, whether th
 
 ### Step 3.1: Release Readiness Review
 
-Run `/pb-release` Phase 1 (Readiness Gate):
+Run `/pb-release` Phase 1 (Readiness Gate); the reviews Phase 2 ran satisfy the matching gates, so run the rest:
 
 This is the senior engineer final gate. Review with fresh eyes:
 
@@ -502,7 +502,7 @@ Update `todos/ship-review-YYYY-MM-DD.md`:
 - [Any observations, learnings, or follow-ups]
 
 ### Next Steps
-- [ ] Monitor for 24h
+- [ ] Watch period done (`/pb-release` Step 3.3)
 - [ ] [Any follow-up tasks]
 ```
 
