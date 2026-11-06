@@ -7,82 +7,93 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-### Security
+v2.36.0 puts one daily loop in every command and doc, fixes samples that failed when run, and settles rules that two commands stated differently.
 
-- **wrangler install runs without the Cloudflare token.** `deploy-book.yml` installs wrangler in its own step, so package install scripts never see `CLOUDFLARE_API_TOKEN`; the deploy step runs the installed binary.
+**After upgrading:** `git pull`, then regenerate `~/.claude/CLAUDE.md` with `/pb-claude-global`.
 
 ### Changed
 
-- **`/pb-what-next` v2.1.0.** Example Output is a real run of the script; the other examples are labelled illustrative and carry no times. Four phases are detected, as the script does; branch names other than main or master change nothing; the commit count is the branch's own commits since the default branch (remote first), and a detached HEAD is not main. Recommended Workflow is the daily ritual, with hygiene and test reviews periodic; `/pb-review` replaces `/pb-cycle` in the comparison table; `/pb-templates` is SDLC and quality templates.
-- **`/pb-start` v2.3.3.** The ritual is README's: `/pb-start`, code, `/pb-review` (which commits), `/pb-pr`; `/pb-commit` is the manual path. The size signal sets review depth and is not `/pb-guide`'s change tier; Related lists `/pb-pr` in place of `/pb-commit`.
-- **`/pb-ship` v1.3.0.** Phase 3 lists `/pb-preflight` in the diagram, table and checklist; peer review is `/pb-review-code`, with /code-review as an independent pass; `/pb-deployment` is no longer listed beside `/pb-release`, which runs it; `/pb-review-hygiene` is the periodic check run before a release, and the escape hatch reviews touched code with `/pb-review-code`; the PR body and commit subjects are checked against the register; the Integration section and its change markers are gone; the summary has no 24h watch, and Phase 1 runs only the gates Phase 2 did not.
-- **`/pb-review` v2.8.2.** The ritual line ends at `/pb-pr`, as README's does. Mindset added.
-- **`/pb-pause` v1.11.0.** The Integration section is gone; Step 3 archives old entries before writing the new one.
-- **`/pb-context-review` v2.4.1.** Daily hygiene points at `/pb-pause` Step 3; pause entries are archived at each pause, not after resume.
-- **`/pb-claude-project` v1.4.4.** The skeleton's Relevant Playbooks row names `/pb-guide` in place of the retired `/pb-guide-[lang]`. Mindset cites `/pb-design-rules`.
-- **`/pb-review-microservice` v1.2.0.** Example code cut; each section keeps its question and checklist, and the common issues and review template stay.
+- **Docs.** One daily loop (`/pb-start`, code, `/pb-review`, `/pb-pr`) on the landing page, FAQ, guides and workflow maps, with hygiene and test reviews periodic; the integration guide is half its length.
+- **Versioning.** `docs/command-versioning.md` defines a breaking change as one that removes something a caller invokes or cites; removed sections and examples are minor.
+- **Self-description.** README, `llms.txt` and the reference site open with "Structured Markdown commands for AI-assisted development."
+- **Book site.** The review chapter names the specialist lanes.
+- **Tooling.** `analyze-playbook-context.py` counts a branch's own commits from the default branch; the Related Commands list in front matter and body must match, in order.
+- **CI.** `deploy-book.yml` installs wrangler in a step without the Cloudflare token and checks out without persisted credentials.
+- **`/pb-what-next` v2.1.0.** The commit count is the branch's own commits since the default branch; Example Output is a real run; Recommended Workflow is the daily loop.
+- **`/pb-start` v2.3.3.** The ritual ends at `/pb-pr`, and Related lists it.
+- **`/pb-review` v2.8.2.** The ritual line ends at `/pb-pr`.
+- **`/pb-cycle` v1.3.0.** The manual path in the ritual; the commit subject is checked against the register.
+- **`/pb-commit` v2.4.0.** Points at the global register and checks the drafted message before committing.
+- **`/pb-pr` v1.2.0.** The small-PR body is one sentence of what, plus upgrader impact; title and body are checked before the PR opens.
+- **`/pb-ship` v1.3.0.** Phase 3 runs `/pb-preflight`; peer review is `/pb-review-code`; the Integration section is gone.
+- **`/pb-release` v1.4.0.** The tag message is the release title; the deploy is dispatched on main and its run at HEAD verified before tagging; one post-deploy watch of at least 15 minutes.
+- **`/pb-forge` v1.9.0.** Peer and Land check their drafted text; a change pulled from an unpushed release is rebuilt out of it; a vet TAKE on a sample, flag or claim carries text the vet ran, applied verbatim, and one the vet cannot run is deferred.
+- **`/pb-huddle` v1.9.0.** A ruled command is dry-run against the untouched base; re-huddle messages each agent once, naming changed files.
+- **`/pb-handcraft` v1.6.1.** Text drafted after the pass is checked by the step that drafts it.
+- **`/pb-claude-global` v2.13.0.** The register covers tag messages and CHANGELOG entries, sets defaults in place of length ceilings, and has the drafting step check its own text.
+- **`/pb-claude-project` v1.4.4.** The skeleton names `/pb-guide` in place of the retired `/pb-guide-[lang]`.
+- **`/pb-claude-orchestration` v1.5.2.** Harness Reality drops model versions and prices; examples name the commands' real model hints.
+- **`/pb-context` v1.1.0.** The SDLC flow names the daily loop and hands releases to `/pb-release`.
+- **`/pb-context-review` v2.4.1.** Pause entries are archived at each pause.
+- **`/pb-pause` v1.11.0.** Step 3 archives old entries before writing the new one; the Integration section is gone.
+- **`/pb-resume` v1.12.0.** Step 0c sends durable notes to the homes `/pb-pause` names.
+- **`/pb-todo-implement` v1.4.0.** The Integration section is gone; its directory layout stays as its own section.
+- **`/pb-guide` v3.1.0.** The Integration section is gone; §5 names the daily loop.
+- **`/pb-standards` v1.4.0.** A fresh repo's first commit is the one exception to never `git add .`; `/pb-cycle` is the manual path.
+- **`/pb-design-rules` v1.3.2.** PR review routes to `/pb-review-code`.
+- **`/pb-preamble` v1.2.0.** Section VII (quotes from other commands) removed; later sections renumber.
+- **`/pb-documentation` v1.2.0.** The Level 5 sample is a process doc that sends releases to `/pb-release`; Compose commands use `docker compose`.
+- **`/pb-new-playbook` v2.1.3.** Naming examples use real commands; the claim about other tools' subagents is gone.
+- **`/pb-evolve` v2.1.1.** Step 3 names the trend measures; their values live in the cycle record.
+- **`/pb-patterns` v3.0.1.** Saga failure handling points at `/pb-patterns-distributed`.
+- **`/pb-patterns-deployment` v2.0.1.** Canary and rolling are chosen by evidence and compatibility; the risk column matches the headings.
+- **`/pb-patterns-security` v2.0.1.** Password hashing lists argon2id, scrypt and bcrypt; environment variables deliver secrets, never store them.
 - **`/pb-calm-design` v1.4.0.** Integration with Playbook section removed.
-- **`/pb-patterns` v3.0.1.** The payment scenario sends Saga failure handling to `/pb-patterns-distributed`; `/pb-incident` has none. Mindset labelled.
-- **`/pb-standards` v1.4.0.** Commit discipline states the one exception to never git add . (a fresh repo's first commit, then check the tree); SDLC Discipline calls `/pb-release` the separate release step rather than the cycle's close. Mindset labelled; the first-commit check reads staged names before committing; SDLC Discipline names the ritual and `/pb-cycle` as the manual path.
-- **`/pb-preamble` v1.2.0.** Section VII (quotes from commands that embed the preamble) removed; section III carries it, and later sections renumber. Mindset cites `/pb-design-rules`.
-- **`/pb-new-playbook` v2.1.3.** Naming examples name `/pb-release` in place of the nonexistent `pb-deploy`; the skill-scope section drops its claim about how other tools' subagents are trained.
-- **`/pb-guide` v3.1.0.** Integration with Playbook Ecosystem section removed; the tier table points at the command index, and §5 names the daily loop with `/pb-review`.
-- **`/pb-evolve` v2.1.1.** Step 3 names the trend measures and leaves their values to the cycle record; the Q3 baseline table is gone.
-- **`/pb-documentation` v1.2.0.** Level 5 sample is a process structure (Overview, Steps, Rollback) and sends releases to `/pb-release`; Compose commands use `docker compose`; Integration with Playbook section removed. Mindset cites `/pb-preamble`.
-- **`/pb-design-rules` v1.3.2.** PR review routes to `/pb-review-code`; `/pb-review-hygiene` is the periodic codebase review; the Mindset drops its framework claim. The opening line is the Mindset and cites `/pb-preamble`.
-- **`/pb-update` v1.1.0.** Tiers re-cut by mechanism (tracked, named, platform) with no semver claims; pip goes through venv or pipx, `--break-system-packages` last; nvm is sourced before use; the update script survives `brew doctor` warnings; Platform is macOS; the script sources nvm and shows pipx and rustup failures; a failed nvm source is reported; the npm step runs only when npm is found.
-- **`/pb-setup` v1.1.0.** Quick Setup Script removed. Claude Code DX says `install.sh` links the scripts and shows the `settings.json` wiring it leaves to you; the context-warning text matches the script. The Brewfile drops the `homebrew/bundle` and `homebrew/cask` taps.
-- **`/pb-ports` v1.1.0.** Every kill goes through one escalation in Step 4 (SIGTERM, check, then SIGKILL) on the listener only (`-sTCP:LISTEN`), so clients on the port survive. The kill quick commands, port-range and clean-slate loops, `pkill -f node` and the `killport` alias are gone. Multi-PID `ps -p` and an empty `kill` are fixed.
-- **`/pb-git-hygiene` v1.1.0.** Samples fixed to run: ignored-file check uses `-ci`/`-oi`, the CI size check passes a clean tree, gitleaks uses `git`/`dir`, filter-repo starts from a fresh clone and re-adds origin, the fresh start archives history outside the tree. CI and pre-commit samples state the pin rule and a read-only token; the git add exception cites `/pb-standards`. CI sample has `on:` and `pull-requests: read`; pre-commit installs through pipx; staged names are read before the first commit.
-- **`/pb-gha` v1.1.0.** Integration with Other Commands removed; `/pb-review-tests` joins Related Commands for flaky-test follow-up.
-- **`/pb-doctor` v1.1.1.** Disk thresholds match the check (warn over 80%, critical over 90%); the memory summary reads the host page size and prints GB; the runaway-process comment says over a day; Platform is macOS only. Mindset cites `/pb-design-rules`.
-- **`/pb-zero-stack` v3.3.0.** Phase A stays account-free: the live CSP check moves from the Ship Gate to Step 10, and full-tier Worker and cron are built under `wrangler dev` and deployed in Phase B. Freshness signals match the data-path table. Budget Math links the vendor limit pages instead of copying figures.
-- **`/pb-repo-readme` v1.1.2.** The License section and template take the license name from LICENSE instead of assuming MIT. Mindset labelled.
-- **`/pb-repo-polish` v1.1.0.** Fleet view scores each repo live; the Last Audited and Not audited columns are gone, since nothing stores past audits. Mindset cites `/pb-preamble`; the fleet list takes `--limit`; the Mindset prediction is softened.
-- **`/pb-repo-organize` v1.0.1.** Step 3 moves files that exist (root docs into docs/, GitHub's root files stay) instead of two no-op moves; memory/ and .claude/ join the protected folders. Mindset labelled. The move uses `git mv` and keeps LICENSE.md, CLAUDE.md and AGENTS.md at the root.
-- **`/pb-repo-enhance` v1.1.1.** The workflow diagram shows Phase 5 Verify, matching Process. Mindset labelled.
-- **`/pb-repo-docsite` v1.1.0.** Appendix B is one workflow plus an SSG table: actions pinned by SHA (rule stated, none pasted), no `latest`, Pages permissions on the deploy job only, no configure-pages. Pages setup uses POST to create and PUT to update; the link check reads the deployed site; Docusaurus caches npm; the PR paths note mkdocs.yml; the MkDocs layout is noted; the Hugo mermaid snippet is gone; the link check takes the site URL, custom domains included.
-- **`/pb-repo-blog` v1.0.2.** One outline: Structure stays, the duplicate Example Outline and the Value Proposition section are removed. Mindset labelled.
-- **`/pb-team` v1.1.0.** Integration with Playbook removed. Meeting samples match their cadence text (one small-team standup time, a two-week medium-team sprint); onboarding pointers match what `/pb-onboarding` holds. Mindset cites `/pb-preamble` and `/pb-design-rules`.
-- **`/pb-onboarding` v1.2.0.** Integration with Playbook removed. One PR ladder throughout: first merged by end of week 2, 2-3 by week 3, 5+ by month 1. Mindset cites `/pb-preamble` and `/pb-design-rules`.
-- **`/pb-knowledge-transfer` v1.3.1.** The hotspot commands filter the blank line `git log` emits, so it no longer ranks first; Section 13 is labelled partially reversible in both places; Related Commands say what each link is for; Mindset cites `/pb-preamble` and `/pb-design-rules`.
-- **`/pb-deprecation` v1.1.0.** Integration with Playbook section removed. Mindset cites `/pb-preamble` and `/pb-design-rules`.
+- **`/pb-deprecation` v1.1.0.** Integration with Playbook section removed.
 - **`/pb-performance` v1.2.0.** Integration with Playbook section removed.
-- **`/pb-patterns-deployment` v2.0.1.** Canary is chosen for real-traffic evidence and rolling for backward-compatible changes on a budget; the comparison table's risk column matches the strategy headings. Mindset added.
-- **`/pb-observability` v1.1.0.** One 5xx alert threshold; resource alerts use the `/pb-sre-practices` thresholds; the error budget arithmetic is fixed (43.2 min); Log Levels point at `/pb-logging`; the login sample logs no username; tracing names OpenTelemetry over OTLP instead of the removed Jaeger exporter; PromQL cut to five valid SLO queries; Integration with Playbook section removed; the percent-threshold burn-rate block is gone; the sample dashboard memory is under the warning threshold.
-- **`/pb-sre-practices` v1.1.0.** Page response times are `/pb-incident`'s per severity; the capacity table is the threshold home other commands cite; one Monday handoff; migration and new-server sections cut to one paragraph; Integration with Playbook section removed; escalation steps run on acknowledgment, new-server pointer to the Pre-Deployment checklist.
-- **`/pb-server-hygiene` v1.0.1.** Docker cleanup is inspected with `docker system df` and `docker container ls -a` (prune has no dry run), and `docker system prune` moves under the judgment block; disk and memory thresholds and the restore-test cadence come from `/pb-sre-practices` and `/pb-dr`.
-- **`/pb-preflight` v1.4.0.** 1.1 scans full history on the first run, then the commits since the last clean scan; 4.2 sets the production log level at info or above; the Static/Managed partition's byte-match check is numbered 4.3s, in place of 4.3.
-- **`/pb-maintenance` v1.0.1.** `VACUUM FULL` only after measured bloat, with `pg_repack` preferred; restore-test cadence and resource thresholds come from `/pb-dr` and `/pb-sre-practices`.
-- **`/pb-incident` v1.1.0.** VP Engineering is told at SEV-1 declaration only; the postmortem checklist follows the per-severity timing; disk alerts use the `/pb-sre-practices` thresholds; unsourced root-cause percentages dropped; Integration with Playbook section removed.
-- **`/pb-dr` v1.1.0.** One verification cadence (monthly restore); point-in-time recovery restores the base backup into the data directory before the recovery settings; Object Lock uses COMPLIANCE mode; disaster communication extends `/pb-incident`'s SEV-1 path; Integration with Playbook section removed; the database-ops pointer names backup and failover.
-- **`/pb-deployment` v1.1.0.** Rollback trigger is the threshold stated in `/pb-preflight` 6.2; the smoke test reads a write back; Compose commands use `docker compose`, and the Compose deploy tags the build with the release and rollback sets the tag back; the smoke test PUTs a designated record; Integration with Playbook section removed; the rollback runs with --no-build.
-- **`/pb-logging` v1.2.0.** Defines PII for logs (log `user_id`; IP addresses only on security events, with a retention limit); samples drop emails and the payment-module DEBUG override; the JSON formatter reads `extra=` fields from the record and keeps tracebacks. Mindset added.
-- **`/pb-jordan-testing` v1.5.0.** Examples use a real test database and mock only external services, as the Overview says; signup hashes with bcrypt and logs the user id, not the email; the concurrency test no longer claims to prove the lock; the connection-pool claim is gone.
-- **`/pb-review-tests` v2.2.1.** Speed thresholds are labelled examples and match the example report (5 min CI); the example tracks critical-path coverage toward 100%, as `/pb-jordan-testing` does.
-- **`/pb-testing` v1.1.0.** Integration section and the second pyramid removed. Mutation, contract and chaos tool sections cut to tool names; the chaos sample is labelled pseudocode.
-- **`/pb-patterns-security` v2.0.1.** Password hashing lists argon2id, scrypt and bcrypt; secrets live in a vault or secrets manager and env vars only deliver them; the `/pb-patterns-core` line no longer promises an OWASP overview. Mindset added.
-- **`/pb-secrets` v1.1.0.** Integration section removed. Environment variables deliver secrets, never store them (the one rule `/pb-security`, `/pb-hardening` and `/pb-patterns-security` now cite); SOPS files are named `*.enc.env` so sops detects the format, and `.gitignore` keeps them committable; deploys use `sops exec-env` with `docker compose`; key rotation is `updatekeys` then `sops rotate`, and the removed key still reads git history.
-- **`/pb-hardening` v1.1.0.** Integration section removed. Docker-published ports bypass UFW (gotcha beside the firewall block); who reboots for kernel updates; Redis password from a mounted secret, not the environment; KbdInteractiveAuthentication, fail2ban systemd backend, sshd -T verification; pinned image tag and a supported Node LTS; post-deploy SSH check reads sshd -T effective values.
-- **`/pb-security` v1.4.0.** Integration section removed. SSRF example checks every resolved address and connects to the checked one; open-redirect example rejects backslashes; secrets, PII and password rules follow `/pb-secrets`, `/pb-logging` and NIST SP 800-63B; secret scanning names gitleaks; SSRF target defaults the path to / before a query and Host carries a non-default port.
-- **`/pb-huddle` v1.9.0.** A command the close rules is dry-run and diffed against the untouched base; re-huddle messages each agent once, then spawns fresh agents from the brief and findings files; the follow-up names changed files and tells the agent to `cat` them.
-- **`/pb-claude-global` v2.13.0.** Register covers tag messages and CHANGELOG entries; length ceilings become defaults (commit subject only, PR body one sentence of what plus upgrader impact); the drafting step checks its own text; process vocabulary named under Never in public text. Mindset added; the Always-strip scope is the section; the register test is the clause test.
-- **`/pb-commit` v2.4.0.** Message Register points to the register instead of restating a body length, and checks the drafted message before committing; the ritual line ends at `/pb-pr`; the Integration section and the footer's stale version are gone. Mindset added.
-- **`/pb-cycle` v1.3.0.** Commit step drops the with-body example and checks the subject against the register; placed in the ritual as the manual path; Step 0 reads the success criteria given to `/pb-start`; Step 5 is done when `/pb-review` ran; the Integration section is gone. Mindset added.
-- **`/pb-pr` v1.2.0.** Small-PR body is one sentence of what plus upgrader impact; the drafted title and body are checked against the register before the PR opens; Related lists `/pb-start`.
-- **`/pb-release` v1.4.0.** Tag message is the release title; dispatch deploy workflows on main after the pull and verify the run at HEAD before tagging; notes and CHANGELOG entry checked against the register before the release step; run from `/pb-ship`, ship's Phase 2 reviews satisfy the Phase 1 review gates; one post-deploy watch, at least `/pb-preflight`'s 15 minutes; the hotfix CHANGELOG entry goes in a version section, not after the link footer; Integration with Playbook section removed; ship-run reviews satisfy only the matching gates; notes.md written in the release, unnamed title fallback.
-- **`/pb-context` v1.1.0.** The SDLC flow names the daily loop, and the release step hands off to `/pb-release`, which tags after CI is green; work tiers defer to `/pb-guide`; the line saying `/pb-start` reads the working context is gone; the daily-loop line says Steps 2-5.
-- **`/pb-handcraft` v1.6.1.** Lens 6 says text drafted after the pass is checked by the step that drafts it; the Integration section is gone.
-- **`/pb-forge` v1.9.0.** Peer and Land check their drafted text against the register; a change pulled from a release is removed by rebuilding an unpushed range, not by a forward revert; a TAKE on a sample, flag or claim carries replacement text the vet ran, applied verbatim.
-- **`/pb-alex-infra` v1.4.0.** Spaced double hyphens replaced. Examples cut to one failure-mode line per review category and two one-line examples; a failed rollout stalls and is rolled back by command; images pinned; Related names Linus for correctness.
-- **`/pb-resume` v1.12.0.** Spaced double hyphens replaced. Step 0c sends durable notes to the home `/pb-pause` Step 0 assigns, instead of restating two of its three homes; the todos/ default-home sentence is gone.
-- **`/pb-review-code` v2.4.0.** Spaced double hyphens replaced. Integration with Playbook section removed.
-- **`/pb-todo-implement` v1.4.0.** Spaced double hyphens replaced; the Integration section is gone, its directory layout kept as its own section. Mindset added.
-- **`/pb-voice` v2.3.1.** Spaced double hyphens replaced. The companion-script line says it needs a playbook clone.
-- **`/pb-claude-orchestration` v1.5.2.** Spaced double hyphens replaced. Harness Reality drops model versions, prices and its date; an independent re-derivation is the exception to never delegating your own check; the model mapping and Example 1 name the commands' real hints.
-- **`/pb-storage` v2.1.0.** Spaced double hyphens replaced. The Everything block is cut to one line; the Docker dry run uses `docker system df -v`, since prune has no dry run; space-not-freed points at local snapshots instead of `sudo purge`; the Node globals row with no command is removed; the header and Related name the recovery tiers; the disk trigger cites `/pb-doctor`. Mindset cites `/pb-design-rules`.
-- **`/pb-greenfield` v2.0.2.** Spaced double hyphens replaced; the first-commit check reads staged names before committing.
-- **`/pb-threat-hunt` v1.1.1.** Spaced double hyphens replaced. Step 11 counts 6 report fields (command, skill and methodology); the SHA-pin search adds `-P` for its look-ahead, and the NoSQL search escapes its brace.
+- **`/pb-observability` v1.1.0.** One 5xx threshold; resource alerts use the `/pb-sre-practices` table; PromQL is five valid SLO queries; tracing uses OpenTelemetry over OTLP.
+- **`/pb-sre-practices` v1.1.0.** Page response times are `/pb-incident`'s; its capacity table holds the thresholds other commands cite; escalation runs on acknowledgment.
+- **`/pb-incident` v1.1.0.** VP Engineering is told at SEV-1 declaration; the postmortem follows per-severity timing; unsourced percentages are dropped.
+- **`/pb-dr` v1.1.0.** One verification cadence; point-in-time recovery restores the base backup first; Object Lock uses COMPLIANCE mode.
+- **`/pb-deployment` v1.1.0.** Rollback triggers on `/pb-preflight` 6.2's threshold; the Compose deploy tags each build and rollback runs the previous tag without a rebuild; the smoke test reads a write back.
+- **`/pb-preflight` v1.4.0.** 1.1 scans full history once, then new commits; 4.2 sets the production log level at info or above; the static byte check is 4.3s.
+- **`/pb-maintenance` v1.0.1.** `VACUUM FULL` only after measured bloat, `pg_repack` preferred.
+- **`/pb-server-hygiene` v1.0.1.** Docker usage is inspected before any prune; thresholds and restore cadence come from `/pb-sre-practices` and `/pb-dr`.
+- **`/pb-alex-infra` v1.4.0.** Examples cut to one failure-mode line per category; images pinned.
+- **`/pb-secrets` v1.1.0.** Environment variables deliver secrets, never store them; SOPS files are `*.enc.env`; key rotation is `updatekeys` then `sops rotate`, and the removed key still decrypts git history.
+- **`/pb-hardening` v1.1.0.** Docker-published ports bypass UFW, with what to do about it; the Redis password comes from a mounted secret; SSH is verified with `sshd -T`.
+- **`/pb-security` v1.4.0.** The SSRF example checks every resolved address and connects to the one it checked; password rules follow NIST SP 800-63B.
+- **`/pb-logging` v1.2.0.** Defines PII for logs; samples log `user_id`, not email; the JSON formatter keeps `extra=` fields and tracebacks.
+- **`/pb-testing` v1.1.0.** The second pyramid is removed; mutation, contract and chaos sections are cut to tool names.
+- **`/pb-jordan-testing` v1.5.0.** Examples use a real test database and mock only external services; signup hashes with bcrypt.
+- **`/pb-review-tests` v2.2.1.** Speed thresholds are labelled examples; the example tracks critical-path coverage toward 100%.
+- **`/pb-review-code` v2.4.0.** Integration with Playbook section removed.
+- **`/pb-review-microservice` v1.2.0.** Example code cut; each section keeps its question and checklist.
+- **`/pb-voice` v2.3.1.** The companion-script line says it needs a playbook clone.
+- **`/pb-threat-hunt` v1.1.1.** Step 11 counts six report fields; two search patterns are fixed.
+- **`/pb-greenfield` v2.0.2.** The first-commit check reads staged names before committing.
+- **`/pb-zero-stack` v3.3.0.** Phase A needs no account: the live CSP check moves to Step 10, and full-tier Worker and cron deploy in Phase B; Budget Math links the vendor limit pages.
+- **`/pb-repo-organize` v1.0.1.** Step 3 moves root docs with `git mv` and keeps README, LICENSE, CLAUDE and AGENTS files at the root.
+- **`/pb-repo-docsite` v1.1.0.** Appendix B is one SHA-pinned workflow with an SSG table; the link check runs on the deployed site.
+- **`/pb-repo-readme` v1.1.2.** The License section reads the license name from LICENSE.
+- **`/pb-repo-polish` v1.1.0.** The fleet view scores each repo live, with no audit-history columns.
+- **`/pb-repo-enhance` v1.1.1.** The workflow diagram shows Phase 5 Verify.
+- **`/pb-repo-blog` v1.0.2.** One outline; the duplicate example outline and the Value Proposition section are removed.
+- **`/pb-team` v1.1.0.** Meeting samples match their cadence; the Integration section is gone.
+- **`/pb-onboarding` v1.2.0.** One PR ladder throughout; the Integration section is gone.
+- **`/pb-knowledge-transfer` v1.3.1.** The hotspot commands skip the blank lines `git log` emits; Related says what each link is for.
+- **`/pb-setup` v1.1.0.** Quick Setup Script removed; Claude Code DX shows the `settings.json` wiring `install.sh` leaves to you.
+- **`/pb-update` v1.1.0.** Tiers are tracked, named and platform; pip goes through a venv or pipx; the update script loads nvm and reports failures.
+- **`/pb-doctor` v1.1.1.** Disk thresholds match the check; the memory summary prints GB.
+- **`/pb-storage` v2.1.0.** The Everything block is one line; the Docker dry run uses `docker system df -v`; the header names the recovery tiers.
+- **`/pb-ports` v1.1.0.** Every kill goes through one escalation on the listener only; the kill shortcuts and the `killport` alias are gone.
+- **`/pb-git-hygiene` v1.1.0.** The ignored-file check, gitleaks, filter-repo and fresh-start samples are fixed; the CI sample has a trigger, a read-only token and `pull-requests: read`; pre-commit installs through pipx.
+- **`/pb-gha` v1.1.0.** Integration with Other Commands removed; Related adds `/pb-review-tests`.
+
+### Removed
+
+- **`docs/command-changelog.md`.** CHANGELOG.md is the one record of command version changes.
+- **Integration sections** (Integration with Playbook and its variants), from 25 commands.
 
 ## [v2.35.0] - 2026-11-05
 
