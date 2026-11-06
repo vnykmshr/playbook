@@ -213,6 +213,10 @@ class TestEvolutionReadiness:
             + "\n".join(f"  {m}" for m in missing)
         )
 
+
+class TestEvolutionDependencies:
+    """Ensure evolution won't break command dependencies."""
+
     def test_bidirectional_command_references_exist(self):
         """If A references B, B should exist."""
         template_files = {"pb-new-playbook.md"}
