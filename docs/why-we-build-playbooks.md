@@ -121,7 +121,7 @@ The playbook is designed for distributed teams. Instead of "let's sync up," it u
 
 ### 4. Multi-Perspective Review Catches More Issues
 
-A single code reviewer can miss things. The playbook uses **specialized perspectives; `/pb-review-comprehensive` pairs them by change type**:
+A single code reviewer can miss things. The playbook uses **specialized perspectives; `/pb-review-comprehensive` picks among them by change type**:
 - **Correctness** - `/pb-linus-agent`
 - **Resilience** - `/pb-alex-infra`
 - **Product** - `/pb-maya-product`
