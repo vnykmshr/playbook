@@ -19,6 +19,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **`/pb-sam-documentation` v1.5.0.** Rewritten around the reader: who they are, what they came to do, which of four kinds of document that makes it, and where they first get stuck; sample documents, checklist and word-count thresholds removed.
 - **`/pb-maya-product` v1.5.0.** Rewritten around five questions; evidence means observed behaviour, not a survey percentage; viability added; samples, checklist and the MVP timebox removed; interface craft routes to `/pb-elena-design`.
 - **`/pb-kai-reach` v1.3.0.** Rewritten around the path from the work to the person who must act; samples and checklist removed; wording routes to `/pb-sam-documentation`.
+- **`/pb-alex-infra` v1.5.0.** Rewritten around the failure walk; checklist and rejection thresholds removed; secrets, performance tuning and recovery objectives routed out of lane.
 - **`/pb-resume` v1.13.0.** Step 4 reads `todos/inbox/`; a job the user runs between sessions is read from its live state before the notes; Step 5 names `/pb-settle` unless the proposal is empty or one or two obvious items.
 
 ## [v2.36.0] - 2026-11-06
