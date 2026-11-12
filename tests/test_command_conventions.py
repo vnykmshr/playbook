@@ -656,7 +656,7 @@ BARE_OPENER_BASELINE = {
     "pb-git-signals.md": 8,
     "pb-handoff.md": 1,
     "pb-hardening.md": 2,
-    "pb-huddle.md": 3,
+    "pb-huddle.md": 2,
     "pb-incident.md": 13,
     "pb-knowledge-transfer.md": 3,
     "pb-learn.md": 3,
