@@ -8,7 +8,7 @@ execution_pattern: "sequential"
 related_commands: ['pb-preamble', 'pb-adr', 'pb-patterns', 'pb-review-hygiene', 'pb-standards']
 last_reviewed: "2026-11-12"
 version: "1.3.3"
-version_notes: "v1.3.3: Fail at the Source points to the correctness persona for swallowed errors; Clarity Before Speed points to /pb-performance for measurement."
+version_notes: "v1.3.3: Fail at the Source points to /pb-linus-agent for swallowed errors; Clarity Before Speed points to /pb-performance for measurement."
 breaking_changes: []
 ---
 # Design Rules: Core Technical Principles

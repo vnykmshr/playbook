@@ -8,7 +8,7 @@ execution_pattern: "reference"
 related_commands: ['pb-review-code', 'pb-review-hygiene', 'pb-review-tests', 'pb-security', 'pb-cycle']
 last_reviewed: "2026-11-12"
 version: "3.0.1"
-version_notes: "v3.0.1: The security persona is /pb-tavis-security; it takes the security role in the hardening pair and the conflict example."
+version_notes: "v3.0.1: The security persona is /pb-tavis-security; it takes the security role in the hardening pair and the conflict example, and joins Phase 2 when a change crosses a trust boundary."
 breaking_changes: ['/pb-review-backend, /pb-review-frontend and /pb-review-infrastructure are retired; the Multi-Perspective Reviews table names their lens pairs. Re-run scripts/install.sh to prune the three links.']
 ---
 # Comprehensive Project Review
@@ -49,6 +49,7 @@ For deeper reviews, run two complementary personas in parallel, then synthesize;
 - `/pb-maya-product` - User impact and scope discipline
 - `/pb-sam-documentation` - Clarity and knowledge transfer
 - `/pb-jordan-testing` - Test coverage and reliability
+- `/pb-tavis-security` - Exploit paths and trust boundaries
 
 See `/pb-preamble` for the team thinking philosophy that enables these perspectives to complement rather than conflict.
 
@@ -71,8 +72,9 @@ See `/pb-preamble` for the team thinking philosophy that enables these perspecti
   - **Goal:** Verify resilience, failure modes, scalability
 - **Persona 3:** `/pb-jordan-testing` - 20-30 minutes
   - **Goal:** Verify test coverage, edge cases, invariants
+- **When the change crosses a trust boundary** (see `/pb-tavis-security`, When to Use): add it to this phase. **Goal:** the exploit path, or the reason there is none.
 
-**Running in parallel:** Launch all 3 simultaneously. They work independently; results synthesize naturally.
+**Running in parallel:** Launch them simultaneously. They work independently; results synthesize naturally.
 
 ### Phase 3: Communication & Clarity (Last)
 - **Persona:** `/pb-sam-documentation` - 15-20 minutes

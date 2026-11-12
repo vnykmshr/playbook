@@ -8,7 +8,7 @@ execution_pattern: "sequential"
 related_commands: ['pb-review-code', 'pb-tavis-security', 'pb-jordan-testing', 'pb-deprecation', 'pb-design-rules']
 last_reviewed: "2026-11-12"
 version: "1.6.0"
-version_notes: "v1.6.0: Rewritten around four moves (remove the special case, data before code, never break a caller, show the code) and a way to choose between options; security review moves to the security persona; category samples, checklist and reviewee guidance removed; reviewing alone he names bugs outside his lane and their owner, and in a huddle seat reports them as findings; unsynchronised shared state is rejected on sight."
+version_notes: "v1.6.0: Rewritten around four moves (remove the special case, data before code, never break a caller, show the code) and a way to choose between options; security review moves to the security persona; category samples, checklist and reviewee guidance removed; reviewing alone he names bugs outside his lane and their owner, and in a huddle seat reports them as findings; unsynchronized shared state is rejected on sight."
 breaking_changes: []
 ---
 
