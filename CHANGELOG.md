@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v2.37.0] - 2026-11-13
+
 v2.37.0 rewrites six personas around what each one checks, adds a tenth persona and `/pb-settle`, and renames the security persona.
 
 **After upgrading:** `git pull`, then re-run `scripts/install.sh` to link `/pb-tavis-security` and prune `/pb-travis-security`.
@@ -2225,6 +2227,7 @@ When releasing a new version:
 
 ---
 
+[v2.37.0]: https://github.com/vnykmshr/playbook/releases/tag/v2.37.0
 [v2.36.0]: https://github.com/vnykmshr/playbook/releases/tag/v2.36.0
 [v2.35.0]: https://github.com/vnykmshr/playbook/releases/tag/v2.35.0
 [v2.34.0]: https://github.com/vnykmshr/playbook/releases/tag/v2.34.0
