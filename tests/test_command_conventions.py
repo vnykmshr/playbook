@@ -531,7 +531,6 @@ class TestChangelogLandsWithChange:
 DASH_BASELINE = {
     "pb-caveman.md": 17,
     "pb-handoff.md": 20,
-    "pb-linus-agent.md": 2,
     "pb-plan.md": 1,
     "pb-review-hygiene.md": 3,
     "pb-review-incoming.md": 55,
@@ -753,7 +752,6 @@ LINE_BUDGET_BASELINE = {
     "pb-hardening.md": 689,
     "pb-incident.md": 681,
     "pb-knowledge-transfer.md": 750,
-    "pb-linus-agent.md": 614,
     "pb-observability.md": 683,
     "pb-performance.md": 638,
     "pb-preamble-decisions.md": 683,
@@ -1211,25 +1209,6 @@ class TestPersonaIntegrity:
             name for name in self.PERSONA_COMMANDS if f"/{name[:-3]}" not in roster
         ]
         assert not missing, f"Personas absent from the pb-huddle roster line: {missing}"
-
-    def test_persona_no_hardcoded_security_flaws(self):
-        """Check persona agents for common security anti-patterns."""
-        # Specifically validates pb-linus-agent.md for password hashing security
-        files = get_command_files()
-        security_issues = []
-        for path in files:
-            if path.name == "pb-linus-agent.md":
-                content = path.read_text()
-                # Should not have hardcoded salt in password examples
-                if "b'salt'" in content:
-                    security_issues.append(f"{path.name}: Contains hardcoded salt in password example")
-                # Should use bcrypt, not pbkdf2 with hardcoded salt
-                if re.search(r"pbkdf2_hmac.*b'salt'", content):
-                    security_issues.append(f"{path.name}: Uses pbkdf2 with hardcoded salt")
-
-        assert not security_issues, f"Security issues in persona agents:\n" + "\n".join(
-            f"  {issue}" for issue in security_issues
-        )
 
 
 class TestRegisterRuleReference:
