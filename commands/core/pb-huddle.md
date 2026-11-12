@@ -134,14 +134,14 @@ A huddle has four roles. Two are fixed; two are chosen per decision.
 | **Lead** | topic-selected domain authority | Decisive in-lane. Not first-and-loudest: the panel challenges in parallel before the lead rebuts and closes. In-lane authority, not a cross-domain veto |
 | **Panel** | 2-4 other lenses | Challenge from their lanes |
 
-Name the lead by the decision's center of gravity and record it ("Lead: Travis, trust-boundary decision"). The user can override. When the topic genuinely is the whole (scope, lifecycle, coherence), Clara is both orchestrator and lead, and Claude stays the second, neutral orchestrator to keep her honest.
+Name the lead by the decision's center of gravity and record it ("Lead: Tavis, trust-boundary decision"). The user can override. When the topic genuinely is the whole (scope, lifecycle, coherence), Clara is both orchestrator and lead, and Claude stays the second, neutral orchestrator to keep her honest.
 
 **Lead and panel by decision type:**
 
 | Decision type | Lead | Panel |
 |---|---|---|
-| Technical / architecture | Linus | Jordan + Alex + Travis |
-| Security / trust boundary | Travis | Linus + Alex |
+| Technical / architecture | Linus | Jordan + Alex + Tavis |
+| Security / trust boundary | Tavis | Linus + Alex |
 | Testing / reliability | Jordan | Linus + Alex |
 | Infrastructure / resilience | Alex | Jordan + Linus |
 | Product / user value | Maya | Sam + Kai + Elena |
@@ -150,7 +150,7 @@ Name the lead by the decision's center of gravity and record it ("Lead: Travis, 
 | Documentation / clarity | Sam | Maya + Elena |
 | Scope / lifecycle / coherence | Clara | Maya + Linus |
 
-**Roster (9):** `/pb-linus-agent`, `/pb-travis-security`, `/pb-jordan-testing`, `/pb-alex-infra`, `/pb-maya-product`, `/pb-elena-design`, `/pb-kai-reach`, `/pb-sam-documentation`, `/pb-clara-curator`.
+**Roster (9):** `/pb-linus-agent`, `/pb-tavis-security`, `/pb-jordan-testing`, `/pb-alex-infra`, `/pb-maya-product`, `/pb-elena-design`, `/pb-kai-reach`, `/pb-sam-documentation`, `/pb-clara-curator`.
 
 Each persona gets the SAME brief; disagreement is expected and valuable. Name the round (review or cycle) in each persona's prompt, not only the brief: a lens that does not know it defers items to the round it is in. Run the panel in parallel so the first response doesn't anchor the others, as separate agents when the ruling binds. Each panelist's prompt names its persona file and tells the agent to read it from disk: an agent spawned mid-session can hold an earlier copy. A persona's `model_hint` is its default when run alone; on a panel, panelists run on sonnet and the lead and synthesis on opus, and the brief records any seat raised. The lead rebuts and closes in its lane; the orchestrators synthesize.
 

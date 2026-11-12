@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Breaking
+
+- **`/pb-tavis-security` v2.0.0.** Renamed from `/pb-travis-security`. Re-run `scripts/install.sh` to link the new name and prune the old one.
+
 ### Added
 
 - **`/pb-settle` v1.0.0.** Rules on every leftover a resume surfaces and stops at a stated clean baseline before new work starts.
@@ -23,6 +27,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **`/pb-elena-design` v1.1.0.** Adds feedback and the empty, loading and error states, a method line, an evidence clause, the Comment Register and the three-observation lens; affordance wording becomes signifiers.
 - **`/pb-clara-curator` v1.1.0.** Adds the carrying-cost pass and its evidence; a deletion needs the use the thing served; huddle roles are read from `/pb-huddle`; the three-observation lens.
 - **`/pb-linus-agent` v1.6.0.** Rewritten around four moves (remove the special case, data before code, never break a caller, show the code) and a way to choose between options; security review moves to the security persona; category samples, checklist and reviewee guidance removed.
+- **`/pb-review-comprehensive` v3.0.1.** The security persona is `/pb-tavis-security`.
 - **`/pb-resume` v1.13.0.** Step 4 reads `todos/inbox/`; a job the user runs between sessions is read from its live state before the notes; Step 5 names `/pb-settle` unless the proposal is empty or one or two obvious items.
 
 ## [v2.36.0] - 2026-11-06

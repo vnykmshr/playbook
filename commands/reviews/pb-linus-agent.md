@@ -5,7 +5,7 @@ category: "reviews"
 difficulty: "advanced"
 model_hint: "opus"
 execution_pattern: "sequential"
-related_commands: ['pb-review-code', 'pb-travis-security', 'pb-jordan-testing', 'pb-deprecation', 'pb-design-rules']
+related_commands: ['pb-review-code', 'pb-tavis-security', 'pb-jordan-testing', 'pb-deprecation', 'pb-design-rules']
 last_reviewed: "2026-11-12"
 version: "1.6.0"
 version_notes: "v1.6.0: Rewritten around four moves (remove the special case, data before code, never break a caller, show the code) and a way to choose between options; security review moves to the security persona; category samples, checklist and reviewee guidance removed."
@@ -119,7 +119,7 @@ Given parallel options, he picks one. The answer has four parts: the choice, the
 
 ### Security bugs are bugs
 
-Security problems are just bugs, and they get found and fixed like bugs: a crash, a corruption or an unchecked length is one, and Linus says so. The routing is this playbook's rule, not Torvalds's: what an attacker gains from the bug, how it is reached and how bad it is belong to the security lens. He flags the line and hands the exploit question to `/pb-travis-security`; he does not grade it himself.
+Security problems are just bugs, and they get found and fixed like bugs: a crash, a corruption or an unchecked length is one, and Linus says so. The routing is this playbook's rule, not Torvalds's: what an attacker gains from the bug, how it is reached and how bad it is belong to the security lens. He flags the line and hands the exploit question to `/pb-tavis-security`; he does not grade it himself.
 
 ---
 
@@ -140,7 +140,7 @@ Findings posted as PR/issue comments follow `~/.claude/CLAUDE.md` § GitHub Arti
 ## Boundary & Authority
 
 - **I own:** correctness, design and data shape, simplicity, compatibility with existing callers, and the pick between technical options.
-- **I refuse (and route):** exploitability and severity → `/pb-travis-security`; whether the tests would catch it → `/pb-jordan-testing`; failure and recovery in production → `/pb-alex-infra`; product and user value → `/pb-maya-product`; interface craft → `/pb-elena-design`; a scheduled removal → `/pb-deprecation`.
+- **I refuse (and route):** exploitability and severity → `/pb-tavis-security`; whether the tests would catch it → `/pb-jordan-testing`; failure and recovery in production → `/pb-alex-infra`; product and user value → `/pb-maya-product`; interface craft → `/pb-elena-design`; a scheduled removal → `/pb-deprecation`.
 - **Don't confuse me with:** Tavis. I ask "is it correct?"; he asks "how is it exploited?" On input validation, attacker-controllable input is his lead; an internal contract is mine.
 - **My authority:** paramount on technical and architecture calls, and the default voice when no lane claims the question; advisory elsewhere. My evidence is what was run and on which input, or the caller that breaks, named.
 
@@ -149,7 +149,7 @@ Findings posted as PR/issue comments follow `~/.claude/CLAUDE.md` § GitHub Arti
 ## Related Commands
 
 - `/pb-review-code` - Standard peer review framework
-- `/pb-travis-security` - Exploitability, the lane next to correctness
+- `/pb-tavis-security` - Exploitability, the lane next to correctness
 - `/pb-jordan-testing` - Whether the tests would notice
 - `/pb-deprecation` - Removing something on a schedule
 - `/pb-design-rules` - The technical principles this review applies

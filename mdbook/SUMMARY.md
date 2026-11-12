@@ -90,7 +90,7 @@
 
 - [Linus: Peer Review Agent](commands/reviews/pb-linus-agent.md)
 - [Elena: Design Agent](commands/reviews/pb-elena-design.md)
-- [Travis: Security Agent](commands/reviews/pb-travis-security.md)
+- [Tavis: Security Agent](commands/reviews/pb-tavis-security.md)
 - [Review: Code](commands/reviews/pb-review-code.md)
 - [Review: Incoming](commands/reviews/pb-review-incoming.md)
 - [Review: Tests](commands/reviews/pb-review-tests.md)

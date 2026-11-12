@@ -1124,7 +1124,7 @@ class TestMetadataConsistency:
 class TestPersonaIntegrity:
     """Validate persona agent structure and consistency."""
 
-    # Persona agents (9): original 5 + kai-reach + elena/travis/clara (added 2026-07-13)
+    # Persona agents (9): original 5 + kai-reach + elena/tavis/clara (added 2026-07-13)
     PERSONA_COMMANDS = {
         "pb-linus-agent.md": {"model": "opus", "category": "reviews", "difficulty": "advanced"},
         "pb-alex-infra.md": {"model": "opus", "category": "deployment", "difficulty": "advanced"},
@@ -1133,7 +1133,7 @@ class TestPersonaIntegrity:
         "pb-jordan-testing.md": {"model": "opus", "category": "development", "difficulty": "advanced"},
         "pb-kai-reach.md": {"model": "sonnet", "category": "planning", "difficulty": "intermediate"},
         "pb-elena-design.md": {"model": "opus", "category": "reviews", "difficulty": "advanced"},
-        "pb-travis-security.md": {"model": "opus", "category": "reviews", "difficulty": "advanced"},
+        "pb-tavis-security.md": {"model": "opus", "category": "reviews", "difficulty": "advanced"},
         "pb-clara-curator.md": {"model": "opus", "category": "core", "difficulty": "advanced"},
     }
 

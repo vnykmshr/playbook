@@ -128,7 +128,7 @@ A single code reviewer can miss things. The playbook uses **specialized perspect
 - **Clarity** - `/pb-sam-documentation`
 - **Testing** - `/pb-jordan-testing`
 
-These perspectives catch different issues using design rules as shared language. A correctness reviewer might miss a failure mode; a resilience reviewer might miss a test coverage gap. Security, design and reach have their own lanes: `/pb-travis-security`, `/pb-elena-design` and `/pb-kai-reach`. Together, they create a high bar for quality.
+These perspectives catch different issues using design rules as shared language. A correctness reviewer might miss a failure mode; a resilience reviewer might miss a test coverage gap. Security, design and reach have their own lanes: `/pb-tavis-security`, `/pb-elena-design` and `/pb-kai-reach`. Together, they create a high bar for quality.
 
 ### 5. Structured Processes Enable Faster Iteration
 
