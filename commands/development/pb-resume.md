@@ -5,10 +5,10 @@ category: "development"
 difficulty: "advanced"
 model_hint: "sonnet"
 execution_pattern: "sequential"
-related_commands: ['pb-start', 'pb-pause', 'pb-cycle', 'pb-review-incoming']
+related_commands: ['pb-start', 'pb-pause', 'pb-cycle', 'pb-review-incoming', 'pb-settle']
 last_reviewed: "2026-11-12"
 version: "1.13.0"
-version_notes: "v1.13.0: Step 4 lists todos/inbox/ notes other projects left, carried to Step 5; a job the user runs between sessions is read from its live state before the notes are trusted."
+version_notes: "v1.13.0: Step 4 lists todos/inbox/ notes other projects left, carried to Step 5; a job the user runs between sessions is read from its live state before the notes are trusted; Step 5 names /pb-settle unless the proposal is empty or one or two obvious items."
 breaking_changes: ['Step 0b changes from ACT to CLASSIFY -- standard mode no longer applies fixes or commits while surfacing the recap; the SURFACE-ACT-ARCHIVE model becomes SURFACE-ARCHIVE', 'Standard mode gains a terminal Step 5 and ends there; deep-mode steps renumber 5-6 to 6-7', 'Quick Commands section removed -- every row duplicated a command already in Steps 1-3']
 ---
 # Resume Development Work
@@ -199,6 +199,8 @@ Nothing has been changed. What do you want to pick up, and what do you know
 about this state that I don't?
 ```
 
+Unless the proposal is empty or one or two obvious items, name `/pb-settle` as the next step: it rules on each and stops at a clean baseline. Resume names it; running it is the user's call.
+
 **The act/propose test: could the user undo this without knowing it happened?** If not, it is a proposal. A commit is trivially reversible and completely invisible, which is the combination that costs someone their afternoon; an append to a gitignored log announced in the same breath is neither. The test is a property of the *action*, not of the file it touches. Do not reduce it to whether something is gitignored.
 
 **Findings from investigation this command did not prescribe are proposals, never actions.** Nothing stops you running the test suite, `gh run list`, or a linter during a standard resume, and nothing should. But a red result you went looking for does not authorize you to fix it; that is a separate decision, and it belongs in the list above. Going looking is cheap and often right; acting on what you find is what needed permission.
@@ -265,6 +267,7 @@ cat todos/pause-notes.md               # Any breadcrumbs?
 - `/pb-pause` - Gracefully pause work and preserve context
 - `/pb-cycle` - Self-review and peer review during development
 - `/pb-review-incoming` - Ratify commits authored in another project's session
+- `/pb-settle` - Work a long proposal down to a clean baseline
 
 ---
 
