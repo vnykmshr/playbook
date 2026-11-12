@@ -1226,15 +1226,16 @@ class TestPersonaIntegrity:
         assert huddle is not None, "pb-huddle.md not found"
         roster_match = re.search(r"^\*\*Roster \((\d+)\):\*\*(.+)$", huddle, re.MULTILINE)
         assert roster_match, "pb-huddle.md has no '**Roster (N):**' line"
-        assert int(roster_match.group(1)) == len(self.PERSONA_COMMANDS), (
-            f"pb-huddle roster says {roster_match.group(1)} personas, "
-            f"PERSONA_COMMANDS has {len(self.PERSONA_COMMANDS)}"
+        seated = re.findall(r"`/(pb-[a-z0-9-]+)`", roster_match.group(2))
+        expected = {name[:-3] for name in self.PERSONA_COMMANDS}
+        assert sorted(seated) == sorted(expected), (
+            f"pb-huddle roster and PERSONA_COMMANDS differ: "
+            f"missing {sorted(expected - set(seated))}, extra or repeated "
+            f"{sorted(n for n in seated if n not in expected or seated.count(n) > 1)}"
         )
-        roster = roster_match.group(2)
-        missing = [
-            name for name in self.PERSONA_COMMANDS if f"/{name[:-3]}" not in roster
-        ]
-        assert not missing, f"Personas absent from the pb-huddle roster line: {missing}"
+        assert int(roster_match.group(1)) == len(seated), (
+            f"pb-huddle roster heading says {roster_match.group(1)}, the line lists {len(seated)}"
+        )
 
 
 class TestRegisterRuleReference:
