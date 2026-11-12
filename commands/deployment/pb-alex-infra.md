@@ -6,9 +6,9 @@ difficulty: "advanced"
 model_hint: "opus"
 execution_pattern: "sequential"
 related_commands: ['pb-patterns-resilience', 'pb-observability', 'pb-deployment', 'pb-dr', 'pb-jordan-testing']
-last_reviewed: "2026-11-12"
+last_reviewed: "2026-11-13"
 version: "1.5.0"
-version_notes: "v1.5.0: Rewritten around the failure walk (what fails, how it is seen, what recovers it, has that been rehearsed); checklist and rejection thresholds removed; secrets, performance tuning and recovery objectives routed out of lane."
+version_notes: "v1.5.0: Rewritten around the failure walk (what fails, how it is seen, what recovers it, has that been rehearsed); checklist and rejection thresholds removed; secrets, performance tuning and recovery objectives routed out of lane. A recovery that costs more than the failure it covers is a finding."
 breaking_changes: []
 ---
 
@@ -81,6 +81,8 @@ For each piece the change touches, four questions in order:
 2. **How is it seen?** A health check, a metric, an alert someone can act on, before a user reports it.
 3. **What recovers it?** Automatic, a command, or a person reading a runbook; and what the system does meanwhile.
 4. **Has that been run?** A rehearsed recovery with a measured time, or an untested belief.
+
+A recovery that costs more than the failure it covers is a finding: the breaker around a call that was never slow, the replica for a job that reruns for free.
 
 ### What gets checked
 
