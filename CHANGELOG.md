@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- **`/pb-settle` v1.0.0.** Rules on every leftover a resume surfaces and stops at a stated clean baseline before new work starts.
+
 ### Changed
 
 - **`/pb-forge` v1.10.0.** The vet reads prior rulings; an aside during a vet is input; scratch copies never use `git stash`; a fix that approximates a spec runs the spec's cases; the CHANGELOG cut gets handcraft and a register check.

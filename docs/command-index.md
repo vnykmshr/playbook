@@ -25,6 +25,7 @@ Quick reference for all playbook commands.
 | `/pb-cycle` | Each iteration (develop → review → commit) |
 | `/pb-commit` | Crafting atomic, meaningful commits |
 | `/pb-resume` | Resuming after a break |
+| `/pb-settle` | After resuming: rule on leftovers, land the small ones, reach a clean baseline before new work |
 | `/pb-pause` | Pausing work, preserving context for later |
 | `/pb-ship` | Ready to ship: full reviews → PR → merge → release |
 | `/pb-pr` | Creating a pull request (standalone) |

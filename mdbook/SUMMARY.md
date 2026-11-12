@@ -52,6 +52,7 @@
 - [Debug](commands/development/pb-debug.md)
 - [Pause](commands/development/pb-pause.md)
 - [Resume](commands/development/pb-resume.md)
+- [Settle](commands/development/pb-settle.md)
 - [Handoff](commands/development/pb-handoff.md)
 - [Handcraft](commands/development/pb-handcraft.md)
 - [Caveman](commands/development/pb-caveman.md)

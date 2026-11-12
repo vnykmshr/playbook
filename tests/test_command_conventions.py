@@ -21,7 +21,7 @@ import pytest
 import yaml
 
 COMMANDS_DIR = Path(__file__).parent.parent / "commands"
-EXPECTED_COUNT = 112
+EXPECTED_COUNT = 113
 
 # Hub commands allowed to exceed the 5-link limit
 HUB_COMMANDS = {"pb-patterns.md"}
