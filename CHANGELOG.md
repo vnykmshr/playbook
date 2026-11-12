@@ -7,9 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+v2.37.0 rewrites six personas around what each one checks, adds a tenth persona and `/pb-settle`, and renames the security persona.
+
+**After upgrading:** `git pull`, then re-run `scripts/install.sh` to link `/pb-tavis-security` and prune `/pb-travis-security`.
+
 ### Breaking
 
-- **`/pb-tavis-security` v2.0.0.** Renamed from `/pb-travis-security`. Re-run `scripts/install.sh` to link the new name and prune the old one. The defense is reviewed as attack surface; a traced input path is the worked example; Comment Register and the three-observation lens added; the route to `/pb-jordan-testing` is whether the tests would catch the exploit, in place of coverage as a metric.
+- **`/pb-tavis-security` v2.0.0.** Renamed from `/pb-travis-security`. The defense is reviewed as attack surface; the route to `/pb-jordan-testing` is whether the tests would catch the exploit, in place of coverage as a metric.
 
 ### Added
 
@@ -18,8 +22,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-- **`/pb-forge` v1.10.0.** The vet reads prior rulings; an aside during a vet is input; scratch copies never use `git stash`; a fix that approximates a spec runs the spec's cases; the CHANGELOG cut gets handcraft and a register check; replacement text the vet did not test goes back to it, the user's included; a finding on what a sentence says, after a fix already reworded it, is a design question unless a check settles it.
-- **`/pb-huddle` v1.10.0.** The brief carries the ask verbatim and the project's constraints; persona prompts name the review; an agreeing panel seats an opposition against the agreement; agreement and a single run are not checks; a panelist reads its persona file from disk; a persona's model hint is its standalone default; one section per panelist; the three-observation cap applies to lens mode only; the roster seats `/pb-grug-simplicity`, who joins any panel whose proposal adds a part; the Opposition seat fires in both directions, and against a build it is his; the brief asks for coverage, not a ranking by cost.
+- **Docs.** `docs/why-we-build-playbooks.md` lists security among the review perspectives and points at `/pb-review-comprehensive` for how they combine; the integration guide drops the count of five paired personas.
+- **Tooling.** Tests hold the `/pb-huddle` roster line to the suite's persona list, and every persona to one identical lens-output line.
+- **`/pb-forge` v1.10.0.** The vet reads prior rulings, and its scratch copies never use `git stash`; replacement text it did not test goes back to it, the user's included; a finding on what a sentence says, after a fix already reworded it, is a design question unless a check settles it; the CHANGELOG cut gets handcraft and a register check.
+- **`/pb-huddle` v1.10.0.** The brief carries the ask verbatim and the project's constraints, and asks for coverage, not a ranking by cost; a panelist reads its persona file from disk; an agreeing panel seats an opposition against the agreement; the roster seats `/pb-grug-simplicity`, who joins any panel whose proposal adds a part, and the Opposition seat fires in both directions.
 - **`/pb-jordan-testing` v1.6.0.** Rewritten around the method: map the diff, trace the nil, empty and error paths, break the code and watch the suite; samples, checklist and coverage thresholds removed; load testing and recovery routed out of lane; a lens gives three observations at most.
 - **`/pb-sam-documentation` v1.5.0.** Rewritten around the reader: who they are, what they came to do, which of four kinds of document that makes it, and where they first get stuck; sample documents, checklist and word-count thresholds removed; a lens gives three observations at most.
 - **`/pb-maya-product` v1.5.0.** Rewritten around five questions; evidence means observed behaviour, not a survey percentage; viability added; samples, checklist and the MVP timebox removed; interface craft routes to `/pb-elena-design`; a lens gives three observations at most.
@@ -27,7 +33,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **`/pb-alex-infra` v1.5.0.** Rewritten around the failure walk; checklist and rejection thresholds removed; secrets, performance tuning and recovery objectives routed out of lane; a recovery that costs more than the failure it covers is a finding; the Boundary tells him apart from `/pb-grug-simplicity`.
 - **`/pb-elena-design` v1.1.0.** Adds feedback and the empty, loading and error states, a method line, an evidence clause, the Comment Register and the three-observation lens; affordance wording becomes signifiers.
 - **`/pb-clara-curator` v1.1.0.** Adds the carrying-cost pass and its evidence; a deletion needs the use the thing served; huddle roles are read from `/pb-huddle`; the three-observation lens; the Boundary tells her apart from `/pb-grug-simplicity`.
-- **`/pb-linus-agent` v1.6.0.** Rewritten around four moves (remove the special case, data before code, never break a caller, show the code) and a way to choose between options; security review moves to the security persona; category samples, checklist and reviewee guidance removed; reviewing alone he names bugs outside his lane and their owner, and in a huddle seat reports them as findings; unsynchronized shared state is rejected on sight; the Boundary tells him apart from `/pb-grug-simplicity`.
+- **`/pb-linus-agent` v1.6.0.** Rewritten around four moves (remove the special case, data before code, never break a caller, show the code) and a way to choose between options; security review moves to `/pb-tavis-security`; samples, checklist and reviewee guidance removed; he names bugs outside his lane and their owner; the Boundary tells him apart from `/pb-grug-simplicity`.
 - **`/pb-review-comprehensive` v3.0.1.** The security persona is `/pb-tavis-security`; it takes the security role in the hardening pair and the conflict example, and joins Phase 2 when a change crosses a trust boundary.
 - **`/pb-design-rules` v1.3.3.** Fail at the Source points to `/pb-linus-agent` for swallowed errors; Clarity Before Speed points to `/pb-performance` for measurement.
 - **`/pb-resume` v1.13.0.** Step 4 reads `todos/inbox/`; a job the user runs between sessions is read from its live state before the notes; Step 5 names `/pb-settle` unless the proposal is empty or one or two obvious items.
