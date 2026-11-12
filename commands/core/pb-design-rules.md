@@ -6,9 +6,9 @@ difficulty: "beginner"
 model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-preamble', 'pb-adr', 'pb-patterns', 'pb-review-hygiene', 'pb-standards']
-last_reviewed: "2026-11-06"
-version: "1.3.2"
-version_notes: "v1.3.2: PR review routes to /pb-review-code; /pb-review-hygiene is the periodic codebase review; the Mindset drops its framework claim. The opening line is the Mindset and cites /pb-preamble."
+last_reviewed: "2026-11-12"
+version: "1.3.3"
+version_notes: "v1.3.3: Fail at the Source points to the correctness persona for swallowed errors; Clarity Before Speed points to /pb-performance for measurement."
 breaking_changes: []
 ---
 # Design Rules: Core Technical Principles
@@ -282,7 +282,7 @@ Don't silently return null. Throw an exception. The exception tells you where th
 
 **Philosophy: Fail at the Source**
 
-See `/pb-linus-agent` for pragmatic security thinking that applies here: catch problems early, before they propagate.
+See `/pb-linus-agent`, who rejects a swallowed error on sight: catch problems early, before they propagate.
 
 Core insight: **Silent failures are worse than crashes.** When code swallows an error, you delay diagnosis. The longer an error hides, the further it propagates. By the time you discover it, you've lost data, accumulated corruption, or exposed a security issue.
 
@@ -342,7 +342,7 @@ Optimization is expensive: added complexity, reduced readability, hard-to-predic
 
 **Philosophy: Clarity Before Speed**
 
-See `/pb-sam-documentation` for clarity thinking and `/pb-alex-infra` for measuring infrastructure performance.
+See `/pb-sam-documentation` for clarity thinking and `/pb-performance` for measuring before tuning.
 
 Core insight: **Premature optimization trades clarity for speed nobody measures.** Before you optimize, you must:
 1. Know what's actually slow (measure, don't guess)

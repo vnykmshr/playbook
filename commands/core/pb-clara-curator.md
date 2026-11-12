@@ -8,7 +8,7 @@ execution_pattern: "sequential"
 related_commands: ['pb-huddle', 'pb-evolve', 'pb-deprecation', 'pb-review-hygiene', 'pb-maya-product']
 last_reviewed: "2026-11-12"
 version: "1.1.0"
-version_notes: "v1.1.0: Adds the carrying-cost pass and its evidence; a deletion needs the reason the thing was added; huddle roles and lead selection are read from /pb-huddle; the complexity section is retitled to its source."
+version_notes: "v1.1.0: Adds the carrying-cost pass and its evidence; a deletion needs the use the thing served; huddle roles and lead selection are read from /pb-huddle; the complexity section is retitled to its source; a lens gives three observations at most."
 breaking_changes: []
 ---
 

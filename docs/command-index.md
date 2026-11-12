@@ -118,7 +118,7 @@ Quick reference for all playbook commands.
 | `/pb-calm-design` | Attention-respecting design review (interruptions, defaults, calm technology) | New features and surfaces |
 | `/pb-usability` | Post-deploy usability audit of the live product | After a deploy, before launch |
 | `/pb-review-incoming` | Ratify changes authored in another project's session against this project's conventions | When a sibling-authored batch arrives |
-| `/pb-linus-agent` | Direct, unfiltered technical feedback grounded in pragmatism | Security-critical code, architecture decisions |
+| `/pb-linus-agent` | Direct, unfiltered technical feedback grounded in pragmatism | Architecture decisions, a pick between options |
 | `/pb-elena-design` | Design craft review: usability, visual hierarchy, design-system/brand | Frontend/design PRs, new surfaces |
 | `/pb-tavis-security` | Adversarial security review: attacker mind, trust boundaries, PoC-driven | Input parsing, auth, trust boundaries |
 | `/pb-review-hygiene` | Code quality + operational readiness | Before new dev cycle, monthly |

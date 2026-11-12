@@ -8,7 +8,7 @@ execution_pattern: "reference"
 related_commands: ['pb-review-code', 'pb-review-hygiene', 'pb-review-tests', 'pb-security', 'pb-cycle']
 last_reviewed: "2026-11-12"
 version: "3.0.1"
-version_notes: "v3.0.1: The security persona is /pb-tavis-security."
+version_notes: "v3.0.1: The security persona is /pb-tavis-security; it takes the security role in the hardening pair and the conflict example."
 breaking_changes: ['/pb-review-backend, /pb-review-frontend and /pb-review-infrastructure are retired; the Multi-Perspective Reviews table names their lens pairs. Re-run scripts/install.sh to prune the three links.']
 ---
 # Comprehensive Project Review
@@ -41,7 +41,7 @@ For deeper reviews, run two complementary personas in parallel, then synthesize;
 |--------|--------|--------------------|
 | Backend code, APIs, data layer | `/pb-alex-infra` then `/pb-jordan-testing` | Design for testability first: if tests can't verify it, don't build it |
 | Frontend code, UI, documentation | `/pb-maya-product` then `/pb-sam-documentation` | Build it and document it well, or defer it |
-| Infrastructure, deployments, hardening | `/pb-alex-infra` then `/pb-linus-agent` | Default to secure; profile before trading security for latency |
+| Infrastructure, deployments, hardening | `/pb-alex-infra` then `/pb-tavis-security` | Default to secure; profile before trading security for latency |
 
 **Persona Deep Dives:**
 - `/pb-linus-agent` - Correctness, assumptions, good taste
@@ -66,7 +66,7 @@ See `/pb-preamble` for the team thinking philosophy that enables these perspecti
 
 ### Phase 2: Quality Review (Run in Parallel)
 - **Persona 1:** `/pb-linus-agent` - 30-45 minutes
-  - **Goal:** Verify code correctness, security assumptions, simplicity
+  - **Goal:** Verify code correctness, simplicity, compatibility with callers
 - **Persona 2:** `/pb-alex-infra` - 20-30 minutes
   - **Goal:** Verify resilience, failure modes, scalability
 - **Persona 3:** `/pb-jordan-testing` - 20-30 minutes
@@ -99,7 +99,7 @@ See `/pb-preamble` for the team thinking philosophy that enables these perspecti
 **If personas disagree,** it's not a bug, it's a design decision:
 
 **Example:**
-- **Linus says:** "Add input validation (improves security)"
+- **Tavis says:** "Add input validation (improves security)"
 - **Alex says:** "Validation adds 20ms latency in hot path"
 
 **Resolution:** Not a contradiction. This is a trade-off:

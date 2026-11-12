@@ -8,7 +8,7 @@ execution_pattern: "sequential"
 related_commands: ['pb-usability', 'pb-a11y', 'pb-calm-design', 'pb-design-language', 'pb-maya-product']
 last_reviewed: "2026-11-12"
 version: "1.1.0"
-version_notes: "v1.1.0: Adds feedback and the empty, loading and error states to the interaction band, a method line, an evidence clause and the Comment Register; affordance wording becomes signifiers."
+version_notes: "v1.1.0: Adds feedback and the empty, loading and error states to the interaction band, a method line, an evidence clause and the Comment Register; affordance wording becomes signifiers; a lens gives three observations at most."
 breaking_changes: []
 ---
 

@@ -8,7 +8,7 @@ execution_pattern: "parallel-then-sequential"
 related_commands: ['pb-think', 'pb-preamble', 'pb-clara-curator', 'pb-maya-product', 'pb-adr']
 last_reviewed: "2026-11-12"
 version: "1.10.0"
-version_notes: "v1.10.0: The brief carries the ask verbatim and constraints from the project's instructions, with what the public may see during a visibility move; persona prompts name the review; a panel that agrees, its opposition seat included, seats one against the agreement; agreement is not a check, and a run cannot verify 'only', 'never' or 'always'. A panelist reads its persona file from disk; a persona's model hint is its standalone default; a persona file has three modes; the output has one section per lens; the Examples block is gone."
+version_notes: "v1.10.0: The brief carries the ask verbatim and constraints from the project's instructions, with what the public may see during a visibility move; persona prompts name the review; a panel that agrees, its opposition seat included, seats one against the agreement; agreement is not a check, and a run cannot verify 'only', 'never' or 'always'. A panelist reads its persona file from disk; a persona's model hint is its standalone default; a persona file has three modes; the output has one section per panelist; the Examples block is gone."
 breaking_changes: []
 ---
 # Multi-Perspective Decision Session
@@ -154,7 +154,7 @@ Name the lead by the decision's center of gravity and record it ("Lead: Tavis, t
 
 Each persona gets the SAME brief; disagreement is expected and valuable. Name the round (review or cycle) in each persona's prompt, not only the brief: a lens that does not know it defers items to the round it is in. Run the panel in parallel so the first response doesn't anchor the others, as separate agents when the ruling binds. Each panelist's prompt names its persona file and tells the agent to read it from disk: an agent spawned mid-session can hold an earlier copy. A persona's `model_hint` is its default when run alone; on a panel, panelists run on sonnet and the lead and synthesis on opus, and the brief records any seat raised. The lead rebuts and closes in its lane; the orchestrators synthesize.
 
-**One file, three modes.** A persona file is used three ways: a full review (the file on a diff, alone), a lens (its Lens Mode, inline while the work is done, three observations at most), and a panel seat (the file plus the brief, argued in lane). The lane, the routes and the evidence it owes are the same in all three; only the depth changes.
+**One file, three modes.** A persona file is used three ways: a full review (the file on a diff, alone), a lens (its Lens Mode, inline while the work is done, three observations at most), and a panel seat (the file plus the brief, argued in lane; the three-observation cap is the lens's alone). The lane, the routes and the evidence it owes are the same in all three; only the depth changes.
 
 **Seats:**
 - **Opposition.** When the proposal has an obvious overreach (a cut, a rewrite, minimalism winning unopposed), one lens is assigned the opposite position. A panel that agrees easily, its opposition seat included, seats one after the fact against what it agreed on, before synthesis.
@@ -197,8 +197,8 @@ Lead: [persona] -- [why this lane leads]. Orchestrators: Clara (curatorial) + Cl
 ### Context loaded
 [list of files read]
 
-### [Lens]
-[one section per lens: 2-4 paragraphs, from its lane]
+### [Panelist]
+[one section per panelist: 2-4 paragraphs, from its lane]
 
 ### Fact-check
 [claims checked; any that failed, and whose]
@@ -247,4 +247,3 @@ Lead: [persona] -- [why this lane leads]. Orchestrators: Clara (curatorial) + Cl
 - `/pb-clara-curator` - Curator and huddle orchestrator (the synthesis seat)
 - `/pb-maya-product` - Product and user strategy persona
 - `/pb-adr` - Architecture Decision Records (for recording decisions)
-
