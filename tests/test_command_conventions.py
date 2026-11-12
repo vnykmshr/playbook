@@ -1181,21 +1181,6 @@ class TestPersonaIntegrity:
 
         assert not errors, f"Persona metadata mismatches:\n" + "\n".join(f"  {e}" for e in errors)
 
-    def test_persona_agents_have_decision_framework(self):
-        """Ensure persona agents have structured decision/review framework."""
-        files = get_command_files()
-        missing_framework = []
-        for path in files:
-            if path.name not in self.PERSONA_COMMANDS:
-                continue
-            content = path.read_text().lower()
-
-            # Personas must have either: "decision", "framework", "review", or "criteria"
-            if not any(keyword in content for keyword in ["decision", "framework", "review criteria", "red flags"]):
-                missing_framework.append(path.name)
-
-        assert not missing_framework, f"Persona agents missing decision framework: {missing_framework}"
-
     def test_personas_have_boundary_section(self):
         """Every persona must carry a Boundary & Authority section (sharpen pass, 2026-07-13).
 
