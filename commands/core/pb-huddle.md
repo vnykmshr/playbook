@@ -8,7 +8,7 @@ execution_pattern: "parallel-then-sequential"
 related_commands: ['pb-think', 'pb-preamble', 'pb-clara-curator', 'pb-maya-product', 'pb-adr']
 last_reviewed: "2026-11-12"
 version: "1.10.0"
-version_notes: "v1.10.0: The brief carries the ask verbatim and constraints from the project's instructions, with what the public may see during a visibility move; persona prompts name the review; a panel that agrees, its opposition seat included, seats one against the agreement; agreement is not a check, and a run cannot verify 'only', 'never' or 'always'. A panelist reads its persona file from disk; a persona's model hint is its standalone default; a persona file has three modes; the output has one section per panelist; the Examples block is gone. The roster seats Grug, who joins any panel whose proposal adds a part; the Opposition seat fires in both directions, and against a build it is his."
+version_notes: "v1.10.0: The brief carries the ask verbatim and constraints from the project's instructions, with what the public may see during a visibility move; persona prompts name the review; a panel that agrees, its opposition seat included, seats one against the agreement; agreement is not a check, and a run cannot verify 'only', 'never' or 'always'. A panelist reads its persona file from disk; a persona's model hint is its standalone default; a persona file has three modes; the output has one section per panelist; the Examples block is gone. The roster seats Grug, who joins any panel whose proposal adds a part; the Opposition seat fires in both directions, and against a build it is his. The brief asks for coverage, not a ranking by cost."
 breaking_changes: []
 ---
 # Multi-Perspective Decision Session
@@ -115,7 +115,7 @@ The brief you write is a claim too. Each fact in it names how it was checked: th
 - the hard constraints (visibility, host, budget, identity or privacy), gathered from the user and the project's instructions before any option: constraints that arrive one at a time void the options built before them. For a move in visibility or hosting, include what the public may see while it changes (pushes, tags, DNS);
 - for a change to an interface, its callers (one grep);
 - your own list of what you suspect you missed;
-- the question as coverage ("does it handle all N things it was built for?"), not go/no-go; and that the answer may sit outside the options offered.
+- the question as coverage ("does it handle all N things it was built for?"), not go/no-go and not a ranking by cost (a brief that asks for the cheapest change gets the cheapest option from every seat); and that the answer may sit outside the options offered.
 
 Write the brief to disk, and each round's findings to a file beside it, so the panel can be re-briefed from files rather than memory.
 
