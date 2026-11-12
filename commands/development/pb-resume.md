@@ -6,9 +6,9 @@ difficulty: "advanced"
 model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-start', 'pb-pause', 'pb-cycle', 'pb-review-incoming']
-last_reviewed: "2026-11-06"
-version: "1.12.0"
-version_notes: "v1.12.0: Spaced double hyphens replaced. Step 0c sends durable notes to the home /pb-pause Step 0 assigns, instead of restating two of its three homes; the todos/ default-home sentence is gone."
+last_reviewed: "2026-11-12"
+version: "1.13.0"
+version_notes: "v1.13.0: Step 4 lists todos/inbox/ notes other projects left, carried to Step 5; a job the user runs between sessions is read from its live state before the notes are trusted."
 breaking_changes: ['Step 0b changes from ACT to CLASSIFY -- standard mode no longer applies fixes or commits while surfacing the recap; the SURFACE-ACT-ARCHIVE model becomes SURFACE-ARCHIVE', 'Standard mode gains a terminal Step 5 and ends there; deep-mode steps renumber 5-6 to 6-7', 'Quick Commands section removed -- every row duplicated a command already in Steps 1-3']
 ---
 # Resume Development Work
@@ -158,9 +158,10 @@ Do not begin ratifying here. The user may already know what this batch is for an
 cat todos/*working-context*.md        # Project snapshot, any project filename
 cat todos/pause-notes.md               # Where you left off
 ls todos/forge/ 2>/dev/null            # /pb-forge arc cursors, if any
+ls todos/inbox/ 2>/dev/null            # Notes other projects left here; read each, carry its items to Step 5
 ```
 
-**If pause notes exist:** Follow documented next steps, verify blockers resolved.
+**If pause notes exist:** Follow documented next steps, verify blockers resolved. For a job the user runs between sessions, read its live state (logs, counts) before trusting the notes.
 
 **Context health check - report actual sizes:**
 

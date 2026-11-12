@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- **`/pb-resume` v1.13.0.** Step 4 reads `todos/inbox/`; a job the user runs between sessions is read from its live state before the notes.
+
 ## [v2.36.0] - 2026-11-06
 
 v2.36.0 puts one daily loop in every command and doc, fixes samples that failed when run, and settles rules that two commands stated differently.
