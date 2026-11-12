@@ -1154,14 +1154,19 @@ class TestPersonaIntegrity:
     )
 
     def test_persona_lens_output_line_identical(self):
-        """Every persona carries the same Lens output line."""
-        missing = [
-            path.name
-            for path in get_command_files()
-            if path.name in self.PERSONA_COMMANDS
-            and self.LENS_OUTPUT_LINE not in path.read_text(encoding="utf-8").splitlines()
-        ]
-        assert not missing, f"Personas without the shared Lens output line: {missing}"
+        """Every persona carries the same Lens output line, exactly once."""
+        drifted = []
+        for path in get_command_files():
+            if path.name not in self.PERSONA_COMMANDS:
+                continue
+            lens_lines = [
+                line
+                for line in path.read_text(encoding="utf-8").splitlines()
+                if line.startswith("**Lens output:**")
+            ]
+            if lens_lines != [self.LENS_OUTPUT_LINE]:
+                drifted.append(path.name)
+        assert not drifted, f"Personas whose Lens output line is missing, changed or repeated: {drifted}"
 
     def test_persona_metadata_correct(self):
         """Verify persona metadata matches expected values."""
