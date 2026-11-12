@@ -15,6 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - **`/pb-forge` v1.10.0.** The vet reads prior rulings; an aside during a vet is input; scratch copies never use `git stash`; a fix that approximates a spec runs the spec's cases; the CHANGELOG cut gets handcraft and a register check.
 - **`/pb-huddle` v1.10.0.** The brief carries the ask verbatim and the project's constraints; persona prompts name the review; an agreeing panel seats an opposition against the agreement; agreement and a single run are not checks.
+- **`/pb-jordan-testing` v1.6.0.** Rewritten around the method: map the diff, trace the nil, empty and error paths, break the code and watch the suite; samples, checklist and coverage thresholds removed; load testing and recovery routed out of lane.
 - **`/pb-resume` v1.13.0.** Step 4 reads `todos/inbox/`; a job the user runs between sessions is read from its live state before the notes; Step 5 names `/pb-settle` unless the proposal is empty or one or two obvious items.
 
 ## [v2.36.0] - 2026-11-06
