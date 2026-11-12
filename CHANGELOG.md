@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Breaking
 
-- **`/pb-tavis-security` v2.0.0.** Renamed from `/pb-travis-security`. Re-run `scripts/install.sh` to link the new name and prune the old one. The defense is reviewed as attack surface; a traced input path is the worked example; Comment Register and the three-observation lens added; whether the tests would catch the exploit routes to `/pb-jordan-testing`.
+- **`/pb-tavis-security` v2.0.0.** Renamed from `/pb-travis-security`. Re-run `scripts/install.sh` to link the new name and prune the old one. The defense is reviewed as attack surface; a traced input path is the worked example; Comment Register and the three-observation lens added; the route to `/pb-jordan-testing` is whether the tests would catch the exploit, in place of coverage as a metric.
 
 ### Added
 
