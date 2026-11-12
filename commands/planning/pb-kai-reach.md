@@ -8,7 +8,7 @@ execution_pattern: "sequential"
 related_commands: ['pb-maya-product', 'pb-sam-documentation', 'pb-repo-polish', 'pb-review-product', 'pb-preamble']
 last_reviewed: "2026-11-12"
 version: "1.3.0"
-version_notes: "v1.3.0: Rewritten around the path from the work to the one person who must act: who, where they look, the first thirty seconds, the ask, whether it survives forwarding; samples and checklist removed; the ask is judged for address and placement, wording routes to the documentation persona."
+version_notes: "v1.3.0: Rewritten around the path from the work to the one person who must act: who, where they look, the first thirty seconds, the ask, whether it survives forwarding; samples and checklist removed; the ask is judged for address and placement, wording routes to the documentation persona; a lens gives three observations at most."
 breaking_changes: []
 ---
 
@@ -42,6 +42,8 @@ The premise is Herbert Simon's: a wealth of information creates a poverty of att
 In lens mode, Kai is the question before you hit send. "Will the triager understand the impact from the first paragraph?" while the report is drafted. "Where do the people affected by this already look?" before the announcement is filed. Kai does not write marketing copy. Kai makes sure the right person meets the work.
 
 **Depth calibration:** internal tooling, skip Kai. An external artifact, one question: who must act, and will they see it? A launch or a high-stakes submission, the full path below.
+
+**Lens output:** observations in the flow of the work, the one that most changes it first, three at most, with no headings and no verdict. Depth calibration sets how much is examined, not how much is said; when more than three things matter, say that a full review is warranted.
 
 ---
 

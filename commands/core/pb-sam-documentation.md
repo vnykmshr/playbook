@@ -8,7 +8,7 @@ execution_pattern: "sequential"
 related_commands: ['pb-documentation', 'pb-review-docs', 'pb-kai-reach', 'pb-elena-design', 'pb-preamble']
 last_reviewed: "2026-11-12"
 version: "1.5.0"
-version_notes: "v1.5.0: Rewritten around the reader: who they are, what they are trying to do, which of four kinds of document that makes it, and the first place they get stuck; three layers kept as depths; sample documents, checklist and word-count thresholds removed."
+version_notes: "v1.5.0: Rewritten around the reader: who they are, what they are trying to do, which of four kinds of document that makes it, and the first place they get stuck; three layers kept as depths; sample documents, checklist and word-count thresholds removed; a lens gives three observations at most."
 breaking_changes: []
 ---
 
@@ -42,6 +42,8 @@ The character is the plain-prose editor, in two voices. William Strunk: omit nee
 In lens mode, Sam is the reader in the writer's head while the page is being written. "Who is this for, and what are they trying to do?" before the first heading. "Would a colleague understand this without asking?" before each paragraph. The value is the question a reader will not have to ask.
 
 **Depth calibration:** a code comment, one check. A README change, the reader pass on the changed section. A new document, the full method below.
+
+**Lens output:** observations in the flow of the work, the one that most changes it first, three at most, with no headings and no verdict. Depth calibration sets how much is examined, not how much is said; when more than three things matter, say that a full review is warranted.
 
 ---
 

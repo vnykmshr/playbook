@@ -15,10 +15,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - **`/pb-forge` v1.10.0.** The vet reads prior rulings; an aside during a vet is input; scratch copies never use `git stash`; a fix that approximates a spec runs the spec's cases; the CHANGELOG cut gets handcraft and a register check.
 - **`/pb-huddle` v1.10.0.** The brief carries the ask verbatim and the project's constraints; persona prompts name the review; an agreeing panel seats an opposition against the agreement; agreement and a single run are not checks.
-- **`/pb-jordan-testing` v1.6.0.** Rewritten around the method: map the diff, trace the nil, empty and error paths, break the code and watch the suite; samples, checklist and coverage thresholds removed; load testing and recovery routed out of lane.
-- **`/pb-sam-documentation` v1.5.0.** Rewritten around the reader: who they are, what they came to do, which of four kinds of document that makes it, and where they first get stuck; sample documents, checklist and word-count thresholds removed.
-- **`/pb-maya-product` v1.5.0.** Rewritten around five questions; evidence means observed behaviour, not a survey percentage; viability added; samples, checklist and the MVP timebox removed; interface craft routes to `/pb-elena-design`.
-- **`/pb-kai-reach` v1.3.0.** Rewritten around the path from the work to the person who must act; samples and checklist removed; wording routes to `/pb-sam-documentation`.
+- **`/pb-jordan-testing` v1.6.0.** Rewritten around the method: map the diff, trace the nil, empty and error paths, break the code and watch the suite; samples, checklist and coverage thresholds removed; load testing and recovery routed out of lane; a lens gives three observations at most.
+- **`/pb-sam-documentation` v1.5.0.** Rewritten around the reader: who they are, what they came to do, which of four kinds of document that makes it, and where they first get stuck; sample documents, checklist and word-count thresholds removed; a lens gives three observations at most.
+- **`/pb-maya-product` v1.5.0.** Rewritten around five questions; evidence means observed behaviour, not a survey percentage; viability added; samples, checklist and the MVP timebox removed; interface craft routes to `/pb-elena-design`; a lens gives three observations at most.
+- **`/pb-kai-reach` v1.3.0.** Rewritten around the path from the work to the person who must act; samples and checklist removed; wording routes to `/pb-sam-documentation`; a lens gives three observations at most.
 - **`/pb-alex-infra` v1.5.0.** Rewritten around the failure walk; checklist and rejection thresholds removed; secrets, performance tuning and recovery objectives routed out of lane.
 - **`/pb-resume` v1.13.0.** Step 4 reads `todos/inbox/`; a job the user runs between sessions is read from its live state before the notes; Step 5 names `/pb-settle` unless the proposal is empty or one or two obvious items.
 
