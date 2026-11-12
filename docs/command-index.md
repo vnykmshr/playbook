@@ -31,6 +31,7 @@ Quick reference for all playbook commands.
 | `/pb-pr` | Creating a pull request (standalone) |
 | `/pb-testing` | Testing philosophy (unit, integration, E2E strategies) |
 | `/pb-jordan-testing` | Testing & reliability review (gap detection, edge case coverage, failure mode analysis) |
+| `/pb-grug-simplicity` | Whether the machinery is needed, and the smaller design that meets the stated need |
 | `/pb-handoff` | Structured work handoff between contexts (agents, sessions, teammates) |
 | `/pb-handcraft` | AI output quality gate: a 7-lens pass for making AI-assisted work indistinguishable from hand-written |
 | `/pb-standup` | Daily async status updates for distributed teams |

@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - **`/pb-settle` v1.0.0.** Rules on every leftover a resume surfaces and stops at a stated clean baseline before new work starts.
+- **`/pb-grug-simplicity` v1.0.0.** A tenth persona: asks whether the machinery is needed and puts the smaller design on the table.
 
 ### Changed
 

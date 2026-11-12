@@ -21,7 +21,7 @@ import pytest
 import yaml
 
 COMMANDS_DIR = Path(__file__).parent.parent / "commands"
-EXPECTED_COUNT = 113
+EXPECTED_COUNT = 114
 
 # Hub commands allowed to exceed the 5-link limit
 HUB_COMMANDS = {"pb-patterns.md"}
@@ -1124,7 +1124,7 @@ class TestMetadataConsistency:
 class TestPersonaIntegrity:
     """Validate persona agent structure and consistency."""
 
-    # Persona agents (9): original 5 + kai-reach + elena/tavis/clara (added 2026-07-13)
+    # Persona agents (10): original 5 + kai-reach + elena/tavis/clara (added 2026-07-13) + grug (2026-11-12)
     PERSONA_COMMANDS = {
         "pb-linus-agent.md": {"model": "opus", "category": "reviews", "difficulty": "advanced"},
         "pb-alex-infra.md": {"model": "opus", "category": "deployment", "difficulty": "advanced"},
@@ -1135,10 +1135,11 @@ class TestPersonaIntegrity:
         "pb-elena-design.md": {"model": "opus", "category": "reviews", "difficulty": "advanced"},
         "pb-tavis-security.md": {"model": "opus", "category": "reviews", "difficulty": "advanced"},
         "pb-clara-curator.md": {"model": "opus", "category": "core", "difficulty": "advanced"},
+        "pb-grug-simplicity.md": {"model": "opus", "category": "development", "difficulty": "intermediate"},
     }
 
     def test_persona_agents_exist(self):
-        """Ensure all 9 persona agents are present."""
+        """Ensure all 10 persona agents are present."""
         files = get_command_files()
         file_names = {f.name for f in files}
         missing = []
@@ -1267,6 +1268,7 @@ class TestRegisterRuleReference:
         "pb-elena-design.md",
         "pb-tavis-security.md",
         "pb-jordan-testing.md",
+        "pb-grug-simplicity.md",
         # Persona reviewers + design lenses
         "pb-maya-product.md",
         "pb-kai-reach.md",

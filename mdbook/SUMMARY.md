@@ -49,6 +49,7 @@
 - [Todo Implement](commands/development/pb-todo-implement.md)
 - [Testing](commands/development/pb-testing.md)
 - [Jordan: Testing Agent](commands/development/pb-jordan-testing.md)
+- [Grug: Smaller Design Agent](commands/development/pb-grug-simplicity.md)
 - [Debug](commands/development/pb-debug.md)
 - [Pause](commands/development/pb-pause.md)
 - [Resume](commands/development/pb-resume.md)

@@ -150,7 +150,7 @@ Name the lead by the decision's center of gravity and record it ("Lead: Tavis, t
 | Documentation / clarity | Sam | Maya + Elena |
 | Scope / lifecycle / coherence | Clara | Maya + Linus |
 
-**Roster (9):** `/pb-linus-agent`, `/pb-tavis-security`, `/pb-jordan-testing`, `/pb-alex-infra`, `/pb-maya-product`, `/pb-elena-design`, `/pb-kai-reach`, `/pb-sam-documentation`, `/pb-clara-curator`.
+**Roster (10):** `/pb-linus-agent`, `/pb-tavis-security`, `/pb-jordan-testing`, `/pb-alex-infra`, `/pb-maya-product`, `/pb-elena-design`, `/pb-kai-reach`, `/pb-sam-documentation`, `/pb-clara-curator`, `/pb-grug-simplicity`.
 
 Each persona gets the SAME brief; disagreement is expected and valuable. Name the round (review or cycle) in each persona's prompt, not only the brief: a lens that does not know it defers items to the round it is in. Run the panel in parallel so the first response doesn't anchor the others, as separate agents when the ruling binds. Each panelist's prompt names its persona file and tells the agent to read it from disk: an agent spawned mid-session can hold an earlier copy. A persona's `model_hint` is its default when run alone; on a panel, panelists run on sonnet and the lead and synthesis on opus, and the brief records any seat raised. The lead rebuts and closes in its lane; the orchestrators synthesize.
 
