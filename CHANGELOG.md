@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- **`/pb-huddle` v1.10.0.** The brief carries the ask verbatim and the project's constraints; persona prompts name the review; an agreeing panel seats an opposition against the agreement; agreement and a single run are not checks.
 - **`/pb-resume` v1.13.0.** Step 4 reads `todos/inbox/`; a job the user runs between sessions is read from its live state before the notes.
 
 ## [v2.36.0] - 2026-11-06

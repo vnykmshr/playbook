@@ -6,9 +6,9 @@ difficulty: "intermediate"
 model_hint: "opus"
 execution_pattern: "parallel-then-sequential"
 related_commands: ['pb-think', 'pb-preamble', 'pb-clara-curator', 'pb-maya-product', 'pb-adr']
-last_reviewed: "2026-11-06"
-version: "1.9.0"
-version_notes: "v1.9.0: A command the close rules is dry-run and diffed against the untouched base; re-huddle messages each agent once, then spawns fresh agents from the brief and findings files; the follow-up names changed files and tells the agent to `cat` them."
+last_reviewed: "2026-11-12"
+version: "1.10.0"
+version_notes: "v1.10.0: The brief carries the ask verbatim and constraints from the project's instructions, with what the public may see during a visibility move; persona prompts name the review; a panel that agrees, its opposition seat included, seats one against the agreement; agreement is not a check, and a run cannot verify 'only', 'never' or 'always'."
 breaking_changes: []
 ---
 # Multi-Perspective Decision Session
@@ -111,7 +111,8 @@ If the user overrode a standing rule this session, the brief states the rule and
 
 The brief you write is a claim too. Each fact in it names how it was checked: the command run or the file opened, marked measured or inferred. A fact with no check is labelled unverified, and every "unverified" is resolved or carried into the decision before the close. Ask panelists to mark the same; "stated from reading, not run" gets them to run things. The brief also states:
 - what the artifact under review is for, and where anything distilled from elsewhere came from;
-- the hard constraints (visibility, host, budget), gathered from the user before any option: constraints that arrive one at a time void the options built before them;
+- the user's ask, verbatim, which each lens answers as stated before narrowing it;
+- the hard constraints (visibility, host, budget, identity or privacy), gathered from the user and the project's instructions before any option: constraints that arrive one at a time void the options built before them. For a move in visibility or hosting, include what the public may see while it changes (pushes, tags, DNS);
 - for a change to an interface, its callers (one grep);
 - your own list of what you suspect you missed;
 - the question as coverage ("does it handle all N things it was built for?"), not go/no-go; and that the answer may sit outside the options offered.
@@ -151,13 +152,13 @@ Name the lead by the decision's center of gravity and record it ("Lead: Travis, 
 
 **Roster (9):** `/pb-linus-agent`, `/pb-travis-security`, `/pb-jordan-testing`, `/pb-alex-infra`, `/pb-maya-product`, `/pb-elena-design`, `/pb-kai-reach`, `/pb-sam-documentation`, `/pb-clara-curator`.
 
-Each persona gets the SAME brief; disagreement is expected and valuable. Run the panel in parallel so the first response doesn't anchor the others, as separate agents when the ruling binds. Panelists can run on sonnet; the lead and synthesis need opus. The lead rebuts and closes in its lane; the orchestrators synthesize.
+Each persona gets the SAME brief; disagreement is expected and valuable. Name the round (review or cycle) in each persona's prompt, not only the brief: a lens that does not know it defers items to the round it is in. Run the panel in parallel so the first response doesn't anchor the others, as separate agents when the ruling binds. Panelists can run on sonnet; the lead and synthesis need opus. The lead rebuts and closes in its lane; the orchestrators synthesize.
 
 **Seats:**
-- **Opposition.** When the proposal has an obvious overreach (a cut, a rewrite, minimalism winning unopposed), one lens is assigned the opposite position. A panel that agrees easily without one seats it after the fact, before synthesis.
+- **Opposition.** When the proposal has an obvious overreach (a cut, a rewrite, minimalism winning unopposed), one lens is assigned the opposite position. A panel that agrees easily, its opposition seat included, seats one after the fact against what it agreed on, before synthesis.
 - **Fresh eyes.** A huddle reviewing work seats at least one panelist who did not plan it.
 
-**Fact-check before the lead.** When the panel returns, the process orchestrator checks the load-bearing claims that name no check, in the brief or in a panelist's argument, before the lead sees them. A wrong fact inside one lens reads as a position, and the other lenses argue with it instead of checking it. A check names its instrument, and the instrument must answer the claim: `git log -S` counts occurrences, so it cannot show when a line was last edited (`-G` can). Evidence that lands after the panel ran goes to the lead and synthesis labelled *the panel did not see this*. A panelist who finds a live defect reports it as a finding; argued as rhetoric, the best-argued room walks past the bug. The lead gets the panelists' verbatim text, not a paraphrase.
+**Fact-check before the lead.** When the panel returns, the process orchestrator checks the load-bearing claims that name no check, in the brief or in a panelist's argument, before the lead sees them; agreement among lenses is not a check. A wrong fact inside one lens reads as a position, and the other lenses argue with it instead of checking it. A check names its instrument, and the instrument must answer the claim: `git log -S` counts occurrences, so it cannot show when a line was last edited (`-G` can). A run shows one path, so it cannot verify "only", "never" or "always": read every path. Evidence that lands after the panel ran goes to the lead and synthesis labelled *the panel did not see this*. A panelist who finds a live defect reports it as a finding; argued as rhetoric, the best-argued room walks past the bug. The lead gets the panelists' verbatim text, not a paraphrase.
 
 **Fact-check the close too.** Agents see the state as of their spawn, so re-read disk first, then check the lead's close for its claims and for what it leaves out. A command the close rules (a filter, a conflict resolution, a script) is code: dry-run it and diff the result against the untouched base, never against the output of the same filter.
 
