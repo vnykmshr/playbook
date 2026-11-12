@@ -531,7 +531,6 @@ class TestChangelogLandsWithChange:
 DASH_BASELINE = {
     "pb-caveman.md": 17,
     "pb-handoff.md": 20,
-    "pb-kai-reach.md": 3,
     "pb-linus-agent.md": 2,
     "pb-plan.md": 1,
     "pb-review-hygiene.md": 3,
@@ -660,7 +659,6 @@ BARE_OPENER_BASELINE = {
     "pb-hardening.md": 2,
     "pb-huddle.md": 3,
     "pb-incident.md": 13,
-    "pb-kai-reach.md": 8,
     "pb-knowledge-transfer.md": 3,
     "pb-learn.md": 3,
     "pb-llm-guidelines.md": 1,
