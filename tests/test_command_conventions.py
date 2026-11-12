@@ -1199,7 +1199,7 @@ class TestPersonaIntegrity:
 
         The block is what makes a boundary legible: the lane, the routes out, the
         collision-pair callout, and the domain authority. Applied inconsistently across
-        nine files, the sharpening silently rots -- this guard is the belt for that.
+        the persona files, the sharpening silently rots -- this guard is the belt for that.
         """
         files = get_command_files()
         missing = []
@@ -1224,9 +1224,13 @@ class TestPersonaIntegrity:
                 huddle = path.read_text()
                 break
         assert huddle is not None, "pb-huddle.md not found"
-        roster_match = re.search(r"^\*\*Roster \(\d+\):\*\*(.+)$", huddle, re.MULTILINE)
+        roster_match = re.search(r"^\*\*Roster \((\d+)\):\*\*(.+)$", huddle, re.MULTILINE)
         assert roster_match, "pb-huddle.md has no '**Roster (N):**' line"
-        roster = roster_match.group(1)
+        assert int(roster_match.group(1)) == len(self.PERSONA_COMMANDS), (
+            f"pb-huddle roster says {roster_match.group(1)} personas, "
+            f"PERSONA_COMMANDS has {len(self.PERSONA_COMMANDS)}"
+        )
+        roster = roster_match.group(2)
         missing = [
             name for name in self.PERSONA_COMMANDS if f"/{name[:-3]}" not in roster
         ]
