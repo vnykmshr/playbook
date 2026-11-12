@@ -1135,7 +1135,7 @@ class TestPersonaIntegrity:
         "pb-elena-design.md": {"model": "opus", "category": "reviews", "difficulty": "advanced"},
         "pb-tavis-security.md": {"model": "opus", "category": "reviews", "difficulty": "advanced"},
         "pb-clara-curator.md": {"model": "opus", "category": "core", "difficulty": "advanced"},
-        "pb-grug-simplicity.md": {"model": "opus", "category": "development", "difficulty": "intermediate"},
+        "pb-grug-simplicity.md": {"model": "opus", "category": "development", "difficulty": "advanced"},
     }
 
     def test_persona_agents_exist(self):
