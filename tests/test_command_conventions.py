@@ -1147,6 +1147,22 @@ class TestPersonaIntegrity:
                 missing.append(persona_name)
         assert not missing, f"Missing persona agents: {missing}"
 
+    LENS_OUTPUT_LINE = (
+        "**Lens output:** observations in the flow of the work, the one that most changes it first, "
+        "three at most, with no headings and no verdict. Depth calibration sets how much is examined, "
+        "not how much is said; when more than three things matter, say that a full review is warranted."
+    )
+
+    def test_persona_lens_output_line_identical(self):
+        """Every persona carries the same Lens output line."""
+        missing = [
+            path.name
+            for path in get_command_files()
+            if path.name in self.PERSONA_COMMANDS
+            and self.LENS_OUTPUT_LINE not in path.read_text(encoding="utf-8").splitlines()
+        ]
+        assert not missing, f"Personas without the shared Lens output line: {missing}"
+
     def test_persona_metadata_correct(self):
         """Verify persona metadata matches expected values."""
         files = get_command_files()
