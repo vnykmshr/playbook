@@ -1211,12 +1211,12 @@ class TestPersonaIntegrity:
         assert not missing, f"Personas missing Boundary & Authority: {missing}"
 
     def test_huddle_registers_all_personas(self):
-        """pb-huddle's roster line must list every persona (roster drift guard).
+        """pb-huddle's roster line and PERSONA_COMMANDS hold the same names (roster drift guard).
 
-        Checks the explicit "**Roster (N):**" line, not the whole file: an incidental
-        mention (a collision-line cross-reference, a related_commands entry) must not
-        satisfy the guard. A persona in PERSONA_COMMANDS but absent from the roster is
-        the "forgot to seat it" drift this catches.
+        Reads the "**Roster (N):**" paragraph through md_read, so an incidental mention
+        elsewhere in the file or a sample line inside a fence cannot satisfy it. Fails on
+        a persona missing from the line, a name on the line that is not a persona, a
+        repeated name, and a heading count that differs from the names listed.
         """
         huddle = None
         for path in get_command_files():
@@ -1224,17 +1224,25 @@ class TestPersonaIntegrity:
                 huddle = path.read_text()
                 break
         assert huddle is not None, "pb-huddle.md not found"
-        roster_match = re.search(r"^\*\*Roster \((\d+)\):\*\*(.+)$", huddle, re.MULTILINE)
-        assert roster_match, "pb-huddle.md has no '**Roster (N):**' line"
-        seated = re.findall(r"`/(pb-[a-z0-9-]+)`", roster_match.group(2))
+        rosters = [
+            t for t in md_read.tokens(split_front_matter(huddle)[1])
+            if t.type == "inline" and re.match(r"\*\*Roster \(\d+\):\*\*", t.content)
+        ]
+        assert len(rosters) == 1, f"pb-huddle.md has {len(rosters)} '**Roster (N):**' lines, expected 1"
+        heading = int(re.match(r"\*\*Roster \((\d+)\)", rosters[0].content).group(1))
+        seated = [
+            c.content[1:] for c in rosters[0].children
+            if c.type == "code_inline" and c.content.startswith("/pb-")
+        ]
         expected = {name[:-3] for name in self.PERSONA_COMMANDS}
         assert sorted(seated) == sorted(expected), (
             f"pb-huddle roster and PERSONA_COMMANDS differ: "
-            f"missing {sorted(expected - set(seated))}, extra or repeated "
-            f"{sorted(n for n in seated if n not in expected or seated.count(n) > 1)}"
+            f"missing {sorted(expected - set(seated))}, "
+            f"not a persona {sorted(set(seated) - expected)}, "
+            f"repeated {sorted({n for n in seated if seated.count(n) > 1})}"
         )
-        assert int(roster_match.group(1)) == len(seated), (
-            f"pb-huddle roster heading says {roster_match.group(1)}, the line lists {len(seated)}"
+        assert heading == len(seated), (
+            f"pb-huddle roster heading says {heading}, the line lists {len(seated)}"
         )
 
 
