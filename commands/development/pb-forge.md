@@ -6,9 +6,9 @@ difficulty: "advanced"
 model_hint: "opus"
 execution_pattern: "interactive"
 related_commands: ['pb-what-next', 'pb-review', 'pb-huddle', 'pb-preflight', 'pb-ship']
-last_reviewed: "2026-11-06"
-version: "1.9.0"
-version_notes: "v1.9.0: Peer and Land check their drafted text against the register; a change pulled from a release is removed by rebuilding an unpushed range, not by a forward revert; a TAKE on a sample, flag or claim carries replacement text the vet ran, applied verbatim."
+last_reviewed: "2026-11-12"
+version: "1.10.0"
+version_notes: "v1.10.0: The vet reads prior rulings on the same item; an aside during the vet is input, not a ruling; scratch copies use a worktree, never git stash; a fix that approximates a spec runs the spec's named cases before re-review; the CHANGELOG cut gets handcraft and a check against the register before its commit."
 breaking_changes: []
 ---
 # Lifecycle Step-Runner
@@ -53,7 +53,7 @@ Forge walks these stages. It auto-runs the mechanical ones, hands off during exe
 
 The arc is the default for new, non-trivial work. Triage decides how much of the front you actually run.
 
-**Every stop carries vetted leans.** Where you rule (direction, forks, plan picks, vet rulings, a release call), forge brings its lean on each item: TAKE, AMEND or REJECT, with the reason. Before the stop, the lead for that lane vets the leans, convening lenses as in `/pb-huddle` only for items it cannot settle alone. The vet reads what each lean rests on (the plan, the diff, the cut, the measurement), not only the lean, because that is where gaps surface; a script that derives its check from the same rule as the work cannot be the vet. A gap the vet finds goes back into the work before the stop, and the stop names what changed and any dissent the lead could not close. You confirm or override.
+**Every stop carries vetted leans.** Where you rule (direction, forks, plan picks, vet rulings, a release call), forge brings its lean on each item: TAKE, AMEND or REJECT, with the reason. Before the stop, the lead for that lane vets the leans, convening lenses as in `/pb-huddle` only for items it cannot settle alone. The vet reads what each lean rests on (the plan, the diff, the cut, the measurement, prior rulings on the same item), not only the lean, because that is where gaps surface; a script that derives its check from the same rule as the work cannot be the vet. A gap the vet finds goes back into the work before the stop, and the stop names what changed and any dissent the lead could not close. You confirm or override. An aside you make while the vet runs is input to the vet, not a ruling: the stop comes after the lead reports.
 
 ---
 
@@ -72,8 +72,8 @@ Self-gate runs in three phases: find, then vet and fix, then judge. Every gate t
 
 **Vet and fix.** When the finders report at least one finding:
 
-1. **Vet.** The lead from the findings' lane rules on each one: TAKE with the fix, REJECT with why, or DEFER with where it goes. The lead convenes two or three more lenses, as in `/pb-huddle`, only for findings it cannot settle alone (disputed, cross-lane, or reversing a prior ruling) and briefs them with those findings only. A TAKE that changes a sample, a flag or a claim carries its replacement text, which the vet has run or tested in a scratch copy; the fix applies that text verbatim, and a TAKE the vet cannot run is a DEFER. Forge stops once with the rulings; the user confirms or overrides them.
-2. **Fix.** Start from a clean tree (`git status --porcelain` prints nothing) and record HEAD in the cursor as the pre-fix SHA. Land the TAKEs, `git add -N` any new file so the re-review diff sees it, and count the fix done only when the project's tests pass on their exit code (`/pb-review --no-auto-commit` holds the commit if the user wants signoff first).
+1. **Vet.** The lead from the findings' lane rules on each one: TAKE with the fix, REJECT with why, or DEFER with where it goes. The lead convenes two or three more lenses, as in `/pb-huddle`, only for findings it cannot settle alone (disputed, cross-lane, or reversing a prior ruling) and briefs them with those findings only. A TAKE that changes a sample, a flag or a claim carries its replacement text, which the vet has run or tested in a scratch copy (a `git worktree`, never `git stash`: every worktree shares one stash list); the fix applies that text verbatim, and a TAKE the vet cannot run is a DEFER. Forge stops once with the rulings; the user confirms or overrides them.
+2. **Fix.** Start from a clean tree (`git status --porcelain` prints nothing) and record HEAD in the cursor as the pre-fix SHA. Land the TAKEs, `git add -N` any new file so the re-review diff sees it, and count the fix done only when the project's tests pass on their exit code (`/pb-review --no-auto-commit` holds the commit if the user wants signoff first). A fix that approximates a spec runs against the cases the spec names before re-review.
 3. **Re-review.** An independent pass on the diff from the pre-fix SHA to the working tree, committed or not: the fixes are a new surface. Findings go back to the vet. When they are counterexamples to a fix that approximates a spec (a regex standing in for a parser), propose the instrument change at round 1, not at the cap. A change pulled out of the release whose command was versioned only for it is removed by rebuilding the range without it while the range is unpushed, not by a forward revert, which leaves a second version change in the same release. Once pushed, revert the body only and drop its words from `version_notes`; the version stays.
 
 Stop when a vet takes nothing. At most two re-review rounds: if a third is needed, forge stops and proposes a guard or test for that defect class, and the user decides, as `/pb-review`'s loop detection escalates.
@@ -160,7 +160,7 @@ This file is the `/pb-resume` hook for the arc. Where `/pb-resume` tells you the
 
 ## External Actions Stop Hard
 
-Opening a PR, merging, syncing to remote, and releasing are stops under the global External Action Gate in `~/.claude/CLAUDE.md`, which also holds the GitHub Artifact Register. Forge states each and waits for the approval that gate requires, so you never tag a release on a reflex. Before Land, read what the previous Land left: its deploy runs, its release notes if it published any, and the traps its cursor logged; release docs (the CHANGELOG cut, the notes) follow the final code commit.
+Opening a PR, merging, syncing to remote, and releasing are stops under the global External Action Gate in `~/.claude/CLAUDE.md`, which also holds the GitHub Artifact Register. Forge states each and waits for the approval that gate requires, so you never tag a release on a reflex. Before Land, read what the previous Land left: its deploy runs, its release notes if it published any, and the traps its cursor logged; release docs (the CHANGELOG cut, the notes) follow the final code commit. Self-gate never saw them: run handcraft on the CHANGELOG cut and check it against the register before committing it.
 
 ---
 
