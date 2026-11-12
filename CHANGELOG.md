@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Breaking
 
-- **`/pb-tavis-security` v2.0.0.** Renamed from `/pb-travis-security`. Re-run `scripts/install.sh` to link the new name and prune the old one.
+- **`/pb-tavis-security` v2.0.0.** Renamed from `/pb-travis-security`. Re-run `scripts/install.sh` to link the new name and prune the old one. The defense is reviewed as attack surface; a traced input path is the worked example; Comment Register and the three-observation lens added.
 
 ### Added
 
