@@ -30,7 +30,7 @@ How playbook commands compose into workflows: which command to reach for, workfl
 → `/pb-review` (self-review gate) → `/pb-review-code` (peer review) → `/pb-security` (security review)
 
 **Deep multi-perspective review?**
-→ `/pb-review-comprehensive` pairs the five core review personas by change type; `/pb-tavis-security`, `/pb-elena-design` and `/pb-kai-reach` hold the security, design and reach lanes
+→ `/pb-review-comprehensive` pairs review personas by change type; `/pb-elena-design` and `/pb-kai-reach` hold the design and reach lanes
 
 **Reviewing quality periodically?**
 → `/pb-review-tests` (monthly) → `/pb-review-hygiene` (monthly) → `/pb-review-product` (product alignment)
