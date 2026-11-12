@@ -1264,6 +1264,7 @@ class TestRegisterRuleReference:
         "pb-review-playbook.md",
         "pb-security.md",
         "pb-linus-agent.md",
+        "pb-elena-design.md",
         "pb-jordan-testing.md",
         # Persona reviewers + design lenses
         "pb-maya-product.md",
