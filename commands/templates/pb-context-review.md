@@ -6,9 +6,9 @@ difficulty: "intermediate"
 model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-pause', 'pb-resume', 'pb-context', 'pb-claude-global', 'pb-evolve']
-last_reviewed: "2026-11-05"
-version: "2.4.1"
-version_notes: "v2.4.1: Daily hygiene points at /pb-pause Step 3, where it lives; pause entries are archived at each pause, not after resume."
+last_reviewed: "2026-11-15"
+version: "2.4.2"
+version_notes: "v2.4.2: Step 3 archives pause notes as /pb-pause Step 3a says."
 breaking_changes: ["pb-review-context merged into this command; use `--violations` mode instead"]
 ---
 # Context Layer Review & Hygiene
@@ -153,7 +153,7 @@ Move completed work out of active files.
 ```bash
 # If pause-notes.md has more than 1 entry, archive old ones
 # Keep only the latest entry in the active file
-# Move old entries to: todos/done/pause-notes-archive-YYYY-MM-DD.md
+# Move old entries as /pb-pause Step 3a says (never overwrite an archive)
 ```
 
 **Working context sections:**

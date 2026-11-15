@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- **`/pb-pause` v1.11.1 and `/pb-context-review` v2.4.2.** Step 3a suffixes the time to a taken archive name; an archive is never overwritten.
+
 ## [v2.37.0] - 2026-11-13
 
 v2.37.0 rewrites six personas around what each one checks, adds a tenth persona and `/pb-settle`, and renames the security persona.

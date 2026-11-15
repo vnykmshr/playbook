@@ -6,9 +6,9 @@ difficulty: "advanced"
 model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-resume', 'pb-start', 'pb-standup', 'pb-handoff']
-last_reviewed: "2026-11-06"
-version: "1.11.0"
-version_notes: "v1.11.0: The Integration section is gone; Step 3 archives old entries before writing the new one."
+last_reviewed: "2026-11-15"
+version: "1.11.1"
+version_notes: "v1.11.1: Step 3a suffixes the time to a taken archive name; an archive is never overwritten."
 breaking_changes: []
 ---
 # Pause Development Work
@@ -111,7 +111,7 @@ Skip this step if there are no active trackers.
 
 ### Step 3: Write Pause Notes + Context Hygiene
 
-**3a. Archive old entries:** before overwriting, move any existing entries in pause-notes to `todos/done/pause-notes-archive-YYYY-MM-DD.md`.
+**3a. Archive old entries:** before overwriting, move any existing entries in pause-notes to `todos/done/pause-notes-archive-YYYY-MM-DD.md`; if that name is taken, suffix the time (`-HHMM`). Never overwrite an archive.
 
 **3b. Write pause entry:** replace contents of `todos/pause-notes.md`:
 
