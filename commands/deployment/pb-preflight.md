@@ -6,9 +6,9 @@ difficulty: "intermediate"
 model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-ship', 'pb-security', 'pb-hardening', 'pb-deployment', 'pb-release']
-last_reviewed: "2026-11-05"
-version: "1.4.0"
-version_notes: "v1.4.0: 1.1 scans full history on the first run, then recent commits; 4.2 sets the production log level at info or above; the Static/Managed partition's byte-match check is 4.3s, in place of 4.3."
+last_reviewed: "2026-11-15"
+version: "1.5.0"
+version_notes: "v1.5.0: 4.4 checks that a scheduled watcher's last run falls within its age bound, not only that its alert reaches a human."
 breaking_changes: ['Bullets are numbered N.M and referenced by number', 'N/A is no longer a valid outcome -- a bullet is in your profile or it is not rendered']
 ---
 # Pre-Ship Readiness Gate
@@ -109,7 +109,7 @@ Nine you own, twelve delegated, nine out of surface. Referenced by number agains
 - [ ] **4.1 Error tracker receiving events from the production build.** Fire a test exception. See it appear in the dashboard within 60 seconds. Not "the SDK is installed."
 - [ ] **4.2 Structured, searchable logs.** Log level at info or above in prod (no debug flood, no stdout garbage). Can query by request ID end-to-end.
 - [ ] **4.3 Health endpoint returns 200 from public DNS.** Not localhost. Not the internal network. The address a real user hits. Include one dependency check, not just `return "ok"`.
-- [ ] **4.4 Alerts wired for real failure modes.** Error rate spike, p99 latency, downtime, disk/memory threshold. At least one reachable human on the receiving end right now. Test-fire one alert.
+- [ ] **4.4 Alerts wired for real failure modes.** Error rate spike, p99 latency, downtime, disk/memory threshold. At least one reachable human on the receiving end right now. Test-fire one alert. A watcher on a schedule is not proven by its alert: its last run falls within the age bound you set for it.
 - [ ] **4.5 Dependency audit clean on criticals.** `npm audit` / `pip-audit` / `govulncheck ./...` / equivalent run within the last 7 days; `go list -m -u all` lists outdated modules, not vulnerable ones. A scanner that checks the toolchain catches what no code change fixes (a vulnerable Go release). No critical or high vulns unacknowledged.
 
 ### [5] Resilience & Limits

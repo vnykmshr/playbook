@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - **`/pb-pause` v1.11.1 and `/pb-context-review` v2.4.2.** Step 3a suffixes the time to a taken archive name; an archive is never overwritten.
+- **`/pb-preflight` v1.5.0.** 4.4 checks that a scheduled watcher's last run falls within its age bound, not only that its alert reaches a human.
 
 ## [v2.37.0] - 2026-11-13
 
