@@ -1124,7 +1124,7 @@ class TestMetadataConsistency:
 class TestPersonaIntegrity:
     """Validate persona agent structure and consistency."""
 
-    # Persona agents (10): original 5 + kai-reach + elena/tavis/clara (added 2026-07-13) + grug (2026-11-12)
+    # Persona agents (10): original 5 + kai-reach + elena/tavis/clara (added 2026-07-13) + adam (2026-11-12)
     PERSONA_COMMANDS = {
         "pb-linus-agent.md": {"model": "opus", "category": "reviews", "difficulty": "advanced"},
         "pb-alex-infra.md": {"model": "opus", "category": "deployment", "difficulty": "advanced"},
@@ -1135,7 +1135,7 @@ class TestPersonaIntegrity:
         "pb-elena-design.md": {"model": "opus", "category": "reviews", "difficulty": "advanced"},
         "pb-tavis-security.md": {"model": "opus", "category": "reviews", "difficulty": "advanced"},
         "pb-clara-curator.md": {"model": "opus", "category": "core", "difficulty": "advanced"},
-        "pb-grug-simplicity.md": {"model": "opus", "category": "development", "difficulty": "advanced"},
+        "pb-adam-simplicity.md": {"model": "opus", "category": "development", "difficulty": "advanced"},
     }
 
     def test_persona_agents_exist(self):
@@ -1281,7 +1281,7 @@ class TestRegisterRuleReference:
         "pb-elena-design.md",
         "pb-tavis-security.md",
         "pb-jordan-testing.md",
-        "pb-grug-simplicity.md",
+        "pb-adam-simplicity.md",
         # Persona reviewers + design lenses
         "pb-maya-product.md",
         "pb-kai-reach.md",
