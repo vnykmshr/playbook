@@ -6,9 +6,9 @@ difficulty: "beginner"
 model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-claude-project', 'pb-claude-orchestration', 'pb-preamble', 'pb-design-rules', 'pb-standards']
-last_reviewed: "2026-11-06"
-version: "2.13.0"
-version_notes: "v2.13.0: Register covers tag messages and CHANGELOG entries; length ceilings become defaults (commit subject only, PR body one sentence of what plus upgrader impact); the drafting step checks its own text; process vocabulary named under Never in public text. Mindset added; the Always-strip scope is the section; the register test is the clause test."
+last_reviewed: "2026-11-15"
+version: "2.13.1"
+version_notes: "v2.13.1: The tag message leaves out what a release workflow adds from the tag."
 breaking_changes: ['Template output restructured -- BEACON headers, standalone Non-Negotiables, Session Ritual added', 'Personas list removed from global (project-specific)', 'Context Efficiency section removed (generic)', 'Project-Specific Overrides section removed (obvious)', 'Development Ritual removed (duplicated the Quick Reference)', 'Session Ritual removed (duplicated the last Quick Reference row)', 'Model Selection prose paragraph removed; the tier table stays']
 ---
 # Generate Global CLAUDE.md
@@ -181,7 +181,7 @@ The Register BEACON applied to text that leaves the machine, in every project. T
 - Issue: 1 paragraph + repro steps if applicable. No template scaffolding.
 - Review/PR comments: state the issue, cite the line, stop. One sentence per finding.
 - CHANGELOG entry: what changed, in one line. No reasons, no inventory.
-- Tag message: the release title.
+- Tag message: the release title, less any part a release workflow adds from the tag.
 - Release: title `vX.Y.Z - <pet name>`, or `vX.Y.Z` when unnamed; never a change summary. Notes: what upgraders must do, security lines, changelog and compare links. No generated PR list, no "New Contributors".
 
 **The clause test:** each clause tells the reviewer something the diff, title or linked CHANGELOG does not. Cut reasons, justifications and inventories.

@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - **`/pb-pause` v1.11.1 and `/pb-context-review` v2.4.2.** Step 3a suffixes the time to a taken archive name; an archive is never overwritten.
 - **`/pb-preflight` v1.5.0.** 4.4 checks that a scheduled watcher's last run falls within its age bound, not only that its alert reaches a human.
+- **`/pb-claude-global` v2.13.1.** The tag message leaves out what a release workflow adds from the tag.
 
 ## [v2.37.0] - 2026-11-13
 
