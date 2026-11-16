@@ -21,6 +21,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **`/pb-linus-agent` v1.6.1.** The Boundary names `/pb-adam-simplicity`.
 - **`/pb-alex-infra` v1.5.1.** The Boundary names `/pb-adam-simplicity`.
 - **`/pb-forge` v1.10.1.** Closing the cursor replaces the stage word with `SHIPPED` and leaves the log.
+- **`/pb-settle` v1.1.0.** A DONE ruling on a finding names the version its cited text shipped in and checks that the text covers the stage where the failure happened.
 
 ## [v2.37.0] - 2026-11-13
 

@@ -6,9 +6,9 @@ difficulty: "advanced"
 model_hint: "opus"
 execution_pattern: "interactive"
 related_commands: ['pb-resume', 'pb-forge', 'pb-huddle', 'pb-evolve', 'pb-review-hygiene']
-last_reviewed: "2026-11-12"
-version: "1.0.0"
-version_notes: "v1.0.0: Rule on every leftover a resume surfaces and stop at a stated clean baseline before new work starts."
+last_reviewed: "2026-11-16"
+version: "1.1.0"
+version_notes: "v1.1.0: A DONE ruling on a finding names the version its cited text shipped in and checks that the text covers the stage where the failure happened."
 breaking_changes: []
 ---
 # Settle Leftovers to a Clean Baseline
@@ -59,7 +59,7 @@ A row lands in this round only if all three hold: it is one change with no desig
 | OWN ARC | its own Frame-stage `/pb-forge` deliverable, its cursor written before the round closes so the next resume lists it |
 | DEFER | a named later cycle (`/pb-evolve`, a dated plan) that will read it |
 | REJECT | with the reason, where the source's next reader looks (the recap archive, a ledger, the closed PR), so it is not proposed again |
-| DONE | the artifact that shows it already shipped |
+| DONE | the artifact that shows it already shipped; for a finding, the version its cited text shipped in (`git log -S`, then `git tag --contains`) and a check that the text covers the stage where the failure happened |
 
 A deferral nobody will read is a rejection with a delay: reject it. Rows that act on a remote or live infrastructure, cannot be undone, or need the user's hands leave the batch as their own gated stops. The round must not become the next planning cycle.
 
