@@ -6,9 +6,9 @@ difficulty: "advanced"
 model_hint: "opus"
 execution_pattern: "interactive"
 related_commands: ['pb-what-next', 'pb-review', 'pb-huddle', 'pb-preflight', 'pb-ship']
-last_reviewed: "2026-11-13"
-version: "1.10.0"
-version_notes: "v1.10.0: The vet reads prior rulings on the same item; an aside during the vet is input, not a ruling; scratch copies use a worktree, never git stash; a fix that approximates a spec runs the spec's named cases before re-review; the CHANGELOG cut gets handcraft and a check against the register before its commit. Replacement text the vet did not test goes back to it, the user's included; a finding on what a sentence says, after a fix already reworded it, is a design question unless a check settles it."
+last_reviewed: "2026-11-16"
+version: "1.10.1"
+version_notes: "v1.10.1: Closing the cursor replaces the stage word with SHIPPED and leaves the log."
 breaking_changes: []
 ---
 # Lifecycle Step-Runner
@@ -154,7 +154,7 @@ This file is the `/pb-resume` hook for the arc. Where `/pb-resume` tells you the
 
 **Leg boundaries.** Plan→Execute and Execute→Self-gate end a leg: the next stage needs nothing from the conversation that the cursor does not hold. At Plan→Execute, forge writes the cursor, says one line, and stops: "Leg done, cursor current. Continuing now: compact the context, then re-invoke `/pb-forge <slug>`. Stopping: start fresh later and re-invoke it." `/pb-start` runs on the re-invoke. Forge is not running when Execute ends, so the Execute hand-off carries that boundary. At Peer, which can wait days on approval, forge says the stopping half. Never mid-stage.
 
-**Closing the cursor.** After the last Land stop the deliverable needs (the release if it ships one, the merge if not), set the stage to `SHIPPED`, then move the file to `todos/done/forge-<slug>.md`, running `mkdir -p todos/done` first; if that name is taken, suffix the date and time (`-YYYYMMDD-HHMM`); never overwrite an archive. Move, never delete: delete commands are commonly denied. A deferred release is still needed, so the cursor stays at Land. If the move fails, leave the `SHIPPED` cursor: `/pb-resume` lists it and offers the move. `SHIPPED` is the stage resume keys on, so do not mark a finished arc any other way. A repo that tracks its cursor gets the close commit after the tag.
+**Closing the cursor.** After the last Land stop the deliverable needs (the release if it ships one, the merge if not), set the stage to `SHIPPED`, replacing the stage word and leaving the log lines, then move the file to `todos/done/forge-<slug>.md`, running `mkdir -p todos/done` first; if that name is taken, suffix the date and time (`-YYYYMMDD-HHMM`); never overwrite an archive. Move, never delete: delete commands are commonly denied. A deferred release is still needed, so the cursor stays at Land. If the move fails, leave the `SHIPPED` cursor: `/pb-resume` lists it and offers the move. `SHIPPED` is the stage resume keys on, so do not mark a finished arc any other way. A repo that tracks its cursor gets the close commit after the tag.
 
 ---
 
