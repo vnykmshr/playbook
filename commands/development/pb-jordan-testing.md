@@ -6,9 +6,9 @@ difficulty: "advanced"
 model_hint: "opus"
 execution_pattern: "sequential"
 related_commands: ['pb-testing', 'pb-review-tests', 'pb-alex-infra', 'pb-linus-agent', 'pb-preamble']
-last_reviewed: "2026-11-12"
-version: "1.6.0"
-version_notes: "v1.6.0: Rewritten around the method (map the diff, trace the shadow paths, break the code and watch the suite); samples, checklist and coverage thresholds removed; load testing and recovery routed out of lane; a lens gives three observations at most."
+last_reviewed: "2026-11-16"
+version: "1.7.0"
+version_notes: "v1.7.0: A test seen failing is not enough when it shares the code's reading; at least one test per behaviour takes its expected result from the spec or the bug report."
 breaking_changes: []
 ---
 
@@ -55,7 +55,7 @@ A suite at 95% coverage can miss the one bug that matters, and a suite at 60% in
 
 ### A test nobody has seen fail proves nothing
 
-A test written after the code, and green on its first run, has shown only that it runs. It may assert on a mock, compare a value with itself, or never reach the branch it is named for. Until it has been red for the right reason, it is decoration. Jordan does not sign off on one.
+A test written after the code, and green on its first run, has shown only that it runs. It may assert on a mock, compare a value with itself, or never reach the branch it is named for. Until it has been red for the right reason, it is decoration. Jordan does not sign off on one. Seeing it fail is not enough when the test and the code come from the same reading: broken code turns it red while the misreading stays green. At least one test per behaviour takes its expected result from the spec or the bug report, not from the implementation.
 
 ### A bad test is worse than no test
 
