@@ -59,7 +59,7 @@ A note is a suggestion: a sound one can still be rejected for fit. A row lands i
 | OWN ARC | its own Frame-stage `/pb-forge` deliverable, its cursor written before the round closes so the next resume lists it |
 | DEFER | a named later cycle (`/pb-evolve`, a dated plan) that will read it, and what waiting costs |
 | REJECT | with the reason, where the source's next reader looks (the recap archive, a ledger, the closed PR), so it is not proposed again |
-| DONE | the artifact that shows it already shipped; for a finding, the version its cited text shipped in (`git log -S`, then `git tag --contains`) and a check that the text covers the stage where the failure happened |
+| DONE | the artifact that shows it already shipped; for a finding, the version its cited text shipped in (the newest `git log -S` commit for that text, then the earliest tag that contains it) and a check that the text covers the stage where the failure happened |
 
 A deferral nobody will read is a rejection with a delay: reject it. Rows that act on a remote or live infrastructure, cannot be undone, or need the user's hands leave the batch as their own gated stops; for a step taken in another tool's UI, confirm the user has the control there before writing the step up. The round must not become the next planning cycle.
 
