@@ -8,7 +8,7 @@ execution_pattern: "interactive"
 related_commands: ['pb-resume', 'pb-forge', 'pb-huddle', 'pb-evolve', 'pb-review-hygiene']
 last_reviewed: "2026-11-20"
 version: "1.1.0"
-version_notes: "v1.1.0: A DONE ruling on a finding names the version its cited text shipped in and checks that the text covers the stage where the failure happened. A DEFER states what waiting costs; a step in another tool's UI is checked for the user's access before it is written up; a sound note can still be rejected for fit."
+version_notes: "v1.1.0: A DONE ruling on a finding checks that its cited text was absent when the failure happened and covers the stage where the failure happened. A DEFER states what waiting costs; a step in another tool's UI is checked for the user's access before it is written up; a sound note can still be rejected for fit."
 breaking_changes: []
 ---
 # Settle Leftovers to a Clean Baseline
@@ -59,7 +59,7 @@ A note is a suggestion: a sound one can still be rejected for fit. A row lands i
 | OWN ARC | its own Frame-stage `/pb-forge` deliverable, its cursor written before the round closes so the next resume lists it |
 | DEFER | a named later cycle (`/pb-evolve`, a dated plan) that will read it, and what waiting costs |
 | REJECT | with the reason, where the source's next reader looks (the recap archive, a ledger, the closed PR), so it is not proposed again |
-| DONE | the artifact that shows it already shipped; for a finding, the version its cited text shipped in (the newest `git log -S` commit for that text, then the earliest tag that contains it) and a check that the text covers the stage where the failure happened |
+| DONE | the artifact that shows it already shipped; for a finding, a check that its cited text is present at HEAD and was absent when the failure happened (`git grep -F '<text>' $(git rev-list -1 --first-parent --before='<date> 23:59:59' HEAD)` finds nothing; the date is the failure's, or the report's when it has none), and that the text covers the stage where the failure happened |
 
 A deferral nobody will read is a rejection with a delay: reject it. Rows that act on a remote or live infrastructure, cannot be undone, or need the user's hands leave the batch as their own gated stops; for a step taken in another tool's UI, confirm the user has the control there before writing the step up. The round must not become the next planning cycle.
 
