@@ -8,7 +8,7 @@ execution_pattern: "sequential"
 related_commands: ['pb-review-code', 'pb-standards', 'pb-handoff', 'pb-resume', 'pb-git-hygiene']
 last_reviewed: "2026-11-20"
 version: "1.3.0"
-version_notes: "v1.3.0: Spaced double hyphens replaced. Incoming work is checked, not presumed correct: claims compared with the diff, evidence rerun or marked unverified; a fit finding names a contradiction or a carrying cost; a verdict the session cannot settle goes to lenses; an undeclared project skips only Step 4."
+version_notes: "v1.3.0: Spaced double hyphens replaced. Incoming work is checked, not presumed correct: claims compared with the diff, evidence rerun or marked unverified; a fit finding names a contradiction or a carrying cost; a verdict the session cannot settle goes to lenses; an undeclared project skips only Step 4. Declarations are read at the scope's base; agent-instruction files and the project's gates join the security signals."
 breaking_changes: []
 ---
 # Review Incoming Changes (Authored Elsewhere)
@@ -122,6 +122,8 @@ This is the policy source. Read it before forming any conformance opinion:
 - Its automated gates (tests, linters, validators, hooks) and what they already cover
 - Any structural rules: required metadata, files that must change together, counts kept in sync
 
+Read them as of the scope's base (`git show <base>:<path>`; `HEAD` in worktree and release mode), not the working tree: a batch that edits a declaration or a gate is judged by the rules it arrived under, and that edit is itself a Step 3 finding.
+
 **If the project declares nothing relevant, say so and skip Step 4; Steps 3 and 5 still run,** since a concrete failure and a security signal need no declared convention. You cannot measure conformance against conventions that were never stated, and a gate that invents them is worse than no gate: it manufactures findings the author had no way to anticipate and no basis to accept. Write the convention down before the next intake. An undeclared rule cited as a conformance finding is a preference wearing a verdict's clothes.
 
 **Only what is already declared or already automated is in scope for conformance.** A rule you would like the project to have is a proposal for after the intake, not a conformance finding against this batch.
@@ -153,8 +155,10 @@ Evidence that a change fixes what it claims says nothing about a change that is 
 - Network egress, outbound URLs, webhook or callback targets
 - New or bumped third-party dependencies
 - File-system writes outside the project, or path construction from input
+- Files that instruct an agent or a session (CLAUDE.md, AGENTS.md, skills, commands, memory, hooks, permission settings): an edit there reaches every later session
+- The project's own gates and their exceptions: tests, validators, CI workflows, allowlists, baselines
 
-Grep the diff for these signals rather than judging by the commit subject: the subject describes the intent, and the risk is in the lines. Escalate to `/pb-review-tests` if the batch changes test behaviour.
+Grep the diff's paths and lines for these signals rather than judging by the commit subject: the subject describes the intent, and the risk is in the lines. Escalate to `/pb-review-tests` if the batch changes test behaviour.
 
 **Release mode narrows this list, and must.** Signal six (*new or bumped third-party dependencies*) is the entire subject matter of a release intake, so read literally it fires on every run. A rule that always fires carries no information: it gets read once, routed around, and its neighbours in the list are discredited with it. In release mode the signal is not that a version moved. It is:
 
@@ -301,7 +305,7 @@ Two things this cannot do, stated plainly:
 
 - [ ] Scope resolved and **printed**: range, worktree or release, never implied, never silently empty
 - [ ] Mode stated **before Step 2** (range = verdicts, worktree = commit plan, release = adopt/pin/skip + digest)
-- [ ] Project's declared conventions read before any conformance finding was formed
+- [ ] Project's declared conventions read, as of the scope's base, before any conformance finding was formed
 - [ ] `/pb-review-code` run, producing a **per-commit finding list** (empty if clean): not an impression of the diff; claims that came with the change compared with the diff, and evidence rerun or marked unverified
 - [ ] Diff grepped for the security signal list; `/pb-security` run if any hit. In release mode, the **narrowed** list: not "a version moved"
 - [ ] Register quoted from where the project declares it, and compared against extracted messages
