@@ -8,7 +8,7 @@ execution_pattern: "sequential"
 related_commands: ['pb-review-code', 'pb-standards', 'pb-handoff', 'pb-resume', 'pb-git-hygiene']
 last_reviewed: "2026-11-20"
 version: "1.3.0"
-version_notes: "v1.3.0: Spaced double hyphens replaced. Incoming work is checked, not presumed correct: claims compared with the diff, evidence rerun or marked unverified; a fit finding names a contradiction or a carrying cost; a verdict the session cannot settle goes to lenses; an undeclared project skips only Step 4. Declarations are read at the scope's base; agent-instruction files and the project's gates join the security signals, and `/pb-security` runs before any of the batch's code. A secret in a pushed commit is rotated before its revert."
+version_notes: "v1.3.0: Spaced double hyphens replaced. Incoming work is checked, not presumed correct: claims compared with the diff, evidence rerun or marked unverified; a fit finding names a contradiction or a carrying cost; a verdict the session cannot settle goes to lenses; an undeclared project skips only Step 4. Declarations are read at the scope's base; agent-instruction edits that change what a session may do and weakened gates join the security signals, and `/pb-security` runs before any of the batch's code. A secret in a pushed commit is rotated before its revert."
 breaking_changes: []
 ---
 # Review Incoming Changes (Authored Elsewhere)
@@ -155,8 +155,8 @@ Evidence that a change fixes what it claims says nothing about a change that is 
 - Network egress, outbound URLs, webhook or callback targets
 - New or bumped third-party dependencies
 - File-system writes outside the project, or path construction from input
-- Files that instruct an agent or a session (CLAUDE.md, AGENTS.md, skills, commands, memory, hooks, permission settings): an edit there reaches every later session
-- The project's own gates and their exceptions: tests, validators, CI workflows, allowlists, baselines
+- Files that instruct an agent or a session (CLAUDE.md, AGENTS.md, skills, commands, memory, hooks, permission settings), where the edit changes what a session may run, fetch, send or approve: it reaches every later session
+- The project's own gates weakened: a test, validator or CI step removed, skipped or loosened, or an allowlist, baseline or exception entry added
 
 Grep the diff's paths and lines for these signals rather than judging by the commit subject: the subject describes the intent, and the risk is in the lines. Escalate to `/pb-review-tests` if the batch changes test behaviour.
 
