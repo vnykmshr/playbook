@@ -8,7 +8,7 @@ execution_pattern: "sequential"
 related_commands: ['pb-review-code', 'pb-standards', 'pb-handoff', 'pb-resume', 'pb-git-hygiene']
 last_reviewed: "2026-11-20"
 version: "1.3.0"
-version_notes: "v1.3.0: Spaced double hyphens replaced. Incoming work is checked, not presumed correct: claims compared with the diff, evidence rerun or marked unverified; a fit finding names a contradiction or a carrying cost; a verdict the session cannot settle goes to lenses; an undeclared project skips only Step 4. Declarations are read at the scope's base; agent-instruction files and the project's gates join the security signals."
+version_notes: "v1.3.0: Spaced double hyphens replaced. Incoming work is checked, not presumed correct: claims compared with the diff, evidence rerun or marked unverified; a fit finding names a contradiction or a carrying cost; a verdict the session cannot settle goes to lenses; an undeclared project skips only Step 4. Declarations are read at the scope's base; agent-instruction files and the project's gates join the security signals. A secret in a pushed commit is rotated before its revert."
 breaking_changes: []
 ---
 # Review Incoming Changes (Authored Elsewhere)
@@ -241,7 +241,7 @@ Fix forward rather than amend. The gap is evidence about the intake path, and re
 git branch -r --contains <sha>    # empty = still local
 ```
 
-Local history: drop the commit from the branch, cost is zero. Already on the remote: `git revert` is itself a published change with its own blast radius: anyone who pulled has the original, and a revert without a stated reason reads as a mistake and gets re-contributed. Record the reason in the revert body, not just in the review.
+Local history: drop the commit from the branch, cost is zero. Already on the remote: `git revert` is itself a published change with its own blast radius: anyone who pulled has the original, and a revert without a stated reason reads as a mistake and gets re-contributed. Record the reason in the revert body, not just in the review. A revert does not unpublish: a secret in a pushed commit is rotated first (`/pb-secrets`), and the revert is not the fix.
 
 ### Worktree mode: a commit plan, not verdicts
 
