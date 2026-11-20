@@ -236,7 +236,7 @@ var AUDIT_GROUPS = [
     name: 'url-canonicalization',
     label: 'URL/path canonicalization and redirect safety',
     hitFilter: h => ['url-path'].includes(h.passName),
-    prompt: 'Audit every URL/path hit for canonicalization vulnerabilities. For each input point, test against all 16 adversarial payloads from the threat hunt methodology (path traversal variants, open redirect forms, SSRF targets including DNS rebinding) by the rule for its sink. No payload reaches a real network or DNS: a fetch sink is tested with the resolver and dialer stubbed, and its fetch path is read for a second resolution between the check and the connect. Classify each finding with severity and write a concrete exploit scenario.',
+    prompt: 'Audit every URL/path hit for canonicalization vulnerabilities. For each input point, test against all 16 adversarial payloads from the threat hunt methodology (path traversal variants, open redirect forms, SSRF targets including DNS rebinding) in unit or handler tests only, never against a running instance. No payload reaches a real network or DNS: a fetch sink is tested with the resolver and dialer stubbed, and its fetch path is read for a second resolution between the check and the connect. Classify each finding with severity and write a concrete exploit scenario.',
   },
   {
     name: 'header-trust-csp',
