@@ -307,7 +307,7 @@ Two things this cannot do, stated plainly:
 - [ ] Mode stated **before Step 2** (range = verdicts, worktree = commit plan, release = adopt/pin/skip + digest)
 - [ ] Project's declared conventions read, as of the scope's base, before any conformance finding was formed
 - [ ] `/pb-review-code` run, producing a **per-commit finding list** (empty if clean): not an impression of the diff; claims that came with the change compared with the diff, and evidence rerun or marked unverified
-- [ ] Diff grepped for the security signal list; `/pb-security` run if any hit. In release mode, the **narrowed** list: not "a version moved"
+- [ ] Diff grepped for the security signal list; `/pb-security` run if any hit, before any of the batch's code runs. In release mode, the **narrowed** list: not "a version moved"
 - [ ] Register quoted from where the project declares it, and compared against extracted messages
 - [ ] Conformance checked, with hand-checked items distinguished from automatically-checked ones
 - [ ] One verdict per commit, each resolving to a concrete action; a fit verdict names a contradiction or a carrying cost; publish state checked before offering REVERT
@@ -333,7 +333,7 @@ Two things this cannot do, stated plainly:
 | Assert the register is followed | Quote it, extract the messages, compare, cite the violating text |
 | Credit the evidence a change carries unchecked | Compare its claims with the diff and rerun it; mark what you cannot rerun as unverified |
 | Run range-mode steps against a dirty working tree | Worktree mode outputs a commit plan; verdicts come on the second pass |
-| Offer REVERT without checking publish state | `git branch -r --contains` first: a published revert has its own blast radius |
+| Offer REVERT without checking publish state | `git fetch --all`, then `git branch -r --contains`: a published revert has its own blast radius |
 | Redesign sound work to your own style | Accept sound-but-different; a content finding needs a concrete failure, a fit finding a contradiction or a carrying cost |
 | One verdict for the whole batch | One per commit; batches are rarely uniform |
 | Amend the author's commits to hide a gap | Fix forward; the gap is evidence about the intake path |
