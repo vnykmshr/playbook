@@ -6,9 +6,9 @@ difficulty: "advanced"
 model_hint: "opus"
 execution_pattern: "interactive"
 related_commands: ['pb-what-next', 'pb-review', 'pb-huddle', 'pb-preflight', 'pb-ship']
-last_reviewed: "2026-11-16"
+last_reviewed: "2026-11-20"
 version: "1.10.1"
-version_notes: "v1.10.1: Closing the cursor replaces the stage word with SHIPPED and leaves the log."
+version_notes: "v1.10.1: Closing the cursor replaces the stage word with SHIPPED and leaves the log. A reviewer's record is its findings, not its transcript."
 breaking_changes: []
 ---
 # Lifecycle Step-Runner
@@ -146,7 +146,7 @@ Forge keeps one file per deliverable at `todos/forge/{slug}.md`, under the dev-o
 - deliverable paths as they appear: sketch -> plan -> branch -> PR
 - the falsifier stated for any acceptance gate the front arc runs
 - decisions resolved at each seam, written as they are made
-- the next action, and the path of everything the next leg needs (briefs, panel records, measurements), under `todos/`, never only in the conversation or a session scratchpad
+- the next action, and the path of everything the next leg needs (briefs, panel records, measurements; a reviewer's record is its findings, not its transcript), under `todos/`, never only in the conversation or a session scratchpad
 - the after-Land list: every step the plan defers to Land or the cursor's close (ledger rows, pointer edits, archive moves), so none rests on memory
 - one log line per stage transition
 
