@@ -6,9 +6,9 @@ difficulty: "advanced"
 model_hint: "opus"
 execution_pattern: "interactive"
 related_commands: ['pb-resume', 'pb-forge', 'pb-huddle', 'pb-evolve', 'pb-review-hygiene']
-last_reviewed: "2026-11-16"
+last_reviewed: "2026-11-20"
 version: "1.1.0"
-version_notes: "v1.1.0: A DONE ruling on a finding names the version its cited text shipped in and checks that the text covers the stage where the failure happened."
+version_notes: "v1.1.0: A DONE ruling on a finding names the version its cited text shipped in and checks that the text covers the stage where the failure happened. A DEFER states what waiting costs."
 breaking_changes: []
 ---
 # Settle Leftovers to a Clean Baseline
@@ -57,7 +57,7 @@ A row lands in this round only if all three hold: it is one change with no desig
 |---|---|
 | TAKE | lands in this round |
 | OWN ARC | its own Frame-stage `/pb-forge` deliverable, its cursor written before the round closes so the next resume lists it |
-| DEFER | a named later cycle (`/pb-evolve`, a dated plan) that will read it |
+| DEFER | a named later cycle (`/pb-evolve`, a dated plan) that will read it, and what waiting costs |
 | REJECT | with the reason, where the source's next reader looks (the recap archive, a ledger, the closed PR), so it is not proposed again |
 | DONE | the artifact that shows it already shipped; for a finding, the version its cited text shipped in (`git log -S`, then `git tag --contains`) and a check that the text covers the stage where the failure happened |
 
