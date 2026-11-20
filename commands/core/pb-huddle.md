@@ -6,9 +6,9 @@ difficulty: "intermediate"
 model_hint: "opus"
 execution_pattern: "parallel-then-sequential"
 related_commands: ['pb-think', 'pb-preamble', 'pb-clara-curator', 'pb-maya-product', 'pb-adr']
-last_reviewed: "2026-11-15"
+last_reviewed: "2026-11-20"
 version: "1.10.1"
-version_notes: "v1.10.1: The simplicity seat is /pb-adam-simplicity."
+version_notes: "v1.10.1: The simplicity seat is /pb-adam-simplicity. The brief names the whole surface under review and every item the ask names."
 breaking_changes: []
 ---
 # Multi-Perspective Decision Session
@@ -110,12 +110,12 @@ A sketch or brief is a claim about the work, not a record of it. Treat files tha
 If the user overrode a standing rule this session, the brief states the rule and the override. The panel can read the rule; it cannot read the session.
 
 The brief you write is a claim too. Each fact in it names how it was checked: the command run or the file opened, marked measured or inferred. A fact with no check is labelled unverified, and every "unverified" is resolved or carried into the decision before the close. Ask panelists to mark the same; "stated from reading, not run" gets them to run things. The brief also states:
-- what the artifact under review is for, and where anything distilled from elsewhere came from;
+- what the artifact under review is for, the whole surface it sits in (every part a reader sees, defaults and fallbacks included), and where anything distilled from elsewhere came from;
 - the user's ask, verbatim, which each lens answers as stated before narrowing it;
 - the hard constraints (visibility, host, budget, identity or privacy), gathered from the user and the project's instructions before any option: constraints that arrive one at a time void the options built before them. For a move in visibility or hosting, include what the public may see while it changes (pushes, tags, DNS);
 - for a change to an interface, its callers (one grep);
 - your own list of what you suspect you missed;
-- the question as coverage ("does it handle all N things it was built for?"), not go/no-go and not a ranking by cost (a brief that asks for the cheapest change gets the cheapest option from every seat); and that the answer may sit outside the options offered.
+- the question as coverage ("does it handle all N things it was built for?"), naming every item the ask names, not go/no-go and not a ranking by cost (a brief that asks for the cheapest change gets the cheapest option from every seat); and that the answer may sit outside the options offered.
 
 Write the brief to disk, and each round's findings to a file beside it, so the panel can be re-briefed from files rather than memory.
 

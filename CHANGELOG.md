@@ -16,7 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **`/pb-pause` v1.11.1 and `/pb-context-review` v2.4.2.** Step 3a suffixes the time to a taken archive name; an archive is never overwritten.
 - **`/pb-preflight` v1.5.0.** 4.4 checks that a scheduled watcher's last run falls within its age bound, not only that its alert reaches a human.
 - **`/pb-claude-global` v2.13.1.** The tag message leaves out what a release workflow adds from the tag.
-- **`/pb-huddle` v1.10.1.** The simplicity seat is `/pb-adam-simplicity`.
+- **`/pb-huddle` v1.10.1.** The simplicity seat is `/pb-adam-simplicity`. The brief names the whole surface under review and every item the ask names.
 - **`/pb-clara-curator` v1.1.1.** The Boundary names `/pb-adam-simplicity`.
 - **`/pb-linus-agent` v1.6.1.** The Boundary names `/pb-adam-simplicity`.
 - **`/pb-alex-infra` v1.5.1.** The Boundary names `/pb-adam-simplicity`.
