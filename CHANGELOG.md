@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Breaking
 
-- **`/pb-adam-simplicity` v2.0.0.** Renamed from `/pb-grug-simplicity`. The demo and fence sections fold into the moves, and a sixth move says when no smaller design exists.
+- **`/pb-adam-simplicity` v2.0.0.** Renamed from `/pb-grug-simplicity`. The fence section folds into the moves, the demo section is cut, and a sixth move says when no smaller design exists.
 
 ### Changed
 

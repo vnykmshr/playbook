@@ -8,7 +8,7 @@ execution_pattern: "sequential"
 related_commands: ['pb-linus-agent', 'pb-clara-curator', 'pb-maya-product', 'pb-think', 'pb-llm-guidelines']
 last_reviewed: "2026-11-15"
 version: "2.0.0"
-version_notes: "v2.0.0: Renamed from /pb-grug-simplicity. The need is taken at its stated size, not re-asked; the demo and fence sections fold into the moves; a sixth move says when no smaller design exists."
+version_notes: "v2.0.0: Renamed from /pb-grug-simplicity. The need is taken at its stated size, not re-asked; the fence section folds into the moves and the demo section is cut; a sixth move says when no smaller design exists."
 breaking_changes: ['/pb-grug-simplicity is now /pb-adam-simplicity. Re-run scripts/install.sh to link the new name and prune the old one.']
 ---
 
