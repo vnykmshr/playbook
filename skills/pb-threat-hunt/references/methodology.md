@@ -106,7 +106,7 @@ rg -n 'websocket|gorilla/websocket|nhooyr.io/websocket|sse|ServerSentEvent|Event
 
 Test every URL and path input with adversarial payloads. Path traversal and open redirect share a root cause: trust in canonical form.
 
-**Run:** For each URL/path input, test with these payloads:
+**Run:** For each URL/path input, find its sink (a file path, a redirect, or an outbound fetch) and test it with these payloads; no payload reaches a real network or DNS. Rows 1-12 at a path or redirect sink may run against an instance you start with no network but loopback and redirects not followed, and nothing runs live where the network cannot be cut; the finding is the path opened or the `Location` returned, read as a browser reads it. A fetch sink, and any input that reaches one, is tested in a unit test that stubs the resolver and the dialer and records the address the client would connect to; the client's own parser must see the payload, not only the validator, since two parsers can read one form as different hosts. Read the fetch path against `/pb-security` Example 6 (resolve once, check every address, connect to the checked one, no unchecked redirect); the IP forms in its bypass table go through the same test.
 
 | # | Payload | Targets |
 |---|---------|---------|
@@ -125,11 +125,9 @@ Test every URL and path input with adversarial payloads. Path traversal and open
 | 13 | `http://localhost:6379` | SSRF to local services |
 | 14 | `http://169.254.169.254/latest/meta-data/` | SSRF to cloud metadata |
 | 15 | `http://[::1]:8080/admin` | SSRF via IPv6 localhost |
-| 16 | `http://<rand>.127.0.0.1.nip.io:6379` | DNS rebinding (reasoning-required: static grep won't catch; requires understanding two-step resolution) |
+| 16 | `http://<name the validator accepts>:6379` | DNS rebinding, two stub answers: always `127.0.0.1` (a validator that never resolves), and a public address then `127.0.0.1` (a check the client resolves past); the dialer gets a checked public address or nothing (reasoning-required: static grep won't catch it) |
 
-Use `nip.io`, not `xip.io` (availability).
-
-**Exit:** Every URL/path input tested against all 16 payloads. Fails when only `../` variants are tested.
+**Exit:** Every URL/path input tested against all 16 payloads by its sink's rule; every fetch path read for a second resolution. Fails when only `../` variants are tested, or when a payload reached a real network or DNS.
 
 ### Step 5: Redirect, Header Trust, and CSP `[Workflow: Phase 2]`
 

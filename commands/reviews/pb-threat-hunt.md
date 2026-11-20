@@ -6,9 +6,9 @@ difficulty: "expert"
 model_hint: "opus"
 execution_pattern: "sequential"
 related_commands: ['pb-security', 'pb-secrets', 'pb-hardening', 'pb-incident', 'pb-debug']
-last_reviewed: "2026-11-05"
-version: "1.1.1"
-version_notes: "v1.1.1: Spaced double hyphens replaced. Step 11 counts 6 report fields; the SHA-pin search adds -P for its look-ahead and the NoSQL search escapes its brace."
+last_reviewed: "2026-11-20"
+version: "1.2.0"
+version_notes: "v1.2.0: Step 4 tests each input by its sink and no payload reaches a real network or DNS; a fetch sink runs with the resolver and dialer stubbed. Row 16 tests rebinding with two stub answers, always loopback and public then loopback, in place of a public wildcard name. The skill's methodology and deep-audit prompt follow."
 breaking_changes: []
 ---
 # Security Threat Hunt: Deep Audit Methodology
@@ -149,7 +149,7 @@ rg -n 'websocket|gorilla/websocket|nhooyr.io/websocket|sse|ServerSentEvent|Event
 
 Test every URL and path input with adversarial payloads. Path traversal and open redirect share a root cause: trust in canonical form.
 
-**Run:** For each URL/path input, test with these payloads:
+**Run:** For each URL/path input, find its sink (a file path, a redirect, or an outbound fetch) and test it with these payloads; no payload reaches a real network or DNS. Rows 1-12 at a path or redirect sink may run against an instance you start with no network but loopback and redirects not followed, and nothing runs live where the network cannot be cut; the finding is the path opened or the `Location` returned, read as a browser reads it. A fetch sink, and any input that reaches one, is tested in a unit test that stubs the resolver and the dialer and records the address the client would connect to; the client's own parser must see the payload, not only the validator, since two parsers can read one form as different hosts. Read the fetch path against `/pb-security` Example 6 (resolve once, check every address, connect to the checked one, no unchecked redirect); the IP forms in its bypass table go through the same test.
 
 | # | Payload | Targets |
 |---|---------|---------|
@@ -168,9 +168,9 @@ Test every URL and path input with adversarial payloads. Path traversal and open
 | 13 | `http://localhost:6379` | SSRF to local services |
 | 14 | `http://169.254.169.254/latest/meta-data/` | SSRF to cloud metadata |
 | 15 | `http://[::1]:8080/admin` | SSRF via IPv6 localhost |
-| 16 | `http://<rand>.127.0.0.1.nip.io:6379` | DNS rebinding (reasoning-required: static grep won't catch this; requires understanding the two-step resolution pattern. Use `nip.io`, not `xip.io` for availability.) |
+| 16 | `http://<name the validator accepts>:6379` | DNS rebinding, two stub answers: always `127.0.0.1` (a validator that never resolves), and a public address then `127.0.0.1` (a check the client resolves past); the dialer gets a checked public address or nothing (reasoning-required: static grep won't catch it) |
 
-**Exit:** Every URL/path input tested against all 16 payloads. Fails when only `../` variants are tested (the first payload catches only the simplest cases).
+**Exit:** Every URL/path input tested against all 16 payloads by its sink's rule; every fetch path read for a second resolution. Fails when only `../` variants are tested (the first payload catches only the simplest cases), or when a payload reached a real network or DNS.
 
 ### Step 5: Redirect and Header Trust
 
