@@ -238,7 +238,7 @@ Fix forward rather than amend. The gap is evidence about the intake path, and re
 **Before offering REVERT, check whether the batch is still private:**
 
 ```bash
-git fetch --all && git branch -r --contains <sha>    # empty = on no fetched remote
+git fetch --all && git branch -r --contains <sha>    # empty = no fetched remote branch has it; tags and PR refs are not checked
 ```
 
 Local history: drop the commit from the branch, cost is zero. Already on the remote: `git revert` is itself a published change with its own blast radius: anyone who pulled has the original, and a revert without a stated reason reads as a mistake and gets re-contributed. Record the reason in the revert body, not just in the review. A revert does not unpublish: a secret in a pushed commit is rotated first (`/pb-secrets`), and the revert is not the fix.
