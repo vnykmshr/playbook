@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v2.38.0] - 2026-11-20
+
 v2.38.0 renames the simplicity persona, checks incoming work instead of presuming it correct, and adds a release-retention offer to `/pb-release`.
 
 **After upgrading:** `git pull`, then re-run `scripts/install.sh` to link `/pb-adam-simplicity` and prune `/pb-grug-simplicity`, and regenerate the global CLAUDE.md with `/pb-claude-global`.
@@ -2254,6 +2256,7 @@ When releasing a new version:
 
 ---
 
+[v2.38.0]: https://github.com/vnykmshr/playbook/releases/tag/v2.38.0
 [v2.37.0]: https://github.com/vnykmshr/playbook/releases/tag/v2.37.0
 [v2.36.0]: https://github.com/vnykmshr/playbook/releases/tag/v2.36.0
 [v2.35.0]: https://github.com/vnykmshr/playbook/releases/tag/v2.35.0
