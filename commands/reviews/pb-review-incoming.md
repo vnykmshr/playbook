@@ -8,7 +8,7 @@ execution_pattern: "sequential"
 related_commands: ['pb-review-code', 'pb-standards', 'pb-handoff', 'pb-resume', 'pb-git-hygiene']
 last_reviewed: "2026-11-20"
 version: "1.3.0"
-version_notes: "v1.3.0: Spaced double hyphens replaced. Incoming work is checked, not presumed correct: claims compared with the diff, evidence rerun or marked unverified; a fit finding names a contradiction or a carrying cost; a verdict the session cannot settle goes to lenses; an undeclared project skips only Step 4. Declarations are read at the scope's base; agent-instruction edits that change what a session may do and weakened gates join the security signals, `/pb-security` runs before any of the batch's code, and a gate the batch edits also runs as of the base. A secret in a pushed commit is rotated before its revert."
+version_notes: "v1.3.0: Spaced double hyphens replaced. Incoming work is checked, not presumed correct: claims compared with the diff, evidence rerun or marked unverified; a fit finding names a contradiction or a carrying cost; a verdict the session cannot settle goes to lenses; an undeclared project skips only Step 4. Declarations are read at the scope's base; agent-instruction edits that change what a session may do and weakened gates join the security signals, `/pb-security` runs before any of the batch's code, and a gate the batch edits also runs as of the base. The private-history check fetches first; a secret in a pushed commit is rotated before its revert."
 breaking_changes: []
 ---
 # Review Incoming Changes (Authored Elsewhere)
@@ -88,7 +88,7 @@ Then read the commit bodies. Provenance is usually already there: the evidence t
 
 **Name the mode before Step 2 runs, not before Step 5.** Steps 3, 4 and 5 each fork on it, and a step that answers two modes leaves the third to be guessed.
 
-**Range**: commits arrived. The full command applies. One further question: is this history still private? If the batch is unpushed, REVERT is free; if it is already on the remote, a revert is itself a published change. Check `git branch -r --contains <sha>` before offering it.
+**Range**: commits arrived. The full command applies. One further question: is this history still private? If the batch is unpushed, REVERT is free; if it is already on the remote, a revert is itself a published change. Check `git branch -r --contains <sha>` after a `git fetch --all` before offering it.
 
 **Worktree**: pre-ratification, not ratification. There are no commits, so there is no message register to check, no paperwork to ride along, and nothing to revert. Steps 3 and 4 still apply to the content; Step 5 produces a **commit plan** instead of verdicts (how to split the work so each change carries its own paperwork), and you run this command again after committing.
 
@@ -238,7 +238,7 @@ Fix forward rather than amend. The gap is evidence about the intake path, and re
 **Before offering REVERT, check whether the batch is still private:**
 
 ```bash
-git branch -r --contains <sha>    # empty = still local
+git fetch --all && git branch -r --contains <sha>    # empty = on no fetched remote
 ```
 
 Local history: drop the commit from the branch, cost is zero. Already on the remote: `git revert` is itself a published change with its own blast radius: anyone who pulled has the original, and a revert without a stated reason reads as a mistake and gets re-contributed. Record the reason in the revert body, not just in the review. A revert does not unpublish: a secret in a pushed commit is rotated first (`/pb-secrets`), and the revert is not the fix.
