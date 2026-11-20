@@ -6,9 +6,9 @@ difficulty: "advanced"
 model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-deployment', 'pb-ship', 'pb-pr', 'pb-review-hygiene']
-last_reviewed: "2026-11-06"
-version: "1.4.0"
-version_notes: "v1.4.0: Tag message is the release title; dispatch deploy workflows on main after the pull and verify the run at HEAD before tagging; notes and CHANGELOG entry checked against the register before the release step; run from /pb-ship, ship's Phase 2 reviews satisfy the Phase 1 review gates; one post-deploy watch, at least /pb-preflight's 15 minutes; the hotfix CHANGELOG entry goes in a version section, not after the link footer; Integration with Playbook section removed; ship-run reviews satisfy only the matching gates; notes.md written in the release, unnamed title fallback."
+last_reviewed: "2026-11-20"
+version: "1.5.0"
+version_notes: "v1.5.0: Step 3.5 offers to delete releases past the newest N after the watch ends without a rollback: 10 unless a Release retention line in the project's CONTRIBUTING.md sets another number or all; each delete asked for alone, Latest and a needed security line skipped, a release with assets stopped on, N below 1 or more than one past N stopped on, never --cleanup-tag; the delete line leaves the Step 2.4 block."
 breaking_changes: []
 ---
 # Release to Production
@@ -235,8 +235,6 @@ gh release list --json tagName,isDraft -q '.[] | select(.isDraft) | .tagName'
 gh release edit vX.Y.Z --draft=false                                            # the draft exists
 gh release create vX.Y.Z --title "vX.Y.Z - <name>" --notes-file notes.md  # it does not; the title is vX.Y.Z when unnamed
 
-# Optional: keep the last N releases. The tag stays, so links and rollback by tag still work
-gh release delete <oldest-tag> --yes  # never --cleanup-tag
 ```
 
 You write `notes.md` before this step. The notes say what upgraders must do, any security line, and link the CHANGELOG entry and the compare view; see the GitHub Artifact Register that `/pb-claude-global` writes into `~/.claude/CLAUDE.md`. Check the drafted notes and the CHANGELOG entry against it before this step: a review earlier in the release does not cover them.
@@ -319,6 +317,24 @@ curl -s [PROD_URL]/health | jq
 - [ ] Update project board
 - [ ] Announce (if applicable)
 ```
+
+### Step 3.5: Release Retention
+
+Once the watch ends without a rollback, offer to delete the releases past the newest N. N is 10 unless a line in the project's `CONTRIBUTING.md` starting `Release retention:` sets another number, or `all`, which skips this step. The offer quotes that line, or says there is none, and names the count and each release it would delete.
+
+```bash
+grep -m1 '^Release retention:' CONTRIBUTING.md
+
+# Published releases past the newest N (here 10), oldest last; pre-releases count, drafts do not.
+# --limit: the default of 30 cuts a long history short
+gh release list --exclude-drafts --limit 1000 --json tagName,isLatest,publishedAt -q 'sort_by(.publishedAt) | reverse | .[10:][] | [.tagName, .isLatest] | @tsv'
+
+# For each one: its asset count, then the delete
+gh release view <tag> --json assets -q '.assets | length'
+gh release delete <tag> --yes  # never --cleanup-tag
+```
+
+Ask for each delete on its own, never in the same step as the release. Skip a release marked Latest. Stop on one with assets: its download links go with it, and installers that fetch them break. The tag stays, so tag links and rollback by tag keep working. The notes do not: copy anything in them the CHANGELOG lacks first. Skip one whose notes carry a security line that users of an older line still need. If N is below 1, or more than one release falls past N, stop before any delete and show the list and where N came from.
 
 ---
 
@@ -409,6 +425,7 @@ PHASE 3: DEPLOY & VERIFY
 [ ] Metrics normal
 [ ] Monitor period complete
 [ ] Release summary documented
+[ ] Releases past the newest N offered for deletion, one at a time
 ```
 
 ---
