@@ -6,9 +6,9 @@ difficulty: "intermediate"
 model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-ship', 'pb-security', 'pb-hardening', 'pb-deployment', 'pb-release']
-last_reviewed: "2026-11-15"
-version: "1.5.0"
-version_notes: "v1.5.0: 4.4 checks that a scheduled watcher's last run falls within its age bound, not only that its alert reaches a human."
+last_reviewed: "2026-11-21"
+version: "1.6.0"
+version_notes: "v1.6.0: 6.2 watches while there is a signal: a service for the window stated with its rollback trigger, 15 minutes if none and never shorter than the span the trigger measures; a surface with no error rate until its post-deploy checks pass (Static/Managed: 4.3s and 6.1), a failed check being the trigger."
 breaking_changes: ['Bullets are numbered N.M and referenced by number', 'N/A is no longer a valid outcome -- a bullet is in your profile or it is not rendered']
 ---
 # Pre-Ship Readiness Gate
@@ -60,7 +60,7 @@ One question, asked once per project: **what are you shipping?**
 
 Nine you own, twelve delegated, nine out of surface. Referenced by number against The Gate below, which is always printed in full.
 
-- **You own (execute these):** 1.1 secrets in history · 2.3 a clean checkout rebuilds and redeploys the live site (this is the restore test) · 3.1 build and CI config match the expected schema · 3.5 rollback rehearsed · 4.3s (in place of 4.3, which needs a health endpoint) every file in the deployed build (or a rebuild with the deploy's pinned toolchain), fetched from its public URL with redirects followed, matches byte for byte; host control files such as `.nojekyll` are not served. Capture the deploy's artifact during the run (it is deleted after). Where the host edits responses (an injected bot-detection script), strip the known injection before comparing, or compare a non-HTML asset · 4.5 dependency audit · 6.1 smoke test on a real page and a real link · 6.2 watched after the flip · 6.5 read like an attacker: for a published corpus, what did you publish that you did not mean to
+- **You own (execute these):** 1.1 secrets in history · 2.3 a clean checkout rebuilds and redeploys the live site (this is the restore test) · 3.1 build and CI config match the expected schema · 3.5 rollback rehearsed · 4.3s (in place of 4.3, which needs a health endpoint) every file in the deployed build (or a rebuild with the deploy's pinned toolchain), fetched from its public URL with redirects followed, matches byte for byte; host control files such as `.nojekyll` are not served. Capture the deploy's artifact during the run (it is deleted after). Where the host edits responses (an injected bot-detection script), strip the known injection before comparing, or compare a non-HTML asset · 4.5 dependency audit · 6.1 smoke test on a real page and a real link · 6.2 watched after the flip until 4.3s and 6.1 pass · 6.5 read like an attacker: for a published corpus, what did you publish that you did not mean to
 - **Delegated (name the provider and the date you last verified):** 1.2 · 3.2 · 3.3 · 3.4 · 4.1 · 4.2 · 4.4 · 5.1-5.5
 - **Out of surface (no database, no sessions, no uploads):** 1.3 · 1.4 · 1.5 · 2.1 · 2.2 · 2.4 · 2.5 · 6.3 · 6.4
 
@@ -123,7 +123,7 @@ Nine you own, twelve delegated, nine out of surface. Referenced by number agains
 ### [6] Launch Sanity
 
 - [ ] **6.1 Post-deploy smoke test runs one real user journey against prod DNS.** Sign in, do the primary action, sign out. Not a ping. A journey.
-- [ ] **6.2 Error rate watched for 15 minutes after the flip.** Rollback trigger criteria stated in advance: "rollback if 5xx rate exceeds X% over 5 minutes."
+- [ ] **6.2 Watched after the flip while there is a signal to watch.** Rollback trigger criteria stated in advance: "rollback if 5xx rate exceeds X% over 5 minutes." A service watches its error rate against them for the window stated with them, 15 minutes if none is, never shorter than the span the trigger measures. A surface with no error rate ends the watch when its post-deploy checks pass; a failed check is the trigger.
 - [ ] **6.3 Admin and internal routes audited manually.** Assume they are not hidden. Authenticated as a non-admin user, try every admin URL you know. None respond with data.
 - [ ] **6.4 File uploads validated server-side for type, size, and content.** Uploading a `.php` named `.jpg` does not get stored or executed. Max size enforced at the server, not just the client.
 - [ ] **6.5 Someone read the app like an attacker.** Not you, if possible. Basic abuse tried: SQLi on a visible form, IDOR on a visible resource ID, auth bypass by stripping tokens, a second user accessing a first user's data.
@@ -155,9 +155,9 @@ Skipping a bullet silently is not an option. The point of a gate is that it is b
 The gate is not done at "deploy succeeded." It is done at "the thing works for real users and the dashboards stayed green."
 
 1. Run the smoke test against prod DNS immediately after the flip.
-2. Watch error rate, latency, and at least one business metric (signups, orders, checkouts, whatever the app does) for 15 minutes.
+2. Watch error rate, latency, and at least one business metric (signups, orders, checkouts, whatever the app does) for the 6.2 window; a surface with none of them ends the watch as 6.2 says.
 3. If any of them move the wrong way past your stated threshold, execute the rehearsed rollback. Do not debug live.
-4. After 15 clean minutes, log the deploy outcome somewhere durable: commit SHA, time, smoke result, incidents if any. The next person to ship needs this.
+4. Once the watch ends clean, log the deploy outcome somewhere durable: commit SHA, time, smoke result, incidents if any. The next person to ship needs this.
 
 ---
 

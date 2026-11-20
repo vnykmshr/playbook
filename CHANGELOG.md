@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- **`/pb-preflight` v1.6.0.** 6.2 watches while there is a signal: a service for the window stated with its rollback trigger, 15 minutes if none and never shorter than the span the trigger measures; a surface with no error rate until its post-deploy checks pass (Static/Managed: 4.3s and 6.1).
+
 ## [v2.38.0] - 2026-11-20
 
 v2.38.0 renames the simplicity persona, checks incoming work instead of presuming it correct, and adds a release-retention offer to `/pb-release`.
