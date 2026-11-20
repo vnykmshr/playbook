@@ -533,7 +533,6 @@ DASH_BASELINE = {
     "pb-handoff.md": 20,
     "pb-plan.md": 1,
     "pb-review-hygiene.md": 3,
-    "pb-review-incoming.md": 55,
 }
 
 PROSE_FIXTURE = [
