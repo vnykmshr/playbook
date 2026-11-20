@@ -8,7 +8,7 @@ execution_pattern: "interactive"
 related_commands: ['pb-resume', 'pb-forge', 'pb-huddle', 'pb-evolve', 'pb-review-hygiene']
 last_reviewed: "2026-11-20"
 version: "1.1.0"
-version_notes: "v1.1.0: A DONE ruling on a finding names the version its cited text shipped in and checks that the text covers the stage where the failure happened. A DEFER states what waiting costs; a step in another tool's UI is checked for the user's access before it is written up."
+version_notes: "v1.1.0: A DONE ruling on a finding names the version its cited text shipped in and checks that the text covers the stage where the failure happened. A DEFER states what waiting costs; a step in another tool's UI is checked for the user's access before it is written up; a sound note can still be rejected for fit."
 breaking_changes: []
 ---
 # Settle Leftovers to a Clean Baseline
@@ -51,7 +51,7 @@ One table, one row per leftover: source, claim, check (measured, inferred or unv
 
 ### 3. Fold in, or give it a home
 
-A row lands in this round only if all three hold: it is one change with no design question; it names an observed failure, not a preference or a note that something worked; it contradicts nothing already written. A mechanical row (a reversible move, an archive entry) needs only its check. Every row gets a ruling and a durable home:
+A note is a suggestion: a sound one can still be rejected for fit. A row lands in this round only if all three hold: it is one change with no design question; it names an observed failure, not a preference or a note that something worked; it contradicts nothing already written. A mechanical row (a reversible move, an archive entry) needs only its check. Every row gets a ruling and a durable home:
 
 | Ruling | Home |
 |---|---|
