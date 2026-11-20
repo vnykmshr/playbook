@@ -6,9 +6,9 @@ difficulty: "advanced"
 model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-deployment', 'pb-ship', 'pb-pr', 'pb-review-hygiene']
-last_reviewed: "2026-11-20"
-version: "1.5.0"
-version_notes: "v1.5.0: Step 3.5 offers to delete releases past the newest N after the watch ends without a rollback: 10 unless a Release retention line in the project's CONTRIBUTING.md sets another number or all; each delete asked for alone, Latest and a needed security line skipped, a release with assets stopped on, N below 1 or more than one past N stopped on, never --cleanup-tag; the delete line leaves the Step 2.4 block."
+last_reviewed: "2026-11-21"
+version: "1.6.0"
+version_notes: "v1.6.0: Step 3.3 watches for as long as /pb-preflight 6.2 says, no longer a fixed 15 minutes."
 breaking_changes: []
 ---
 # Release to Production
@@ -286,7 +286,7 @@ curl -s [PROD_URL]/health | jq
 
 ### Step 3.3: Monitor Period
 
-**Watch for at least the `/pb-preflight` 6.2 window (15 minutes), against the rollback threshold stated there:**
+**Watch for as long as `/pb-preflight` 6.2 says, against the rollback trigger stated there. A service:**
 - Watch error rates
 - Monitor latency
 - Check resource usage

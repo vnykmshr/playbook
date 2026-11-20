@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - **`/pb-preflight` v1.6.0.** 6.2 watches while there is a signal: a service for the window stated with its rollback trigger, 15 minutes if none and never shorter than the span the trigger measures; a surface with no error rate until its post-deploy checks pass (Static/Managed: 4.3s and 6.1).
+- **`/pb-release` v1.6.0.** Step 3.3 watches for as long as `/pb-preflight` 6.2 says.
 
 ## [v2.38.0] - 2026-11-20
 
