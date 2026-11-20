@@ -8,7 +8,7 @@ execution_pattern: "sequential"
 related_commands: ['pb-review-code', 'pb-standards', 'pb-handoff', 'pb-resume', 'pb-git-hygiene']
 last_reviewed: "2026-11-20"
 version: "1.3.0"
-version_notes: "v1.3.0: Spaced double hyphens replaced. Incoming work is checked, not presumed correct: claims compared with the diff, evidence rerun or marked unverified; a fit finding names a contradiction or a carrying cost; a verdict the session cannot settle goes to lenses; an undeclared project skips only Step 4. Declarations are read at the scope's base; agent-instruction edits that change what a session may do and weakened gates join the security signals, `/pb-security` runs before any of the batch's code, and a gate the batch edits also runs as of the base. The private-history check fetches first; a secret in a pushed commit is rotated before its revert."
+version_notes: "v1.3.0: Spaced double hyphens replaced. Incoming work is checked, not presumed correct: claims compared with the diff, evidence rerun or marked unverified; a fit finding names a contradiction or a carrying cost; a verdict the session cannot settle goes to lenses; an undeclared project skips only Step 4. Declarations are read at the scope's base; edits to files that run or load unasked (CI, hooks, install scripts, permission settings, auto-loaded instructions) and weakened gates join the security signals, `/pb-security` runs before any of the batch's code, and a gate the batch weakens also runs as of the base. The private-history check fetches first; a secret in a pushed commit is rotated before its revert."
 breaking_changes: []
 ---
 # Review Incoming Changes (Authored Elsewhere)
@@ -122,7 +122,7 @@ This is the policy source. Read it before forming any conformance opinion:
 - Its automated gates (tests, linters, validators, hooks) and what they already cover
 - Any structural rules: required metadata, files that must change together, counts kept in sync
 
-Read them as of the scope's base (`git show <base>:<path>`; `HEAD` in worktree and release mode), not the working tree: a batch that edits a declaration or a gate is judged by the rules it arrived under, and that edit is itself a Step 3 finding.
+Read them as of the scope's base (`git show <base>:<path>`; `HEAD` in worktree and release mode), not the working tree: a batch that edits a declaration or a gate is judged by the rules it arrived under; an edit that weakens a gate is a Step 3 security signal.
 
 **If the project declares nothing relevant, say so and skip Step 4; Steps 3 and 5 still run,** since a concrete failure and a security signal need no declared convention. You cannot measure conformance against conventions that were never stated, and a gate that invents them is worse than no gate: it manufactures findings the author had no way to anticipate and no basis to accept. Write the convention down before the next intake. An undeclared rule cited as a conformance finding is a preference wearing a verdict's clothes.
 
@@ -155,7 +155,7 @@ Evidence that a change fixes what it claims says nothing about a change that is 
 - Network egress, outbound URLs, webhook or callback targets
 - New or bumped third-party dependencies
 - File-system writes outside the project, or path construction from input
-- Files that instruct an agent or a session (CLAUDE.md, AGENTS.md, skills, commands, memory, hooks, permission settings), where the edit changes what a session may run, fetch, send or approve: it reaches every later session
+- Files that run or load without anyone invoking them, and any path the project declares as such (Step 2): CI workflows, hooks, install scripts, permission settings, and the instruction files every session loads (CLAUDE.md, AGENTS.md, memory). Any edit counts: they run with the project's secrets or reach every later session. A command or skill is grepped for the other signals, like code
 - The project's own gates weakened: a test, validator or CI step removed, skipped or loosened, or an allowlist, baseline or exception entry added
 
 Grep the diff's paths and lines for these signals rather than judging by the commit subject: the subject describes the intent, and the risk is in the lines. Escalate to `/pb-review-tests` if the batch changes test behaviour.
@@ -195,7 +195,7 @@ This is the pass the authoring session structurally could not run. Against the d
 | Counts, indexes and nav kept in sync | Invisible from anywhere but here |
 | Automated gates still pass | Cheap, and it is the floor rather than the bar |
 
-Run the project's own gates before forming a verdict, and when the batch edits a gate, run that gate as of the scope's base too (Step 2): a check that passes only under the edited gate is a Step 3 finding. **Note explicitly which checks passed automatically and which you performed by hand**: the hand-performed ones are the input to Step 6.
+Run the project's own gates before forming a verdict. A gate the batch weakens (Step 3's signals) is not counted as passed automatically: run it, with its config, as of the scope's base too; a check that passes only under the weakened gate is a Step 3 finding. **Note explicitly which checks passed automatically and which you performed by hand**: the hand-performed ones are the input to Step 6.
 
 ### Checking the register, not asserting it
 
