@@ -8,7 +8,7 @@ execution_pattern: "sequential"
 related_commands: ['pb-security', 'pb-secrets', 'pb-hardening', 'pb-incident', 'pb-debug']
 last_reviewed: "2026-11-20"
 version: "1.2.0"
-version_notes: "v1.2.0: Step 4 tests each input by its sink and no payload reaches a real network or DNS; a fetch sink runs with the resolver and dialer stubbed. Row 16 tests rebinding with two stub answers, always loopback and public then loopback, in place of a public wildcard name. The skill's methodology and deep-audit prompt follow."
+version_notes: "v1.2.0: Step 4 tests each input by its sink and no payload reaches a real network or DNS; a fetch sink, and rows 13-16 at any sink, run in a test with the resolver and dialer stubbed. Row 16 tests rebinding with two stub answers, always loopback and public then loopback, in place of a public wildcard name. The skill's methodology and deep-audit prompt follow."
 breaking_changes: []
 ---
 # Security Threat Hunt: Deep Audit Methodology
@@ -149,7 +149,7 @@ rg -n 'websocket|gorilla/websocket|nhooyr.io/websocket|sse|ServerSentEvent|Event
 
 Test every URL and path input with adversarial payloads. Path traversal and open redirect share a root cause: trust in canonical form.
 
-**Run:** For each URL/path input, find its sink (a file path, a redirect, or an outbound fetch) and test it with these payloads; no payload reaches a real network or DNS. Rows 1-12 at a path or redirect sink may run against an instance you start with no network but loopback and redirects not followed, and nothing runs live where the network cannot be cut; rows 13-16 at any sink run only in a unit or handler test; the finding is the path opened or the `Location` returned, read as a browser reads it. A fetch sink, and any input that reaches one, is tested in a unit test that stubs the resolver and the dialer and records the address the client would connect to; the client's own parser must see the payload, not only the validator, since two parsers can read one form as different hosts. Read the fetch path against `/pb-security` Example 6 (resolve once, check every address, connect to the checked one, no unchecked redirect); the IP forms in its bypass table go through the same test.
+**Run:** For each URL/path input, find its sink (a file path, a redirect, or an outbound fetch) and test it with these payloads; no payload reaches a real network or DNS. Rows 1-12 at a path or redirect sink may run against an instance you start with no network but loopback and redirects not followed, and nothing runs live where the network cannot be cut; the finding is the path opened or the `Location` returned, read as a browser reads it. Rows 13-16 at any sink run only in a unit or handler test with the resolver and dialer stubbed. A fetch sink, and any input that reaches one, is tested in a unit test that stubs the resolver and the dialer and records the address the client would connect to; the client's own parser must see the payload, not only the validator, since two parsers can read one form as different hosts. Read the fetch path against `/pb-security` Example 6 (resolve once, check every address, connect to the checked one, no unchecked redirect); the IP forms in its bypass table go through the same test.
 
 | # | Payload | Targets |
 |---|---------|---------|
