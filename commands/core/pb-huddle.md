@@ -8,7 +8,7 @@ execution_pattern: "parallel-then-sequential"
 related_commands: ['pb-think', 'pb-preamble', 'pb-clara-curator', 'pb-maya-product', 'pb-adr']
 last_reviewed: "2026-11-20"
 version: "1.10.1"
-version_notes: "v1.10.1: The simplicity seat is /pb-adam-simplicity. The brief names the whole surface under review and every item the ask names."
+version_notes: "v1.10.1: The simplicity seat is /pb-adam-simplicity. The brief names the whole surface under review and every item the ask names; each seat has a timebox and returns what it has when it runs out."
 breaking_changes: []
 ---
 # Multi-Perspective Decision Session
@@ -154,7 +154,7 @@ Name the lead by the decision's center of gravity and record it ("Lead: Tavis, t
 
 **Roster (10):** `/pb-linus-agent`, `/pb-tavis-security`, `/pb-jordan-testing`, `/pb-alex-infra`, `/pb-maya-product`, `/pb-elena-design`, `/pb-kai-reach`, `/pb-sam-documentation`, `/pb-clara-curator`, `/pb-adam-simplicity`.
 
-Each persona gets the SAME brief; disagreement is expected and valuable. Name the round (review or cycle) in each persona's prompt, not only the brief: a lens that does not know it defers items to the round it is in. Run the panel in parallel so the first response doesn't anchor the others, as separate agents when the ruling binds. Each panelist's prompt names its persona file and tells the agent to read it from disk: an agent spawned mid-session can hold an earlier copy. A persona's `model_hint` is its default when run alone; on a panel, panelists run on sonnet and the lead and synthesis on opus, and the brief records any seat raised. The lead rebuts and closes in its lane; the orchestrators synthesize.
+Each persona gets the SAME brief; disagreement is expected and valuable. Name the round (review or cycle) in each persona's prompt, not only the brief: a lens that does not know it defers items to the round it is in. Run the panel in parallel so the first response doesn't anchor the others, as separate agents when the ruling binds. Each panelist's prompt names its persona file and tells the agent to read it from disk: an agent spawned mid-session can hold an earlier copy. A persona's `model_hint` is its default when run alone; on a panel, panelists run on sonnet and the lead and synthesis on opus, and the brief records any seat raised. Each seat gets a timebox; a seat out of time returns its findings so far and names the items it did not reach. The lead rebuts and closes in its lane; the orchestrators synthesize.
 
 **One file, three modes.** A persona file is used three ways: a full review (the file on a diff, alone), a lens-mode pass (its Lens Mode, inline while the work is done, three observations at most), and a panel seat (the file plus the brief, argued in lane; the three-observation cap belongs to lens mode alone). The lane, the routes and the evidence it owes are the same in all three; only the depth changes.
 
