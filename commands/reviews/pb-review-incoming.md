@@ -8,7 +8,7 @@ execution_pattern: "sequential"
 related_commands: ['pb-review-code', 'pb-standards', 'pb-handoff', 'pb-resume', 'pb-git-hygiene']
 last_reviewed: "2026-11-20"
 version: "1.3.0"
-version_notes: "v1.3.0: Spaced double hyphens replaced. Incoming work is checked, not presumed correct: claims compared with the diff, evidence rerun or marked unverified; a fit finding names a contradiction or a carrying cost; a verdict the session cannot settle goes to lenses; an undeclared project skips only Step 4. Declarations are read at the scope's base; agent-instruction edits that change what a session may do and weakened gates join the security signals, and `/pb-security` runs before any of the batch's code. A secret in a pushed commit is rotated before its revert."
+version_notes: "v1.3.0: Spaced double hyphens replaced. Incoming work is checked, not presumed correct: claims compared with the diff, evidence rerun or marked unverified; a fit finding names a contradiction or a carrying cost; a verdict the session cannot settle goes to lenses; an undeclared project skips only Step 4. Declarations are read at the scope's base; agent-instruction edits that change what a session may do and weakened gates join the security signals, `/pb-security` runs before any of the batch's code, and a gate the batch edits also runs as of the base. A secret in a pushed commit is rotated before its revert."
 breaking_changes: []
 ---
 # Review Incoming Changes (Authored Elsewhere)
@@ -195,7 +195,7 @@ This is the pass the authoring session structurally could not run. Against the d
 | Counts, indexes and nav kept in sync | Invisible from anywhere but here |
 | Automated gates still pass | Cheap, and it is the floor rather than the bar |
 
-Run the project's own gates before forming a verdict. **Note explicitly which checks passed automatically and which you performed by hand**: the hand-performed ones are the input to Step 6.
+Run the project's own gates before forming a verdict, and when the batch edits a gate, run that gate as of the scope's base too (Step 2): a check that passes only under the edited gate is a Step 3 finding. **Note explicitly which checks passed automatically and which you performed by hand**: the hand-performed ones are the input to Step 6.
 
 ### Checking the register, not asserting it
 
