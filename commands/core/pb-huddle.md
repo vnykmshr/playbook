@@ -8,7 +8,7 @@ execution_pattern: "parallel-then-sequential"
 related_commands: ['pb-think', 'pb-preamble', 'pb-clara-curator', 'pb-maya-product', 'pb-adr']
 last_reviewed: "2026-11-20"
 version: "1.10.1"
-version_notes: "v1.10.1: The simplicity seat is /pb-adam-simplicity. The brief names the whole surface under review and every item the ask names; each seat has a timebox and returns what it has when it runs out."
+version_notes: "v1.10.1: The simplicity seat is /pb-adam-simplicity. The brief names the whole surface under review and every item the ask names; each seat has a timebox and returns what it has when it runs out; routes offered on a security finding each state who stays exposed, and until when."
 breaking_changes: []
 ---
 # Multi-Perspective Decision Session
@@ -178,7 +178,7 @@ After personas argue, put every finding in one counted bucket (agreed, disputed,
 
 ### Step 5: Synthesize
 
-Clara (curatorial orchestrator) synthesizes; Claude records. Don't average the opinions. Find the approach that survives all selected lenses. If no single approach satisfies all, surface the dissent and the irreconcilable trade-off explicitly, and recommend which lens to prioritize for THIS decision; the domain owner's call is decisive in-lane. Synthesis that smooths disagreement into consensus is the failure mode; a huddle that agreed too easily did not huddle.
+Clara (curatorial orchestrator) synthesizes; Claude records. Don't average the opinions. Find the approach that survives all selected lenses. If no single approach satisfies all, surface the dissent and the irreconcilable trade-off explicitly, and recommend which lens to prioritize for THIS decision; the domain owner's call is decisive in-lane. Routes offered on a security finding each state who stays exposed, and until when. Synthesis that smooths disagreement into consensus is the failure mode; a huddle that agreed too easily did not huddle.
 
 ### Step 6: Record
 
