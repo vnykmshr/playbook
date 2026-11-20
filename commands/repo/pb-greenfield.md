@@ -6,9 +6,9 @@ difficulty: "intermediate"
 model_hint: "opus"
 execution_pattern: "interactive"
 related_commands: ['pb-zero-stack', 'pb-claude-project', 'pb-context', 'pb-plan', 'pb-start']
-last_reviewed: "2026-11-06"
-version: "2.0.2"
-version_notes: "v2.0.2: Spaced double hyphens replaced; the first-commit check reads staged names before committing."
+last_reviewed: "2026-11-20"
+version: "2.1.0"
+version_notes: "v2.1.0: A multi-step first build starts with /pb-forge."
 breaking_changes: ['Renamed from pb-repo-init - the old name no longer resolves', 'No longer emits a phase plan; that content moved to /pb-plan -> /pb-spec', 'Language directory trees removed - the ecosystem initializers own them']
 ---
 # New Project, End to End (Idea → Working Repo)
@@ -88,7 +88,7 @@ This is what makes it a playbook project instead of a directory:
 2. **Hand to `/pb-context`** for `todos/1-working-context.md` - `todos/` is the working-material root; pause notes land beside it later
 3. **Hand to `/pb-claude-project`** for the project `.claude/CLAUDE.md`. Do this *after* step 2, not before: the generated file links the working context for current state rather than copying it, so the link needs a target
 4. **One CI workflow:** lint + test. That's it.
-5. **First commit:** `git add -A && git commit -m "chore: initial scaffold"`. Then `/pb-start` for the first real feature.
+5. **First commit:** `git add -A && git commit -m "chore: initial scaffold"`. Then `/pb-start` for the first real feature, or `/pb-forge` when it is a multi-step build.
 
 The test for this step: **on day two, `/pb-resume` works.** It reads `todos/1-working-context.md`, so an empty `todos/` directory fails this test. Seed the working context, or day two starts cold.
 
