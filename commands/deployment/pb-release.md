@@ -234,7 +234,6 @@ The CI check reads each workflow's newest run for this commit, so a cancelled ru
 gh release list --json tagName,isDraft -q '.[] | select(.isDraft) | .tagName'
 gh release edit vX.Y.Z --draft=false                                            # the draft exists
 gh release create vX.Y.Z --title "vX.Y.Z - <name>" --notes-file notes.md  # it does not; the title is vX.Y.Z when unnamed
-
 ```
 
 You write `notes.md` before this step. The notes say what upgraders must do, any security line, and link the CHANGELOG entry and the compare view; see the GitHub Artifact Register that `/pb-claude-global` writes into `~/.claude/CLAUDE.md`. Check the drafted notes and the CHANGELOG entry against it before this step: a review earlier in the release does not cover them.
@@ -320,17 +319,17 @@ curl -s [PROD_URL]/health | jq
 
 ### Step 3.5: Release Retention
 
-Once the watch ends without a rollback, offer to delete the releases past the newest N. N is 10 unless a line in the project's `CONTRIBUTING.md` starting `Release retention:` sets another number, or `all`, which skips this step. The offer quotes that line, or says there is none, and names the count and each release it would delete.
+Once the watch ends without a rollback, offer to delete the releases past the newest N. N is 10 unless a line in the project's `CONTRIBUTING.md` (at the root, in `.github/` or in `docs/`) starting `Release retention:` sets another number, or `all`, which skips this step. The offer quotes that line, or says there is none, and names the count and each release it would delete.
 
 ```bash
-grep -m1 '^Release retention:' CONTRIBUTING.md
+grep -s -H -m1 '^Release retention:' CONTRIBUTING.md .github/CONTRIBUTING.md docs/CONTRIBUTING.md
 
 # Published releases past the newest N (here 10), oldest last; pre-releases count, drafts do not.
 # --limit: the default of 30 cuts a long history short
 gh release list --exclude-drafts --limit 1000 --json tagName,isLatest,publishedAt -q 'sort_by(.publishedAt) | reverse | .[10:][] | [.tagName, .isLatest] | @tsv'
 
-# For each one: its asset count, then the delete
-gh release view <tag> --json assets -q '.assets | length'
+# For each one: its asset count and notes, then the delete
+gh release view <tag> --json assets,body -q '"assets: \(.assets | length)", .body'
 gh release delete <tag> --yes  # never --cleanup-tag
 ```
 
