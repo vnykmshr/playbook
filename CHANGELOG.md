@@ -20,7 +20,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **`/pb-clara-curator` v1.1.1.** The Boundary names `/pb-adam-simplicity`.
 - **`/pb-linus-agent` v1.6.1.** The Boundary names `/pb-adam-simplicity`.
 - **`/pb-alex-infra` v1.5.1.** The Boundary names `/pb-adam-simplicity`.
-- **`/pb-forge` v1.10.1.** Closing the cursor replaces the stage word with `SHIPPED` and leaves the log. A reviewer's record is its findings, not its transcript.
+- **`/pb-forge` v1.10.1.** Closing the cursor replaces the stage word with `SHIPPED` and leaves the log. A reviewer's record is its findings, not its transcript; vet lenses are briefed with the hard constraints.
 - **`/pb-settle` v1.1.0.** A DONE ruling on a finding names the version its cited text shipped in and checks that the text covers the stage where the failure happened. A DEFER states what waiting costs; a step in another tool's UI is checked for the user's access before it is written up; a sound note can still be rejected for fit.
 - **`/pb-jordan-testing` v1.7.0.** Seeing a test fail is not enough when it shares the code's reading; one test per behaviour takes its expected result from the spec or the bug report.
 
