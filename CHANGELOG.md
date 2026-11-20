@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+v2.38.0 renames the simplicity persona, checks incoming work instead of presuming it correct, and adds a release-retention offer to `/pb-release`.
+
+**After upgrading:** `git pull`, then re-run `scripts/install.sh` to link `/pb-adam-simplicity` and prune `/pb-grug-simplicity`, and regenerate the global CLAUDE.md with `/pb-claude-global`.
+
 ### Breaking
 
 - **`/pb-adam-simplicity` v2.0.0.** Renamed from `/pb-grug-simplicity`. The fence section folds into the moves, the demo section is cut, and a sixth move says when no smaller design exists.
@@ -21,11 +25,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **`/pb-linus-agent` v1.6.1.** The Boundary names `/pb-adam-simplicity`.
 - **`/pb-alex-infra` v1.5.1.** The Boundary names `/pb-adam-simplicity`.
 - **`/pb-forge` v1.10.1.** Closing the cursor replaces the stage word with `SHIPPED` and leaves the log. A reviewer's record is its findings, not its transcript; vet lenses are briefed with the hard constraints.
-- **`/pb-settle` v1.1.0.** A DONE ruling on a finding checks that its cited text is on main and that the failing session lacked it, naming the commit or release it read, and that the text covers the stage where the failure happened. A DEFER states what waiting costs; a step in another tool's UI is checked for the user's access before it is written up; a sound note can still be rejected for fit.
+- **`/pb-settle` v1.1.0.** A DONE ruling checks that the failing session lacked the cited text and names the commit or release it read. A DEFER states what waiting costs; a step in another tool's UI is checked for the user's access first; a sound note can still be rejected for fit.
 - **`/pb-jordan-testing` v1.7.0.** Seeing a test fail is not enough when it shares the code's reading; one test per behaviour takes its expected result from the spec or the bug report.
 - **`/pb-review-code` v2.4.1 and `/pb-resume` v1.13.1.** Their pointers to `/pb-review-incoming` no longer say incoming content is trusted or usually sound.
 - **`/pb-release` v1.5.0.** Step 3.5 offers to delete releases past the newest N once the watch ends without a rollback: 10 unless the project's `CONTRIBUTING.md` sets its own, each delete asked for alone, Latest and a needed security line skipped, a release with assets stopped on, N below 1 or more than one past N stopped on, never `--cleanup-tag`.
-- **`/pb-review-incoming` v1.3.0.** Spaced double hyphens replaced. Incoming work is checked, not presumed correct: claims compared with the diff, evidence rerun or marked unverified; a fit finding names a contradiction or a carrying cost; a verdict the session cannot settle goes to lenses; an undeclared project skips only Step 4. Declarations are read at the scope's base, and a batch's edit to one or to a gate is a finding; edits to files that run or load unasked, command or skill edits that change what a session may do, and weakened gates join the security signals, `/pb-security` runs before any of the batch's code, and a gate the batch edits also runs as of the base. The private-history check fetches first; a secret in the batch is rotated before its commit is dropped or reverted.
+- **`/pb-review-incoming` v1.3.0.** Incoming work is checked, not presumed correct: evidence is rerun, fit is judged against written text, and declarations are read at the scope's base. Edits to what runs or loads unasked, to commands or skills that change what a session may do, and to gates are security signals; any secret in the batch is rotated.
 - **`/pb-threat-hunt` v1.2.0.** Step 4 tests each input by its sink and keeps every payload off the real network and DNS; rows 13-16 run only in a test with the resolver and dialer stubbed, and row 16 tests rebinding with two stub resolver answers in place of a public wildcard name.
 - **`/pb-tavis-security` v2.1.0.** A proof runs inside the brief's rules: an address, IP or hostname form goes to the parser, the validator or a stubbed resolver and dialer, never connected to or resolved for real.
 - **`/pb-greenfield` v2.1.0.** A multi-step first build starts with `/pb-forge`.
