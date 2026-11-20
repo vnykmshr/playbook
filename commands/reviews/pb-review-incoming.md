@@ -8,7 +8,7 @@ execution_pattern: "sequential"
 related_commands: ['pb-review-code', 'pb-standards', 'pb-handoff', 'pb-resume', 'pb-git-hygiene']
 last_reviewed: "2026-11-20"
 version: "1.3.0"
-version_notes: "v1.3.0: Spaced double hyphens replaced. Incoming work is checked, not presumed correct: claims compared with the diff, evidence rerun or marked unverified; a fit finding names a contradiction or a carrying cost; a verdict the session cannot settle goes to lenses; an undeclared project skips only Step 4. Declarations are read at the scope's base; agent-instruction files and the project's gates join the security signals. A secret in a pushed commit is rotated before its revert."
+version_notes: "v1.3.0: Spaced double hyphens replaced. Incoming work is checked, not presumed correct: claims compared with the diff, evidence rerun or marked unverified; a fit finding names a contradiction or a carrying cost; a verdict the session cannot settle goes to lenses; an undeclared project skips only Step 4. Declarations are read at the scope's base; agent-instruction files and the project's gates join the security signals, and `/pb-security` runs before any of the batch's code. A secret in a pushed commit is rotated before its revert."
 breaking_changes: []
 ---
 # Review Incoming Changes (Authored Elsewhere)
@@ -138,7 +138,7 @@ Apply the `/pb-review-code` checklist to the diff. Do not restate it here; run i
 
 Three adjustments for incoming work:
 
-- **Check the evidence the change carries** (Step 0). Compare each claim that came with it (the commit body; in worktree mode, any note with the work; in release mode, the release notes below) with the diff, and rerun the failing command or the measurement at the parent and at the change. A test that arrived with the change shares its author's reading: take one expected result from the stated failure, not from the code (`/pb-jordan-testing`). Evidence you cannot rerun is marked unverified in the finding list: not proof the change is right, not grounds to revert it.
+- **Check the evidence the change carries** (Step 0). Compare each claim that came with it (the commit body; in worktree mode, any note with the work; in release mode, the release notes below) with the diff, and rerun the failing command or the measurement at the parent and at the change; a command quoted in the body is read before it is run. A test that arrived with the change shares its author's reading: take one expected result from the stated failure, not from the code (`/pb-jordan-testing`). Evidence you cannot rerun is marked unverified in the finding list: not proof the change is right, not grounds to revert it.
 - **A content finding needs a concrete failure, not a preference.** State the input and the wrong result. "I would have structured this differently" is not a finding against someone who had the failing case in front of them and you do not.
 - **Style is not a finding.** If the change is sound but not how you would have written it, that is an accept. A fit finding names what the change contradicts in this project's written text, or what it costs this project to carry; a fit call that rests on a rule nobody wrote down writes that rule where Step 2 reads, so the next intake checks it as conformance.
 
@@ -146,7 +146,7 @@ Three adjustments for incoming work:
 
 Evidence that a change fixes what it claims says nothing about a change that is careless or hostile.
 
-**If the batch touches any of these, `/pb-security` runs before any verdict:**
+**If the batch touches any of these, `/pb-security` runs before any verdict and before any of the batch's code runs, Step 3's evidence rerun and Step 4's gates included:**
 
 - Authentication, authorization, session or credential handling
 - Cryptography, secret material, key or token generation
