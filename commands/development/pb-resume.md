@@ -6,9 +6,9 @@ difficulty: "advanced"
 model_hint: "sonnet"
 execution_pattern: "sequential"
 related_commands: ['pb-start', 'pb-pause', 'pb-cycle', 'pb-review-incoming', 'pb-settle']
-last_reviewed: "2026-11-12"
-version: "1.13.0"
-version_notes: "v1.13.0: Step 4 lists todos/inbox/ notes other projects left, carried to Step 5; a job the user runs between sessions is read from its live state before the notes are trusted; Step 5 names /pb-settle unless the proposal is empty or one or two obvious items."
+last_reviewed: "2026-11-20"
+version: "1.13.1"
+version_notes: "v1.13.1: Step 3 no longer calls an unratified batch usually sound."
 breaking_changes: ['Step 0b changes from ACT to CLASSIFY -- standard mode no longer applies fixes or commits while surfacing the recap; the SURFACE-ACT-ARCHIVE model becomes SURFACE-ARCHIVE', 'Standard mode gains a terminal Step 5 and ends there; deep-mode steps renumber 5-6 to 6-7', 'Quick Commands section removed -- every row duplicated a command already in Steps 1-3']
 ---
 # Resume Development Work
@@ -146,7 +146,7 @@ git diff                                # Uncommitted changes
 git diff --staged                       # Staged changes
 ```
 
-**Detection, not action:** if commits here have not been ratified against this project's conventions (authored in another project's session, or simply never reviewed here), record that and carry `/pb-review-incoming` to Step 5 as a proposed next command. The author had the evidence and not your conventions, so the content is usually sound and the conformance is where it drifts.
+**Detection, not action:** if commits here have not been ratified against this project's conventions (authored in another project's session, or simply never reviewed here), record that and carry `/pb-review-incoming` to Step 5 as a proposed next command.
 
 Do not begin ratifying here. The user may already know what this batch is for and what they intend to do with it, and that intent is cheaper to receive than to reconstruct.
 

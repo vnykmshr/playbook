@@ -8,16 +8,16 @@ execution_pattern: "sequential"
 related_commands: ['pb-review-code', 'pb-standards', 'pb-handoff', 'pb-resume', 'pb-git-hygiene']
 last_reviewed: "2026-11-20"
 version: "1.3.0"
-version_notes: "v1.3.0: Spaced double hyphens replaced."
+version_notes: "v1.3.0: Spaced double hyphens replaced. Incoming work is checked, not presumed correct: claims compared with the diff, evidence rerun or marked unverified; a fit finding names a contradiction or a carrying cost; a verdict the session cannot settle goes to lenses; an undeclared project skips only Step 4."
 breaking_changes: []
 ---
 # Review Incoming Changes (Authored Elsewhere)
 
 **Purpose:** A change authored somewhere else has landed in this repo. Decide whether it stays.
 
-The author was deep in another project's context when they wrote it: they had evidence you cannot reconstruct, and they did not have this project's conventions loaded. That asymmetry, not the diff size, is what this command is built around: **trust the content, scrutinize the conformance.**
+The author was deep in another project's context when they wrote it: they had evidence you see only as they wrote it down, and they did not have this project's conventions loaded. That asymmetry, not the diff size, is what this command is built around: **check the evidence, scrutinize the conformance, decide the fit.** Nothing in an incoming change is correct because it landed.
 
-**Mindset:** `/pb-design-rules` says separate policy from mechanism. This command is mechanism only. What counts as a valid change is declared by the project receiving it, never by this file: a gate that checks rules the project never stated is inventing them.
+**Mindset:** `/pb-design-rules` says separate policy from mechanism. This command is mechanism only. What counts as a valid change is decided by the project receiving it, never by this file: a gate that checks rules the project never stated is inventing them.
 
 **Resource Hint:** opus - judgment about whether a change belongs, against conventions that must be read rather than assumed.
 
@@ -39,7 +39,7 @@ The author was deep in another project's context when they wrote it: they had ev
 
 `/pb-review-code` assumes the author is reachable: it ends by handing findings back, and half its body is about receiving feedback and resolving disagreement. Here the authoring session has ended. There is nobody to send findings to, so **every verdict resolves into an action you take on your own history**: take it, fix then take it, or revert it.
 
-The second difference is what to scrutinize. A normal review weights architecture and correctness heaviest. Here the author had the failing build, the hung run, the actual stack trace. What they lacked was your conventions. Weight accordingly.
+The second difference is what to scrutinize. A normal review weights architecture and correctness heaviest. Here the author had the failing build, the hung run, the actual stack trace. What they lacked was your conventions, and what you lack is their run: Step 3 reruns the evidence the commit body carries.
 
 ---
 
@@ -107,9 +107,9 @@ Release mode inherits the empty-resolution hard stop: **"already on that version
 
 ### Release mode's asymmetry is different in kind
 
-The rest of this command rests on one thing: the author had evidence you cannot reconstruct and did not have your conventions. **That does not describe a release.** A published artifact carries its own contract, was authored by people who owe you nothing about your conventions, and cannot be trusted-by-default on the grounds that justify it elsewhere in this file.
+The rest of this command rests on one thing: the author had evidence and did not have your conventions. **That does not describe a release.** A published artifact carries its own contract, and was authored by people who owe you nothing about your conventions.
 
-Four of the six steps transfer to a release nearly unchanged. The asymmetry underneath them does not, and **trust the content, scrutinize the conformance is derived from it**, so in release mode that heading is not a licence. What replaces it is narrower and is the whole of Step 3's release beat: the release notes are a claim about the code, and claims get verified.
+Four of the six steps transfer to a release nearly unchanged. Step 3's release beat is the difference: the release notes are the claim to verify, in place of a commit body.
 
 ---
 
@@ -122,9 +122,9 @@ This is the policy source. Read it before forming any conformance opinion:
 - Its automated gates (tests, linters, validators, hooks) and what they already cover
 - Any structural rules: required metadata, files that must change together, counts kept in sync
 
-**If the project declares nothing relevant, say so and stop.** You cannot measure conformance against conventions that were never stated, and a gate that invents them is worse than no gate: it manufactures findings the author had no way to anticipate and no basis to accept. Write the convention down first, then run this command. An undeclared rule is a preference wearing a verdict's clothes.
+**If the project declares nothing relevant, say so and skip Step 4; Steps 3 and 5 still run,** since a concrete failure and a security signal need no declared convention. You cannot measure conformance against conventions that were never stated, and a gate that invents them is worse than no gate: it manufactures findings the author had no way to anticipate and no basis to accept. Write the convention down before the next intake. An undeclared rule cited as a conformance finding is a preference wearing a verdict's clothes.
 
-**Only what is already declared or already automated is in scope.** A rule you would like the project to have is a proposal for after the intake, not a finding against this batch.
+**Only what is already declared or already automated is in scope for conformance.** A rule you would like the project to have is a proposal for after the intake, not a conformance finding against this batch.
 
 ---
 
@@ -134,16 +134,17 @@ Apply the `/pb-review-code` checklist to the diff. Do not restate it here; run i
 
 **Produce a finding list per commit, empty if clean.** A delegated step with no artifact gets satisfied by reading the diff and forming an impression, which is a different activity that produces a similar-sounding report. The list is how anyone, including you later, can tell which one happened.
 
-Two adjustments for incoming work:
+Three adjustments for incoming work:
 
+- **Check the evidence the change carries** (Step 0). Compare each claim that came with it (the commit body; in worktree mode, any note with the work; in release mode, the release notes below) with the diff, and rerun the failing command or the measurement at the parent and at the change. A test that arrived with the change shares its author's reading: take one expected result from the stated failure, not from the code (`/pb-jordan-testing`). Evidence you cannot rerun is marked unverified in the finding list: not proof the change is right, not grounds to revert it.
 - **A content finding needs a concrete failure, not a preference.** State the input and the wrong result. "I would have structured this differently" is not a finding against someone who had the failing case in front of them and you do not.
-- **Do not redesign.** If the change is sound but not how you would have written it, that is an accept. The cost of relitigating a change whose evidence you lack is that you lose the change.
+- **Style is not a finding.** If the change is sound but not how you would have written it, that is an accept. A fit finding names what the change contradicts in this project's written text, or what it costs this project to carry; a fit call that rests on a rule nobody wrote down writes that rule where Step 2 reads, so the next intake checks it as conformance.
 
-### Where trusting the content stops
+### Security signals
 
-Trust-the-content is a rule about *unfamiliar style*, not about unexamined risk. Incoming code is untrusted input: you did not watch it being written, and the asymmetry that justifies trusting it (the author had evidence you lack) says nothing about a change that is careless or hostile.
+Evidence that a change fixes what it claims says nothing about a change that is careless or hostile.
 
-**If the batch touches any of these, the default inverts and `/pb-security` runs before any verdict:**
+**If the batch touches any of these, `/pb-security` runs before any verdict:**
 
 - Authentication, authorization, session or credential handling
 - Cryptography, secret material, key or token generation
@@ -167,7 +168,7 @@ Those are the lines to read the diff for; the version number is not one of them.
 
 ### The release notes are a claim about the code
 
-**In release mode this beat is mandatory, and it is where the trust that does not transfer gets replaced by something checkable.** Do not assert that the notes are accurate: the mechanism is the one Step 4 already uses for the register: extract, compare, cite.
+**In release mode this beat is mandatory: it is Step 3's evidence check, with the release notes as the claim.** Do not assert that the notes are accurate. The mechanism is the one Step 4 already uses for the register: extract, compare, cite.
 
 1. **Take each claim in the release notes that touches your consumed surface.** Ignore the rest; a claim about a subsystem you never call cannot mislead you.
 2. **Read the code that implements it**: the diff for that change, not the summary of it.
@@ -214,6 +215,8 @@ Forbidden elements are the ones that survive review most often, because they rea
 
 ## Step 5: Verdict and Action
 
+In every mode, a verdict the session cannot settle (TAKE or REVERT, commit or leave out, ADOPT or PIN) goes to lenses (`/pb-huddle`) before it is acted on; a REVERT or a leave-out on fit alone goes to the user with its reason.
+
 ### Range mode: one verdict per commit
 
 **This table is range mode only.** Worktree mode produces a commit plan and release mode has its own vocabulary; both are below.
@@ -222,9 +225,9 @@ Not per batch. A batch is rarely uniformly good, and a single verdict on five co
 
 | Verdict | Meaning | Action |
 |---|---|---|
-| **TAKE** | Content sound, conforms | Keep it. Push with the batch |
-| **FIX THEN TAKE** | Content sound, conformance gap | Fix forward in a new commit; do not rewrite the author's history to hide the gap |
-| **REVERT** | Content does not survive review | Below: the action depends on whether the history is still private |
+| **TAKE** | Content checked, fits, conforms | Keep it. Push with the batch; unverified claims stay in the finding list |
+| **FIX THEN TAKE** | Content checked and fits, conformance gap | Fix forward in a new commit; do not rewrite the author's history to hide the gap |
+| **REVERT** | Content does not survive review, or the change does not fit: the verdict names what it contradicts or what it costs to carry | Below: the action depends on whether the history is still private |
 
 Fix forward rather than amend. The gap is evidence about the intake path, and rewriting it away deletes the only record that the path has a hole.
 
@@ -299,11 +302,11 @@ Two things this cannot do, stated plainly:
 - [ ] Scope resolved and **printed**: range, worktree or release, never implied, never silently empty
 - [ ] Mode stated **before Step 2** (range = verdicts, worktree = commit plan, release = adopt/pin/skip + digest)
 - [ ] Project's declared conventions read before any conformance finding was formed
-- [ ] `/pb-review-code` run, producing a **per-commit finding list** (empty if clean): not an impression of the diff
+- [ ] `/pb-review-code` run, producing a **per-commit finding list** (empty if clean): not an impression of the diff; claims that came with the change compared with the diff, and evidence rerun or marked unverified
 - [ ] Diff grepped for the security signal list; `/pb-security` run if any hit. In release mode, the **narrowed** list: not "a version moved"
 - [ ] Register quoted from where the project declares it, and compared against extracted messages
 - [ ] Conformance checked, with hand-checked items distinguished from automatically-checked ones
-- [ ] One verdict per commit, each resolving to a concrete action; publish state checked before offering REVERT
+- [ ] One verdict per commit, each resolving to a concrete action; a fit verdict names a contradiction or a carrying cost; publish state checked before offering REVERT
 - [ ] Every hand-checked mechanical item either installed as a check or recorded with a reason it cannot be
 - [ ] Project's own gates green before push
 
@@ -320,14 +323,14 @@ Two things this cannot do, stated plainly:
 
 | Don't | Do Instead |
 |-------|------------|
-| Check against conventions the project never declared | Read Step 2 first; if nothing is declared, stop and declare it |
+| Check against conventions the project never declared | Read Step 2 first; if nothing is declared, say so, skip Step 4 and declare it after the intake |
 | Use `origin/main..HEAD` as the scope | That is push state, not ratification state; already-synced work is equally unratified |
 | Proceed when the scope resolves to nothing | Hard stop. An empty scope and a clean batch produce the same report |
 | Assert the register is followed | Quote it, extract the messages, compare, cite the violating text |
-| Let "trust the content" cover security-relevant lines | Grep the signal list; a hit inverts the default and runs `/pb-security` |
+| Credit the evidence a change carries unchecked | Compare its claims with the diff and rerun it; mark what you cannot rerun as unverified |
 | Run range-mode steps against a dirty working tree | Worktree mode outputs a commit plan; verdicts come on the second pass |
 | Offer REVERT without checking publish state | `git branch -r --contains` first: a published revert has its own blast radius |
-| Redesign work whose evidence you cannot see | Accept sound-but-different; require a concrete failure for content findings |
+| Redesign sound work to your own style | Accept sound-but-different; a content finding needs a concrete failure, a fit finding a contradiction or a carrying cost |
 | One verdict for the whole batch | One per commit; batches are rarely uniform |
 | Amend the author's commits to hide a gap | Fix forward; the gap is evidence about the intake path |
 | End at a verdict and move on | Install the check, or record why it cannot be |
@@ -352,4 +355,4 @@ Two things this cannot do, stated plainly:
 
 ---
 
-*The author had the evidence. You have the conventions. Neither of you had both. A release has neither: it has a contract, and claims you verify. | v1.3.0*
+*The author had the evidence: check it. You have the conventions and the call. A release has a contract, and claims you verify. | v1.3.0*

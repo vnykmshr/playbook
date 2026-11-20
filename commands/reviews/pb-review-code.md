@@ -6,9 +6,9 @@ difficulty: "advanced"
 model_hint: "opus"
 execution_pattern: "sequential"
 related_commands: ['pb-cycle', 'pb-review', 'pb-review-hygiene', 'pb-review-tests', 'pb-security']
-last_reviewed: "2026-11-05"
-version: "2.4.0"
-version_notes: "v2.4.0: Spaced double hyphens replaced. Integration with Playbook section removed."
+last_reviewed: "2026-11-20"
+version: "2.4.1"
+version_notes: "v2.4.1: The decision tree says /pb-review-incoming checks the evidence."
 breaking_changes: []
 ---
 # Code Review (Specific Changes)
@@ -46,7 +46,7 @@ Q1: Is this for a specific change (PR/commit)?
   │        │        ✓ ~30-60 min per PR
   │        │
   │        └─ NO (authored in another project's session) → /pb-review-incoming
-  │                 ✓ Trusts the content, scrutinizes the conformance
+  │                 ✓ Checks the evidence, scrutinizes the conformance
   │                 ✓ Checks against THIS project's declared conventions
   │                 ✓ Verdict resolves to take / fix-then-take / revert
   │
