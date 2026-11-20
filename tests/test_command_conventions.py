@@ -460,7 +460,7 @@ class TestReviewDateFreshness:
     A command edited without touching its review date claims a review that did
     not happen. This is the failure mode of changes authored in another
     project's session: the author has the evidence and not the conventions, so
-    the body is sound and the metadata drifts. See /pb-review-incoming.
+    the metadata drifts. See /pb-review-incoming.
     """
 
     def _violations(self) -> dict[str, str]:
