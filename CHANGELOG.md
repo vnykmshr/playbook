@@ -23,6 +23,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **`/pb-forge` v1.10.1.** Closing the cursor replaces the stage word with `SHIPPED` and leaves the log. A reviewer's record is its findings, not its transcript; vet lenses are briefed with the hard constraints.
 - **`/pb-settle` v1.1.0.** A DONE ruling on a finding names the version its cited text shipped in and checks that the text covers the stage where the failure happened. A DEFER states what waiting costs; a step in another tool's UI is checked for the user's access before it is written up; a sound note can still be rejected for fit.
 - **`/pb-jordan-testing` v1.7.0.** Seeing a test fail is not enough when it shares the code's reading; one test per behaviour takes its expected result from the spec or the bug report.
+- **`/pb-tavis-security` v2.1.0.** A proof runs inside the brief's rules: an address, IP or hostname form goes to the parser, the validator or a stubbed resolver and dialer, never connected to or resolved for real.
 - **`/pb-greenfield` v2.1.0.** A multi-step first build starts with `/pb-forge`.
 
 ## [v2.37.0] - 2026-11-13

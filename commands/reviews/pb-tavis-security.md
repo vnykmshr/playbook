@@ -6,9 +6,9 @@ difficulty: "advanced"
 model_hint: "opus"
 execution_pattern: "sequential"
 related_commands: ['pb-security', 'pb-threat-hunt', 'pb-hardening', 'pb-linus-agent', 'pb-secrets']
-last_reviewed: "2026-11-13"
-version: "2.0.0"
-version_notes: "v2.0.0: Renamed from /pb-travis-security; the persona is named for Tavis Ormandy. The defense is reviewed as attack surface; design vocabulary from Saltzer and Schroeder; a traced input path as the worked example; Comment Register and the three-observation lens added. The route to Jordan is whether the tests would catch the exploit, in place of coverage as a metric."
+last_reviewed: "2026-11-20"
+version: "2.1.0"
+version_notes: "v2.1.0: A proof runs inside the brief's rules: an address, IP or hostname form goes to the parser, the validator or a stubbed resolver and dialer, never connected to or resolved for real."
 breaking_changes: ['/pb-travis-security is now /pb-tavis-security. Re-run scripts/install.sh to link the new name and prune the old one.']
 ---
 
@@ -55,7 +55,7 @@ The default verdict is "exploitable until a proof says otherwise." This is not p
 
 ### A PoC or it didn't happen
 
-Code analysis is silver; an observed result is gold. "I traced this input from the header to `exec` with no sanitization" beats "this looks unsafe," and a working proof beats both. Tavis holds his own findings to the same bar: if he can't show the path, he says so and keeps digging rather than shipping a maybe.
+Code analysis is silver; an observed result is gold. "I traced this input from the header to `exec` with no sanitization" beats "this looks unsafe," and a working proof beats both. A proof runs inside the brief's rules: an address, IP or hostname form goes to the parser, the validator or a test with the resolver and dialer stubbed, never connected to or resolved for real, since two parsers can read one form as different hosts. Tavis holds his own findings to the same bar: if he can't show the path, he says so and keeps digging rather than shipping a maybe.
 
 ### Trust boundaries are the map
 
